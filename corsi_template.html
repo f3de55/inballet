@@ -1,0 +1,1000 @@
+        /* CTA Button */
+        .cta-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(135, 206, 235, 0.3);
+        }
+
+        .cta-btn:hover {
+            background: var(--primary-blue-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(135, 206, 235, 0.4);
+        }<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InBallet - Educazione alla Danza 1 e 2</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Francois+One&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Elegante - ESATTAMENTE COME CHI-SIAMO -->
+    <header class="main-header">
+        <nav class="nav-container">
+            <div class="logo-section">
+                <img src="https://i.ibb.co/Y7r09pvC/inballet-logo-base-bianco-452x226-2.png" alt="InBallet Logo">
+            </div>
+            
+            <!-- Desktop Navigation UGUALE CHI-SIAMO -->
+            <ul class="nav-menu">
+                <li class="nav-item" data-menu="scuola">
+                    <span class="nav-link">SCUOLA</span>
+                    <div class="mega-menu" id="mega-menu-scuola">
+                        <div class="mega-menu-container">
+                            <div class="mega-menu-section">
+                                <h4>InBallet</h4>
+                                <ul>
+                                    <li><a href="#">Su di noi</a></li>
+                                    <li><a href="#">Collaborazioni</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-section">
+                                <h4>Servizi</h4>
+                                <ul>
+                                    <li><a href="#">Sportello psicologico</a></li>
+                                    <li><a href="#">Spettacoli ed eventi</a></li>
+                                    <li><a href="#">Progetto NoiConVoi</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-section">
+                                <h4>Collaborazioni</h4>
+                                <ul>
+                                    <li><a href="#">Partner</a></li>
+                                    <li><a href="#">Scuole</a></li>
+                                    <li><a href="#">Enti</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" data-menu="corsi">
+                    <span class="nav-link active">CORSI</span>
+                    <div class="mega-menu" id="mega-menu-corsi">
+                        <div class="mega-menu-container">
+                            <div class="mega-menu-section">
+                                <h4>Classici e Moderni</h4>
+                                <ul>
+                                    <li><a href="#">Danza Classica Accademica</a></li>
+                                    <li><a href="#">Tecnica della Danza Classica</a></li>
+                                    <li><a href="#">Danza Contemporanea</a></li>
+                                    <li><a href="#">Contact Improvisation</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-section">
+                                <h4>Urban & Acrobatici</h4>
+                                <ul>
+                                    <li><a href="#">Hip-Hop</a></li>
+                                    <li><a href="#">Heels</a></li>
+                                    <li><a href="#">Breaking</a></li>
+                                    <li><a href="#">Danza Acrobatica</a></li>
+                                    <li><a href="#">Contaminato</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-section">
+                                <h4>Bambini e Adulti</h4>
+                                <ul>
+                                    <li><a href="#">Educazione alla Danza (1–2)</a></li>
+                                    <li><a href="#">Movimento Creativo</a></li>
+                                    <li><a href="#">Danza Over 40</a></li>
+                                    <li><a href="#">Lezioni Individuali</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" data-menu="attivita">
+                    <span class="nav-link">ATTIVITÀ MOTORIE</span>
+                    <div class="mega-menu" id="mega-menu-attivita">
+                        <div class="mega-menu-container">
+                            <div class="mega-menu-section">
+                                <h4>Percorsi Integrati</h4>
+                                <ul>
+                                    <li><a href="#">Classi Multidisciplinari</a></li>
+                                    <li><a href="#">Laboratori Creativi</a></li>
+                                    <li><a href="#">Danza Inclusiva</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-section">
+                                <h4>Benessere Fisico</h4>
+                                <ul>
+                                    <li><a href="#">Yoga</a></li>
+                                    <li><a href="#">Pilates</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-section">
+                                <h4>Eventi Speciali</h4>
+                                <ul>
+                                    <li><a href="#">Workshop</a></li>
+                                    <li><a href="#">Masterclass</a></li>
+                                    <li><a href="#">Seminari</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" data-menu="formazione">
+                    <span class="nav-link">FORMAZIONE</span>
+                    <div class="mega-menu" id="mega-menu-formazione">
+                        <div class="mega-menu-container">
+                            <div class="mega-menu-section">
+                                <h4>Corsi Professionali</h4>
+                                <ul>
+                                    <li><a href="#">Corso per Insegnanti</a></li>
+                                    <li><a href="#">Formazioni Personalizzate</a></li>
+                                    <li><a href="#">Workshop Tematici</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-section">
+                                <h4>Atelier per Fasce d'Età</h4>
+                                <ul>
+                                    <li><a href="#">Prima Infanzia</a></li>
+                                    <li><a href="#">Bambini</a></li>
+                                    <li><a href="#">Ragazzi</a></li>
+                                    <li><a href="#">Adulti</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-section">
+                                <h4>Certificazioni</h4>
+                                <ul>
+                                    <li><a href="#">CSEN</a></li>
+                                    <li><a href="#">CONI</a></li>
+                                    <li><a href="#">Attestati</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            
+            <a href="#contatti" class="btn-primary">Contattaci</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu UGUALE CHI-SIAMO -->
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+        <div class="mobile-menu" id="mobileMenu">
+            <button class="mobile-menu-close" id="mobileMenuClose">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="mobile-nav-item">
+                <div class="mobile-nav-toggle" data-target="scuola-submenu">
+                    <span>SCUOLA</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-submenu" id="scuola-submenu">
+                    <div class="mobile-submenu-header">InBallet</div>
+                    <a href="#">Su di noi</a>
+                    <a href="#">Collaborazioni</a>
+                    <div class="mobile-submenu-header">Servizi</div>
+                    <a href="#">Sportello psicologico</a>
+                    <a href="#">Spettacoli ed eventi</a>
+                    <a href="#">Progetto NoiConVoi</a>
+                </div>
+            </div>
+
+            <div class="mobile-nav-item">
+                <div class="mobile-nav-toggle" data-target="corsi-submenu">
+                    <span>CORSI</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-submenu" id="corsi-submenu">
+                    <div class="mobile-submenu-header">Classici e Moderni</div>
+                    <a href="#">Danza Classica Accademica</a>
+                    <a href="#">Tecnica della Danza Classica</a>
+                    <a href="#">Danza Contemporanea</a>
+                    <a href="#">Contact Improvisation</a>
+                    <div class="mobile-submenu-header">Urban & Acrobatici</div>
+                    <a href="#">Hip-Hop</a>
+                    <a href="#">Heels</a>
+                    <a href="#">Breaking</a>
+                    <a href="#">Danza Acrobatica</a>
+                    <a href="#">Contaminato</a>
+                    <div class="mobile-submenu-header">Bambini e Adulti</div>
+                    <a href="#">Educazione alla Danza (1–2)</a>
+                    <a href="#">Movimento Creativo</a>
+                    <a href="#">Danza Over 40</a>
+                    <a href="#">Lezioni Individuali</a>
+                </div>
+            </div>
+
+            <div class="mobile-nav-item">
+                <div class="mobile-nav-toggle" data-target="attivita-submenu">
+                    <span>ATTIVITÀ & BENESSERE</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-submenu" id="attivita-submenu">
+                    <div class="mobile-submenu-header">Percorsi Integrati</div>
+                    <a href="#">Classi Multidisciplinari</a>
+                    <a href="#">Laboratori Creativi</a>
+                    <a href="#">Danza Inclusiva</a>
+                    <div class="mobile-submenu-header">Benessere Fisico</div>
+                    <a href="#">Yoga</a>
+                    <a href="#">Pilates</a>
+                </div>
+            </div>
+
+            <div class="mobile-nav-item">
+                <div class="mobile-nav-toggle" data-target="formazione-submenu">
+                    <span>FORMAZIONE</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-submenu" id="formazione-submenu">
+                    <div class="mobile-submenu-header">Corsi Professionali</div>
+                    <a href="#">Corso per Insegnanti</a>
+                    <a href="#">Formazioni Personalizzate</a>
+                    <a href="#">Workshop Tematici</a>
+                    <div class="mobile-submenu-header">Atelier per Fasce d'Età</div>
+                    <a href="#">Prima Infanzia</a>
+                    <a href="#">Bambini</a>
+                    <a href="#">Ragazzi</a>
+                    <a href="#">Adulti</a>
+                </div>
+            </div>
+
+            <div class="mobile-cta">
+                <a href="#contatti" class="btn-primary">Contattaci</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section - COMPATTO CON NUMERI PICCOLI -->
+    <section class="hero-courses">
+        <div class="hero-bg-image"></div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <!-- Breadcrumb identico a chi-siamo -->
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="breadcrumb-separator">•</span>
+                    <a href="corsi.html">Corsi</a>
+                    <span class="breadcrumb-separator">•</span>
+                    <span class="breadcrumb-current">Educazione alla Danza</span>
+                </nav>
+                
+                <h1 class="hero-title">
+                    Educazione alla Danza
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Il primo magico incontro con la musica e il movimento. Guidiamo i più piccoli alla scoperta del linguaggio espressivo della danza in un ambiente sicuro e stimolante.
+                </p>
+                
+                <div class="hero-stats">
+                    <div class="stat-badge">
+                        <span class="stat-number">3+</span>
+                        <span class="stat-label">Anni</span>
+                    </div>
+                    <div class="stat-badge">
+                        <span class="stat-number">45</span>
+                        <span class="stat-label">Minuti</span>
+                    </div>
+                    <div class="stat-badge">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">Bambini</span>
+                    </div>
+                </div>
+                
+                <!-- Freccia Scroll Down -->
+                <div class="scroll-indicator" id="scrollIndicator">
+                    <div class="scroll-arrow">
+                        <i class="fas fa-chevron-down scroll-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Tabs Section -->
+    <section class="courses-section" id="corsi">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tagline">
+                    <i class="fas fa-star"></i>
+                    I nostri percorsi
+                </p>
+                <h2 class="section-title">Due Livelli, Due Mondi da Scoprire</h2>
+                <p class="section-subtitle">
+                    Ogni corso è studiato per accompagnare la crescita naturale del bambino, rispettando i tempi individuali e creando un ambiente dove curiosità e movimento si incontrano per dare vita alla magia della danza.
+                </p>
+            </div>
+            
+            <div class="courses-tabs">
+                <div class="tab-nav">
+                    <button class="tab-btn active" onclick="showTab('danza1')">
+                        Danza 1
+                    </button>
+                    <button class="tab-btn" onclick="showTab('danza2')">
+                        Danza 2
+                    </button>
+                </div>
+                
+                <!-- Educazione alla Danza 1 -->
+                <div class="tab-content active" id="danza1">
+                    <div class="course-details">
+                        <div class="course-header">
+                            <p class="course-tagline">
+                                <i class="fas fa-seedling"></i>
+                                Primo approccio
+                            </p>
+                            <h3 class="course-title">Educazione alla Danza 1</h3>
+                        </div>
+                        
+                        <div class="course-text-columns">
+                            <div class="course-column">
+                                <h4 style="color: var(--primary-blue-dark); margin-bottom: 1rem;">Il Percorso</h4>
+                                <p class="course-description">
+                                    Percorso studiato per il primissimo approccio alla musica ed al movimento. Il bambino, attraverso la sperimentazione di giochi interattivi e pratici all'interno della sala di Danza, inizierà a sentirsi orientato nello spazio e capace di sviluppare gli esercizi proposti.
+                                </p>
+                            </div>
+                            <div class="course-column">
+                                <h4 style="color: var(--primary-blue-dark); margin-bottom: 1rem;">Obiettivi</h4>
+                                <p class="course-description">
+                                    L'insieme delle attività proposte ha come focus l'Educazione al movimento che pian piano si evolverà in Educazione alla Danza. Classe mono-settimanale ed a numero chiuso, il bambino impara attraverso il gioco e la scoperta del proprio corpo nello spazio.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" 
+                                 alt="Bambine di 3 anni durante una lezione di educazione alla danza" 
+                                 class="course-image">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Educazione alla Danza 2 -->
+                <div class="tab-content" id="danza2">
+                    <div class="course-details">
+                        <div class="course-header">
+                            <p class="course-tagline">
+                                <i class="fas fa-star"></i>
+                                Evoluzione naturale
+                            </p>
+                            <h3 class="course-title">Educazione alla Danza 2</h3>
+                        </div>
+                        
+                        <div class="course-text-columns">
+                            <div class="course-column">
+                                <h4 style="color: var(--primary-blue-dark); margin-bottom: 1rem;">Evoluzione</h4>
+                                <p class="course-description">
+                                    Evoluzione naturale del primo corso, con maggiore focus sulla coordinazione motoria e l'espressività. I bambini sviluppano una migliore consapevolezza del corpo, iniziano a esplorare elementi base della danza e si preparano ai percorsi successivi.
+                                </p>
+                            </div>
+                            <div class="course-column">
+                                <h4 style="color: var(--primary-blue-dark); margin-bottom: 1rem;">Sviluppo</h4>
+                                <p class="course-description">
+                                    Il lavoro di gruppo diventa fondamentale per la socializzazione. I bambini imparano a muoversi insieme, a rispettare i tempi degli altri e a creare piccole coreografie. La creatività viene stimolata attraverso improvvisazioni guidate.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" 
+                                 alt="Bambini di 4-5 anni durante una lezione di educazione alla danza" 
+                                 class="course-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Flip Cards -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tagline">
+                    <i class="fas fa-rocket"></i>
+                    Benefici per la crescita
+                </p>
+                <h2 class="section-title">Perché Scegliere l'Educazione alla Danza</h2>
+                <p class="section-subtitle">
+                    La danza non è solo movimento: è crescita completa. I nostri corsi offrono benefici che vanno oltre la tecnica, contribuendo allo sviluppo armonico della personalità del bambino.
+                </p>
+            </div>
+            
+            <div class="click-hint">
+                <i class="fas fa-arrow-down"></i>
+                <span>Passaci sopra per scoprire di più</span>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="flip-card animate-on-scroll">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="benefit-icon-large">
+                                <i class="fas fa-running"></i>
+                            </div>
+                            <h3 class="benefit-title">Sviluppo Motorio</h3>
+                            <p class="benefit-short-desc">Coordinazione, equilibrio e consapevolezza corporea</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="benefit-icon-large">
+                                <i class="fas fa-running"></i>
+                            </div>
+                            <h3 class="benefit-title">Sviluppo Motorio Completo</h3>
+                            <p class="benefit-full-desc">I nostri corsi migliorano coordinazione, equilibrio e consapevolezza corporea attraverso movimenti studiati specificamente per l'età prescolare, gettando le basi per una crescita fisica armoniosa.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card animate-on-scroll">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="benefit-icon-large">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <h3 class="benefit-title">Creatività</h3>
+                            <p class="benefit-short-desc">Immaginazione e capacità espressiva</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="benefit-icon-large">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <h3 class="benefit-title">Creatività e Espressione</h3>
+                            <p class="benefit-full-desc">Stimoliamo l'immaginazione e la capacità espressiva, permettendo al bambino di comunicare emozioni e pensieri attraverso il movimento, sviluppando la sua unicità artistica.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card animate-on-scroll">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="benefit-icon-large">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 class="benefit-title">Socializzazione</h3>
+                            <p class="benefit-short-desc">Interazione e dinamiche di gruppo</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="benefit-icon-large">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 class="benefit-title">Socializzazione Positiva</h3>
+                            <p class="benefit-full-desc">Favoriamo l'interazione con i coetanei e l'apprendimento delle dinamiche di gruppo in un ambiente positivo, costruendo le basi per relazioni sociali sane e durature.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card animate-on-scroll">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="benefit-icon-large">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <h3 class="benefit-title">Musicalità</h3>
+                            <p class="benefit-short-desc">Senso del ritmo e educazione musicale</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="benefit-icon-large">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <h3 class="benefit-title">Educazione Musicale</h3>
+                            <p class="benefit-full-desc">Sviluppiamo il senso del ritmo e la musicalità, creando una base solida per futuri apprendimenti artistici e una sensibilità musicale che arricchirà la vita del bambino.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card animate-on-scroll">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="benefit-icon-large">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <h3 class="benefit-title">Autostima</h3>
+                            <p class="benefit-short-desc">Fiducia in sé stessi e realizzazione</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="benefit-icon-large">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <h3 class="benefit-title">Autostima e Fiducia</h3>
+                            <p class="benefit-full-desc">Ogni piccolo successo contribuisce a costruire fiducia in sé stessi e senso di realizzazione personale, elementi fondamentali per una crescita equilibrata e positiva.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card animate-on-scroll">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="benefit-icon-large">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="benefit-title">Preparazione</h3>
+                            <p class="benefit-short-desc">Basi per il futuro artistico</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="benefit-icon-large">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="benefit-title">Preparazione al Futuro</h3>
+                            <p class="benefit-full-desc">Creiamo le basi per un eventuale percorso artistico più avanzato o semplicemente per una vita più ricca di movimento, espressività e benessere fisico e mentale.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Practical Info Accordion -->
+    <section class="practical-info">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tagline">
+                    <i class="fas fa-info-circle"></i>
+                    Informazioni pratiche
+                </p>
+                <h2 class="section-title">Tutto quello che Devi Sapere</h2>
+                <p class="section-subtitle">
+                    Dettagli pratici e informazioni utili per rendere semplice l'iscrizione e l'inizio di questo bellissimo percorso di crescita insieme al tuo bambino.
+                </p>
+            </div>
+            
+            <div class="accordion-container">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(0)">
+                        <div class="accordion-title">
+                            <i class="fas fa-calendar-alt"></i>
+                            Orari e Frequenza
+                        </div>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="info-details">
+                                <div class="info-detail">
+                                    <div class="detail-text">
+                                        <h4>Durata e Struttura Lezioni</h4>
+                                        <p>45 minuti per lezione, una volta a settimana. Include riscaldamento dolce, attività di movimento e gioco, espressività creativa e rilassamento finale.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-detail">
+                                    <div class="detail-text">
+                                        <h4>Giorni e Orari Disponibili</h4>
+                                        <p>Martedì e Giovedì 16:00-16:45 per entrambi i livelli. Sabato mattina 10:00-10:45 (Danza 1) e 11:00-11:45 (Danza 2).</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-detail">
+                                    <div class="detail-text">
+                                        <h4>Anno Accademico</h4>
+                                        <p>Da settembre a giugno, con pause natalizie e pasquali. Possibilità di inserimento durante l'anno accademico previa valutazione.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(1)">
+                        <div class="accordion-title">
+                            <i class="fas fa-user-plus"></i>
+                            Iscrizioni e Requisiti
+                        </div>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="info-details">
+                                <div class="info-detail">
+                                    <div class="detail-text">
+                                        <h4>Requisiti di Età</h4>
+                                        <p>Educazione alla Danza 1: 3 anni compiuti. Educazione alla Danza 2: 4-5 anni. Necessari certificato di nascita e certificato medico sportivo.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-detail">
+                                    <div class="detail-text">
+                                        <h4>Organizzazione Classi</h4>
+                                        <p>Massimo 8 bambini per classe per garantire attenzione personalizzata. Lezione di prova gratuita e colloquio conoscitivo con l'insegnante.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-detail">
+                                    <div class="detail-text">
+                                        <h4>Procedura di Iscrizione</h4>
+                                        <p>Contatto telefonico iniziale, prenotazione lezione di prova, compilazione moduli di iscrizione e conferma del posto in classe.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(2)">
+                        <div class="accordion-title">
+                            <i class="fas fa-euro-sign"></i>
+                            Costi e Modalità di Pagamento
+                        </div>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="info-details">
+                                <div class="info-detail">
+                                    <div class="detail-text">
+                                        <h4>Quota Mensile</h4>
+                                        <p>€60 al mese per entrambi i livelli. Pagamento tramite bonifico bancario o POS. Include tutte le lezioni mensili e materiale didattico.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-detail">
+                                    <div class="detail-text">
+                                        <h4>Tessera Associativa</h4>
+                                        <p>€25 una tantum con assicurazione inclusa, valida per tutto l'anno accademico. Dà diritto a vantaggi esclusivi e partecipazione agli eventi.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-detail">
+                                    <div class="detail-text">
+                                        <h4>Agevolazioni e Sconti</h4>
+                                        <p>-10% per il secondo figlio, -15% per iscrizione anticipata entro luglio, agevolazioni specifiche per famiglie numerose e convenzioni aziendali.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(3)">
+                        <div class="accordion-title">
+                            <i class="fas fa-tshirt"></i>
+                            Abbigliamento e Accessori
+                        </div>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="info-details">
+                                <div class="info-detail">
+                                    <div class="detail-text">
+                                        <h4>Abbigliamento Consigliato</h4>
+                                        <p>Maglietta comoda e leggings elastici, preferibilmente in colori chiari (bianco, rosa, celeste). Capelli sempre raccolti con elastico morbido.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-detail">
+                                    <div class="detail-text">
+                                        <h4>Calzature Appropriate</h4>
+                                        <p>Calze antiscivolo o piedi scalzi per sentire meglio il pavimento. Vietate scarpe da ginnastica. Scarpine da danza morbide opzionali dal secondo anno.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-detail">
+                                    <div class="detail-text">
+                                        <h4>Accessori Indispensabili</h4>
+                                        <p>Borraccia dell'acqua personale, cambio completo di ricambio, fazzoletti di carta e piccola borsetta personale per riporre oggetti e vestiti.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section - Background Image -->
+    <section class="cta-section" id="prenota">
+        <div class="cta-bg-image"></div>
+        <div class="cta-overlay"></div>
+        
+        <div class="container">
+            <div class="cta-content">
+                <h2>Inizia Questo Magico Percorso</h2>
+                <p>
+                    Non perdere l'opportunità di regalare al tuo bambino un'esperienza che lo accompagnerà per tutta la vita. 
+                    Contattaci ora per la lezione di prova gratuita e scopri insieme a noi la gioia del movimento e della danza.
+                </p>
+                
+                <a href="mailto:info@inballet.it" class="cta-btn-single">
+                    <i class="fas fa-envelope"></i>
+                    Scrivici
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Elegante - IDENTICO A CHI-SIAMO -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Sezione Superiore: Logo + Sedi + Contatti -->
+            <div class="footer-top">
+                <!-- Logo e Descrizione -->
+                <div class="footer-logo-section">
+                    <img src="https://i.ibb.co/Y7r09pvC/inballet-logo-base-bianco-452x226-2.png" alt="InBallet Logo" />
+                    <p>Dal 2007 formiamo ballerini completi nel territorio rhodense con un approccio multidisciplinare che unisce tecnica, creatività e crescita personale. 
+                    Offre un ambiente dinamico e ricco di risorse per ballerini, appassionati e professionisti del settore.</p>
+                    <div class="footer-credentials">
+                        <strong>Ente Formativo Riconosciuto</strong>
+                        CSEN • CONI • Valenza Nazionale
+                    </div>
+                </div>
+
+                <!-- Sedi -->
+                <div class="footer-sedi-section">
+                    <h4>Sedi</h4>
+                    <div class="contact-location">
+                        <h5>SEDE CENTRALE</h5>
+                        <p>Via Puccini, 14<br>Lainate (MI)</p>
+                    </div>
+                    
+                    <div class="contact-location">
+                        <h5>ALTRE SEDI</h5>
+                        <p>Scuola elementare Franceschini (palestra)<br>Via Tevere, 9 - Rho (MI)</p>
+                        <p style="margin-top: 1rem;">Scuola elementare Anna Frank (palestra)<br>Via Chiminello, 2 - Rho (MI)</p>
+                    </div>
+                </div>
+
+                <!-- Contatti -->
+                <div class="footer-contact-section">
+                    <h4>Contatti</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> +39 393 780 2996</p>
+                        <p><i class="fas fa-envelope"></i> info@inballet.it</p>
+                        <p><i class="fas fa-clock"></i> Segreteria: Lun-Ven 15:00-20:00</p>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sezione Inferiore: Menu Categorie -->
+            <div class="footer-bottom">
+                <div class="footer-menu-column">
+                    <h4>Scuola & Servizi</h4>
+                    <ul>
+                        <li><a href="#">Su di noi</a></li>
+                        <li><a href="#">Collaborazioni</a></li>
+                        <li><a href="#">Sportello psicologico</a></li>
+                        <li><a href="#">Spettacoli ed eventi</a></li>
+                        <li><a href="#">Progetto NoiConVoi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-column">
+                    <h4>Corsi</h4>
+                    <ul>
+                        <li><a href="#">Danza Classica Accademica</a></li>
+                        <li><a href="#">Danza Contemporanea</a></li>
+                        <li><a href="#">Hip-Hop e Urban</a></li>
+                        <li><a href="#">Danza Acrobatica</a></li>
+                        <li><a href="#">Educazione alla Danza</a></li>
+                        <li><a href="#">Movimento Creativo</a></li>
+                        <li><a href="#">Danza Over 40</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-column">
+                    <h4>Formazione & Benessere</h4>
+                    <ul>
+                        <li><a href="#">Corso per Insegnanti</a></li>
+                        <li><a href="#">Formazioni Personalizzate</a></li>
+                        <li><a href="#">Workshop Tematici</a></li>
+                        <li><a href="#">Classi Multidisciplinari</a></li>
+                        <li><a href="#">Laboratori Creativi</a></li>
+                        <li><a href="#">Yoga e Pilates</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Associazione Sportiva Dilettantistica I.N. BALLET. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality per i corsi - FINALMENTE FUNZIONANTE!
+        function showTab(tabId) {
+            // Rimuovi classe active da tutti i bottoni tab
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            
+            // Rimuovi classe active da tutti i contenuti tab
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Aggiungi classe active al bottone cliccato
+            event.target.classList.add('active');
+            
+            // Mostra il contenuto corrispondente
+            const targetContent = document.getElementById(tabId);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        }
+
+        // Accordion functionality
+        function toggleAccordion(index) {
+            const headers = document.querySelectorAll('.accordion-header');
+            const contents = document.querySelectorAll('.accordion-content');
+            
+            headers[index].classList.toggle('active');
+            contents[index].classList.toggle('active');
+            
+            // Close other accordions
+            headers.forEach((header, i) => {
+                if (i !== index) {
+                    header.classList.remove('active');
+                    contents[i].classList.remove('active');
+                }
+            });
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(42, 42, 42, 0.95)';
+                header.style.boxShadow = '0 4px 30px rgba(0,0,0,0.4)';
+            } else {
+                header.style.background = 'var(--header-dark)';
+                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.3)';
+            }
+        });
+
+        // Mega Menu functionality - IDENTICO CHI-SIAMO
+        document.querySelectorAll('.nav-item[data-menu]').forEach(navItem => {
+            const menuType = navItem.getAttribute('data-menu');
+            const megaMenu = document.getElementById(`mega-menu-${menuType}`);
+
+            if (megaMenu) {
+                navItem.addEventListener('mouseenter', () => {
+                    // Close all other mega menus
+                    document.querySelectorAll('.mega-menu').forEach(menu => {
+                        menu.classList.remove('active');
+                    });
+                    
+                    // Open current mega menu
+                    megaMenu.classList.add('active');
+                });
+
+                navItem.addEventListener('mouseleave', () => {
+                    setTimeout(() => {
+                        if (!megaMenu.matches(':hover') && !navItem.matches(':hover')) {
+                            megaMenu.classList.remove('active');
+                        }
+                    }, 100);
+                });
+
+                megaMenu.addEventListener('mouseleave', () => {
+                    megaMenu.classList.remove('active');
+                });
+            }
+        });
+
+        // Mobile menu functionality - ESATTAMENTE COME CHI-SIAMO
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            mobileOverlay.classList.add('active');
+            mobileMenuBtn.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            mobileMenuBtn.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        mobileMenuBtn?.addEventListener('click', openMobileMenu);
+        mobileMenuClose?.addEventListener('click', closeMobileMenu);
+        mobileOverlay?.addEventListener('click', closeMobileMenu);
+
+        // Mobile submenu toggles - LOGICA CHI-SIAMO
+        document.querySelectorAll('.mobile-nav-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                const submenu = document.getElementById(target);
+                
+                if (submenu) {
+                    const isActive = submenu.classList.contains('active');
+                    
+                    // Close all submenus
+                    document.querySelectorAll('.mobile-submenu').forEach(sub => {
+                        sub.classList.remove('active');
+                    });
+                    document.querySelectorAll('.mobile-nav-toggle').forEach(tog => {
+                        tog.classList.remove('active');
+                    });
+                    
+                    // Open clicked submenu if it wasn't active
+                    if (!isActive) {
+                        submenu.classList.add('active');
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Scroll indicator functionality
+        const scrollIndicator = document.getElementById('scrollIndicator');
+        if (scrollIndicator) {
+            scrollIndicator.addEventListener('click', () => {
+                const nextSection = document.querySelector('.courses-section');
+                if (nextSection) {
+                    nextSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

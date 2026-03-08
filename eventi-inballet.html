@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InBallet - Eventi e Calendario</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <nav class="nav-container">
+            <div class="logo-section">
+                <img src="https://i.ibb.co/Y7r09pvC/inballet-logo-base-bianco-452x226-2.png" alt="InBallet Logo" />
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        SCUOLA
+                        <i class="fas fa-chevron-down" style="margin-left: 0.5rem; font-size: 0.7rem;"></i>
+                    </a>
+                    <div class="dropdown">
+                        <div class="dropdown-section">
+                            <div class="dropdown-header">InBallet</div>
+                            <a href="#">Su di noi</a>
+                            <a href="#">Collaborazioni</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <div class="dropdown-header">Servizi</div>
+                            <a href="#">Sportello psicologico</a>
+                            <a href="#">Spettacoli ed eventi</a>
+                            <a href="#">Progetto NoiConVoi</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        CORSI
+                        <i class="fas fa-chevron-down" style="margin-left: 0.5rem; font-size: 0.7rem;"></i>
+                    </a>
+                    <div class="dropdown">
+                        <div class="dropdown-section">
+                            <div class="dropdown-header">Classici e Moderni</div>
+                            <a href="#">Danza Classica Accademica</a>
+                            <a href="#">Tecnica della Danza Classica</a>
+                            <a href="#">Danza Contemporanea</a>
+                            <a href="#">Contact Improvisation</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <div class="dropdown-header">Urban & Acrobatici</div>
+                            <a href="#">Hip-Hop</a>
+                            <a href="#">Heels</a>
+                            <a href="#">Breaking</a>
+                            <a href="#">Danza Acrobatica</a>
+                            <a href="#">Contaminato</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <div class="dropdown-header">Bambini e Adulti</div>
+                            <a href="#">Educazione alla Danza (1–2)</a>
+                            <a href="#">Movimento Creativo</a>
+                            <a href="#">Danza Over 40</a>
+                            <a href="#">Lezioni Individuali</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        ATTIVITÀ & BENESSERE
+                        <i class="fas fa-chevron-down" style="margin-left: 0.5rem; font-size: 0.7rem;"></i>
+                    </a>
+                    <div class="dropdown">
+                        <div class="dropdown-section">
+                            <div class="dropdown-header">Percorsi Integrati</div>
+                            <a href="#">Classi Multidisciplinari</a>
+                            <a href="#">Laboratori Creativi</a>
+                            <a href="#">Danza Inclusiva</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <div class="dropdown-header">Benessere Fisico</div>
+                            <a href="#">Yoga</a>
+                            <a href="#">Pilates</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        FORMAZIONE
+                        <i class="fas fa-chevron-down" style="margin-left: 0.5rem; font-size: 0.7rem;"></i>
+                    </a>
+                    <div class="dropdown">
+                        <div class="dropdown-section">
+                            <div class="dropdown-header">Corsi Professionali</div>
+                            <a href="#">Corso per Insegnanti</a>
+                            <a href="#">Formazioni Personalizzate</a>
+                            <a href="#">Workshop Tematici</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <div class="dropdown-header">Atelier per Fasce d'Età</div>
+                            <a href="#">Prima Infanzia</a>
+                            <a href="#">Bambini</a>
+                            <a href="#">Ragazzi</a>
+                            <a href="#">Adulti</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            
+            <a href="#contatti" class="cta-btn">Contattaci</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+        <div class="mobile-menu" id="mobileMenu">
+            <button class="mobile-menu-close" id="mobileMenuClose">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="mobile-nav-item">
+                <div class="mobile-nav-toggle" data-target="scuola-submenu">
+                    <span>SCUOLA</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-submenu" id="scuola-submenu">
+                    <div class="mobile-submenu-header">InBallet</div>
+                    <a href="#">Su di noi</a>
+                    <a href="#">Collaborazioni</a>
+                    <div class="mobile-submenu-header">Servizi</div>
+                    <a href="#">Sportello psicologico</a>
+                    <a href="#">Spettacoli ed eventi</a>
+                    <a href="#">Progetto NoiConVoi</a>
+                </div>
+            </div>
+
+            <div class="mobile-nav-item">
+                <div class="mobile-nav-toggle" data-target="corsi-submenu">
+                    <span>CORSI</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-submenu" id="corsi-submenu">
+                    <div class="mobile-submenu-header">Classici e Moderni</div>
+                    <a href="#">Danza Classica Accademica</a>
+                    <a href="#">Tecnica della Danza Classica</a>
+                    <a href="#">Danza Contemporanea</a>
+                    <a href="#">Contact Improvisation</a>
+                    <div class="mobile-submenu-header">Urban & Acrobatici</div>
+                    <a href="#">Hip-Hop</a>
+                    <a href="#">Heels</a>
+                    <a href="#">Breaking</a>
+                    <a href="#">Danza Acrobatica</a>
+                    <a href="#">Contaminato</a>
+                    <div class="mobile-submenu-header">Bambini e Adulti</div>
+                    <a href="#">Educazione alla Danza (1–2)</a>
+                    <a href="#">Movimento Creativo</a>
+                    <a href="#">Danza Over 40</a>
+                    <a href="#">Lezioni Individuali</a>
+                </div>
+            </div>
+
+            <div class="mobile-nav-item">
+                <div class="mobile-nav-toggle" data-target="attivita-submenu">
+                    <span>ATTIVITÀ & BENESSERE</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-submenu" id="attivita-submenu">
+                    <div class="mobile-submenu-header">Percorsi Integrati</div>
+                    <a href="#">Classi Multidisciplinari</a>
+                    <a href="#">Laboratori Creativi</a>
+                    <a href="#">Danza Inclusiva</a>
+                    <div class="mobile-submenu-header">Benessere Fisico</div>
+                    <a href="#">Yoga</a>
+                    <a href="#">Pilates</a>
+                </div>
+            </div>
+
+            <div class="mobile-nav-item">
+                <div class="mobile-nav-toggle" data-target="formazione-submenu">
+                    <span>FORMAZIONE</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-submenu" id="formazione-submenu">
+                    <div class="mobile-submenu-header">Corsi Professionali</div>
+                    <a href="#">Corso per Insegnanti</a>
+                    <a href="#">Formazioni Personalizzate</a>
+                    <a href="#">Workshop Tematici</a>
+                    <div class="mobile-submenu-header">Atelier per Fasce d'Età</div>
+                    <a href="#">Prima Infanzia</a>
+                    <a href="#">Bambini</a>
+                    <a href="#">Ragazzi</a>
+                    <a href="#">Adulti</a>
+                </div>
+            </div>
+
+            <div class="mobile-cta">
+                <a href="#contatti" class="cta-btn">Contattaci</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section Chi Siamo - Minimal & Elegante -->
+    <section class="hero-about">
+        <!-- Video placeholder -->
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="video-inballet-eventi.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Immagine di fallback -->
+        <div class="hero-image-fallback"></div>
+        
+        <!-- Overlay pulito -->
+        <div class="hero-overlay"></div>
+        
+        <!-- Content principale -->
+        <div class="hero-content">
+            <!-- Breadcrumb minimal -->
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="breadcrumb-separator">•</span>
+                <span class="breadcrumb-current">Eventi</span>
+            </nav>
+            
+            <!-- Titolo principale -->
+            <h1 class="hero-title">Eventi & Spettacoli</h1>
+            
+            <!-- Sottotitolo descrittivo -->
+            <p class="hero-subtitle">
+                Vivi la magia della danza attraverso i nostri spettacoli annuali, workshop esclusivi e eventi speciali. 
+                Dalla formazione artistica alle performance sul territorio rhodense.
+            </p>
+        </div>
+
+        <!-- Freccia scroll indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendario Section -->
+    <section class="calendario-section">
+        <div class="container">
+            <div class="calendario-header fade-in-up">
+                <h2 class="calendario-title">Calendario Eventi</h2>
+                <p class="calendario-subtitle">
+                    Scopri tutti i nostri eventi in programma. 
+                    <span class="desktop-hint">Clicca su ogni evento per maggiori dettagli e prenotazioni.</span>
+                    <span class="mobile-hint">Tocca un giorno per vedere gli eventi e prenotare.</span>
+                </p>
+            </div>
+
+            <div class="calendario-wrapper fade-in-up">
+                <!-- Controls -->
+                <div class="calendario-controls">
+                    <div class="month-navigation">
+                        <button class="nav-btn" id="prevMonth" aria-label="Mese precedente">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 class="current-month" id="currentMonth">Luglio 2025</h3>
+                        <button class="nav-btn" id="nextMonth" aria-label="Mese successivo">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-views">
+                        <button class="view-btn active" data-view="month">Mese</button>
+                        <button class="view-btn" data-view="week">Settimana</button>
+                    </div>
+                </div>
+
+                <!-- Calendario Grid -->
+                <div class="calendario-grid" id="calendarioGrid">
+                    <div class="calendar-header">
+                        <div class="day-header">Lun</div>
+                        <div class="day-header">Mar</div>
+                        <div class="day-header">Mer</div>
+                        <div class="day-header">Gio</div>
+                        <div class="day-header">Ven</div>
+                        <div class="day-header">Sab</div>
+                        <div class="day-header">Dom</div>
+                    </div>
+                    <div class="calendar-days" id="calendarDays">
+                        <!-- Generato dinamicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Popup Eventi -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" id="closeModal" aria-label="Chiudi modal">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="event-status-badge" id="eventStatusBadge" style="display: none;">
+                    Evento Passato
+                </div>
+                <div class="event-category" id="eventCategory">Spettacolo</div>
+                <h2 class="event-title" id="eventTitle">Titolo Evento</h2>
+                <div class="event-date-time" id="eventDateTime">Data e Ora</div>
+            </div>
+            <div class="modal-body">
+                <div class="event-content-layout">
+                    <div class="event-text-content">
+                        <p class="event-description" id="eventDescription">
+                            Descrizione dell'evento...
+                        </p>
+                    </div>
+                    <div class="event-image-container" id="eventImageContainer">
+                        <div class="event-image-placeholder">
+                            <i class="fas fa-image"></i>
+                            <span>Locandina Evento</span>
+                        </div>
+                        <div class="image-overlay">
+                            <i class="fas fa-search-plus zoom-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="event-details">
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="detail-text">
+                            <div class="detail-label">Sede</div>
+                            <div class="detail-value" id="eventLocation">Sede InBallet</div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="detail-text">
+                            <div class="detail-label">Destinatari</div>
+                            <div class="detail-value" id="eventTarget">Tutti i livelli</div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-euro-sign"></i>
+                        </div>
+                        <div class="detail-text">
+                            <div class="detail-label">Costo</div>
+                            <div class="detail-value" id="eventPrice">Gratuito per allievi</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="calendar-options" id="calendarOptionsSection">
+                    <div class="calendar-options-title">
+                        <i class="fas fa-calendar-plus"></i>
+                        Aggiungi al tuo calendario
+                    </div>
+                    <div class="calendar-options-list">
+                        <a href="#" class="calendar-option" id="addToGoogleCalendar">
+                            <i class="fab fa-google"></i>
+                            Google Calendar
+                        </a>
+                        <a href="#" class="calendar-option" id="addToAppleCalendar">
+                            <i class="fab fa-apple"></i>
+                            Apple Calendar
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="modal-main-action">
+                    <button class="btn-primary-modal" id="bookEvent">
+                        <i class="fas fa-calendar-plus"></i>
+                        Prenota Posto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Popup -->
+    <div class="image-popup-overlay" id="imagePopup">
+        <div class="image-popup-content">
+            <button class="image-popup-close" id="imagePopupClose" aria-label="Chiudi immagine">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="" alt="" class="image-popup-img" id="imagePopupImg">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-top">
+                <!-- Logo e Descrizione -->
+                <div class="footer-logo-section">
+                    <img src="https://i.ibb.co/Y7r09pvC/inballet-logo-base-bianco-452x226-2.png" alt="InBallet Logo" />
+                    <p>
+                        Dal 2007 trasformiamo la passione per la danza in crescita personale. 
+                        Formiamo ballerini completi nel territorio rhodense con un approccio 
+                        multidisciplinare e inclusivo.
+                    </p>
+                    
+                    <!-- Credenziali Ufficiali -->
+                    <div class="footer-credentials">
+                        <strong>Ente Formativo Riconosciuto</strong>
+                        <span>CSEN • CONI</span>
+                    </div>
+                </div>
+
+                <!-- Sedi -->
+                <div class="footer-sedi-section">
+                    <h4>Le Nostre Sedi</h4>
+                    <p><strong>Sede Centrale - Lainate</strong></p>
+                    <p>Via Roma 123, 20020 Lainate (MI)</p>
+                    <p>Tel: 02 9374 5678</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>Sede Rho</strong></p>
+                    <p>Via Milano 456, 20017 Rho (MI)</p>
+                    <p>Tel: 02 9374 5679</p>
+                    
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" aria-label="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contatti -->
+                <div class="footer-contact-section">
+                    <h4>Contatti</h4>
+                    <p><i class="fas fa-envelope" style="margin-right: 0.5rem; color: var(--primary-blue);"></i> info@inballet.it</p>
+                    <p><i class="fas fa-phone" style="margin-right: 0.5rem; color: var(--primary-blue);"></i> 342 123 4567</p>
+                    <p><i class="fas fa-whatsapp" style="margin-right: 0.5rem; color: var(--primary-blue);"></i> 342 123 4567</p>
+                    
+                    <p style="margin-top: 1rem; font-weight: 600; color: var(--primary-blue);">Orari Segreteria</p>
+                    <p>Lun-Ven: 15:00 - 20:00</p>
+                    <p>Sab: 9:00 - 13:00</p>
+                    <p>Dom: Chiuso</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <!-- Menu Scuola -->
+                <div class="footer-menu-column">
+                    <h4>Scuola</h4>
+                    <ul>
+                        <li><a href="#">Chi Siamo</a></li>
+                        <li><a href="#">La Nostra Storia</a></li>
+                        <li><a href="#">Il Team</a></li>
+                        <li><a href="#">Collaborazioni</a></li>
+                        <li><a href="#">Riconoscimenti</a></li>
+                    </ul>
+                </div>
+
+                <!-- Menu Formazione -->
+                <div class="footer-menu-column">
+                    <h4>Formazione</h4>
+                    <ul>
+                        <li><a href="#">Corsi Classici</a></li>
+                        <li><a href="#">Danze Urbane</a></li>
+                        <li><a href="#">Benessere</a></li>
+                        <li><a href="#">Professionali</a></li>
+                        <li><a href="#">Formazione Insegnanti</a></li>
+                    </ul>
+                </div>
+
+                <!-- Menu Servizi -->
+                <div class="footer-menu-column">
+                    <h4>Servizi</h4>
+                    <ul>
+                        <li><a href="#">Eventi & Spettacoli</a></li>
+                        <li><a href="#">Progetto NoiConVoi</a></li>
+                        <li><a href="#">Sportello Psicologico</a></li>
+                        <li><a href="#">Progetti Territoriali</a></li>
+                        <li><a href="#">Lezioni Private</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="footer-divider">
+
+            <div class="footer-bottom-content">
+                <div class="footer-copyright">
+                    © 2025 InBallet. Tutti i diritti riservati.
+                </div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Cookie Policy</a>
+                    <a href="#">Termini di Servizio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Classe CalendarioInBallet - Gestione Magistrale del Calendario
+        class CalendarioInBallet {
+            constructor() {
+                this.currentDate = new Date();
+                this.currentView = 'month';
+                this.events = this.generateSampleEvents();
+                this.currentEvent = null;
+                
+                // Proprietà per la vista settimana - rimane nel mese corrente
+                this.currentWeekIndex = 0; // Indice della settimana nel mese (0-5)
+                
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.setupMobileMenu();
+                this.renderCalendar();
+                this.setupResponsiveListeners();
+            }
+
+            // Setup per gestire il cambio di dimensioni schermo
+            setupResponsiveListeners() {
+                let resizeTimer;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(() => {
+                        // Re-render del calendario quando cambia la dimensione dello schermo
+                        this.renderCalendar();
+                    }, 250);
+                });
+            }
+
+            // Setup Mobile Menu
+            setupMobileMenu() {
+                const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                const mobileMenu = document.getElementById('mobileMenu');
+                const mobileOverlay = document.getElementById('mobileOverlay');
+                const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.style.display = 'block';
+                    mobileOverlay.style.display = 'block';
+                    setTimeout(() => {
+                        mobileMenu.classList.add('active');
+                    }, 10);
+                });
+
+                const closeMobileMenu = () => {
+                    mobileMenu.classList.remove('active');
+                    setTimeout(() => {
+                        mobileMenu.style.display = 'none';
+                        mobileOverlay.style.display = 'none';
+                    }, 300);
+                };
+
+                mobileMenuClose.addEventListener('click', closeMobileMenu);
+                mobileOverlay.addEventListener('click', closeMobileMenu);
+
+                // Mobile submenu toggles
+                document.querySelectorAll('.mobile-nav-toggle').forEach(toggle => {
+                    toggle.addEventListener('click', (e) => {
+                        const targetId = e.currentTarget.dataset.target;
+                        const submenu = document.getElementById(targetId);
+                        const icon = e.currentTarget.querySelector('i');
+
+                        // Close other submenus
+                        document.querySelectorAll('.mobile-submenu').forEach(sub => {
+                            if (sub.id !== targetId) {
+                                sub.classList.remove('active');
+                            }
+                        });
+
+                        document.querySelectorAll('.mobile-nav-toggle i').forEach(i => {
+                            if (i !== icon) {
+                                i.style.transform = 'rotate(0deg)';
+                            }
+                        });
+
+                        // Toggle current submenu
+                        submenu.classList.toggle('active');
+                        const isActive = submenu.classList.contains('active');
+                        icon.style.transform = isActive ? 'rotate(180deg)' : 'rotate(0deg)';
+                    });
+                });
+            }
+
+            // Genera eventi di esempio realistici per InBallet - EVENTI PASSATI E FUTURI COMPLETI
+            generateSampleEvents() {
+                const events = [];
+                const currentDate = new Date();
+                const currentMonth = currentDate.getMonth();
+                const currentYear = currentDate.getFullYear();
+                const currentDay = currentDate.getDate();
+
+                // EVENTI PASSATI (ultimi 2 mesi)
+                const eventsPassati = [
+                    {
+                        id: 101,
+                        title: "Workshop Danza Classica",
+                        type: "workshop",
+                        date: new Date(currentYear, currentMonth - 1, 15),
+                        time: "15:00",
+                        description: "Workshop intensivo di tecnica classica con focus su adagio e allegro. Perfezionamento della postura e dell'eleganza del movimento attraverso esercizi mirati.",
+                        location: "Sede Centrale Lainate",
+                        target: "Livello intermedio",
+                        price: "€30 per allievi, €40 esterni",
+                        duration: "2 ore",
+                        image: "https://i.ibb.co/fzFJ2Qtq/469485031-18284413222243883-1185728677509819960-n.jpg"
+                    },
+                    {
+                        id: 102,
+                        title: "Spettacolo Autunnale",
+                        type: "spettacolo",
+                        date: new Date(currentYear, currentMonth - 1, 8),
+                        time: "20:00",
+                        description: "Grande spettacolo autunnale con le coreografie più belle dell'anno. Un viaggio attraverso i colori e le emozioni dell'autunno danzato dai nostri allievi.",
+                        location: "Teatro dell'Arte - Rho",
+                        target: "Famiglie e pubblico",
+                        price: "€10 adulti, €6 bambini",
+                        duration: "1,5 ore",
+                        image: "https://i.ibb.co/wrWZkgWb/488209820-2723830004673064-7144421766735923192-n.jpg"
+                    },
+                    {
+                        id: 103,
+                        title: "Open Day Novembre",
+                        type: "corso",
+                        date: new Date(currentYear, currentMonth - 1, 28),
+                        time: "16:00",
+                        description: "Giornata porte aperte con lezioni di prova gratuite per tutti i corsi. Un'occasione per conoscere la scuola e provare diverse discipline di danza.",
+                        location: "Sede Rho",
+                        target: "Tutti i livelli",
+                        price: "Gratuito",
+                        duration: "3 ore",
+                        image: "https://i.postimg.cc/Hs1w3YtQ/356241695-18217050880243883-691478116167163068-n.jpg"
+                    }
+                ];
+
+                // EVENTI DEL MESE CORRENTE (alcuni passati, alcuni futuri)
+                const eventiCorrente = [
+                    {
+                        id: 1,
+                        title: "Workshop Contemporary",
+                        type: "workshop", 
+                        date: new Date(currentYear, currentMonth, Math.max(1, currentDay - 5)),
+                        time: "14:00",
+                        description: "Workshop intensivo di danza contemporanea con ospite speciale. Tecnica avanzata, improvvisazione guidata e creazione di sequenze coreografiche innovative.",
+                        location: "Sede Centrale Lainate",
+                        target: "Livello intermedio/avanzato",
+                        price: "€35 per allievi, €45 esterni",
+                        duration: "3 ore",
+                        image: "https://i.ibb.co/fzFJ2Qtq/469485031-18284413222243883-1185728677509819960-n.jpg"
+                    },
+                    {
+                        id: 2,
+                        title: "Spettacolo di Fine Anno",
+                        type: "spettacolo",
+                        date: new Date(currentYear, currentMonth, Math.min(28, currentDay + 8)),
+                        time: "20:30",
+                        description: "Il grande spettacolo annuale che coinvolge tutti gli allievi di InBallet, dalle propedeutiche ai corsi avanzati. Una serata magica al Teatro dell'Arte di Rho con coreografie originali e musiche emozionanti.",
+                        location: "Teatro dell'Arte - Rho",
+                        target: "Famiglie e pubblico",
+                        price: "Biglietto: €12 adulti, €8 bambini",
+                        duration: "2 ore con intervallo",
+                        image: "https://i.ibb.co/wrWZkgWb/488209820-2723830004673064-7144421766735923192-n.jpg"
+                    },
+                    {
+                        id: 3,
+                        title: "Corso Aperto Hip-Hop",
+                        type: "corso",
+                        date: new Date(currentYear, currentMonth, Math.min(28, currentDay + 15)),
+                        time: "17:30",
+                        description: "Lezione aperta di Hip-Hop per far provare questa disciplina a chi non l'ha mai praticata. Atmosfera friendly, musica coinvolgente e primi passi nel mondo urban.",
+                        location: "Sede Rho",
+                        target: "Principianti dai 10 anni",
+                        price: "Gratuito",
+                        duration: "1 ora",
+                        image: "https://i.postimg.cc/K8JtZnhN/369046080-18224575936243883-5572491442353810626-n.jpg"
+                    },
+                    {
+                        id: 4,
+                        title: "Laboratorio Creatività",
+                        type: "laboratorio",
+                        date: new Date(currentYear, currentMonth, Math.min(30, currentDay + 22)),
+                        time: "10:00",
+                        description: "Laboratorio di espressione corporea e movimento creativo. Progetto educativo in collaborazione con le scuole del territorio per sviluppare fantasia e coordinazione.",
+                        location: "Sede Centrale Lainate",
+                        target: "Bambini 6-10 anni",
+                        price: "Incluso nella quota mensile",
+                        duration: "1,5 ore",
+                        image: "https://i.ibb.co/qYWvMhq7/487313529-1227367299338056-2600530233585693867-n.jpg"
+                    }
+                ];
+                
+                // EVENTI FUTURI TRA 1-3 MESI
+                const eventiFuturiVicini = [
+                    {
+                        id: 201,
+                        title: "Workshop Acrobatica",
+                        type: "workshop",
+                        date: new Date(currentYear, currentMonth + 1, 10),
+                        time: "16:00",
+                        description: "Workshop di danza acrobatica per imparare i primi elementi di floor work e acrobazia applicata alla danza. Focus su sicurezza e progressione graduale.",
+                        location: "Sede Centrale Lainate",
+                        target: "Dai 12 anni con esperienza danza",
+                        price: "€45 per allievi, €55 esterni",
+                        duration: "3 ore",
+                        image: "https://i.postimg.cc/K8JtZnhN/369046080-18224575936243883-5572491442353810626-n.jpg"
+                    },
+                    {
+                        id: 202,
+                        title: "Concorso Interno InBallet",
+                        type: "spettacolo",
+                        date: new Date(currentYear, currentMonth + 2, 5),
+                        time: "18:00",
+                        description: "Prima edizione del concorso interno con premi per le migliori performance. Categoria solisti e gruppi, giuria di esperti e pubblico delle famiglie.",
+                        location: "Teatro dell'Arte - Rho",
+                        target: "Allievi InBallet tutti i livelli",
+                        price: "Gratuito per partecipanti e famiglie",
+                        duration: "2,5 ore",
+                        image: "https://i.postimg.cc/xjMHkrSq/291114173-3158382537757909-3981417142899425453-n.jpg"
+                    },
+                    {
+                        id: 203,
+                        title: "Stage Breaking Avanzato",
+                        type: "workshop",
+                        date: new Date(currentYear, currentMonth + 2, 18),
+                        time: "15:30",
+                        description: "Stage intensivo di breaking con B-Boy professionista. Power moves, toprock, footwork e battle simulation per portare il tuo breaking al livello successivo.",
+                        location: "Sede Rho",
+                        target: "Livello intermedio/avanzato breaking",
+                        price: "€50",
+                        duration: "4 ore",
+                        image: "https://i.postimg.cc/K8JtZnhN/369046080-18224575936243883-5572491442353810626-n.jpg"
+                    }
+                ];
+
+                // EVENTI FUTURI TRA 3-6 MESI  
+                const eventiFuturiMedi = [
+                    {
+                        id: 301,
+                        title: "Masterclass Internazionale",
+                        type: "workshop",
+                        date: new Date(currentYear, currentMonth + 4, 12),
+                        time: "15:00",
+                        description: "Workshop esclusivo con maestri internazionali di danza classica. Tecnica avanzata e preparazione per audizioni professionali. Un'opportunità unica per perfezionare la propria tecnica con docenti di fama mondiale.",
+                        location: "Teatro dell'Arte - Rho",
+                        target: "Livello avanzato (dai 16 anni)",
+                        price: "€60 per allievi, €80 esterni",
+                        duration: "4 ore con pausa",
+                        image: "https://i.postimg.cc/L5tZGPVj/497550000-18302060431243883-6825549711946567973-n.jpg"
+                    },
+                    {
+                        id: 302,
+                        title: "Festival Danza Contemporanea",
+                        type: "spettacolo",
+                        date: new Date(currentYear, currentMonth + 4, 20),
+                        time: "19:00",
+                        description: "Prima edizione del Festival di Danza Contemporanea InBallet. Due giorni di spettacoli, workshop e incontri con coreografi emergenti del panorama italiano ed europeo.",
+                        location: "Auditorium Comunale Lainate",
+                        target: "Pubblico di tutte le età",
+                        price: "€20 abbonamento 2 giorni, €12 singola serata",
+                        duration: "Weekend completo",
+                        image: "https://i.postimg.cc/Hs1w3YtQ/356241695-18217050880243883-691478116167163068-n.jpg"
+                    },
+                    {
+                        id: 303,
+                        title: "Workshop Danza Inclusiva",
+                        type: "laboratorio",
+                        date: new Date(currentYear, currentMonth + 5, 8),
+                        time: "14:30",
+                        description: "Laboratorio di danza inclusiva aperto a persone con disabilità e normodotate. Movimento espressivo, comunicazione non verbale e integrazione attraverso la danza.",
+                        location: "Sede Centrale Lainate",
+                        target: "Tutti, progetto inclusivo",
+                        price: "Gratuito",
+                        duration: "2 ore",
+                        image: "https://i.postimg.cc/fT7xrGH1/469507220-18284415193243883-5615607331315246244-n.jpg"
+                    }
+                ];
+
+                // EVENTI FUTURI OLTRE 6 MESI
+                const eventiFuturiLontani = [
+                    {
+                        id: 401,
+                        title: "Spettacolo di Primavera",
+                        type: "spettacolo",
+                        date: new Date(currentYear, currentMonth + 8, 15),
+                        time: "19:30",
+                        description: "Grande evento primaverile con performance multidisciplinari. Classico, contemporaneo e urban si fondono in uno spettacolo unico che celebra la rinascita della natura attraverso il movimento.",
+                        location: "Auditorium Comunale Lainate",
+                        target: "Famiglie e appassionati",
+                        price: "€15 adulti, €10 bambini",
+                        duration: "2 ore",
+                        image: "https://i.postimg.cc/xjMHkrSq/291114173-3158382537757909-3981417142899425453-n.jpg"
+                    },
+                    {
+                        id: 402,
+                        title: "Open Day Estivo",
+                        type: "corso",
+                        date: new Date(currentYear, currentMonth + 9, 5),
+                        time: "10:00",
+                        description: "Giornata di porte aperte per scoprire tutti i corsi InBallet. Lezioni dimostrative, prove gratuite e presentazione del corpo docente. Perfect per chi vuole iniziare a settembre!",
+                        location: "Sede Centrale Lainate",
+                        target: "Tutti i livelli e tutte le età",
+                        price: "Gratuito",
+                        duration: "4 ore",
+                        image: "https://i.postimg.cc/Hs1w3YtQ/356241695-18217050880243883-691478116167163068-n.jpg"
+                    },
+                    {
+                        id: 403,
+                        title: "Campus Estivo Danza",
+                        type: "laboratorio",
+                        date: new Date(currentYear, currentMonth + 9, 15),
+                        time: "09:00",
+                        description: "Campus intensivo estivo per bambini e ragazzi. Una settimana immersi nella danza con laboratori creativi, giochi di movimento e piccolo spettacolo finale per le famiglie.",
+                        location: "Sede Centrale Lainate + Outdoor",
+                        target: "Bambini 6-14 anni",
+                        price: "€180 settimana intera, €40 giornata singola",
+                        duration: "5 giorni (lun-ven)",
+                        image: "https://i.postimg.cc/fT7xrGH1/469507220-18284415193243883-5615607331315246244-n.jpg"
+                    }
+                ];
+
+                // Combina tutti gli eventi
+                events.push(...eventsPassati);
+                events.push(...eventiCorrente);
+                events.push(...eventiFuturiVicini);
+                events.push(...eventiFuturiMedi);
+                events.push(...eventiFuturiLontani);
+
+                return events;
+            }
+
+            setupEventListeners() {
+                // Navigazione mesi intelligente
+                document.getElementById('prevMonth').addEventListener('click', () => {
+                    if (this.currentView === 'month') {
+                        this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+                        this.renderCalendar();
+                    } else {
+                        // Vista settimana: vai alla settimana precedente con eventi
+                        const weeksWithEvents = this.getWeeksWithEventsInMonth();
+                        if (this.currentWeekIndex > 0) {
+                            this.currentWeekIndex--;
+                            this.renderCalendar();
+                        } else {
+                            // Se siamo alla prima settimana, vai al mese precedente
+                            this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+                            this.currentWeekIndex = 0;
+                            this.renderCalendar();
+                        }
+                    }
+                });
+
+                document.getElementById('nextMonth').addEventListener('click', () => {
+                    if (this.currentView === 'month') {
+                        this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+                        this.renderCalendar();
+                    } else {
+                        // Vista settimana: vai alla settimana successiva con eventi
+                        const weeksWithEvents = this.getWeeksWithEventsInMonth();
+                        if (this.currentWeekIndex < weeksWithEvents.length - 1) {
+                            this.currentWeekIndex++;
+                            this.renderCalendar();
+                        } else {
+                            // Se siamo all'ultima settimana, vai al mese successivo
+                            this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+                            this.currentWeekIndex = 0;
+                            this.renderCalendar();
+                        }
+                    }
+                });
+
+                // Cambio vista
+                document.querySelectorAll('.view-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        
+                        const newView = e.target.dataset.view;
+                        
+                        // Quando si passa alla vista settimana, trova la settimana che contiene oggi
+                        if (newView === 'week' && this.currentView === 'month') {
+                            this.currentWeekIndex = this.getTodayWeekIndex();
+                        }
+                        
+                        this.currentView = newView;
+                        this.renderCalendar();
+                    });
+                });
+
+                // Modal
+                document.getElementById('closeModal').addEventListener('click', () => {
+                    this.closeModal();
+                });
+
+                document.getElementById('eventModal').addEventListener('click', (e) => {
+                    if (e.target === e.currentTarget) {
+                        this.closeModal();
+                    }
+                });
+
+                // Booking and Calendar Actions
+                document.getElementById('bookEvent').addEventListener('click', () => {
+                    this.bookEvent();
+                });
+
+                document.getElementById('addToGoogleCalendar').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.addToGoogleCalendar();
+                });
+
+                document.getElementById('addToAppleCalendar').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.addToAppleCalendar();
+                });
+
+                // Image popup events
+                document.getElementById('imagePopupClose').addEventListener('click', () => {
+                    this.closeImagePopup();
+                });
+
+                document.getElementById('imagePopup').addEventListener('click', (e) => {
+                    if (e.target === e.currentTarget) {
+                        this.closeImagePopup();
+                    }
+                });
+
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.closeModal();
+                        this.closeImagePopup();
+                    }
+                });
+            }
+
+            renderCalendar() {
+                this.updateMonthDisplay();
+                
+                if (this.currentView === 'month') {
+                    this.renderMonthView();
+                } else if (this.currentView === 'week') {
+                    this.renderWeekView();
+                }
+            }
+
+            updateMonthDisplay() {
+                const monthNames = [
+                    'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
+                    'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'
+                ];
+                
+                let monthDisplay = `${monthNames[this.currentDate.getMonth()]} ${this.currentDate.getFullYear()}`;
+                
+                // Se siamo in vista settimana, aggiungi info sulla settimana
+                if (this.currentView === 'week') {
+                    const weeksWithEvents = this.getWeeksWithEventsInMonth();
+                    
+                    if (weeksWithEvents.length === 0) {
+                        monthDisplay += ' - Nessun evento questo mese';
+                    } else if (this.currentWeekIndex < weeksWithEvents.length) {
+                        const currentWeek = weeksWithEvents[this.currentWeekIndex];
+                        monthDisplay += ` - Settimana ${currentWeek.label}`;
+                    }
+                }
+                
+                document.getElementById('currentMonth').textContent = monthDisplay;
+            }
+
+            renderMonthView() {
+                const calendarDays = document.getElementById('calendarDays');
+                calendarDays.innerHTML = '';
+
+                const year = this.currentDate.getFullYear();
+                const month = this.currentDate.getMonth();
+                const today = new Date();
+                
+                // SEMPRE tutti i giorni del mese (30/31)
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                
+                // Genera TUTTI i giorni del mese corrente
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const currentDay = new Date(year, month, day);
+                    const dayElement = this.createDayElement(currentDay, today, true);
+                    calendarDays.appendChild(dayElement);
+                }
+                
+                // Aggiungi celle vuote per completare l'ultima riga se necessario
+                const totalCells = Math.ceil(daysInMonth / 7) * 7;
+                const remainingCells = totalCells - daysInMonth;
+                for (let i = 0; i < remainingCells; i++) {
+                    const emptyCell = document.createElement('div');
+                    emptyCell.className = 'calendar-day empty-cell';
+                    emptyCell.style.visibility = 'hidden';
+                    calendarDays.appendChild(emptyCell);
+                }
+            }
+
+            renderWeekView() {
+                const calendarGrid = document.getElementById('calendarioGrid');
+                const weeksWithEvents = this.getWeeksWithEventsInMonth();
+                
+                // Se non ci sono settimane con eventi
+                if (weeksWithEvents.length === 0) {
+                    calendarGrid.innerHTML = `
+                        <div class="week-view">
+                            <div style="text-align: center; padding: 3rem; color: var(--text-light);">
+                                <i class="fas fa-calendar-times" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                                <h3>Nessun evento programmato</h3>
+                                <p>Non ci sono eventi in programma per questo mese nella vista settimana.</p>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Assicurati che currentWeekIndex sia valido
+                if (this.currentWeekIndex >= weeksWithEvents.length) {
+                    this.currentWeekIndex = 0;
+                }
+                
+                const weekDays = this.getWeekDaysInMonth(this.currentWeekIndex);
+                const timeSlots = this.getWeekTimeSlots(weekDays);
+                const today = new Date();
+
+                // Controlla se siamo su mobile per layout diverso
+                const isMobile = window.innerWidth <= 768;
+                
+                if (isMobile) {
+                    this.renderMobileWeekView(weekDays, timeSlots, today);
+                } else {
+                    this.renderDesktopWeekView(weekDays, timeSlots, today);
+                }
+            }
+
+            renderDesktopWeekView(weekDays, timeSlots, today) {
+                const calendarGrid = document.getElementById('calendarioGrid');
+                
+                // Genera header con giorni della settimana
+                const weekHeaders = weekDays.map(day => {
+                    if (!day) {
+                        return '<div class="week-day-header empty"></div>';
+                    }
+                    
+                    const dayNames = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+                    const isToday = this.isSameDay(day, today);
+                    
+                    return `
+                        <div class="week-day-header ${isToday ? 'today' : ''}">
+                            <div class="week-day-number">${day.getDate()}</div>
+                            <div class="week-day-name">${dayNames[day.getDay()]}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                // Genera griglia con orari e eventi
+                const weekGrid = timeSlots.map(timeSlot => {
+                    const timeRow = `<div class="week-time-slot">${timeSlot}</div>`;
+                    
+                    const dayCells = weekDays.map(day => {
+                        if (!day) {
+                            return '<div class="week-day-slot empty"></div>';
+                        }
+                        
+                        const dayEvents = this.events.filter(event => 
+                            this.isSameDay(event.date, day) && event.time === timeSlot
+                        );
+                        
+                        const eventsHtml = dayEvents.map(event => {
+                            const isPast = event.date < today && !this.isSameDay(event.date, today);
+                            return `
+                                <div class="week-event ${isPast ? 'past' : ''}" data-event-id="${event.id}">
+                                    ${event.title}
+                                </div>
+                            `;
+                        }).join('');
+                        
+                        return `<div class="week-day-slot">${eventsHtml}</div>`;
+                    }).join('');
+                    
+                    return timeRow + dayCells;
+                }).join('');
+                
+                calendarGrid.innerHTML = `
+                    <div class="week-view">
+                        <div class="week-header">
+                            <div class="week-time-header">Orario</div>
+                            ${weekHeaders}
+                        </div>
+                        <div class="week-grid">
+                            ${weekGrid}
+                        </div>
+                    </div>
+                `;
+
+                // Aggiungi event listeners per gli eventi nella vista settimanale
+                document.querySelectorAll('.week-event').forEach(eventEl => {
+                    eventEl.addEventListener('click', () => {
+                        const eventId = parseInt(eventEl.dataset.eventId);
+                        const event = this.events.find(e => e.id === eventId);
+                        if (event) {
+                            this.showEventModal(event);
+                        }
+                    });
+                });
+            }
+
+            renderMobileWeekView(weekDays, timeSlots, today) {
+                const calendarGrid = document.getElementById('calendarioGrid');
+                const dayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+                
+                const mobileWeekCards = weekDays.map(day => {
+                    if (!day) return '';
+                    
+                    const isToday = this.isSameDay(day, today);
+                    const dayName = dayNames[day.getDay()];
+                    const dayDate = day.getDate();
+                    
+                    // Trova tutti gli eventi per questo giorno organizzati per orario
+                    const dayEventsGrouped = {};
+                    timeSlots.forEach(timeSlot => {
+                        const eventsAtTime = this.events.filter(event => 
+                            this.isSameDay(event.date, day) && event.time === timeSlot
+                        );
+                        if (eventsAtTime.length > 0) {
+                            dayEventsGrouped[timeSlot] = eventsAtTime;
+                        }
+                    });
+
+                    const hasEvents = Object.keys(dayEventsGrouped).length > 0;
+                    
+                    if (!hasEvents) return ''; // Non mostrare giorni senza eventi su mobile
+                    
+                    const eventsHtml = Object.keys(dayEventsGrouped).map(timeSlot => {
+                        const events = dayEventsGrouped[timeSlot];
+                        const eventsListHtml = events.map(event => {
+                            const isPast = event.date < today && !this.isSameDay(event.date, today);
+                            return `
+                                <div class="mobile-week-event ${isPast ? 'past' : ''}" data-event-id="${event.id}">
+                                    ${event.title}
+                                </div>
+                            `;
+                        }).join('');
+                        
+                        return `
+                            <div class="mobile-week-time-slot">
+                                <div class="mobile-week-time">${timeSlot}</div>
+                                <div class="mobile-week-events-list">
+                                    ${eventsListHtml}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    return `
+                        <div class="mobile-week-day-card">
+                            <div class="mobile-week-day-header ${isToday ? 'today' : ''}">
+                                <div class="mobile-week-day-title">${dayName} ${dayDate}</div>
+                                <div class="mobile-week-day-date">${day.toLocaleDateString('it-IT', { month: 'long' })}</div>
+                            </div>
+                            <div class="mobile-week-day-events">
+                                ${eventsHtml || '<div class="mobile-no-events">Nessun evento</div>'}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                calendarGrid.innerHTML = `
+                    <div class="week-view">
+                        ${mobileWeekCards}
+                    </div>
+                `;
+
+                // Aggiungi event listeners per gli eventi nella vista mobile
+                document.querySelectorAll('.mobile-week-event').forEach(eventEl => {
+                    eventEl.addEventListener('click', () => {
+                        const eventId = parseInt(eventEl.dataset.eventId);
+                        const event = this.events.find(e => e.id === eventId);
+                        if (event) {
+                            this.showEventModal(event);
+                        }
+                    });
+                });
+            }
+
+            // Funzioni helper per gestire settimane del mese con eventi
+            getWeeksWithEventsInMonth() {
+                const year = this.currentDate.getFullYear();
+                const month = this.currentDate.getMonth();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                
+                const weeksWithEvents = [];
+                
+                // Controlla ogni possibile settimana del mese
+                for (let weekIndex = 0; weekIndex < Math.ceil(daysInMonth / 7); weekIndex++) {
+                    const startDay = (weekIndex * 7) + 1;
+                    const endDay = Math.min(startDay + 6, daysInMonth);
+                    
+                    // Controlla se questa settimana ha eventi
+                    let hasEvents = false;
+                    for (let day = startDay; day <= endDay; day++) {
+                        const dayDate = new Date(year, month, day);
+                        const dayEvents = this.events.filter(event => this.isSameDay(event.date, dayDate));
+                        if (dayEvents.length > 0) {
+                            hasEvents = true;
+                            break;
+                        }
+                    }
+                    
+                    if (hasEvents) {
+                        weeksWithEvents.push({
+                            index: weekIndex,
+                            startDay: startDay,
+                            endDay: endDay,
+                            label: `${startDay}-${endDay}`
+                        });
+                    }
+                }
+                
+                return weeksWithEvents;
+            }
+
+            getTodayWeekIndex() {
+                const today = new Date();
+                const weeksWithEvents = this.getWeeksWithEventsInMonth();
+                
+                if (weeksWithEvents.length === 0) {
+                    return 0; // Nessuna settimana con eventi
+                }
+                
+                if (today.getMonth() === this.currentDate.getMonth() && 
+                    today.getFullYear() === this.currentDate.getFullYear()) {
+                    
+                    const todayDay = today.getDate();
+                    
+                    // Trova la settimana con eventi che contiene oggi
+                    for (let i = 0; i < weeksWithEvents.length; i++) {
+                        const week = weeksWithEvents[i];
+                        if (todayDay >= week.startDay && todayDay <= week.endDay) {
+                            return i; // Restituisce l'indice nell'array delle settimane con eventi
+                        }
+                    }
+                    
+                    // Se oggi non è in una settimana con eventi, trova la più vicina
+                    for (let i = 0; i < weeksWithEvents.length; i++) {
+                        if (weeksWithEvents[i].startDay > todayDay) {
+                            return i; // Prima settimana con eventi dopo oggi
+                        }
+                    }
+                    
+                    return weeksWithEvents.length - 1; // Ultima settimana con eventi
+                }
+                
+                return 0; // Se non siamo nel mese corrente, inizia dalla prima settimana con eventi
+            }
+
+            getWeekDaysInMonth(weekIndexInEventsArray) {
+                const weeksWithEvents = this.getWeeksWithEventsInMonth();
+                
+                if (weekIndexInEventsArray >= weeksWithEvents.length) {
+                    return []; // Nessuna settimana disponibile
+                }
+                
+                const week = weeksWithEvents[weekIndexInEventsArray];
+                const year = this.currentDate.getFullYear();
+                const month = this.currentDate.getMonth();
+                
+                const weekDays = [];
+                for (let day = week.startDay; day <= week.endDay; day++) {
+                    weekDays.push(new Date(year, month, day));
+                }
+                
+                // Completa la settimana con 7 giorni (alcuni potrebbero essere vuoti)
+                while (weekDays.length < 7) {
+                    weekDays.push(null);
+                }
+                
+                return weekDays;
+            }
+
+            getWeekTimeSlots(weekDays) {
+                // Trova tutti gli orari degli eventi nella settimana corrente
+                const timeSlots = new Set();
+                
+                weekDays.forEach(day => {
+                    if (day) {
+                        const dayEvents = this.events.filter(event => this.isSameDay(event.date, day));
+                        dayEvents.forEach(event => {
+                            const time = event.time;
+                            timeSlots.add(time);
+                        });
+                    }
+                });
+                
+                // Converti in array e ordina
+                const sortedSlots = Array.from(timeSlots).sort((a, b) => {
+                    const [hoursA, minutesA] = a.split(':').map(Number);
+                    const [hoursB, minutesB] = b.split(':').map(Number);
+                    const timeA = hoursA * 60 + minutesA;
+                    const timeB = hoursB * 60 + minutesB;
+                    return timeA - timeB;
+                });
+                
+                // Se non ci sono eventi, mostra almeno le fasce orarie standard
+                if (sortedSlots.length === 0) {
+                    return ['15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
+                }
+                
+                return sortedSlots;
+            }
+
+            createDayElement(date, today, isCurrentMonth) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                
+                // Classi CSS appropriate
+                if (!isCurrentMonth) {
+                    dayElement.classList.add('other-month');
+                }
+                
+                if (this.isSameDay(date, today)) {
+                    dayElement.classList.add('today');
+                }
+
+                // Classi per giorni passati (solo stile, ma cliccabili)
+                if (date < today && !this.isSameDay(date, today)) {
+                    dayElement.classList.add('past');
+                }
+
+                // Numero del giorno
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = date.getDate();
+                dayElement.appendChild(dayNumber);
+
+                // Container eventi
+                const eventsContainer = document.createElement('div');
+                eventsContainer.className = 'day-events';
+
+                // Trova eventi per questa data
+                const dayEvents = this.events.filter(event => 
+                    this.isSameDay(event.date, date)
+                );
+
+                // Rileva se siamo su mobile/tablet (≤1024px) e vista mensile
+                const isMobileTablet = window.innerWidth <= 1024;
+                const isMonthView = this.currentView === 'month';
+
+                // Mobile/Tablet + Vista Mensile: Background azzurro se ha eventi
+                if (isMobileTablet && isMonthView && dayEvents.length > 0) {
+                    dayElement.classList.add('has-events');
+                }
+
+                // Aggiungi eventi
+                dayEvents.forEach((event, index) => {
+                    const eventDot = document.createElement('div');
+                    eventDot.className = 'event-dot';
+                    
+                    // Aggiungi classe "past" se l'evento è passato
+                    const todayReset = new Date(today);
+                    todayReset.setHours(0, 0, 0, 0);
+                    const eventDate = new Date(event.date);
+                    eventDate.setHours(0, 0, 0, 0);
+                    
+                    if (eventDate < todayReset) {
+                        eventDot.classList.add('past');
+                    }
+
+                    // Desktop o Vista Settimana: testo completo + click su evento
+                    if (!isMobileTablet || !isMonthView) {
+                        eventDot.textContent = event.title;
+                        
+                        // Click diretto su evento
+                        eventDot.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            this.showEventModal(event);
+                        });
+                    } else {
+                        // Mobile/Tablet + Vista Mensile: niente testo (nascosto da CSS)
+                        eventDot.textContent = event.title; // Mantenuto per accessibility
+                        eventDot.style.pointerEvents = 'none';
+                    }
+                    
+                    eventsContainer.appendChild(eventDot);
+                });
+
+                dayElement.appendChild(eventsContainer);
+
+                // ===== NUOVA LOGICA: PULSANTI EVENTI RESPONSIVE CON FLEX =====
+                if (isMobileTablet && isMonthView && dayEvents.length > 0) {
+                    const eventButton = document.createElement('div');
+                    eventButton.className = 'mobile-event-button';
+                    
+                    // Determina il tipo di pulsante
+                    const todayReset = new Date(today);
+                    todayReset.setHours(0, 0, 0, 0);
+                    const eventDate = new Date(date);
+                    eventDate.setHours(0, 0, 0, 0);
+                    
+                    let buttonClass = '';
+                    let textFull = '';
+                    let textShort = '';
+                    
+                    if (this.isSameDay(date, today)) {
+                        buttonClass = 'today';
+                        textFull = 'Oggi';
+                        textShort = 'Oggi';
+                    } else if (eventDate < todayReset) {
+                        buttonClass = 'past';
+                        textFull = 'Evento Passato';
+                        textShort = 'Evento Passato';
+                    } else {
+                        buttonClass = 'future';
+                        textFull = 'Nuovo Evento';
+                        textShort = 'Nuovo evento';
+                    }
+                    
+                    eventButton.classList.add(buttonClass);
+                    
+                    // Crea testi responsive
+                    eventButton.innerHTML = `
+                        <span class="text-full">${textFull}</span>
+                        <span class="text-short">${textShort}</span>
+                    `;
+                    
+                    // Click handler per il pulsante
+                    eventButton.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.showEventModal(dayEvents[0]);
+                    });
+                    
+                    dayElement.appendChild(eventButton);
+                }
+
+                // Click handler per il giorno (solo se non ci sono pulsanti)
+                dayElement.addEventListener('click', (e) => {
+                    // Evita il click se si clicca sul pulsante
+                    if (e.target.classList.contains('mobile-event-button') || 
+                        e.target.closest('.mobile-event-button')) {
+                        return;
+                    }
+                    
+                    if (isMobileTablet && isMonthView && dayEvents.length > 0) {
+                        // Mobile/Tablet + Vista Mensile: apri direttamente primo evento
+                        this.showEventModal(dayEvents[0]);
+                    } else if (dayEvents.length === 0) {
+                        // Desktop senza eventi: selezione giorno
+                        this.selectDay(date);
+                    }
+                });
+
+                return dayElement;
+            }
+
+            showEventModal(event) {
+                const today = new Date();
+                const isPast = event.date < today && !this.isSameDay(event.date, today);
+
+                // Popola il modal con i dati dell'evento
+                document.getElementById('eventCategory').textContent = this.getEventTypeLabel(event.type);
+                document.getElementById('eventCategory').className = `event-category ${event.type}`;
+                document.getElementById('eventTitle').textContent = event.title;
+                
+                // Gestione data/ora con icona condividi integrata
+                const dateTimeContainer = document.getElementById('eventDateTime');
+                const dateTimeText = `${this.formatDate(event.date)} alle ${event.time}`;
+                
+                dateTimeContainer.innerHTML = `
+                    <div class="event-date-time-container">
+                        <span style="font-size: 1.1rem; color: var(--primary-blue-dark); font-weight: 600;">${dateTimeText}</span>
+                        <button class="modal-share-btn" id="shareEventBtnInline" aria-label="Condividi evento">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                `;
+
+                document.getElementById('eventLocation').textContent = event.location;
+                document.getElementById('eventTarget').textContent = event.target;
+                document.getElementById('eventPrice').textContent = event.price;
+
+                // Gestione badge evento passato
+                const statusBadge = document.getElementById('eventStatusBadge');
+                if (isPast) {
+                    statusBadge.style.display = 'inline-block';
+                } else {
+                    statusBadge.style.display = 'none';
+                }
+
+                // Gestione immagine con click handler per popup
+                const imageContainer = document.getElementById('eventImageContainer');
+                if (event.image) {
+                    imageContainer.innerHTML = `
+                        <img src="${event.image}" alt="${event.title}" class="event-image">
+                        <div class="image-overlay">
+                            <i class="fas fa-search-plus zoom-icon"></i>
+                        </div>
+                    `;
+                    
+                    // Aggiungi click handler per aprire popup immagine
+                    imageContainer.addEventListener('click', () => {
+                        this.openImagePopup(event.image, event.title);
+                    });
+                } else {
+                    imageContainer.innerHTML = `
+                        <div class="event-image-placeholder">
+                            <i class="fas fa-image"></i>
+                            <span>Locandina Evento</span>
+                        </div>
+                    `;
+                }
+
+                // Aggiungi titoletto e descrizione
+                const textContent = document.querySelector('.event-text-content');
+                textContent.innerHTML = `
+                    <h5 class="event-description-title">Dettagli dell'Evento</h5>
+                    <p class="event-description">${event.description}</p>
+                `;
+
+                // Gestione sezione calendario - NASCOSTA per eventi passati
+                const calendarSection = document.getElementById('calendarOptionsSection');
+                if (isPast) {
+                    calendarSection.style.display = 'none';
+                } else {
+                    calendarSection.style.display = 'block';
+                }
+
+                // Gestione pulsante principale
+                const bookButton = document.getElementById('bookEvent');
+                if (isPast) {
+                    bookButton.disabled = true;
+                    bookButton.innerHTML = '<i class="fas fa-clock"></i> Evento Concluso';
+                } else {
+                    bookButton.disabled = false;
+                    bookButton.innerHTML = '<i class="fas fa-calendar-plus"></i> Prenota Posto';
+                }
+
+                // Salva l'evento corrente per le azioni
+                this.currentEvent = event;
+
+                // Mostra il modal
+                document.getElementById('eventModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+
+                // Aggiungi event listener per il nuovo pulsante condividi
+                document.getElementById('shareEventBtnInline').addEventListener('click', () => {
+                    this.shareEvent();
+                });
+
+                // Focus management
+                setTimeout(() => {
+                    document.getElementById('closeModal').focus();
+                }, 100);
+            }
+
+            openImagePopup(imageSrc, imageAlt) {
+                const popup = document.getElementById('imagePopup');
+                const img = document.getElementById('imagePopupImg');
+                
+                img.src = imageSrc;
+                img.alt = imageAlt;
+                popup.style.display = 'flex';
+                
+                // Prevent body scroll
+                document.body.style.overflow = 'hidden';
+            }
+
+            closeImagePopup() {
+                document.getElementById('imagePopup').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            closeModal() {
+                document.getElementById('eventModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+                this.currentEvent = null;
+            }
+
+            bookEvent() {
+                if (!this.currentEvent) return;
+
+                const today = new Date();
+                const isPast = this.currentEvent.date < today && !this.isSameDay(this.currentEvent.date, today);
+                
+                if (isPast) {
+                    alert('Non è possibile prenotare eventi già conclusi.');
+                    return;
+                }
+
+                // Simulazione prenotazione
+                alert(`Prenotazione per "${this.currentEvent.title}"\n\nSarai contattato entro 24 ore per la conferma.\n\nGrazie per aver scelto InBallet!`);
+                this.closeModal();
+            }
+
+            addToGoogleCalendar() {
+                if (!this.currentEvent) return;
+
+                const event = this.currentEvent;
+                const startDate = new Date(event.date);
+                const [hours, minutes] = event.time.split(':');
+                startDate.setHours(parseInt(hours), parseInt(minutes));
+
+                const endDate = new Date(startDate);
+                endDate.setHours(startDate.getHours() + 2); // Durata predefinita 2 ore
+
+                const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${this.formatGoogleDate(startDate)}/${this.formatGoogleDate(endDate)}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
+
+                window.open(googleCalendarUrl, '_blank');
+            }
+
+            addToAppleCalendar() {
+                if (!this.currentEvent) return;
+                
+                const event = this.currentEvent;
+                const startDate = new Date(event.date);
+                const [hours, minutes] = event.time.split(':');
+                startDate.setHours(parseInt(hours), parseInt(minutes));
+
+                const endDate = new Date(startDate);
+                endDate.setHours(startDate.getHours() + 2);
+
+                // Crea il formato WebCal/ICS per Apple
+                const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//InBallet//Eventi//IT
+BEGIN:VEVENT
+UID:${event.id}@inballet.it
+DTSTAMP:${this.formatICSDate(new Date())}
+DTSTART:${this.formatICSDate(startDate)}
+DTEND:${this.formatICSDate(endDate)}
+SUMMARY:${event.title}
+DESCRIPTION:${event.description}
+LOCATION:${event.location}
+END:VEVENT
+END:VCALENDAR`;
+
+                const blob = new Blob([icsContent], { type: 'text/calendar' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${event.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.ics`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            shareEvent() {
+                if (!this.currentEvent) return;
+
+                const event = this.currentEvent;
+                const shareText = `${event.title}\n${this.formatDate(event.date)} alle ${event.time}\n${event.location}\n\nMaggiori info: ${window.location.href}`;
+
+                if (navigator.share) {
+                    navigator.share({
+                        title: event.title,
+                        text: shareText,
+                        url: window.location.href
+                    });
+                } else {
+                    navigator.clipboard.writeText(shareText).then(() => {
+                        alert('Link copiato negli appunti!');
+                    });
+                }
+            }
+
+            formatGoogleDate(date) {
+                return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+            }
+
+            formatICSDate(date) {
+                return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+            }
+
+            selectDay(date) {
+                // Rimuovi selezione precedente
+                document.querySelectorAll('.calendar-day.selected').forEach(day => {
+                    day.classList.remove('selected');
+                });
+
+                // Aggiungi effetto di selezione se l'elemento esiste
+                const targetElement = event.target.closest('.calendar-day');
+                if (targetElement) {
+                    targetElement.classList.add('selected');
+                }
+            }
+
+            getEventTypeLabel(type) {
+                const labels = {
+                    'spettacolo': 'Spettacolo',
+                    'workshop': 'Workshop',
+                    'corso': 'Corso Speciale',
+                    'laboratorio': 'Laboratorio'
+                };
+                return labels[type] || 'Evento';
+            }
+
+            formatDate(date) {
+                const options = { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                };
+                return date.toLocaleDateString('it-IT', options);
+            }
+
+            isSameDay(date1, date2) {
+                if (!date1 || !date2) return false;
+                
+                // Assicurati che entrambe siano oggetti Date validi
+                const d1 = new Date(date1);
+                const d2 = new Date(date2);
+                
+                if (isNaN(d1.getTime()) || isNaN(d2.getTime())) return false;
+                
+                return d1.getDate() === d2.getDate() &&
+                       d1.getMonth() === d2.getMonth() &&
+                       d1.getFullYear() === d2.getFullYear();
+            }
+
+            renderCalendar() {
+                this.updateMonthDisplay();
+                
+                // Pulisce sempre il contenuto precedente
+                const calendarGrid = document.getElementById('calendarioGrid');
+                
+                if (this.currentView === 'month') {
+                    // Ripristina la struttura del mese COMPLETA (sempre 7 giorni)
+                    calendarGrid.innerHTML = `
+                        <div class="calendar-header">
+                            <div class="day-header">Lun</div>
+                            <div class="day-header">Mar</div>
+                            <div class="day-header">Mer</div>
+                            <div class="day-header">Gio</div>
+                            <div class="day-header">Ven</div>
+                            <div class="day-header">Sab</div>
+                            <div class="day-header">Dom</div>
+                        </div>
+                        <div class="calendar-days" id="calendarDays">
+                            <!-- Generato dinamicamente -->
+                        </div>
+                    `;
+                    
+                    // Aggiungi classe per mobile/tablet + vista mensile
+                    const isMobileTablet = window.innerWidth <= 1024;
+                    if (isMobileTablet) {
+                        calendarGrid.classList.add('mobile-month-view');
+                    } else {
+                        calendarGrid.classList.remove('mobile-month-view');
+                    }
+                    
+                    this.renderMonthView();
+                } else if (this.currentView === 'week') {
+                    // Rimuovi classe mobile per vista settimana
+                    calendarGrid.classList.remove('mobile-month-view');
+                    
+                    // Reset week index quando si cambia mese
+                    const weeksWithEvents = this.getWeeksWithEventsInMonth();
+                    if (this.currentWeekIndex >= weeksWithEvents.length) {
+                        this.currentWeekIndex = 0;
+                    }
+                    this.renderWeekView();
+                }
+                
+                // Aggiorna attributi per eventi
+                this.updateMobileEventHandlers();
+            }
+
+            // Aggiorna gli handler per responsive corretto
+            updateMobileEventHandlers() {
+                const isMobileTablet = window.innerWidth <= 1024;
+                const isMonthView = this.currentView === 'month';
+                
+                // Riapplica la logica per eventi esistenti
+                document.querySelectorAll('.calendar-day').forEach(dayEl => {
+                    const dayEvents = Array.from(dayEl.querySelectorAll('.event-dot'));
+                    const hasEvents = dayEvents.length > 0;
+                    const mobileButton = dayEl.querySelector('.mobile-event-button');
+                    
+                    if (isMobileTablet && isMonthView) {
+                        // Mobile/Tablet + Vista Mensile: background azzurro se ha eventi
+                        if (hasEvents) {
+                            dayEl.classList.add('has-events');
+                            dayEl.style.cursor = 'pointer';
+                            
+                            // Assicura che il pulsante mobile sia visibile
+                            if (mobileButton) {
+                                mobileButton.style.display = 'flex';
+                            }
+                        } else {
+                            dayEl.classList.remove('has-events');
+                            dayEl.style.cursor = 'default';
+                            
+                            // Nascondi il pulsante se non ci sono eventi
+                            if (mobileButton) {
+                                mobileButton.style.display = 'none';
+                            }
+                        }
+                        
+                        // Eventi non cliccabili individualmente
+                        dayEvents.forEach(eventEl => {
+                            eventEl.style.pointerEvents = 'none';
+                        });
+                    } else {
+                        // Desktop o Vista Settimana: comportamento normale
+                        dayEl.classList.remove('has-events');
+                        dayEl.style.cursor = hasEvents ? 'default' : 'pointer';
+                        
+                        // Nascondi sempre i pulsanti mobile su desktop
+                        if (mobileButton) {
+                            mobileButton.style.display = 'none';
+                        }
+                        
+                        // Eventi cliccabili individualmente
+                        dayEvents.forEach(eventEl => {
+                            eventEl.style.pointerEvents = 'auto';
+                            eventEl.style.cursor = 'pointer';
+                        });
+                    }
+                });
+
+                // Aggiorna i testi responsive dei pulsanti esistenti
+                document.querySelectorAll('.mobile-event-button').forEach(button => {
+                    const textFull = button.querySelector('.text-full');
+                    const textShort = button.querySelector('.text-short');
+                    
+                    if (window.innerWidth <= 480) {
+                        // Mobile small: mostra testi corti
+                        if (textFull) textFull.style.display = 'none';
+                        if (textShort) textShort.style.display = 'inline';
+                    } else {
+                        // Mobile/tablet più grandi: mostra testi completi
+                        if (textFull) textFull.style.display = 'inline';
+                        if (textShort) textShort.style.display = 'none';
+                    }
+                });
+            }
+        }
+
+        // Inizializzazione quando il DOM è pronto
+        document.addEventListener('DOMContentLoaded', () => {
+            new CalendarioInBallet();
+
+            // Animazioni di entrata
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-up').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

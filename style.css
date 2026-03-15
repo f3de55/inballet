@@ -1,17 +1,180 @@
 /* Reset e Base */
 * {margin:0; padding:0; box-sizing:border-box}
+
+/* Scrollbar globale */
+html {
+    scrollbar-width: thin !important;
+    scrollbar-color: #87CEEB #1a1a1a !important;
+}
+
+html::-webkit-scrollbar {
+    width: 10px !important;
+}
+
+html::-webkit-scrollbar-track {
+    background: #1a1a1a !important;
+}
+
+html::-webkit-scrollbar-thumb {
+    background: #87CEEB !important;
+    border-radius: 5px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+    background: #4682B4 !important;
+}
+
 :root {
+    /* ========================================
+       COLORI
+    ======================================== */
     --primary-blue:#87CEEB; --primary-blue-light:#B0E0E6; --primary-blue-dark:#4682B4;
     --gold:#FFD700; --gold-dark:#DAA520; --dark-navy:#1a1a1a; --header-dark:#2a2a2a;
     --light-gray:#f8f9fa; --text-dark:#2c2c2c; --text-light:#666; --white:#fff; --black:#000;
-    --text-3xs:.55rem; --text-2xs:.65rem; --text-xs:.75rem; --text-sm:.875rem; --text-base:1rem;
-    --text-lg:1.125rem; --text-xl:1.25rem; --text-2xl:1.5rem; --text-3xl:1.875rem;
-    --text-4xl:2.25rem; --text-5xl:3rem; --text-6xl:4rem;
+
+    /* ========================================
+       TYPESCALE RESPONSIVE - Sistema Fluido
+       Mobile (320px) → Tablet (768px) → Desktop (1920px)
+    ======================================== */
+
+    /* Display - Titoli Hero e Sezioni Principali */
+    --text-6xl: clamp(2.25rem, 4vw + 0.5rem, 3.5rem);   /* 36px → 56px */
+    --text-5xl: clamp(2rem, 3.5vw + 0.25rem, 3rem);     /* 32px → 48px */
+    --text-4xl: clamp(1.75rem, 3vw + 0.2rem, 2.5rem);   /* 28px → 40px */
+    --text-3xl: clamp(1.5rem, 2.5vw + 0.15rem, 2rem);   /* 24px → 32px */
+
+    /* Heading - Titoli Sezioni e Card */
+    --text-2xl: clamp(1.25rem, 2vw + 0.1rem, 1.75rem);  /* 20px → 28px */
+    --text-xl: clamp(1.125rem, 1.5vw + 0.1rem, 1.5rem); /* 18px → 24px */
+    --text-lg: clamp(1.0625rem, 1.25vw + 0.05rem, 1.25rem); /* 17px → 20px */
+
+    /* Body - Testo Principale */
+    --text-base: clamp(1rem, 0.5vw, 1.0625rem);         /* 16px → 17px */
+    --text-sm: clamp(0.875rem, 0.4vw, 0.9375rem);       /* 14px → 15px */
+    --text-xs: clamp(0.75rem, 0.3vw, 0.8125rem);        /* 12px → 13px */
+    --text-2xs: clamp(0.6875rem, 0.2vw, 0.75rem);       /* 11px → 12px */
+    --text-3xs: clamp(0.625rem, 0.15vw, 0.6875rem);     /* 10px → 11px */
+
+    /* Line Heights - Ottimizzati per leggibilità */
+    --leading-none: 1;
+    --leading-tight: 1.1;
+    --leading-snug: 1.3;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.6;
+    --leading-loose: 1.8;
+
+    /* Font Weights */
+    --font-light: 300;
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+    --font-extrabold: 800;
+
+    /* ========================================
+       ALTRI DESIGN TOKENS
+    ======================================== */
     --transition-base:.3s ease; --transition-fast:.3s cubic-bezier(.4,0,.2,1);
     --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-xl:25px; --radius-full:50%;
     --shadow-sm:0 2px 8px rgba(0,0,0,.05); --shadow-md:0 4px 16px rgba(0,0,0,.08);
     --shadow-lg:0 8px 24px rgba(0,0,0,.12); --shadow-blue:0 4px 15px rgba(135,206,235,.3);
 }
+
+/* ========================================
+   UTILITY CLASSES - Typography
+   Utilizzabili in HTML per applicazioni rapide
+======================================== */
+
+/* Font Sizes */
+.text-6xl { font-size: var(--text-6xl); line-height: var(--leading-tight); }
+.text-5xl { font-size: var(--text-5xl); line-height: var(--leading-tight); }
+.text-4xl { font-size: var(--text-4xl); line-height: var(--leading-tight); }
+.text-3xl { font-size: var(--text-3xl); line-height: var(--leading-snug); }
+.text-2xl { font-size: var(--text-2xl); line-height: var(--leading-snug); }
+.text-xl { font-size: var(--text-xl); line-height: var(--leading-snug); }
+.text-lg { font-size: var(--text-lg); line-height: var(--leading-normal); }
+.text-base { font-size: var(--text-base); line-height: var(--leading-normal); }
+.text-sm { font-size: var(--text-sm); line-height: var(--leading-normal); }
+.text-xs { font-size: var(--text-xs); line-height: var(--leading-normal); }
+.text-2xs { font-size: var(--text-2xs); line-height: var(--leading-normal); }
+.text-3xs { font-size: var(--text-3xs); line-height: var(--leading-normal); }
+
+/* Font Weights */
+.font-light { font-weight: var(--font-light); }
+.font-normal { font-weight: var(--font-normal); }
+.font-medium { font-weight: var(--font-medium); }
+.font-semibold { font-weight: var(--font-semibold); }
+.font-bold { font-weight: var(--font-bold); }
+.font-extrabold { font-weight: var(--font-extrabold); }
+
+/* Line Heights */
+.leading-none { line-height: var(--leading-none); }
+.leading-tight { line-height: var(--leading-tight); }
+.leading-snug { line-height: var(--leading-snug); }
+.leading-normal { line-height: var(--leading-normal); }
+.leading-relaxed { line-height: var(--leading-relaxed); }
+.leading-loose { line-height: var(--leading-loose); }
+
+/* ========================================
+   TYPESCALE - GUIDA ALL'USO
+========================================
+
+   La typescale e' COMPLETAMENTE RESPONSIVE - scala automaticamente
+   da mobile (320px) a desktop (1920px+) senza bisogno di media queries.
+
+   SCALA DIMENSIONI:
+   ------------------------------------------------------------------
+   Variabile    Mobile -> Desktop   Uso Consigliato
+   ------------------------------------------------------------------
+   --text-6xl   36px  ->  56px     Hero H1 principale
+   --text-5xl   32px  ->  48px     Titoli sezione principali
+   --text-4xl   28px  ->  40px     Sottotitoli hero
+   --text-3xl   24px  ->  32px     H2 secondari
+   --text-2xl   20px  ->  28px     H3, titoli card grandi
+   --text-xl    18px  ->  24px     H4, titoli card
+   --text-lg    17px  ->  20px     Lead paragraph, subtitle
+   --text-base  16px  ->  17px     Body text, paragrafi
+   --text-sm    14px  ->  15px     Small text, captions
+   --text-xs    12px  ->  13px     Labels, badges
+   --text-2xs   11px  ->  12px     Fine print
+   --text-3xs   10px  ->  11px     Micro text
+
+   ESEMPI DI UTILIZZO:
+
+   In CSS:
+   .my-title {
+       font-size: var(--text-5xl);
+       line-height: var(--leading-tight);
+       font-weight: var(--font-bold);
+   }
+
+   .my-paragraph {
+       font-size: var(--text-base);
+       line-height: var(--leading-relaxed);
+       font-weight: var(--font-normal);
+   }
+
+   In HTML (usando utility classes):
+   <h1 class="text-5xl font-bold leading-tight">Titolo</h1>
+   <p class="text-base font-normal leading-relaxed">Testo</p>
+
+   LINE HEIGHT RACCOMANDATI:
+   ------------------------------------------------------------------
+   - Display/Hero: leading-tight (1.1)
+   - Headings: leading-snug (1.3)
+   - Body text: leading-normal (1.5) o leading-relaxed (1.6)
+   - Long-form: leading-loose (1.8)
+
+   VANTAGGI:
+   ------------------------------------------------------------------
+   + Zero media queries necessarie per font-size
+   + Scaling fluido e automatico
+   + Leggibilita ottimale su tutti i dispositivi
+   + Manutenzione semplificata
+   + Performance migliorate (meno CSS)
+
+======================================== */
+
 body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; color:var(--text-dark); overflow-x:hidden}
 .container {max-width:1200px; margin:0 auto; padding:0 2rem}
 
@@ -31,7 +194,7 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 .cta-btn:hover {background:rgba(255,255,255,0.95); color:var(--dark-navy)}
 
 /* Mega Menu */
-.mega-menu {position:fixed; top:80px; left:0; width:100vw; height:auto; max-height:calc(100vh - 80px); background:var(--header-dark); box-shadow:0 10px 20px rgba(0,0,0,.3); padding:0; display:none; opacity:0; transition:opacity var(--transition-base); border-bottom:1px solid rgba(255,255,255,.1); overflow-y:auto; overflow-x:hidden; z-index:999; -webkit-overflow-scrolling:touch; scrollbar-width:thin; scrollbar-color:var(--primary-blue) var(--header-dark)}
+.mega-menu {position:fixed; top:80px; left:0; width:100vw; height:auto; max-height:calc(100vh - 80px); background:var(--header-dark); box-shadow:0 10px 20px rgba(0,0,0,.3); padding:0; display:none; opacity:0; transition:opacity var(--transition-base); border-bottom:1px solid rgba(255,255,255,.1); overflow-y:auto; overflow-x:hidden; z-index:999; -webkit-overflow-scrolling:touch}
 .mega-menu.active {display:block; opacity:1}
 .mega-menu-content {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:0; padding:1.5rem 2rem; max-width:1400px; margin:0 auto; justify-content:center}
 #mega-menu-scuola .mega-menu-content, #mega-menu-attivita .mega-menu-content, #mega-menu-formazione .mega-menu-content {max-width:1000px}
@@ -43,10 +206,6 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 .mega-menu-section a {color:#ccc; text-decoration:none; transition:color var(--transition-base); padding:.5rem 0; display:flex; align-items:center; font-weight:500; font-size:var(--text-sm); position:relative; padding-left:1.2rem; line-height:1.3}
 .mega-menu-section a::before {content:"•"; position:absolute; left:0; top:50%; transform:translateY(-50%); color:var(--primary-blue); font-weight:700; font-size:var(--text-sm); line-height:1}
 .mega-menu-section a:hover {color:var(--white)}
-.mega-menu::-webkit-scrollbar {width:8px}
-.mega-menu::-webkit-scrollbar-track {background:var(--header-dark)}
-.mega-menu::-webkit-scrollbar-thumb {background:var(--primary-blue); border-radius:4px}
-.mega-menu::-webkit-scrollbar-thumb:hover {background:var(--primary-blue-dark)}
 
 /* Mobile Menu */
 .mobile-menu-btn {display:none; background:0 0; border:none; font-size:var(--text-2xl); cursor:pointer; color:var(--white); z-index:1001; transition:all .3s ease}
@@ -85,10 +244,10 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 .hero {height:100vh; min-height:100vh; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; z-index:1; padding-top:80px}
 .hero-image {position:absolute; top:0; left:0; width:100%; height:100%; background:url(assets/images/hero-bg.jpg) center/cover no-repeat; z-index:1; content-visibility:auto}
 .hero-overlay {position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(135deg,rgba(26,26,26,.6) 0,rgba(42,42,42,.4) 50%,rgba(26,26,26,.6) 100%); z-index:2}
-.hero-content {text-align:center; color:var(--white); z-index:3; max-width:800px; padding:3rem 2rem; animation:fadeInUp 1s ease-out; background:rgba(135,206,235,.25); backdrop-filter:blur(6px); border-radius:20px; border:1px solid rgba(135,206,235,.2)}
+.hero-content {text-align:center; color:var(--white); z-index:3; max-width:800px; margin:0 2rem; padding:3rem 2rem; animation:fadeInUp 1s ease-out; background:rgba(135,206,235,.25); backdrop-filter:blur(6px); border-radius:20px; border:1px solid rgba(135,206,235,.2)}
 .hero-badge {display:block; font-size:var(--text-lg); font-weight:700; margin-bottom:1rem; color:var(--primary-blue); text-transform:uppercase; letter-spacing:2px; text-shadow:0 2px 4px rgba(0,0,0,.3)}
 .hero-badge i {display:none}
-.hero h1 {font-size:clamp(2.2rem,5.5vw,3.5rem); font-weight:700; line-height:1.1; margin-bottom:1.5rem; color:var(--white); letter-spacing:-.02em; text-shadow:0 4px 8px rgba(0,0,0,.3)}
+.hero h1 {font-size:var(--text-6xl); font-weight:700; line-height:var(--leading-tight); margin-bottom:1.5rem; color:var(--white); letter-spacing:-.02em; text-shadow:0 4px 8px rgba(0,0,0,.3)}
 .hero-subtitle {font-size:var(--text-xl); margin-bottom:3rem; opacity:.9; font-weight:300; line-height:1.5; max-width:600px; margin-left:auto; margin-right:auto; text-shadow:0 2px 4px rgba(0,0,0,.2)}
 .hero-cta {display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:1.5rem}
 .btn-primary, .btn-secondary {display:inline-flex; align-items:center; gap:.6rem; padding:1rem 2.5rem; border-radius:25px; text-decoration:none; font-weight:600; font-size:var(--text-base); transition:background .3s ease,color .3s ease,border-color .3s ease; text-transform:uppercase; letter-spacing:.5px}
@@ -100,20 +259,20 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 
 /* Sezioni comuni */
 .chi-siamo-section, .formazione-professionale-section, .dicono-di-noi-section, .gallery-section {background:#fff; position:relative}
-.chi-siamo-section, .formazione-professionale-section {padding:6rem 0}
-.corsi-overview-section {padding:8rem 0; background:rgba(176,224,230,.25); position:relative; overflow:hidden}
+.chi-siamo-section, .formazione-professionale-section {padding:5rem 0}
+.corsi-overview-section {padding:5rem 0; background:rgba(176,224,230,.25); position:relative; overflow:hidden}
 .corsi-overview-section::before, .gallery-section::before, .dicono-di-noi-section::before {content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--primary-blue)}
 .corsi-overview-section::after {content:''; position:absolute; top:-50%; right:-20%; width:800px; height:800px; background:radial-gradient(circle,rgba(135,206,235,.08) 0,transparent 70%); border-radius:50%; pointer-events:none}
-.section-header {margin-bottom:3rem}
-.corsi-overview-section .section-header {margin-bottom:6rem; text-align:center; position:relative; z-index:2}
-.section-title {font-size:clamp(2.5rem,6vw,4rem); font-weight:700; color:var(--dark-navy); line-height:1.1; margin-bottom:1.5rem; letter-spacing:-0.02em}
-.section-subtitle {font-size:clamp(1.25rem,2.5vw,1.75rem); color:var(--text-light); font-weight:300; margin-bottom:.5rem}
+.section-header {margin-bottom:2.5rem}
+.corsi-overview-section .section-header {margin-bottom:4rem; text-align:center; position:relative; z-index:2}
+.section-title {font-size:var(--text-5xl); font-weight:700; color:var(--dark-navy); line-height:var(--leading-tight); margin-bottom:1.5rem; letter-spacing:-0.02em}
+.section-subtitle {font-size:var(--text-xl); color:var(--text-light); font-weight:300; margin-bottom:.5rem; line-height:var(--leading-snug)}
 .section-tagline {font-size:var(--text-base); color:var(--primary-blue-dark); font-weight:500; text-transform:uppercase; letter-spacing:1px}
 .corsi-overview-section .section-tagline {font-weight:600; letter-spacing:2px; font-size:var(--text-sm); margin-bottom:1.5rem}
 
 /* Chi Siamo */
 .chi-siamo-section {position:relative}
-.chi-siamo-header {text-align:left; margin-bottom:2rem; max-width:1200px; margin-left:auto; margin-right:auto}
+.chi-siamo-header {text-align:left; margin-bottom:2.5rem; max-width:1200px; margin-left:auto; margin-right:auto}
 .chi-siamo-header .section-tagline {margin-bottom:1.5rem}
 .chi-siamo-header .section-title {margin-bottom:0}
 .story-layout {display:grid; grid-template-columns:1.1fr 0.9fr; gap:5rem; align-items:center; max-width:1200px; margin:0 auto}
@@ -138,7 +297,7 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 ======================================== */
 
 .corsi-section {
-    padding: 8rem 0;
+    padding: 5rem 0;
     background: rgba(176, 224, 230, 0.25);
     position: relative;
     overflow: hidden;
@@ -167,13 +326,13 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 .corsi-wrapper {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 clamp(1.5rem, 4vw, 3rem);
+    padding: 0 2rem;
 }
 
 /* Header */
 .corsi-header {
     text-align: center;
-    margin-bottom: clamp(4rem, 8vw, 7rem);
+    margin-bottom: 4rem;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -190,17 +349,17 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 }
 
 .corsi-title {
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-size: var(--text-5xl);
     font-weight: 700;
     color: var(--dark-navy);
-    line-height: 1.1;
+    line-height: var(--leading-tight);
     margin-bottom: 1.5rem;
     letter-spacing: -0.02em;
 }
 
 .corsi-intro {
-    font-size: clamp(1rem, 2vw, 1.15rem);
-    line-height: 1.7;
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
     color: var(--text-light);
     max-width: 600px;
     margin: 0 auto;
@@ -210,8 +369,8 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 .corsi-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: clamp(3rem, 6vw, 5rem) clamp(3rem, 6vw, 6rem);
-    margin-bottom: clamp(4rem, 8vw, 6rem);
+    gap: 3rem 4rem;
+    margin-bottom: 4rem;
     position: relative;
 }
 
@@ -230,9 +389,9 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 .corso-item {
     display: grid;
     grid-template-columns: 50px 1fr;
-    gap: clamp(1rem, 2vw, 1.2rem);
+    gap: 1rem;
     position: relative;
-    padding-bottom: clamp(3rem, 6vw, 5rem);
+    padding-bottom: 3rem;
     border-bottom: 1px solid rgba(135, 206, 235, 0.3);
 }
 
@@ -244,11 +403,11 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 
 /* Numero */
 .corso-numero {
-    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-size: var(--text-4xl);
     font-weight: 700;
     font-family: 'Francois One', sans-serif;
     color: rgba(135, 206, 235, 0.5);
-    line-height: 1;
+    line-height: var(--leading-none);
     display: flex;
     align-items: flex-start;
 }
@@ -261,10 +420,10 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 }
 
 .corso-titolo {
-    font-size: clamp(1.5rem, 3vw, 1.75rem);
+    font-size: var(--text-2xl);
     font-weight: 700;
     color: var(--dark-navy);
-    line-height: 1.3;
+    line-height: var(--leading-snug);
     letter-spacing: -0.01em;
     margin: 0;
 }
@@ -304,7 +463,7 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 /* CTA Bottom */
 .corsi-cta {
     text-align: center;
-    padding: clamp(3rem, 6vw, 4rem) clamp(2rem, 4vw, 3rem);
+    padding: 3rem 2rem;
     background: linear-gradient(135deg,
         rgba(135, 206, 235, 0.08) 0%,
         rgba(176, 224, 230, 0.12) 100%
@@ -315,11 +474,12 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 }
 
 .corsi-cta-text {
-    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    font-size: var(--text-xl);
     color: var(--text-dark);
     font-weight: 600;
     margin-bottom: 2rem;
     letter-spacing: -0.01em;
+    line-height: var(--leading-snug);
 }
 
 .corsi-cta-btn {
@@ -354,7 +514,7 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 ======================================== */
 
 .formazione-professionale-section {
-    padding: 8rem 0;
+    padding: 5rem 0;
     background: var(--white);
     position: relative;
 }
@@ -362,7 +522,7 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 .formazione-wrapper {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 clamp(1.5rem, 4vw, 3rem);
+    padding: 0 2rem;
     position: relative;
     z-index: 2;
 }
@@ -370,7 +530,7 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 /* Header */
 .formazione-header {
     text-align: center;
-    margin-bottom: clamp(4rem, 8vw, 6rem);
+    margin-bottom: 4rem;
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
@@ -387,17 +547,17 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 }
 
 .formazione-title {
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-size: var(--text-5xl);
     font-weight: 700;
     color: var(--dark-navy);
-    line-height: 1.1;
+    line-height: var(--leading-tight);
     margin-bottom: 1.5rem;
     letter-spacing: -0.02em;
 }
 
 .formazione-intro {
-    font-size: clamp(1rem, 2vw, 1.15rem);
-    line-height: 1.7;
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
     color: var(--text-light);
     max-width: 700px;
     margin: 0 auto;
@@ -412,7 +572,7 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 .percorsi-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: clamp(2rem, 4vw, 3rem);
+    gap: 2.5rem;
     max-width: 1100px;
     margin: 0 auto;
 }
@@ -421,7 +581,7 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 .percorso-card {
     background: var(--white);
     border-radius: 16px;
-    padding: clamp(2rem, 4vw, 2.5rem);
+    padding: 2rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
     border: 1px solid rgba(135, 206, 235, 0.2);
     position: relative;
@@ -451,29 +611,12 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
     box-shadow: 0 2px 8px rgba(70, 130, 180, 0.3);
 }
 
-/* Icon */
-.percorso-icon {
-    width: 70px;
-    height: 70px;
-    background: var(--primary-blue);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
-}
-
-.percorso-icon i {
-    font-size: 2rem;
-    color: var(--white);
-}
-
 /* Card Title */
 .percorso-card-title {
-    font-size: clamp(1.5rem, 3vw, 1.75rem);
+    font-size: var(--text-2xl);
     font-weight: 700;
     color: var(--dark-navy);
-    line-height: 1.3;
+    line-height: var(--leading-snug);
     margin-bottom: 1.2rem;
     letter-spacing: -0.01em;
 }
@@ -543,11 +686,11 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 }
 
 /* Gallery */
-.gallery-section {padding:clamp(5rem,8vw,8rem) 0 clamp(5rem,8vw,8rem) 0; overflow:hidden}
-.gallery-header, .testimonials-header {text-align:center; margin-bottom:clamp(3rem,6vw,5rem); position:relative; z-index:2}
+.gallery-section {padding:5rem 0; overflow:hidden}
+.gallery-header, .testimonials-header {text-align:center; margin-bottom:3rem; position:relative; z-index:2}
 .gallery-tagline, .testimonials-tagline {color:var(--primary-blue-dark); font-weight:600; text-transform:uppercase; letter-spacing:2px; font-size:var(--text-sm); margin-bottom:1.5rem}
-.gallery-title, .testimonials-title {font-size:clamp(2.5rem,6vw,4rem); font-weight:700; color:var(--dark-navy); line-height:1.1; margin-bottom:1.5rem; letter-spacing:-0.02em}
-.gallery-description, .testimonials-description {font-size:clamp(1rem,2vw,1.15rem); color:var(--text-light); line-height:1.7; max-width:700px; margin:0 auto; font-weight:400}
+.gallery-title, .testimonials-title {font-size:var(--text-5xl); font-weight:700; color:var(--dark-navy); line-height:var(--leading-tight); margin-bottom:1.5rem; letter-spacing:-0.02em}
+.gallery-description, .testimonials-description {font-size:var(--text-base); color:var(--text-light); line-height:var(--leading-relaxed); max-width:700px; margin:0 auto; font-weight:400}
 .gallery-infinite {width:100vw; margin-left:calc(-50vw + 50%); overflow:hidden; height:420px; position:relative}
 .gallery-track {display:flex; gap:8px; width:calc((308px) * 20); animation:scroll-infinite 80s linear infinite; will-change:transform}
 .gallery-track:hover {animation-play-state:paused}
@@ -576,7 +719,7 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 
 /* Altri Servizi - Progetti Sul Territorio */
 .altri-servizi-section {
-    padding: 8rem 0;
+    padding: 5rem 0;
     position: relative;
     overflow: hidden;
 }
@@ -611,7 +754,7 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 
 .altri-servizi-header {
     text-align: center;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
 }
 
 .altri-servizi-label {
@@ -625,18 +768,18 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 }
 
 .altri-servizi-title {
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-size: var(--text-5xl);
     font-weight: 700;
     color: var(--white);
-    line-height: 1.1;
+    line-height: var(--leading-tight);
     margin-bottom: 1.5rem;
     letter-spacing: -0.02em;
 }
 
 .altri-servizi-intro {
-    font-size: clamp(1rem, 2vw, 1.15rem);
+    font-size: var(--text-base);
     color: rgba(255, 255, 255, 0.8);
-    line-height: 1.7;
+    line-height: var(--leading-relaxed);
     max-width: 700px;
     margin: 0 auto;
 }
@@ -649,17 +792,18 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 }
 
 .narrativo-colonna h3 {
-    font-size: clamp(1.5rem, 3vw, 1.75rem);
+    font-size: var(--text-2xl);
     font-weight: 700;
     color: var(--primary-blue);
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 2px solid rgba(135, 206, 235, 0.3);
+    line-height: var(--leading-snug);
 }
 
 .narrativo-colonna p {
-    font-size: clamp(1.1rem, 2vw, 1.25rem);
-    line-height: 1.9;
+    font-size: var(--text-lg);
+    line-height: var(--leading-loose);
     color: rgba(255, 255, 255, 0.85);
     margin: 0;
 }
@@ -685,9 +829,9 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 }
 
 /* Dicono di Noi */
-.dicono-di-noi-section {padding:clamp(4rem,8vw,8rem) 0; overflow:hidden}
+.dicono-di-noi-section {padding:5rem 0; overflow:hidden}
 .dicono-di-noi-section::after {content:''; position:absolute; top:-30%; left:-10%; width:600px; height:600px; background:radial-gradient(circle,rgba(135,206,235,.05) 0,transparent 70%); border-radius:50%; pointer-events:none}
-.testimonials-header {margin-bottom:clamp(3rem,6vw,6rem); z-index:3}
+.testimonials-header {margin-bottom:3rem; z-index:3}
 .loading-reviews {text-align:center; padding:2rem; color:var(--text-light)}
 .loading-spinner {width:40px; height:40px; border:4px solid var(--primary-blue-light); border-top:4px solid var(--primary-blue); border-radius:50%; animation:spin 1s linear infinite; margin:0 auto 1rem}
 .testimonials-container {position:relative; z-index:2}
@@ -707,7 +851,7 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
 .stars i.far {color:#e2e8f0}
 .rating-text {font-weight:700; font-size:var(--text-base); color:var(--primary-blue-dark); margin-left:.5rem}
 .testimonial-content {position:relative; z-index:2; padding:0 2.5rem 2rem; flex:1; display:flex; flex-direction:column; justify-content:center}
-.testimonial-text {font-size:clamp(1.05rem,2vw,1.2rem); line-height:1.75; color:var(--text-dark); font-style:italic; margin-bottom:2rem; font-weight:400; text-align:center; position:relative; transition:all .3s ease}
+.testimonial-text {font-size:var(--text-lg); line-height:var(--leading-relaxed); color:var(--text-dark); font-style:italic; margin-bottom:2rem; font-weight:400; text-align:center; position:relative; transition:all .3s ease}
 .testimonial-footer {background:rgba(248,250,252,.95); backdrop-filter:blur(10px); border-top:1px solid rgba(135,206,235,.12); padding:2rem 2.5rem; position:relative; flex-shrink:0; margin-top:auto}
 .testimonial-author {display:flex; align-items:center; gap:1.5rem; justify-content:center}
 .author-avatar {width:56px; height:56px; border-radius:16px; background:linear-gradient(135deg,var(--primary-blue-light) 0,var(--primary-blue) 100%); display:flex; align-items:center; justify-content:center; font-size:var(--text-xl); color:#fff; font-weight:700; border:3px solid rgba(255,255,255,.8); box-shadow:0 8px 24px rgba(135,206,235,.2),inset 0 1px 0 rgba(255,255,255,.3)}
@@ -821,12 +965,23 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
         padding: 6rem 0;
     }
     .corsi-grid {
+        grid-template-columns: 1fr;
         gap: 3rem 4rem;
+    }
+    .corsi-grid::before {
+        display: none;
     }
     .corso-item {
         grid-template-columns: 45px 1fr;
         gap: 1rem;
         padding-bottom: 3rem;
+        margin-bottom: 3rem;
+        border-bottom: 1px solid rgba(135, 206, 235, 0.3);
+    }
+    .corso-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 0;
     }
     .corso-numero {
         font-size: 2rem;
@@ -853,13 +1008,6 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
     }
     .percorso-card {
         padding: 2.5rem;
-    }
-    .percorso-icon {
-        width: 60px;
-        height: 60px;
-    }
-    .percorso-icon i {
-        font-size: 1.75rem;
     }
     .percorso-card-title {
         font-size: 1.5rem;
@@ -1074,14 +1222,6 @@ body {font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-
         padding: 0.35rem 0.8rem;
         top: -8px;
         right: 20px;
-    }
-    .percorso-icon {
-        width: 55px;
-        height: 55px;
-        margin-bottom: 1.5rem;
-    }
-    .percorso-icon i {
-        font-size: 1.5rem;
     }
     .percorso-card-title {
         font-size: 1.4rem;

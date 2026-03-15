@@ -34,12 +34,6 @@ class GoogleReviews {
             const response = await fetch(REVIEWS_CONFIG.endpoint);
             const text = await response.text();
 
-            // Debug: controlla se il server restituisce PHP invece di JSON
-            if (text.startsWith('<?php') || text.startsWith('<?')) {
-                this.errorMessage = 'Il server non supporta PHP. Usa XAMPP, WAMP o un hosting con PHP.';
-                return;
-            }
-
             let data;
             try {
                 data = JSON.parse(text);

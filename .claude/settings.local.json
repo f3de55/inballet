@@ -1,7 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(ipconfig:*)"
+      "Bash(dir /s \"c:\\\\Users\\\\feder\\\\Documents\\\\GitHub\\\\inballet\")"
     ]
   }
 }

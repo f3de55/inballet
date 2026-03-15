@@ -7,52 +7,62 @@
    ======================================== */
 
 // 1. GOOGLE REVIEWS API INTEGRATION
-const GOOGLE_CONFIG = {
-    placeId: 'ChIJMTLpHKeUhkcR23yEdflvQRQ',
-    apiKey: 'AIzaSyB1T64uyO5Ke-MttLo9Amscl5ViUvYYvtI',
+const REVIEWS_CONFIG = {
+    endpoint: 'api/google-reviews.php',
     maxReviews: 5,
     minRating: 1
 };
 
-class StaticGoogleReviews {
+class GoogleReviews {
     constructor() {
         this.reviews = [];
         this.placeData = null;
         this.currentSlide = 0;
         this.carousel = null;
+        this.errorMessage = null;
         this.init();
     }
+
     async init() {
-        await this.loadGoogleReviews();
+        await this.loadReviews();
         this.renderReviews();
         this.initCarousel();
     }
-    async loadGoogleReviews() {
+
+    async loadReviews() {
         try {
-            const proxyUrl = 'https://api.allorigins.win/raw?url=';
-            const googleUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${GOOGLE_CONFIG.placeId}&fields=reviews,rating,user_ratings_total&language=it&key=${GOOGLE_CONFIG.apiKey}`;
-            const response = await fetch(proxyUrl + encodeURIComponent(googleUrl));
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            const response = await fetch(REVIEWS_CONFIG.endpoint);
+            const text = await response.text();
+
+            // Debug: controlla se il server restituisce PHP invece di JSON
+            if (text.startsWith('<?php') || text.startsWith('<?')) {
+                this.errorMessage = 'Il server non supporta PHP. Usa XAMPP, WAMP o un hosting con PHP.';
+                return;
             }
-            const data = await response.json();
+
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                this.errorMessage = 'Risposta non JSON: ' + text.substring(0, 100);
+                return;
+            }
+
             if (data.status === 'OK' && data.result) {
                 this.placeData = data.result;
-                if (data.result.reviews && Array.isArray(data.result.reviews) && data.result.reviews.length > 0) {
+                this.errorMessage = null;
+
+                if (data.result.reviews && Array.isArray(data.result.reviews)) {
                     this.reviews = data.result.reviews
-                        .filter(review => review.rating >= GOOGLE_CONFIG.minRating)
+                        .filter(r => r.rating >= REVIEWS_CONFIG.minRating)
                         .sort((a, b) => b.time - a.time)
-                        .slice(0, GOOGLE_CONFIG.maxReviews);
-                } else {
-                    this.reviews = [];
+                        .slice(0, REVIEWS_CONFIG.maxReviews);
                 }
             } else {
-                this.reviews = [];
-                this.placeData = null;
+                this.errorMessage = data.error_message || data.status || 'Errore API';
             }
         } catch (error) {
-            this.reviews = [];
-            this.placeData = null;
+            this.errorMessage = 'Errore fetch: ' + error.message;
         }
     }
     populateGoogleStats() {
@@ -67,16 +77,17 @@ class StaticGoogleReviews {
         const starsHtml = this.generateStars(Math.round(rating || 0));
         statsContent.innerHTML = `
             <div class="stat-item">
-                <span class="stat-label">Valutazione media</span>
+                <span class="stat-value">${rating ? rating.toFixed(1) : 'N/A'}</span>
                 <div class="stat-stars">${starsHtml}</div>
+                <span class="stat-label">Valutazione media</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Recensioni totali</span>
                 <span class="stat-value">${user_ratings_total || 'N/A'}</span>
+                <span class="stat-label">Recensioni</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Soddisfazione clienti</span>
                 <span class="stat-value">${satisfactionPercentage}%</span>
+                <span class="stat-label">Gradimento</span>
             </div>
         `;
         statsCard.style.display = 'block';
@@ -90,11 +101,12 @@ class StaticGoogleReviews {
         if (this.reviews.length === 0) {
             if (carouselSidebar) carouselSidebar.style.display = 'none';
             if (carouselMain) carouselMain.style.display = 'none';
+            const errorDetail = this.errorMessage ? `<br><code style="background:#333;padding:4px 8px;border-radius:4px;font-size:12px;margin-top:8px;display:inline-block;">${this.errorMessage}</code>` : '';
             carouselWithCta.innerHTML = `
                 <div class="no-reviews-message" style="width: 100%; display: flex; justify-content: center; padding: 3rem 0;">
                     <div class="alert-box">
                         <i class="fas fa-info-circle"></i>
-                        <p>Le recensioni sono temporaneamente non disponibili. <br>
+                        <p>Le recensioni sono temporaneamente non disponibili. ${errorDetail}<br>
                         <small style="opacity: 0.7; margin-top: 0.5rem; display: block;">
                         Visualizza tutte le nostre recensioni direttamente su Google Maps.
                         </small></p>
@@ -194,13 +206,20 @@ function toggleFullText(uniqueId, fullText, shortText) {
     const textElement = document.getElementById(uniqueId + '_text');
     const buttonElement = document.getElementById(uniqueId + '_btn');
     if (!textElement || !buttonElement) return;
-    if (buttonElement.textContent === 'Leggi tutto') {
-        textElement.textContent = fullText;
-        buttonElement.textContent = 'Leggi meno';
-    } else {
-        textElement.textContent = shortText + '...';
-        buttonElement.textContent = 'Leggi tutto';
-    }
+
+    // Smooth transition
+    textElement.style.opacity = '0.7';
+
+    setTimeout(() => {
+        if (buttonElement.textContent === 'Leggi tutto') {
+            textElement.textContent = fullText;
+            buttonElement.textContent = 'Leggi meno';
+        } else {
+            textElement.textContent = shortText + '...';
+            buttonElement.textContent = 'Leggi tutto';
+        }
+        textElement.style.opacity = '1';
+    }, 150);
 }
 class TestimonialsCarousel {
     constructor() {
@@ -218,11 +237,47 @@ class TestimonialsCarousel {
         this.isDragging = false;
         this.swipeThreshold = 50;
         this.carousel = document.querySelector('.testimonials-carousel');
+        this.track = document.querySelector('.testimonials-track');
         this.init();
     }
     init() {
+        this.setMinHeight();
         this.bindEvents();
         this.bindTouchEvents();
+    }
+    setMinHeight() {
+        if (!this.slides || this.slides.length === 0 || !this.track) return;
+
+        // Mostra tutte le slide temporaneamente per misurare
+        this.slides.forEach(slide => {
+            slide.style.display = 'block';
+            slide.style.opacity = '0';
+            slide.style.position = 'absolute';
+        });
+
+        // Trova l'altezza massima
+        let maxHeight = 0;
+        this.slides.forEach(slide => {
+            const height = slide.offsetHeight;
+            if (height > maxHeight) maxHeight = height;
+        });
+
+        // Ripristina stato originale
+        this.slides.forEach((slide, index) => {
+            slide.style.position = '';
+            if (index === 0) {
+                slide.style.display = 'block';
+                slide.style.opacity = '1';
+            } else {
+                slide.style.display = 'none';
+                slide.style.opacity = '0';
+            }
+        });
+
+        // Imposta min-height sul track
+        if (maxHeight > 0) {
+            this.track.style.minHeight = maxHeight + 'px';
+        }
     }
     bindEvents() {
         this.prevBtn.addEventListener('click', () => this.prevSlide());
@@ -309,7 +364,7 @@ class TestimonialsCarousel {
         this.isTransitioning = true;
         const direction = index > this.currentSlide ? 1 : -1;
         this.slides[this.currentSlide].style.opacity = '0';
-        this.slides[this.currentSlide].style.transform = `translateX(${-50 * direction}px)`;
+        this.slides[this.currentSlide].style.transform = `translateX(${-20 * direction}px)`;
         this.indicators[this.currentSlide].classList.remove('active');
         setTimeout(() => {
             this.slides[this.currentSlide].classList.remove('active');
@@ -317,7 +372,7 @@ class TestimonialsCarousel {
             this.currentSlide = index;
             this.slides[this.currentSlide].style.display = 'block';
             this.slides[this.currentSlide].style.opacity = '0';
-            this.slides[this.currentSlide].style.transform = `translateX(${50 * direction}px)`;
+            this.slides[this.currentSlide].style.transform = `translateX(${20 * direction}px)`;
             this.slides[this.currentSlide].classList.add('active');
             this.slides[this.currentSlide].offsetHeight;
             setTimeout(() => {
@@ -326,9 +381,9 @@ class TestimonialsCarousel {
                 this.indicators[this.currentSlide].classList.add('active');
                 setTimeout(() => {
                     this.isTransitioning = false;
-                }, 400);
-            }, 50);
-        }, 200);
+                }, 350);
+            }, 30);
+        }, 150);
     }
     nextSlide() {
         if (this.slides.length <= 1) return;
@@ -350,7 +405,7 @@ class TestimonialsCarousel {
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
-    new StaticGoogleReviews();
+    new GoogleReviews();
 });
 
 // 2. INFINITE GALLERY WITH LIGHTBOX
@@ -698,3 +753,45 @@ document.querySelectorAll('.corso-card').forEach(card => {
 document.querySelectorAll('.percorso-item').forEach(item => {
     observer.observe(item);
 });
+
+// 4. FOOTER (Modale Corsi + Copyright Dinamico)
+function initFooter() {
+    // Anno dinamico nel copyright
+    var copyrightEl = document.getElementById('footerCopyright');
+    if (copyrightEl) {
+        copyrightEl.textContent = '© ' + new Date().getFullYear() + ' ASD I.N. BALLET. Tutti i diritti riservati.';
+    }
+}
+
+// Funzione globale per toggle modale CORSI
+function toggleCorsiModal() {
+    var modal = document.getElementById('corsiModal');
+    var corsiTitle = document.querySelector('.footer-corsi-title');
+    if (modal) {
+        modal.classList.toggle('open');
+        if (corsiTitle) {
+            corsiTitle.classList.toggle('active');
+        }
+        // Blocca scroll quando modale aperta
+        document.body.style.overflow = modal.classList.contains('open') ? 'hidden' : '';
+    }
+}
+
+// Chiudi modale cliccando fuori
+function closeCorsiModal(event) {
+    if (event.target.classList.contains('corsi-modal')) {
+        toggleCorsiModal();
+    }
+}
+
+// Chiudi modale con ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        var modal = document.getElementById('corsiModal');
+        if (modal && modal.classList.contains('open')) {
+            toggleCorsiModal();
+        }
+    }
+});
+
+window.addEventListener('componentsLoaded', initFooter);

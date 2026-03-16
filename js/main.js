@@ -836,7 +836,7 @@ function initFooter() {
     // Anno dinamico nel copyright
     var copyrightEl = document.getElementById('footerCopyright');
     if (copyrightEl) {
-        copyrightEl.textContent = '© ' + new Date().getFullYear() + ' ASD I.N. BALLET. Tutti i diritti riservati.';
+        copyrightEl.innerHTML = '© ' + new Date().getFullYear() + ' ASD I.N. BALLET. Tutti i diritti riservati - <a href="mailto:fedecpz03@gmail.com">Crediti</a>';
     }
 }
 

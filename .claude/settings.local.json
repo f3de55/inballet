@@ -3,7 +3,13 @@
     "allow": [
       "Bash(dir /s \"c:\\\\Users\\\\feder\\\\Documents\\\\GitHub\\\\inballet\")",
       "Bash(curl:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(php --version:*)",
+      "Bash(choco --version:*)",
+      "Bash(docker:*)",
+      "Bash(npx --version:*)",
+      "Bash(npx localtunnel --port 3000)",
+      "Bash(gpg:*)"
     ]
   }
 }

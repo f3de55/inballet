@@ -353,7 +353,7 @@ body{font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-s
 .view-all-btn:active{transform:translateY(0)}
 .btn-google-icon{width:20px; height:20px; background:linear-gradient(135deg,#4285f4,#34a853); border-radius:4px; display:flex; align-items:center; justify-content:center; flex-shrink:0}
 .btn-google-icon i{color:#fff; font-size:11px}
-.btn-main-text{color:var(--white); font-weight:600; line-height:1}
+.btn-main-text{color:var(--white); font-weight:600; line-height:1.5}
 .no-reviews-message{display:flex; justify-content:center; padding:2rem 0}
 .alert-box{background:linear-gradient(135deg,rgba(255,255,255,.95) 0,rgba(176,224,230,.1) 100%); border:1px solid rgba(135,206,235,.3); border-radius:15px; padding:2rem 3rem; max-width:600px; display:flex; align-items:center; gap:1rem; box-shadow:0 8px 25px rgba(135,206,235,.1); backdrop-filter:blur(10px)}
 .alert-box i{color:var(--primary-blue-dark); font-size:var(--text-2xl); flex-shrink:0}

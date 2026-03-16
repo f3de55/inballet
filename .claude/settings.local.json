@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dir /s \"c:\\\\Users\\\\feder\\\\Documents\\\\GitHub\\\\inballet\")"
+      "Bash(dir /s \"c:\\\\Users\\\\feder\\\\Documents\\\\GitHub\\\\inballet\")",
+      "Bash(curl:*)",
+      "Bash(ls:*)"
     ]
   }
 }

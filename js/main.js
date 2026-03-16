@@ -561,22 +561,57 @@ function initNavbar() {
     const megaMenus = document.querySelectorAll('.mega-menu');
     let currentMenu = null;
     let hoverTimeout;
+
+    // Inizializza tabindex per tutti i link nei mega menu chiusi
+    megaMenus.forEach(menu => {
+        menu.querySelectorAll('a').forEach(link => link.setAttribute('tabindex','-1'));
+    });
     navItems.forEach(item => {
         const menuId = item.getAttribute('data-menu');
         const megaMenu = document.getElementById(`mega-menu-${menuId}`);
-        item.addEventListener('mouseenter', () => {
+        const navLink = item.querySelector('.nav-link');
+        function openMenu(){
             clearTimeout(hoverTimeout);
-            megaMenus.forEach(menu => menu.classList.remove('active'));
+            megaMenus.forEach(menu => {
+                menu.classList.remove('active');
+                menu.querySelectorAll('a').forEach(link => link.setAttribute('tabindex','-1'));
+            });
+            document.querySelectorAll('.nav-link').forEach(link => link.setAttribute('aria-expanded','false'));
             if (megaMenu) {
                 megaMenu.classList.add('active');
+                navLink.setAttribute('aria-expanded','true');
+                megaMenu.querySelectorAll('a').forEach(link => link.removeAttribute('tabindex'));
                 currentMenu = megaMenu;
+            }
+        }
+        function closeMenu(){
+            if (megaMenu) {
+                megaMenu.classList.remove('active');
+                navLink.setAttribute('aria-expanded','false');
+                megaMenu.querySelectorAll('a').forEach(link => link.setAttribute('tabindex','-1'));
+                currentMenu = null;
+            }
+        }
+        item.addEventListener('mouseenter', openMenu);
+        navLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(megaMenu.classList.contains('active'))closeMenu();
+            else openMenu();
+        });
+        navLink.addEventListener('keydown', (e) => {
+            if(e.key==='Enter'||e.key===' '){
+                e.preventDefault();
+                if(megaMenu.classList.contains('active'))closeMenu();
+                else openMenu();
+            }
+            if(e.key==='Escape'){
+                closeMenu();
             }
         });
         item.addEventListener('mouseleave', () => {
             hoverTimeout = setTimeout(() => {
                 if (currentMenu && !currentMenu.matches(':hover')) {
-                    currentMenu.classList.remove('active');
-                    currentMenu = null;
+                    closeMenu();
                 }
             }, 100);
         });
@@ -587,12 +622,17 @@ function initNavbar() {
         });
         menu.addEventListener('mouseleave', () => {
             menu.classList.remove('active');
+            menu.querySelectorAll('a').forEach(link => link.setAttribute('tabindex','-1'));
             currentMenu = null;
         });
     });
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.nav-item') && !e.target.closest('.mega-menu')) {
-            megaMenus.forEach(menu => menu.classList.remove('active'));
+            megaMenus.forEach(menu => {
+                menu.classList.remove('active');
+                menu.querySelectorAll('a').forEach(link => link.setAttribute('tabindex','-1'));
+            });
+            document.querySelectorAll('.nav-link').forEach(link => link.setAttribute('aria-expanded','false'));
             currentMenu = null;
         }
     });
@@ -649,6 +689,11 @@ function initNavbar() {
     const mobileOverlay = document.getElementById('mobileOverlay');
     const mobileMenuClose = document.getElementById('mobileMenuClose');
     const mobileNavToggles = document.querySelectorAll('.mobile-nav-toggle');
+
+    // Inizializza tabindex per mobile menu chiuso
+    if (mobileMenu) {
+        mobileMenu.querySelectorAll('a, button').forEach(el => el.setAttribute('tabindex','-1'));
+    }
     function toggleMobileMenu() {
         const isActive = mobileMenu.classList.contains('active');
         if (isActive) {
@@ -660,32 +705,50 @@ function initNavbar() {
     function openMobileMenu() {
         mobileMenuBtn.style.display = 'none';
         mobileMenu.classList.add('active');
+        mobileMenu.setAttribute('aria-hidden','false');
+        mobileMenu.querySelectorAll('a, button').forEach(el => el.removeAttribute('tabindex'));
         mobileOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
     function closeMobileMenu() {
         mobileMenuBtn.style.display = 'block';
         mobileMenu.classList.remove('active');
+        mobileMenu.setAttribute('aria-hidden','true');
+        mobileMenu.querySelectorAll('a, button').forEach(el => el.setAttribute('tabindex','-1'));
         mobileOverlay.classList.remove('active');
         document.body.style.overflow = 'auto';
     }
     mobileMenuBtn.addEventListener('click', toggleMobileMenu);
     mobileMenuClose.addEventListener('click', closeMobileMenu);
     mobileOverlay.addEventListener('click', closeMobileMenu);
+    // Inizializza tabindex per mobile submenu chiusi
+    document.querySelectorAll('.mobile-submenu').forEach(submenu => {
+        submenu.querySelectorAll('a').forEach(link => link.setAttribute('tabindex','-1'));
+    });
+
     mobileNavToggles.forEach(toggle => {
         toggle.addEventListener('click', function() {
             const targetId = this.getAttribute('data-target');
             const submenu = document.getElementById(targetId);
+            const isActive = submenu.classList.contains('active');
             mobileNavToggles.forEach(otherToggle => {
                 if (otherToggle !== this) {
                     const otherId = otherToggle.getAttribute('data-target');
                     const otherSubmenu = document.getElementById(otherId);
                     otherSubmenu.classList.remove('active');
+                    otherSubmenu.querySelectorAll('a').forEach(link => link.setAttribute('tabindex','-1'));
                     otherToggle.classList.remove('active');
+                    otherToggle.setAttribute('aria-expanded','false');
                 }
             });
             submenu.classList.toggle('active');
+            if (!isActive) {
+                submenu.querySelectorAll('a').forEach(link => link.removeAttribute('tabindex'));
+            } else {
+                submenu.querySelectorAll('a').forEach(link => link.setAttribute('tabindex','-1'));
+            }
             this.classList.toggle('active');
+            this.setAttribute('aria-expanded',!isActive);
         });
     });
     document.querySelectorAll('.mobile-submenu a, .mobile-cta a').forEach(link => {
@@ -696,7 +759,11 @@ function initNavbar() {
         if (window.innerWidth > 1200) {
             closeMobileMenu();
             mobileMenuBtn.style.display = 'none';
-            megaMenus.forEach(menu => menu.classList.remove('active'));
+            megaMenus.forEach(menu => {
+                menu.classList.remove('active');
+                menu.querySelectorAll('a').forEach(link => link.setAttribute('tabindex','-1'));
+            });
+            document.querySelectorAll('.nav-link').forEach(link => link.setAttribute('aria-expanded','false'));
             currentMenu = null;
         } else {
             if (!mobileMenu.classList.contains('active')) {
@@ -728,6 +795,22 @@ function initNavbar() {
     });
 }
 window.addEventListener('componentsLoaded', initNavbar);
+
+// SKIP LINK FUNCTIONALITY
+document.addEventListener('DOMContentLoaded', () => {
+    const skipLink = document.getElementById('skip-link');
+    if (skipLink) {
+        skipLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const mainContent = document.getElementById('main-content');
+            if (mainContent) {
+                mainContent.setAttribute('tabindex', '-1');
+                mainContent.focus();
+                mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+});
 
 // INTERSECTION OBSERVER
 const observerOptions = {

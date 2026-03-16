@@ -1,12 +1,14 @@
-<nav class="nav-container">
+<nav class="nav-container" aria-label="Navigazione principale">
     <div class="logo-section">
-        <img src="./assets/images/logo.png" alt="InBallet Logo" />
+        <a href="/" aria-label="InBallet - Torna alla homepage">
+            <img src="./assets/images/logo.png" alt="InBallet Logo" />
+        </a>
     </div>
 
     <ul class="nav-menu">
         <li class="nav-item" data-menu="corsi">
-            <span class="nav-link">CORSI</span>
-            <div class="mega-menu" id="mega-menu-corsi">
+            <button class="nav-link" aria-expanded="false" aria-haspopup="true">CORSI</button>
+            <div class="mega-menu" id="mega-menu-corsi" role="region" aria-label="Menu Corsi">
                 <div class="mega-menu-content">
                     <div class="mega-menu-section">
                         <h4>Danza Classica e Moderna</h4>
@@ -60,8 +62,8 @@
         </li>
 
         <li class="nav-item" data-menu="scuola">
-            <span class="nav-link">LA SCUOLA</span>
-            <div class="mega-menu" id="mega-menu-scuola">
+            <button class="nav-link" aria-expanded="false" aria-haspopup="true">LA SCUOLA</button>
+            <div class="mega-menu" id="mega-menu-scuola" role="region" aria-label="Menu La Scuola">
                 <div class="mega-menu-content">
                     <div class="mega-menu-section">
                         <h4>Eventi e Collaborazioni</h4>
@@ -76,8 +78,8 @@
         </li>
 
         <li class="nav-item" data-menu="progetti">
-            <span class="nav-link">PROGETTI</span>
-            <div class="mega-menu" id="mega-menu-progetti">
+            <button class="nav-link" aria-expanded="false" aria-haspopup="true">PROGETTI</button>
+            <div class="mega-menu" id="mega-menu-progetti" role="region" aria-label="Menu Progetti">
                 <div class="mega-menu-content">
                     <div class="mega-menu-section">
                         <h4>Danza Integrativa</h4>
@@ -93,8 +95,8 @@
         </li>
 
         <li class="nav-item" data-menu="formazione">
-            <span class="nav-link">FORMAZIONE</span>
-            <div class="mega-menu" id="mega-menu-formazione">
+            <button class="nav-link" aria-expanded="false" aria-haspopup="true">FORMAZIONE</button>
+            <div class="mega-menu" id="mega-menu-formazione" role="region" aria-label="Menu Formazione">
                 <div class="mega-menu-content">
                     <div class="mega-menu-section">
                         <h4>Percorsi Professionali</h4>
@@ -116,16 +118,16 @@
 
 <!-- Mobile Menu -->
 <div class="mobile-overlay" id="mobileOverlay"></div>
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Chiudi menu">
         <i class="fas fa-times"></i>
     </button>
 
     <div class="mobile-nav-item">
-        <div class="mobile-nav-toggle" data-target="corsi-submenu">
+        <button class="mobile-nav-toggle" data-target="corsi-submenu" aria-expanded="false" aria-controls="corsi-submenu">
             <span>CORSI</span>
-            <i class="fas fa-chevron-down"></i>
-        </div>
+            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+        </button>
         <div class="mobile-submenu" id="corsi-submenu">
             <h4>Danza Classica e Moderna</h4>
             <a href="#">Avviamento alla Danza</a>
@@ -158,10 +160,10 @@
     </div>
 
     <div class="mobile-nav-item">
-        <div class="mobile-nav-toggle" data-target="scuola-submenu">
+        <button class="mobile-nav-toggle" data-target="scuola-submenu" aria-expanded="false" aria-controls="scuola-submenu">
             <span>LA SCUOLA</span>
-            <i class="fas fa-chevron-down"></i>
-        </div>
+            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+        </button>
         <div class="mobile-submenu" id="scuola-submenu">
             <h4>Eventi e Collaborazioni</h4>
             <a href="#">Spettacoli ed Eventi</a>
@@ -171,10 +173,10 @@
     </div>
 
     <div class="mobile-nav-item">
-        <div class="mobile-nav-toggle" data-target="progetti-submenu">
+        <button class="mobile-nav-toggle" data-target="progetti-submenu" aria-expanded="false" aria-controls="progetti-submenu">
             <span>PROGETTI</span>
-            <i class="fas fa-chevron-down"></i>
-        </div>
+            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+        </button>
         <div class="mobile-submenu" id="progetti-submenu">
             <h4>Danza Integrativa</h4>
             <a href="#">Classi Multidisciplinari Integrate</a>
@@ -185,10 +187,10 @@
     </div>
 
     <div class="mobile-nav-item">
-        <div class="mobile-nav-toggle" data-target="formazione-submenu">
+        <button class="mobile-nav-toggle" data-target="formazione-submenu" aria-expanded="false" aria-controls="formazione-submenu">
             <span>FORMAZIONE</span>
-            <i class="fas fa-chevron-down"></i>
-        </div>
+            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+        </button>
         <div class="mobile-submenu" id="formazione-submenu">
             <h4>Percorsi Professionali</h4>
             <a href="#">Corso di Formazione per Insegnanti di Danza</a>

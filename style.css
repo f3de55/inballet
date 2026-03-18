@@ -106,7 +106,7 @@ body{font-family:Rubik,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-s
 .hero-image{position:absolute; top:0; left:0; width:100%; height:100%; background:url(assets/images/hero-bg.jpg) center/cover no-repeat; z-index:1; content-visibility:auto}
 .hero-overlay{position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(135deg,rgba(26,26,26,.6) 0,rgba(42,42,42,.4) 50%,rgba(26,26,26,.6) 100%); z-index:2}
 .hero-content{text-align:center; color:var(--white); z-index:3; max-width:800px; margin:0 2rem; padding:3rem 2rem; animation:fadeInUp 1s ease-out; background:rgba(135,206,235,.25); backdrop-filter:blur(6px); border-radius:20px; border:1px solid rgba(135,206,235,.2)}
-.hero-badge{display:block; font-size:var(--text-lg); font-weight:700; margin-bottom:1rem; color:var(--primary-blue); text-transform:uppercase; letter-spacing:2px; text-shadow:0 2px 6px rgba(0,0,0,.8)}
+.hero-badge{display:block; font-size:var(--text-lg); font-weight:700; margin-bottom:1rem; color:var(--white); text-transform:uppercase; letter-spacing:2px; text-shadow:0 2px 8px rgba(0,0,0,.9)}
 .hero-badge i{display:none}
 .hero h1{font-size:var(--text-6xl); font-weight:700; line-height:var(--leading-tight); margin-bottom:1.5rem; color:var(--white); letter-spacing:-.02em; text-shadow:0 4px 8px rgba(0,0,0,.3)}
 .hero-subtitle{font-size:var(--text-xl); margin-bottom:3rem; opacity:.9; font-weight:300; line-height:1.5; max-width:600px; margin-left:auto; margin-right:auto; text-shadow:0 2px 4px rgba(0,0,0,.2)}

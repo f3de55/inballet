@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Corso di Heels Dance. Danza sui tacchi con eleganza, sensualità e potenza. InBallet Lainate e Rho.">
+    <meta name="keywords" content="heels dance, danza tacchi, high heels, corso heels, InBallet, Lainate, Rho">
+    <meta name="author" content="InBallet ASD">
+    <meta name="theme-color" content="#87CEEB">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Heels - InBallet">
+    <meta property="og:description" content="Corso di Heels Dance. Eleganza e potenza sui tacchi.">
+
+    <title>Heels - InBallet</title>
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Francois+One&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <style>body{min-height:100vh}.main-header{min-height:80px}</style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+    <header class="main-header" role="banner"></header>
+
+    <main id="main-content" role="main" tabindex="-1"></main>
+
+    <footer class="footer" role="contentinfo"></footer>
+
+    <script src="js/loader.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+    // Dati del corso
+    const corsoData = {
+        badge: 'Adulti',
+        titolo: 'Heels',
+        tagline: 'Eleganza, potenza e sensualità: danza sui tacchi con sicurezza',
+        heroImage: 'assets/images/gallery-10.jpg',
+        introImage: 'assets/images/gallery-2.jpg',
+        intro: `
+            <p>L'<strong>Heels Dance</strong> è una disciplina che unisce tecnica, stile e
+            empowerment. Ballare sui tacchi richiede controllo, forza e consapevolezza del
+            proprio corpo.</p>
+            <p>I nostri corsi insegnano a muoversi con <strong>eleganza</strong> e
+            <strong>sicurezza</strong>, sviluppando portamento, coordinazione e una nuova
+            percezione di se. Non serve esperienza: serve solo voglia di mettersi in gioco.</p>
+        `,
+        eta: 'Adulti',
+        frequenza: '1 lezione a settimana',
+        metodoTitolo: 'Il Nostro Approccio',
+        metodo: [
+            {
+                titolo: 'Tecnica sui Tacchi',
+                testo: 'Apprendimento graduale della postura e dell\'equilibrio sui tacchi, partendo dalle basi per arrivare a movimenti complessi.'
+            },
+            {
+                titolo: 'Empowerment',
+                testo: 'La danza come strumento per sentirsi forti e sicure di sé. Ogni lezione è un\'occasione per celebrare il proprio corpo.'
+            },
+            {
+                titolo: 'Coreografia',
+                testo: 'Studio di coreografie che uniscono diversi stili: commercial, jazz funk, voguing. Sempre con personalità e attitudine.'
+            }
+        ],
+        imparaTitolo: 'Cosa imparerai',
+        impara: [
+            'Postura e equilibrio sui tacchi',
+            'Camminata elegante e sicura',
+            'Movimenti fluidi e controllati',
+            'Coreografie su diversi stili musicali',
+            'Espressività e presenza scenica',
+            'Fiducia in se stessi'
+        ]
+    };
+
+    // Carica template e popola dati
+    async function loadCorsoTemplate() {
+        try {
+            const response = await fetch('components/template-corsi.html');
+            const template = await response.text();
+            document.querySelector('main').innerHTML = template;
+
+            // Hero
+            document.getElementById('corsoHeroImage').style.backgroundImage = `url('${corsoData.heroImage}')`;
+            document.getElementById('corsoBadge').textContent = corsoData.badge;
+            document.getElementById('corsoTitolo').textContent = corsoData.titolo;
+            document.getElementById('corsoTagline').textContent = corsoData.tagline;
+
+            // Intro section
+            document.getElementById('corsoIntroText').innerHTML = corsoData.intro;
+            document.getElementById('corsoIntroImg').src = corsoData.introImage;
+            document.getElementById('corsoIntroImg').alt = corsoData.titolo;
+            document.getElementById('corsoEta').textContent = corsoData.eta;
+            document.getElementById('corsoFrequenza').textContent = corsoData.frequenza;
+
+            // Metodo section
+            document.getElementById('corsoMetodoTitolo').textContent = corsoData.metodoTitolo;
+            document.getElementById('corsoMetodoContent').innerHTML = corsoData.metodo.map(item => `
+                <div class="corso-metodo-item">
+                    <h3>${item.titolo}</h3>
+                    <p>${item.testo}</p>
+                </div>
+            `).join('');
+
+            // Impara section
+            document.getElementById('corsoImparaTitolo').textContent = corsoData.imparaTitolo;
+            document.getElementById('corsoImparaGrid').innerHTML = corsoData.impara.map(item => `
+                <li>${item}</li>
+            `).join('');
+
+        } catch (error) {
+            console.error('Errore caricamento template:', error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadCorsoTemplate);
+    </script>
+</body>
+</html>

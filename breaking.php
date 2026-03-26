@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corsi di danza per la Seconda Infanzia (6-8 anni). Tecnica e divertimento per piccoli danzatori. InBallet Lainate e Rho.">
-    <meta name="keywords" content="danza bambini 6 anni, danza seconda infanzia, corso danza bambini, InBallet, Lainate, Rho">
+    <meta name="description" content="Corso di Breaking (Breakdance). Power moves, footwork e freeze. InBallet Lainate e Rho.">
+    <meta name="keywords" content="breaking, breakdance, corso breaking, b-boy, b-girl, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Seconda Infanzia - InBallet">
-    <meta property="og:description" content="Percorsi di danza per bambini dai 6 agli 8 anni.">
+    <meta property="og:title" content="Breaking - InBallet">
+    <meta property="og:description" content="Corso di Breaking. Power moves, footwork e cultura b-boy.">
 
-    <title>Seconda Infanzia - InBallet</title>
+    <title>Breaking - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: '6-8 anni',
-        titolo: 'Seconda Infanzia',
-        tagline: 'Dal gioco alla tecnica: i primi passi verso la danza vera',
-        heroImage: 'assets/images/gallery-4.jpg',
-        introImage: 'assets/images/gallery-6.jpg',
+        badge: 'Ragazzi e adulti',
+        titolo: 'Breaking',
+        tagline: 'La disciplina olimpica che unisce forza, ritmo e creatività',
+        heroImage: 'assets/images/gallery-3.jpg',
+        introImage: 'assets/images/gallery-5.jpg',
         intro: `
-            <p>I percorsi per la <strong>seconda infanzia</strong> accompagnano i bambini
-            dai 6 agli 8 anni nella transizione dal gioco alla tecnica. È l'età perfetta
-            per iniziare a costruire le <strong>basi solide</strong> della danza.</p>
-            <p>I bambini imparano <strong>postura</strong>, <strong>coordinazione</strong> e
-            <strong>musicalità</strong> attraverso lezioni strutturate ma sempre coinvolgenti,
-            dove il divertimento resta protagonista.</p>
+            <p>Il <strong>Breaking</strong> è una delle discipline originali della cultura
+            hip-hop, ora riconosciuta come sport olimpico. Un mix esplosivo di
+            <strong>atletismo</strong>, <strong>ritmo</strong> e <strong>creatività</strong>.</p>
+            <p>I nostri corsi insegnano le fondamenta del breaking: <strong>toprock</strong>,
+            <strong>footwork</strong>, <strong>freeze</strong> e <strong>power moves</strong>,
+            sempre nel rispetto della cultura e dei valori di questa disciplina.</p>
         `,
-        eta: 'Bambini 6-8 anni',
-        frequenza: '1-2 lezioni a settimana',
-        metodoTitolo: 'I Nostri Corsi',
+        eta: 'Ragazzi e adulti',
+        frequenza: '2 lezioni a settimana',
+        metodoTitolo: 'Il Nostro Approccio',
         metodo: [
             {
-                titolo: 'Educazione alla Danza',
-                testo: 'Introduzione agli elementi tecnici fondamentali: postura, coordinazione, musicalità. Il ponte tra il gioco e la danza.'
+                titolo: 'Foundation',
+                testo: 'Studio delle basi fondamentali: toprock, footwork, freeze. Ogni b-boy e b-girl deve costruire solide fondamenta.'
             },
             {
-                titolo: 'Danza Classica Preparatoria',
-                testo: 'Primi elementi della tecnica classica adattati all\'eta: posizioni, port de bras, semplici combinazioni.'
+                titolo: 'Power Moves',
+                testo: 'Introduzione progressiva ai movimenti acrobatici: windmill, headspin, flare. Sicurezza e tecnica prima di tutto.'
             },
             {
-                titolo: 'Hip-Hop Kids',
-                testo: 'Per chi preferisce ritmi urbani: groove, isolazioni e coreografie divertenti su musiche attuali.'
+                titolo: 'Battle Ready',
+                testo: 'Sviluppo dello stile personale e della capacità di improvvisare in cerchio e nelle battle.'
             }
         ],
-        imparaTitolo: 'Cosa impareranno',
+        imparaTitolo: 'Cosa imparerai',
         impara: [
-            'Postura corretta e allineamento',
-            'Coordinazione braccia-gambe',
-            'Riconoscere tempi e ritmi musicali',
-            'Prime sequenze coreografiche',
-            'Disciplina e rispetto delle regole',
-            'Lavorare in gruppo con armonia'
+            'Toprock e groove in piedi',
+            'Footwork e lavoro a terra',
+            'Freeze e posizioni statiche',
+            'Power moves progressivi',
+            'Transizioni fluide tra elementi',
+            'Freestyle e battle mindset'
         ]
     };
 

@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corso di Breaking (Breakdance). Power moves, footwork e freeze. InBallet Lainate e Rho.">
-    <meta name="keywords" content="breaking, breakdance, corso breaking, b-boy, b-girl, InBallet, Lainate, Rho">
+    <meta name="description" content="Corso di Pilates per adulti. Tonificazione, postura e core stability. InBallet Lainate e Rho.">
+    <meta name="keywords" content="pilates, corso pilates, core stability, postura, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Breaking - InBallet">
-    <meta property="og:description" content="Corso di Breaking. Power moves, footwork e cultura b-boy.">
+    <meta property="og:title" content="Pilates - InBallet">
+    <meta property="og:description" content="Corso di Pilates per tutti i livelli. Tonificazione e benessere.">
 
-    <title>Breaking - InBallet</title>
+    <title>Pilates - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Ragazzi e adulti',
-        titolo: 'Breaking',
-        tagline: 'La disciplina olimpica che unisce forza, ritmo e creatività',
-        heroImage: 'assets/images/gallery-3.jpg',
-        introImage: 'assets/images/gallery-5.jpg',
+        badge: 'Adulti - tutti i livelli',
+        titolo: 'Pilates',
+        tagline: 'Forza, controllo e consapevolezza: il metodo che trasforma il corpo',
+        heroImage: 'assets/images/gallery-8.jpg',
+        introImage: 'assets/images/gallery-9.jpg',
         intro: `
-            <p>Il <strong>Breaking</strong> è una delle discipline originali della cultura
-            hip-hop, ora riconosciuta come sport olimpico. Un mix esplosivo di
-            <strong>atletismo</strong>, <strong>ritmo</strong> e <strong>creatività</strong>.</p>
-            <p>I nostri corsi insegnano le fondamenta del breaking: <strong>toprock</strong>,
-            <strong>footwork</strong>, <strong>freeze</strong> e <strong>power moves</strong>,
-            sempre nel rispetto della cultura e dei valori di questa disciplina.</p>
+            <p>Il <strong>Pilates</strong> è un metodo di allenamento che sviluppa
+            <strong>forza</strong>, <strong>flessibilità</strong> e <strong>controllo</strong>
+            attraverso movimenti precisi e consapevoli.</p>
+            <p>Ideale per migliorare la <strong>postura</strong>, rafforzare il
+            <strong>core</strong> e prevenire dolori muscolari. I nostri corsi sono
+            adatti a tutti i livelli, con esercizi adattabili alle esigenze individuali.</p>
         `,
-        eta: 'Ragazzi e adulti',
-        frequenza: '2 lezioni a settimana',
+        eta: 'Adulti di tutte le età',
+        frequenza: '1-2 lezioni a settimana',
         metodoTitolo: 'Il Nostro Approccio',
         metodo: [
             {
-                titolo: 'Foundation',
-                testo: 'Studio delle basi fondamentali: toprock, footwork, freeze. Ogni b-boy e b-girl deve costruire solide fondamenta.'
+                titolo: 'Core Stability',
+                testo: 'Lavoro mirato sul centro del corpo (powerhouse) per sviluppare stabilità, forza e controllo in ogni movimento.'
             },
             {
-                titolo: 'Power Moves',
-                testo: 'Introduzione progressiva ai movimenti acrobatici: windmill, headspin, flare. Sicurezza e tecnica prima di tutto.'
+                titolo: 'Precisione',
+                testo: 'Ogni esercizio viene eseguito con attenzione alla qualità del movimento. Meglio poche ripetizioni perfette che tante approssimative.'
             },
             {
-                titolo: 'Battle Ready',
-                testo: 'Sviluppo dello stile personale e della capacità di improvvisare in cerchio e nelle battle.'
+                titolo: 'Respirazione',
+                testo: 'La respirazione è parte integrante di ogni esercizio, aiutando a mantenere il controllo e a ossigenare i muscoli.'
             }
         ],
         imparaTitolo: 'Cosa imparerai',
         impara: [
-            'Toprock e groove in piedi',
-            'Footwork e lavoro a terra',
-            'Freeze e posizioni statiche',
-            'Power moves progressivi',
-            'Transizioni fluide tra elementi',
-            'Freestyle e battle mindset'
+            'Esercizi per il core e la stabilità',
+            'Tecniche di respirazione Pilates',
+            'Allineamento posturale corretto',
+            'Stretching e flessibilità',
+            'Tonificazione muscolare profonda',
+            'Prevenzione di dolori e tensioni'
         ]
     };
 

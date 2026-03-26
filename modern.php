@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corso di Danza Classica per ragazzi e adulti. Tecnica accademica, grazia e disciplina. InBallet Lainate e Rho.">
-    <meta name="keywords" content="danza classica, corso balletto, tecnica classica, InBallet, Lainate, Rho">
+    <meta name="description" content="Corso di Danza Modern per ragazzi e adulti. Espressività, tecnica e libertà di movimento. InBallet Lainate e Rho.">
+    <meta name="keywords" content="danza modern, corso modern jazz, danza moderna, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Danza Classica - InBallet">
-    <meta property="og:description" content="Corso di tecnica classica accademica per tutti i livelli.">
+    <meta property="og:title" content="Danza Modern - InBallet">
+    <meta property="og:description" content="Corso di danza modern per tutti i livelli. Espressivita e tecnica.">
 
-    <title>Danza Classica - InBallet</title>
+    <title>Danza Modern - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
         badge: 'Tutti i livelli',
-        titolo: 'Danza Classica',
-        tagline: 'La disciplina che forma il corpo e lo spirito, dalla sbarra al centro',
-        heroImage: 'assets/images/gallery-1.jpg',
-        introImage: 'assets/images/gallery-7.jpg',
+        titolo: 'Danza Modern',
+        tagline: 'Libertà espressiva e tecnica si fondono in un linguaggio unico',
+        heroImage: 'assets/images/gallery-2.jpg',
+        introImage: 'assets/images/gallery-8.jpg',
         intro: `
-            <p>La <strong>danza classica</strong> è la base di tutte le discipline coreutiche.
-            Un percorso rigoroso che sviluppa <strong>grazia</strong>, <strong>forza</strong> e
-            <strong>controllo del corpo</strong> attraverso la tecnica accademica.</p>
-            <p>I nostri corsi seguono i programmi delle principali scuole internazionali,
-            adattandoli alle esigenze di ogni allievo. Dalla <strong>sbarra</strong> al
-            <strong>centro</strong>, ogni lezione è un passo verso la perfezione tecnica.</p>
+            <p>La <strong>danza modern</strong> nasce dalla fusione tra tecnica classica e
+            libertà espressiva. Un linguaggio che permette di esplorare il movimento in modo
+            personale, senza rinunciare al rigore tecnico.</p>
+            <p>I nostri corsi sviluppano <strong>fluidità</strong>, <strong>dinamismo</strong> e
+            <strong>consapevolezza corporea</strong>, preparando gli allievi a esprimersi
+            attraverso coreografie che uniscono emozione e tecnica.</p>
         `,
         eta: 'Ragazzi e adulti',
         frequenza: '2-3 lezioni a settimana',
-        metodoTitolo: 'Il Nostro Metodo',
+        metodoTitolo: 'Il Nostro Approccio',
         metodo: [
             {
-                titolo: 'Tecnica Accademica',
-                testo: 'Studio approfondito delle posizioni, dei passi e delle combinazioni secondo il metodo classico, con attenzione alla pulizia del movimento.'
+                titolo: 'Tecnica Modern',
+                testo: 'Studio delle tecniche fondamentali della danza moderna, dal floor work ai salti, con attenzione alla qualità del movimento.'
             },
             {
-                titolo: 'Lavoro alla Sbarra',
-                testo: 'Esercizi fondamentali per sviluppare forza, equilibrio e allineamento. La sbarra è il punto di partenza di ogni lezione.'
+                titolo: 'Espressività',
+                testo: 'Lavoro sull\'interpretazione e sulla capacità di trasmettere emozioni attraverso il corpo. Ogni movimento racconta una storia.'
             },
             {
-                titolo: 'Centro e Punte',
-                testo: 'Progressione verso il lavoro al centro e, per chi è pronto, l\'introduzione alle punte con la dovuta preparazione.'
+                titolo: 'Coreografia',
+                testo: 'Apprendimento di sequenze coreografiche che sfidano e sviluppano le capacità tecniche ed espressive di ogni allievo.'
             }
         ],
         imparaTitolo: 'Cosa imparerai',
         impara: [
-            'Le cinque posizioni fondamentali',
-            'Tecnica alla sbarra e al centro',
-            'Port de bras e utilizzo delle braccia',
-            'Salti, giri e combinazioni',
-            'Espressività e musicalità',
-            'Preparazione alle punte (livelli avanzati)'
+            'Tecniche di floor work e lavoro a terra',
+            'Dinamiche di movimento (sostenuto, staccato, fluido)',
+            'Utilizzo del peso e della gravità',
+            'Isolazioni e coordinazione avanzata',
+            'Interpretazione musicale e coreografica',
+            'Improvvisazione guidata'
         ]
     };
 

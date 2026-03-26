@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corsi di danza per la Prima Infanzia (3-5 anni). Gioco, musica e movimento per i più piccoli. InBallet Lainate e Rho.">
-    <meta name="keywords" content="danza bambini 3 anni, danza prima infanzia, corso danza piccoli, InBallet, Lainate, Rho">
+    <meta name="description" content="Corso di Heels Dance. Danza sui tacchi con eleganza, sensualità e potenza. InBallet Lainate e Rho.">
+    <meta name="keywords" content="heels dance, danza tacchi, high heels, corso heels, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Prima Infanzia - InBallet">
-    <meta property="og:description" content="Percorsi di danza per bambini dai 3 ai 5 anni.">
+    <meta property="og:title" content="Heels - InBallet">
+    <meta property="og:description" content="Corso di Heels Dance. Eleganza e potenza sui tacchi.">
 
-    <title>Prima Infanzia - InBallet</title>
+    <title>Heels - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: '3-5 anni',
-        titolo: 'Prima Infanzia',
-        tagline: 'I primi passi nel mondo della danza, attraverso il gioco e la fantasia',
-        heroImage: 'assets/images/gallery-3.jpg',
-        introImage: 'assets/images/gallery-5.jpg',
+        badge: 'Adulti',
+        titolo: 'Heels',
+        tagline: 'Eleganza, potenza e sensualità: danza sui tacchi con sicurezza',
+        heroImage: 'assets/images/gallery-10.jpg',
+        introImage: 'assets/images/gallery-2.jpg',
         intro: `
-            <p>I percorsi per la <strong>prima infanzia</strong> sono pensati per accompagnare
-            i bambini dai 3 ai 5 anni nella scoperta del movimento. Un approccio giocoso
-            che rispetta i tempi e le esigenze di ogni piccolo allievo.</p>
-            <p>Attraverso <strong>giochi</strong>, <strong>musica</strong> e <strong>storie</strong>,
-            i bambini sviluppano coordinazione, ritmo e socialità, preparandosi naturalmente
-            ai percorsi di danza più strutturati.</p>
+            <p>L'<strong>Heels Dance</strong> è una disciplina che unisce tecnica, stile e
+            empowerment. Ballare sui tacchi richiede controllo, forza e consapevolezza del
+            proprio corpo.</p>
+            <p>I nostri corsi insegnano a muoversi con <strong>eleganza</strong> e
+            <strong>sicurezza</strong>, sviluppando portamento, coordinazione e una nuova
+            percezione di se. Non serve esperienza: serve solo voglia di mettersi in gioco.</p>
         `,
-        eta: 'Bambini 3-5 anni',
+        eta: 'Adulti',
         frequenza: '1 lezione a settimana',
-        metodoTitolo: 'I Nostri Corsi',
+        metodoTitolo: 'Il Nostro Approccio',
         metodo: [
             {
-                titolo: 'Avviamento alla Danza',
-                testo: 'Il primissimo approccio al movimento per i bambini di 3 anni. Giochi, ritmo e scoperta del proprio corpo nello spazio.'
+                titolo: 'Tecnica sui Tacchi',
+                testo: 'Apprendimento graduale della postura e dell\'equilibrio sui tacchi, partendo dalle basi per arrivare a movimenti complessi.'
             },
             {
-                titolo: 'Movimento Creativo',
-                testo: 'Espressione libera attraverso la fantasia. I bambini esplorano il movimento guidati da storie e immagini.'
+                titolo: 'Empowerment',
+                testo: 'La danza come strumento per sentirsi forti e sicure di sé. Ogni lezione è un\'occasione per celebrare il proprio corpo.'
             },
             {
-                titolo: 'Educazione alla Danza',
-                testo: 'Per i bambini di 4-5 anni pronti a un primo approccio più strutturato, sempre nel rispetto del gioco.'
+                titolo: 'Coreografia',
+                testo: 'Studio di coreografie che uniscono diversi stili: commercial, jazz funk, voguing. Sempre con personalità e attitudine.'
             }
         ],
-        imparaTitolo: 'Cosa impareranno',
+        imparaTitolo: 'Cosa imparerai',
         impara: [
-            'Riconoscere e seguire il ritmo',
-            'Muoversi nello spazio con consapevolezza',
-            'Coordinare i movimenti del corpo',
-            'Esprimersi attraverso il movimento',
-            'Collaborare e giocare con gli altri',
-            'Sviluppare ascolto e concentrazione'
+            'Postura e equilibrio sui tacchi',
+            'Camminata elegante e sicura',
+            'Movimenti fluidi e controllati',
+            'Coreografie su diversi stili musicali',
+            'Espressività e presenza scenica',
+            'Fiducia in se stessi'
         ]
     };
 

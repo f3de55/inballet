@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corso di Heels Dance. Danza sui tacchi con eleganza, sensualità e potenza. InBallet Lainate e Rho.">
-    <meta name="keywords" content="heels dance, danza tacchi, high heels, corso heels, InBallet, Lainate, Rho">
+    <meta name="description" content="Corso di Yoga per adulti. Equilibrio tra corpo e mente, flessibilità e benessere. InBallet Lainate e Rho.">
+    <meta name="keywords" content="yoga, corso yoga, hatha yoga, benessere, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Heels - InBallet">
-    <meta property="og:description" content="Corso di Heels Dance. Eleganza e potenza sui tacchi.">
+    <meta property="og:title" content="Yoga - InBallet">
+    <meta property="og:description" content="Corso di Yoga per tutti i livelli. Equilibrio tra corpo e mente.">
 
-    <title>Heels - InBallet</title>
+    <title>Yoga - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Adulti',
-        titolo: 'Heels',
-        tagline: 'Eleganza, potenza e sensualità: danza sui tacchi con sicurezza',
-        heroImage: 'assets/images/gallery-10.jpg',
-        introImage: 'assets/images/gallery-2.jpg',
+        badge: 'Adulti - tutti i livelli',
+        titolo: 'Yoga',
+        tagline: 'Trova il tuo equilibrio tra corpo, mente e respiro',
+        heroImage: 'assets/images/gallery-7.jpg',
+        introImage: 'assets/images/gallery-8.jpg',
         intro: `
-            <p>L'<strong>Heels Dance</strong> è una disciplina che unisce tecnica, stile e
-            empowerment. Ballare sui tacchi richiede controllo, forza e consapevolezza del
-            proprio corpo.</p>
-            <p>I nostri corsi insegnano a muoversi con <strong>eleganza</strong> e
-            <strong>sicurezza</strong>, sviluppando portamento, coordinazione e una nuova
-            percezione di se. Non serve esperienza: serve solo voglia di mettersi in gioco.</p>
+            <p>Lo <strong>Yoga</strong> è una pratica millenaria che unisce movimento,
+            respirazione e consapevolezza. Un percorso per ritrovare <strong>equilibrio</strong>,
+            <strong>flessibilità</strong> e <strong>serenità</strong> interiore.</p>
+            <p>I nostri corsi sono aperti a tutti, dai principianti ai praticanti esperti.
+            Ogni lezione è un'occasione per staccare dalla frenesia quotidiana e dedicare
+            tempo a se stessi.</p>
         `,
-        eta: 'Adulti',
-        frequenza: '1 lezione a settimana',
+        eta: 'Adulti di tutte le età',
+        frequenza: '1-2 lezioni a settimana',
         metodoTitolo: 'Il Nostro Approccio',
         metodo: [
             {
-                titolo: 'Tecnica sui Tacchi',
-                testo: 'Apprendimento graduale della postura e dell\'equilibrio sui tacchi, partendo dalle basi per arrivare a movimenti complessi.'
+                titolo: 'Asana',
+                testo: 'Pratica delle posizioni yoga con attenzione all\'allineamento e al respiro. Ogni posizione viene adattata alle capacità individuali.'
             },
             {
-                titolo: 'Empowerment',
-                testo: 'La danza come strumento per sentirsi forti e sicure di sé. Ogni lezione è un\'occasione per celebrare il proprio corpo.'
+                titolo: 'Pranayama',
+                testo: 'Tecniche di respirazione per calmare la mente, aumentare l\'energia e migliorare la concentrazione.'
             },
             {
-                titolo: 'Coreografia',
-                testo: 'Studio di coreografie che uniscono diversi stili: commercial, jazz funk, voguing. Sempre con personalità e attitudine.'
+                titolo: 'Rilassamento',
+                testo: 'Ogni lezione si conclude con momenti di rilassamento profondo per integrare i benefici della pratica.'
             }
         ],
         imparaTitolo: 'Cosa imparerai',
         impara: [
-            'Postura e equilibrio sui tacchi',
-            'Camminata elegante e sicura',
-            'Movimenti fluidi e controllati',
-            'Coreografie su diversi stili musicali',
-            'Espressività e presenza scenica',
-            'Fiducia in se stessi'
+            'Posizioni base e avanzate (asana)',
+            'Tecniche di respirazione consapevole',
+            'Allineamento posturale corretto',
+            'Gestione dello stress e dell\'ansia',
+            'Flessibilità e forza muscolare',
+            'Meditazione e presenza mentale'
         ]
     };
 

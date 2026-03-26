@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corso di Yoga per adulti. Equilibrio tra corpo e mente, flessibilità e benessere. InBallet Lainate e Rho.">
-    <meta name="keywords" content="yoga, corso yoga, hatha yoga, benessere, InBallet, Lainate, Rho">
+    <meta name="description" content="Corso di Contact Improvisation. Esplora il movimento attraverso il contatto e il dialogo corporeo. InBallet Lainate e Rho.">
+    <meta name="keywords" content="contact improvisation, danza contatto, improvvisazione danza, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Yoga - InBallet">
-    <meta property="og:description" content="Corso di Yoga per tutti i livelli. Equilibrio tra corpo e mente.">
+    <meta property="og:title" content="Contact Improvisation - InBallet">
+    <meta property="og:description" content="Corso di Contact Improvisation. Il dialogo corporeo attraverso il contatto.">
 
-    <title>Yoga - InBallet</title>
+    <title>Contact Improvisation - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Adulti - tutti i livelli',
-        titolo: 'Yoga',
-        tagline: 'Trova il tuo equilibrio tra corpo, mente e respiro',
+        badge: 'Adulti',
+        titolo: 'Contact Improvisation',
+        tagline: 'Il dialogo dei corpi attraverso il peso, lo spazio e l\'ascolto reciproco',
         heroImage: 'assets/images/gallery-7.jpg',
-        introImage: 'assets/images/gallery-8.jpg',
+        introImage: 'assets/images/gallery-3.jpg',
         intro: `
-            <p>Lo <strong>Yoga</strong> è una pratica millenaria che unisce movimento,
-            respirazione e consapevolezza. Un percorso per ritrovare <strong>equilibrio</strong>,
-            <strong>flessibilità</strong> e <strong>serenità</strong> interiore.</p>
-            <p>I nostri corsi sono aperti a tutti, dai principianti ai praticanti esperti.
-            Ogni lezione è un'occasione per staccare dalla frenesia quotidiana e dedicare
-            tempo a se stessi.</p>
+            <p>Il <strong>Contact Improvisation</strong> è una forma di danza basata sul dialogo
+            fisico tra due o più persone. Si esplora il movimento attraverso il contatto,
+            il peso condiviso e l'ascolto reciproco.</p>
+            <p>Una pratica che sviluppa <strong>fiducia</strong>, <strong>presenza</strong> e
+            <strong>reattività</strong>, dove ogni momento è unico e irripetibile.
+            Non servono passi predefiniti, solo la volontà di esplorare.</p>
         `,
-        eta: 'Adulti di tutte le età',
-        frequenza: '1-2 lezioni a settimana',
+        eta: 'Adulti',
+        frequenza: '1 lezione a settimana',
         metodoTitolo: 'Il Nostro Approccio',
         metodo: [
             {
-                titolo: 'Asana',
-                testo: 'Pratica delle posizioni yoga con attenzione all\'allineamento e al respiro. Ogni posizione viene adattata alle capacità individuali.'
+                titolo: 'Ascolto',
+                testo: 'Sviluppo della capacità di percepire e rispondere ai segnali del partner attraverso il contatto fisico.'
             },
             {
-                titolo: 'Pranayama',
-                testo: 'Tecniche di respirazione per calmare la mente, aumentare l\'energia e migliorare la concentrazione.'
+                titolo: 'Fiducia',
+                testo: 'Costruzione di un ambiente sicuro dove sperimentare il dare e ricevere peso, cadere e sostenere.'
             },
             {
-                titolo: 'Rilassamento',
-                testo: 'Ogni lezione si conclude con momenti di rilassamento profondo per integrare i benefici della pratica.'
+                titolo: 'Spontaneità',
+                testo: 'Esplorazione del movimento senza schemi predefiniti, seguendo gli impulsi che nascono dal contatto.'
             }
         ],
         imparaTitolo: 'Cosa imparerai',
         impara: [
-            'Posizioni base e avanzate (asana)',
-            'Tecniche di respirazione consapevole',
-            'Allineamento posturale corretto',
-            'Gestione dello stress e dell\'ansia',
-            'Flessibilità e forza muscolare',
-            'Meditazione e presenza mentale'
+            'Principi di peso e contro-peso',
+            'Rotolamenti e cadute controllate',
+            'Lift e sostegni reciproci',
+            'Ascolto attraverso il tatto',
+            'Improvvisazione a coppia e in gruppo',
+            'Consapevolezza dei confini personali'
         ]
     };
 

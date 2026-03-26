@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Lezioni individuali personalizzate di danza e benessere. Percorsi su misura per i tuoi obiettivi. InBallet Lainate e Rho.">
-    <meta name="keywords" content="lezioni private danza, lezioni individuali, personal training danza, InBallet, Lainate, Rho">
+    <meta name="description" content="Corsi di danza per la Seconda Infanzia (6-8 anni). Tecnica e divertimento per piccoli danzatori. InBallet Lainate e Rho.">
+    <meta name="keywords" content="danza bambini 6 anni, danza seconda infanzia, corso danza bambini, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Lezioni Individuali - InBallet">
-    <meta property="og:description" content="Lezioni private personalizzate per i tuoi obiettivi.">
+    <meta property="og:title" content="Seconda Infanzia - InBallet">
+    <meta property="og:description" content="Percorsi di danza per bambini dai 6 agli 8 anni.">
 
-    <title>Lezioni Individuali - InBallet</title>
+    <title>Seconda Infanzia - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Tutte le età',
-        titolo: 'Lezioni Individuali',
-        tagline: 'Un percorso su misura, pensato esclusivamente per te',
-        heroImage: 'assets/images/gallery-1.jpg',
-        introImage: 'assets/images/gallery-3.jpg',
+        badge: '6-8 anni',
+        titolo: 'Seconda Infanzia',
+        tagline: 'Dal gioco alla tecnica: i primi passi verso la danza vera',
+        heroImage: 'assets/images/gallery-4.jpg',
+        introImage: 'assets/images/gallery-6.jpg',
         intro: `
-            <p>Le <strong>lezioni individuali</strong> sono il modo più efficace per raggiungere
-            i tuoi obiettivi. Un insegnante dedicato, un programma personalizzato, tutta
-            l'attenzione focalizzata su di te.</p>
-            <p>Ideali per chi vuole <strong>accelerare i progressi</strong>, lavorare su
-            <strong>aspetti specifici</strong> o semplicemente preferisce un approccio
-            one-to-one. Disponibili per tutte le discipline e tutti i livelli.</p>
+            <p>I percorsi per la <strong>seconda infanzia</strong> accompagnano i bambini
+            dai 6 agli 8 anni nella transizione dal gioco alla tecnica. È l'età perfetta
+            per iniziare a costruire le <strong>basi solide</strong> della danza.</p>
+            <p>I bambini imparano <strong>postura</strong>, <strong>coordinazione</strong> e
+            <strong>musicalità</strong> attraverso lezioni strutturate ma sempre coinvolgenti,
+            dove il divertimento resta protagonista.</p>
         `,
-        eta: 'Bambini, ragazzi e adulti',
-        frequenza: 'Su appuntamento',
-        metodoTitolo: 'Il Nostro Approccio',
+        eta: 'Bambini 6-8 anni',
+        frequenza: '1-2 lezioni a settimana',
+        metodoTitolo: 'I Nostri Corsi',
         metodo: [
             {
-                titolo: 'Personalizzazione',
-                testo: 'Ogni lezione è costruita sui tuoi obiettivi, sul tuo livello e sulle tue esigenze specifiche. Nessun programma preconfezionato.'
+                titolo: 'Educazione alla Danza',
+                testo: 'Introduzione agli elementi tecnici fondamentali: postura, coordinazione, musicalità. Il ponte tra il gioco e la danza.'
             },
             {
-                titolo: 'Attenzione Totale',
-                testo: 'L\'insegnante si dedica esclusivamente a te, correggendo, guidando e supportando ogni movimento.'
+                titolo: 'Danza Classica Preparatoria',
+                testo: 'Primi elementi della tecnica classica adattati all\'eta: posizioni, port de bras, semplici combinazioni.'
             },
             {
-                titolo: 'Flessibilità',
-                testo: 'Orari concordati in base alle tue disponibilità. Lezioni singole o pacchetti, come preferisci.'
+                titolo: 'Hip-Hop Kids',
+                testo: 'Per chi preferisce ritmi urbani: groove, isolazioni e coreografie divertenti su musiche attuali.'
             }
         ],
-        imparaTitolo: 'Cosa offriamo',
+        imparaTitolo: 'Cosa impareranno',
         impara: [
-            'Lezioni private di qualsiasi disciplina',
-            'Preparazione per audizioni e concorsi',
-            'Recupero tecnico e correzione posturale',
-            'Coreografie personalizzate',
-            'Supporto per esami e saggi',
-            'Percorsi riabilitativi post-infortunio'
+            'Postura corretta e allineamento',
+            'Coordinazione braccia-gambe',
+            'Riconoscere tempi e ritmi musicali',
+            'Prime sequenze coreografiche',
+            'Disciplina e rispetto delle regole',
+            'Lavorare in gruppo con armonia'
         ]
     };
 

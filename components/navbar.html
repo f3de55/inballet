@@ -1,3 +1,89 @@
+<!-- Banner Evento Prossimo -->
+<div class="event-banner" id="eventBanner">
+    <div class="event-banner-content">
+        <div class="event-banner-icon"><i class="fas fa-star"></i></div>
+        <div class="event-banner-info">
+            <div class="event-banner-label">Prossimo Evento</div>
+            <div class="event-banner-title" id="bannerTitle"></div>
+            <div class="event-banner-meta">
+                <span class="event-banner-date" id="bannerDate"></span>
+                <span class="event-banner-desc" id="bannerDesc"></span>
+            </div>
+            <a href="#" class="event-banner-link" id="bannerLink">Scopri di più <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <button class="event-banner-close" id="bannerClose" aria-label="Chiudi banner"><i class="fas fa-times"></i></button>
+    </div>
+</div>
+<script>
+(function(){
+    async function initEventBanner(){
+        try{
+            const res=await fetch('/data/eventi.json');
+            if(!res.ok)return;
+            const eventi=await res.json();
+            if(!eventi||!Array.isArray(eventi)||eventi.length===0)return;
+
+            const adesso=Date.now();
+            const eventiFuturi=eventi.filter(e=>{
+                if(!e.data)return false;
+                const dt=e.data+'T'+(e.ora||'23:59');
+                return new Date(dt).getTime()>=adesso;
+            }).sort((a,b)=>{
+                const dtA=new Date(a.data+'T'+(a.ora||'23:59')).getTime();
+                const dtB=new Date(b.data+'T'+(b.ora||'23:59')).getTime();
+                return dtA-dtB;
+            });
+
+            if(eventiFuturi.length===0)return;
+
+            const evento=eventiFuturi[0];
+
+            // Controlla se è stato chiuso
+            const dismissed=localStorage.getItem('banner_dismissed_'+evento.id);
+            if(dismissed)return;
+
+            // Formatta data
+            const d=new Date(evento.data);
+            const giorni=['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+            const mesi=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+            const dataF=giorni[d.getDay()]+' '+d.getDate()+' '+mesi[d.getMonth()];
+
+            // Descrizione troncata
+            let desc='';
+            if(evento.descrizione){
+                const words=evento.descrizione.split(' ').slice(0,6);
+                desc=words.join(' ');
+                if(evento.descrizione.split(' ').length>6)desc+='...';
+            }
+
+            // Popola
+            document.getElementById('bannerTitle').textContent=evento.titolo;
+            document.getElementById('bannerDate').textContent=dataF+(evento.ora?' • '+evento.ora:'');
+            if(desc)document.getElementById('bannerDesc').textContent=desc;
+
+            // Link con ID evento per aprire modale
+            document.getElementById('bannerLink').href='spettacoli-eventi.html?evento='+evento.id;
+
+            // Chiudi banner
+            document.getElementById('bannerClose').onclick=function(){
+                localStorage.setItem('banner_dismissed_'+evento.id,'1');
+                document.getElementById('eventBanner').classList.remove('visible');
+                document.body.classList.remove('has-event-banner');
+            };
+
+            // Mostra
+            document.getElementById('eventBanner').classList.add('visible');
+            document.body.classList.add('has-event-banner');
+        }catch(e){}
+    }
+    if(document.readyState==='loading'){
+        document.addEventListener('DOMContentLoaded',initEventBanner);
+    }else{
+        initEventBanner();
+    }
+})();
+</script>
+
 <nav class="nav-container" aria-label="Navigazione principale">
     <div class="logo-section">
         <a href="/" aria-label="InBallet - Torna alla homepage">
@@ -13,48 +99,48 @@
                     <div class="mega-menu-section">
                         <h4>Danza Classica e Moderna</h4>
                         <ul>
-                            <li><a href="avviamento-danza.html">Avviamento alla Danza</a></li>
-                            <li><a href="educazione-danza.html">Educazione alla Danza</a></li>
-                            <li><a href="danza-classica.html">Danza Classica</a></li>
-                            <li><a href="modern.html">Modern</a></li>
+                            <li><a href="avviamento-danza">Avviamento alla Danza</a></li>
+                            <li><a href="educazione-danza">Educazione alla Danza</a></li>
+                            <li><a href="danza-classica">Danza Classica</a></li>
+                            <li><a href="modern">Modern</a></li>
                         </ul>
                     </div>
                     <div class="mega-menu-section">
                         <h4>Danza Contemporanea</h4>
                         <ul>
-                            <li><a href="danza-contemporanea.html">Danza Contemporanea</a></li>
-                            <li><a href="contemporanea-adulti.html">Danza Contemporanea Adulti</a></li>
-                            <li><a href="contact-improvisation.html">Contact Improvisation</a></li>
-                            <li><a href="movimento-creativo.html">Movimento Creativo</a></li>
+                            <li><a href="danza-contemporanea">Danza Contemporanea</a></li>
+                            <li><a href="contemporanea-adulti">Danza Contemporanea Adulti</a></li>
+                            <li><a href="contact-improvisation">Contact Improvisation</a></li>
+                            <li><a href="movimento-creativo">Movimento Creativo</a></li>
                         </ul>
                     </div>
                     <div class="mega-menu-section">
                         <h4>Urban Dance</h4>
                         <ul>
-                            <li><a href="hip-hop.html">Hip-Hop</a></li>
-                            <li><a href="heels.html">Heels</a></li>
-                            <li><a href="breaking.html">Breaking</a></li>
-                            <li><a href="danza-acrobatica.html">Danza Acrobatica</a></li>
-                            <li><a href="contaminato.html">Contaminato</a></li>
+                            <li><a href="hip-hop">Hip-Hop</a></li>
+                            <li><a href="heels">Heels</a></li>
+                            <li><a href="breaking">Breaking</a></li>
+                            <li><a href="danza-acrobatica">Danza Acrobatica</a></li>
+                            <li><a href="contaminato">Contaminato</a></li>
                         </ul>
                     </div>
                     <div class="mega-menu-section">
                         <h4>Benessere e Movimento</h4>
                         <ul>
-                            <li><a href="yoga.html">Yoga</a></li>
-                            <li><a href="pilates.html">Pilates</a></li>
-                            <li><a href="classi.html">Classi</a></li>
-                            <li><a href="lezioni-individuali.html">Lezioni Individuali</a></li>
+                            <li><a href="yoga">Yoga</a></li>
+                            <li><a href="pilates">Pilates</a></li>
+                            <li><a href="classi">Classi</a></li>
+                            <li><a href="lezioni-individuali">Lezioni Individuali</a></li>
                         </ul>
                     </div>
                     <div class="mega-menu-section">
                         <h4>Percorsi per Età</h4>
                         <ul>
-                            <li><a href="prima-infanzia.html">Prima Infanzia</a></li>
-                            <li><a href="seconda-infanzia.html">Seconda Infanzia</a></li>
-                            <li><a href="bambini.html">Bambini</a></li>
-                            <li><a href="ragazzi.html">Ragazzi</a></li>
-                            <li><a href="adulti.html">Adulti</a></li>
+                            <li><a href="prima-infanzia">Prima Infanzia</a></li>
+                            <li><a href="seconda-infanzia">Seconda Infanzia</a></li>
+                            <li><a href="bambini">Bambini</a></li>
+                            <li><a href="ragazzi">Ragazzi</a></li>
+                            <li><a href="adulti">Adulti</a></li>
                         </ul>
                     </div>
                 </div>
@@ -68,10 +154,10 @@
                     <div class="mega-menu-section">
                         <h4>La Scuola</h4>
                         <ul>
-                            <li><a href="chi-siamo.html">Chi Siamo</a></li>
-                            <li><a href="spettacoli-eventi.html">Spettacoli ed Eventi</a></li>
-                            <li><a href="collaborazioni-scuole.html">Collaborazioni con Scuole</a></li>
-                            <li><a href="sportello-psicologico.html">Sportello Psicologico</a></li>
+                            <li><a href="chi-siamo">Chi Siamo</a></li>
+                            <li><a href="spettacoli-eventi">Spettacoli ed Eventi</a></li>
+                            <li><a href="collaborazioni-scuole">Collaborazioni con Scuole</a></li>
+                            <li><a href="sportello-psicologico">Sportello Psicologico</a></li>
                         </ul>
                     </div>
                 </div>
@@ -85,10 +171,10 @@
                     <div class="mega-menu-section">
                         <h4>Danza Integrativa</h4>
                         <ul>
-                            <li><a href="classi-integrate.html">Classi Multidisciplinari Integrate</a></li>
-                            <li><a href="progetto-noiconvoi.html">Progetto NoiConVoi</a></li>
-                            <li><a href="sportello-bambino.html">Sportello Psicologico del Bambino</a></li>
-                            <li><a href="sostenitori.html">Sostenitori Progetti Sociali</a></li>
+                            <li><a href="classi-integrate">Classi Multidisciplinari Integrate</a></li>
+                            <li><a href="progetto-noiconvoi">Progetto NoiConVoi</a></li>
+                            <li><a href="sportello-bambino">Sportello Psicologico del Bambino</a></li>
+                            <li><a href="sostenitori">Sostenitori Progetti Sociali</a></li>
                         </ul>
                     </div>
                 </div>
@@ -102,16 +188,17 @@
                     <div class="mega-menu-section">
                         <h4>Percorsi Professionali</h4>
                         <ul>
-                            <li><a href="formazione-insegnanti.html">Corso di Formazione per Insegnanti di Danza</a></li>
-                            <li><a href="formazioni-personalizzate.html">Formazioni Personalizzate</a></li>
+                            <li><a href="formazione-insegnanti">Corso di Formazione per Insegnanti di Danza</a></li>
+                            <li><a href="formazioni-personalizzate">Formazioni Personalizzate</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </li>
+
     </ul>
 
-    <a href="contatti.html" class="cta-btn">Contattaci</a>
+    <a href="contatti" class="cta-btn">Contattaci</a>
     <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Apri menu di navigazione">
         <i class="fas fa-bars"></i>
     </button>
@@ -131,32 +218,32 @@
         </button>
         <div class="mobile-submenu" id="corsi-submenu">
             <h4>Danza Classica e Moderna</h4>
-            <a href="avviamento-danza.html">Avviamento alla Danza</a>
-            <a href="educazione-danza.html">Educazione alla Danza</a>
-            <a href="danza-classica.html">Danza Classica</a>
-            <a href="modern.html">Modern</a>
+            <a href="avviamento-danza">Avviamento alla Danza</a>
+            <a href="educazione-danza">Educazione alla Danza</a>
+            <a href="danza-classica">Danza Classica</a>
+            <a href="modern">Modern</a>
             <h4>Danza Contemporanea</h4>
-            <a href="danza-contemporanea.html">Danza Contemporanea</a>
-            <a href="contemporanea-adulti.html">Danza Contemporanea Adulti</a>
-            <a href="contact-improvisation.html">Contact Improvisation</a>
-            <a href="movimento-creativo.html">Movimento Creativo</a>
+            <a href="danza-contemporanea">Danza Contemporanea</a>
+            <a href="contemporanea-adulti">Danza Contemporanea Adulti</a>
+            <a href="contact-improvisation">Contact Improvisation</a>
+            <a href="movimento-creativo">Movimento Creativo</a>
             <h4>Urban Dance</h4>
-            <a href="hip-hop.html">Hip-Hop</a>
-            <a href="heels.html">Heels</a>
-            <a href="breaking.html">Breaking</a>
-            <a href="danza-acrobatica.html">Danza Acrobatica</a>
-            <a href="contaminato.html">Contaminato</a>
+            <a href="hip-hop">Hip-Hop</a>
+            <a href="heels">Heels</a>
+            <a href="breaking">Breaking</a>
+            <a href="danza-acrobatica">Danza Acrobatica</a>
+            <a href="contaminato">Contaminato</a>
             <h4>Benessere e Movimento</h4>
-            <a href="yoga.html">Yoga</a>
-            <a href="pilates.html">Pilates</a>
-            <a href="classi.html">Classi</a>
-            <a href="lezioni-individuali.html">Lezioni Individuali</a>
+            <a href="yoga">Yoga</a>
+            <a href="pilates">Pilates</a>
+            <a href="classi">Classi</a>
+            <a href="lezioni-individuali">Lezioni Individuali</a>
             <h4>Percorsi per Età</h4>
-            <a href="prima-infanzia.html">Prima Infanzia</a>
-            <a href="seconda-infanzia.html">Seconda Infanzia</a>
-            <a href="bambini.html">Bambini</a>
-            <a href="ragazzi.html">Ragazzi</a>
-            <a href="adulti.html">Adulti</a>
+            <a href="prima-infanzia">Prima Infanzia</a>
+            <a href="seconda-infanzia">Seconda Infanzia</a>
+            <a href="bambini">Bambini</a>
+            <a href="ragazzi">Ragazzi</a>
+            <a href="adulti">Adulti</a>
         </div>
     </div>
 
@@ -167,10 +254,10 @@
         </button>
         <div class="mobile-submenu" id="scuola-submenu">
             <h4>La Scuola</h4>
-            <a href="chi-siamo.html">Chi Siamo</a>
-            <a href="spettacoli-eventi.html">Spettacoli ed Eventi</a>
-            <a href="collaborazioni-scuole.html">Collaborazioni con Scuole</a>
-            <a href="sportello-psicologico.html">Sportello Psicologico</a>
+            <a href="chi-siamo">Chi Siamo</a>
+            <a href="spettacoli-eventi">Spettacoli ed Eventi</a>
+            <a href="collaborazioni-scuole">Collaborazioni con Scuole</a>
+            <a href="sportello-psicologico">Sportello Psicologico</a>
         </div>
     </div>
 
@@ -181,10 +268,10 @@
         </button>
         <div class="mobile-submenu" id="progetti-submenu">
             <h4>Danza Integrativa</h4>
-            <a href="classi-integrate.html">Classi Multidisciplinari Integrate</a>
-            <a href="progetto-noiconvoi.html">Progetto NoiConVoi</a>
-            <a href="sportello-bambino.html">Sportello Psicologico del Bambino</a>
-            <a href="sostenitori.html">Sostenitori Progetti Sociali</a>
+            <a href="classi-integrate">Classi Multidisciplinari Integrate</a>
+            <a href="progetto-noiconvoi">Progetto NoiConVoi</a>
+            <a href="sportello-bambino">Sportello Psicologico del Bambino</a>
+            <a href="sostenitori">Sostenitori Progetti Sociali</a>
         </div>
     </div>
 
@@ -195,12 +282,12 @@
         </button>
         <div class="mobile-submenu" id="formazione-submenu">
             <h4>Percorsi Professionali</h4>
-            <a href="formazione-insegnanti.html">Corso di Formazione per Insegnanti di Danza</a>
-            <a href="formazioni-personalizzate.html">Formazioni Personalizzate</a>
+            <a href="formazione-insegnanti">Corso di Formazione per Insegnanti di Danza</a>
+            <a href="formazioni-personalizzate">Formazioni Personalizzate</a>
         </div>
     </div>
 
     <div class="mobile-cta">
-        <a href="contatti.html" class="cta-btn">Contattaci</a>
+        <a href="contatti" class="cta-btn">Contattaci</a>
     </div>
 </div>

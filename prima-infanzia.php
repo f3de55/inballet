@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corso di Contact Improvisation. Esplora il movimento attraverso il contatto e il dialogo corporeo. InBallet Lainate e Rho.">
-    <meta name="keywords" content="contact improvisation, danza contatto, improvvisazione danza, InBallet, Lainate, Rho">
+    <meta name="description" content="Corsi di danza per la Prima Infanzia (3-5 anni). Gioco, musica e movimento per i più piccoli. InBallet Lainate e Rho.">
+    <meta name="keywords" content="danza bambini 3 anni, danza prima infanzia, corso danza piccoli, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Contact Improvisation - InBallet">
-    <meta property="og:description" content="Corso di Contact Improvisation. Il dialogo corporeo attraverso il contatto.">
+    <meta property="og:title" content="Prima Infanzia - InBallet">
+    <meta property="og:description" content="Percorsi di danza per bambini dai 3 ai 5 anni.">
 
-    <title>Contact Improvisation - InBallet</title>
+    <title>Prima Infanzia - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Adulti',
-        titolo: 'Contact Improvisation',
-        tagline: 'Il dialogo dei corpi attraverso il peso, lo spazio e l\'ascolto reciproco',
-        heroImage: 'assets/images/gallery-7.jpg',
-        introImage: 'assets/images/gallery-3.jpg',
+        badge: '3-5 anni',
+        titolo: 'Prima Infanzia',
+        tagline: 'I primi passi nel mondo della danza, attraverso il gioco e la fantasia',
+        heroImage: 'assets/images/gallery-3.jpg',
+        introImage: 'assets/images/gallery-5.jpg',
         intro: `
-            <p>Il <strong>Contact Improvisation</strong> è una forma di danza basata sul dialogo
-            fisico tra due o più persone. Si esplora il movimento attraverso il contatto,
-            il peso condiviso e l'ascolto reciproco.</p>
-            <p>Una pratica che sviluppa <strong>fiducia</strong>, <strong>presenza</strong> e
-            <strong>reattività</strong>, dove ogni momento è unico e irripetibile.
-            Non servono passi predefiniti, solo la volontà di esplorare.</p>
+            <p>I percorsi per la <strong>prima infanzia</strong> sono pensati per accompagnare
+            i bambini dai 3 ai 5 anni nella scoperta del movimento. Un approccio giocoso
+            che rispetta i tempi e le esigenze di ogni piccolo allievo.</p>
+            <p>Attraverso <strong>giochi</strong>, <strong>musica</strong> e <strong>storie</strong>,
+            i bambini sviluppano coordinazione, ritmo e socialità, preparandosi naturalmente
+            ai percorsi di danza più strutturati.</p>
         `,
-        eta: 'Adulti',
+        eta: 'Bambini 3-5 anni',
         frequenza: '1 lezione a settimana',
-        metodoTitolo: 'Il Nostro Approccio',
+        metodoTitolo: 'I Nostri Corsi',
         metodo: [
             {
-                titolo: 'Ascolto',
-                testo: 'Sviluppo della capacità di percepire e rispondere ai segnali del partner attraverso il contatto fisico.'
+                titolo: 'Avviamento alla Danza',
+                testo: 'Il primissimo approccio al movimento per i bambini di 3 anni. Giochi, ritmo e scoperta del proprio corpo nello spazio.'
             },
             {
-                titolo: 'Fiducia',
-                testo: 'Costruzione di un ambiente sicuro dove sperimentare il dare e ricevere peso, cadere e sostenere.'
+                titolo: 'Movimento Creativo',
+                testo: 'Espressione libera attraverso la fantasia. I bambini esplorano il movimento guidati da storie e immagini.'
             },
             {
-                titolo: 'Spontaneità',
-                testo: 'Esplorazione del movimento senza schemi predefiniti, seguendo gli impulsi che nascono dal contatto.'
+                titolo: 'Educazione alla Danza',
+                testo: 'Per i bambini di 4-5 anni pronti a un primo approccio più strutturato, sempre nel rispetto del gioco.'
             }
         ],
-        imparaTitolo: 'Cosa imparerai',
+        imparaTitolo: 'Cosa impareranno',
         impara: [
-            'Principi di peso e contro-peso',
-            'Rotolamenti e cadute controllate',
-            'Lift e sostegni reciproci',
-            'Ascolto attraverso il tatto',
-            'Improvvisazione a coppia e in gruppo',
-            'Consapevolezza dei confini personali'
+            'Riconoscere e seguire il ritmo',
+            'Muoversi nello spazio con consapevolezza',
+            'Coordinare i movimenti del corpo',
+            'Esprimersi attraverso il movimento',
+            'Collaborare e giocare con gli altri',
+            'Sviluppare ascolto e concentrazione'
         ]
     };
 

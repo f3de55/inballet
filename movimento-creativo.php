@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corso Avviamento alla Danza per bambini dai 3 anni. Primo approccio al movimento e alla musica attraverso il gioco. InBallet Lainate e Rho.">
-    <meta name="keywords" content="avviamento danza, corso danza bambini 3 anni, propedeutica danza, InBallet, Lainate, Rho">
+    <meta name="description" content="Corso di Movimento Creativo per bambini. Espressione libera attraverso il gioco e la fantasia. InBallet Lainate e Rho.">
+    <meta name="keywords" content="movimento creativo, danza creativa bambini, espressione corporea, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Avviamento alla Danza - InBallet">
-    <meta property="og:description" content="Corso per bambini dai 3 anni. Primo approccio al movimento e alla musica.">
+    <meta property="og:title" content="Movimento Creativo - InBallet">
+    <meta property="og:description" content="Corso di movimento creativo per bambini. Espressione libera e fantasia.">
 
-    <title>Avviamento alla Danza - InBallet</title>
+    <title>Movimento Creativo - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Dai 3 anni',
-        titolo: 'Avviamento alla Danza',
-        tagline: 'Il primo passo nel mondo della danza, attraverso il gioco e la musica',
-        heroImage: 'assets/images/gallery-3.jpg',
-        introImage: 'assets/images/gallery-5.jpg',
+        badge: 'Dai 4 anni',
+        titolo: 'Movimento Creativo',
+        tagline: 'Dove la fantasia incontra il movimento e ogni bambino diventa protagonista',
+        heroImage: 'assets/images/gallery-8.jpg',
+        introImage: 'assets/images/gallery-4.jpg',
         intro: `
-            <p>Un percorso studiato per il <strong>primissimo approccio alla musica e al movimento</strong>.
-            I bambini sperimentano giochi interattivi in sala per orientarsi nello spazio e sviluppare
-            le prime competenze motorie, con stimoli pensati per migliorare anche le capacita cognitive.</p>
-            <p>L'obiettivo e l'<strong>educazione al movimento</strong>, che progressivamente
-            evolve verso l'educazione alla danza vera e propria. Il tutto in un ambiente
-            accogliente, dove ogni bambino puo esprimersi liberamente.</p>
+            <p>Il <strong>movimento creativo</strong> è un percorso dove i bambini esplorano
+            il movimento attraverso la fantasia e il gioco. Non ci sono passi giusti o sbagliati,
+            solo infinite possibilità da scoprire.</p>
+            <p>Attraverso storie, immagini e musica, i piccoli allievi sviluppano
+            <strong>creatività</strong>, <strong>espressività</strong> e <strong>sicurezza</strong>
+            in sé stessi, imparando a comunicare con il proprio corpo.</p>
         `,
-        eta: 'Bambini dai 3 anni',
+        eta: 'Bambini dai 4 anni',
         frequenza: '1 lezione a settimana',
         metodoTitolo: 'Il Nostro Approccio',
         metodo: [
             {
-                titolo: 'Coinvolgimento',
-                testo: 'Sintonia ed equilibrio di gruppo alla base della classe. Ogni bambino e parte di un\'esperienza condivisa, dove impara a relazionarsi con gli altri attraverso il movimento.'
+                titolo: 'Fantasia',
+                testo: 'Utilizzo di storie, personaggi e ambientazioni immaginarie per stimolare la creatività e rendere ogni lezione un\'avventura.'
             },
             {
-                titolo: 'Educazione',
-                testo: 'Attenzione e cura per ogni singolo piccolo allievo. Un percorso che rispetta i tempi di ciascuno, senza forzature, con un approccio dolce e professionale.'
+                titolo: 'Libertà',
+                testo: 'Spazio per l\'espressione individuale senza giudizio. Ogni movimento è valido se nasce da un\'intenzione autentica.'
             },
             {
-                titolo: 'Divertimento',
-                testo: 'Lo spazio ludico e sempre presente. I bambini imparano giocando, senza rendersene conto, sviluppando coordinazione e musicalita in modo naturale.'
+                titolo: 'Esplorazione',
+                testo: 'Scoperta delle infinite possibilità del corpo attraverso giochi di movimento, ritmo e improvvisazione guidata.'
             }
         ],
         imparaTitolo: 'Cosa impareranno',
         impara: [
-            'Riconoscere e seguire il ritmo della musica',
-            'Muoversi nello spazio con consapevolezza',
-            'Coordinare i movimenti del corpo',
-            'Lavorare insieme agli altri bambini',
-            'Esprimersi attraverso il movimento libero',
-            'Sviluppare equilibrio e postura'
+            'Esprimersi liberamente attraverso il movimento',
+            'Tradurre emozioni e immagini in gesti',
+            'Collaborare con i compagni in giochi di gruppo',
+            'Sviluppare la propria creatività',
+            'Ascoltare e interpretare la musica',
+            'Acquisire fiducia nel proprio corpo'
         ]
     };
 

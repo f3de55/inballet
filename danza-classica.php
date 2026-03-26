@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corso di Danza Contemporanea per Adulti. Riscopri il movimento, inizia anche da zero. InBallet Lainate e Rho.">
-    <meta name="keywords" content="danza contemporanea adulti, corso danza adulti, danza per principianti, InBallet, Lainate, Rho">
+    <meta name="description" content="Corso di Danza Classica per ragazzi e adulti. Tecnica accademica, grazia e disciplina. InBallet Lainate e Rho.">
+    <meta name="keywords" content="danza classica, corso balletto, tecnica classica, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Contemporanea Adulti - InBallet">
-    <meta property="og:description" content="Corso di danza contemporanea pensato per gli adulti, anche principianti.">
+    <meta property="og:title" content="Danza Classica - InBallet">
+    <meta property="og:description" content="Corso di tecnica classica accademica per tutti i livelli.">
 
-    <title>Contemporanea Adulti - InBallet</title>
+    <title>Danza Classica - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Adulti - anche principianti',
-        titolo: 'Contemporanea Adulti',
-        tagline: 'Non è mai troppo tardi per iniziare a danzare',
-        heroImage: 'assets/images/gallery-6.jpg',
-        introImage: 'assets/images/gallery-10.jpg',
+        badge: 'Tutti i livelli',
+        titolo: 'Danza Classica',
+        tagline: 'La disciplina che forma il corpo e lo spirito, dalla sbarra al centro',
+        heroImage: 'assets/images/gallery-1.jpg',
+        introImage: 'assets/images/gallery-7.jpg',
         intro: `
-            <p>Un corso pensato per chi vuole avvicinarsi alla danza da adulto, senza
-            esperienza precedente. La <strong>danza contemporanea</strong> è il linguaggio
-            perfetto per riscoprire il proprio corpo e le sue potenzialità.</p>
-            <p>In un ambiente accogliente e senza giudizio, ogni partecipante può esplorare
-            il movimento al proprio ritmo, sviluppando <strong>flessibilità</strong>,
-            <strong>forza</strong> e <strong>consapevolezza corporea</strong>.</p>
+            <p>La <strong>danza classica</strong> è la base di tutte le discipline coreutiche.
+            Un percorso rigoroso che sviluppa <strong>grazia</strong>, <strong>forza</strong> e
+            <strong>controllo del corpo</strong> attraverso la tecnica accademica.</p>
+            <p>I nostri corsi seguono i programmi delle principali scuole internazionali,
+            adattandoli alle esigenze di ogni allievo. Dalla <strong>sbarra</strong> al
+            <strong>centro</strong>, ogni lezione è un passo verso la perfezione tecnica.</p>
         `,
-        eta: 'Adulti di tutte le età',
-        frequenza: '1-2 lezioni a settimana',
-        metodoTitolo: 'Il Nostro Approccio',
+        eta: 'Ragazzi e adulti',
+        frequenza: '2-3 lezioni a settimana',
+        metodoTitolo: 'Il Nostro Metodo',
         metodo: [
             {
-                titolo: 'Accessibilità',
-                testo: 'Un percorso pensato per accogliere tutti, indipendentemente dal livello di partenza. Ogni esercizio viene proposto con varianti adatte a ciascuno.'
+                titolo: 'Tecnica Accademica',
+                testo: 'Studio approfondito delle posizioni, dei passi e delle combinazioni secondo il metodo classico, con attenzione alla pulizia del movimento.'
             },
             {
-                titolo: 'Benessere',
-                testo: 'La danza come strumento di benessere fisico e mentale. Un\'ora di lezione per staccare dalla routine e riconnettersi con se stessi.'
+                titolo: 'Lavoro alla Sbarra',
+                testo: 'Esercizi fondamentali per sviluppare forza, equilibrio e allineamento. La sbarra è il punto di partenza di ogni lezione.'
             },
             {
-                titolo: 'Progressione',
-                testo: 'Un percorso graduale che permette di acquisire sicurezza e competenze tecniche senza fretta, rispettando i tempi di ognuno.'
+                titolo: 'Centro e Punte',
+                testo: 'Progressione verso il lavoro al centro e, per chi è pronto, l\'introduzione alle punte con la dovuta preparazione.'
             }
         ],
         imparaTitolo: 'Cosa imparerai',
         impara: [
-            'Riscaldamento e stretching consapevole',
-            'Tecniche base di danza contemporanea',
-            'Coordinazione e fluidità del movimento',
-            'Lavoro a terra e utilizzo del peso',
-            'Brevi sequenze coreografiche',
-            'Rilassamento e respirazione'
+            'Le cinque posizioni fondamentali',
+            'Tecnica alla sbarra e al centro',
+            'Port de bras e utilizzo delle braccia',
+            'Salti, giri e combinazioni',
+            'Espressività e musicalità',
+            'Preparazione alle punte (livelli avanzati)'
         ]
     };
 

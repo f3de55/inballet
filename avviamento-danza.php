@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Classi di gruppo per il benessere. Yoga, Pilates e discipline per corpo e mente. InBallet Lainate e Rho.">
-    <meta name="keywords" content="classi gruppo, fitness gruppo, yoga gruppo, pilates gruppo, InBallet, Lainate, Rho">
+    <meta name="description" content="Corso Avviamento alla Danza per bambini dai 3 anni. Primo approccio al movimento e alla musica attraverso il gioco. InBallet Lainate e Rho.">
+    <meta name="keywords" content="avviamento danza, corso danza bambini 3 anni, propedeutica danza, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Classi di Gruppo - InBallet">
-    <meta property="og:description" content="Classi di gruppo per il benessere fisico e mentale.">
+    <meta property="og:title" content="Avviamento alla Danza - InBallet">
+    <meta property="og:description" content="Corso per bambini dai 3 anni. Primo approccio al movimento e alla musica.">
 
-    <title>Classi di Gruppo - InBallet</title>
+    <title>Avviamento alla Danza - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Adulti',
-        titolo: 'Classi di Gruppo',
-        tagline: 'Il benessere condiviso: energia, motivazione e divertimento insieme',
-        heroImage: 'assets/images/gallery-6.jpg',
-        introImage: 'assets/images/gallery-7.jpg',
+        badge: 'Dai 3 anni',
+        titolo: 'Avviamento alla Danza',
+        tagline: 'Il primo passo nel mondo della danza, attraverso il gioco e la musica',
+        heroImage: 'assets/images/gallery-3.jpg',
+        introImage: 'assets/images/gallery-5.jpg',
         intro: `
-            <p>Le nostre <strong>classi di gruppo</strong> sono pensate per chi vuole
-            prendersi cura del proprio corpo in compagnia. L'energia del gruppo
-            <strong>motiva</strong>, <strong>sostiene</strong> e rende ogni lezione più coinvolgente.</p>
-            <p>Offriamo diverse tipologie di classi: dal <strong>Pilates</strong> allo
-            <strong>Yoga</strong>, dal <strong>stretching</strong> al <strong>conditioning</strong>.
-            Ogni classe è guidata da insegnanti qualificati in un ambiente accogliente.</p>
+            <p>Un percorso studiato per il <strong>primissimo approccio alla musica e al movimento</strong>.
+            I bambini sperimentano giochi interattivi in sala per orientarsi nello spazio e sviluppare
+            le prime competenze motorie, con stimoli pensati per migliorare anche le capacita cognitive.</p>
+            <p>L'obiettivo e l'<strong>educazione al movimento</strong>, che progressivamente
+            evolve verso l'educazione alla danza vera e propria. Il tutto in un ambiente
+            accogliente, dove ogni bambino puo esprimersi liberamente.</p>
         `,
-        eta: 'Adulti di tutte le età',
-        frequenza: '1-3 lezioni a settimana',
+        eta: 'Bambini dai 3 anni',
+        frequenza: '1 lezione a settimana',
         metodoTitolo: 'Il Nostro Approccio',
         metodo: [
             {
-                titolo: 'Varietà',
-                testo: 'Diverse tipologie di classi per soddisfare esigenze diverse: tonificazione, flessibilità, rilassamento, cardio.'
+                titolo: 'Coinvolgimento',
+                testo: 'Sintonia ed equilibrio di gruppo alla base della classe. Ogni bambino e parte di un\'esperienza condivisa, dove impara a relazionarsi con gli altri attraverso il movimento.'
             },
             {
-                titolo: 'Comunità',
-                testo: 'Un ambiente dove nascono amicizie e dove l\'energia del gruppo diventa motore di motivazione e costanza.'
+                titolo: 'Educazione',
+                testo: 'Attenzione e cura per ogni singolo piccolo allievo. Un percorso che rispetta i tempi di ciascuno, senza forzature, con un approccio dolce e professionale.'
             },
             {
-                titolo: 'Flessibilità',
-                testo: 'Orari diversi e possibilità di scegliere le classi più adatte ai propri obiettivi e al proprio stile di vita.'
+                titolo: 'Divertimento',
+                testo: 'Lo spazio ludico e sempre presente. I bambini imparano giocando, senza rendersene conto, sviluppando coordinazione e musicalita in modo naturale.'
             }
         ],
-        imparaTitolo: 'Cosa troverai',
+        imparaTitolo: 'Cosa impareranno',
         impara: [
-            'Classi di Pilates matwork',
-            'Sessioni di Yoga per tutti i livelli',
-            'Stretching e mobilità articolare',
-            'Conditioning e tonificazione',
-            'Classi di rilassamento e respirazione',
-            'Programmi combinati personalizzabili'
+            'Riconoscere e seguire il ritmo della musica',
+            'Muoversi nello spazio con consapevolezza',
+            'Coordinare i movimenti del corpo',
+            'Lavorare insieme agli altri bambini',
+            'Esprimersi attraverso il movimento libero',
+            'Sviluppare equilibrio e postura'
         ]
     };
 

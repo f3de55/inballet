@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corsi di danza per Ragazzi (12-16 anni). Tecnica avanzata, espressione e identità artistica. InBallet Lainate e Rho.">
-    <meta name="keywords" content="danza ragazzi, corso danza adolescenti, danza teen, InBallet, Lainate, Rho">
+    <meta name="description" content="Lezioni individuali personalizzate di danza e benessere. Percorsi su misura per i tuoi obiettivi. InBallet Lainate e Rho.">
+    <meta name="keywords" content="lezioni private danza, lezioni individuali, personal training danza, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Ragazzi - InBallet">
-    <meta property="og:description" content="Percorsi di danza per ragazzi dai 12 ai 16 anni.">
+    <meta property="og:title" content="Lezioni Individuali - InBallet">
+    <meta property="og:description" content="Lezioni private personalizzate per i tuoi obiettivi.">
 
-    <title>Ragazzi - InBallet</title>
+    <title>Lezioni Individuali - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: '12-16 anni',
-        titolo: 'Ragazzi',
-        tagline: 'Trova la tua voce artistica: tecnica, stile e identità',
-        heroImage: 'assets/images/gallery-9.jpg',
-        introImage: 'assets/images/gallery-8.jpg',
+        badge: 'Tutte le età',
+        titolo: 'Lezioni Individuali',
+        tagline: 'Un percorso su misura, pensato esclusivamente per te',
+        heroImage: 'assets/images/gallery-1.jpg',
+        introImage: 'assets/images/gallery-3.jpg',
         intro: `
-            <p>I percorsi per <strong>ragazzi</strong> dai 12 ai 16 anni sono pensati per
-            chi vuole fare sul serio. È l'età in cui si consolida la <strong>tecnica</strong>,
-            si sviluppa uno <strong>stile personale</strong> e si inizia a pensare al futuro.</p>
-            <p>Offriamo corsi di livello intermedio e avanzato in tutte le discipline,
-            con possibilità di partecipare a <strong>concorsi</strong>, <strong>stage</strong>
-            e <strong>progetti coreografici</strong> speciali.</p>
+            <p>Le <strong>lezioni individuali</strong> sono il modo più efficace per raggiungere
+            i tuoi obiettivi. Un insegnante dedicato, un programma personalizzato, tutta
+            l'attenzione focalizzata su di te.</p>
+            <p>Ideali per chi vuole <strong>accelerare i progressi</strong>, lavorare su
+            <strong>aspetti specifici</strong> o semplicemente preferisce un approccio
+            one-to-one. Disponibili per tutte le discipline e tutti i livelli.</p>
         `,
-        eta: 'Ragazzi 12-16 anni',
-        frequenza: '2-4 lezioni a settimana',
-        metodoTitolo: 'I Nostri Corsi',
+        eta: 'Bambini, ragazzi e adulti',
+        frequenza: 'Su appuntamento',
+        metodoTitolo: 'Il Nostro Approccio',
         metodo: [
             {
-                titolo: 'Danza Classica e Modern',
-                testo: 'Livelli intermedio e avanzato con studio approfondito della tecnica. Possibilità di preparazione per esami e concorsi.'
+                titolo: 'Personalizzazione',
+                testo: 'Ogni lezione è costruita sui tuoi obiettivi, sul tuo livello e sulle tue esigenze specifiche. Nessun programma preconfezionato.'
             },
             {
-                titolo: 'Contemporanea e Contaminato',
-                testo: 'Per chi cerca ricerca e sperimentazione. Improvvisazione, composizione e sviluppo di un linguaggio personale.'
+                titolo: 'Attenzione Totale',
+                testo: 'L\'insegnante si dedica esclusivamente a te, correggendo, guidando e supportando ogni movimento.'
             },
             {
-                titolo: 'Urban: Hip-Hop e Breaking',
-                testo: 'Livelli avanzati con focus su freestyle, battle e performance. Per chi vuole portare lo stile urbano al massimo livello.'
+                titolo: 'Flessibilità',
+                testo: 'Orari concordati in base alle tue disponibilità. Lezioni singole o pacchetti, come preferisci.'
             }
         ],
-        imparaTitolo: 'Cosa impareranno',
+        imparaTitolo: 'Cosa offriamo',
         impara: [
-            'Tecnica avanzata nella disciplina scelta',
-            'Repertorio coreografico complesso',
-            'Presenza scenica e performance',
+            'Lezioni private di qualsiasi disciplina',
             'Preparazione per audizioni e concorsi',
-            'Collaborazione in progetti artistici',
-            'Orientamento verso percorsi professionali'
+            'Recupero tecnico e correzione posturale',
+            'Coreografie personalizzate',
+            'Supporto per esami e saggi',
+            'Percorsi riabilitativi post-infortunio'
         ]
     };
 

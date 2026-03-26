@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corso di Danza Modern per ragazzi e adulti. Espressività, tecnica e libertà di movimento. InBallet Lainate e Rho.">
-    <meta name="keywords" content="danza modern, corso modern jazz, danza moderna, InBallet, Lainate, Rho">
+    <meta name="description" content="Corso di Danza Contaminato. Fusione di stili diversi in un linguaggio unico. InBallet Lainate e Rho.">
+    <meta name="keywords" content="danza contaminato, fusion dance, stili misti danza, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Danza Modern - InBallet">
-    <meta property="og:description" content="Corso di danza modern per tutti i livelli. Espressivita e tecnica.">
+    <meta property="og:title" content="Contaminato - InBallet">
+    <meta property="og:description" content="Corso di Danza Contaminato. Fusione di stili in un linguaggio unico.">
 
-    <title>Danza Modern - InBallet</title>
+    <title>Contaminato - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Tutti i livelli',
-        titolo: 'Danza Modern',
-        tagline: 'Libertà espressiva e tecnica si fondono in un linguaggio unico',
+        badge: 'Ragazzi e adulti',
+        titolo: 'Contaminato',
+        tagline: 'Quando gli stili si incontrano nasce qualcosa di unico',
         heroImage: 'assets/images/gallery-2.jpg',
-        introImage: 'assets/images/gallery-8.jpg',
+        introImage: 'assets/images/gallery-4.jpg',
         intro: `
-            <p>La <strong>danza modern</strong> nasce dalla fusione tra tecnica classica e
-            libertà espressiva. Un linguaggio che permette di esplorare il movimento in modo
-            personale, senza rinunciare al rigore tecnico.</p>
-            <p>I nostri corsi sviluppano <strong>fluidità</strong>, <strong>dinamismo</strong> e
-            <strong>consapevolezza corporea</strong>, preparando gli allievi a esprimersi
-            attraverso coreografie che uniscono emozione e tecnica.</p>
+            <p>Il <strong>Contaminato</strong> è uno stile che nasce dalla fusione di diverse
+            discipline: hip-hop, contemporanea, jazz, breaking. Un linguaggio ibrido che
+            non conosce confini e che permette di esplorare il movimento in totale libertà.</p>
+            <p>Ogni lezione è un viaggio attraverso stili diversi, dove gli allievi imparano
+            a <strong>mescolare</strong>, <strong>reinterpretare</strong> e <strong>creare</strong>
+            un linguaggio personale e unico.</p>
         `,
         eta: 'Ragazzi e adulti',
-        frequenza: '2-3 lezioni a settimana',
+        frequenza: '1-2 lezioni a settimana',
         metodoTitolo: 'Il Nostro Approccio',
         metodo: [
             {
-                titolo: 'Tecnica Modern',
-                testo: 'Studio delle tecniche fondamentali della danza moderna, dal floor work ai salti, con attenzione alla qualità del movimento.'
+                titolo: 'Fusione',
+                testo: 'Esplorazione di diversi stili di danza e delle loro possibili combinazioni. Nessun limite, nessuna regola fissa.'
             },
             {
-                titolo: 'Espressività',
-                testo: 'Lavoro sull\'interpretazione e sulla capacità di trasmettere emozioni attraverso il corpo. Ogni movimento racconta una storia.'
+                titolo: 'Versatilità',
+                testo: 'Sviluppo della capacità di passare da uno stile all\'altro con fluidità, adattandosi a musiche e situazioni diverse.'
             },
             {
-                titolo: 'Coreografia',
-                testo: 'Apprendimento di sequenze coreografiche che sfidano e sviluppano le capacità tecniche ed espressive di ogni allievo.'
+                titolo: 'Identità',
+                testo: 'Ricerca del proprio stile personale attraverso la contaminazione. Ogni danzatore trova la propria voce unica.'
             }
         ],
         imparaTitolo: 'Cosa imparerai',
         impara: [
-            'Tecniche di floor work e lavoro a terra',
-            'Dinamiche di movimento (sostenuto, staccato, fluido)',
-            'Utilizzo del peso e della gravità',
-            'Isolazioni e coordinazione avanzata',
-            'Interpretazione musicale e coreografica',
-            'Improvvisazione guidata'
+            'Elementi di diversi stili di danza',
+            'Tecniche di fusione e transizione',
+            'Adattamento a generi musicali diversi',
+            'Creatività coreografica',
+            'Sviluppo di uno stile personale',
+            'Versatilità e apertura mentale'
         ]
     };
 

@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corso di Danza Contaminato. Fusione di stili diversi in un linguaggio unico. InBallet Lainate e Rho.">
-    <meta name="keywords" content="danza contaminato, fusion dance, stili misti danza, InBallet, Lainate, Rho">
+    <meta name="description" content="Corsi di danza per Adulti. Non è mai troppo tardi per iniziare o riprendere a danzare. InBallet Lainate e Rho.">
+    <meta name="keywords" content="danza adulti, corso danza principianti adulti, danza over 30, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Contaminato - InBallet">
-    <meta property="og:description" content="Corso di Danza Contaminato. Fusione di stili in un linguaggio unico.">
+    <meta property="og:title" content="Adulti - InBallet">
+    <meta property="og:description" content="Percorsi di danza e benessere per adulti di tutte le età.">
 
-    <title>Contaminato - InBallet</title>
+    <title>Adulti - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Ragazzi e adulti',
-        titolo: 'Contaminato',
-        tagline: 'Quando gli stili si incontrano nasce qualcosa di unico',
-        heroImage: 'assets/images/gallery-2.jpg',
-        introImage: 'assets/images/gallery-4.jpg',
+        badge: 'Dai 17 anni in su',
+        titolo: 'Adulti',
+        tagline: 'Non è mai troppo tardi: inizia, riprendi o continua a danzare',
+        heroImage: 'assets/images/gallery-10.jpg',
+        introImage: 'assets/images/gallery-1.jpg',
         intro: `
-            <p>Il <strong>Contaminato</strong> è uno stile che nasce dalla fusione di diverse
-            discipline: hip-hop, contemporanea, jazz, breaking. Un linguaggio ibrido che
-            non conosce confini e che permette di esplorare il movimento in totale libertà.</p>
-            <p>Ogni lezione è un viaggio attraverso stili diversi, dove gli allievi imparano
-            a <strong>mescolare</strong>, <strong>reinterpretare</strong> e <strong>creare</strong>
-            un linguaggio personale e unico.</p>
+            <p>I percorsi per <strong>adulti</strong> sono pensati per chi vuole avvicinarsi
+            alla danza per la prima volta, riprendere dopo anni di pausa, o continuare
+            a crescere. Non ci sono limiti di età, solo <strong>voglia di muoversi</strong>.</p>
+            <p>Offriamo corsi di danza e benessere per tutti i livelli, in un ambiente
+            accogliente dove ogni partecipante può esprimersi senza giudizio e al
+            proprio ritmo.</p>
         `,
-        eta: 'Ragazzi e adulti',
-        frequenza: '1-2 lezioni a settimana',
-        metodoTitolo: 'Il Nostro Approccio',
+        eta: 'Adulti di tutte le età',
+        frequenza: '1-3 lezioni a settimana',
+        metodoTitolo: 'I Nostri Corsi',
         metodo: [
             {
-                titolo: 'Fusione',
-                testo: 'Esplorazione di diversi stili di danza e delle loro possibili combinazioni. Nessun limite, nessuna regola fissa.'
+                titolo: 'Danza Contemporanea Adulti',
+                testo: 'Ideale per chi inizia: movimento libero, consapevolezza corporea, nessuna esperienza richiesta. Solo voglia di provare.'
             },
             {
-                titolo: 'Versatilità',
-                testo: 'Sviluppo della capacità di passare da uno stile all\'altro con fluidità, adattandosi a musiche e situazioni diverse.'
+                titolo: 'Yoga e Pilates',
+                testo: 'Per il benessere fisico e mentale: flessibilità, forza, equilibrio. Perfetti per chi cerca movimento senza coreografie.'
             },
             {
-                titolo: 'Identità',
-                testo: 'Ricerca del proprio stile personale attraverso la contaminazione. Ogni danzatore trova la propria voce unica.'
+                titolo: 'Hip-Hop e Heels',
+                testo: 'Per chi vuole energia e divertimento: groove, coreografie, attitudine. Corsi pensati per adulti di ogni livello.'
             }
         ],
-        imparaTitolo: 'Cosa imparerai',
+        imparaTitolo: 'Cosa troverai',
         impara: [
-            'Elementi di diversi stili di danza',
-            'Tecniche di fusione e transizione',
-            'Adattamento a generi musicali diversi',
-            'Creatività coreografica',
-            'Sviluppo di uno stile personale',
-            'Versatilità e apertura mentale'
+            'Corsi per principianti assoluti',
+            'Ambiente accogliente e senza giudizio',
+            'Progressione rispettosa dei tuoi tempi',
+            'Benefici fisici e mentali',
+            'Nuove amicizie e comunità',
+            'Possibilità di partecipare a saggi'
         ]
     };
 

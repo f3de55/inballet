@@ -9,7 +9,15 @@
       "Bash(docker:*)",
       "Bash(npx --version:*)",
       "Bash(npx localtunnel --port 3000)",
-      "Bash(gpg:*)"
+      "Bash(gpg:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(move chi-siamo.html chi-siamo.php)",
+      "Bash(perl -i -pe:*)",
+      "Bash(for f in adulti.php avviamento-danza.php bambini.php breaking.php chi-siamo.php classi.php contact-improvisation.php contaminato.php contemporanea-adulti.php danza-acrobatica.php danza-classica.php danza-contemporanea.php educazione-danza.php heels.php hip-hop.php lezioni-individuali.php modern.php movimento-creativo.php pilates.php prima-infanzia.php ragazzi.php seconda-infanzia.php spettacoli-eventi.php)",
+      "Bash(do)",
+      "Bash(done)",
+      "Bash(timeout 30 bash:*)",
+      "Bash(xargs:*)"
     ]
   }
 }

@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corso di Movimento Creativo per bambini. Espressione libera attraverso il gioco e la fantasia. InBallet Lainate e Rho.">
-    <meta name="keywords" content="movimento creativo, danza creativa bambini, espressione corporea, InBallet, Lainate, Rho">
+    <meta name="description" content="Classi di gruppo per il benessere. Yoga, Pilates e discipline per corpo e mente. InBallet Lainate e Rho.">
+    <meta name="keywords" content="classi gruppo, fitness gruppo, yoga gruppo, pilates gruppo, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Movimento Creativo - InBallet">
-    <meta property="og:description" content="Corso di movimento creativo per bambini. Espressione libera e fantasia.">
+    <meta property="og:title" content="Classi di Gruppo - InBallet">
+    <meta property="og:description" content="Classi di gruppo per il benessere fisico e mentale.">
 
-    <title>Movimento Creativo - InBallet</title>
+    <title>Classi di Gruppo - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Dai 4 anni',
-        titolo: 'Movimento Creativo',
-        tagline: 'Dove la fantasia incontra il movimento e ogni bambino diventa protagonista',
-        heroImage: 'assets/images/gallery-8.jpg',
-        introImage: 'assets/images/gallery-4.jpg',
+        badge: 'Adulti',
+        titolo: 'Classi di Gruppo',
+        tagline: 'Il benessere condiviso: energia, motivazione e divertimento insieme',
+        heroImage: 'assets/images/gallery-6.jpg',
+        introImage: 'assets/images/gallery-7.jpg',
         intro: `
-            <p>Il <strong>movimento creativo</strong> è un percorso dove i bambini esplorano
-            il movimento attraverso la fantasia e il gioco. Non ci sono passi giusti o sbagliati,
-            solo infinite possibilità da scoprire.</p>
-            <p>Attraverso storie, immagini e musica, i piccoli allievi sviluppano
-            <strong>creatività</strong>, <strong>espressività</strong> e <strong>sicurezza</strong>
-            in sé stessi, imparando a comunicare con il proprio corpo.</p>
+            <p>Le nostre <strong>classi di gruppo</strong> sono pensate per chi vuole
+            prendersi cura del proprio corpo in compagnia. L'energia del gruppo
+            <strong>motiva</strong>, <strong>sostiene</strong> e rende ogni lezione più coinvolgente.</p>
+            <p>Offriamo diverse tipologie di classi: dal <strong>Pilates</strong> allo
+            <strong>Yoga</strong>, dal <strong>stretching</strong> al <strong>conditioning</strong>.
+            Ogni classe è guidata da insegnanti qualificati in un ambiente accogliente.</p>
         `,
-        eta: 'Bambini dai 4 anni',
-        frequenza: '1 lezione a settimana',
+        eta: 'Adulti di tutte le età',
+        frequenza: '1-3 lezioni a settimana',
         metodoTitolo: 'Il Nostro Approccio',
         metodo: [
             {
-                titolo: 'Fantasia',
-                testo: 'Utilizzo di storie, personaggi e ambientazioni immaginarie per stimolare la creatività e rendere ogni lezione un\'avventura.'
+                titolo: 'Varietà',
+                testo: 'Diverse tipologie di classi per soddisfare esigenze diverse: tonificazione, flessibilità, rilassamento, cardio.'
             },
             {
-                titolo: 'Libertà',
-                testo: 'Spazio per l\'espressione individuale senza giudizio. Ogni movimento è valido se nasce da un\'intenzione autentica.'
+                titolo: 'Comunità',
+                testo: 'Un ambiente dove nascono amicizie e dove l\'energia del gruppo diventa motore di motivazione e costanza.'
             },
             {
-                titolo: 'Esplorazione',
-                testo: 'Scoperta delle infinite possibilità del corpo attraverso giochi di movimento, ritmo e improvvisazione guidata.'
+                titolo: 'Flessibilità',
+                testo: 'Orari diversi e possibilità di scegliere le classi più adatte ai propri obiettivi e al proprio stile di vita.'
             }
         ],
-        imparaTitolo: 'Cosa impareranno',
+        imparaTitolo: 'Cosa troverai',
         impara: [
-            'Esprimersi liberamente attraverso il movimento',
-            'Tradurre emozioni e immagini in gesti',
-            'Collaborare con i compagni in giochi di gruppo',
-            'Sviluppare la propria creatività',
-            'Ascoltare e interpretare la musica',
-            'Acquisire fiducia nel proprio corpo'
+            'Classi di Pilates matwork',
+            'Sessioni di Yoga per tutti i livelli',
+            'Stretching e mobilità articolare',
+            'Conditioning e tonificazione',
+            'Classi di rilassamento e respirazione',
+            'Programmi combinati personalizzabili'
         ]
     };
 

@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corso Educazione alla Danza per bambini dai 6 anni. Sviluppo della tecnica base e della musicalità. InBallet Lainate e Rho.">
-    <meta name="keywords" content="educazione danza, corso danza bambini, propedeutica danza, InBallet, Lainate, Rho">
+    <meta name="description" content="Corso di Danza Contemporanea per Adulti. Riscopri il movimento, inizia anche da zero. InBallet Lainate e Rho.">
+    <meta name="keywords" content="danza contemporanea adulti, corso danza adulti, danza per principianti, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Educazione alla Danza - InBallet">
-    <meta property="og:description" content="Corso per bambini dai 6 anni. Sviluppo della tecnica base e della musicalità.">
+    <meta property="og:title" content="Contemporanea Adulti - InBallet">
+    <meta property="og:description" content="Corso di danza contemporanea pensato per gli adulti, anche principianti.">
 
-    <title>Educazione alla Danza - InBallet</title>
+    <title>Contemporanea Adulti - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Dai 6 anni',
-        titolo: 'Educazione alla Danza',
-        tagline: 'Il percorso che trasforma il gioco in tecnica, con dolcezza e professionalità',
-        heroImage: 'assets/images/gallery-4.jpg',
-        introImage: 'assets/images/gallery-6.jpg',
+        badge: 'Adulti - anche principianti',
+        titolo: 'Contemporanea Adulti',
+        tagline: 'Non è mai troppo tardi per iniziare a danzare',
+        heroImage: 'assets/images/gallery-6.jpg',
+        introImage: 'assets/images/gallery-10.jpg',
         intro: `
-            <p>Un corso pensato per i bambini che hanno già sperimentato l'avviamento e sono pronti
-            a fare un passo avanti. L'<strong>educazione alla danza</strong> introduce i primi elementi
-            tecnici in modo graduale, sempre nel rispetto dei tempi di crescita di ogni allievo.</p>
-            <p>Si lavora sulla <strong>postura</strong>, sulla <strong>coordinazione</strong> e sulla
-            <strong>musicalità</strong>, preparando il corpo e la mente alla danza vera e propria.
-            Un percorso che unisce disciplina e divertimento.</p>
+            <p>Un corso pensato per chi vuole avvicinarsi alla danza da adulto, senza
+            esperienza precedente. La <strong>danza contemporanea</strong> è il linguaggio
+            perfetto per riscoprire il proprio corpo e le sue potenzialità.</p>
+            <p>In un ambiente accogliente e senza giudizio, ogni partecipante può esplorare
+            il movimento al proprio ritmo, sviluppando <strong>flessibilità</strong>,
+            <strong>forza</strong> e <strong>consapevolezza corporea</strong>.</p>
         `,
-        eta: 'Bambini dai 6 anni',
+        eta: 'Adulti di tutte le età',
         frequenza: '1-2 lezioni a settimana',
         metodoTitolo: 'Il Nostro Approccio',
         metodo: [
             {
-                titolo: 'Tecnica Graduale',
-                testo: 'Introduzione progressiva agli elementi base della danza classica e moderna, rispettando i tempi di apprendimento di ogni bambino.'
+                titolo: 'Accessibilità',
+                testo: 'Un percorso pensato per accogliere tutti, indipendentemente dal livello di partenza. Ogni esercizio viene proposto con varianti adatte a ciascuno.'
             },
             {
-                titolo: 'Postura e Consapevolezza',
-                testo: 'Lavoro mirato sulla postura corretta e sulla consapevolezza del proprio corpo nello spazio, fondamenti per qualsiasi disciplina.'
+                titolo: 'Benessere',
+                testo: 'La danza come strumento di benessere fisico e mentale. Un\'ora di lezione per staccare dalla routine e riconnettersi con se stessi.'
             },
             {
-                titolo: 'Musicalità',
-                testo: 'Sviluppo dell\'orecchio musicale e della capacità di interpretare ritmi e melodie attraverso il movimento.'
+                titolo: 'Progressione',
+                testo: 'Un percorso graduale che permette di acquisire sicurezza e competenze tecniche senza fretta, rispettando i tempi di ognuno.'
             }
         ],
-        imparaTitolo: 'Cosa impareranno',
+        imparaTitolo: 'Cosa imparerai',
         impara: [
-            'Le basi della postura corretta',
-            'Coordinazione braccia-gambe',
-            'Riconoscere tempi e ritmi musicali',
-            'Eseguire semplici sequenze coreografiche',
-            'Lavorare in gruppo con rispetto e collaborazione',
-            'Sviluppare concentrazione e disciplina'
+            'Riscaldamento e stretching consapevole',
+            'Tecniche base di danza contemporanea',
+            'Coordinazione e fluidità del movimento',
+            'Lavoro a terra e utilizzo del peso',
+            'Brevi sequenze coreografiche',
+            'Rilassamento e respirazione'
         ]
     };
 

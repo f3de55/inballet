@@ -1,0 +1,198 @@
+<!-- Chatbot Bella - Assistente AI InBallet -->
+<style>
+#cb-toggle{position:fixed!important;bottom:28px!important;right:28px!important;width:60px!important;height:60px!important;background:linear-gradient(135deg,#87CEEB,#5bb8e0)!important;border:none!important;border-radius:50%!important;cursor:pointer!important;box-shadow:0 6px 25px rgba(135,206,235,0.5)!important;z-index:998!important;display:flex!important;align-items:center!important;justify-content:center!important;transition:transform .3s,box-shadow .3s!important}
+#cb-toggle:hover{transform:scale(1.1)!important;box-shadow:0 8px 35px rgba(135,206,235,0.6)!important}
+#cb-toggle i{font-size:24px!important;color:#1a1a1a!important}
+#cb-box{position:fixed!important;bottom:25px!important;right:25px!important;width:380px!important;max-width:calc(100vw - 40px)!important;height:520px!important;max-height:75vh!important;background:#1a1a1a!important;border-radius:20px!important;display:none;flex-direction:column!important;z-index:998!important;box-shadow:0 15px 50px rgba(0,0,0,0.7)!important;border:none!important;overflow:hidden!important}
+#cb-box.open{display:flex!important;animation:cbSlide .3s ease!important}
+@keyframes cbSlide{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#cb-head{background:linear-gradient(135deg,#87CEEB,#5bb8e0)!important;color:#1a1a1a!important;padding:18px 20px!important;display:flex!important;justify-content:space-between!important;align-items:center!important;font-weight:700!important;font-size:15px!important}
+#cb-head button{background:rgba(0,0,0,0.1)!important;border:none!important;color:#1a1a1a!important;font-size:16px!important;cursor:pointer!important;width:32px!important;height:32px!important;border-radius:50%!important;transition:background .2s!important}
+#cb-head button:hover{background:rgba(0,0,0,0.2)!important}
+#cb-msgs{flex:1!important;padding:16px!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;gap:12px!important;background:#1a1a1a!important}
+#cb-msgs::-webkit-scrollbar{width:6px}
+#cb-msgs::-webkit-scrollbar-thumb{background:#444;border-radius:3px}
+.cb-m{padding:12px 16px!important;border-radius:18px!important;max-width:85%!important;line-height:1.6!important;font-size:14px!important;word-wrap:break-word!important}
+.cb-m.usr{background:linear-gradient(135deg,#87CEEB,#6bb8d9)!important;color:#1a1a1a!important;align-self:flex-end!important;border-bottom-right-radius:4px!important}
+.cb-m.bot{background:#2a2a2a!important;color:#fff!important;align-self:flex-start!important;border-bottom-left-radius:4px!important}
+.cb-m.load{opacity:0.6!important}
+.cb-m .cb-txt{display:block!important}
+.cb-m .cb-time{display:block!important;font-size:10px!important;opacity:0.5!important;margin-top:6px!important;text-align:right!important}
+.cb-m a.cb-link{color:#87CEEB!important;text-decoration:none!important;font-weight:600!important;border-bottom:1px dotted #87CEEB!important;transition:opacity .2s!important}
+.cb-m a.cb-link:hover{opacity:0.8!important}
+.cb-m.usr a.cb-link{color:#1a1a1a!important;border-bottom-color:#1a1a1a!important}
+#cb-inp{display:flex!important;padding:14px 16px!important;background:#222!important;gap:10px!important;border-top:1px solid rgba(255,255,255,0.05)!important}
+#cb-inp input{flex:1!important;padding:14px 18px!important;border:none!important;border-radius:25px!important;background:#333!important;color:#fff!important;font-size:14px!important;outline:none!important;transition:box-shadow .2s!important}
+#cb-inp input:focus{box-shadow:0 0 0 2px rgba(135,206,235,0.3)!important}
+#cb-inp input::placeholder{color:#999!important}
+#cb-inp button{width:46px!important;height:46px!important;border:none!important;border-radius:50%!important;background:linear-gradient(135deg,#87CEEB,#5bb8e0)!important;color:#1a1a1a!important;cursor:pointer!important;transition:transform .2s!important}
+#cb-inp button:hover{transform:scale(1.05)!important}
+@media(max-width:768px){#cb-toggle{width:54px!important;height:54px!important;bottom:22px!important;right:22px!important}#cb-toggle i{font-size:22px!important}}
+@media(max-width:480px){#cb-box{bottom:0!important;right:0!important;width:100%!important;max-width:100%!important;height:100%!important;max-height:100%!important;border-radius:0!important}#cb-toggle{width:50px!important;height:50px!important;bottom:18px!important;right:18px!important}#cb-toggle i{font-size:20px!important}}
+</style>
+
+<button id="cb-toggle" onclick="cbToggle()" aria-label="Apri chat assistente Bella" aria-pressed="false">
+    <i class="fas fa-comments" aria-hidden="true"></i>
+</button>
+<div id="cb-box" role="dialog" aria-modal="true" aria-labelledby="cb-title" aria-hidden="true">
+    <div id="cb-head">
+        <span id="cb-title">💃 Bella - Assistente InBallet</span>
+        <button onclick="cbToggle()" aria-label="Chiudi chat" title="Chiudi (Esc)">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div id="cb-msgs" role="log" aria-live="polite" aria-label="Messaggi della chat"></div>
+    <form id="cb-inp" onsubmit="event.preventDefault();cbSend()">
+        <label for="cb-txt" class="sr-only">Scrivi il tuo messaggio</label>
+        <input type="text" id="cb-txt" placeholder="Chiedimi dei corsi, sedi, orari..." aria-label="Scrivi la tua domanda" required>
+        <button type="submit" aria-label="Invia messaggio" title="Invia (Enter)">
+            <i class="fas fa-paper-plane" aria-hidden="true"></i>
+        </button>
+    </form>
+</div>
+
+<script>
+(function(){
+    // Evita duplicazione se già caricato
+    if(window.cbInitialized) return;
+    window.cbInitialized = true;
+
+    const STORAGE_KEY = 'inballet_chatbot_session';
+    const COUNT_KEY = 'inballet_chatbot_count';
+    let cbLast=0, cbCount=0;
+    const cbMax=50;
+
+    function cbTime(){
+        const d=new Date();
+        return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');
+    }
+
+    // Carica sessione salvata
+    function loadSession(){
+        try{
+            const saved = localStorage.getItem(STORAGE_KEY);
+            const savedCount = localStorage.getItem(COUNT_KEY);
+            if(savedCount) cbCount = parseInt(savedCount) || 0;
+            if(saved){
+                const messages = JSON.parse(saved);
+                const msgsContainer = document.getElementById('cb-msgs');
+                if(msgsContainer && messages.length > 0){
+                    messages.forEach(msg => {
+                        const d = document.createElement('div');
+                        d.className = `cb-m ${msg.type}`;
+                        d.innerHTML = `<span class="cb-txt">${msg.content}</span><span class="cb-time">${msg.time}</span>`;
+                        msgsContainer.appendChild(d);
+                    });
+                    msgsContainer.scrollTop = msgsContainer.scrollHeight;
+                }
+            }
+        }catch(e){
+            console.error('Errore caricamento sessione chatbot:', e);
+        }
+    }
+
+    // Salva messaggio in localStorage
+    function saveMessage(type, content){
+        try{
+            const saved = localStorage.getItem(STORAGE_KEY);
+            let messages = saved ? JSON.parse(saved) : [];
+            messages.push({type, content, time: cbTime()});
+            // Mantieni solo gli ultimi 100 messaggi
+            if(messages.length > 100) messages = messages.slice(-100);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+            localStorage.setItem(COUNT_KEY, cbCount.toString());
+        }catch(e){
+            console.error('Errore salvataggio messaggio:', e);
+        }
+    }
+
+    // Pulisci sessione (opzionale - può essere chiamato da console)
+    window.cbClearSession = function(){
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(COUNT_KEY);
+        cbCount = 0;
+        const msgsContainer = document.getElementById('cb-msgs');
+        if(msgsContainer) msgsContainer.innerHTML = '';
+        cbAddBot('Ciao! 👋 Sono <b>Bella</b>, l\'assistente virtuale di InBallet.<br><br>Chiedimi di <b>corsi</b>, <b>sedi</b>, <b>orari</b> o <b>iscrizioni</b>! 💃');
+    };
+
+    window.cbToggle = function(){
+        const box=document.getElementById('cb-box'),tog=document.getElementById('cb-toggle');
+        if(!box || !tog) return;
+        const isOpen=box.classList.contains('open');
+        box.classList.toggle('open');
+        box.setAttribute('aria-hidden',isOpen);
+        tog.setAttribute('aria-pressed',!isOpen);
+        tog.style.display=box.classList.contains('open')?'none':'flex';
+        if(box.classList.contains('open')){
+            document.getElementById('cb-txt').focus();
+            // Carica sessione o mostra benvenuto
+            const msgsContainer = document.getElementById('cb-msgs');
+            if(msgsContainer && !msgsContainer.children.length){
+                loadSession();
+                if(!msgsContainer.children.length){
+                    cbAddBot('Ciao! 👋 Sono <b>Bella</b>, l\'assistente virtuale di InBallet.<br><br>Chiedimi di <b>corsi</b>, <b>sedi</b>, <b>orari</b> o <b>iscrizioni</b>! 💃');
+                }
+            }
+        }
+    };
+
+    document.addEventListener('keydown',function(e){
+        if(e.key==='Escape'){
+            const box=document.getElementById('cb-box');
+            if(box&&box.classList.contains('open'))cbToggle();
+        }
+    });
+
+    function cbAddBot(html, skipSave = false){
+        const m=document.getElementById('cb-msgs');
+        if(!m) return null;
+        const d=document.createElement('div');
+        d.className='cb-m bot';
+        d.innerHTML='<span class="cb-txt">'+html+'</span><span class="cb-time">'+cbTime()+'</span>';
+        m.appendChild(d);
+        m.scrollTop=m.scrollHeight;
+        if(!skipSave) saveMessage('bot', html);
+        return d;
+    }
+
+    function cbAddUsr(text){
+        const m=document.getElementById('cb-msgs');
+        if(!m) return null;
+        const d=document.createElement('div');
+        d.className='cb-m usr';
+        const escapedText = text.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        d.innerHTML='<span class="cb-txt">'+escapedText+'</span><span class="cb-time">'+cbTime()+'</span>';
+        m.appendChild(d);
+        m.scrollTop=m.scrollHeight;
+        saveMessage('usr', escapedText);
+        return d;
+    }
+
+    window.cbSend = async function(){
+        const i=document.getElementById('cb-txt'),t=i.value.trim();
+        if(!t)return;
+        const now=Date.now();
+        if(now-cbLast<2000){alert('Aspetta 2 secondi tra i messaggi');return;}
+        cbLast=now;
+        if(cbCount>=cbMax){
+            cbAddBot('Hai raggiunto il limite di messaggi. Contattaci: <a href="tel:+393937802996" class="cb-link">+39 393 780 2996</a> 📞');
+            return;
+        }
+        cbCount++;
+        cbAddUsr(t);
+        i.value='';
+        const l=cbAddBot('<i>Sto scrivendo...</i>', true); // skipSave=true per messaggio di caricamento
+        l.classList.add('load');
+        try{
+            const r=await fetch('chatbot.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:t})});
+            const d=await r.json();
+            l.remove();
+            cbAddBot(d.response||d.error||'Errore');
+        }catch(e){
+            l.remove();
+            cbAddBot('Errore di connessione. Riprova!');
+        }
+    };
+})();
+</script>

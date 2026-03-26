@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Corso di Danza Acrobatica. Fusione di danza e acrobatica per ragazzi. InBallet Lainate e Rho.">
-    <meta name="keywords" content="danza acrobatica, acrobatica danza, corso acrobatica, InBallet, Lainate, Rho">
+    <meta name="description" content="Corsi di danza per Ragazzi (12-16 anni). Tecnica avanzata, espressione e identità artistica. InBallet Lainate e Rho.">
+    <meta name="keywords" content="danza ragazzi, corso danza adolescenti, danza teen, InBallet, Lainate, Rho">
     <meta name="author" content="InBallet ASD">
     <meta name="theme-color" content="#87CEEB">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Danza Acrobatica - InBallet">
-    <meta property="og:description" content="Corso di Danza Acrobatica. Fusione di danza e elementi acrobatici.">
+    <meta property="og:title" content="Ragazzi - InBallet">
+    <meta property="og:description" content="Percorsi di danza per ragazzi dai 12 ai 16 anni.">
 
-    <title>Danza Acrobatica - InBallet</title>
+    <title>Ragazzi - InBallet</title>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -25,56 +25,56 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
-    <header class="main-header" role="banner"></header>
+    <?php include 'components/header.php'; ?>
 
     <main id="main-content" role="main" tabindex="-1"></main>
 
-    <footer class="footer" role="contentinfo"></footer>
+    <footer class="footer" role="contentinfo"><?php include 'components/footer.php'; ?></footer>
 
-    <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
 
     <script>
     // Dati del corso
     const corsoData = {
-        badge: 'Ragazzi',
-        titolo: 'Danza Acrobatica',
-        tagline: 'Quando la danza incontra l\'acrobatica: forza, flessibilità e spettacolarità',
-        heroImage: 'assets/images/gallery-4.jpg',
-        introImage: 'assets/images/gallery-6.jpg',
+        badge: '12-16 anni',
+        titolo: 'Ragazzi',
+        tagline: 'Trova la tua voce artistica: tecnica, stile e identità',
+        heroImage: 'assets/images/gallery-9.jpg',
+        introImage: 'assets/images/gallery-8.jpg',
         intro: `
-            <p>La <strong>danza acrobatica</strong> unisce la grazia della danza con la
-            spettacolarità degli elementi acrobatici. Un percorso che sviluppa
-            <strong>forza</strong>, <strong>flessibilità</strong> e <strong>coraggio</strong>.</p>
-            <p>I nostri corsi insegnano progressivamente ruote, verticali, ponti e salti
-            acrobatici, sempre in totale sicurezza e con la supervisione di insegnanti
-            qualificati.</p>
+            <p>I percorsi per <strong>ragazzi</strong> dai 12 ai 16 anni sono pensati per
+            chi vuole fare sul serio. È l'età in cui si consolida la <strong>tecnica</strong>,
+            si sviluppa uno <strong>stile personale</strong> e si inizia a pensare al futuro.</p>
+            <p>Offriamo corsi di livello intermedio e avanzato in tutte le discipline,
+            con possibilità di partecipare a <strong>concorsi</strong>, <strong>stage</strong>
+            e <strong>progetti coreografici</strong> speciali.</p>
         `,
-        eta: 'Ragazzi dai 7 anni',
-        frequenza: '1-2 lezioni a settimana',
-        metodoTitolo: 'Il Nostro Approccio',
+        eta: 'Ragazzi 12-16 anni',
+        frequenza: '2-4 lezioni a settimana',
+        metodoTitolo: 'I Nostri Corsi',
         metodo: [
             {
-                titolo: 'Sicurezza',
-                testo: 'Ogni elemento viene insegnato con progressioni sicure, utilizzando tappeti e assistenza costante. La sicurezza è la priorità.'
+                titolo: 'Danza Classica e Modern',
+                testo: 'Livelli intermedio e avanzato con studio approfondito della tecnica. Possibilità di preparazione per esami e concorsi.'
             },
             {
-                titolo: 'Preparazione Fisica',
-                testo: 'Lavoro specifico su forza, flessibilità e propriocezione. Il corpo deve essere pronto prima di affrontare elementi complessi.'
+                titolo: 'Contemporanea e Contaminato',
+                testo: 'Per chi cerca ricerca e sperimentazione. Improvvisazione, composizione e sviluppo di un linguaggio personale.'
             },
             {
-                titolo: 'Integrazione',
-                testo: 'Gli elementi acrobatici vengono integrati in sequenze coreografiche, unendo tecnica e artisticità.'
+                titolo: 'Urban: Hip-Hop e Breaking',
+                testo: 'Livelli avanzati con focus su freestyle, battle e performance. Per chi vuole portare lo stile urbano al massimo livello.'
             }
         ],
-        imparaTitolo: 'Cosa imparerai',
+        imparaTitolo: 'Cosa impareranno',
         impara: [
-            'Ruote e rondate',
-            'Verticali e appoggi sulle mani',
-            'Ponti e flessibilità della schiena',
-            'Salti acrobatici base',
-            'Combinazioni danza-acrobatica',
-            'Controllo del corpo in volo'
+            'Tecnica avanzata nella disciplina scelta',
+            'Repertorio coreografico complesso',
+            'Presenza scenica e performance',
+            'Preparazione per audizioni e concorsi',
+            'Collaborazione in progetti artistici',
+            'Orientamento verso percorsi professionali'
         ]
     };
 

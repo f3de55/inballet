@@ -468,7 +468,9 @@
         </div>
     </section>
 
-    
+    <!-- Sezione Sostenitori -->
+    <?php include 'components/sostenitori-section.php'; ?>
+
     <!-- Sezione Galleria Infinita -->
     <section class="gallery-section">
         <div class="container">
@@ -694,6 +696,7 @@
     </footer>
 
     <!-- JavaScript -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1T64uyO5Ke-MttLo9Amscl5ViUvYYvtI&libraries=places&loading=async"></script>
     <script src="js/main.js"></script>
     <script>
         // Lancia evento per inizializzare navbar/footer (caricati via PHP)

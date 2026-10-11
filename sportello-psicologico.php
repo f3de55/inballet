@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sportello Psicologico InBallet - Sostegno alle famiglie, ascolto e supporto psicologico per genitori, bambini e adolescenti a Lainate.">
+    <meta name="keywords" content="sportello psicologico, supporto famiglie, psicoterapeuta Lainate, consulenza psicologica, danza e benessere">
+    <meta name="author" content="InBallet ASD">
+    <meta name="theme-color" content="#87CEEB">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sportello Psicologico - InBallet">
+    <meta property="og:description" content="Sostegno psicologico e ascolto per famiglie. Uno spazio sicuro per affrontare difficoltà e momenti delicati.">
+
+    <title>Sportello Psicologico - InBallet</title>
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Francois+One&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <style>body{min-height:100vh}.main-header{min-height:80px}</style>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* === SEZIONI SPECIFICHE SPORTELLO PSICOLOGICO === */
+
+        /* Intro Section */
+        .sport-intro-section{padding:5rem 0;background:#fff}
+        .sport-intro-wrapper{max-width:900px;margin:0 auto;padding:0 2rem}
+        .sport-intro-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;text-align:center}
+        .sport-intro-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:2rem;text-align:center}
+        .sport-intro-text{font-size:var(--text-lg);line-height:1.8;color:var(--text-light);margin-bottom:1.5rem;text-align:center}
+        .sport-intro-text strong{color:var(--dark-navy);font-weight:600}
+        .sport-intro-highlight{background:rgba(135,206,235,.1);border-left:4px solid var(--primary-blue);padding:1.5rem 2rem;border-radius:0 12px 12px 0;margin-top:2.5rem;max-width:750px;margin-left:auto;margin-right:auto}
+        .sport-intro-highlight p{font-size:var(--text-base);color:var(--dark-navy);font-weight:500;margin:0;line-height:1.7}
+
+        /* Pilastri Section - CARD (unica sezione card) */
+        .sport-pilastri-section{padding:5rem 0;background:rgba(176,224,230,.1)}
+        .sport-pilastri-wrapper{max-width:1100px;margin:0 auto;padding:0 2rem}
+        .sport-pilastri-header{text-align:center;margin-bottom:4rem}
+        .sport-pilastri-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
+        .sport-pilastri-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:1rem}
+        .sport-pilastri-subtitle{font-size:var(--text-base);color:var(--text-light);max-width:600px;margin:0 auto}
+        .sport-pilastri-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem}
+        .sport-pilastro-card{background:#fff;padding:2.5rem 2rem;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid rgba(135,206,235,.15);transition:all .3s ease;text-align:center}
+        .sport-pilastro-card:hover{transform:translateY(-8px);box-shadow:0 12px 35px rgba(135,206,235,.2);border-color:var(--primary-blue)}
+        .sport-pilastro-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;color:var(--dark-navy);font-size:2rem}
+        .sport-pilastro-name{font-size:var(--text-xl);font-weight:700;color:var(--dark-navy);margin-bottom:1rem;text-transform:uppercase;letter-spacing:.5px}
+        .sport-pilastro-desc{font-size:var(--text-sm);color:var(--text-light);line-height:1.7}
+
+        /* Accesso Section - Minimal */
+        .sport-accesso-section{padding:5rem 0;background:var(--dark-navy);position:relative;overflow:hidden}
+        .sport-accesso-section::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);border-radius:50%}
+        .sport-accesso-wrapper{max-width:800px;margin:0 auto;padding:0 2rem;position:relative;z-index:2}
+        .sport-accesso-header{text-align:center;margin-bottom:3rem}
+        .sport-accesso-label{display:block;font-size:var(--text-sm);color:var(--primary-blue);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
+        .sport-accesso-title{font-size:var(--text-4xl);font-weight:700;color:#fff;line-height:var(--leading-tight);margin-bottom:1rem}
+        .sport-accesso-subtitle{font-size:var(--text-lg);color:rgba(255,255,255,.7);max-width:600px;margin:0 auto;line-height:1.7}
+        .sport-accesso-list{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 3rem;margin-top:2.5rem}
+        .sport-accesso-item{display:flex;align-items:center;gap:.8rem}
+        .sport-accesso-item i{color:var(--primary-blue);font-size:1.1rem}
+        .sport-accesso-item span{font-size:var(--text-base);color:#fff;font-weight:500}
+        .sport-accesso-note{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1)}
+        .sport-accesso-note p{font-size:var(--text-base);color:rgba(255,255,255,.7);margin:0}
+        .sport-accesso-note strong{color:var(--primary-blue);font-weight:600}
+
+        /* Responsive */
+        @media(max-width:992px){
+            .sport-pilastri-grid{grid-template-columns:1fr;gap:2rem}
+        }
+        @media(max-width:600px){
+            .sport-accesso-list{grid-template-columns:1fr}
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+    <?php include 'components/header.php'; ?>
+
+    <main id="main-content" role="main" tabindex="-1">
+
+        <!-- Hero Section -->
+        <section class="chisiamo-hero">
+            <div class="chisiamo-hero-image" style="background-image: url('assets/images/gallery-3.jpg')"></div>
+            <div class="chisiamo-hero-overlay"></div>
+            <div class="chisiamo-hero-glass">
+                <span class="chisiamo-hero-badge">Benessere & Supporto</span>
+                <h1 class="chisiamo-hero-title">Sportello Psicologico</h1>
+                <p class="chisiamo-hero-tagline">Uno spazio sicuro di ascolto e sostegno per famiglie, genitori e bambini.</p>
+                <a href="#intro" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Intro Section -->
+        <section id="intro" class="sport-intro-section">
+            <div class="sport-intro-wrapper">
+                <span class="sport-intro-label">Il Nostro Servizio</span>
+                <h2 class="sport-intro-title">Sostegno alle famiglie attraverso l'ascolto</h2>
+                <p class="sport-intro-text">
+                    Il servizio si concentra sull'<strong>ascolto come abilità sociale fondamentale</strong> per instaurare fiducia e comprensione. Offriamo sostegno alle famiglie riconoscendo difficoltà e necessità che spesso rimangono inespresse da bambini e genitori.
+                </p>
+                <p class="sport-intro-text">
+                    In un ambiente accogliente e privo di giudizio, creiamo uno spazio dove <strong>la parola e il dialogo</strong> diventano strumenti terapeutici fondamentali per affrontare momenti particolarmente delicati.
+                </p>
+                <div class="sport-intro-highlight">
+                    <p>Il trattamento psichico agisce sulla psiche umana principalmente attraverso la parola e il dialogo, offrendo un supporto concreto durante i momenti più difficili del percorso educativo e di crescita.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pilastri Section - CARD -->
+        <section class="sport-pilastri-section">
+            <div class="sport-pilastri-wrapper">
+                <div class="sport-pilastri-header">
+                    <span class="sport-pilastri-label">I Tre Pilastri</span>
+                    <h2 class="sport-pilastri-title">Come possiamo aiutarti</h2>
+                    <p class="sport-pilastri-subtitle">Tre aree di intervento per supportare il benessere psicologico di individui, coppie e famiglie.</p>
+                </div>
+                <div class="sport-pilastri-grid">
+                    <div class="sport-pilastro-card">
+                        <div class="sport-pilastro-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3 class="sport-pilastro-name">Confusione</h3>
+                        <p class="sport-pilastro-desc">Consultare uno specialista rappresenta un supporto durante momenti particolarmente difficili, quando le emozioni e i pensieri sembrano troppo complessi da gestire da soli.</p>
+                    </div>
+                    <div class="sport-pilastro-card">
+                        <div class="sport-pilastro-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="sport-pilastro-name">Pensieri</h3>
+                        <p class="sport-pilastro-desc">Il trattamento psichico agisce sulla psiche umana principalmente attraverso la parola e il dialogo come strumenti terapeutici fondamentali per elaborare pensieri ed emozioni.</p>
+                    </div>
+                    <div class="sport-pilastro-card">
+                        <div class="sport-pilastro-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="sport-pilastro-name">Relazioni</h3>
+                        <p class="sport-pilastro-desc">Lo sportello accoglie individui singoli, coppie e si dedica principalmente alla tutela del rapporto genitore-figlio, favorendo comunicazione e comprensione reciproca.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accesso Section -->
+        <section class="sport-accesso-section">
+            <div class="sport-accesso-wrapper">
+                <div class="sport-accesso-header">
+                    <span class="sport-accesso-label">Come Accedere</span>
+                    <h2 class="sport-accesso-title">Incontri con la dottoressa psicoterapeuta</h2>
+                    <p class="sport-accesso-subtitle">Il nostro sportello è attivo su appuntamento. Contatta la Direzione per fissare un primo colloquio conoscitivo.</p>
+                </div>
+                <div class="sport-accesso-list">
+                    <div class="sport-accesso-item">
+                        <i class="fas fa-check"></i>
+                        <span>Colloqui individuali per genitori</span>
+                    </div>
+                    <div class="sport-accesso-item">
+                        <i class="fas fa-check"></i>
+                        <span>Consulenze di coppia</span>
+                    </div>
+                    <div class="sport-accesso-item">
+                        <i class="fas fa-check"></i>
+                        <span>Supporto rapporto genitore-figlio</span>
+                    </div>
+                    <div class="sport-accesso-item">
+                        <i class="fas fa-check"></i>
+                        <span>Riservatezza garantita</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section - Stile corso-contatto -->
+        <section class="corso-contatto-section">
+            <div class="corso-contatto-bg" style="background: url('assets/images/bg-progetti-territorio.jpg') center/cover no-repeat"></div>
+            <div class="corso-contatto-overlay"></div>
+            <div class="corso-contatto-wrapper">
+                <div class="corso-contatto-content">
+                    <h2>Prenota un colloquio conoscitivo</h2>
+                    <p>Il primo passo è sempre il più importante. Siamo qui per ascoltarti.</p>
+                    <a href="mailto:info@inballet.it?subject=Richiesta%20Sportello%20Psicologico" class="corso-btn-cta">
+                        Contattaci <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <?php include 'components/footer.php'; ?>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>window.dispatchEvent(new Event('componentsLoaded'));</script>
+</body>
+</html>

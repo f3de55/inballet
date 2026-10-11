@@ -87,7 +87,6 @@
                         <ul>
                             <li><a href="classi-integrate">Classi Multidisciplinari Integrate</a></li>
                             <li><a href="progetto-noiconvoi">Progetto NoiConVoi</a></li>
-                            <li><a href="sportello-bambino">Sportello Psicologico del Bambino</a></li>
                             <li><a href="sostenitori">Sostenitori Progetti Sociali</a></li>
                         </ul>
                     </div>
@@ -184,7 +183,6 @@
             <h4>Danza Integrativa</h4>
             <a href="classi-integrate">Classi Multidisciplinari Integrate</a>
             <a href="progetto-noiconvoi">Progetto NoiConVoi</a>
-            <a href="sportello-bambino">Sportello Psicologico del Bambino</a>
             <a href="sostenitori">Sostenitori Progetti Sociali</a>
         </div>
     </div>

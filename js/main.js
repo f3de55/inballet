@@ -8,9 +8,9 @@
 
 // 1. GOOGLE REVIEWS API INTEGRATION
 const REVIEWS_CONFIG = {
-    endpoint: 'api/google-reviews.php',
     maxReviews: 5,
-    minRating: 1
+    minRating: 1,
+    placeId: 'ChIJ8RJT3JnBhkcRzaWqrFz3JLE'
 };
 
 class GoogleReviews {
@@ -24,40 +24,70 @@ class GoogleReviews {
     }
 
     async init() {
+        if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
+            setTimeout(() => this.init(), 500);
+            return;
+        }
         await this.loadReviews();
         this.renderReviews();
         this.initCarousel();
     }
 
-    async loadReviews() {
-        try {
-            const response = await fetch(REVIEWS_CONFIG.endpoint);
-            const text = await response.text();
-
-            let data;
+    loadReviews() {
+        return new Promise((resolve) => {
             try {
-                data = JSON.parse(text);
-            } catch (e) {
-                this.errorMessage = 'Risposta non JSON: ' + text.substring(0, 100);
-                return;
-            }
+                const map = document.createElement('div');
+                const service = new google.maps.places.PlacesService(map);
 
-            if (data.status === 'OK' && data.result) {
-                this.placeData = data.result;
-                this.errorMessage = null;
+                const request = {
+                    placeId: REVIEWS_CONFIG.placeId,
+                    fields: ['name', 'rating', 'user_ratings_total', 'reviews']
+                };
 
-                if (data.result.reviews && Array.isArray(data.result.reviews)) {
-                    this.reviews = data.result.reviews
-                        .filter(r => r.rating >= REVIEWS_CONFIG.minRating)
-                        .sort((a, b) => b.time - a.time)
-                        .slice(0, REVIEWS_CONFIG.maxReviews);
-                }
-            } else {
-                this.errorMessage = data.error_message || data.status || 'Errore API';
+                const timeout = setTimeout(() => {
+                    this.errorMessage = 'Timeout caricamento recensioni';
+                    console.error('Timeout loading reviews');
+                    resolve();
+                }, 10000);
+
+                service.getDetails(request, (place, status) => {
+                    clearTimeout(timeout);
+                    console.log('Reviews API status:', status, 'Place:', place);
+
+                    if (status === google.maps.places.PlacesServiceStatus.OK && place) {
+                        this.placeData = {
+                            name: place.name || 'InBallet',
+                            rating: place.rating || 0,
+                            user_ratings_total: place.user_ratings_total || 0
+                        };
+
+                        if (place.reviews && Array.isArray(place.reviews)) {
+                            this.reviews = place.reviews
+                                .filter(r => r.rating >= REVIEWS_CONFIG.minRating)
+                                .map(r => ({
+                                    author_name: r.author_name || 'Anonimo',
+                                    rating: r.rating || 0,
+                                    text: r.text || '',
+                                    time: r.time || 0,
+                                    profile_photo_url: r.profile_photo_url || '',
+                                    relative_time_description: r.relative_time_description || ''
+                                }))
+                                .sort((a, b) => b.time - a.time)
+                                .slice(0, REVIEWS_CONFIG.maxReviews);
+                        }
+                        this.errorMessage = null;
+                    } else {
+                        this.errorMessage = 'API status: ' + status;
+                        console.error('Reviews API error:', status);
+                    }
+                    resolve();
+                });
+            } catch (error) {
+                this.errorMessage = 'Errore: ' + error.message;
+                console.error('Reviews error:', error);
+                resolve();
             }
-        } catch (error) {
-            this.errorMessage = 'Errore fetch: ' + error.message;
-        }
+        });
     }
     populateGoogleStats() {
         const statsCard = document.getElementById('googleStatsCard');
@@ -92,21 +122,26 @@ class GoogleReviews {
         const carouselSidebar = document.querySelector('.carousel-sidebar');
         const carouselMain = document.querySelector('.carousel-main');
         const carouselWithCta = document.querySelector('.carousel-with-cta');
+
+        if (!container || !indicators) return;
+
         if (this.reviews.length === 0) {
             if (carouselSidebar) carouselSidebar.style.display = 'none';
             if (carouselMain) carouselMain.style.display = 'none';
-            const errorDetail = this.errorMessage ? `<br><code style="background:#333;padding:4px 8px;border-radius:4px;font-size:12px;margin-top:8px;display:inline-block;">${this.errorMessage}</code>` : '';
-            carouselWithCta.innerHTML = `
-                <div class="no-reviews-message" style="width: 100%; display: flex; justify-content: center; padding: 3rem 0;">
-                    <div class="alert-box">
-                        <i class="fas fa-info-circle"></i>
-                        <p>Le recensioni sono temporaneamente non disponibili. ${errorDetail}<br>
-                        <small style="opacity: 0.7; margin-top: 0.5rem; display: block;">
-                        Visualizza tutte le nostre recensioni direttamente su Google Maps.
-                        </small></p>
+            if (carouselWithCta) {
+                const errorDetail = this.errorMessage ? `<br><code style="background:#333;padding:4px 8px;border-radius:4px;font-size:12px;margin-top:8px;display:inline-block;">${this.errorMessage}</code>` : '';
+                carouselWithCta.innerHTML = `
+                    <div class="no-reviews-message" style="width: 100%; display: flex; justify-content: center; padding: 3rem 0;">
+                        <div class="alert-box">
+                            <i class="fas fa-info-circle"></i>
+                            <p>Le recensioni sono temporaneamente non disponibili. ${errorDetail}<br>
+                            <small style="opacity: 0.7; margin-top: 0.5rem; display: block;">
+                            Visualizza tutte le nostre recensioni direttamente su Google Maps.
+                            </small></p>
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
+            }
             return;
         }
         if (carouselSidebar) carouselSidebar.style.display = '';
@@ -235,6 +270,9 @@ class TestimonialsCarousel {
         this.init();
     }
     init() {
+        if (!this.slides || this.slides.length === 0 || !this.prevBtn || !this.nextBtn || !this.carousel || !this.track) {
+            return;
+        }
         this.setMinHeight();
         this.bindEvents();
         this.bindTouchEvents();
@@ -439,7 +477,7 @@ class InBalletInfiniteGallery {
                 this.openLightbox(index);
             });
         });
-        if (this.isMobile) {
+        if (this.isMobile && this.galleryTrack) {
             let touchTimeout;
             this.galleryTrack.addEventListener('touchstart', () => {
                 this.galleryTrack.classList.add('paused');
@@ -451,10 +489,10 @@ class InBalletInfiniteGallery {
                 }, 2000);
             });
         }
-        this.lightboxClose.addEventListener('click', () => this.closeLightbox());
-        this.lightboxPrev.addEventListener('click', () => this.prevLightboxImage());
-        this.lightboxNext.addEventListener('click', () => this.nextLightboxImage());
-        this.lightbox.addEventListener('click', (e) => {
+        if (this.lightboxClose) this.lightboxClose.addEventListener('click', () => this.closeLightbox());
+        if (this.lightboxPrev) this.lightboxPrev.addEventListener('click', () => this.prevLightboxImage());
+        if (this.lightboxNext) this.lightboxNext.addEventListener('click', () => this.nextLightboxImage());
+        if (this.lightbox) this.lightbox.addEventListener('click', (e) => {
             if (e.target === this.lightbox) {
                 this.closeLightbox();
             }

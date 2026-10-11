@@ -12,7 +12,7 @@ header('Access-Control-Allow-Origin: *');
 
 // === CONFIGURAZIONE ===
 $apiKey = 'AIzaSyB1T64uyO5Ke-MttLo9Amscl5ViUvYYvtI';
-$placeId = 'ChIJMTLpHKeUhkcR23yEdflvQRQ';
+$placeId = 'ChIJ8RJT3JnBhkcRzaWqrFz3JLE';
 
 // === FUNZIONI ===
 function sendJson($data, $code = 200) {

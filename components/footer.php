@@ -24,7 +24,6 @@
             <h4>PROGETTI</h4>
             <a href="classi-integrate">Classi Multidisciplinari Integrate</a>
             <a href="progetto-noiconvoi">Progetto NoiConVoi</a>
-            <a href="sportello-bambino">Sportello Psicologico del Bambino</a>
             <a href="sostenitori">Sostenitori Progetti Sociali</a>
         </div>
         <div class="footer-col">

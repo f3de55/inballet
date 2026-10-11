@@ -17,7 +17,15 @@
       "Bash(do)",
       "Bash(done)",
       "Bash(timeout 30 bash:*)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(git clone:*)",
+      "Bash(timeout /t:*)",
+      "Bash(dir \"C:\\\\Users\\\\feder\\\\.claude\\\\superpowers\")",
+      "Bash(claude --version:*)",
+      "Bash(dir /s /b \"C:\\\\Users\\\\feder\\\\.claude\\\\plugins\")",
+      "Bash(findstr:*)",
+      "PowerShell(docker info --format '{{.ServerVersion}}')",
+      "PowerShell(for\\($i=0;$i -lt 10;$i++\\){ Start-Sleep 3; $u = docker logs 0273d927715b 2>&1 | Select-String -Pattern 'https://[a-z0-9-]+\\\\.trycloudflare\\\\.com' | ForEach-Object { $_.Matches[0].Value } | Select-Object -First 1; if\\($u\\){break} }; $u)"
     ]
   }
 }

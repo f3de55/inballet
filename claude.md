@@ -1,209 +1,115 @@
-# Procedura Deploy InBallet con Cloudflare Tunnel
+# CLAUDE.md
 
-Il sito è un progetto **Astro 7** (`src/`): pagine pubbliche pre-renderizzate in HTML statico,
-dashboard e login renderizzati on-demand dal server Node (`@astrojs/node`).
-Backend = **Astro Actions** (`src/actions/index.ts`): chatbot, calendario eventi, login, gestione dashboard.
-Icone: sottoinsieme di Font Awesome generato da `scripts/icons.mjs` (automatico prima di dev/build/check).
-Dati runtime (eventi, tipi evento, analytics chatbot, sessioni, locandine caricate) in `data/`.
-Segreti in `.env` (vedi `.env.example`), **senza apici** attorno ai valori.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Sviluppo locale (senza Docker)
+## Development Commands
 
 ```bash
-npm install
-npm run dev        # http://localhost:4321 con hot reload
-npm run build      # build di produzione in dist/
-npm start          # avvia dist/ leggendo .env
-npm run check      # controllo tipi
-npm run icons      # rigenera solo il set di icone (dopo aver usato una nuova icona fa-…)
+npm run dev        # http://localhost:4321 with hot reload
+npm run build      # production build to dist/
+npm start          # run dist/ reading .env
+npm run check      # TypeScript type check
+npm run icons      # regenerate Font Awesome icon subset (run after using a new fa-… icon)
 ```
+
+`predev`, `prebuild`, `precheck` auto-run `npm run icons` — no need to run it manually before those.
+
+## Architecture
+
+**Astro 7** with hybrid rendering. Default output is `static` (prerendered HTML), but pages with `export const prerender = false` are SSR. Currently SSR: `/login`, `/dashboard`, and the image asset route.
+
+### Request flow
+
+```
+Browser → middleware.ts → Astro page / Action
+```
+
+`src/middleware.ts` handles two things:
+1. Legacy PHP URL redirects (`/chi-siamo.php` → `/chi-siamo`, 301)
+2. CSRF protection: POST to `/_actions/*` must have matching `Origin` header
+
+### Backend: Astro Actions
+
+All backend logic lives in `src/actions/index.ts` — no separate API routes. Actions are grouped: `chatbot`, `eventi`, `tipi`, `immagini`, `auth`. Admin actions guard themselves with `soloAdmin()` (checks session). Called from the browser via `import { actions } from 'astro:actions'` or as `<form>` action.
+
+### Data layer
+
+Everything is JSON files on disk in `DATA_DIR` (default `./data/`, set in `.env`). The `src/lib/storage.ts` module provides:
+- `readJson` / `writeJson` (atomic: write temp file → rename)
+- `serialized()` — a promise queue that prevents concurrent read→modify→write races
+
+File layout in `data/`:
+- `eventi.json`, `tipi_evento.json` — event data
+- `analytics.json` — chatbot logs (capped at 10000 entries)
+- `sessions/` — fsLite session driver
+- `uploads/eventi/` — uploaded event posters
+- `cache/`, `ratelimit/` — chatbot caches and rate limit counters
+
+In Docker, this directory is a named volume (`inballet-data`) so data survives rebuilds.
+
+### Chatbot (BELLA)
+
+`src/lib/chatbot.ts`. Flow per message: sanitize → injection/bad-words/spam filter → rate limit (30/hr, 100/day per IP hash) → cache check → Groq API call → cache store → log analytics.
+
+Uses `GROQ_API_KEY` and `GROQ_MODEL` from env. Default model: `openai/gpt-oss-120b`. Cache TTL is 2 hours; cache key includes a `SITE_VERSION` (set at process start) so deploys invalidate it.
+
+### Content collections
+
+Course pages use Astro Content Collections: `src/data/corsi.json` defines 22 courses, each keyed by slug. `src/pages/[corso].astro` renders them. Schema is in `src/content.config.ts`.
+
+### Icons
+
+`scripts/icons.mjs` generates a Font Awesome subset from `@fortawesome/fontawesome-free`. It scans source files for `fa-*` class usage and builds a minimal subset. Run `npm run icons` after adding any new Font Awesome icon class.
+
+### Session & Auth
+
+Sessions via Astro's built-in session API (fsLite driver, 24h TTL). `src/lib/auth.ts` wraps session read/write. Login is password-only (`DASHBOARD_PASSWORD` from env).
+
+### Security config
+
+`security.allowedDomains` in `astro.config.mjs` controls which hosts the Origin check trusts. Add new domains there for new deployments. No trailing quotes around `.env` values or they break.
 
 ---
 
-## Passaggi da eseguire (per Claude)
+## Deploy (Docker + Cloudflare Tunnel)
 
-### 1. Verifica Docker attivo
+### First deploy
+
 ```bash
+# 1. Check Docker is running
 docker info
-```
-Se fallisce: chiedere all'utente di avviare Docker Desktop e attendere 10 secondi.
 
----
-
-### 2. Dockerfile
-Già presente in `c:\Users\feder\Documents\GitHub\inballet\Dockerfile` (multi-stage
-`node:22-alpine`: `npm ci` + `astro build`, runtime Node non-root sulla porta **8080**).
-
----
-
-### 3. Build immagine Docker
-```bash
-cd "c:\Users\feder\Documents\GitHub\inballet" && docker build -t inballet-site .
-```
-
-**Tempo:** ~1 minuto (include ottimizzazione immagini in WebP)
-
----
-
-### 4. Rimuovi container esistente (se presente) e avvia nuovo
-```bash
-docker rm -f inballet-web
-docker run -d --name inballet-web -p 3000:8080 --env-file .env -v inballet-data:/app/data inballet-site
-```
-
-- **Porta locale:** 3000 (→ 8080 nel container)
-- `--env-file .env`: chiavi Groq/Google e password dashboard
-- `-v inballet-data:/app/data`: eventi e upload **persistono** tra un rebuild e l'altro
-- **Verifica:** il container deve restituire un ID (es: `d5eba632e328...`)
-
----
-
-### 5. Avvia Cloudflare Tunnel
-```bash
-docker run -d --network host cloudflare/cloudflared:latest tunnel --url http://localhost:3000
-```
-
-**Output:** Restituisce un container ID (es: `77088fb3df60...`)
-
----
-
-### 6. Recupera URL pubblico
-```bash
-sleep 3 && docker logs [CONTAINER_ID] | grep "https://"
-```
-
-Sostituire `[CONTAINER_ID]` con l'ID del container cloudflared appena creato.
-
-**Esempio output:**
-```
-https://cotton-spies-lights-temp.trycloudflare.com
-```
-
----
-
-### 7. Fornisci URL all'utente
-
-**Messaggio da inviare:**
-```
-✅ Sito ONLINE su: https://[URL-GENERATO].trycloudflare.com
-
-- Nessuna password richiesta
-- Tunnel attivo finché Docker è in esecuzione
-- Per fermare: docker stop [CONTAINER_ID]
-```
-
----
-
-## 🔄 AGGIORNAMENTO DOPO MODIFICHE AL CODICE
-
-Quando l'utente modifica file in `src/` (pagine `.astro`, CSS, JS, dati), seguire questa procedura:
-
-```bash
-# 1. Rebuild immagine con nuove modifiche
-cd "c:\Users\feder\Documents\GitHub\inballet"
+# 2. Build image (~1 min, includes WebP image optimization)
 docker build -t inballet-site .
 
-# 2. Stop e rimuovi vecchio container (i dati restano nel volume inballet-data)
+# 3. Start container
 docker rm -f inballet-web
-
-# 3. Avvia nuovo container con codice aggiornato
 docker run -d --name inballet-web -p 3000:8080 --env-file .env -v inballet-data:/app/data inballet-site
-```
 
-**Tempo totale:** ~1 minuto
-
-### Il tunnel Cloudflare
-
-**IMPORTANTE:** Il tunnel cloudflared continua a funzionare! NON serve riavviarlo.
-
-**Verifica:** Ricarica la pagina nel browser, vedrai le modifiche.
-
-### Se il tunnel si è chiuso
-
-Solo se necessario (tunnel non funziona):
-
-```bash
-# 1. Trova e ferma vecchio tunnel
-docker ps | grep cloudflared
-docker stop [CLOUDFLARED_CONTAINER_ID]
-
-# 2. Avvia nuovo tunnel
+# 4. Start Cloudflare tunnel
 docker run -d --network host cloudflare/cloudflared:latest tunnel --url http://localhost:3000
 
-# 3. Recupera nuovo URL
-docker ps | grep cloudflared  # prendi l'ID
-docker logs [NUOVO_ID] | grep "https://"
+# 5. Get public URL (wait a few seconds first)
+docker logs <cloudflared-container-id> | grep "https://"
 ```
 
-**NOTA:** Nuovo URL = nuovo link da condividere
+### After code changes (one-liner)
 
----
-
-## Note Importanti
-
-- **URL cambia ogni volta** che si riavvia cloudflared
-- **Tunnel si chiude** se Docker Desktop si chiude o PC si spegne
-- **Non adatto** per uso permanente oltre qualche giorno
-- **Soluzione temporanea** per demo/test veloci
-- Login dashboard accettato solo da `localhost`, `*.trycloudflare.com` e `inballet.it`
-  (`security.allowedDomains` in `astro.config.mjs`): per un nuovo dominio aggiungerlo lì
-
----
-
-## Troubleshooting
-
-### Porta 3000 già occupata
 ```bash
-docker rm -f inballet-web
-docker run -d --name inballet-web -p 3001:8080 --env-file .env -v inballet-data:/app/data inballet-site
-# Poi usa --url http://localhost:3001 nel tunnel
+docker build -t inballet-site . && docker rm -f inballet-web && docker run -d --name inballet-web -p 3000:8080 --env-file .env -v inballet-data:/app/data inballet-site
 ```
 
-### Docker non risponde
-Chiedere all'utente di:
-1. Aprire Docker Desktop
-2. Attendere che sia completamente avviato (icona verde)
-3. Riprovare
+The Cloudflare tunnel keeps running — no need to restart it.
 
-### Cloudflare non genera URL
-```bash
-docker logs [CONTAINER_ID]
-```
-Cercare errori. Potrebbe essere un problema di rete.
+### Notes
 
-### Login dashboard: "403" o password rifiutata
-- 403: l'host non è in `allowedDomains` (vedi Note Importanti)
-- Password rifiutata: in `.env` il valore di `DASHBOARD_PASSWORD` non deve avere apici
+- The tunnel URL changes every time cloudflared restarts
+- Login is accepted only from `localhost`, `*.trycloudflare.com`, and `inballet.it` (see `security.allowedDomains` in `astro.config.mjs` to add more)
+- `docker volume rm inballet-data` permanently deletes events and uploads
+- Port conflict: use `-p 3001:8080` and `--url http://localhost:3001` in the tunnel
 
----
+### Troubleshooting
 
-## Comandi Rapidi
-
-**Aggiornamento dopo modifiche (1 comando):**
-```bash
-cd "c:\Users\feder\Documents\GitHub\inballet" && docker build -t inballet-site . && docker rm -f inballet-web && docker run -d --name inballet-web -p 3000:8080 --env-file .env -v inballet-data:/app/data inballet-site
-```
-
-**Stop tutto:**
-```bash
-docker stop inballet-web
-docker ps | grep cloudflared  # trova ID tunnel
-docker stop [CLOUDFLARED_CONTAINER_ID]
-```
-
-**Riavvio rapido (se immagine già pronta):**
-```bash
-docker start inballet-web
-docker run -d --network host cloudflare/cloudflared:latest tunnel --url http://localhost:3000
-```
-
-**Pulizia completa** (⚠️ `docker volume rm` cancella eventi e locandine):
-```bash
-docker rm -f inballet-web
-docker rmi inballet-site
-docker volume rm inballet-data
-```
-
----
-
-**Ultimo aggiornamento:** 2026-10-11 (migrazione PHP → Astro)
+- **Login 403**: host not in `allowedDomains`
+- **Password rejected**: check `.env` — no quotes around `DASHBOARD_PASSWORD`
+- **Tunnel no URL**: `docker logs <container-id>` for errors

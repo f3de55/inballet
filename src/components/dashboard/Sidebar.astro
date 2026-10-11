@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/images/logo.png';
+
+interface Props {
+  sezione: 'bot' | 'eventi';
+}
+
+const { sezione } = Astro.props;
+const voci = [
+  { id: 'bot', label: 'Chatbot', icon: 'fa-robot' },
+  { id: 'eventi', label: 'Eventi', icon: 'fa-calendar-alt' },
+] as const;
+---
+
+<!-- Hamburger menu mobile -->
+<button class="hamburger" type="button" aria-label="Apri menu" aria-expanded="false" data-sidebar-toggle>
+    <span></span><span></span><span></span>
+</button>
+<div class="sidebar-overlay" data-sidebar-toggle></div>
+
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="/" target="_blank" title="Vai al sito"><i class="fas fa-external-link-alt"></i></a>
+    </div>
+    <div class="sidebar-logo">
+        <Image src={logo} alt="InBallet Logo" width={280} format="webp" loading="eager" />
+        <span>Dashboard Admin</span>
+    </div>
+    <nav class="sidebar-nav">
+        {voci.map((v) => (
+            <a href={`?s=${v.id}`} class:list={['nav-item', { active: sezione === v.id }]} aria-current={sezione === v.id ? 'page' : undefined}>
+                <i class:list={['fas', v.icon]}></i><span>{v.label}</span>
+            </a>
+        ))}
+    </nav>
+</aside>
+
+<script>
+    // Toggle sidebar mobile
+    const sidebar = document.querySelector('.sidebar')!;
+    const hamburger = document.querySelector<HTMLButtonElement>('.hamburger')!;
+    const overlay = document.querySelector('.sidebar-overlay')!;
+
+    for (const el of document.querySelectorAll('[data-sidebar-toggle]')) {
+        el.addEventListener('click', () => {
+            const open = sidebar.classList.toggle('open');
+            hamburger.classList.toggle('open', open);
+            overlay.classList.toggle('open', open);
+            hamburger.setAttribute('aria-expanded', String(open));
+        });
+    }
+</script>

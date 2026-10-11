@@ -1,0 +1,123 @@
+---
+/**
+ * Analytics del chatbot: messaggi, utenti unici, cache hit rate, grafici per
+ * giorno/ora e domande più frequenti nel periodo selezionato.
+ */
+import type { LogEntry } from '../../lib/chatbot';
+import { paths, readJson } from '../../lib/storage';
+import { mbSlice } from '../../lib/text';
+import { romeDate } from '../../lib/time';
+
+const params = Astro.url.searchParams;
+const filterFrom = params.get('from') ?? romeDate(Date.now() - 30 * 86400000);
+const filterTo = params.get('to') ?? romeDate();
+const logs = (await readJson<LogEntry[]>(paths.analytics, [])).filter((l) => l.date >= filterFrom && l.date <= filterTo);
+
+const totalMessages = logs.length;
+const uniqueUsers = new Set(logs.map((l) => l.ip_hash)).size;
+const cacheHitRate = totalMessages ? Math.round((logs.filter((l) => l.cached).length / totalMessages) * 1000) / 10 : 0;
+
+const perGiorno = new Map<string, number>();
+const perOra = Array<number>(24).fill(0);
+const domande = new Map<string, number>();
+for (const log of logs) {
+  perGiorno.set(log.date, (perGiorno.get(log.date) ?? 0) + 1);
+  perOra[log.hour ?? 0]++;
+  if (log.message && log.type !== 'blocked') {
+    const q = mbSlice(log.message.trim(), 80).toLowerCase();
+    domande.set(q, (domande.get(q) ?? 0) + 1);
+  }
+}
+const giorni = [...perGiorno.keys()].sort();
+const topQuestions = [...domande].sort((a, b) => b[1] - a[1]).slice(0, 10);
+const charts = {
+  daily: { labels: giorni, data: giorni.map((d) => perGiorno.get(d)!) },
+  hourly: { labels: perOra.map((_, h) => `${String(h).padStart(2, '0')}:00`), data: perOra },
+};
+const fmt = new Intl.NumberFormat('en-US');
+---
+
+<div class="header">
+    <h2><i class="fas fa-robot"></i> Analytics Chatbot</h2>
+    <form class="filters" method="GET">
+        <input type="hidden" name="s" value="bot">
+        <input type="date" name="from" value={filterFrom} aria-label="Dal">
+        <span style="color:var(--text-muted)">-</span>
+        <input type="date" name="to" value={filterTo} aria-label="Al">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i> Filtra</button>
+    </form>
+</div>
+
+<div class="stats">
+    <div class="stat">
+        <div class="stat-icon blue"><i class="fas fa-comments"></i></div>
+        <div class="stat-value">{fmt.format(totalMessages)}</div>
+        <div class="stat-label">Messaggi Totali</div>
+    </div>
+    <div class="stat">
+        <div class="stat-icon green"><i class="fas fa-users"></i></div>
+        <div class="stat-value">{fmt.format(uniqueUsers)}</div>
+        <div class="stat-label">Utenti Unici</div>
+    </div>
+    <div class="stat">
+        <div class="stat-icon yellow"><i class="fas fa-bolt"></i></div>
+        <div class="stat-value">{cacheHitRate}%</div>
+        <div class="stat-label">Cache Hit Rate</div>
+    </div>
+</div>
+
+<div class="grid-2" data-charts={JSON.stringify(charts)}>
+    <div class="card">
+        <div class="card-header"><h3><i class="fas fa-chart-line"></i> Messaggi per Giorno</h3></div>
+        <div class="card-body"><canvas id="chartDaily" height="200"></canvas></div>
+    </div>
+    <div class="card">
+        <div class="card-header"><h3><i class="fas fa-clock"></i> Messaggi per Ora</h3></div>
+        <div class="card-body"><canvas id="chartHourly" height="200"></canvas></div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header"><h3><i class="fas fa-question-circle"></i> Domande Frequenti</h3></div>
+    <div class="card-body">
+        {topQuestions.length === 0 ? (
+            <div class="empty"><i class="fas fa-inbox"></i><p>Nessun dato disponibile</p></div>
+        ) : (
+            <ul class="question-list">
+                {topQuestions.map(([q, c]) => (
+                    <li><span class="q">{q}</span><span class="count">{c}</span></li>
+                ))}
+            </ul>
+        )}
+    </div>
+</div>
+
+<script>
+    import { BarController, BarElement, CategoryScale, Chart, Filler, LinearScale, LineController, LineElement, PointElement } from 'chart.js';
+
+    Chart.register(LineController, BarController, LineElement, BarElement, PointElement, CategoryScale, LinearScale, Filler);
+    Chart.defaults.color = '#888';
+    Chart.defaults.borderColor = '#222';
+
+    type Serie = { labels: string[]; data: number[] };
+    const container = document.querySelector<HTMLElement>('[data-charts]');
+    if (container) {
+        const { daily, hourly } = JSON.parse(container.dataset.charts!) as { daily: Serie; hourly: Serie };
+        const options = {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true, grid: { color: '#222' } }, x: { grid: { display: false } } },
+        };
+
+        new Chart(document.querySelector<HTMLCanvasElement>('#chartDaily')!, {
+            type: 'line',
+            data: { labels: daily.labels, datasets: [{ label: 'Messaggi', data: daily.data, borderColor: '#87CEEB', backgroundColor: 'rgba(135,206,235,.1)', fill: true, tension: 0.4 }] },
+            options,
+        });
+        new Chart(document.querySelector<HTMLCanvasElement>('#chartHourly')!, {
+            type: 'bar',
+            data: { labels: hourly.labels, datasets: [{ label: 'Messaggi', data: hourly.data, backgroundColor: 'rgba(135,206,235,.5)', borderColor: '#87CEEB', borderWidth: 1, borderRadius: 4 }] },
+            options,
+        });
+    }
+</script>

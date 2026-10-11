@@ -1,0 +1,136 @@
+---
+import Base from '../layouts/Base.astro';
+import { webp } from '../lib/images';
+
+const bg: Record<string, string> = {
+  'gallery-2.jpg': await webp('gallery-2.jpg', 1920),
+  'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
+};
+---
+
+<Base
+    title="Sostenitori Progetti Sociali - InBallet"
+    description="Sostieni i progetti sociali InBallet - Dona ora per supportare l'inclusione attraverso la danza. Dal 2013 accogliamo giovani e adulti con disabilità."
+    keywords="donazione danza, sostieni inclusione, progetti sociali danza, volontariato aziendale, CSR danza, Lainate"
+    ogTitle="Sostieni i Progetti Sociali - InBallet"
+    ogDescription="La tua donazione supporta l'inclusione attraverso la danza. Aiutaci a continuare il nostro lavoro."
+>
+
+        <!-- Hero Section -->
+        <section class="chisiamo-hero">
+            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-2.jpg']}')`}></div>
+            <div class="chisiamo-hero-overlay"></div>
+            <div class="chisiamo-hero-glass">
+                <span class="chisiamo-hero-badge">Fai la differenza</span>
+                <h1 class="chisiamo-hero-title">Sostieni i Nostri Progetti</h1>
+                <p class="chisiamo-hero-tagline">Sostieni la danza inclusiva per giovani e adulti.</p>
+                <a href="#dona" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Intro Section -->
+        <section class="sost-intro-section">
+            <div class="sost-intro-wrapper">
+                <span class="sost-intro-label">La Nostra Missione</span>
+                <h2 class="sost-intro-title">Inclusione attraverso la danza</h2>
+                <p class="sost-intro-text">
+                    Dal 2013 accogliamo <strong>giovani e adulti con disabilità</strong> nella provincia di Milano, offrendo percorsi di danza accessibili e inclusivi. Il nostro lavoro è reso possibile grazie al supporto di chi crede nell'importanza dell'arte come strumento educativo.
+                </p>
+                <p class="sost-intro-text">
+                    Oltre 10 anni di attività, 50+ famiglie coinvolte e un team completamente volontario che crede nel potere dell'arte come strumento di inclusione sociale.
+                </p>
+            </div>
+        </section>
+
+        <!-- Dona Section -->
+        <section id="dona" class="sost-dona-section">
+            <div class="sost-dona-wrapper">
+                <span class="sost-dona-label">Dona Ora</span>
+                <h2 class="sost-dona-title">Il tuo contributo fa la differenza</h2>
+                <p class="sost-dona-text">Ogni donazione ci aiuta a continuare il nostro lavoro di inclusione. Sostieni i progetti sociali di InBallet e permetti a più persone di vivere l'esperienza della danza.</p>
+                <a href="https://www.paypal.com/cgi-bin/webscr?business=inballetasd%40gmail.com&cmd=_donations&item_name=Custom%20Item&item_number=donazione&currency_code=EUR" target="_blank" rel="noopener" class="sost-dona-btn">
+                    <i class="fab fa-paypal"></i>
+                    Dona con PayPal
+                </a>
+                <div class="sost-dona-secure">
+                    <i class="fas fa-lock"></i>
+                    <span>Pagamento sicuro tramite PayPal</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progetti Section -->
+        <section class="sost-utilizzo-section">
+            <div class="sost-intro-wrapper">
+                <span class="sost-intro-label">I Progetti che Sostieni</span>
+                <h2 class="sost-intro-title">Dove va la tua donazione</h2>
+                <div class="sost-utilizzo-list" style="max-width:600px;margin:2rem auto 0">
+                    <div class="sost-utilizzo-item">
+                        <i class="fas fa-check"></i>
+                        <span>Lezioni gratuite per ragazzi con difficolta' economiche</span>
+                    </div>
+                    <div class="sost-utilizzo-item">
+                        <i class="fas fa-check"></i>
+                        <span>Progetto NoiConVoi - danza inclusiva dal 2013</span>
+                    </div>
+                    <div class="sost-utilizzo-item">
+                        <i class="fas fa-check"></i>
+                        <span>Classi integrate per bambini con bisogni speciali</span>
+                    </div>
+                    <div class="sost-utilizzo-item">
+                        <i class="fas fa-check"></i>
+                        <span>Spettacoli inclusivi aperti alla comunita'</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="corso-contatto-section">
+            <div class="corso-contatto-bg" style={`background: url('${bg['bg-progetti-territorio.jpg']}') center/cover no-repeat`}></div>
+            <div class="corso-contatto-overlay"></div>
+            <div class="corso-contatto-wrapper">
+                <div class="corso-contatto-content">
+                    <h2>Vuoi saperne di piu'?</h2>
+                    <p>Contattaci per informazioni sui progetti o per collaborazioni aziendali.</p>
+                    <a href="mailto:info@inballet.it?subject=Informazioni%20Progetti%20Sociali" class="corso-btn-cta">
+                        Contattaci <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+</Base>
+
+<style is:global>
+        /* === SEZIONI SOSTENITORI - MINIMAL === */
+
+        /* Intro Section */
+        .sost-intro-section{padding:5rem 0;background:#fff}
+        .sost-intro-wrapper{max-width:900px;margin:0 auto;padding:0 2rem}
+        .sost-intro-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;text-align:center}
+        .sost-intro-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:2rem;text-align:center}
+        .sost-intro-text{font-size:var(--text-lg);line-height:1.8;color:var(--text-light);margin-bottom:1.5rem;text-align:center}
+        .sost-intro-text strong{color:var(--dark-navy);font-weight:600}
+
+        /* Dona Section - Minimal */
+        .sost-dona-section{padding:5rem 0;background:var(--dark-navy);position:relative;overflow:hidden}
+        .sost-dona-section::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);border-radius:50%}
+        .sost-dona-wrapper{max-width:700px;margin:0 auto;padding:0 2rem;position:relative;z-index:2;text-align:center}
+        .sost-dona-label{display:block;font-size:var(--text-sm);color:var(--primary-blue);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
+        .sost-dona-title{font-size:var(--text-4xl);font-weight:700;color:#fff;line-height:var(--leading-tight);margin-bottom:1.5rem}
+        .sost-dona-text{font-size:var(--text-lg);color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:2.5rem}
+        .sost-dona-btn{display:inline-flex;align-items:center;gap:.8rem;background:#0070ba;color:#fff;padding:1.2rem 3rem;border-radius:10px;font-size:var(--text-lg);font-weight:600;text-decoration:none;transition:all .3s ease}
+        .sost-dona-btn:hover{background:#005a9e;transform:translateY(-2px)}
+        .sost-dona-btn i{font-size:1.4rem}
+        .sost-dona-secure{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:1.5rem;font-size:var(--text-sm);color:rgba(255,255,255,.5)}
+        .sost-dona-secure i{color:#22c55e}
+
+        /* Progetti Section */
+        .sost-utilizzo-section{padding:5rem 0;background:#fff}
+        .sost-utilizzo-list{display:flex;flex-direction:column;gap:1rem}
+        .sost-utilizzo-item{display:flex;align-items:flex-start;gap:1rem}
+        .sost-utilizzo-item i{width:20px;color:var(--primary-blue-dark);font-size:1rem;margin-top:3px}
+        .sost-utilizzo-item span{font-size:var(--text-base);color:var(--dark-navy);line-height:1.6}
+</style>

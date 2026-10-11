@@ -1,0 +1,31 @@
+---
+/**
+ * InBallet Dashboard: analytics chatbot e gestione eventi.
+ * Renderizzata on-demand e protetta dalla sessione di login.
+ */
+import '../styles/dashboard.css';
+import Admin from '../layouts/Admin.astro';
+import Sidebar from '../components/dashboard/Sidebar.astro';
+import BotAnalytics from '../components/dashboard/BotAnalytics.astro';
+import EventiManager from '../components/dashboard/EventiManager.astro';
+import { isLoggedIn, logout } from '../lib/auth';
+
+export const prerender = false;
+
+if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login');
+
+if (Astro.url.searchParams.has('logout')) {
+  logout(Astro.session);
+  return Astro.redirect('/login');
+}
+
+const sezione = Astro.url.searchParams.get('s') === 'eventi' ? 'eventi' : 'bot';
+---
+
+<Admin title="Dashboard - InBallet" rubik>
+    <Sidebar sezione={sezione} />
+
+    <main class="main">
+        {sezione === 'bot' ? <BotAnalytics /> : <EventiManager />}
+    </main>
+</Admin>

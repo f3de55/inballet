@@ -1,0 +1,20 @@
+---
+/**
+ * <img> con immagine locale convertita in WebP + srcset responsive.
+ * Tutti gli altri attributi (alt, width, height, loading, class…) vengono
+ * passati invariati, così il markup resta identico all'originale.
+ */
+import type { HTMLAttributes } from 'astro/types';
+import { webpSrcset } from '../lib/images';
+
+interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'srcset'> {
+  src: string;
+  widths?: number[];
+  sizes?: string;
+}
+
+const { src, widths = [480, 800, 1280], sizes = '100vw', ...attrs } = Astro.props;
+const img = await webpSrcset(src, widths);
+---
+
+<img src={img.src} srcset={img.srcset} sizes={sizes} {...attrs} />

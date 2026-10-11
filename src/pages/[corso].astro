@@ -1,0 +1,139 @@
+---
+/**
+ * Pagine corso (22): stesso template, dati nella collection `corsi`
+ * (src/content.config.ts → src/data/corsi.json). L'HTML è generato al build.
+ */
+import type { GetStaticPaths } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import { webp } from '../lib/images';
+
+export const getStaticPaths = (async () => {
+  const corsi = await getCollection('corsi');
+  return corsi.map((corso) => ({ params: { corso: corso.id }, props: { data: corso.data } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  data: CollectionEntry<'corsi'>['data'];
+}
+
+const { data } = Astro.props;
+const heroBg = await webp(data.heroImage, 1920);
+const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
+---
+
+<Base
+    title={data.title}
+    description={data.description}
+    keywords={data.keywords}
+    ogTitle={data.ogTitle}
+    ogDescription={data.ogDescription}
+>
+    <link slot="head" rel="preload" as="image" href={heroBg} fetchpriority="high">
+
+    <!-- Hero Corso -->
+    <section class="corso-hero">
+        <div class="corso-hero-image" id="corsoHeroImage" style={`background-image: url('${heroBg}');`}></div>
+        <div class="corso-hero-overlay"></div>
+
+        <div class="corso-hero-glass">
+            <span class="corso-hero-badge" id="corsoBadge">{data.badge}</span>
+            <h1 class="corso-hero-title" id="corsoTitolo">{data.titolo}</h1>
+            <p class="corso-hero-tagline" id="corsoTagline">{data.tagline}</p>
+
+            <a href="#corso-intro" class="corso-scroll-arrow" aria-label="Scorri in basso">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Intro -->
+    <section id="corso-intro" class="corso-intro-section">
+        <div class="container">
+            <div class="corso-story-layout">
+                <div class="corso-story-content">
+                    <div class="corso-section-header">
+                        <p class="corso-section-tagline" id="corsoIntroTagline">Il percorso</p>
+                        <h2 class="corso-section-title" id="corsoIntroTitolo">Di cosa si tratta</h2>
+                    </div>
+
+                    <div class="corso-story-text" id="corsoIntroText" set:html={data.intro} />
+
+                    <div class="corso-intro-meta">
+                        <div class="corso-meta-card">
+                            <div class="corso-meta-icon">
+                                <i class="fas fa-child"></i>
+                            </div>
+                            <div class="corso-meta-info">
+                                <span class="corso-meta-label">Età</span>
+                                <strong id="corsoEta">{data.eta}</strong>
+                            </div>
+                        </div>
+                        <div class="corso-meta-card">
+                            <div class="corso-meta-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="corso-meta-info">
+                                <span class="corso-meta-label">Frequenza</span>
+                                <strong id="corsoFrequenza">{data.frequenza}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="corso-story-image">
+                    <Img id="corsoIntroImg" src={data.introImage} alt={data.titolo} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 50vw" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Il Metodo -->
+    <section class="corso-metodo-section">
+        <div class="corso-metodo-wrapper">
+            <div class="corso-metodo-header">
+                <span class="corso-metodo-label">Come lavoriamo</span>
+                <h2 id="corsoMetodoTitolo">{data.metodoTitolo}</h2>
+            </div>
+            <div class="corso-metodo-list" id="corsoMetodoContent">
+                {data.metodo.map((item) => (
+                    <div class="corso-metodo-item">
+                        <h3 set:html={item.titolo} />
+                        <p set:html={item.testo} />
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Cosa Imparera -->
+    <section class="corso-impara-section">
+        <div class="corso-impara-wrapper">
+            <div class="corso-impara-header">
+                <span class="corso-impara-label">Gli obiettivi</span>
+                <h2 id="corsoImparaTitolo">{data.imparaTitolo}</h2>
+                <p class="corso-impara-subtitle">Le competenze che svilupperà durante il percorso</p>
+            </div>
+            <ul class="corso-impara-list" id="corsoImparaGrid">
+                {data.impara.map((item) => <li set:html={item} />)}
+            </ul>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="corso-contatto-section">
+        <div class="corso-contatto-bg" style={`background-image: url('${contattoBg}')`}></div>
+        <div class="corso-contatto-overlay"></div>
+        <div class="corso-contatto-wrapper">
+            <div class="corso-contatto-content">
+                <h2>Prenota una lezione di prova gratuita</h2>
+                <p>Vieni a conoscerci: la prima lezione è sempre senza impegno.</p>
+                <a href="/contatti" class="corso-btn-cta">
+                    Contattaci per prenotare
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+</Base>

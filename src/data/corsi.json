@@ -1,0 +1,860 @@
+{
+  "adulti": {
+    "title": "Adulti - InBallet",
+    "description": "Corsi di danza per Adulti. Non è mai troppo tardi per iniziare o riprendere a danzare. InBallet Lainate e Rho.",
+    "keywords": "danza adulti, corso danza principianti adulti, danza over 30, InBallet, Lainate, Rho",
+    "ogTitle": "Adulti - InBallet",
+    "ogDescription": "Percorsi di danza e benessere per adulti di tutte le età.",
+    "badge": "Dai 17 anni in su",
+    "titolo": "Adulti",
+    "tagline": "Non è mai troppo tardi: inizia, riprendi o continua a danzare",
+    "heroImage": "assets/images/gallery-10.jpg",
+    "introImage": "assets/images/gallery-1.jpg",
+    "intro": "<p>I percorsi per <strong>adulti</strong> sono pensati per chi vuole avvicinarsi\nalla danza per la prima volta, riprendere dopo anni di pausa, o continuare\na crescere. Non ci sono limiti di età, solo <strong>voglia di muoversi</strong>.</p>\n<p>Offriamo corsi di danza e benessere per tutti i livelli, in un ambiente\naccogliente dove ogni partecipante può esprimersi senza giudizio e al\nproprio ritmo.</p>",
+    "eta": "Adulti di tutte le età",
+    "frequenza": "1-3 lezioni a settimana",
+    "metodoTitolo": "I Nostri Corsi",
+    "metodo": [
+      {
+        "titolo": "Danza Contemporanea Adulti",
+        "testo": "Ideale per chi inizia: movimento libero, consapevolezza corporea, nessuna esperienza richiesta. Solo voglia di provare."
+      },
+      {
+        "titolo": "Yoga e Pilates",
+        "testo": "Per il benessere fisico e mentale: flessibilità, forza, equilibrio. Perfetti per chi cerca movimento senza coreografie."
+      },
+      {
+        "titolo": "Hip-Hop e Heels",
+        "testo": "Per chi vuole energia e divertimento: groove, coreografie, attitudine. Corsi pensati per adulti di ogni livello."
+      }
+    ],
+    "imparaTitolo": "Cosa troverai",
+    "impara": [
+      "Corsi per principianti assoluti",
+      "Ambiente accogliente e senza giudizio",
+      "Progressione rispettosa dei tuoi tempi",
+      "Benefici fisici e mentali",
+      "Nuove amicizie e comunità",
+      "Possibilità di partecipare a saggi"
+    ]
+  },
+  "avviamento-danza": {
+    "title": "Avviamento alla Danza - InBallet",
+    "description": "Corso Avviamento alla Danza per bambini dai 3 anni. Primo approccio al movimento e alla musica attraverso il gioco. InBallet Lainate e Rho.",
+    "keywords": "avviamento danza, corso danza bambini 3 anni, propedeutica danza, InBallet, Lainate, Rho",
+    "ogTitle": "Avviamento alla Danza - InBallet",
+    "ogDescription": "Corso per bambini dai 3 anni. Primo approccio al movimento e alla musica.",
+    "badge": "Dai 3 anni",
+    "titolo": "Avviamento alla Danza",
+    "tagline": "Il primo passo nel mondo della danza, attraverso il gioco e la musica",
+    "heroImage": "assets/images/gallery-3.jpg",
+    "introImage": "assets/images/gallery-5.jpg",
+    "intro": "<p>Un percorso studiato per il <strong>primissimo approccio alla musica e al movimento</strong>.\nI bambini sperimentano giochi interattivi in sala per orientarsi nello spazio e sviluppare\nle prime competenze motorie, con stimoli pensati per migliorare anche le capacita cognitive.</p>\n<p>L'obiettivo e l'<strong>educazione al movimento</strong>, che progressivamente\nevolve verso l'educazione alla danza vera e propria. Il tutto in un ambiente\naccogliente, dove ogni bambino puo esprimersi liberamente.</p>",
+    "eta": "Bambini dai 3 anni",
+    "frequenza": "1 lezione a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Coinvolgimento",
+        "testo": "Sintonia ed equilibrio di gruppo alla base della classe. Ogni bambino e parte di un'esperienza condivisa, dove impara a relazionarsi con gli altri attraverso il movimento."
+      },
+      {
+        "titolo": "Educazione",
+        "testo": "Attenzione e cura per ogni singolo piccolo allievo. Un percorso che rispetta i tempi di ciascuno, senza forzature, con un approccio dolce e professionale."
+      },
+      {
+        "titolo": "Divertimento",
+        "testo": "Lo spazio ludico e sempre presente. I bambini imparano giocando, senza rendersene conto, sviluppando coordinazione e musicalita in modo naturale."
+      }
+    ],
+    "imparaTitolo": "Cosa impareranno",
+    "impara": [
+      "Riconoscere e seguire il ritmo della musica",
+      "Muoversi nello spazio con consapevolezza",
+      "Coordinare i movimenti del corpo",
+      "Lavorare insieme agli altri bambini",
+      "Esprimersi attraverso il movimento libero",
+      "Sviluppare equilibrio e postura"
+    ]
+  },
+  "bambini": {
+    "title": "Bambini - InBallet",
+    "description": "Corsi di danza per Bambini (9-11 anni). Tecnica, espressività e crescita. InBallet Lainate e Rho.",
+    "keywords": "danza bambini 9 anni, corso danza bambini, danza classica bambini, InBallet, Lainate, Rho",
+    "ogTitle": "Bambini - InBallet",
+    "ogDescription": "Percorsi di danza per bambini dai 9 agli 11 anni.",
+    "badge": "9-11 anni",
+    "titolo": "Bambini",
+    "tagline": "L'età della crescita: tecnica, espressività e passione",
+    "heroImage": "assets/images/gallery-5.jpg",
+    "introImage": "assets/images/gallery-7.jpg",
+    "intro": "<p>I percorsi per <strong>bambini</strong> dai 9 agli 11 anni rappresentano\nuna fase cruciale nella formazione del danzatore. È il momento di consolidare\nla <strong>tecnica</strong> e sviluppare l'<strong>espressività</strong>.</p>\n<p>Gli allievi possono scegliere tra diverse discipline e iniziare a scoprire\nquale stile li rappresenta di più, sempre guidati da insegnanti attenti\nalla crescita individuale di ciascuno.</p>",
+    "eta": "Bambini 9-11 anni",
+    "frequenza": "2-3 lezioni a settimana",
+    "metodoTitolo": "I Nostri Corsi",
+    "metodo": [
+      {
+        "titolo": "Danza Classica",
+        "testo": "Studio della tecnica accademica: sbarra, centro, primi salti e giri. Le basi per qualsiasi percorso futuro."
+      },
+      {
+        "titolo": "Modern e Contemporanea",
+        "testo": "Esplorazione di linguaggi più liberi: floor work, dinamiche, espressività. Per chi cerca movimento e creatività."
+      },
+      {
+        "titolo": "Hip-Hop e Breaking",
+        "testo": "Energia e stile urbano: groove, coreografie, primi elementi acrobatici. Per chi ama i ritmi contemporanei."
+      }
+    ],
+    "imparaTitolo": "Cosa impareranno",
+    "impara": [
+      "Tecnica specifica della disciplina scelta",
+      "Coreografie di media complessità",
+      "Espressività e interpretazione",
+      "Forza, flessibilità e resistenza",
+      "Preparazione per saggi e spettacoli",
+      "Autonomia e responsabilità"
+    ]
+  },
+  "breaking": {
+    "title": "Breaking - InBallet",
+    "description": "Corso di Breaking (Breakdance). Power moves, footwork e freeze. InBallet Lainate e Rho.",
+    "keywords": "breaking, breakdance, corso breaking, b-boy, b-girl, InBallet, Lainate, Rho",
+    "ogTitle": "Breaking - InBallet",
+    "ogDescription": "Corso di Breaking. Power moves, footwork e cultura b-boy.",
+    "badge": "Ragazzi e adulti",
+    "titolo": "Breaking",
+    "tagline": "La disciplina olimpica che unisce forza, ritmo e creatività",
+    "heroImage": "assets/images/gallery-3.jpg",
+    "introImage": "assets/images/gallery-5.jpg",
+    "intro": "<p>Il <strong>Breaking</strong> è una delle discipline originali della cultura\nhip-hop, ora riconosciuta come sport olimpico. Un mix esplosivo di\n<strong>atletismo</strong>, <strong>ritmo</strong> e <strong>creatività</strong>.</p>\n<p>I nostri corsi insegnano le fondamenta del breaking: <strong>toprock</strong>,\n<strong>footwork</strong>, <strong>freeze</strong> e <strong>power moves</strong>,\nsempre nel rispetto della cultura e dei valori di questa disciplina.</p>",
+    "eta": "Ragazzi e adulti",
+    "frequenza": "2 lezioni a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Foundation",
+        "testo": "Studio delle basi fondamentali: toprock, footwork, freeze. Ogni b-boy e b-girl deve costruire solide fondamenta."
+      },
+      {
+        "titolo": "Power Moves",
+        "testo": "Introduzione progressiva ai movimenti acrobatici: windmill, headspin, flare. Sicurezza e tecnica prima di tutto."
+      },
+      {
+        "titolo": "Battle Ready",
+        "testo": "Sviluppo dello stile personale e della capacità di improvvisare in cerchio e nelle battle."
+      }
+    ],
+    "imparaTitolo": "Cosa imparerai",
+    "impara": [
+      "Toprock e groove in piedi",
+      "Footwork e lavoro a terra",
+      "Freeze e posizioni statiche",
+      "Power moves progressivi",
+      "Transizioni fluide tra elementi",
+      "Freestyle e battle mindset"
+    ]
+  },
+  "classi": {
+    "title": "Classi di Gruppo - InBallet",
+    "description": "Classi di gruppo per il benessere. Yoga, Pilates e discipline per corpo e mente. InBallet Lainate e Rho.",
+    "keywords": "classi gruppo, fitness gruppo, yoga gruppo, pilates gruppo, InBallet, Lainate, Rho",
+    "ogTitle": "Classi di Gruppo - InBallet",
+    "ogDescription": "Classi di gruppo per il benessere fisico e mentale.",
+    "badge": "Adulti",
+    "titolo": "Classi di Gruppo",
+    "tagline": "Il benessere condiviso: energia, motivazione e divertimento insieme",
+    "heroImage": "assets/images/gallery-6.jpg",
+    "introImage": "assets/images/gallery-7.jpg",
+    "intro": "<p>Le nostre <strong>classi di gruppo</strong> sono pensate per chi vuole\nprendersi cura del proprio corpo in compagnia. L'energia del gruppo\n<strong>motiva</strong>, <strong>sostiene</strong> e rende ogni lezione più coinvolgente.</p>\n<p>Offriamo diverse tipologie di classi: dal <strong>Pilates</strong> allo\n<strong>Yoga</strong>, dal <strong>stretching</strong> al <strong>conditioning</strong>.\nOgni classe è guidata da insegnanti qualificati in un ambiente accogliente.</p>",
+    "eta": "Adulti di tutte le età",
+    "frequenza": "1-3 lezioni a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Varietà",
+        "testo": "Diverse tipologie di classi per soddisfare esigenze diverse: tonificazione, flessibilità, rilassamento, cardio."
+      },
+      {
+        "titolo": "Comunità",
+        "testo": "Un ambiente dove nascono amicizie e dove l'energia del gruppo diventa motore di motivazione e costanza."
+      },
+      {
+        "titolo": "Flessibilità",
+        "testo": "Orari diversi e possibilità di scegliere le classi più adatte ai propri obiettivi e al proprio stile di vita."
+      }
+    ],
+    "imparaTitolo": "Cosa troverai",
+    "impara": [
+      "Classi di Pilates matwork",
+      "Sessioni di Yoga per tutti i livelli",
+      "Stretching e mobilità articolare",
+      "Conditioning e tonificazione",
+      "Classi di rilassamento e respirazione",
+      "Programmi combinati personalizzabili"
+    ]
+  },
+  "contact-improvisation": {
+    "title": "Contact Improvisation - InBallet",
+    "description": "Corso di Contact Improvisation. Esplora il movimento attraverso il contatto e il dialogo corporeo. InBallet Lainate e Rho.",
+    "keywords": "contact improvisation, danza contatto, improvvisazione danza, InBallet, Lainate, Rho",
+    "ogTitle": "Contact Improvisation - InBallet",
+    "ogDescription": "Corso di Contact Improvisation. Il dialogo corporeo attraverso il contatto.",
+    "badge": "Adulti",
+    "titolo": "Contact Improvisation",
+    "tagline": "Il dialogo dei corpi attraverso il peso, lo spazio e l'ascolto reciproco",
+    "heroImage": "assets/images/gallery-7.jpg",
+    "introImage": "assets/images/gallery-3.jpg",
+    "intro": "<p>Il <strong>Contact Improvisation</strong> è una forma di danza basata sul dialogo\nfisico tra due o più persone. Si esplora il movimento attraverso il contatto,\nil peso condiviso e l'ascolto reciproco.</p>\n<p>Una pratica che sviluppa <strong>fiducia</strong>, <strong>presenza</strong> e\n<strong>reattività</strong>, dove ogni momento è unico e irripetibile.\nNon servono passi predefiniti, solo la volontà di esplorare.</p>",
+    "eta": "Adulti",
+    "frequenza": "1 lezione a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Ascolto",
+        "testo": "Sviluppo della capacità di percepire e rispondere ai segnali del partner attraverso il contatto fisico."
+      },
+      {
+        "titolo": "Fiducia",
+        "testo": "Costruzione di un ambiente sicuro dove sperimentare il dare e ricevere peso, cadere e sostenere."
+      },
+      {
+        "titolo": "Spontaneità",
+        "testo": "Esplorazione del movimento senza schemi predefiniti, seguendo gli impulsi che nascono dal contatto."
+      }
+    ],
+    "imparaTitolo": "Cosa imparerai",
+    "impara": [
+      "Principi di peso e contro-peso",
+      "Rotolamenti e cadute controllate",
+      "Lift e sostegni reciproci",
+      "Ascolto attraverso il tatto",
+      "Improvvisazione a coppia e in gruppo",
+      "Consapevolezza dei confini personali"
+    ]
+  },
+  "contaminato": {
+    "title": "Contaminato - InBallet",
+    "description": "Corso di Danza Contaminato. Fusione di stili diversi in un linguaggio unico. InBallet Lainate e Rho.",
+    "keywords": "danza contaminato, fusion dance, stili misti danza, InBallet, Lainate, Rho",
+    "ogTitle": "Contaminato - InBallet",
+    "ogDescription": "Corso di Danza Contaminato. Fusione di stili in un linguaggio unico.",
+    "badge": "Ragazzi e adulti",
+    "titolo": "Contaminato",
+    "tagline": "Quando gli stili si incontrano nasce qualcosa di unico",
+    "heroImage": "assets/images/gallery-2.jpg",
+    "introImage": "assets/images/gallery-4.jpg",
+    "intro": "<p>Il <strong>Contaminato</strong> è uno stile che nasce dalla fusione di diverse\ndiscipline: hip-hop, contemporanea, jazz, breaking. Un linguaggio ibrido che\nnon conosce confini e che permette di esplorare il movimento in totale libertà.</p>\n<p>Ogni lezione è un viaggio attraverso stili diversi, dove gli allievi imparano\na <strong>mescolare</strong>, <strong>reinterpretare</strong> e <strong>creare</strong>\nun linguaggio personale e unico.</p>",
+    "eta": "Ragazzi e adulti",
+    "frequenza": "1-2 lezioni a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Fusione",
+        "testo": "Esplorazione di diversi stili di danza e delle loro possibili combinazioni. Nessun limite, nessuna regola fissa."
+      },
+      {
+        "titolo": "Versatilità",
+        "testo": "Sviluppo della capacità di passare da uno stile all'altro con fluidità, adattandosi a musiche e situazioni diverse."
+      },
+      {
+        "titolo": "Identità",
+        "testo": "Ricerca del proprio stile personale attraverso la contaminazione. Ogni danzatore trova la propria voce unica."
+      }
+    ],
+    "imparaTitolo": "Cosa imparerai",
+    "impara": [
+      "Elementi di diversi stili di danza",
+      "Tecniche di fusione e transizione",
+      "Adattamento a generi musicali diversi",
+      "Creatività coreografica",
+      "Sviluppo di uno stile personale",
+      "Versatilità e apertura mentale"
+    ]
+  },
+  "contemporanea-adulti": {
+    "title": "Contemporanea Adulti - InBallet",
+    "description": "Corso di Danza Contemporanea per Adulti. Riscopri il movimento, inizia anche da zero. InBallet Lainate e Rho.",
+    "keywords": "danza contemporanea adulti, corso danza adulti, danza per principianti, InBallet, Lainate, Rho",
+    "ogTitle": "Contemporanea Adulti - InBallet",
+    "ogDescription": "Corso di danza contemporanea pensato per gli adulti, anche principianti.",
+    "badge": "Adulti - anche principianti",
+    "titolo": "Contemporanea Adulti",
+    "tagline": "Non è mai troppo tardi per iniziare a danzare",
+    "heroImage": "assets/images/gallery-6.jpg",
+    "introImage": "assets/images/gallery-10.jpg",
+    "intro": "<p>Un corso pensato per chi vuole avvicinarsi alla danza da adulto, senza\nesperienza precedente. La <strong>danza contemporanea</strong> è il linguaggio\nperfetto per riscoprire il proprio corpo e le sue potenzialità.</p>\n<p>In un ambiente accogliente e senza giudizio, ogni partecipante può esplorare\nil movimento al proprio ritmo, sviluppando <strong>flessibilità</strong>,\n<strong>forza</strong> e <strong>consapevolezza corporea</strong>.</p>",
+    "eta": "Adulti di tutte le età",
+    "frequenza": "1-2 lezioni a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Accessibilità",
+        "testo": "Un percorso pensato per accogliere tutti, indipendentemente dal livello di partenza. Ogni esercizio viene proposto con varianti adatte a ciascuno."
+      },
+      {
+        "titolo": "Benessere",
+        "testo": "La danza come strumento di benessere fisico e mentale. Un'ora di lezione per staccare dalla routine e riconnettersi con se stessi."
+      },
+      {
+        "titolo": "Progressione",
+        "testo": "Un percorso graduale che permette di acquisire sicurezza e competenze tecniche senza fretta, rispettando i tempi di ognuno."
+      }
+    ],
+    "imparaTitolo": "Cosa imparerai",
+    "impara": [
+      "Riscaldamento e stretching consapevole",
+      "Tecniche base di danza contemporanea",
+      "Coordinazione e fluidità del movimento",
+      "Lavoro a terra e utilizzo del peso",
+      "Brevi sequenze coreografiche",
+      "Rilassamento e respirazione"
+    ]
+  },
+  "danza-acrobatica": {
+    "title": "Danza Acrobatica - InBallet",
+    "description": "Corso di Danza Acrobatica. Fusione di danza e acrobatica per ragazzi. InBallet Lainate e Rho.",
+    "keywords": "danza acrobatica, acrobatica danza, corso acrobatica, InBallet, Lainate, Rho",
+    "ogTitle": "Danza Acrobatica - InBallet",
+    "ogDescription": "Corso di Danza Acrobatica. Fusione di danza e elementi acrobatici.",
+    "badge": "Ragazzi",
+    "titolo": "Danza Acrobatica",
+    "tagline": "Quando la danza incontra l'acrobatica: forza, flessibilità e spettacolarità",
+    "heroImage": "assets/images/gallery-4.jpg",
+    "introImage": "assets/images/gallery-6.jpg",
+    "intro": "<p>La <strong>danza acrobatica</strong> unisce la grazia della danza con la\nspettacolarità degli elementi acrobatici. Un percorso che sviluppa\n<strong>forza</strong>, <strong>flessibilità</strong> e <strong>coraggio</strong>.</p>\n<p>I nostri corsi insegnano progressivamente ruote, verticali, ponti e salti\nacrobatici, sempre in totale sicurezza e con la supervisione di insegnanti\nqualificati.</p>",
+    "eta": "Ragazzi dai 7 anni",
+    "frequenza": "1-2 lezioni a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Sicurezza",
+        "testo": "Ogni elemento viene insegnato con progressioni sicure, utilizzando tappeti e assistenza costante. La sicurezza è la priorità."
+      },
+      {
+        "titolo": "Preparazione Fisica",
+        "testo": "Lavoro specifico su forza, flessibilità e propriocezione. Il corpo deve essere pronto prima di affrontare elementi complessi."
+      },
+      {
+        "titolo": "Integrazione",
+        "testo": "Gli elementi acrobatici vengono integrati in sequenze coreografiche, unendo tecnica e artisticità."
+      }
+    ],
+    "imparaTitolo": "Cosa imparerai",
+    "impara": [
+      "Ruote e rondate",
+      "Verticali e appoggi sulle mani",
+      "Ponti e flessibilità della schiena",
+      "Salti acrobatici base",
+      "Combinazioni danza-acrobatica",
+      "Controllo del corpo in volo"
+    ]
+  },
+  "danza-classica": {
+    "title": "Danza Classica - InBallet",
+    "description": "Corso di Danza Classica per ragazzi e adulti. Tecnica accademica, grazia e disciplina. InBallet Lainate e Rho.",
+    "keywords": "danza classica, corso balletto, tecnica classica, InBallet, Lainate, Rho",
+    "ogTitle": "Danza Classica - InBallet",
+    "ogDescription": "Corso di tecnica classica accademica per tutti i livelli.",
+    "badge": "Tutti i livelli",
+    "titolo": "Danza Classica",
+    "tagline": "La disciplina che forma il corpo e lo spirito, dalla sbarra al centro",
+    "heroImage": "assets/images/gallery-1.jpg",
+    "introImage": "assets/images/gallery-7.jpg",
+    "intro": "<p>La <strong>danza classica</strong> è la base di tutte le discipline coreutiche.\nUn percorso rigoroso che sviluppa <strong>grazia</strong>, <strong>forza</strong> e\n<strong>controllo del corpo</strong> attraverso la tecnica accademica.</p>\n<p>I nostri corsi seguono i programmi delle principali scuole internazionali,\nadattandoli alle esigenze di ogni allievo. Dalla <strong>sbarra</strong> al\n<strong>centro</strong>, ogni lezione è un passo verso la perfezione tecnica.</p>",
+    "eta": "Ragazzi e adulti",
+    "frequenza": "2-3 lezioni a settimana",
+    "metodoTitolo": "Il Nostro Metodo",
+    "metodo": [
+      {
+        "titolo": "Tecnica Accademica",
+        "testo": "Studio approfondito delle posizioni, dei passi e delle combinazioni secondo il metodo classico, con attenzione alla pulizia del movimento."
+      },
+      {
+        "titolo": "Lavoro alla Sbarra",
+        "testo": "Esercizi fondamentali per sviluppare forza, equilibrio e allineamento. La sbarra è il punto di partenza di ogni lezione."
+      },
+      {
+        "titolo": "Centro e Punte",
+        "testo": "Progressione verso il lavoro al centro e, per chi è pronto, l'introduzione alle punte con la dovuta preparazione."
+      }
+    ],
+    "imparaTitolo": "Cosa imparerai",
+    "impara": [
+      "Le cinque posizioni fondamentali",
+      "Tecnica alla sbarra e al centro",
+      "Port de bras e utilizzo delle braccia",
+      "Salti, giri e combinazioni",
+      "Espressività e musicalità",
+      "Preparazione alle punte (livelli avanzati)"
+    ]
+  },
+  "danza-contemporanea": {
+    "title": "Danza Contemporanea - InBallet",
+    "description": "Corso di Danza Contemporanea per ragazzi e adulti. Ricerca artistica, improvvisazione e movimento libero. InBallet Lainate e Rho.",
+    "keywords": "danza contemporanea, corso contemporaneo, danza libera, InBallet, Lainate, Rho",
+    "ogTitle": "Danza Contemporanea - InBallet",
+    "ogDescription": "Corso di danza contemporanea. Ricerca artistica e movimento libero.",
+    "badge": "Ragazzi e adulti",
+    "titolo": "Danza Contemporanea",
+    "tagline": "Esplora nuovi linguaggi del corpo attraverso la ricerca e l'improvvisazione",
+    "heroImage": "assets/images/gallery-5.jpg",
+    "introImage": "assets/images/gallery-9.jpg",
+    "intro": "<p>La <strong>danza contemporanea</strong> è un viaggio alla scoperta del proprio\nlinguaggio corporeo. Un approccio che rompe gli schemi tradizionali per esplorare\nnuove possibilità di movimento.</p>\n<p>I nostri corsi combinano <strong>tecnica</strong>, <strong>improvvisazione</strong> e\n<strong>ricerca artistica</strong>, offrendo agli allievi gli strumenti per sviluppare\nuna voce coreografica personale e autentica.</p>",
+    "eta": "Ragazzi e adulti",
+    "frequenza": "2-3 lezioni a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Ricerca del Movimento",
+        "testo": "Esplorazione delle infinite possibilità del corpo attraverso esercizi di ricerca e sperimentazione guidata."
+      },
+      {
+        "titolo": "Improvvisazione",
+        "testo": "Sviluppo della capacità di creare movimento spontaneo, rispondendo a stimoli musicali, visivi o emotivi."
+      },
+      {
+        "titolo": "Composizione",
+        "testo": "Introduzione ai principi della composizione coreografica per sviluppare il proprio linguaggio artistico."
+      }
+    ],
+    "imparaTitolo": "Cosa imparerai",
+    "impara": [
+      "Tecniche di release e utilizzo del peso",
+      "Floor work e lavoro a terra avanzato",
+      "Improvvisazione strutturata e libera",
+      "Principi di composizione coreografica",
+      "Consapevolezza spaziale e relazionale",
+      "Integrazione corpo-mente nel movimento"
+    ]
+  },
+  "educazione-danza": {
+    "title": "Educazione alla Danza - InBallet",
+    "description": "Corso Educazione alla Danza per bambini dai 6 anni. Sviluppo della tecnica base e della musicalità. InBallet Lainate e Rho.",
+    "keywords": "educazione danza, corso danza bambini, propedeutica danza, InBallet, Lainate, Rho",
+    "ogTitle": "Educazione alla Danza - InBallet",
+    "ogDescription": "Corso per bambini dai 6 anni. Sviluppo della tecnica base e della musicalità.",
+    "badge": "Dai 6 anni",
+    "titolo": "Educazione alla Danza",
+    "tagline": "Il percorso che trasforma il gioco in tecnica, con dolcezza e professionalità",
+    "heroImage": "assets/images/gallery-4.jpg",
+    "introImage": "assets/images/gallery-6.jpg",
+    "intro": "<p>Un corso pensato per i bambini che hanno già sperimentato l'avviamento e sono pronti\na fare un passo avanti. L'<strong>educazione alla danza</strong> introduce i primi elementi\ntecnici in modo graduale, sempre nel rispetto dei tempi di crescita di ogni allievo.</p>\n<p>Si lavora sulla <strong>postura</strong>, sulla <strong>coordinazione</strong> e sulla\n<strong>musicalità</strong>, preparando il corpo e la mente alla danza vera e propria.\nUn percorso che unisce disciplina e divertimento.</p>",
+    "eta": "Bambini dai 6 anni",
+    "frequenza": "1-2 lezioni a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Tecnica Graduale",
+        "testo": "Introduzione progressiva agli elementi base della danza classica e moderna, rispettando i tempi di apprendimento di ogni bambino."
+      },
+      {
+        "titolo": "Postura e Consapevolezza",
+        "testo": "Lavoro mirato sulla postura corretta e sulla consapevolezza del proprio corpo nello spazio, fondamenti per qualsiasi disciplina."
+      },
+      {
+        "titolo": "Musicalità",
+        "testo": "Sviluppo dell'orecchio musicale e della capacità di interpretare ritmi e melodie attraverso il movimento."
+      }
+    ],
+    "imparaTitolo": "Cosa impareranno",
+    "impara": [
+      "Le basi della postura corretta",
+      "Coordinazione braccia-gambe",
+      "Riconoscere tempi e ritmi musicali",
+      "Eseguire semplici sequenze coreografiche",
+      "Lavorare in gruppo con rispetto e collaborazione",
+      "Sviluppare concentrazione e disciplina"
+    ]
+  },
+  "heels": {
+    "title": "Heels - InBallet",
+    "description": "Corso di Heels Dance. Danza sui tacchi con eleganza, sensualità e potenza. InBallet Lainate e Rho.",
+    "keywords": "heels dance, danza tacchi, high heels, corso heels, InBallet, Lainate, Rho",
+    "ogTitle": "Heels - InBallet",
+    "ogDescription": "Corso di Heels Dance. Eleganza e potenza sui tacchi.",
+    "badge": "Adulti",
+    "titolo": "Heels",
+    "tagline": "Eleganza, potenza e sensualità: danza sui tacchi con sicurezza",
+    "heroImage": "assets/images/gallery-10.jpg",
+    "introImage": "assets/images/gallery-2.jpg",
+    "intro": "<p>L'<strong>Heels Dance</strong> è una disciplina che unisce tecnica, stile e\nempowerment. Ballare sui tacchi richiede controllo, forza e consapevolezza del\nproprio corpo.</p>\n<p>I nostri corsi insegnano a muoversi con <strong>eleganza</strong> e\n<strong>sicurezza</strong>, sviluppando portamento, coordinazione e una nuova\npercezione di se. Non serve esperienza: serve solo voglia di mettersi in gioco.</p>",
+    "eta": "Adulti",
+    "frequenza": "1 lezione a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Tecnica sui Tacchi",
+        "testo": "Apprendimento graduale della postura e dell'equilibrio sui tacchi, partendo dalle basi per arrivare a movimenti complessi."
+      },
+      {
+        "titolo": "Empowerment",
+        "testo": "La danza come strumento per sentirsi forti e sicure di sé. Ogni lezione è un'occasione per celebrare il proprio corpo."
+      },
+      {
+        "titolo": "Coreografia",
+        "testo": "Studio di coreografie che uniscono diversi stili: commercial, jazz funk, voguing. Sempre con personalità e attitudine."
+      }
+    ],
+    "imparaTitolo": "Cosa imparerai",
+    "impara": [
+      "Postura e equilibrio sui tacchi",
+      "Camminata elegante e sicura",
+      "Movimenti fluidi e controllati",
+      "Coreografie su diversi stili musicali",
+      "Espressività e presenza scenica",
+      "Fiducia in se stessi"
+    ]
+  },
+  "hip-hop": {
+    "title": "Hip-Hop - InBallet",
+    "description": "Corso di Hip-Hop per ragazzi e adulti. Groove, stile e attitudine urbana. InBallet Lainate e Rho.",
+    "keywords": "hip hop, corso hip hop, danza urbana, street dance, InBallet, Lainate, Rho",
+    "ogTitle": "Hip-Hop - InBallet",
+    "ogDescription": "Corso di Hip-Hop per tutti i livelli. Groove, stile e attitudine.",
+    "badge": "Ragazzi e adulti",
+    "titolo": "Hip-Hop",
+    "tagline": "Energia, groove e stile urbano in ogni passo",
+    "heroImage": "assets/images/gallery-9.jpg",
+    "introImage": "assets/images/gallery-1.jpg",
+    "intro": "<p>L'<strong>Hip-Hop</strong> è molto più di uno stile di danza: è una cultura,\nun'attitudine, un modo di esprimersi. I nostri corsi insegnano le basi tecniche\ninsieme alla storia e ai valori di questo movimento.</p>\n<p>Dalle fondamenta del <strong>groove</strong> alle coreografie più complesse,\nogni allievo sviluppa il proprio stile personale, imparando a muoversi con\n<strong>ritmo</strong>, <strong>energia</strong> e <strong>sicurezza</strong>.</p>",
+    "eta": "Ragazzi e adulti",
+    "frequenza": "1-2 lezioni a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Foundation",
+        "testo": "Studio delle basi fondamentali: groove, bounce, ritmo. Senza foundation solide non esiste stile autentico."
+      },
+      {
+        "titolo": "Stili",
+        "testo": "Esplorazione dei diversi stili hip-hop: new style, old school, popping, locking. Ogni stile ha la sua storia e il suo linguaggio."
+      },
+      {
+        "titolo": "Freestyle",
+        "testo": "Sviluppo della capacità di improvvisare e creare il proprio movimento, esprimendo la propria personalità."
+      }
+    ],
+    "imparaTitolo": "Cosa imparerai",
+    "impara": [
+      "Groove e bounce fondamentali",
+      "Isolazioni e controllo del corpo",
+      "Coreografie su diversi stili musicali",
+      "Elementi di popping e locking",
+      "Freestyle e improvvisazione",
+      "Storia e cultura hip-hop"
+    ]
+  },
+  "lezioni-individuali": {
+    "title": "Lezioni Individuali - InBallet",
+    "description": "Lezioni individuali personalizzate di danza e benessere. Percorsi su misura per i tuoi obiettivi. InBallet Lainate e Rho.",
+    "keywords": "lezioni private danza, lezioni individuali, personal training danza, InBallet, Lainate, Rho",
+    "ogTitle": "Lezioni Individuali - InBallet",
+    "ogDescription": "Lezioni private personalizzate per i tuoi obiettivi.",
+    "badge": "Tutte le età",
+    "titolo": "Lezioni Individuali",
+    "tagline": "Un percorso su misura, pensato esclusivamente per te",
+    "heroImage": "assets/images/gallery-1.jpg",
+    "introImage": "assets/images/gallery-3.jpg",
+    "intro": "<p>Le <strong>lezioni individuali</strong> sono il modo più efficace per raggiungere\ni tuoi obiettivi. Un insegnante dedicato, un programma personalizzato, tutta\nl'attenzione focalizzata su di te.</p>\n<p>Ideali per chi vuole <strong>accelerare i progressi</strong>, lavorare su\n<strong>aspetti specifici</strong> o semplicemente preferisce un approccio\none-to-one. Disponibili per tutte le discipline e tutti i livelli.</p>",
+    "eta": "Bambini, ragazzi e adulti",
+    "frequenza": "Su appuntamento",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Personalizzazione",
+        "testo": "Ogni lezione è costruita sui tuoi obiettivi, sul tuo livello e sulle tue esigenze specifiche. Nessun programma preconfezionato."
+      },
+      {
+        "titolo": "Attenzione Totale",
+        "testo": "L'insegnante si dedica esclusivamente a te, correggendo, guidando e supportando ogni movimento."
+      },
+      {
+        "titolo": "Flessibilità",
+        "testo": "Orari concordati in base alle tue disponibilità. Lezioni singole o pacchetti, come preferisci."
+      }
+    ],
+    "imparaTitolo": "Cosa offriamo",
+    "impara": [
+      "Lezioni private di qualsiasi disciplina",
+      "Preparazione per audizioni e concorsi",
+      "Recupero tecnico e correzione posturale",
+      "Coreografie personalizzate",
+      "Supporto per esami e saggi",
+      "Percorsi riabilitativi post-infortunio"
+    ]
+  },
+  "modern": {
+    "title": "Danza Modern - InBallet",
+    "description": "Corso di Danza Modern per ragazzi e adulti. Espressività, tecnica e libertà di movimento. InBallet Lainate e Rho.",
+    "keywords": "danza modern, corso modern jazz, danza moderna, InBallet, Lainate, Rho",
+    "ogTitle": "Danza Modern - InBallet",
+    "ogDescription": "Corso di danza modern per tutti i livelli. Espressivita e tecnica.",
+    "badge": "Tutti i livelli",
+    "titolo": "Danza Modern",
+    "tagline": "Libertà espressiva e tecnica si fondono in un linguaggio unico",
+    "heroImage": "assets/images/gallery-2.jpg",
+    "introImage": "assets/images/gallery-8.jpg",
+    "intro": "<p>La <strong>danza modern</strong> nasce dalla fusione tra tecnica classica e\nlibertà espressiva. Un linguaggio che permette di esplorare il movimento in modo\npersonale, senza rinunciare al rigore tecnico.</p>\n<p>I nostri corsi sviluppano <strong>fluidità</strong>, <strong>dinamismo</strong> e\n<strong>consapevolezza corporea</strong>, preparando gli allievi a esprimersi\nattraverso coreografie che uniscono emozione e tecnica.</p>",
+    "eta": "Ragazzi e adulti",
+    "frequenza": "2-3 lezioni a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Tecnica Modern",
+        "testo": "Studio delle tecniche fondamentali della danza moderna, dal floor work ai salti, con attenzione alla qualità del movimento."
+      },
+      {
+        "titolo": "Espressività",
+        "testo": "Lavoro sull'interpretazione e sulla capacità di trasmettere emozioni attraverso il corpo. Ogni movimento racconta una storia."
+      },
+      {
+        "titolo": "Coreografia",
+        "testo": "Apprendimento di sequenze coreografiche che sfidano e sviluppano le capacità tecniche ed espressive di ogni allievo."
+      }
+    ],
+    "imparaTitolo": "Cosa imparerai",
+    "impara": [
+      "Tecniche di floor work e lavoro a terra",
+      "Dinamiche di movimento (sostenuto, staccato, fluido)",
+      "Utilizzo del peso e della gravità",
+      "Isolazioni e coordinazione avanzata",
+      "Interpretazione musicale e coreografica",
+      "Improvvisazione guidata"
+    ]
+  },
+  "movimento-creativo": {
+    "title": "Movimento Creativo - InBallet",
+    "description": "Corso di Movimento Creativo per bambini. Espressione libera attraverso il gioco e la fantasia. InBallet Lainate e Rho.",
+    "keywords": "movimento creativo, danza creativa bambini, espressione corporea, InBallet, Lainate, Rho",
+    "ogTitle": "Movimento Creativo - InBallet",
+    "ogDescription": "Corso di movimento creativo per bambini. Espressione libera e fantasia.",
+    "badge": "Dai 4 anni",
+    "titolo": "Movimento Creativo",
+    "tagline": "Dove la fantasia incontra il movimento e ogni bambino diventa protagonista",
+    "heroImage": "assets/images/gallery-8.jpg",
+    "introImage": "assets/images/gallery-4.jpg",
+    "intro": "<p>Il <strong>movimento creativo</strong> è un percorso dove i bambini esplorano\nil movimento attraverso la fantasia e il gioco. Non ci sono passi giusti o sbagliati,\nsolo infinite possibilità da scoprire.</p>\n<p>Attraverso storie, immagini e musica, i piccoli allievi sviluppano\n<strong>creatività</strong>, <strong>espressività</strong> e <strong>sicurezza</strong>\nin sé stessi, imparando a comunicare con il proprio corpo.</p>",
+    "eta": "Bambini dai 4 anni",
+    "frequenza": "1 lezione a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Fantasia",
+        "testo": "Utilizzo di storie, personaggi e ambientazioni immaginarie per stimolare la creatività e rendere ogni lezione un'avventura."
+      },
+      {
+        "titolo": "Libertà",
+        "testo": "Spazio per l'espressione individuale senza giudizio. Ogni movimento è valido se nasce da un'intenzione autentica."
+      },
+      {
+        "titolo": "Esplorazione",
+        "testo": "Scoperta delle infinite possibilità del corpo attraverso giochi di movimento, ritmo e improvvisazione guidata."
+      }
+    ],
+    "imparaTitolo": "Cosa impareranno",
+    "impara": [
+      "Esprimersi liberamente attraverso il movimento",
+      "Tradurre emozioni e immagini in gesti",
+      "Collaborare con i compagni in giochi di gruppo",
+      "Sviluppare la propria creatività",
+      "Ascoltare e interpretare la musica",
+      "Acquisire fiducia nel proprio corpo"
+    ]
+  },
+  "pilates": {
+    "title": "Pilates - InBallet",
+    "description": "Corso di Pilates per adulti. Tonificazione, postura e core stability. InBallet Lainate e Rho.",
+    "keywords": "pilates, corso pilates, core stability, postura, InBallet, Lainate, Rho",
+    "ogTitle": "Pilates - InBallet",
+    "ogDescription": "Corso di Pilates per tutti i livelli. Tonificazione e benessere.",
+    "badge": "Adulti - tutti i livelli",
+    "titolo": "Pilates",
+    "tagline": "Forza, controllo e consapevolezza: il metodo che trasforma il corpo",
+    "heroImage": "assets/images/gallery-8.jpg",
+    "introImage": "assets/images/gallery-9.jpg",
+    "intro": "<p>Il <strong>Pilates</strong> è un metodo di allenamento che sviluppa\n<strong>forza</strong>, <strong>flessibilità</strong> e <strong>controllo</strong>\nattraverso movimenti precisi e consapevoli.</p>\n<p>Ideale per migliorare la <strong>postura</strong>, rafforzare il\n<strong>core</strong> e prevenire dolori muscolari. I nostri corsi sono\nadatti a tutti i livelli, con esercizi adattabili alle esigenze individuali.</p>",
+    "eta": "Adulti di tutte le età",
+    "frequenza": "1-2 lezioni a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Core Stability",
+        "testo": "Lavoro mirato sul centro del corpo (powerhouse) per sviluppare stabilità, forza e controllo in ogni movimento."
+      },
+      {
+        "titolo": "Precisione",
+        "testo": "Ogni esercizio viene eseguito con attenzione alla qualità del movimento. Meglio poche ripetizioni perfette che tante approssimative."
+      },
+      {
+        "titolo": "Respirazione",
+        "testo": "La respirazione è parte integrante di ogni esercizio, aiutando a mantenere il controllo e a ossigenare i muscoli."
+      }
+    ],
+    "imparaTitolo": "Cosa imparerai",
+    "impara": [
+      "Esercizi per il core e la stabilità",
+      "Tecniche di respirazione Pilates",
+      "Allineamento posturale corretto",
+      "Stretching e flessibilità",
+      "Tonificazione muscolare profonda",
+      "Prevenzione di dolori e tensioni"
+    ]
+  },
+  "prima-infanzia": {
+    "title": "Prima Infanzia - InBallet",
+    "description": "Corsi di danza per la Prima Infanzia (3-5 anni). Gioco, musica e movimento per i più piccoli. InBallet Lainate e Rho.",
+    "keywords": "danza bambini 3 anni, danza prima infanzia, corso danza piccoli, InBallet, Lainate, Rho",
+    "ogTitle": "Prima Infanzia - InBallet",
+    "ogDescription": "Percorsi di danza per bambini dai 3 ai 5 anni.",
+    "badge": "3-5 anni",
+    "titolo": "Prima Infanzia",
+    "tagline": "I primi passi nel mondo della danza, attraverso il gioco e la fantasia",
+    "heroImage": "assets/images/gallery-3.jpg",
+    "introImage": "assets/images/gallery-5.jpg",
+    "intro": "<p>I percorsi per la <strong>prima infanzia</strong> sono pensati per accompagnare\ni bambini dai 3 ai 5 anni nella scoperta del movimento. Un approccio giocoso\nche rispetta i tempi e le esigenze di ogni piccolo allievo.</p>\n<p>Attraverso <strong>giochi</strong>, <strong>musica</strong> e <strong>storie</strong>,\ni bambini sviluppano coordinazione, ritmo e socialità, preparandosi naturalmente\nai percorsi di danza più strutturati.</p>",
+    "eta": "Bambini 3-5 anni",
+    "frequenza": "1 lezione a settimana",
+    "metodoTitolo": "I Nostri Corsi",
+    "metodo": [
+      {
+        "titolo": "Avviamento alla Danza",
+        "testo": "Il primissimo approccio al movimento per i bambini di 3 anni. Giochi, ritmo e scoperta del proprio corpo nello spazio."
+      },
+      {
+        "titolo": "Movimento Creativo",
+        "testo": "Espressione libera attraverso la fantasia. I bambini esplorano il movimento guidati da storie e immagini."
+      },
+      {
+        "titolo": "Educazione alla Danza",
+        "testo": "Per i bambini di 4-5 anni pronti a un primo approccio più strutturato, sempre nel rispetto del gioco."
+      }
+    ],
+    "imparaTitolo": "Cosa impareranno",
+    "impara": [
+      "Riconoscere e seguire il ritmo",
+      "Muoversi nello spazio con consapevolezza",
+      "Coordinare i movimenti del corpo",
+      "Esprimersi attraverso il movimento",
+      "Collaborare e giocare con gli altri",
+      "Sviluppare ascolto e concentrazione"
+    ]
+  },
+  "ragazzi": {
+    "title": "Ragazzi - InBallet",
+    "description": "Corsi di danza per Ragazzi (12-16 anni). Tecnica avanzata, espressione e identità artistica. InBallet Lainate e Rho.",
+    "keywords": "danza ragazzi, corso danza adolescenti, danza teen, InBallet, Lainate, Rho",
+    "ogTitle": "Ragazzi - InBallet",
+    "ogDescription": "Percorsi di danza per ragazzi dai 12 ai 16 anni.",
+    "badge": "12-16 anni",
+    "titolo": "Ragazzi",
+    "tagline": "Trova la tua voce artistica: tecnica, stile e identità",
+    "heroImage": "assets/images/gallery-9.jpg",
+    "introImage": "assets/images/gallery-8.jpg",
+    "intro": "<p>I percorsi per <strong>ragazzi</strong> dai 12 ai 16 anni sono pensati per\nchi vuole fare sul serio. È l'età in cui si consolida la <strong>tecnica</strong>,\nsi sviluppa uno <strong>stile personale</strong> e si inizia a pensare al futuro.</p>\n<p>Offriamo corsi di livello intermedio e avanzato in tutte le discipline,\ncon possibilità di partecipare a <strong>concorsi</strong>, <strong>stage</strong>\ne <strong>progetti coreografici</strong> speciali.</p>",
+    "eta": "Ragazzi 12-16 anni",
+    "frequenza": "2-4 lezioni a settimana",
+    "metodoTitolo": "I Nostri Corsi",
+    "metodo": [
+      {
+        "titolo": "Danza Classica e Modern",
+        "testo": "Livelli intermedio e avanzato con studio approfondito della tecnica. Possibilità di preparazione per esami e concorsi."
+      },
+      {
+        "titolo": "Contemporanea e Contaminato",
+        "testo": "Per chi cerca ricerca e sperimentazione. Improvvisazione, composizione e sviluppo di un linguaggio personale."
+      },
+      {
+        "titolo": "Urban: Hip-Hop e Breaking",
+        "testo": "Livelli avanzati con focus su freestyle, battle e performance. Per chi vuole portare lo stile urbano al massimo livello."
+      }
+    ],
+    "imparaTitolo": "Cosa impareranno",
+    "impara": [
+      "Tecnica avanzata nella disciplina scelta",
+      "Repertorio coreografico complesso",
+      "Presenza scenica e performance",
+      "Preparazione per audizioni e concorsi",
+      "Collaborazione in progetti artistici",
+      "Orientamento verso percorsi professionali"
+    ]
+  },
+  "seconda-infanzia": {
+    "title": "Seconda Infanzia - InBallet",
+    "description": "Corsi di danza per la Seconda Infanzia (6-8 anni). Tecnica e divertimento per piccoli danzatori. InBallet Lainate e Rho.",
+    "keywords": "danza bambini 6 anni, danza seconda infanzia, corso danza bambini, InBallet, Lainate, Rho",
+    "ogTitle": "Seconda Infanzia - InBallet",
+    "ogDescription": "Percorsi di danza per bambini dai 6 agli 8 anni.",
+    "badge": "6-8 anni",
+    "titolo": "Seconda Infanzia",
+    "tagline": "Dal gioco alla tecnica: i primi passi verso la danza vera",
+    "heroImage": "assets/images/gallery-4.jpg",
+    "introImage": "assets/images/gallery-6.jpg",
+    "intro": "<p>I percorsi per la <strong>seconda infanzia</strong> accompagnano i bambini\ndai 6 agli 8 anni nella transizione dal gioco alla tecnica. È l'età perfetta\nper iniziare a costruire le <strong>basi solide</strong> della danza.</p>\n<p>I bambini imparano <strong>postura</strong>, <strong>coordinazione</strong> e\n<strong>musicalità</strong> attraverso lezioni strutturate ma sempre coinvolgenti,\ndove il divertimento resta protagonista.</p>",
+    "eta": "Bambini 6-8 anni",
+    "frequenza": "1-2 lezioni a settimana",
+    "metodoTitolo": "I Nostri Corsi",
+    "metodo": [
+      {
+        "titolo": "Educazione alla Danza",
+        "testo": "Introduzione agli elementi tecnici fondamentali: postura, coordinazione, musicalità. Il ponte tra il gioco e la danza."
+      },
+      {
+        "titolo": "Danza Classica Preparatoria",
+        "testo": "Primi elementi della tecnica classica adattati all'eta: posizioni, port de bras, semplici combinazioni."
+      },
+      {
+        "titolo": "Hip-Hop Kids",
+        "testo": "Per chi preferisce ritmi urbani: groove, isolazioni e coreografie divertenti su musiche attuali."
+      }
+    ],
+    "imparaTitolo": "Cosa impareranno",
+    "impara": [
+      "Postura corretta e allineamento",
+      "Coordinazione braccia-gambe",
+      "Riconoscere tempi e ritmi musicali",
+      "Prime sequenze coreografiche",
+      "Disciplina e rispetto delle regole",
+      "Lavorare in gruppo con armonia"
+    ]
+  },
+  "yoga": {
+    "title": "Yoga - InBallet",
+    "description": "Corso di Yoga per adulti. Equilibrio tra corpo e mente, flessibilità e benessere. InBallet Lainate e Rho.",
+    "keywords": "yoga, corso yoga, hatha yoga, benessere, InBallet, Lainate, Rho",
+    "ogTitle": "Yoga - InBallet",
+    "ogDescription": "Corso di Yoga per tutti i livelli. Equilibrio tra corpo e mente.",
+    "badge": "Adulti - tutti i livelli",
+    "titolo": "Yoga",
+    "tagline": "Trova il tuo equilibrio tra corpo, mente e respiro",
+    "heroImage": "assets/images/gallery-7.jpg",
+    "introImage": "assets/images/gallery-8.jpg",
+    "intro": "<p>Lo <strong>Yoga</strong> è una pratica millenaria che unisce movimento,\nrespirazione e consapevolezza. Un percorso per ritrovare <strong>equilibrio</strong>,\n<strong>flessibilità</strong> e <strong>serenità</strong> interiore.</p>\n<p>I nostri corsi sono aperti a tutti, dai principianti ai praticanti esperti.\nOgni lezione è un'occasione per staccare dalla frenesia quotidiana e dedicare\ntempo a se stessi.</p>",
+    "eta": "Adulti di tutte le età",
+    "frequenza": "1-2 lezioni a settimana",
+    "metodoTitolo": "Il Nostro Approccio",
+    "metodo": [
+      {
+        "titolo": "Asana",
+        "testo": "Pratica delle posizioni yoga con attenzione all'allineamento e al respiro. Ogni posizione viene adattata alle capacità individuali."
+      },
+      {
+        "titolo": "Pranayama",
+        "testo": "Tecniche di respirazione per calmare la mente, aumentare l'energia e migliorare la concentrazione."
+      },
+      {
+        "titolo": "Rilassamento",
+        "testo": "Ogni lezione si conclude con momenti di rilassamento profondo per integrare i benefici della pratica."
+      }
+    ],
+    "imparaTitolo": "Cosa imparerai",
+    "impara": [
+      "Posizioni base e avanzate (asana)",
+      "Tecniche di respirazione consapevole",
+      "Allineamento posturale corretto",
+      "Gestione dello stress e dell'ansia",
+      "Flessibilità e forza muscolare",
+      "Meditazione e presenza mentale"
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+---
+/** Modale crea/modifica evento con editor descrizione e gestione locandine. */
+interface Props {
+  tipi: string[];
+}
+
+const { tipi } = Astro.props;
+---
+
+<div class="modal" id="modalEvento" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 id="modalTitle">Nuovo Evento</h3>
+            <button type="button" class="modal-close" data-chiudi-evento aria-label="Chiudi"><i class="fas fa-times"></i></button>
+        </div>
+        <form id="formEvento" novalidate>
+            <div class="modal-body">
+                <input type="hidden" id="eventoId">
+                <div class="form-group">
+                    <label for="titolo">Titolo * <small style="color:var(--text-muted);font-weight:400">(3-100 caratteri)</small></label>
+                    <input type="text" id="titolo" required placeholder="Es: Workshop Hip-Hop" maxlength="100" data-counter="100">
+                    <small class="char-counter" id="titolo-counter" style="color:var(--text-muted);font-size:.75rem"></small>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="data">Data *</label>
+                        <input type="date" id="data" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ora">Ora</label>
+                        <input type="time" id="ora">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" id="tipoFormGroup">
+                        <label>Tipo {tipi.length > 0 && <button type="button" class="btn btn-sm" id="tipoCogBtn" style="margin-left:.5rem;padding:.2rem .5rem;font-size:.7rem" data-apri-tipi aria-label="Gestisci tipi"><i class="fas fa-cog"></i></button>}</label>
+                        <select id="tipo" style={tipi.length === 0 ? 'display:none' : undefined}>
+                            {tipi.map((t) => <option value={t}>{t}</option>)}
+                        </select>
+                        <span id="noTipoMsg" style={`color:var(--text-muted);font-size:.85rem;${tipi.length === 0 ? '' : 'display:none'}`}>Nessun tipo creato. <a href="#" data-apri-tipi style="color:var(--primary)">Aggiungi tipo</a></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="luogo">Luogo</label>
+                        <input type="text" id="luogo" placeholder="Es: Sede Lainate" maxlength="150">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label id="descrizione-label">Descrizione <small style="color:var(--text-muted);font-weight:400">(max 1000 caratteri)</small></label>
+                    <div class="editor-wrapper">
+                        <div class="editor-toolbar" role="toolbar" aria-label="Formattazione">
+                            <button type="button" data-format="bold" title="Grassetto (Ctrl+B)" aria-label="Grassetto"><i class="fas fa-bold"></i></button>
+                            <button type="button" data-format="italic" title="Corsivo (Ctrl+I)" aria-label="Corsivo"><i class="fas fa-italic"></i></button>
+                            <div class="separator"></div>
+                            <button type="button" data-format="list" title="Elenco puntato" aria-label="Elenco puntato"><i class="fas fa-list-ul"></i></button>
+                        </div>
+                        <div class="editor-content" id="descrizione" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="descrizione-label" data-placeholder="Descrizione evento..."></div>
+                    </div>
+                    <small class="char-counter" id="descrizione-counter" style="color:var(--text-muted);font-size:.75rem"></small>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="destinatari">Destinatari</label>
+                        <input type="text" id="destinatari" placeholder="Es: Tutti i livelli" maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="costo">Costo</label>
+                        <input type="text" id="costo" placeholder="Es: Gratuito / 15€" maxlength="50">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Immagine</label>
+                    <input type="hidden" id="immagine">
+                    <div class="upload-zone" role="button" tabindex="0" data-upload>
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Clicca per caricare (max 20MB, multiplo)</p>
+                        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/gif,image/webp" multiple>
+                    </div>
+                    <div class="images-grid" id="imagesGrid"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-chiudi-evento>Annulla</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salva</button>
+            </div>
+        </form>
+    </div>
+</div>

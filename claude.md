@@ -1,5 +1,25 @@
 # Procedura Deploy InBallet con Cloudflare Tunnel
 
+Il sito è un progetto **Astro 7** (`src/`): pagine pubbliche pre-renderizzate in HTML statico,
+dashboard e login renderizzati on-demand dal server Node (`@astrojs/node`).
+Backend = **Astro Actions** (`src/actions/index.ts`): chatbot, calendario eventi, login, gestione dashboard.
+Icone: sottoinsieme di Font Awesome generato da `scripts/icons.mjs` (automatico prima di dev/build/check).
+Dati runtime (eventi, tipi evento, analytics chatbot, sessioni, locandine caricate) in `data/`.
+Segreti in `.env` (vedi `.env.example`), **senza apici** attorno ai valori.
+
+## Sviluppo locale (senza Docker)
+
+```bash
+npm install
+npm run dev        # http://localhost:4321 con hot reload
+npm run build      # build di produzione in dist/
+npm start          # avvia dist/ leggendo .env
+npm run check      # controllo tipi
+npm run icons      # rigenera solo il set di icone (dopo aver usato una nuova icona fa-…)
+```
+
+---
+
 ## Passaggi da eseguire (per Claude)
 
 ### 1. Verifica Docker attivo
@@ -10,28 +30,9 @@ Se fallisce: chiedere all'utente di avviare Docker Desktop e attendere 10 second
 
 ---
 
-### 2. Verifica esistenza Dockerfile
-Il Dockerfile è già presente in: `c:\Users\feder\Documents\GitHub\inballet\Dockerfile`
-
-Contenuto:
-```dockerfile
-FROM php:8.2-apache
-
-# Abilita mod_rewrite
-RUN a2enmod rewrite
-
-# Copia tutti i file del sito
-COPY . /var/www/html/
-
-# Permessi
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
-
-# Porta 80
-EXPOSE 80
-
-CMD ["apache2-foreground"]
-```
+### 2. Dockerfile
+Già presente in `c:\Users\feder\Documents\GitHub\inballet\Dockerfile` (multi-stage
+`node:22-alpine`: `npm ci` + `astro build`, runtime Node non-root sulla porta **8080**).
 
 ---
 
@@ -40,18 +41,20 @@ CMD ["apache2-foreground"]
 cd "c:\Users\feder\Documents\GitHub\inballet" && docker build -t inballet-site .
 ```
 
-**Tempo:** ~30 secondi (se immagine base già scaricata)
+**Tempo:** ~1 minuto (include ottimizzazione immagini in WebP)
 
 ---
 
 ### 4. Rimuovi container esistente (se presente) e avvia nuovo
 ```bash
 docker rm -f inballet-web
-docker run -d --name inballet-web -p 3000:80 inballet-site
+docker run -d --name inballet-web -p 3000:8080 --env-file .env -v inballet-data:/app/data inballet-site
 ```
 
-**Porta locale:** 3000
-**Verifica:** Il container deve restituire un ID (es: `d5eba632e328...`)
+- **Porta locale:** 3000 (→ 8080 nel container)
+- `--env-file .env`: chiavi Groq/Google e password dashboard
+- `-v inballet-data:/app/data`: eventi e upload **persistono** tra un rebuild e l'altro
+- **Verifica:** il container deve restituire un ID (es: `d5eba632e328...`)
 
 ---
 
@@ -93,23 +96,21 @@ https://cotton-spies-lights-temp.trycloudflare.com
 
 ## 🔄 AGGIORNAMENTO DOPO MODIFICHE AL CODICE
 
-Quando l'utente modifica file (HTML, CSS, JS, PHP), seguire questa procedura:
-
-### Procedura Completa di Aggiornamento
+Quando l'utente modifica file in `src/` (pagine `.astro`, CSS, JS, dati), seguire questa procedura:
 
 ```bash
 # 1. Rebuild immagine con nuove modifiche
 cd "c:\Users\feder\Documents\GitHub\inballet"
 docker build -t inballet-site .
 
-# 2. Stop e rimuovi vecchio container
+# 2. Stop e rimuovi vecchio container (i dati restano nel volume inballet-data)
 docker rm -f inballet-web
 
 # 3. Avvia nuovo container con codice aggiornato
-docker run -d --name inballet-web -p 3000:80 inballet-site
+docker run -d --name inballet-web -p 3000:8080 --env-file .env -v inballet-data:/app/data inballet-site
 ```
 
-**Tempo totale:** ~30-40 secondi
+**Tempo totale:** ~1 minuto
 
 ### Il tunnel Cloudflare
 
@@ -144,6 +145,8 @@ docker logs [NUOVO_ID] | grep "https://"
 - **Tunnel si chiude** se Docker Desktop si chiude o PC si spegne
 - **Non adatto** per uso permanente oltre qualche giorno
 - **Soluzione temporanea** per demo/test veloci
+- Login dashboard accettato solo da `localhost`, `*.trycloudflare.com` e `inballet.it`
+  (`security.allowedDomains` in `astro.config.mjs`): per un nuovo dominio aggiungerlo lì
 
 ---
 
@@ -152,7 +155,7 @@ docker logs [NUOVO_ID] | grep "https://"
 ### Porta 3000 già occupata
 ```bash
 docker rm -f inballet-web
-docker run -d --name inballet-web -p 3001:80 inballet-site
+docker run -d --name inballet-web -p 3001:8080 --env-file .env -v inballet-data:/app/data inballet-site
 # Poi usa --url http://localhost:3001 nel tunnel
 ```
 
@@ -168,13 +171,17 @@ docker logs [CONTAINER_ID]
 ```
 Cercare errori. Potrebbe essere un problema di rete.
 
+### Login dashboard: "403" o password rifiutata
+- 403: l'host non è in `allowedDomains` (vedi Note Importanti)
+- Password rifiutata: in `.env` il valore di `DASHBOARD_PASSWORD` non deve avere apici
+
 ---
 
 ## Comandi Rapidi
 
 **Aggiornamento dopo modifiche (1 comando):**
 ```bash
-cd "c:\Users\feder\Documents\GitHub\inballet" && docker build -t inballet-site . && docker rm -f inballet-web && docker run -d --name inballet-web -p 3000:80 inballet-site
+cd "c:\Users\feder\Documents\GitHub\inballet" && docker build -t inballet-site . && docker rm -f inballet-web && docker run -d --name inballet-web -p 3000:8080 --env-file .env -v inballet-data:/app/data inballet-site
 ```
 
 **Stop tutto:**
@@ -190,12 +197,13 @@ docker start inballet-web
 docker run -d --network host cloudflare/cloudflared:latest tunnel --url http://localhost:3000
 ```
 
-**Pulizia completa:**
+**Pulizia completa** (⚠️ `docker volume rm` cancella eventi e locandine):
 ```bash
 docker rm -f inballet-web
 docker rmi inballet-site
+docker volume rm inballet-data
 ```
 
 ---
 
-**Ultimo aggiornamento:** 2026-03-17
+**Ultimo aggiornamento:** 2026-10-11 (migrazione PHP → Astro)

@@ -1,0 +1,16 @@
+node_modules
+dist
+.astro
+.git
+.vscode
+.claude
+data/sessions
+data/cache
+data/ratelimit
+data/uploads
+data/analytics.json
+.env
+.env.*
+!.env.example
+*.md
+!README.md

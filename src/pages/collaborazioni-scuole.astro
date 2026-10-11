@@ -1,0 +1,263 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import { webp } from '../lib/images';
+
+const bg: Record<string, string> = {
+  'gallery-4.jpg': await webp('gallery-4.jpg', 1920),
+  'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
+};
+---
+
+<Base
+    title="Collaborazioni con Scuole - InBallet"
+    description="Collaborazioni con scuole del territorio - InBallet porta la danza nelle scuole con progetti educativi personalizzati per nidi, infanzia, primarie e secondarie."
+    keywords="danza nelle scuole, progetti scolastici danza, educazione motoria scuole, laboratori danza bambini, Lainate, Rho, Milano"
+    ogTitle="Collaborazioni con Scuole - InBallet"
+    ogDescription="Portiamo la danza nelle scuole con progetti educativi personalizzati. Scopri come collaborare con InBallet."
+>
+
+        <!-- Hero Section -->
+        <section class="chisiamo-hero">
+            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-4.jpg']}')`}></div>
+            <div class="chisiamo-hero-overlay"></div>
+            <div class="chisiamo-hero-glass">
+                <span class="chisiamo-hero-badge">Per le Scuole</span>
+                <h1 class="chisiamo-hero-title">Collaborazioni con Scuole</h1>
+                <p class="chisiamo-hero-tagline">Progetti educativi di danza e movimento per le scuole.</p>
+                <a href="#intro" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Intro Section -->
+        <section id="intro" class="collab-intro-section">
+            <div class="container">
+                <div class="collab-intro-layout">
+                    <div class="collab-intro-content">
+                        <span class="collab-intro-label">Chi Siamo</span>
+                        <h2 class="collab-intro-title">Da oltre 15 anni partner delle scuole del territorio</h2>
+                        <p class="collab-intro-text">
+                            La Direzione <strong>I.N.BALLET</strong> collabora con le scuole del territorio offrendo <strong>progetti personalizzati</strong> che integrano la danza e il movimento nell'attivita educativa.
+                        </p>
+                        <p class="collab-intro-text">
+                            I nostri interventi sono progettati per favorire lo <strong>sviluppo psicomotorio</strong>, la socializzazione e l'integrazione attraverso il linguaggio universale del movimento.
+                        </p>
+                        <div class="collab-intro-highlight">
+                            <p>Ogni progetto e costruito insieme alla scuola, rispettando le esigenze specifiche di ogni fascia d'eta e contesto educativo.</p>
+                        </div>
+                    </div>
+                    <div class="collab-intro-visual">
+                        <Img src="gallery-7.jpg" alt="Bambini durante un laboratorio di danza a scuola" class="collab-intro-image" />
+                        <div class="collab-intro-badge">
+                            <span class="collab-intro-badge-number">15+</span>
+                            <span class="collab-intro-badge-text">Anni di collaborazioni</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Target Section -->
+        <section class="collab-target-section">
+            <div class="collab-target-wrapper">
+                <div class="collab-target-header">
+                    <span class="collab-target-label">A Chi Ci Rivolgiamo</span>
+                    <h2 class="collab-target-title">Progetti per ogni fascia d'eta</h2>
+                    <p class="collab-target-subtitle">Collaboriamo con tutte le tipologie di istituti scolastici, adattando i nostri programmi alle specifiche esigenze.</p>
+                </div>
+                <div class="collab-target-grid">
+                    <div class="collab-target-item">
+                        <div class="collab-target-icon">
+                            <i class="fas fa-baby"></i>
+                        </div>
+                        <h3 class="collab-target-name">Asili Nido</h3>
+                        <p class="collab-target-age">0-3 anni</p>
+                    </div>
+                    <div class="collab-target-item">
+                        <div class="collab-target-icon">
+                            <i class="fas fa-child"></i>
+                        </div>
+                        <h3 class="collab-target-name">Scuole dell'Infanzia</h3>
+                        <p class="collab-target-age">3-6 anni</p>
+                    </div>
+                    <div class="collab-target-item">
+                        <div class="collab-target-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3 class="collab-target-name">Scuole Primarie</h3>
+                        <p class="collab-target-age">6-11 anni</p>
+                    </div>
+                    <div class="collab-target-item">
+                        <div class="collab-target-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="collab-target-name">Scuole Secondarie</h3>
+                        <p class="collab-target-age">11-14 anni</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progetti Section -->
+        <section class="collab-progetti-section">
+            <div class="collab-progetti-wrapper">
+                <div class="collab-progetti-header">
+                    <span class="collab-progetti-label">I Nostri Progetti</span>
+                    <h2 class="collab-progetti-title">Cosa possiamo offrire alla tua scuola</h2>
+                    <p class="collab-progetti-subtitle">Programmi flessibili e personalizzabili, sviluppati da professionisti con esperienza nel mondo educativo.</p>
+                </div>
+                <div class="collab-progetti-list">
+                    <div class="collab-progetto-item">
+                        <div class="collab-progetto-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="collab-progetto-content">
+                            <h3 class="collab-progetto-name">Educazione al Movimento</h3>
+                            <p class="collab-progetto-desc">Percorsi di psicomotricita e movimento creativo per sviluppare coordinazione, equilibrio e consapevolezza corporea fin dalla prima infanzia.</p>
+                        </div>
+                    </div>
+                    <div class="collab-progetto-item">
+                        <div class="collab-progetto-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="collab-progetto-content">
+                            <h3 class="collab-progetto-name">Laboratori Espressivi</h3>
+                            <p class="collab-progetto-desc">Attivita che uniscono danza, musica e teatro per stimolare la creativita, l'espressione emotiva e le capacita relazionali dei bambini.</p>
+                        </div>
+                    </div>
+                    <div class="collab-progetto-item">
+                        <div class="collab-progetto-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="collab-progetto-content">
+                            <h3 class="collab-progetto-name">Progetti Inclusivi</h3>
+                            <p class="collab-progetto-desc">Programmi specifici per l'integrazione e l'inclusione sociale attraverso la danza, favorendo l'accoglienza delle diversita.</p>
+                        </div>
+                    </div>
+                    <div class="collab-progetto-item">
+                        <div class="collab-progetto-icon">
+                            <i class="fas fa-theater-masks"></i>
+                        </div>
+                        <div class="collab-progetto-content">
+                            <h3 class="collab-progetto-name">Spettacoli di Fine Anno</h3>
+                            <p class="collab-progetto-desc">Supporto nella creazione di performance per saggi e eventi scolastici, con coreografie adatte all'eta e al livello dei partecipanti.</p>
+                        </div>
+                    </div>
+                    <div class="collab-progetto-item">
+                        <div class="collab-progetto-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="collab-progetto-content">
+                            <h3 class="collab-progetto-name">Formazione Docenti</h3>
+                            <p class="collab-progetto-desc">Workshop e corsi di aggiornamento per insegnanti, per integrare il movimento nelle attivita didattiche quotidiane.</p>
+                        </div>
+                    </div>
+                    <div class="collab-progetto-item">
+                        <div class="collab-progetto-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="collab-progetto-content">
+                            <h3 class="collab-progetto-name">Progetti PON/PTOF</h3>
+                            <p class="collab-progetto-desc">Collaborazione per progetti finanziati, con documentazione completa e supporto nella pianificazione delle attivita.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="collab-cta-section">
+            <div class="collab-cta-bg" style={`background-image: url('${bg['bg-progetti-territorio.jpg']}')`}></div>
+            <div class="collab-cta-overlay"></div>
+            <div class="collab-cta-wrapper">
+                <h2 class="collab-cta-title">Portiamo la danza nella tua scuola</h2>
+                <p class="collab-cta-text">Contattaci per un incontro conoscitivo senza impegno. Saremo lieti di presentarti le nostre proposte e costruire insieme un progetto su misura per la tua scuola.</p>
+                <div class="collab-cta-buttons">
+                    <a href="mailto:info@inballet.it?subject=Collaborazione%20Scuola" class="collab-cta-btn collab-cta-btn-primary">
+                        <i class="fas fa-envelope"></i> Richiedi Informazioni
+                    </a>
+                    <a href="tel:+393937802996" class="collab-cta-btn collab-cta-btn-secondary">
+                        <i class="fas fa-phone"></i> Chiamaci
+                    </a>
+                </div>
+            </div>
+        </section>
+</Base>
+
+<style is:global>
+        /* === SEZIONI SPECIFICHE COLLABORAZIONI === */
+
+        /* Intro Section */
+        .collab-intro-section{padding:5rem 0;background:#fff}
+        .collab-intro-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1100px;margin:0 auto}
+        .collab-intro-content{max-width:540px}
+        .collab-intro-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
+        .collab-intro-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:1.5rem;letter-spacing:-.02em}
+        .collab-intro-text{font-size:var(--text-base);line-height:1.8;color:var(--text-light);margin-bottom:1.5rem}
+        .collab-intro-text strong{color:var(--dark-navy);font-weight:600}
+        .collab-intro-highlight{background:rgba(135,206,235,.1);border-left:4px solid var(--primary-blue);padding:1.5rem;border-radius:0 12px 12px 0;margin-top:2rem}
+        .collab-intro-highlight p{font-size:var(--text-lg);color:var(--dark-navy);font-weight:500;margin:0;line-height:1.6}
+        .collab-intro-visual{position:relative}
+        .collab-intro-image{width:100%;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,.1)}
+        .collab-intro-badge{position:absolute;bottom:-20px;right:-20px;background:var(--dark-navy);color:#fff;padding:1.5rem 2rem;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+        .collab-intro-badge-number{font-size:var(--text-4xl);font-weight:700;display:block;line-height:1;color:var(--primary-blue)}
+        .collab-intro-badge-text{font-size:var(--text-sm);text-transform:uppercase;letter-spacing:1px;margin-top:.3rem}
+
+        /* Target Section - A chi ci rivolgiamo */
+        .collab-target-section{padding:5rem 0;background:rgba(176,224,230,.15)}
+        .collab-target-wrapper{max-width:1100px;margin:0 auto;padding:0 2rem}
+        .collab-target-header{text-align:center;margin-bottom:4rem}
+        .collab-target-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
+        .collab-target-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:1rem}
+        .collab-target-subtitle{font-size:var(--text-base);color:var(--text-light);max-width:600px;margin:0 auto}
+        .collab-target-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+        .collab-target-item{text-align:center;padding:2rem 1.5rem;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid rgba(135,206,235,.15);transition:all .3s ease}
+        .collab-target-item:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(135,206,235,.15);border-color:var(--primary-blue)}
+        .collab-target-icon{width:70px;height:70px;background:linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;color:var(--dark-navy);font-size:1.8rem}
+        .collab-target-name{font-size:var(--text-lg);font-weight:700;color:var(--dark-navy);margin-bottom:.5rem}
+        .collab-target-age{font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:500}
+
+        /* Progetti Section - Lista */
+        .collab-progetti-section{padding:5rem 0;background:#fff}
+        .collab-progetti-wrapper{max-width:1000px;margin:0 auto;padding:0 2rem}
+        .collab-progetti-header{text-align:center;margin-bottom:4rem}
+        .collab-progetti-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
+        .collab-progetti-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:1rem}
+        .collab-progetti-subtitle{font-size:var(--text-base);color:var(--text-light);max-width:650px;margin:0 auto}
+        .collab-progetti-list{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem 4rem}
+        .collab-progetto-item{display:flex;gap:1.2rem;align-items:flex-start}
+        .collab-progetto-icon{width:50px;height:50px;background:linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--dark-navy);font-size:1.3rem;flex-shrink:0}
+        .collab-progetto-content{}
+        .collab-progetto-name{font-size:var(--text-lg);font-weight:700;color:var(--dark-navy);margin-bottom:.4rem}
+        .collab-progetto-desc{font-size:var(--text-sm);color:var(--text-light);line-height:1.6}
+
+        /* CTA Section */
+        .collab-cta-section{padding:5rem 0;position:relative;overflow:hidden}
+        .collab-cta-bg{position:absolute;top:0;left:0;width:100%;height:100%;background:center/cover no-repeat;z-index:1}
+        .collab-cta-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(26,26,26,.9) 0%,rgba(42,42,42,.85) 100%);z-index:2}
+        .collab-cta-wrapper{max-width:800px;margin:0 auto;padding:0 2rem;position:relative;z-index:3;text-align:center}
+        .collab-cta-title{font-size:var(--text-4xl);font-weight:700;color:#fff;margin-bottom:1rem}
+        .collab-cta-text{font-size:var(--text-lg);color:rgba(255,255,255,.8);margin-bottom:2.5rem;line-height:1.7}
+        .collab-cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem}
+        .collab-cta-btn{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2.5rem;border-radius:25px;text-decoration:none;font-weight:600;font-size:var(--text-sm);transition:all .3s ease;text-transform:uppercase;letter-spacing:.5px}
+        .collab-cta-btn-primary{background:var(--primary-blue);color:var(--dark-navy);box-shadow:0 4px 15px rgba(135,206,235,.3)}
+        .collab-cta-btn-primary:hover{background:#fff;color:var(--dark-navy)}
+        .collab-cta-btn-secondary{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5)}
+        .collab-cta-btn-secondary:hover{background:#fff;color:var(--dark-navy);border-color:#fff}
+
+        /* Responsive */
+        @media(max-width:992px){
+            .collab-intro-layout{grid-template-columns:1fr;gap:3rem}
+            .collab-intro-visual{order:-1}
+            .collab-intro-badge{bottom:20px;right:20px}
+            .collab-target-grid{grid-template-columns:repeat(2,1fr)}
+            .collab-progetti-grid{grid-template-columns:repeat(2,1fr)}
+        }
+        @media(max-width:600px){
+            .collab-target-grid{grid-template-columns:1fr}
+            .collab-progetti-grid{grid-template-columns:1fr}
+            .collab-intro-badge{position:relative;bottom:auto;right:auto;margin-top:1.5rem;display:inline-block}
+        }
+</style>

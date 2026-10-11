@@ -1,0 +1,27 @@
+# build
+dist/
+.astro/
+
+# dipendenze
+node_modules/
+
+# segreti
+.env
+.env.*
+!.env.example
+
+# dati runtime generati dal server
+data/*
+!data/eventi.json
+!data/tipi_evento.json
+
+# log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# file generati da scripts/icons.mjs
+src/styles/icons.css
+src/assets/fonts/

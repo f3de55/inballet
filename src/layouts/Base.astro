@@ -1,0 +1,99 @@
+---
+/**
+ * Layout comune a tutte le pagine pubbliche: <head> (meta, font, CSS),
+ * skip link, banner evento (Server Island), header/navbar, <main> e footer.
+ */
+import '../styles/icons.css';
+import '../styles/global.css';
+import { Font } from 'astro:assets';
+import Banner from '../components/Banner.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  /** Immagine Open Graph / Twitter (solo homepage) */
+  ogImage?: string;
+  twitter?: boolean;
+  /** id dello skip link (la homepage usa "skip-link") */
+  skipLinkId?: string;
+  /** tabindex="-1" su <main> (tutte le pagine tranne il calendario eventi) */
+  mainFocusable?: boolean;
+}
+
+const {
+  title,
+  description,
+  keywords,
+  ogTitle,
+  ogDescription,
+  ogImage,
+  twitter = false,
+  skipLinkId,
+  mainFocusable = true,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content={description}>
+    {keywords && <meta name="keywords" content={keywords}>}
+    {ogTitle && (
+        <>
+            <meta name="author" content="InBallet ASD">
+            <meta name="theme-color" content="#87CEEB">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content={ogTitle}>
+            <meta property="og:description" content={ogDescription}>
+        </>
+    )}
+    {ogImage && <meta property="og:image" content={ogImage}>}
+    {twitter && (
+        <>
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:title" content={ogTitle}>
+            <meta name="twitter:description" content={ogDescription}>
+            <meta name="twitter:image" content={ogImage}>
+        </>
+    )}
+
+    <title>{title}</title>
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <Font cssVariable="--font-rubik" preload={[{ style: 'normal', subset: 'latin' }]} />
+    <style is:inline>body{min-height:100vh}.main-header{min-height:80px}</style>
+    <slot name="head" />
+</head>
+<body>
+    <a href="#main-content" class="skip-link" id={skipLinkId}>Salta al contenuto principale</a>
+
+    <!-- Banner Evento Prossimo -->
+    <Banner server:defer />
+
+    <header class="main-header" role="banner">
+        <Navbar />
+    </header>
+
+    <main id="main-content" role="main" tabindex={mainFocusable ? '-1' : undefined}>
+        <slot />
+    </main>
+
+    <slot name="after-main" />
+
+    <footer class="footer" role="contentinfo">
+        <Footer />
+    </footer>
+
+    <script>
+        import '../scripts/navbar';
+    </script>
+    <slot name="scripts" />
+</body>
+</html>

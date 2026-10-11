@@ -1,0 +1,112 @@
+---
+/**
+ * Banner evento prossimo. Usato come Server Island (`server:defer`): le pagine
+ * restano HTML statico e solo questo frammento viene renderizzato a ogni
+ * richiesta leggendo gli eventi aggiornati dalla dashboard.
+ * Il comportamento è un custom element: si attiva quando l'island arriva.
+ */
+import { prossimoEvento } from '../lib/eventi';
+import { decodeHtml, mbLen, mbSlice } from '../lib/text';
+
+const prossimo = await prossimoEvento();
+
+let titolo = '';
+let quando = '';
+if (prossimo) {
+  const { evento } = prossimo;
+  const giorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+  const mesi = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+  const [y, m, d] = evento.data.split('-').map(Number);
+  quando = `${giorni[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]} ${d} ${mesi[m - 1]}`;
+  if (evento.ora) quando += ` • ${evento.ora}`;
+  // Titolo troncato a 20 caratteri (salvato con escape HTML: si tronca il testo, non le entità)
+  const testo = decodeHtml(evento.titolo);
+  titolo = mbLen(testo) > 20 ? mbSlice(testo, 20) + '...' : testo;
+}
+
+// Il frammento non va messo in cache: dipende dagli eventi correnti
+Astro.response.headers.set('Cache-Control', 'no-store');
+---
+
+{prossimo && (
+    <event-banner data-evento-id={prossimo.evento.id} data-evento-ts={prossimo.ts}>
+        <div class="event-banner" id="eventBanner">
+            <div class="event-banner-content">
+                <div class="event-banner-icon"><i class="fas fa-calendar-alt"></i></div>
+                <div class="event-banner-info">
+                    <div class="event-banner-title">{titolo}</div>
+                    <div class="event-banner-meta">
+                        <span class="event-banner-date">{quando}</span>
+                    </div>
+                    <a href={`/spettacoli-eventi?evento=${encodeURIComponent(prossimo.evento.id)}`} class="event-banner-btn">Scopri di più <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <button type="button" class="event-banner-close" aria-label="Chiudi banner"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </event-banner>
+)}
+
+<style>
+    event-banner {
+        display: contents;
+    }
+</style>
+
+<script>
+    const root = document.documentElement;
+
+    class EventBanner extends HTMLElement {
+        #interval = 0;
+        #onResize = () => this.#updateHeight();
+
+        connectedCallback() {
+            const id = this.dataset.eventoId!;
+            const ts = Number(this.dataset.eventoTs);
+            const banner = this.querySelector<HTMLElement>('.event-banner')!;
+
+            // Evento già scaduto o banner chiuso in precedenza
+            if (ts < Date.now()) return this.remove();
+            if (localStorage.getItem(`banner_dismissed_${id}`)) {
+                banner.style.display = 'none';
+                return;
+            }
+
+            banner.classList.add('visible');
+            document.body.classList.add('has-event-banner');
+            requestAnimationFrame(() => requestAnimationFrame(() => this.#updateHeight()));
+            window.addEventListener('resize', this.#onResize);
+
+            // Chiusura con X o con click su "Scopri di più"
+            const dismiss = () => {
+                localStorage.setItem(`banner_dismissed_${id}`, '1');
+                this.#hide();
+            };
+            this.querySelector('.event-banner-close')!.addEventListener('click', dismiss);
+            this.querySelector('.event-banner-btn')!.addEventListener('click', dismiss);
+
+            // Rimuovi quando l'evento scade (controllo ogni minuto)
+            this.#interval = window.setInterval(() => {
+                if (ts < Date.now()) this.remove();
+            }, 60000);
+        }
+
+        disconnectedCallback() {
+            clearInterval(this.#interval);
+            window.removeEventListener('resize', this.#onResize);
+            this.#hide();
+        }
+
+        #updateHeight() {
+            const banner = this.querySelector<HTMLElement>('.event-banner');
+            if (banner) root.style.setProperty('--banner-height', `${banner.offsetHeight}px`);
+        }
+
+        #hide() {
+            this.querySelector('.event-banner')?.classList.remove('visible');
+            document.body.classList.remove('has-event-banner');
+            root.style.setProperty('--banner-height', '0px');
+        }
+    }
+
+    customElements.define('event-banner', EventBanner);
+</script>

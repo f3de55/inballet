@@ -1,16 +1,31 @@
-FROM php:8.2-apache
+# ---- Build: genera HTML statico, immagini WebP e server Node ----
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
 
-# Abilita mod_rewrite
-RUN a2enmod rewrite
+# ---- Dipendenze di produzione (sharp serve per /_image a runtime) ----
+FROM node:22-alpine AS deps
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
 
-# Copia tutti i file del sito
-COPY . /var/www/html/
+# ---- Runtime ----
+FROM node:22-alpine
+WORKDIR /app
+ENV NODE_ENV=production \
+    HOST=0.0.0.0 \
+    PORT=8080 \
+    DATA_DIR=/app/data
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+COPY package.json ./
+# Dati iniziali (eventi, tipi evento); in produzione montare un volume su /app/data
+COPY --chown=node:node data/eventi.json data/tipi_evento.json ./data/
+RUN chown node:node /app/data
+USER node
 
-# Permessi
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
-
-# Porta 80
-EXPOSE 80
-
-CMD ["apache2-foreground"]
+EXPOSE 8080
+CMD ["node", "./dist/server/entry.mjs"]

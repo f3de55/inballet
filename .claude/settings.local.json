@@ -25,7 +25,22 @@
       "Bash(dir /s /b \"C:\\\\Users\\\\feder\\\\.claude\\\\plugins\")",
       "Bash(findstr:*)",
       "PowerShell(docker info --format '{{.ServerVersion}}')",
-      "PowerShell(for\\($i=0;$i -lt 10;$i++\\){ Start-Sleep 3; $u = docker logs 0273d927715b 2>&1 | Select-String -Pattern 'https://[a-z0-9-]+\\\\.trycloudflare\\\\.com' | ForEach-Object { $_.Matches[0].Value } | Select-Object -First 1; if\\($u\\){break} }; $u)"
+      "PowerShell(for\\($i=0;$i -lt 10;$i++\\){ Start-Sleep 3; $u = docker logs 0273d927715b 2>&1 | Select-String -Pattern 'https://[a-z0-9-]+\\\\.trycloudflare\\\\.com' | ForEach-Object { $_.Matches[0].Value } | Select-Object -First 1; if\\($u\\){break} }; $u)",
+      "Bash(npm -v)",
+      "Bash(grep -n '<?php\\\\|?>\\\\|$_\\\\|file_put\\\\|json_\\\\|session\\\\|password\\\\|fetch\\(\\\\|action=' dashboard.php)",
+      "Bash(npm view *)",
+      "Bash(file assets/images/*.jpg assets/images/*.png)",
+      "Bash(cd \"C:/Users/feder/Documents/GitHub/inballet/node_modules/astro\" && ls; ls ../@astrojs/node/dist; grep -n \"^## 7.0.0\\\\|^## 6.0.0\\\\|^## 7\\\\.\\\\|^## 6\\\\.\" CHANGELOG.md | head -20)",
+      "Read(//c/Users/feder/Documents/GitHub/@astrojs/node/**)",
+      "Bash(git rm *)",
+      "Bash(rm -rf assets)",
+      "Bash(sed -i \"s#url\\(assets/images/#url\\(../assets/images/#g; s#url\\('assets/images/#url\\('../assets/images/#g\" src/styles/global.css)",
+      "Bash(sed -i \"s#PUBLIC_GOOGLE_MAPS_KEY: envField.string\\({ context: 'client', access: 'public', default: '' }\\)#PUBLIC_GOOGLE_MAPS_KEY: envField.string\\({ context: 'client', access: 'public', default: 'AIzaSyB1T64uyO5Ke-MttLo9Amscl5ViUvYYvtI' }\\)#\" astro.config.mjs)",
+      "Bash(cat)",
+      "Bash(sort -t: -k3)",
+      "Bash(awk -F: '{print $3\":\"$4}')",
+      "Bash(npm install *)",
+      "Bash(file src/assets/images/sponsors/*.png)"
     ]
   }
 }

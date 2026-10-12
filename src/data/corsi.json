@@ -2,7 +2,6 @@
   "adulti": {
     "title": "Adulti - InBallet",
     "description": "Corsi di danza per Adulti. Non è mai troppo tardi per iniziare o riprendere a danzare. InBallet Lainate e Rho.",
-    "keywords": "danza adulti, corso danza principianti adulti, danza over 30, InBallet, Lainate, Rho",
     "ogTitle": "Adulti - InBallet",
     "ogDescription": "Percorsi di danza e benessere per adulti di tutte le età.",
     "badge": "Dai 17 anni in su",
@@ -41,7 +40,6 @@
   "avviamento-danza": {
     "title": "Avviamento alla Danza - InBallet",
     "description": "Corso Avviamento alla Danza per bambini dai 3 anni. Primo approccio al movimento e alla musica attraverso il gioco. InBallet Lainate e Rho.",
-    "keywords": "avviamento danza, corso danza bambini 3 anni, propedeutica danza, InBallet, Lainate, Rho",
     "ogTitle": "Avviamento alla Danza - InBallet",
     "ogDescription": "Corso per bambini dai 3 anni. Primo approccio al movimento e alla musica.",
     "badge": "Dai 3 anni",
@@ -80,7 +78,6 @@
   "bambini": {
     "title": "Bambini - InBallet",
     "description": "Corsi di danza per Bambini (9-11 anni). Tecnica, espressività e crescita. InBallet Lainate e Rho.",
-    "keywords": "danza bambini 9 anni, corso danza bambini, danza classica bambini, InBallet, Lainate, Rho",
     "ogTitle": "Bambini - InBallet",
     "ogDescription": "Percorsi di danza per bambini dai 9 agli 11 anni.",
     "badge": "9-11 anni",
@@ -119,7 +116,6 @@
   "breaking": {
     "title": "Breaking - InBallet",
     "description": "Corso di Breaking (Breakdance). Power moves, footwork e freeze. InBallet Lainate e Rho.",
-    "keywords": "breaking, breakdance, corso breaking, b-boy, b-girl, InBallet, Lainate, Rho",
     "ogTitle": "Breaking - InBallet",
     "ogDescription": "Corso di Breaking. Power moves, footwork e cultura b-boy.",
     "badge": "Ragazzi e adulti",
@@ -158,7 +154,6 @@
   "classi": {
     "title": "Classi di Gruppo - InBallet",
     "description": "Classi di gruppo per il benessere. Yoga, Pilates e discipline per corpo e mente. InBallet Lainate e Rho.",
-    "keywords": "classi gruppo, fitness gruppo, yoga gruppo, pilates gruppo, InBallet, Lainate, Rho",
     "ogTitle": "Classi di Gruppo - InBallet",
     "ogDescription": "Classi di gruppo per il benessere fisico e mentale.",
     "badge": "Adulti",
@@ -197,7 +192,6 @@
   "contact-improvisation": {
     "title": "Contact Improvisation - InBallet",
     "description": "Corso di Contact Improvisation. Esplora il movimento attraverso il contatto e il dialogo corporeo. InBallet Lainate e Rho.",
-    "keywords": "contact improvisation, danza contatto, improvvisazione danza, InBallet, Lainate, Rho",
     "ogTitle": "Contact Improvisation - InBallet",
     "ogDescription": "Corso di Contact Improvisation. Il dialogo corporeo attraverso il contatto.",
     "badge": "Adulti",
@@ -236,7 +230,6 @@
   "contaminato": {
     "title": "Contaminato - InBallet",
     "description": "Corso di Danza Contaminato. Fusione di stili diversi in un linguaggio unico. InBallet Lainate e Rho.",
-    "keywords": "danza contaminato, fusion dance, stili misti danza, InBallet, Lainate, Rho",
     "ogTitle": "Contaminato - InBallet",
     "ogDescription": "Corso di Danza Contaminato. Fusione di stili in un linguaggio unico.",
     "badge": "Ragazzi e adulti",
@@ -275,7 +268,6 @@
   "contemporanea-adulti": {
     "title": "Contemporanea Adulti - InBallet",
     "description": "Corso di Danza Contemporanea per Adulti. Riscopri il movimento, inizia anche da zero. InBallet Lainate e Rho.",
-    "keywords": "danza contemporanea adulti, corso danza adulti, danza per principianti, InBallet, Lainate, Rho",
     "ogTitle": "Contemporanea Adulti - InBallet",
     "ogDescription": "Corso di danza contemporanea pensato per gli adulti, anche principianti.",
     "badge": "Adulti - anche principianti",
@@ -314,7 +306,6 @@
   "danza-acrobatica": {
     "title": "Danza Acrobatica - InBallet",
     "description": "Corso di Danza Acrobatica. Fusione di danza e acrobatica per ragazzi. InBallet Lainate e Rho.",
-    "keywords": "danza acrobatica, acrobatica danza, corso acrobatica, InBallet, Lainate, Rho",
     "ogTitle": "Danza Acrobatica - InBallet",
     "ogDescription": "Corso di Danza Acrobatica. Fusione di danza e elementi acrobatici.",
     "badge": "Ragazzi",
@@ -353,7 +344,6 @@
   "danza-classica": {
     "title": "Danza Classica - InBallet",
     "description": "Corso di Danza Classica per ragazzi e adulti. Tecnica accademica, grazia e disciplina. InBallet Lainate e Rho.",
-    "keywords": "danza classica, corso balletto, tecnica classica, InBallet, Lainate, Rho",
     "ogTitle": "Danza Classica - InBallet",
     "ogDescription": "Corso di tecnica classica accademica per tutti i livelli.",
     "badge": "Tutti i livelli",
@@ -392,7 +382,6 @@
   "danza-contemporanea": {
     "title": "Danza Contemporanea - InBallet",
     "description": "Corso di Danza Contemporanea per ragazzi e adulti. Ricerca artistica, improvvisazione e movimento libero. InBallet Lainate e Rho.",
-    "keywords": "danza contemporanea, corso contemporaneo, danza libera, InBallet, Lainate, Rho",
     "ogTitle": "Danza Contemporanea - InBallet",
     "ogDescription": "Corso di danza contemporanea. Ricerca artistica e movimento libero.",
     "badge": "Ragazzi e adulti",
@@ -431,7 +420,6 @@
   "educazione-danza": {
     "title": "Educazione alla Danza - InBallet",
     "description": "Corso Educazione alla Danza per bambini dai 6 anni. Sviluppo della tecnica base e della musicalità. InBallet Lainate e Rho.",
-    "keywords": "educazione danza, corso danza bambini, propedeutica danza, InBallet, Lainate, Rho",
     "ogTitle": "Educazione alla Danza - InBallet",
     "ogDescription": "Corso per bambini dai 6 anni. Sviluppo della tecnica base e della musicalità.",
     "badge": "Dai 6 anni",
@@ -470,7 +458,6 @@
   "heels": {
     "title": "Heels - InBallet",
     "description": "Corso di Heels Dance. Danza sui tacchi con eleganza, sensualità e potenza. InBallet Lainate e Rho.",
-    "keywords": "heels dance, danza tacchi, high heels, corso heels, InBallet, Lainate, Rho",
     "ogTitle": "Heels - InBallet",
     "ogDescription": "Corso di Heels Dance. Eleganza e potenza sui tacchi.",
     "badge": "Adulti",
@@ -509,7 +496,6 @@
   "hip-hop": {
     "title": "Hip-Hop - InBallet",
     "description": "Corso di Hip-Hop per ragazzi e adulti. Groove, stile e attitudine urbana. InBallet Lainate e Rho.",
-    "keywords": "hip hop, corso hip hop, danza urbana, street dance, InBallet, Lainate, Rho",
     "ogTitle": "Hip-Hop - InBallet",
     "ogDescription": "Corso di Hip-Hop per tutti i livelli. Groove, stile e attitudine.",
     "badge": "Ragazzi e adulti",
@@ -548,7 +534,6 @@
   "lezioni-individuali": {
     "title": "Lezioni Individuali - InBallet",
     "description": "Lezioni individuali personalizzate di danza e benessere. Percorsi su misura per i tuoi obiettivi. InBallet Lainate e Rho.",
-    "keywords": "lezioni private danza, lezioni individuali, personal training danza, InBallet, Lainate, Rho",
     "ogTitle": "Lezioni Individuali - InBallet",
     "ogDescription": "Lezioni private personalizzate per i tuoi obiettivi.",
     "badge": "Tutte le età",
@@ -587,7 +572,6 @@
   "modern": {
     "title": "Danza Modern - InBallet",
     "description": "Corso di Danza Modern per ragazzi e adulti. Espressività, tecnica e libertà di movimento. InBallet Lainate e Rho.",
-    "keywords": "danza modern, corso modern jazz, danza moderna, InBallet, Lainate, Rho",
     "ogTitle": "Danza Modern - InBallet",
     "ogDescription": "Corso di danza modern per tutti i livelli. Espressivita e tecnica.",
     "badge": "Tutti i livelli",
@@ -626,7 +610,6 @@
   "movimento-creativo": {
     "title": "Movimento Creativo - InBallet",
     "description": "Corso di Movimento Creativo per bambini. Espressione libera attraverso il gioco e la fantasia. InBallet Lainate e Rho.",
-    "keywords": "movimento creativo, danza creativa bambini, espressione corporea, InBallet, Lainate, Rho",
     "ogTitle": "Movimento Creativo - InBallet",
     "ogDescription": "Corso di movimento creativo per bambini. Espressione libera e fantasia.",
     "badge": "Dai 4 anni",
@@ -665,7 +648,6 @@
   "pilates": {
     "title": "Pilates - InBallet",
     "description": "Corso di Pilates per adulti. Tonificazione, postura e core stability. InBallet Lainate e Rho.",
-    "keywords": "pilates, corso pilates, core stability, postura, InBallet, Lainate, Rho",
     "ogTitle": "Pilates - InBallet",
     "ogDescription": "Corso di Pilates per tutti i livelli. Tonificazione e benessere.",
     "badge": "Adulti - tutti i livelli",
@@ -704,7 +686,6 @@
   "prima-infanzia": {
     "title": "Prima Infanzia - InBallet",
     "description": "Corsi di danza per la Prima Infanzia (3-5 anni). Gioco, musica e movimento per i più piccoli. InBallet Lainate e Rho.",
-    "keywords": "danza bambini 3 anni, danza prima infanzia, corso danza piccoli, InBallet, Lainate, Rho",
     "ogTitle": "Prima Infanzia - InBallet",
     "ogDescription": "Percorsi di danza per bambini dai 3 ai 5 anni.",
     "badge": "3-5 anni",
@@ -743,7 +724,6 @@
   "ragazzi": {
     "title": "Ragazzi - InBallet",
     "description": "Corsi di danza per Ragazzi (12-16 anni). Tecnica avanzata, espressione e identità artistica. InBallet Lainate e Rho.",
-    "keywords": "danza ragazzi, corso danza adolescenti, danza teen, InBallet, Lainate, Rho",
     "ogTitle": "Ragazzi - InBallet",
     "ogDescription": "Percorsi di danza per ragazzi dai 12 ai 16 anni.",
     "badge": "12-16 anni",
@@ -782,7 +762,6 @@
   "seconda-infanzia": {
     "title": "Seconda Infanzia - InBallet",
     "description": "Corsi di danza per la Seconda Infanzia (6-8 anni). Tecnica e divertimento per piccoli danzatori. InBallet Lainate e Rho.",
-    "keywords": "danza bambini 6 anni, danza seconda infanzia, corso danza bambini, InBallet, Lainate, Rho",
     "ogTitle": "Seconda Infanzia - InBallet",
     "ogDescription": "Percorsi di danza per bambini dai 6 agli 8 anni.",
     "badge": "6-8 anni",
@@ -821,7 +800,6 @@
   "yoga": {
     "title": "Yoga - InBallet",
     "description": "Corso di Yoga per adulti. Equilibrio tra corpo e mente, flessibilità e benessere. InBallet Lainate e Rho.",
-    "keywords": "yoga, corso yoga, hatha yoga, benessere, InBallet, Lainate, Rho",
     "ogTitle": "Yoga - InBallet",
     "ogDescription": "Corso di Yoga per tutti i livelli. Equilibrio tra corpo e mente.",
     "badge": "Adulti - tutti i livelli",

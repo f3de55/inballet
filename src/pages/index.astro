@@ -2,97 +2,47 @@
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import SostenitoriSection from '../components/SostenitoriSection.astro';
-import { webp } from '../lib/images';
+import { getImage } from 'astro:assets';
+import { ANNI_ATTIVITA, categorieCorsi, faq, FONDAZIONE, scuola } from '../data/scuola';
+import { getAsset, webp } from '../lib/images';
+import { schemaHome } from '../lib/schema';
 
 // Galleria: miniature responsive + versione grande per il lightbox
+const alts = [
+  'Allieve si preparano dietro le quinte prima dello spettacolo',
+  'Corpo di ballo sul palco illuminato di blu',
+  'Coreografia di danza contemporanea con costumi bianchi',
+  "Lezione di danza contemporanea in sala con l'insegnante",
+  'Allieve durante il riscaldamento a terra in sala',
+  'Spettacolo di fine anno con tutto il corpo di ballo',
+  'Gruppo di allievi InBallet in sala prove',
+  "Abbraccio tra insegnante e allieva al termine della lezione",
+  'Allieve in allungamento sul parquet della sala',
+  'Coreografia sul palco con luci blu ed elementi scenici',
+];
 const gallery = await Promise.all(
-  Array.from({ length: 10 }, async (_, i) => {
+  alts.map(async (alt, i) => {
     const file = `gallery-${i + 1}.jpg`;
-    return { file, full: await webp(file, 1280) };
+    return { file, alt, full: await webp(file, 1280) };
   }),
 );
 
 // Sfondi in WebP (il CSS definisce solo posizione e dimensione)
-const heroBg = await webp('hero-bg.jpg', 1920);
+const heroBg = await webp('gallery-3.jpg', 1920);
 const progettiBg = await webp('bg-progetti-territorio.jpg', 1920);
 
-const ogImage = new URL('/assets/images/hero-bg.jpg', Astro.site).href;
+// Dati strutturati (immagine social 1200x630)
+const socialImage = new URL((await getImage({ src: getAsset('gallery-3.jpg'), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
+const schema = schemaHome(socialImage);
 
-// Schema.org Structured Data
-const schema = {
-        "@context": "https://schema.org",
-        "@type": "DanceSchool",
-        "name": "InBallet ASD",
-        "description": "Scuola di danza multidisciplinare con 17 anni di esperienza. Corsi di danza classica, contemporanea, hip-hop, yoga e pilates per tutte le età.",
-        "url": "https://www.inballet.it",
-        "logo": "https://www.inballet.it/assets/images/logo.png",
-        "image": "https://www.inballet.it/assets/images/hero-bg.jpg",
-        "telephone": "+39-393-780-2996",
-        "email": "info@inballet.it",
-        "address": [
-            {
-                "@type": "PostalAddress",
-                "streetAddress": "Via Roma",
-                "addressLocality": "Lainate",
-                "addressRegion": "MI",
-                "postalCode": "20020",
-                "addressCountry": "IT"
-            },
-            {
-                "@type": "PostalAddress",
-                "streetAddress": "Via Milano",
-                "addressLocality": "Rho",
-                "addressRegion": "MI",
-                "postalCode": "20017",
-                "addressCountry": "IT"
-            }
-        ],
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "45.5667",
-            "longitude": "9.0333"
-        },
-        "priceRange": "€€",
-        "openingHoursSpecification": [
-            {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                "opens": "15:00",
-                "closes": "21:00"
-            },
-            {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": "Saturday",
-                "opens": "09:00",
-                "closes": "18:00"
-            }
-        ],
-        "sameAs": [
-            "https://www.facebook.com/inballet",
-            "https://www.instagram.com/inballet"
-        ],
-        "foundingDate": "2008",
-        "numberOfEmployees": "10-20",
-        "areaServed": {
-            "@type": "GeoCircle",
-            "geoMidpoint": {
-                "@type": "GeoCoordinates",
-                "latitude": "45.5667",
-                "longitude": "9.0333"
-            },
-            "geoRadius": "30000"
-        }
-    };
 ---
 
 <Base
-    title="InBallet - Scuola di Danza Multidisciplinare"
-    description="Scuola di Danza a Lainate e Rho: corsi per bambini (3+ anni), ragazzi e adulti. 17 anni di esperienza, +200 allievi l'anno. Classica, contemporanea, hip-hop, yoga. Ente formativo CSEN-CONI. Prova gratuita!"
-    keywords="InBallet, scuola danza, danza classica, danza contemporanea, hip hop, Lainate, Rho, corso danza, formazione insegnanti danza"
-    ogTitle="InBallet - Scuola di Danza Multidisciplinare"
-    ogDescription="Dove i Sogni Prendono Vita Attraverso la Danza. 17 anni di esperienza, formazione multidisciplinare per tutte le età."
-    ogImage={ogImage}
-    twitter
+    title="Scuola di Danza a Lainate e Rho | InBallet"
+    description={`Scuola di danza a Lainate e Rho (MI) dal ${FONDAZIONE}: corsi per bambini dai 3 anni, ragazzi e adulti. Classica, modern, contemporanea, hip-hop, yoga e pilates. Ente formativo CSEN-CONI. Lezione di prova gratuita.`}
+    ogTitle="InBallet - Scuola di Danza a Lainate e Rho"
+    ogDescription={`${ANNI_ATTIVITA} anni di danza, passione e formazione per tutte le età. Prenota una lezione di prova.`}
+    ogImage={socialImage}
     skipLinkId="skip-link"
 >
     <Fragment slot="head">
@@ -103,23 +53,22 @@ const schema = {
 
     <!-- Hero Section Personalizzata -->
     <section class="hero">
-        <!-- Placeholder foto -->
         <div class="hero-image" style={`background-image: url('${heroBg}')`}></div>
-        
+
         <div class="hero-overlay"></div>
-        
+
         <div class="hero-content">
             <div class="hero-badge">
                 <i class="fas fa-hand-sparkles" aria-hidden="true"></i>
-                InBallet ASD
+                InBallet ASD · {ANNI_ATTIVITA} anni di danza
             </div>
-            
-            <h1>17 Anni di Danza, Passione e Formazione</h1>
+
+            <h1>Scuola di Danza a Lainate e Rho</h1>
 
             <p class="hero-subtitle">
-                Scuola di danza a <strong>Lainate e Rho</strong> per <strong>tutte le età</strong>. Corsi di <strong>classica</strong>, <strong>contemporanea</strong>, <strong>hip-hop</strong>, <strong>breaking</strong>, <strong>yoga</strong> e <strong>pilates</strong>. Ente formativo riconosciuto <strong>CSEN e CONI</strong>.
+                Corsi per <strong>tutte le età</strong>, dai 3 anni agli adulti: <strong>classica</strong>, <strong>contemporanea</strong>, <strong>hip-hop</strong>, <strong>breaking</strong>, <strong>yoga</strong> e <strong>pilates</strong>. Ente formativo riconosciuto <strong>CSEN e CONI</strong>.
             </p>
-            
+
             <div class="hero-cta">
                 <a href="#corsi" class="btn-primary">
                     <i class="fas fa-search" aria-hidden="true"></i>
@@ -129,34 +78,6 @@ const schema = {
                     <i class="fas fa-envelope" aria-hidden="true"></i>
                     <span>Contattaci</span>
                 </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Chi Siamo Section -->
-    <section id="chi-siamo" class="chi-siamo-section">
-        <div class="container">
-            <div class="story-layout">
-                <div class="story-content">
-                    <div class="section-header chi-siamo-header">
-                        <p class="section-tagline">Dal 2008 a Lainate e Rho</p>
-                        <h2 class="section-title">La Nostra Storia</h2>
-                    </div>
-
-                    <div class="story-text">
-                        <p class="story-lead"><strong>InBallet</strong> nasce nel <strong>2008</strong> dalla visione di <strong>Ilenia Nobile</strong> di portare la danza a tutti. Dalle prime lezioni nei quartieri alle <strong>sedi stabili di Lainate e Rho</strong>, uniamo <strong>tecnica rigorosa</strong>, <strong>consapevolezza corporea</strong> e <strong>ricerca artistica</strong>.</p>
-
-                        <p>Dal <strong>2023</strong> siamo <strong>Ente Formativo CSEN e CONI</strong> per la formazione di insegnanti. Offriamo <strong>danza classica</strong>, <strong>modern</strong>, <strong>contemporanea</strong>, <strong>hip-hop</strong>, <strong>breaking</strong>, <strong>yoga</strong> e <strong>pilates</strong>.</p>
-                    </div>
-                </div>
-
-                <div class="story-image">
-                    <Img src="ballerina.jpg" alt="Ballerina InBallet" width="450" height="500" loading="lazy" decoding="async" widths={[450, 900]} sizes="450px" />
-                    <div class="image-accent">
-                        <span class="accent-number">17</span>
-                        <span class="accent-text">anni</span>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -171,84 +92,19 @@ const schema = {
                 <p class="corsi-intro">Scopri i percorsi di danza pensati per <strong>ogni età e livello</strong>. Dalla <strong>tecnica classica</strong> alle <strong>discipline contemporanee e urbane</strong>.</p>
             </div>
 
-            <!-- Grid Corsi Uniforme -->
             <div class="corsi-grid">
-
-                <!-- Danza Classica -->
-                <article class="corso-item">
-                    <div class="corso-numero">01</div>
-                    <div class="corso-contenuto">
-                        <h3 class="corso-titolo">Danza Classica e Moderna</h3>
-                        <p class="corso-descrizione">Dalla propedeutica alla tecnica avanzata, un percorso completo per sviluppare <strong>grazia</strong>, <strong>disciplina</strong> e <strong>consapevolezza corporea</strong>.</p>
-                        <div class="corso-livelli">
-                            <span class="livello">Avviamento alla Danza</span>
-                            <span class="livello">Educazione alla Danza</span>
-                            <span class="livello">Danza Classica</span>
-                            <span class="livello">Modern</span>
+                {categorieCorsi.map((cat, i) => (
+                    <article class="corso-item">
+                        <div class="corso-numero">{String(i + 1).padStart(2, '0')}</div>
+                        <div class="corso-contenuto">
+                            <h3 class="corso-titolo">{cat.nome}</h3>
+                            <p class="corso-descrizione" set:html={cat.descrizione} />
+                            <div class="corso-livelli">
+                                {cat.corsi.map((c) => <a class="livello" href={c.url}>{c.nome}</a>)}
+                            </div>
                         </div>
-                    </div>
-                </article>
-
-                <!-- Danza Contemporanea -->
-                <article class="corso-item">
-                    <div class="corso-numero">02</div>
-                    <div class="corso-contenuto">
-                        <h3 class="corso-titolo">Danza Contemporanea</h3>
-                        <p class="corso-descrizione">Esplora il <strong>movimento libero e creativo</strong> attraverso tecniche contemporanee, <strong>improvvisazione</strong> e <strong>ricerca artistica</strong> personale.</p>
-                        <div class="corso-livelli">
-                            <span class="livello">Danza Contemporanea</span>
-                            <span class="livello">Contemporanea Adulti</span>
-                            <span class="livello">Contact Improvisation</span>
-                            <span class="livello">Movimento Creativo</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Urban Dance -->
-                <article class="corso-item">
-                    <div class="corso-numero">03</div>
-                    <div class="corso-contenuto">
-                        <h3 class="corso-titolo">Urban Dance</h3>
-                        <p class="corso-descrizione">Dal <strong>breaking</strong> all'<strong>hip-hop</strong>, dai tacchi alla <strong>danza acrobatica</strong>. Stili urbani che uniscono tecnica, <strong>freestyle</strong> e <strong>attitudine</strong>.</p>
-                        <div class="corso-livelli">
-                            <span class="livello">Hip-Hop</span>
-                            <span class="livello">Heels</span>
-                            <span class="livello">Breaking</span>
-                            <span class="livello">Danza Acrobatica</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Benessere -->
-                <article class="corso-item">
-                    <div class="corso-numero">04</div>
-                    <div class="corso-contenuto">
-                        <h3 class="corso-titolo">Benessere e Movimento</h3>
-                        <p class="corso-descrizione"><strong>Yoga</strong>, <strong>Pilates</strong> e discipline per il <strong>benessere fisico e mentale</strong>. Corsi di gruppo e lezioni individuali <strong>personalizzate</strong>.</p>
-                        <div class="corso-livelli">
-                            <span class="livello">Yoga</span>
-                            <span class="livello">Pilates</span>
-                            <span class="livello">Classi di Gruppo</span>
-                            <span class="livello">Lezioni Individuali</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Percorsi per Età -->
-                <article class="corso-item">
-                    <div class="corso-numero">05</div>
-                    <div class="corso-contenuto">
-                        <h3 class="corso-titolo">Percorsi per Età</h3>
-                        <p class="corso-descrizione">Corsi pensati per <strong>ogni fase della crescita</strong>, dalla prima infanzia agli adulti, con <strong>programmi didattici specifici</strong> per età.</p>
-                        <div class="corso-livelli">
-                            <span class="livello">Prima Infanzia (3-5 anni)</span>
-                            <span class="livello">Seconda Infanzia (6-8 anni)</span>
-                            <span class="livello">Ragazzi (9-16 anni)</span>
-                            <span class="livello">Adulti</span>
-                        </div>
-                    </div>
-                </article>
-
+                    </article>
+                ))}
             </div>
 
             <!-- Bottom CTA -->
@@ -260,6 +116,43 @@ const schema = {
                         <path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chi Siamo Section -->
+    <section id="chi-siamo" class="chi-siamo-section">
+        <div class="container">
+            <div class="story-layout">
+                <div class="story-content">
+                    <div class="section-header chi-siamo-header">
+                        <p class="section-tagline">Dal {FONDAZIONE} a Lainate e Rho</p>
+                        <h2 class="section-title">La Nostra Storia</h2>
+                    </div>
+
+                    <div class="story-text">
+                        <p class="story-lead"><strong>I.N. Ballet</strong> è una scuola di danza <strong>multidisciplinare</strong>: un luogo di vita dedicato alla conoscenza e all'esplorazione dei diversi stili di danza, nelle loro sfumature <strong>tecniche</strong> e <strong>artistiche</strong>.</p>
+
+                        <p>Fondata nel <strong>{FONDAZIONE}</strong> da <strong>{scuola.fondatrice}</strong>, accoglie <strong>bambini dai 3 anni</strong>, ragazzi e adulti, con gruppi di ogni livello fino ai corsi avanzati. È uno spazio di continua ricerca corporea, in dialogo costante con le famiglie, dove la danza incontra le emozioni e le forme espressive di ciascuno.</p>
+
+                        <p>È anche punto di riferimento per la <strong>formazione nazionale dei maestri di danza</strong> e per i professionisti dell'ambito educativo e terapeutico, come <strong>Ente Formativo CSEN e CONI</strong>.</p>
+                    </div>
+
+                    <blockquote class="story-quote">
+                        <p>La Danza è capace di creare racconti in tutti i corpi ed in tutte le menti.</p>
+                        <cite>I.N.</cite>
+                    </blockquote>
+                </div>
+
+                <div class="story-image">
+                    <div class="story-photo">
+                        <Img src="ballerina.jpg" alt="Ballerina InBallet" width="450" height="500" loading="lazy" decoding="async" widths={[450, 900]} sizes="450px" />
+                        <div class="image-accent">
+                            <span class="accent-number">{ANNI_ATTIVITA}</span>
+                            <span class="accent-text">anni</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -292,8 +185,8 @@ const schema = {
                             <span>2 anni + 6 master specialistici opzionali</span>
                         </div>
                     </div>
-                    <a href="/contatti" class="percorso-card-btn">
-                        <span>Richiedi Info</span>
+                    <a href="/formazione-insegnanti" class="percorso-card-btn">
+                        <span>Scopri il corso</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
                 </article>
@@ -314,8 +207,8 @@ const schema = {
                             <span>Formazione per scuole ed enti</span>
                         </div>
                     </div>
-                    <a href="/contatti" class="percorso-card-btn">
-                        <span>Progetta con noi</span>
+                    <a href="/formazioni-personalizzate" class="percorso-card-btn">
+                        <span>Scopri di più</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
                 </article>
@@ -324,43 +217,6 @@ const schema = {
         </div>
     </section>
 
-     <!-- Sezione Progetti Sul Territorio -->
-    <section class="altri-servizi-section">
-        <div class="altri-servizi-bg" style={`background-image: url('${progettiBg}')`}></div>
-        <div class="altri-servizi-overlay"></div>
-
-        <div class="altri-servizi-wrapper">
-            <!-- Header -->
-            <div class="altri-servizi-header">
-                <span class="altri-servizi-label">La danza fuori dalla sala</span>
-                <h2 class="altri-servizi-title">Progetti Sul Territorio</h2>
-                <p class="altri-servizi-intro">Portiamo la danza nelle <strong>scuole</strong>, nelle <strong>comunità</strong> e accanto a chi ha <strong>bisogno</strong>.</p>
-            </div>
-
-            <!-- Testo Narrativo -->
-            <div class="progetti-narrativo">
-                <div class="narrativo-colonna">
-                    <h3>Eventi e Collaborazioni</h3>
-                    <p>
-                        Organizziamo <strong><a href="/spettacoli-eventi">Spettacoli ed Eventi</a></strong> in teatri e spazi pubblici,
-                        portiamo la danza nelle scuole con <strong><a href="/collaborazioni-scuole">Collaborazioni Scolastiche</a></strong>
-                        e offriamo <strong><a href="/sportello-psicologico">Supporto Psicologico</a></strong> per allievi e famiglie.
-                    </p>
-                </div>
-
-                <div class="narrativo-colonna">
-                    <h3>Danza Integrativa</h3>
-                    <p>
-                        Con <strong><a href="/classi-integrate">Classi Integrate</a></strong> e il
-                        <strong><a href="/progetto-noiconvoi">Progetto NoiConVoi</a></strong> portiamo la danza a tutti.
-                        Lo <strong><a href="/sportello-bambino">Sportello del Bambino</a></strong> accompagna le famiglie
-                        e i <strong><a href="/sostenitori">Sostenitori</a></strong> ci aiutano a crescere.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
      <section class="dicono-di-noi-section">
         <div class="container">
             <!-- Header sezione -->
@@ -391,9 +247,9 @@ const schema = {
 
                         <!-- Bottone CTA -->
                         <div class="view-all-reviews" id="viewAllSection">
-                            <a href="https://www.google.com/search?sa=X&sca_esv=ccb8066356fd07b7&tbm=lcl&sxsrf=AE3TifONsbUe8wj4bCgnW_SAO2k4jfCpMg:1750798486383&q=I.N.+Ballet+Recensioni&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxI2NDG1NDU3sDAHMowtDSwMLcw3MDK-YhTz1PPTU3BKzMlJLVEISk1OzSvOzM_LXMSKQwIA6ENBIkwAAAA&rldimm=1459570871453908187&hl=it-IT&ved=2ahUKEwiGturO-IqOAxUihP0HHdBWAj4Q9fQKegQIUhAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews" 
-                               target="_blank" 
-                               rel="noopener" 
+                            <a href="https://www.google.com/search?sa=X&sca_esv=ccb8066356fd07b7&tbm=lcl&sxsrf=AE3TifONsbUe8wj4bCgnW_SAO2k4jfCpMg:1750798486383&q=I.N.+Ballet+Recensioni&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxI2NDG1NDU3sDAHMowtDSwMLcw3MDK-YhTz1PPTU3BKzMlJLVEISk1OzSvOzM_LXMSKQwIA6ENBIkwAAAA&rldimm=1459570871453908187&hl=it-IT&ved=2ahUKEwiGturO-IqOAxUihP0HHdBWAj4Q9fQKegQIUhAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
+                               target="_blank"
+                               rel="noopener"
                                class="view-all-btn">
                                 <div class="btn-google-icon">
                                     <i class="fab fa-google"></i>
@@ -446,8 +302,43 @@ const schema = {
         </div>
     </section>
 
-    <!-- Sezione Sostenitori -->
-    <SostenitoriSection />
+     <!-- Sezione Progetti Sul Territorio -->
+    <section class="altri-servizi-section">
+        <div class="altri-servizi-bg" style={`background-image: url('${progettiBg}')`}></div>
+        <div class="altri-servizi-overlay"></div>
+
+        <div class="altri-servizi-wrapper">
+            <!-- Header -->
+            <div class="altri-servizi-header">
+                <span class="altri-servizi-label">La danza fuori dalla sala</span>
+                <h2 class="altri-servizi-title">Progetti Sul Territorio</h2>
+                <p class="altri-servizi-intro">Portiamo la danza nelle <strong>scuole</strong>, nelle <strong>comunità</strong> e accanto a chi ha <strong>bisogno</strong>.</p>
+            </div>
+
+            <!-- Testo Narrativo -->
+            <div class="progetti-narrativo">
+                <div class="narrativo-colonna">
+                    <h3>Eventi e Collaborazioni</h3>
+                    <p>
+                        Organizziamo <strong><a href="/spettacoli-eventi">Spettacoli ed Eventi</a></strong> in teatri e spazi pubblici,
+                        portiamo la danza nelle scuole con <strong><a href="/collaborazioni-scuole">Collaborazioni Scolastiche</a></strong>
+                        e offriamo <strong><a href="/sportello-psicologico">Supporto Psicologico</a></strong> per allievi e famiglie.
+                    </p>
+                </div>
+
+                <div class="narrativo-colonna">
+                    <h3>Danza Integrativa</h3>
+                    <p>
+                        Dal 2013 il <strong><a href="/progetto-noiconvoi">Progetto NoiConVoi</a></strong> accoglie ragazzi con disabilità
+                        in esperienze di danza con supporto psicomotorio, insieme a un team di volontari.
+                        Con le <strong><a href="/classi-integrate">Classi Integrate</a></strong>, lo
+                        <strong><a href="/sportello-psicologico">Sportello del Bambino</a></strong> e i
+                        <strong><a href="/sostenitori">Sostenitori</a></strong> la danza diventa davvero di tutti.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Sezione Galleria Infinita -->
     <section class="gallery-section">
@@ -464,7 +355,7 @@ const schema = {
                 {[0, 1].map((set) =>
                     gallery.map((img, i) => (
                         <div class="gallery-item" data-index={i} data-full={img.full}>
-                            <Img src={img.file} alt={`Danza InBallet - Performance ${i + 1}`} width="300" height="400" loading="lazy" decoding="async" widths={[300, 600]} sizes="300px" aria-hidden={set === 1 ? 'true' : undefined} />
+                            <Img src={img.file} alt={img.alt} width="300" height="400" loading="lazy" decoding="async" widths={[300, 600]} sizes="300px" aria-hidden={set === 1 ? 'true' : undefined} />
                             <div class="gallery-overlay">
                                 <div class="gallery-zoom-icon">
                                     <i class="fas fa-expand"></i>
@@ -473,6 +364,31 @@ const schema = {
                         </div>
                     ))
                 )}
+            </div>
+        </div>
+    </section>
+
+    <!-- Sezione Sostenitori -->
+    <SostenitoriSection />
+
+    <!-- Domande frequenti -->
+    <section class="faq-section" aria-labelledby="faq-titolo">
+        <div class="container faq-layout">
+            <div class="faq-intro">
+                <p class="faq-label">Domande frequenti</p>
+                <h2 class="faq-title" id="faq-titolo">Tutto quello che vuoi sapere</h2>
+                <p class="faq-text">
+                    Non trovi la risposta? Scrivici a <a href={`mailto:${scuola.email}`}>{scuola.email}</a>
+                    o chiamaci al <a href={scuola.telefonoHref}>{scuola.telefono}</a>.
+                </p>
+            </div>
+            <div class="faq-list">
+                {faq.map((f, i) => (
+                    <details class="faq-item" open={i === 0}>
+                        <summary>{f.domanda}</summary>
+                        <p>{f.risposta}</p>
+                    </details>
+                ))}
             </div>
         </div>
     </section>
@@ -502,3 +418,2191 @@ const schema = {
         </script>
     </Fragment>
 </Base>
+
+<style>
+.carousel-nav:focus-visible,
+.lightbox-nav:focus-visible {
+  box-shadow: 0 0 0 3px var(--primary-blue);
+}
+
+:global(.indicator:focus-visible) {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+  transform: scale(1.1);
+}
+
+.hero {
+  height: 72vh;
+  min-height: 560px;
+  max-height: 800px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  padding-top: 80px;
+}
+
+.hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: center/cover no-repeat;
+  z-index: 1;
+  content-visibility: auto;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg,rgba(26,26,26,.6) 0,rgba(42,42,42,.4) 50%,rgba(26,26,26,.6) 100%);
+  z-index: 2;
+}
+
+.hero-content {
+  text-align: center;
+  color: var(--white);
+  z-index: 3;
+  max-width: 800px;
+  margin: 0 2rem;
+  padding: 3rem 2rem;
+  animation: fadeInUp 1s ease-out;
+  background: rgba(135,206,235,.25);
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  border: 1px solid rgba(135,206,235,.2);
+}
+
+.hero-badge {
+  display: block;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px rgba(0,0,0,.9);
+}
+
+.hero-badge :global(i) {
+  display: none;
+}
+
+.hero :global(h1) {
+  text-wrap: balance;
+  font-size: var(--text-6xl);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  margin-bottom: 1.5rem;
+  color: var(--white);
+  letter-spacing: -.02em;
+  text-shadow: 0 4px 8px rgba(0,0,0,.3);
+}
+
+.hero-subtitle {
+  font-size: var(--text-xl);
+  margin-bottom: 3rem;
+  opacity: .9;
+  font-weight: 300;
+  line-height: 1.5;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 0 2px 4px rgba(0,0,0,.2);
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.chi-siamo-section,
+.formazione-professionale-section,
+.dicono-di-noi-section,
+.gallery-section {
+  background: #fff;
+  position: relative;
+}
+
+.chi-siamo-section,
+.formazione-professionale-section {
+  padding: 5rem 0;
+}
+
+.gallery-section::before,
+.dicono-di-noi-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-blue);
+}
+
+.section-header {
+  margin-bottom: 2.5rem;
+}
+
+.chi-siamo-section {
+  position: relative;
+}
+
+.chi-siamo-header {
+  text-align: left;
+  margin-bottom: 3rem;
+}
+
+.story-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 5rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.story-content {
+  padding: 0;
+}
+
+.story-text {
+  max-width: 580px;
+}
+
+.story-text :global(p) {
+  font-size: var(--text-base);
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+}
+
+.story-text :global(p:last-child) {
+  margin-bottom: 0;
+}
+
+.story-lead {
+  font-size: var(--text-xl);
+  line-height: 1.7;
+  color: var(--dark-navy);
+  font-weight: 400;
+}
+
+.story-quote {
+  max-width: 580px;
+  margin: 2.5rem 0 0;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--primary-blue);
+}
+
+.story-quote p {
+  font-size: var(--text-lg);
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--dark-navy);
+}
+
+.story-quote cite {
+  display: block;
+  margin-top: .5rem;
+  font-size: var(--text-sm);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--dark-navy);
+}
+
+.story-quote cite::before {
+  content: '— ';
+}
+
+.story-image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+  contain: layout;
+  padding-right: 40px;
+  padding-top: 40px;
+}
+
+/* Cornice azzurra sfalsata dietro la foto (come nella pagina Contatti) */
+.story-photo {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 450px;
+}
+
+.story-photo::before {
+  content: '';
+  position: absolute;
+  inset: 2.5rem 2.5rem -1.5rem -1.5rem;
+  border: 2px solid var(--primary-blue);
+  border-radius: 24px;
+  z-index: -1;
+}
+
+.story-image :global(img) {
+  display: block;
+  width: 100%;
+  max-width: 450px;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.14);
+  aspect-ratio: 450/500;
+}
+
+.image-accent {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
+  color: var(--dark-navy);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 30px rgba(135,206,235,.4),0 4px 12px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.3);
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.image-accent::before,
+.image-accent::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.image-accent::before {
+  border: 3px solid rgba(255,255,255,.8);
+  animation: accent-pulse 4s ease-in-out infinite;
+}
+
+.image-accent::after {
+  border: 3px solid rgba(135,206,235,.7);
+  animation: accent-pulse 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.accent-number {
+  font-size: 2.75rem;
+  font-weight: 700;
+  line-height: .9;
+  letter-spacing: -1px;
+  display: block;
+}
+
+.accent-text {
+  font-size: .85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  display: block;
+  line-height: 1;
+}
+
+.corsi-section {
+  padding: 5rem 0;
+  background: rgba(176, 224, 230, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.corsi-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-blue);
+}
+
+.corsi-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-blue);
+}
+
+.corsi-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.corsi-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.corsi-label {
+  display: block;
+  font-size: var(--text-lg);
+  color: var(--primary-blue-dark);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+}
+
+.corsi-title {
+  font-size: var(--text-5xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.corsi-intro {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-light);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.corsi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem 4rem;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.corsi-grid::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(135, 206, 235, 0.3);
+  transform: translateX(-50%);
+}
+
+.corso-item {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 1rem;
+  position: relative;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(135, 206, 235, 0.3);
+}
+
+.corso-item:nth-child(4),
+.corso-item:nth-child(5) {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.corso-numero {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  font-family: var(--font-rubik);
+  color: rgba(135, 206, 235, 0.5);
+  line-height: var(--leading-none);
+  display: flex;
+  align-items: flex-start;
+}
+
+.corso-contenuto {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.corso-titolo {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-snug);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.corso-descrizione {
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--text-light);
+  margin: 0;
+  font-weight: 400;
+}
+
+.corso-descrizione :global(strong) {
+  color: var(--dark-navy);
+  font-weight: 600;
+}
+
+.corso-livelli {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.corsi-cta {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, rgba(135, 206, 235, 0.08) 0%, rgba(176, 224, 230, 0.12) 100% );
+  border-radius: 20px;
+  border: 1px solid rgba(135, 206, 235, 0.2);
+  position: relative;
+}
+
+.corsi-cta-text {
+  font-size: var(--text-xl);
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 2rem;
+  letter-spacing: -0.01em;
+  line-height: var(--leading-snug);
+}
+
+.corsi-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 2.5rem;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  transition: background 0.3s ease, color 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--dark-navy);
+  color: var(--white);
+  border: none;
+  box-shadow: 0 4px 15px rgba(26, 26, 26, 0.3);
+}
+
+.corsi-cta-btn:hover {
+  background: #0a0a0a;
+  color: var(--white);
+}
+
+.corsi-cta-btn :global(i) {
+  font-size: var(--text-base);
+}
+
+.formazione-professionale-section {
+  padding: 5rem 0;
+  background: var(--white);
+  position: relative;
+}
+
+.formazione-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 0;
+}
+
+.formazione-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.formazione-label {
+  display: block;
+  font-size: var(--text-lg);
+  color: var(--primary-blue-dark);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+}
+
+.formazione-title {
+  font-size: var(--text-5xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.percorsi-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.percorso-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(135, 206, 235, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.percorso-card-title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-snug);
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.01em;
+}
+
+.percorso-card-description {
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.percorso-card-description :global(strong) {
+  color: var(--dark-navy);
+  font-weight: 600;
+}
+
+.percorso-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: var(--text-lg);
+  color: var(--text-dark);
+}
+
+.highlight-item :global(i) {
+  color: var(--primary-blue);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.highlight-item :global(span) {
+  font-weight: 500;
+}
+
+.percorso-card-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1rem 2rem;
+  background: var(--dark-navy);
+  color: var(--white);
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  transition: background 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(26, 26, 26, 0.3);
+  align-self: flex-start;
+}
+
+.percorso-card-btn:hover {
+  background: #0a0a0a;
+}
+
+.gallery-section {
+  padding: 5rem 0;
+  overflow: hidden;
+}
+
+.gallery-header,
+.testimonials-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.gallery-tagline,
+.testimonials-tagline {
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: var(--text-lg);
+  margin-bottom: 1.5rem;
+}
+
+.gallery-title,
+.testimonials-title {
+  font-size: var(--text-5xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.gallery-description,
+.testimonials-description {
+  font-size: var(--text-base);
+  color: var(--text-light);
+  line-height: var(--leading-relaxed);
+  max-width: 700px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+.gallery-infinite {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  overflow: hidden;
+  height: 420px;
+  position: relative;
+}
+
+.gallery-track {
+  display: flex;
+  gap: 8px;
+  width: calc((308px) * 20);
+  animation: scroll-infinite 80s linear infinite;
+  will-change: transform;
+}
+
+.gallery-track:hover {
+  animation-play-state: paused;
+}
+
+.gallery-item {
+  width: 300px;
+  height: 420px;
+  flex-shrink: 0;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.gallery-item :global(img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+
+.gallery-item:hover :global(img) {
+  transform: scale(1.03);
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26,26,26,.4);
+  opacity: 0;
+  transition: opacity .3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+.gallery-zoom-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(.8);
+  opacity: 0;
+  transition: all .3s ease;
+}
+
+.gallery-zoom-icon :global(i) {
+  font-size: 1rem;
+  color: var(--dark-navy);
+}
+
+.gallery-item:hover .gallery-zoom-icon {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.lightbox-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  transform: scale(.95);
+  transition: transform .3s ease;
+}
+
+.lightbox.active .lightbox-image {
+  transform: scale(1);
+}
+
+.lightbox-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: var(--text-xl);
+  cursor: pointer;
+  transition: all .2s ease;
+  backdrop-filter: blur(10px);
+  z-index: 200001;
+}
+
+.lightbox-nav:hover {
+  background: rgba(255,255,255,.2);
+  border-color: rgba(255,255,255,.4);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.lightbox-prev {
+  left: 20px;
+}
+
+.lightbox-next {
+  right: 20px;
+}
+
+.lightbox-counter {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 20px;
+  padding: .6rem 1.2rem;
+  color: #fff;
+  font-weight: 500;
+  font-size: var(--text-sm);
+  backdrop-filter: blur(10px);
+  z-index: 200001;
+}
+
+.altri-servizi-section {
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.altri-servizi-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: center/cover no-repeat;
+  z-index: 1;
+}
+
+.altri-servizi-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.85) 0%, rgba(42, 42, 42, 0.82) 50%, rgba(26, 26, 26, 0.85) 100%);
+  z-index: 2;
+}
+
+.altri-servizi-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 3;
+}
+
+.altri-servizi-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.altri-servizi-label {
+  color: var(--primary-blue);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: var(--text-lg);
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.altri-servizi-title {
+  font-size: var(--text-5xl);
+  font-weight: 700;
+  color: var(--white);
+  line-height: var(--leading-tight);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.altri-servizi-intro {
+  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: var(--leading-relaxed);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.progetti-narrativo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.narrativo-colonna :global(h3) {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(135, 206, 235, 0.3);
+  line-height: var(--leading-snug);
+}
+
+.narrativo-colonna :global(p) {
+  font-size: var(--text-base);
+  line-height: var(--leading-loose);
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.narrativo-colonna :global(a) {
+  color: var(--white);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid var(--primary-blue);
+  padding-bottom: 2px;
+  transition: all 0.3s ease;
+}
+
+.narrativo-colonna :global(a:hover) {
+  color: var(--primary-blue);
+}
+
+@media (max-width: 768px) {
+.progetti-narrativo {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+.dicono-di-noi-section {
+  padding: 5rem 0;
+  overflow: hidden;
+}
+
+.dicono-di-noi-section::after {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle,rgba(135,206,235,.05) 0,transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.testimonials-header {
+  margin-bottom: 3rem;
+  z-index: 3;
+}
+
+.loading-reviews {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-light);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--primary-blue-light);
+  border-top: 4px solid var(--primary-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+.testimonials-container {
+  position: relative;
+  z-index: 2;
+}
+
+.carousel-with-cta {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.carousel-main {
+  flex: 1;
+  position: relative;
+}
+
+.carousel-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-self: center;
+}
+
+.testimonials-carousel {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+.testimonials-track {
+  overflow: hidden;
+  border-radius: 12px;
+  min-height: 400px;
+}
+
+:global(.testimonials-slide) {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+:global(.testimonials-slide.active) {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+:global(.testimonial-card) {
+  background: linear-gradient(145deg,rgba(255,255,255,.98) 0,rgba(248,250,252,.95) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(135,206,235,.2);
+  border-radius: 24px;
+  padding: 0;
+  position: relative;
+  box-shadow: 0 24px 48px rgba(135,206,235,.1),0 12px 24px rgba(0,0,0,.03);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+:global(.testimonial-header) {
+  padding: 2rem 2.5rem 1.5rem;
+  position: relative;
+  z-index: 3;
+  flex-shrink: 0;
+}
+
+:global(.google-rating) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 0;
+}
+
+:global(.rating-badge) {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  background: rgba(135,206,235,.12);
+  padding: .85rem 1.6rem;
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(135,206,235,.15);
+}
+
+:global(.stars) {
+  display: flex;
+  gap: .3rem;
+}
+
+:global(.stars i) {
+  color: #ffd700;
+  font-size: var(--text-lg);
+  filter: drop-shadow(0 1px 2px rgba(255,215,0,.3));
+}
+
+:global(.rating-text) {
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--primary-blue-dark);
+  margin-left: .5rem;
+}
+
+:global(.testimonial-content) {
+  position: relative;
+  z-index: 2;
+  padding: 0 2.5rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+:global(.testimonial-text) {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--text-dark);
+  font-style: italic;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  text-align: center;
+  position: relative;
+  transition: all .3s ease;
+}
+
+:global(.testimonial-footer) {
+  background: rgba(248,250,252,.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(135,206,235,.12);
+  padding: 2rem 2.5rem;
+  position: relative;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+:global(.testimonial-author) {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+:global(.author-avatar) {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg,var(--primary-blue-light) 0,var(--primary-blue) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xl);
+  color: #fff;
+  font-weight: 700;
+  border: 3px solid rgba(255,255,255,.8);
+  box-shadow: 0 8px 24px rgba(135,206,235,.2),inset 0 1px 0 rgba(255,255,255,.3);
+}
+
+:global(.author-info) {
+  text-align: left;
+}
+
+:global(.author-info h4) {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--dark-navy);
+  margin-bottom: .4rem;
+  letter-spacing: -.02em;
+}
+
+:global(.author-meta) {
+  font-size: var(--text-sm);
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+:global(.read-more-btn) {
+  background: 0 0;
+  border: none;
+  color: var(--primary-blue);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  margin-left: .5rem;
+  text-decoration: none;
+  font-style: normal;
+  padding: 0;
+  transition: color .2s ease;
+  border-bottom: 2px solid var(--primary-blue);
+  padding-bottom: 2px;
+}
+
+:global(.read-more-btn:active) {
+  transform: scale(.98);
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--white);
+  border: 1px solid rgba(135,206,235,.25);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .25s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(135,206,235,.12);
+  z-index: 5;
+}
+
+.carousel-nav:hover {
+  background: var(--primary-blue);
+  border-color: var(--primary-blue);
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 6px 18px rgba(135,206,235,.25);
+}
+
+.carousel-nav:active {
+  transform: translateY(-50%) scale(1);
+}
+
+.carousel-nav :global(i) {
+  font-size: var(--text-base);
+  color: var(--primary-blue-dark);
+  transition: color .25s ease;
+}
+
+.carousel-nav:hover :global(i) {
+  color: #fff;
+}
+
+.carousel-prev {
+  left: 20px;
+}
+
+.carousel-next {
+  right: 20px;
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: .8rem;
+  margin-top: 2.5rem;
+}
+
+:global(.indicator) {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(135,206,235,.25);
+  cursor: pointer;
+  transition: all .25s ease;
+  position: relative;
+}
+
+:global(.indicator:hover) {
+  background: rgba(135,206,235,.5);
+}
+
+:global(.indicator.active) {
+  background: var(--primary-blue);
+  width: 28px;
+  border-radius: 5px;
+}
+
+:global(.indicator.active:hover) {
+  background: var(--primary-blue-dark);
+}
+
+.google-stats-card {
+  background: linear-gradient(145deg,rgba(255,255,255,.98) 0,rgba(248,250,252,.95) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(135,206,235,.2);
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 20px 40px rgba(135,206,235,.1),0 10px 20px rgba(0,0,0,.03);
+  text-align: center;
+}
+
+.stats-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(135,206,235,.15);
+}
+
+.stats-title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--dark-navy);
+  letter-spacing: .3px;
+}
+
+.stats-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+:global(.stat-item) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  padding: 0;
+}
+
+:global(.stat-stars) {
+  display: flex;
+  gap: .3rem;
+  margin-top: .2rem;
+}
+
+:global(.stat-stars i) {
+  font-size: 1rem;
+  color: #ffd700;
+  filter: drop-shadow(0 1px 2px rgba(255,215,0,.3));
+}
+
+.view-all-reviews {
+  margin: 0;
+  padding: 0;
+}
+
+.view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .8rem;
+  background: var(--dark-navy);
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  color: var(--white);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  transition: all .3s ease;
+  box-shadow: 0 4px 15px rgba(26,26,26,.25);
+  width: 100%;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+
+.view-all-btn:hover {
+  background: #0a0a0a;
+  box-shadow: 0 6px 20px rgba(26,26,26,.35);
+  transform: translateY(-2px);
+}
+
+.view-all-btn:active {
+  transform: translateY(0);
+}
+
+.btn-google-icon {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg,#4285f4,#34a853);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-google-icon :global(i) {
+  color: #fff;
+  font-size: 11px;
+}
+
+.btn-main-text {
+  color: var(--white);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+:global(.no-reviews-message) {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+:global(.alert-box) {
+  background: linear-gradient(135deg,rgba(255,255,255,.95) 0,rgba(176,224,230,.1) 100%);
+  border: 1px solid rgba(135,206,235,.3);
+  border-radius: 15px;
+  padding: 2rem 3rem;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 8px 25px rgba(135,206,235,.1);
+  backdrop-filter: blur(10px);
+}
+
+:global(.alert-box i) {
+  color: var(--primary-blue-dark);
+  font-size: var(--text-2xl);
+  flex-shrink: 0;
+}
+
+:global(.alert-box p) {
+  color: var(--text-dark);
+  font-size: var(--text-base);
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width:1200px) {
+.carousel-with-cta {
+    gap: 1.5rem;
+  }
+
+.carousel-sidebar {
+    width: 260px;
+  }
+}
+
+@media (max-width:1024px) {
+.story-layout {
+    gap: 4rem;
+  }
+
+.percorsi-container {
+    grid-template-columns: 1fr;
+  }
+
+.corsi-section {
+    padding: 6rem 0;
+  }
+
+.corsi-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem 4rem;
+  }
+
+.corsi-grid::before {
+    display: none;
+  }
+
+.corso-item {
+    grid-template-columns: 45px 1fr;
+    gap: 1rem;
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid rgba(135, 206, 235, 0.3);
+  }
+
+.corso-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+.corso-numero {
+    font-size: 2rem;
+  }
+
+.corso-titolo {
+    font-size: 1.5rem;
+  }
+
+.corso-descrizione {
+    font-size: var(--text-base);
+  }
+
+.corso-livelli {
+    gap: 0.6rem;
+  }
+
+.formazione-professionale-section {
+    padding: 6rem 0;
+  }
+
+.percorsi-container {
+    gap: 2rem;
+  }
+
+.percorso-card {
+    padding: 2.5rem;
+  }
+
+.percorso-card-title {
+    font-size: 1.5rem;
+  }
+
+.percorso-card-description {
+    font-size: var(--text-base);
+  }
+
+.highlight-item {
+    font-size: var(--text-lg);
+  }
+
+.gallery-infinite {
+    height: 380px;
+  }
+
+.gallery-item {
+    width: 280px;
+    height: 380px;
+    border-radius: 10px;
+  }
+
+.gallery-item:hover :global(img) {
+    transform: none;
+  }
+
+.gallery-overlay {
+    display: none;
+  }
+
+.gallery-track {
+    gap: 6px;
+    width: calc(286px * 20);
+  }
+
+.lightbox-nav {
+    width: 44px;
+    height: 44px;
+    font-size: var(--text-lg);
+  }
+
+.lightbox-prev {
+    left: 15px;
+  }
+
+.lightbox-next {
+    right: 15px;
+  }
+
+.lightbox-counter {
+    bottom: 15px;
+    padding: .5rem 1rem;
+    font-size: var(--text-xs);
+  }
+
+.carousel-with-cta {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+.carousel-main {
+    order: 2;
+    width: 100%;
+  }
+
+.carousel-sidebar {
+    order: 1;
+    width: 100%;
+    max-width: 600px;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+.google-stats-card {
+    width: 100%;
+  }
+
+.view-all-reviews {
+    order: 3;
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+.testimonials-carousel {
+    padding: 0 20px;
+    touch-action: pan-y;
+  }
+
+.carousel-nav {
+    display: none;
+  }
+}
+
+@media (max-width:900px) {
+.story-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+.story-text {
+    max-width: 100%;
+  }
+
+.story-text :global(p) {
+    font-size: var(--text-base);
+  }
+
+.story-lead {
+    font-size: var(--text-lg);
+  }
+
+.image-accent {
+    top: -15px;
+    left: 50%;
+    right: auto;
+    width: 80px;
+    height: 80px;
+    transform: translateX(-50%) translateZ(0);
+  }
+
+.accent-number {
+    font-size: 2rem;
+    line-height: .9;
+  }
+
+.accent-text {
+    font-size: .7rem;
+    line-height: 1;
+  }
+
+.story-image {
+    min-height: 400px;
+    padding-right: 0;
+    padding-top: 40px;
+    justify-content: center;
+  }
+
+.story-image :global(img) {
+    height: 400px;
+    max-width: none;
+    aspect-ratio: auto;
+  }
+
+.story-photo {
+    max-width: none;
+  }
+
+.chi-siamo-section {
+    padding: 4rem 0;
+  }
+
+.story-content {
+    order: 1;
+  }
+
+.story-image {
+    order: 2;
+  }
+}
+
+@media (max-width:768px) {
+.hero {
+    padding-top: 110px;
+    align-items: center;
+    padding-bottom: 50px;
+    height: auto;
+    min-height: 0;
+  }
+
+.hero-content {
+    margin: 0 1rem;
+    padding: 1.8rem 1.5rem 1.5rem;
+    border-radius: 16px;
+    max-width: 95%;
+    will-change: auto;
+  }
+
+.hero-badge {
+    font-size: var(--text-sm);
+    margin-bottom: .8rem;
+    letter-spacing: 1.5px;
+  }
+
+.hero :global(h1) {
+    font-size: var(--text-4xl);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+.hero-subtitle {
+    font-size: var(--text-base);
+    line-height: 1.5;
+    margin-bottom: 1.8rem;
+    max-width: 100%;
+  }
+
+.hero-cta {
+    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+.formazione-professionale-section {
+    padding: 4rem 0;
+  }
+
+.formazione-professionale-section .section-header {
+    margin-bottom: 4rem;
+  }
+
+.percorsi-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+.altri-servizi-section {
+    padding: 5rem 0;
+  }
+
+.altri-servizi-header {
+    margin-bottom: 3rem;
+  }
+
+.progetti-narrativo {
+    gap: 2.5rem;
+  }
+
+.carousel-with-cta {
+    padding: 0 1rem;
+  }
+
+.carousel-sidebar {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+.testimonials-carousel {
+    padding: 0 15px;
+  }
+
+.testimonials-track {
+    min-height: 350px;
+  }
+
+:global(.testimonial-header) {
+    padding: 1.2rem 1.5rem .8rem;
+  }
+
+:global(.testimonial-content) {
+    padding: 0 1.5rem 1.2rem;
+  }
+
+:global(.testimonial-footer) {
+    padding: 1.2rem 1.5rem;
+  }
+
+:global(.testimonial-author) {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+:global(.author-info) {
+    text-align: center;
+  }
+
+.gallery-infinite {
+    height: 340px;
+  }
+
+.gallery-item {
+    width: calc(50vw - 35px);
+    max-width: 240px;
+    height: 340px;
+    border-radius: 10px;
+  }
+
+.gallery-item:hover :global(img) {
+    transform: none;
+  }
+
+.gallery-overlay {
+    display: none;
+  }
+
+.gallery-track {
+    gap: 8px;
+    width: calc((calc(50vw - 27px)) * 20);
+    animation-duration: 70s;
+  }
+
+.lightbox-nav {
+    width: 40px;
+    height: 40px;
+    font-size: var(--text-base);
+  }
+}
+
+@media (max-width:480px) {
+.hero {
+    padding-top: 105px;
+    height: auto;
+    min-height: 0;
+  }
+
+.hero-content {
+    padding: 1.5rem 1.2rem 1.3rem;
+    margin: 0 .8rem;
+  }
+
+.hero-badge {
+    font-size: var(--text-sm);
+    margin-bottom: .6rem;
+  }
+
+.hero :global(h1) {
+    font-size: var(--text-3xl);
+    margin-bottom: .8rem;
+  }
+
+.hero-subtitle {
+    font-size: var(--text-base);
+    margin-bottom: 1.5rem;
+  }
+
+.chi-siamo-header {
+    margin-bottom: 2.5rem;
+  }
+
+.story-text :global(p) {
+    font-size: var(--text-base);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+.story-lead {
+    font-size: var(--text-base);
+  }
+
+.story-image {
+    min-height: 350px;
+    padding-right: 0;
+    padding-top: 40px;
+    justify-content: center;
+  }
+
+.story-image :global(img) {
+    height: 350px;
+    aspect-ratio: auto;
+  }
+
+.corsi-section {
+    padding: 5rem 0;
+  }
+
+.corsi-header {
+    margin-bottom: 3rem;
+  }
+
+.corsi-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-bottom: 3rem;
+  }
+
+.corsi-grid::before {
+    display: none;
+  }
+
+.corso-item {
+    grid-template-columns: 40px 1fr;
+    gap: 0.9rem;
+    padding-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(135, 206, 235, 0.3);
+  }
+
+.corso-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+.corso-numero {
+    font-size: 1.75rem;
+  }
+
+.corso-titolo {
+    font-size: 1.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+.corso-descrizione {
+    font-size: var(--text-base);
+    line-height: 1.6;
+  }
+
+.corso-livelli {
+    gap: 0.5rem;
+  }
+
+.corsi-cta {
+    padding: 2.5rem 1.5rem;
+  }
+
+.corsi-cta-text {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+.corsi-cta-btn {
+    padding: 0.9rem 2rem;
+    font-size: var(--text-sm);
+  }
+
+.altri-servizi-section {
+    padding: 4rem 0;
+  }
+
+.altri-servizi-header {
+    margin-bottom: 2.5rem;
+  }
+
+.narrativo-colonna :global(h3) {
+    font-size: var(--text-2xl);
+    margin-bottom: 1rem;
+  }
+
+.narrativo-colonna :global(p) {
+    font-size: var(--text-base);
+    line-height: 1.8;
+  }
+
+.formazione-professionale-section {
+    padding: 5rem 0;
+  }
+
+.formazione-header {
+    margin-bottom: 3rem;
+  }
+
+.percorsi-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+.percorso-card {
+    padding: 2rem;
+  }
+
+.percorso-card-title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+.percorso-card-description {
+    font-size: var(--text-base);
+    margin-bottom: 1.5rem;
+  }
+
+.percorso-highlights {
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+.highlight-item {
+    font-size: var(--text-lg);
+  }
+
+.percorso-card-btn {
+    padding: 0.9rem 1.8rem;
+    font-size: var(--text-sm);
+    width: 100%;
+  }
+
+.gallery-infinite {
+    height: 320px;
+  }
+
+.gallery-item {
+    width: calc(50vw - 30px);
+    max-width: 220px;
+    height: 320px;
+    border-radius: 8px;
+  }
+
+.gallery-track {
+    gap: 8px;
+    width: calc((calc(50vw - 22px)) * 20);
+    animation-duration: 60s;
+  }
+
+.gallery-zoom-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+.gallery-zoom-icon :global(i) {
+    font-size: .85rem;
+  }
+
+.lightbox-nav {
+    width: 40px;
+    height: 40px;
+    font-size: var(--text-base);
+  }
+
+.lightbox-prev {
+    left: 10px;
+  }
+
+.lightbox-next {
+    right: 10px;
+  }
+
+.lightbox-counter {
+    bottom: 12px;
+    padding: .4rem .8rem;
+    font-size: var(--text-xs);
+  }
+
+.carousel-with-cta {
+    padding: 0 1rem;
+  }
+
+.testimonials-carousel {
+    padding: 0 10px;
+  }
+
+.testimonials-track {
+    min-height: 320px;
+  }
+
+:global(.testimonial-header) {
+    padding: 1rem 1.2rem .6rem;
+  }
+
+:global(.testimonial-content) {
+    padding: 0 1.2rem 1rem;
+  }
+
+:global(.testimonial-footer) {
+    padding: 1rem 1.2rem;
+  }
+
+:global(.testimonial-text) {
+    margin-bottom: .5rem;
+  }
+
+.google-stats-card {
+    padding: 1.2rem;
+  }
+
+:global(.rating-badge) {
+    padding: .6rem 1.2rem;
+    gap: .6rem;
+  }
+}
+
+@media (max-width:380px) {
+.lightbox-nav {
+    display: none;
+  }
+
+.lightbox-counter {
+    bottom: 10px;
+    padding: .35rem .7rem;
+  }
+
+.gallery-infinite {
+    height: 280px;
+  }
+
+.gallery-item {
+    height: 280px;
+  }
+}
+
+/* ---------- Corsi: ogni livello porta alla pagina del corso ---------- */
+a.livello {
+  text-decoration: none;
+  transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+a.livello:hover {
+  border-color: var(--primary-blue);
+  background: rgba(135, 206, 235, 0.15);
+  color: var(--dark-navy);
+  transform: translateY(-2px);
+}
+
+/* ---------- Domande frequenti ---------- */
+.faq-section {
+  padding: 6.5rem 0;
+  background: #f4f9fc;
+}
+
+.faq-layout {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.faq-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--primary-blue-dark);
+  margin-bottom: 1rem;
+}
+
+.faq-title {
+  font-size: var(--text-5xl);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  color: var(--dark-navy);
+  margin-bottom: 1.5rem;
+}
+
+.faq-text {
+  font-size: var(--text-lg);
+  line-height: var(--leading-loose);
+  color: var(--text-light);
+}
+
+.faq-text a {
+  color: var(--dark-navy);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid var(--primary-blue);
+}
+
+.faq-list {
+  border-top: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.faq-item summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--dark-navy);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: '+';
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(26, 26, 26, 0.2);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--primary-blue-dark);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+  background: var(--primary-blue);
+  border-color: var(--primary-blue);
+  color: var(--dark-navy);
+}
+
+.faq-item summary:hover {
+  color: var(--primary-blue-dark);
+}
+
+.faq-item p {
+  padding: 0 3.5rem 1.6rem 0;
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-light);
+}
+
+@media (max-width: 900px) {
+  .faq-section {
+    padding: 5rem 0;
+  }
+
+  .faq-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .faq-title {
+    font-size: var(--text-4xl);
+  }
+
+  .faq-item p {
+    padding-right: 0;
+  }
+
+}
+</style>

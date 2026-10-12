@@ -11,7 +11,6 @@ const bg: Record<string, string> = {
 <Base
     title="Classi Multidisciplinari Integrate - InBallet"
     description="Classi Multidisciplinari Integrate InBallet - Percorsi di danza inclusivi per accogliere ogni bambino con professionalità e attenzione personalizzata."
-    keywords="danza inclusiva, classi integrate, danza bambini speciali, inclusione danza, Lainate, corsi danza inclusivi"
     ogTitle="Classi Multidisciplinari Integrate - InBallet"
     ogDescription="Percorsi di danza inclusivi dove ogni bambino trova il suo spazio per crescere ed esprimersi."
 >
@@ -133,51 +132,245 @@ const bg: Record<string, string> = {
         </section>
 </Base>
 
-<style is:global>
-        /* === SEZIONI SPECIFICHE CLASSI INTEGRATE === */
+<style>
+.integrate-intro-section {
+  padding: 5rem 0;
+  background: #fff;
+}
 
-        /* Intro Section */
-        .integrate-intro-section{padding:5rem 0;background:#fff}
-        .integrate-intro-wrapper{max-width:900px;margin:0 auto;padding:0 2rem}
-        .integrate-intro-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;text-align:center}
-        .integrate-intro-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:2rem;text-align:center}
-        .integrate-intro-text{font-size:var(--text-lg);line-height:1.8;color:var(--text-light);margin-bottom:1.5rem;text-align:center}
-        .integrate-intro-text strong{color:var(--dark-navy);font-weight:600}
-        .integrate-intro-highlight{background:rgba(135,206,235,.1);border-left:4px solid var(--primary-blue);padding:1.5rem 2rem;border-radius:0 12px 12px 0;margin-top:2.5rem;max-width:750px;margin-left:auto;margin-right:auto}
-        .integrate-intro-highlight p{font-size:var(--text-base);color:var(--dark-navy);font-weight:500;margin:0;line-height:1.7}
+.integrate-intro-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
 
-        /* Valori Section - CARD (unica sezione card) */
-        .integrate-valori-section{padding:5rem 0;background:rgba(176,224,230,.1)}
-        .integrate-valori-wrapper{max-width:1100px;margin:0 auto;padding:0 2rem}
-        .integrate-valori-header{text-align:center;margin-bottom:4rem}
-        .integrate-valori-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .integrate-valori-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:1rem}
-        .integrate-valori-subtitle{font-size:var(--text-base);color:var(--text-light);max-width:600px;margin:0 auto}
-        .integrate-valori-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem}
-        .integrate-valore-card{background:#fff;padding:2.5rem 2rem;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid rgba(135,206,235,.15);transition:all .3s ease;text-align:center}
-        .integrate-valore-card:hover{transform:translateY(-8px);box-shadow:0 12px 35px rgba(135,206,235,.2);border-color:var(--primary-blue)}
-        .integrate-valore-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;color:var(--dark-navy);font-size:2rem}
-        .integrate-valore-name{font-size:var(--text-xl);font-weight:700;color:var(--dark-navy);margin-bottom:1rem;text-transform:uppercase;letter-spacing:.5px}
-        .integrate-valore-desc{font-size:var(--text-sm);color:var(--text-light);line-height:1.7}
+.integrate-intro-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
 
-        /* Classi Section */
-        .integrate-classi-section{padding:5rem 0;background:var(--dark-navy);position:relative;overflow:hidden}
-        .integrate-classi-section::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);border-radius:50%}
-        .integrate-classi-wrapper{max-width:900px;margin:0 auto;padding:0 2rem;position:relative;z-index:2}
-        .integrate-classi-header{text-align:center;margin-bottom:3rem}
-        .integrate-classi-label{display:block;font-size:var(--text-sm);color:var(--primary-blue);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .integrate-classi-title{font-size:var(--text-4xl);font-weight:700;color:#fff;line-height:var(--leading-tight);margin-bottom:1rem}
-        .integrate-classi-subtitle{font-size:var(--text-lg);color:rgba(255,255,255,.7);max-width:600px;margin:0 auto;line-height:1.7}
-        .integrate-classi-list{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem 3rem;margin-top:2.5rem}
-        .integrate-classe-item{display:flex;align-items:center;gap:.8rem}
-        .integrate-classe-item i{color:var(--primary-blue);font-size:1rem}
-        .integrate-classe-item span{font-size:var(--text-base);color:#fff;font-weight:500}
+.integrate-intro-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 2rem;
+  text-align: center;
+}
 
-        /* Responsive */
-        @media(max-width:992px){
-            .integrate-valori-grid{grid-template-columns:1fr;gap:2rem}
-        }
-        @media(max-width:600px){
-            .integrate-classi-list{grid-template-columns:1fr}
-        }
+.integrate-intro-text {
+  font-size: var(--text-lg);
+  line-height: 1.8;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.integrate-intro-text :global(strong) {
+  color: var(--dark-navy);
+  font-weight: 600;
+}
+
+.integrate-intro-highlight {
+  background: rgba(135,206,235,.1);
+  border-left: 4px solid var(--primary-blue);
+  padding: 1.5rem 2rem;
+  border-radius: 0 12px 12px 0;
+  margin-top: 2.5rem;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.integrate-intro-highlight :global(p) {
+  font-size: var(--text-base);
+  color: var(--dark-navy);
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.7;
+}
+
+.integrate-valori-section {
+  padding: 5rem 0;
+  background: rgba(176,224,230,.1);
+}
+
+.integrate-valori-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.integrate-valori-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.integrate-valori-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.integrate-valori-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 1rem;
+}
+
+.integrate-valori-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 2.5rem;
+}
+
+.integrate-valore-card {
+  background: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.05);
+  border: 1px solid rgba(135,206,235,.15);
+  transition: all .3s ease;
+  text-align: center;
+}
+
+.integrate-valore-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(135,206,235,.2);
+  border-color: var(--primary-blue);
+}
+
+.integrate-valore-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: var(--dark-navy);
+  font-size: 2rem;
+}
+
+.integrate-valore-name {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.integrate-valore-desc {
+  font-size: var(--text-sm);
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+.integrate-classi-section {
+  padding: 5rem 0;
+  background: var(--dark-navy);
+  position: relative;
+  overflow: hidden;
+}
+
+.integrate-classi-section::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);
+  border-radius: 50%;
+}
+
+.integrate-classi-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.integrate-classi-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.integrate-classi-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.integrate-classi-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: #fff;
+  line-height: var(--leading-tight);
+  margin-bottom: 1rem;
+}
+
+.integrate-classi-subtitle {
+  font-size: var(--text-lg);
+  color: rgba(255,255,255,.7);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.integrate-classi-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem 3rem;
+  margin-top: 2.5rem;
+}
+
+.integrate-classe-item {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.integrate-classe-item :global(i) {
+  color: var(--primary-blue);
+  font-size: 1rem;
+}
+
+.integrate-classe-item :global(span) {
+  font-size: var(--text-base);
+  color: #fff;
+  font-weight: 500;
+}
+
+@media(max-width:992px) {
+  .integrate-valori-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media(max-width:600px) {
+  .integrate-classi-list {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

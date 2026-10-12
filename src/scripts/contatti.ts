@@ -52,18 +52,18 @@ async function initOrari() {
 
     grid.replaceChildren(
       ...items.map(({ giorno, orario }) => {
-        const card = document.createElement('div');
+        const card = document.createElement('li');
         card.className = `orario-item${giorno === oggi ? ' oggi' : ''}`;
         const chiuso = /closed|chiuso/i.test(orario);
-        const d = Object.assign(document.createElement('div'), { className: 'orario-day', textContent: giorno });
-        const t = Object.assign(document.createElement('div'), { className: chiuso ? 'orario-time chiuso' : 'orario-time', textContent: orario });
+        const d = Object.assign(document.createElement('span'), { className: 'orario-day', textContent: giorno });
+        const t = Object.assign(document.createElement('span'), { className: chiuso ? 'orario-time chiuso' : 'orario-time', textContent: orario });
         card.append(d, t);
         return card;
       }),
     );
   } catch (error) {
     console.error('Errore nel caricamento degli orari:', error);
-    grid.innerHTML = '<div class="orario-item"><div class="orario-day">Errore</div><div class="orario-time">Contattaci</div></div>';
+    grid.innerHTML = '<li class="orario-item"><span class="orario-day">Orari non disponibili</span><span class="orario-time">Contattaci</span></li>';
   }
 }
 

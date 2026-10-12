@@ -12,7 +12,6 @@ const corsi = defineCollection({
     // <head>
     title: z.string(),
     description: z.string(),
-    keywords: z.string(),
     ogTitle: z.string(),
     ogDescription: z.string(),
     // Hero

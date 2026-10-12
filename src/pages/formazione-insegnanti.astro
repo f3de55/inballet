@@ -11,7 +11,6 @@ const bg: Record<string, string> = {
 <Base
     title="Corso Formazione Insegnanti di Danza - InBallet"
     description="Corso di Formazione per Insegnanti di Danza - Percorso biennale riconosciuto CSEN e CONI. Specializzazione Modern con moduli pedagogici."
-    keywords="corso insegnanti danza, formazione danza, diploma CSEN CONI, insegnante modern, pedagogia danza, Lainate Milano"
     ogTitle="Corso Formazione Insegnanti di Danza - InBallet"
     ogDescription="Percorso biennale per diventare insegnante di danza. Diploma riconosciuto CSEN e CONI a valenza nazionale."
 >
@@ -115,42 +114,244 @@ const bg: Record<string, string> = {
         </section>
 </Base>
 
-<style is:global>
-        /* === FORMAZIONE INSEGNANTI - MINIMAL === */
+<style>
+.form-intro-section {
+  padding: 5rem 0;
+  background: #fff;
+}
 
-        /* Intro Section */
-        .form-intro-section{padding:5rem 0;background:#fff}
-        .form-intro-wrapper{max-width:800px;margin:0 auto;padding:0 2rem;text-align:center}
-        .form-intro-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .form-intro-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:2rem}
-        .form-intro-text{font-size:var(--text-lg);line-height:1.8;color:var(--text-light);margin-bottom:1.5rem}
-        .form-intro-text strong{color:var(--dark-navy);font-weight:600}
+.form-intro-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
 
-        /* Programma Section - stile corsi-section */
-        .form-prog-section{padding:5rem 0;background:rgba(176,224,230,.25);position:relative;overflow:hidden}
-        .form-prog-section::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--primary-blue)}
-        .form-prog-section::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--primary-blue)}
-        .form-prog-wrapper{max-width:1100px;margin:0 auto;padding:0 2rem}
-        .form-prog-header{text-align:center;margin-bottom:3.5rem}
-        .form-prog-label{display:block;font-size:var(--text-lg);color:var(--primary-blue-dark);font-weight:500;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem}
-        .form-prog-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight)}
-        .form-prog-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.5rem 4rem;position:relative}
-        .form-prog-grid::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(135,206,235,.3);transform:translateX(-50%)}
-        .form-prog-item{display:grid;grid-template-columns:45px 1fr;gap:1rem;padding-bottom:2rem;border-bottom:1px solid rgba(135,206,235,.3)}
-        .form-prog-item:nth-last-child(-n+2){border-bottom:none;padding-bottom:0}
-        .form-prog-num{width:45px;height:45px;background:linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--dark-navy);font-weight:700;font-size:var(--text-lg)}
-        .form-prog-text{font-size:var(--text-base);color:var(--dark-navy);line-height:1.6;font-weight:500;padding-top:.6rem}
-        @media(max-width:768px){.form-prog-grid{grid-template-columns:1fr;gap:2rem}.form-prog-grid::before{display:none}.form-prog-item:nth-last-child(2){border-bottom:1px solid rgba(135,206,235,.3);padding-bottom:2rem}}
+.form-intro-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
 
-        /* Certificazione Section */
-        .form-cert-section{padding:5rem 0;background:var(--dark-navy);position:relative;overflow:hidden}
-        .form-cert-section::before{content:'';position:absolute;top:-30%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);border-radius:50%}
-        .form-cert-wrapper{max-width:800px;margin:0 auto;padding:0 2rem;position:relative;z-index:2;text-align:center}
-        .form-cert-label{display:block;font-size:var(--text-sm);color:var(--primary-blue);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .form-cert-title{font-size:var(--text-3xl);font-weight:700;color:#fff;line-height:var(--leading-tight);margin-bottom:1.5rem}
-        .form-cert-text{font-size:var(--text-lg);color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:2rem}
-        .form-cert-badges{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap}
-        .form-cert-badge{text-align:center}
-        .form-cert-badge-name{font-size:var(--text-2xl);font-weight:700;color:var(--primary-blue)}
-        .form-cert-badge-desc{font-size:var(--text-sm);color:rgba(255,255,255,.6);margin-top:.3rem}
+.form-intro-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 2rem;
+}
+
+.form-intro-text {
+  font-size: var(--text-lg);
+  line-height: 1.8;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+
+.form-intro-text :global(strong) {
+  color: var(--dark-navy);
+  font-weight: 600;
+}
+
+.form-prog-section {
+  padding: 5rem 0;
+  background: rgba(176,224,230,.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.form-prog-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-blue);
+}
+
+.form-prog-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-blue);
+}
+
+.form-prog-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.form-prog-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.form-prog-label {
+  display: block;
+  font-size: var(--text-lg);
+  color: var(--primary-blue-dark);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.form-prog-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+}
+
+.form-prog-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 2.5rem 4rem;
+  position: relative;
+}
+
+.form-prog-grid::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(135,206,235,.3);
+  transform: translateX(-50%);
+}
+
+.form-prog-item {
+  display: grid;
+  grid-template-columns: 45px 1fr;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(135,206,235,.3);
+}
+
+.form-prog-item:nth-last-child(-n+2) {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.form-prog-num {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dark-navy);
+  font-weight: 700;
+  font-size: var(--text-lg);
+}
+
+.form-prog-text {
+  font-size: var(--text-base);
+  color: var(--dark-navy);
+  line-height: 1.6;
+  font-weight: 500;
+  padding-top: .6rem;
+}
+
+@media(max-width:768px) {
+  .form-prog-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .form-prog-grid::before {
+    display: none;
+  }
+
+  .form-prog-item:nth-last-child(2) {
+    border-bottom: 1px solid rgba(135,206,235,.3);
+    padding-bottom: 2rem;
+  }
+}
+
+.form-cert-section {
+  padding: 5rem 0;
+  background: var(--dark-navy);
+  position: relative;
+  overflow: hidden;
+}
+
+.form-cert-section::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);
+  border-radius: 50%;
+}
+
+.form-cert-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.form-cert-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.form-cert-title {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: #fff;
+  line-height: var(--leading-tight);
+  margin-bottom: 1.5rem;
+}
+
+.form-cert-text {
+  font-size: var(--text-lg);
+  color: rgba(255,255,255,.7);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.form-cert-badges {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.form-cert-badge {
+  text-align: center;
+}
+
+.form-cert-badge-name {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--primary-blue);
+}
+
+.form-cert-badge-desc {
+  font-size: var(--text-sm);
+  color: rgba(255,255,255,.6);
+  margin-top: .3rem;
+}
 </style>

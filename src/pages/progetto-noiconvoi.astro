@@ -11,7 +11,6 @@ const bg: Record<string, string> = {
 <Base
     title="Progetto NoiConVoi - InBallet"
     description="Progetto NoiConVoi InBallet - Iniziativa di volontariato per l'inclusione attraverso la danza. La danza è per tutti, dal 2013."
-    keywords="danza inclusiva, volontariato danza, progetto sociale, danza bisogni speciali, Lainate, inclusione"
     ogTitle="Progetto NoiConVoi - InBallet"
     ogDescription="Iniziativa di volontariato dove la danza diventa strumento di inclusione. Perché la danza è per tutti."
 >
@@ -168,65 +167,338 @@ const bg: Record<string, string> = {
         </section>
 </Base>
 
-<style is:global>
-        /* === SEZIONI SPECIFICHE PROGETTO NOICONVOI === */
+<style>
+.noi-intro-section {
+  padding: 5rem 0;
+  background: #fff;
+}
 
-        /* Intro Section */
-        .noi-intro-section{padding:5rem 0;background:#fff}
-        .noi-intro-wrapper{max-width:900px;margin:0 auto;padding:0 2rem}
-        .noi-intro-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;text-align:center}
-        .noi-intro-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:2rem;text-align:center}
-        .noi-intro-text{font-size:var(--text-lg);line-height:1.8;color:var(--text-light);margin-bottom:1.5rem;text-align:center}
-        .noi-intro-text strong{color:var(--dark-navy);font-weight:600}
-        .noi-intro-highlight{background:rgba(135,206,235,.1);border-left:4px solid var(--primary-blue);padding:1.5rem 2rem;border-radius:0 12px 12px 0;margin-top:2.5rem;max-width:750px;margin-left:auto;margin-right:auto}
-        .noi-intro-highlight p{font-size:var(--text-base);color:var(--dark-navy);font-weight:500;margin:0;line-height:1.7;font-style:italic}
+.noi-intro-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
 
-        /* Metodo Section - CARD (unica sezione card) */
-        .noi-metodo-section{padding:5rem 0;background:rgba(176,224,230,.1)}
-        .noi-metodo-wrapper{max-width:1100px;margin:0 auto;padding:0 2rem}
-        .noi-metodo-header{text-align:center;margin-bottom:4rem}
-        .noi-metodo-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .noi-metodo-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:1rem}
-        .noi-metodo-subtitle{font-size:var(--text-base);color:var(--text-light);max-width:600px;margin:0 auto}
-        .noi-metodo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.5rem}
-        .noi-metodo-card{background:#fff;padding:2.5rem 2rem;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid rgba(135,206,235,.15);transition:all .3s ease;text-align:center}
-        .noi-metodo-card:hover{transform:translateY(-8px);box-shadow:0 12px 35px rgba(135,206,235,.2);border-color:var(--primary-blue)}
-        .noi-metodo-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;color:var(--dark-navy);font-size:2rem}
-        .noi-metodo-name{font-size:var(--text-xl);font-weight:700;color:var(--dark-navy);margin-bottom:1rem;text-transform:uppercase;letter-spacing:.5px}
-        .noi-metodo-desc{font-size:var(--text-sm);color:var(--text-light);line-height:1.7}
+.noi-intro-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
 
-        /* Target Section */
-        .noi-target-section{padding:5rem 0;background:var(--dark-navy);position:relative;overflow:hidden}
-        .noi-target-section::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);border-radius:50%}
-        .noi-target-wrapper{max-width:900px;margin:0 auto;padding:0 2rem;position:relative;z-index:2}
-        .noi-target-header{text-align:center;margin-bottom:3rem}
-        .noi-target-label{display:block;font-size:var(--text-sm);color:var(--primary-blue);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .noi-target-title{font-size:var(--text-4xl);font-weight:700;color:#fff;line-height:var(--leading-tight);margin-bottom:1rem}
-        .noi-target-subtitle{font-size:var(--text-lg);color:rgba(255,255,255,.7);max-width:600px;margin:0 auto;line-height:1.7}
-        .noi-target-list{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 3rem;margin-top:2.5rem}
-        .noi-target-item{display:flex;align-items:center;gap:.8rem}
-        .noi-target-item i{color:var(--primary-blue);font-size:1.1rem}
-        .noi-target-item span{font-size:var(--text-base);color:#fff;font-weight:500}
+.noi-intro-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 2rem;
+  text-align: center;
+}
 
-        /* Info Section */
-        .noi-info-section{padding:5rem 0;background:#fff}
-        .noi-info-wrapper{max-width:900px;margin:0 auto;padding:0 2rem}
-        .noi-info-header{text-align:center;margin-bottom:3rem}
-        .noi-info-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .noi-info-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:1rem}
-        .noi-info-subtitle{font-size:var(--text-base);color:var(--text-light);max-width:600px;margin:0 auto}
-        .noi-info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;margin-top:2.5rem}
-        .noi-info-item{display:flex;gap:1rem;align-items:flex-start}
-        .noi-info-icon{width:50px;height:50px;background:linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--dark-navy);font-size:1.2rem;flex-shrink:0}
-        .noi-info-content h3{font-size:var(--text-lg);font-weight:700;color:var(--dark-navy);margin-bottom:.3rem}
-        .noi-info-content p{font-size:var(--text-sm);color:var(--text-light);line-height:1.6;margin:0}
+.noi-intro-text {
+  font-size: var(--text-lg);
+  line-height: 1.8;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
 
-        /* Responsive */
-        @media(max-width:992px){
-            .noi-metodo-grid{grid-template-columns:1fr;gap:2rem}
-        }
-        @media(max-width:600px){
-            .noi-target-list{grid-template-columns:1fr}
-            .noi-info-grid{grid-template-columns:1fr}
-        }
+.noi-intro-text :global(strong) {
+  color: var(--dark-navy);
+  font-weight: 600;
+}
+
+.noi-intro-highlight {
+  background: rgba(135,206,235,.1);
+  border-left: 4px solid var(--primary-blue);
+  padding: 1.5rem 2rem;
+  border-radius: 0 12px 12px 0;
+  margin-top: 2.5rem;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.noi-intro-highlight :global(p) {
+  font-size: var(--text-base);
+  color: var(--dark-navy);
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.noi-metodo-section {
+  padding: 5rem 0;
+  background: rgba(176,224,230,.1);
+}
+
+.noi-metodo-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.noi-metodo-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.noi-metodo-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.noi-metodo-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 1rem;
+}
+
+.noi-metodo-subtitle {
+  font-size: var(--text-base);
+  color: var(--text-light);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.noi-metodo-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 2.5rem;
+}
+
+.noi-metodo-card {
+  background: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.05);
+  border: 1px solid rgba(135,206,235,.15);
+  transition: all .3s ease;
+  text-align: center;
+}
+
+.noi-metodo-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(135,206,235,.2);
+  border-color: var(--primary-blue);
+}
+
+.noi-metodo-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: var(--dark-navy);
+  font-size: 2rem;
+}
+
+.noi-metodo-name {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.noi-metodo-desc {
+  font-size: var(--text-sm);
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+.noi-target-section {
+  padding: 5rem 0;
+  background: var(--dark-navy);
+  position: relative;
+  overflow: hidden;
+}
+
+.noi-target-section::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);
+  border-radius: 50%;
+}
+
+.noi-target-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.noi-target-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.noi-target-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.noi-target-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: #fff;
+  line-height: var(--leading-tight);
+  margin-bottom: 1rem;
+}
+
+.noi-target-subtitle {
+  font-size: var(--text-lg);
+  color: rgba(255,255,255,.7);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.noi-target-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 3rem;
+  margin-top: 2.5rem;
+}
+
+.noi-target-item {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.noi-target-item :global(i) {
+  color: var(--primary-blue);
+  font-size: 1.1rem;
+}
+
+.noi-target-item :global(span) {
+  font-size: var(--text-base);
+  color: #fff;
+  font-weight: 500;
+}
+
+.noi-info-section {
+  padding: 5rem 0;
+  background: #fff;
+}
+
+.noi-info-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.noi-info-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.noi-info-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.noi-info-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 1rem;
+}
+
+.noi-info-subtitle {
+  font-size: var(--text-base);
+  color: var(--text-light);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.noi-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+
+.noi-info-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.noi-info-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dark-navy);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.noi-info-content :global(h3) {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--dark-navy);
+  margin-bottom: .3rem;
+}
+
+.noi-info-content :global(p) {
+  font-size: var(--text-sm);
+  color: var(--text-light);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media(max-width:992px) {
+  .noi-metodo-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media(max-width:600px) {
+  .noi-target-list {
+    grid-template-columns: 1fr;
+  }
+
+  .noi-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig, envField, fontProviders, sessionDrivers } from 'astro/config';
 import node from '@astrojs/node';
+import sitemap from '@astrojs/sitemap';
 
 // https://docs.astro.build/en/reference/configuration-reference/
 export default defineConfig({
@@ -11,6 +12,9 @@ export default defineConfig({
   output: 'static',
   adapter: node({ mode: 'standalone' }),
 
+  // sitemap-index.xml con tutte le pagine pubbliche (area riservata esclusa)
+  integrations: [sitemap({ filter: (page) => !/\/(login|dashboard)/.test(page) })],
+
   // URL puliti senza slash finale: /chi-siamo -> dist/client/chi-siamo.html
   trailingSlash: 'never',
   build: {
@@ -20,6 +24,9 @@ export default defineConfig({
   },
 
   compressHTML: true,
+
+  // Stili scoped dei componenti con :where(): stessa specificità del CSS originale
+  scopedStyleStrategy: 'where',
 
   // Prefetch dei link interni al passaggio del mouse: navigazione istantanea
   prefetch: {

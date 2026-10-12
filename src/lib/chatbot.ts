@@ -10,6 +10,7 @@ import { GROQ_API_KEY, GROQ_MODEL } from 'astro:env/server';
 import { ensureDir, paths, readJson, serialized, writeJson } from './storage';
 import { mbLen, mbSlice, stripTags } from './text';
 import { romeDate, romeHour, romeIso } from './time';
+import { FONDAZIONE, iscrizioni, orari, scuola, sedi } from '../data/scuola';
 
 const CONFIG = {
   cacheTime: 7200,
@@ -179,7 +180,10 @@ async function getSiteData(origin: string): Promise<string> {
   return '';
 }
 
-const prompt = (site: string, msg: string) => `Sei BELLA, l'assistente virtuale di InBallet - scuola di danza multidisciplinare a Lainate e Rho (Milano), fondata nel 2008 da Ilenia Nobile. Oltre 200 allievi ogni anno.
+const elencoSedi = sedi.map((s) => `📍 ${s.indirizzo} (${s.titolo.toLowerCase()})`).join('\n');
+const elencoOrari = orari.map((o) => `${o.etichetta} ${o.apre}-${o.chiude}`).join(', ') + ', Dom chiuso';
+
+const prompt = (site: string, msg: string) => `Sei BELLA, l'assistente virtuale di InBallet - scuola di danza multidisciplinare a Lainate e Rho (Milano), fondata nel ${FONDAZIONE} da ${scuola.fondatrice}. Oltre 200 allievi ogni anno.
 
 STILE:
 - Cordiale, entusiasta, professionale
@@ -187,14 +191,18 @@ STILE:
 - Emoji appropriati: 💃🩰✨📞📧📍
 
 CONTATTI:
-📞 +39 393 780 2996
-📧 info@inballet.it
-🕐 Segreteria: Lun-Ven 15:00-20:00
+📞 ${scuola.telefono}
+📧 ${scuola.email}
+🕐 Orari: ${elencoOrari}
 
 SEDI:
-📍 Via Puccini 14, Lainate (centrale)
-📍 Via Tevere 9, Rho
-📍 Via Chiminello 2, Rho
+${elencoSedi}
+
+ISCRIZIONI ${iscrizioni.anno}:
+- Modulo e documenti da scaricare nella pagina Documenti del sito (/documenti), da consegnare in segreteria
+- Quota associativa annuale ${iscrizioni.quota} euro (include tesseramento CSEN)
+- Certificato medico non agonistico obbligatorio dai 6 anni; sotto i 6 anni autocertificazione dei genitori
+- Corso pagato in tre rate: ${iscrizioni.rate.map((r) => `entro il ${r.scadenza}`).join(', ')}
 
 REGOLE STRICT:
 1. Rispondi SOLO su InBallet

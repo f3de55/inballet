@@ -1,36 +1,4 @@
 <!-- Chatbot Bella - Assistente AI InBallet -->
-<style is:global>
-#cb-toggle{position:fixed!important;bottom:28px!important;right:28px!important;width:60px!important;height:60px!important;background:linear-gradient(135deg,#87CEEB,#5bb8e0)!important;border:none!important;border-radius:50%!important;cursor:pointer!important;box-shadow:0 6px 25px rgba(135,206,235,0.5)!important;z-index:998!important;display:flex!important;align-items:center!important;justify-content:center!important;transition:transform .3s,box-shadow .3s!important}
-#cb-toggle:hover{transform:scale(1.1)!important;box-shadow:0 8px 35px rgba(135,206,235,0.6)!important}
-#cb-toggle i{font-size:24px!important;color:#1a1a1a!important}
-#cb-box{position:fixed!important;bottom:25px!important;right:25px!important;width:380px!important;max-width:calc(100vw - 40px)!important;height:520px!important;max-height:75vh!important;background:#1a1a1a!important;border-radius:20px!important;display:none;flex-direction:column!important;z-index:998!important;box-shadow:0 15px 50px rgba(0,0,0,0.7)!important;border:none!important;overflow:hidden!important}
-#cb-box.open{display:flex!important;animation:cbSlide .3s ease!important}
-@keyframes cbSlide{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-#cb-head{background:linear-gradient(135deg,#87CEEB,#5bb8e0)!important;color:#1a1a1a!important;padding:18px 20px!important;display:flex!important;justify-content:space-between!important;align-items:center!important;font-weight:700!important;font-size:15px!important}
-#cb-head button{background:rgba(0,0,0,0.1)!important;border:none!important;color:#1a1a1a!important;font-size:16px!important;cursor:pointer!important;width:32px!important;height:32px!important;border-radius:50%!important;transition:background .2s!important}
-#cb-head button:hover{background:rgba(0,0,0,0.2)!important}
-#cb-msgs{flex:1!important;padding:16px!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;gap:12px!important;background:#1a1a1a!important}
-#cb-msgs::-webkit-scrollbar{width:6px}
-#cb-msgs::-webkit-scrollbar-thumb{background:#444;border-radius:3px}
-.cb-m{padding:12px 16px!important;border-radius:18px!important;max-width:85%!important;line-height:1.6!important;font-size:14px!important;word-wrap:break-word!important}
-.cb-m.usr{background:linear-gradient(135deg,#87CEEB,#6bb8d9)!important;color:#1a1a1a!important;align-self:flex-end!important;border-bottom-right-radius:4px!important}
-.cb-m.bot{background:#2a2a2a!important;color:#fff!important;align-self:flex-start!important;border-bottom-left-radius:4px!important}
-.cb-m.load{opacity:0.6!important}
-.cb-m .cb-txt{display:block!important}
-.cb-m .cb-time{display:block!important;font-size:10px!important;opacity:0.5!important;margin-top:6px!important;text-align:right!important}
-.cb-m a.cb-link{color:#87CEEB!important;text-decoration:none!important;font-weight:600!important;border-bottom:1px dotted #87CEEB!important;transition:opacity .2s!important}
-.cb-m a.cb-link:hover{opacity:0.8!important}
-.cb-m.usr a.cb-link{color:#1a1a1a!important;border-bottom-color:#1a1a1a!important}
-#cb-inp{display:flex!important;padding:14px 16px!important;background:#222!important;gap:10px!important;border-top:1px solid rgba(255,255,255,0.05)!important}
-#cb-inp input{flex:1!important;padding:14px 18px!important;border:none!important;border-radius:25px!important;background:#333!important;color:#fff!important;font-size:14px!important;outline:none!important;transition:box-shadow .2s!important}
-#cb-inp input:focus{box-shadow:0 0 0 2px rgba(135,206,235,0.3)!important}
-#cb-inp input::placeholder{color:#999!important}
-#cb-inp button{width:46px!important;height:46px!important;border:none!important;border-radius:50%!important;background:linear-gradient(135deg,#87CEEB,#5bb8e0)!important;color:#1a1a1a!important;cursor:pointer!important;transition:transform .2s!important}
-#cb-inp button:hover{transform:scale(1.05)!important}
-@media(max-width:768px){#cb-toggle{width:54px!important;height:54px!important;bottom:22px!important;right:22px!important}#cb-toggle i{font-size:22px!important}}
-@media(max-width:480px){#cb-box{bottom:0!important;right:0!important;width:100%!important;max-width:100%!important;height:100%!important;max-height:100%!important;border-radius:0!important}#cb-toggle{width:50px!important;height:50px!important;bottom:18px!important;right:18px!important}#cb-toggle i{font-size:20px!important}}
-</style>
-
 <button id="cb-toggle" aria-label="Apri chat assistente Bella" aria-pressed="false">
     <i class="fas fa-comments" aria-hidden="true"></i>
 </button>
@@ -54,3 +22,251 @@
 <script>
     import '../scripts/chatbot';
 </script>
+
+<style>
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+#cb-toggle {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg,#87CEEB,#5bb8e0);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 6px 25px rgba(135,206,235,0.5);
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .3s,box-shadow .3s;
+}
+
+#cb-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 35px rgba(135,206,235,0.6);
+}
+
+#cb-toggle :global(i) {
+  font-size: 24px;
+  color: #1a1a1a;
+}
+
+#cb-box {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 380px;
+  max-width: calc(100vw - 40px);
+  height: 520px;
+  max-height: 75vh;
+  background: #1a1a1a;
+  border-radius: 20px;
+  display: none;
+  flex-direction: column;
+  z-index: 998;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+  border: none;
+  overflow: hidden;
+}
+
+#cb-box.open {
+  display: flex;
+  animation: cbSlide .3s ease;
+}
+
+@keyframes cbSlide {from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+#cb-head {
+  background: linear-gradient(135deg,#87CEEB,#5bb8e0);
+  color: #1a1a1a;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+#cb-head :global(button) {
+  background: rgba(0,0,0,0.1);
+  border: none;
+  color: #1a1a1a;
+  font-size: 16px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: background .2s;
+}
+
+#cb-head :global(button:hover) {
+  background: rgba(0,0,0,0.2);
+}
+
+#cb-msgs {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #1a1a1a;
+}
+
+#cb-msgs::-webkit-scrollbar {
+  width: 6px;
+}
+
+#cb-msgs::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 3px;
+}
+
+:global(.cb-m) {
+  padding: 12px 16px;
+  border-radius: 18px;
+  max-width: 85%;
+  line-height: 1.6;
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+:global(.cb-m.usr) {
+  background: linear-gradient(135deg,#87CEEB,#6bb8d9);
+  color: #1a1a1a;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+:global(.cb-m.bot) {
+  background: #2a2a2a;
+  color: #fff;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+:global(.cb-m.load) {
+  opacity: 0.6;
+}
+
+:global(.cb-m .cb-txt) {
+  display: block;
+}
+
+:global(.cb-m .cb-time) {
+  display: block;
+  font-size: 10px;
+  opacity: 0.5;
+  margin-top: 6px;
+  text-align: right;
+}
+
+:global(.cb-m a.cb-link) {
+  color: #87CEEB;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px dotted #87CEEB;
+  transition: opacity .2s;
+}
+
+:global(.cb-m a.cb-link:hover) {
+  opacity: 0.8;
+}
+
+:global(.cb-m.usr a.cb-link) {
+  color: #1a1a1a;
+  border-bottom-color: #1a1a1a;
+}
+
+#cb-inp {
+  display: flex;
+  padding: 14px 16px;
+  background: #222;
+  gap: 10px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+#cb-inp :global(input) {
+  flex: 1;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 25px;
+  background: #333;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: box-shadow .2s;
+}
+
+#cb-inp :global(input:focus) {
+  box-shadow: 0 0 0 2px rgba(135,206,235,0.3);
+}
+
+#cb-inp :global(input::placeholder) {
+  color: #999;
+}
+
+#cb-inp :global(button) {
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#87CEEB,#5bb8e0);
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: transform .2s;
+}
+
+#cb-inp :global(button:hover) {
+  transform: scale(1.05);
+}
+
+@media(max-width:768px) {
+#cb-toggle {
+    width: 54px;
+    height: 54px;
+    bottom: 22px;
+    right: 22px;
+  }
+
+#cb-toggle :global(i) {
+    font-size: 22px;
+  }
+}
+
+@media(max-width:480px) {
+#cb-box {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+  }
+
+#cb-toggle {
+    width: 50px;
+    height: 50px;
+    bottom: 18px;
+    right: 18px;
+  }
+
+#cb-toggle :global(i) {
+    font-size: 20px;
+  }
+}
+</style>

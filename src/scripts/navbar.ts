@@ -51,12 +51,15 @@ navItems.forEach((item) => {
       if (currentMenu && !currentMenu.matches(':hover')) closeMenu();
     }, 100);
   });
+  // Una voce con pagina propria (CORSI → /corsi) si apre al clic; il mega menu resta al passaggio del mouse
+  const conPagina = navLink instanceof HTMLAnchorElement;
   navLink.addEventListener('click', (e) => {
+    if (conPagina) return;
     e.preventDefault();
     toggleMenu();
   });
   navLink.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if ((e.key === 'Enter' && !conPagina) || e.key === ' ') {
       e.preventDefault();
       toggleMenu();
     }

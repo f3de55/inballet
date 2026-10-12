@@ -1,565 +1,354 @@
 ---
 import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
 import { webp } from '../lib/images';
+import { scuola, sedi } from '../data/scuola';
 
-const bg: Record<string, string> = {
-  'gallery-6.jpg': await webp('gallery-6.jpg', 1920),
-};
+const { telefono: TEL, telefonoHref: TEL_HREF, email: EMAIL } = scuola;
+const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenotare una lezione di prova.')}`;
+
+const heroBg = await webp('gallery-6.jpg', 1920);
 ---
 
 <Base
     title="Contatti - InBallet"
     description="Contatta InBallet - Scuola di danza a Lainate e Rho. Telefono, email, sedi e orari di apertura."
-    keywords="contatti InBallet, scuola danza Lainate, scuola danza Rho, telefono, email, dove siamo"
     ogTitle="Contatti - InBallet"
     ogDescription="Vieni a trovarci a Lainate o Rho. Contattaci per informazioni sui corsi."
 >
+    <!-- Hero -->
+    <section class="chisiamo-hero">
+        <div class="chisiamo-hero-image" style={`background-image: url('${heroBg}')`}></div>
+        <div class="chisiamo-hero-overlay"></div>
+        <div class="chisiamo-hero-glass">
+            <span class="chisiamo-hero-badge">Contatti</span>
+            <h1 class="chisiamo-hero-title">Vieni a trovarci</h1>
+            <p class="chisiamo-hero-tagline">Due sedi a Lainate e Rho. Siamo pronti ad accoglierti.</p>
+            <a href="#contatti" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
 
-        <!-- Hero -->
-        <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-6.jpg']}')`}></div>
-            <div class="chisiamo-hero-overlay"></div>
-            <div class="chisiamo-hero-glass">
-                <span class="chisiamo-hero-badge">Contatti</span>
-                <h1 class="chisiamo-hero-title">Vieni a trovarci</h1>
-                <p class="chisiamo-hero-tagline">Due sedi a Lainate e Rho. Siamo pronti ad accoglierti.</p>
-                <a href="#contatti" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
-                    <i class="fas fa-chevron-down"></i>
+    <section id="contatti" class="contatti">
+        <div class="container contatti-layout">
+            <div class="contatti-testo">
+                <p class="eyebrow">Scuola di danza a Lainate e Rho</p>
+                <h2 class="titolo">Il primo passo<br>è un <em>passo di danza</em></h2>
+                <p class="invito">
+                    Raccontaci chi sei e cosa vorresti imparare: ti aiutiamo a scegliere il corso giusto
+                    e a prenotare una lezione di prova, senza impegno.
+                </p>
+                <a href={PROVA} target="_blank" rel="noopener" class="cta">
+                    Prenota una lezione di prova
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
+
+                <dl class="info">
+                    <div class="info-riga">
+                        <dt>Contatti</dt>
+                        <dd>
+                            <a href={TEL_HREF}>{TEL}</a>
+                            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+                        </dd>
+                    </div>
+
+                    {sedi.map((sede) => (
+                        <div class="info-riga">
+                            <dt>{sede.titolo}</dt>
+                            <dd><a href={sede.maps} target="_blank" rel="noopener">{sede.indirizzo}</a></dd>
+                        </div>
+                    ))}
+
+                    <div class="info-riga">
+                        <dt>
+                            Orari segreteria
+                            <span id="open-status" class="orari-status" aria-live="polite"></span>
+                        </dt>
+                        <dd>
+                            <ul class="orari-grid" id="orari-grid">
+                                <li class="orario-item">
+                                    <span class="orario-day">Caricamento orari…</span>
+                                    <span class="orario-time"></span>
+                                </li>
+                            </ul>
+                        </dd>
+                    </div>
+                </dl>
             </div>
-        </section>
 
-        <!-- Come Contattarci -->
-        <section id="contatti" class="come-contattarci-section">
-            <div class="container">
-                <div class="contatti-wrapper">
-                    <div class="contatti-header">
-                        <span class="contatti-label">Come Contattarci</span>
-                        <h2 class="contatti-title">Parliamo</h2>
-                    </div>
-
-                    <div class="metodi-grid">
-                        <div class="metodo-item">
-                            <div class="metodo-numero">Telefono</div>
-                            <h3><a href="tel:+393937802996">+39 393 780 2996</a></h3>
-                            <p class="metodo-detail">Lun-Ven 15:00-21:00<br>Sab 10:30-19:00</p>
-                        </div>
-
-                        <div class="metodo-item">
-                            <div class="metodo-numero">WhatsApp</div>
-                            <h3><a href="https://wa.me/393937802996" target="_blank" rel="noopener">+39 393 780 2996</a></h3>
-                            <p class="metodo-detail">Risposta rapida<br>Disponibile sempre</p>
-                        </div>
-
-                        <div class="metodo-item">
-                            <div class="metodo-numero">Email</div>
-                            <h3><a href="mailto:info@inballet.it">info@inballet.it</a></h3>
-                            <p class="metodo-detail">Risposta entro 24 ore<br>Tutti i giorni</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Le Nostre Sedi -->
-        <section class="sedi-section">
-            <div class="container">
-                <div class="sedi-wrapper">
-                    <div class="sedi-header">
-                        <span class="sedi-label">Dove Siamo</span>
-                        <h2 class="sedi-title">Le Nostre Sedi</h2>
-                    </div>
-
-                    <div class="sedi-grid">
-                        <!-- Sede Lainate -->
-                        <div class="sede-item">
-                            <span class="sede-tag">Sede Centrale</span>
-                            <h3 class="sede-nome">Lainate</h3>
-
-                            <div class="sede-dettagli">
-                                <div class="sede-riga">
-                                    <div class="sede-riga-label">Indirizzo</div>
-                                    <div class="sede-riga-value">
-                                        <a href="https://www.google.com/maps/search/?api=1&query=Via+Puccini+14+Lainate+MI" target="_blank" rel="noopener">
-                                            Via Puccini, 14 - 20045 Lainate (MI)
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="sede-riga">
-                                    <div class="sede-riga-label">Contatti</div>
-                                    <div class="sede-riga-value">
-                                        <a href="tel:+393937802996">+39 393 780 2996</a> • <a href="mailto:info@inballet.it">info@inballet.it</a>
-                                    </div>
-                                </div>
-
-                                <div class="sede-riga">
-                                    <div class="sede-riga-label">Parcheggio</div>
-                                    <div class="sede-riga-value">Disponibile in zona</div>
-                                </div>
-                            </div>
-
-                            <div class="sede-actions">
-                                <a href="https://www.google.com/maps/search/?api=1&query=Via+Puccini+14+Lainate+MI" target="_blank" rel="noopener" class="sede-btn">
-                                    <i class="fas fa-directions"></i>
-                                    Indicazioni
-                                </a>
-                                <a href="https://wa.me/393937802996" target="_blank" rel="noopener" class="sede-btn outline">
-                                    <i class="fab fa-whatsapp"></i>
-                                    WhatsApp
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Sede Rho -->
-                        <div class="sede-item">
-                            <span class="sede-tag">Altra Sede</span>
-                            <h3 class="sede-nome">Rho</h3>
-
-                            <div class="sede-dettagli">
-                                <div class="sede-riga">
-                                    <div class="sede-riga-label">Indirizzo</div>
-                                    <div class="sede-riga-value">
-                                        <a href="https://www.google.com/maps/search/?api=1&query=Via+Tevere+19+Rho+MI" target="_blank" rel="noopener">
-                                            Via Tevere, 19 - 20017 Rho (MI)
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="sede-riga">
-                                    <div class="sede-riga-label">Contatti</div>
-                                    <div class="sede-riga-value">
-                                        <a href="tel:+393937802996">+39 393 780 2996</a> • <a href="mailto:info@inballet.it">info@inballet.it</a>
-                                    </div>
-                                </div>
-
-                                <div class="sede-riga">
-                                    <div class="sede-riga-label">Info</div>
-                                    <div class="sede-riga-value">Contattaci per dettagli</div>
-                                </div>
-                            </div>
-
-                            <div class="sede-actions">
-                                <a href="https://www.google.com/maps/search/?api=1&query=Via+Tevere+19+Rho+MI" target="_blank" rel="noopener" class="sede-btn">
-                                    <i class="fas fa-directions"></i>
-                                    Indicazioni
-                                </a>
-                                <a href="tel:+393937802996" class="sede-btn outline">
-                                    <i class="fas fa-phone"></i>
-                                    Chiama
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Orari -->
-        <section class="orari-section">
-            <div class="orari-container">
-                <div class="orari-header">
-                    <p class="section-tagline">Orari Segreteria</p>
-                    <h2 class="section-title">Quando Siamo Aperti</h2>
-                    <div id="open-status" class="orari-status"></div>
-                </div>
-
-                <div class="orari-grid" id="orari-grid">
-                    <div class="orario-item">
-                        <div class="orario-day">Caricamento...</div>
-                        <div class="orario-time">Recupero orari...</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            <figure class="contatti-foto">
+                <Img src="gallery-4.jpg" alt="Lezione di danza in sala a InBallet" loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 35vw" />
+            </figure>
+        </div>
+    </section>
 
     <Fragment slot="scripts">
-    <script>
-        import '../scripts/contatti';
-    </script>
+        <script>
+            import '../scripts/contatti';
+        </script>
     </Fragment>
 </Base>
 
-<style is:global>
-        /* Sezione Come Contattarci */
-        .come-contattarci-section {
-            padding: 5rem 0;
-            background: var(--white);
-        }
+<style>
+  .contatti {
+    padding: 7rem 0 8rem;
+    background: var(--white);
+    /* l'ancora #contatti non deve finire sotto l'header fisso (e il banner) */
+    scroll-margin-top: calc(80px + var(--banner-height, 0px));
+  }
 
-        .come-contattarci-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--primary-blue);
-        }
+  .contatti-layout {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 5.5rem;
+    align-items: start;
+  }
 
-        .contatti-wrapper {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+  /* ---------- Foto ---------- */
+  .contatti-foto {
+    position: sticky;
+    top: calc(110px + var(--banner-height, 0px));
+    margin: 0;
+    isolation: isolate;
+  }
 
-        .contatti-header {
-            margin-bottom: 3rem;
-        }
+  .contatti-foto::before {
+    content: '';
+    position: absolute;
+    inset: 2.5rem 2.5rem -1.5rem -1.5rem;
+    border: 2px solid var(--primary-blue);
+    border-radius: 24px;
+    z-index: -1;
+  }
 
-        .contatti-label {
-            font-size: var(--text-lg);
-            color: var(--primary-blue-dark);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-            display: block;
-        }
+  .contatti-foto :global(img) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14);
+  }
 
-        .contatti-title {
-            font-size: var(--text-4xl);
-            font-weight: 700;
-            color: var(--dark-navy);
-            line-height: var(--leading-tight);
-            letter-spacing: -0.02em;
-        }
+  /* ---------- Testo ---------- */
+  .eyebrow {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary-blue-dark);
+    margin-bottom: 1.25rem;
+  }
 
-        /* Grid orizzontale metodi */
-        .metodi-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
-        }
+  .titolo {
+    font-size: var(--text-5xl);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    letter-spacing: -0.02em;
+    color: var(--dark-navy);
+    margin-bottom: 1.5rem;
+  }
 
-        .metodo-item {
-            padding: 0;
-        }
+  .titolo em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--primary-blue-dark);
+  }
 
-        .metodo-numero {
-            font-size: var(--text-sm);
-            font-weight: 700;
-            color: var(--primary-blue-dark);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+  .invito {
+    font-size: var(--text-lg);
+    line-height: var(--leading-loose);
+    color: var(--text-light);
+    max-width: 34rem;
+  }
 
-        .metodo-item h3 {
-            font-size: var(--text-2xl);
-            font-weight: 700;
-            color: var(--dark-navy);
-            margin-bottom: 1rem;
-            letter-spacing: -0.01em;
-        }
+  /* ---------- Informazioni ---------- */
+  .info {
+    margin-top: 3rem;
+  }
 
-        .metodo-value {
-            font-size: var(--text-lg);
-            margin-bottom: 0.5rem;
-        }
+  .info-riga {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 1.5rem;
+    padding: 1.6rem 0;
+    border-top: 1px solid rgba(26, 26, 26, 0.1);
+  }
 
-        .metodo-value a {
-            color: var(--primary-blue-dark);
-            text-decoration: none;
-            font-weight: 500;
-        }
+  .info-riga:last-child {
+    border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+  }
 
-        .metodo-detail {
-            font-size: var(--text-sm);
-            color: var(--text-light);
-            margin: 0;
-            line-height: 1.6;
-        }
+  .info-riga dt {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    padding-top: 0.3rem;
+  }
 
-        /* Sezione Sedi - Layout orizzontale */
-        .sedi-section {
-            padding: 5rem 0;
-            background: rgba(176, 224, 230, 0.25);
-            position: relative;
-        }
+  .info-riga dd {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
 
-        .sedi-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--primary-blue);
-        }
+  .info-riga dd > a {
+    align-self: flex-start;
+    font-size: var(--text-xl);
+    font-weight: 500;
+    color: var(--dark-navy);
+    text-decoration: none;
+    background: linear-gradient(var(--primary-blue), var(--primary-blue)) 0 100% / 0 2px no-repeat;
+    transition: background-size 0.3s ease, color 0.3s ease;
+  }
 
-        .sedi-wrapper {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+  .info-riga dd > a:hover {
+    color: var(--primary-blue-dark);
+    background-size: 100% 2px;
+  }
 
-        .sedi-header {
-            margin-bottom: 3rem;
-        }
+  /* Orari e stato: generati da src/scripts/contatti.ts */
+  :global(.orari-status) {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.6rem;
+    letter-spacing: 1px;
+    color: var(--dark-navy);
+  }
 
-        .sedi-label {
-            font-size: var(--text-lg);
-            color: var(--primary-blue-dark);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-            display: block;
-        }
+  :global(.orari-status:empty) {
+    display: none;
+  }
 
-        .sedi-title {
-            font-size: var(--text-4xl);
-            font-weight: 700;
-            color: var(--dark-navy);
-            line-height: var(--leading-tight);
-            letter-spacing: -0.02em;
-        }
+  :global(.orari-status i) {
+    font-size: 0.5rem;
+  }
 
-        /* Grid sedi orizzontale */
-        .sedi-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 4rem;
-        }
+  :global(.orari-status.aperto i) {
+    color: #22c55e;
+  }
 
-        .sede-item {
-            display: flex;
-            flex-direction: column;
-        }
+  :global(.orari-status.chiuso i) {
+    color: #ef4444;
+  }
 
-        .sede-tag {
-            display: inline-block;
-            align-self: flex-start;
-            padding: 0.3rem 0.9rem;
-            background: var(--primary-blue);
-            color: var(--dark-navy);
-            font-size: var(--text-xs);
-            font-weight: 700;
-            border-radius: 16px;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+  .orari-grid {
+    list-style: none;
+    max-width: 22rem;
+  }
 
-        .sede-item:last-child .sede-tag {
-            background: rgba(135, 206, 235, 0.2);
-            color: var(--primary-blue-dark);
-        }
+  :global(.orario-item) {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1rem;
+    padding: 0.3rem 0;
+    font-size: 1.0625rem;
+    color: var(--text-dark);
+  }
 
-        .sede-nome {
-            font-size: var(--text-3xl);
-            font-weight: 700;
-            color: var(--dark-navy);
-            margin-bottom: 1.5rem;
-            line-height: var(--leading-tight);
-        }
+  :global(.orario-day) {
+    font-weight: 600;
+  }
 
-        .sede-dettagli {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
+  :global(.orario-time) {
+    font-variant-numeric: tabular-nums;
+    color: var(--text-light);
+  }
 
-        .sede-riga {
-            display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
-        }
+  :global(.orario-time.chiuso) {
+    font-style: italic;
+    opacity: 0.7;
+  }
 
-        .sede-riga-label {
-            font-size: var(--text-xs);
-            color: var(--text-light);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+  :global(.orario-item.oggi .orario-day),
+  :global(.orario-item.oggi .orario-time) {
+    color: var(--primary-blue-dark);
+    font-weight: 600;
+  }
 
-        .sede-riga-value {
-            font-size: var(--text-base);
-            color: var(--dark-navy);
-            font-weight: 500;
-        }
+  /* ---------- Invito alla lezione di prova (link) ---------- */
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--primary-blue);
+    color: var(--dark-navy);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
 
-        .sede-riga-value a {
-            color: var(--dark-navy);
-            text-decoration: none;
-        }
+  .cta i {
+    color: var(--primary-blue-dark);
+    transition: transform 0.3s ease;
+  }
 
-        .sede-actions {
-            display: flex;
-            gap: 0.8rem;
-        }
+  .cta:hover {
+    color: var(--primary-blue-dark);
+    border-color: var(--primary-blue-dark);
+  }
 
-        .sede-btn {
-            flex: 1;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
-            background: var(--dark-navy);
-            color: var(--white);
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: var(--text-xs);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+  .cta:hover i {
+    transform: translateX(6px);
+  }
 
-        .sede-btn.outline {
-            background: transparent;
-            border: 2px solid var(--dark-navy);
-            color: var(--dark-navy);
-        }
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1024px) {
+    .contatti-layout {
+      gap: 4rem;
+    }
 
-        /* Orari */
-        .orari-section {
-            padding: 5rem 0;
-            background: var(--white);
-            position: relative;
-        }
+    .info-riga {
+      grid-template-columns: 9rem 1fr;
+    }
+  }
 
-        .orari-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--primary-blue);
-        }
+  @media (max-width: 900px) {
+    .contatti {
+      padding: 5rem 0 6rem;
+    }
 
-        .orari-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+    .contatti-layout {
+      grid-template-columns: 1fr;
+      gap: 4rem;
+    }
 
-        .orari-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
+    .contatti-foto {
+      position: relative;
+      top: auto;
+      max-width: 520px;
+      width: calc(100% - 1.5rem);
+      margin-left: auto;
+    }
 
-        .section-tagline {
-            font-size: var(--text-lg);
-            color: var(--primary-blue-dark);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-        }
+    .contatti-foto :global(img) {
+      aspect-ratio: 4 / 3;
+    }
+  }
 
-        .section-title {
-            font-size: var(--text-4xl);
-            font-weight: 700;
-            color: var(--dark-navy);
-            line-height: var(--leading-tight);
-            letter-spacing: -0.02em;
-        }
+  @media (max-width: 600px) {
+    .titolo {
+      font-size: var(--text-4xl);
+    }
 
-        .orari-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.6rem 1.3rem;
-            border-radius: 30px;
-            font-size: var(--text-sm);
-            font-weight: 600;
-            margin-top: 0.8rem;
-        }
+    .info-riga {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      padding: 1.4rem 0;
+    }
 
-        .orari-status.aperto {
-            background: rgba(76, 175, 80, 0.15);
-            color: #2e7d32;
-        }
+    .contatti-foto::before {
+      inset: 1.5rem 1.5rem -0.75rem -0.75rem;
+    }
 
-        .orari-status.chiuso {
-            background: rgba(158, 158, 158, 0.15);
-            color: #666;
-        }
-
-        .orari-status i {
-            font-size: 0.7rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .orari-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 1.2rem;
-        }
-
-        .orario-item {
-            background: rgba(176, 224, 230, 0.08);
-            padding: 1.3rem 1rem;
-            border-radius: 8px;
-            border: 1px solid rgba(135, 206, 235, 0.2);
-        }
-
-        .orario-item.oggi {
-            background: rgba(135, 206, 235, 0.12);
-            border: 2px solid var(--primary-blue);
-        }
-
-        .orario-day {
-            font-size: var(--text-base);
-            font-weight: 700;
-            color: var(--dark-navy);
-            margin-bottom: 0.5rem;
-        }
-
-        .orario-time {
-            font-size: var(--text-sm);
-            color: var(--text-light);
-            font-weight: 500;
-            line-height: 1.4;
-        }
-
-        .orario-time.chiuso {
-            color: #999;
-            font-style: italic;
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .metodi-grid {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-
-            .metodo-item {
-                padding-bottom: 2.5rem;
-                border-bottom: 1px solid rgba(135, 206, 235, 0.2);
-            }
-
-            .metodo-item:last-child {
-                border-bottom: none;
-                padding-bottom: 0;
-            }
-
-            .sedi-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .orari-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .sede-actions {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .orari-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+  }
 </style>

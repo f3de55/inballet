@@ -12,7 +12,6 @@ const bg: Record<string, string> = {
 <Base
     title="Collaborazioni con Scuole - InBallet"
     description="Collaborazioni con scuole del territorio - InBallet porta la danza nelle scuole con progetti educativi personalizzati per nidi, infanzia, primarie e secondarie."
-    keywords="danza nelle scuole, progetti scolastici danza, educazione motoria scuole, laboratori danza bambini, Lainate, Rho, Milano"
     ogTitle="Collaborazioni con Scuole - InBallet"
     ogDescription="Portiamo la danza nelle scuole con progetti educativi personalizzati. Scopri come collaborare con InBallet."
 >
@@ -186,78 +185,404 @@ const bg: Record<string, string> = {
         </section>
 </Base>
 
-<style is:global>
-        /* === SEZIONI SPECIFICHE COLLABORAZIONI === */
+<style>
+.collab-intro-section {
+  padding: 5rem 0;
+  background: #fff;
+}
 
-        /* Intro Section */
-        .collab-intro-section{padding:5rem 0;background:#fff}
-        .collab-intro-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1100px;margin:0 auto}
-        .collab-intro-content{max-width:540px}
-        .collab-intro-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .collab-intro-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:1.5rem;letter-spacing:-.02em}
-        .collab-intro-text{font-size:var(--text-base);line-height:1.8;color:var(--text-light);margin-bottom:1.5rem}
-        .collab-intro-text strong{color:var(--dark-navy);font-weight:600}
-        .collab-intro-highlight{background:rgba(135,206,235,.1);border-left:4px solid var(--primary-blue);padding:1.5rem;border-radius:0 12px 12px 0;margin-top:2rem}
-        .collab-intro-highlight p{font-size:var(--text-lg);color:var(--dark-navy);font-weight:500;margin:0;line-height:1.6}
-        .collab-intro-visual{position:relative}
-        .collab-intro-image{width:100%;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,.1)}
-        .collab-intro-badge{position:absolute;bottom:-20px;right:-20px;background:var(--dark-navy);color:#fff;padding:1.5rem 2rem;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
-        .collab-intro-badge-number{font-size:var(--text-4xl);font-weight:700;display:block;line-height:1;color:var(--primary-blue)}
-        .collab-intro-badge-text{font-size:var(--text-sm);text-transform:uppercase;letter-spacing:1px;margin-top:.3rem}
+.collab-intro-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
 
-        /* Target Section - A chi ci rivolgiamo */
-        .collab-target-section{padding:5rem 0;background:rgba(176,224,230,.15)}
-        .collab-target-wrapper{max-width:1100px;margin:0 auto;padding:0 2rem}
-        .collab-target-header{text-align:center;margin-bottom:4rem}
-        .collab-target-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .collab-target-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:1rem}
-        .collab-target-subtitle{font-size:var(--text-base);color:var(--text-light);max-width:600px;margin:0 auto}
-        .collab-target-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
-        .collab-target-item{text-align:center;padding:2rem 1.5rem;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid rgba(135,206,235,.15);transition:all .3s ease}
-        .collab-target-item:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(135,206,235,.15);border-color:var(--primary-blue)}
-        .collab-target-icon{width:70px;height:70px;background:linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;color:var(--dark-navy);font-size:1.8rem}
-        .collab-target-name{font-size:var(--text-lg);font-weight:700;color:var(--dark-navy);margin-bottom:.5rem}
-        .collab-target-age{font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:500}
+.collab-intro-content {
+  max-width: 540px;
+}
 
-        /* Progetti Section - Lista */
-        .collab-progetti-section{padding:5rem 0;background:#fff}
-        .collab-progetti-wrapper{max-width:1000px;margin:0 auto;padding:0 2rem}
-        .collab-progetti-header{text-align:center;margin-bottom:4rem}
-        .collab-progetti-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .collab-progetti-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:1rem}
-        .collab-progetti-subtitle{font-size:var(--text-base);color:var(--text-light);max-width:650px;margin:0 auto}
-        .collab-progetti-list{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem 4rem}
-        .collab-progetto-item{display:flex;gap:1.2rem;align-items:flex-start}
-        .collab-progetto-icon{width:50px;height:50px;background:linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--dark-navy);font-size:1.3rem;flex-shrink:0}
-        .collab-progetto-content{}
-        .collab-progetto-name{font-size:var(--text-lg);font-weight:700;color:var(--dark-navy);margin-bottom:.4rem}
-        .collab-progetto-desc{font-size:var(--text-sm);color:var(--text-light);line-height:1.6}
+.collab-intro-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
 
-        /* CTA Section */
-        .collab-cta-section{padding:5rem 0;position:relative;overflow:hidden}
-        .collab-cta-bg{position:absolute;top:0;left:0;width:100%;height:100%;background:center/cover no-repeat;z-index:1}
-        .collab-cta-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(26,26,26,.9) 0%,rgba(42,42,42,.85) 100%);z-index:2}
-        .collab-cta-wrapper{max-width:800px;margin:0 auto;padding:0 2rem;position:relative;z-index:3;text-align:center}
-        .collab-cta-title{font-size:var(--text-4xl);font-weight:700;color:#fff;margin-bottom:1rem}
-        .collab-cta-text{font-size:var(--text-lg);color:rgba(255,255,255,.8);margin-bottom:2.5rem;line-height:1.7}
-        .collab-cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem}
-        .collab-cta-btn{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2.5rem;border-radius:25px;text-decoration:none;font-weight:600;font-size:var(--text-sm);transition:all .3s ease;text-transform:uppercase;letter-spacing:.5px}
-        .collab-cta-btn-primary{background:var(--primary-blue);color:var(--dark-navy);box-shadow:0 4px 15px rgba(135,206,235,.3)}
-        .collab-cta-btn-primary:hover{background:#fff;color:var(--dark-navy)}
-        .collab-cta-btn-secondary{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5)}
-        .collab-cta-btn-secondary:hover{background:#fff;color:var(--dark-navy);border-color:#fff}
+.collab-intro-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 1.5rem;
+  letter-spacing: -.02em;
+}
 
-        /* Responsive */
-        @media(max-width:992px){
-            .collab-intro-layout{grid-template-columns:1fr;gap:3rem}
-            .collab-intro-visual{order:-1}
-            .collab-intro-badge{bottom:20px;right:20px}
-            .collab-target-grid{grid-template-columns:repeat(2,1fr)}
-            .collab-progetti-grid{grid-template-columns:repeat(2,1fr)}
-        }
-        @media(max-width:600px){
-            .collab-target-grid{grid-template-columns:1fr}
-            .collab-progetti-grid{grid-template-columns:1fr}
-            .collab-intro-badge{position:relative;bottom:auto;right:auto;margin-top:1.5rem;display:inline-block}
-        }
+.collab-intro-text {
+  font-size: var(--text-base);
+  line-height: 1.8;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+
+.collab-intro-text :global(strong) {
+  color: var(--dark-navy);
+  font-weight: 600;
+}
+
+.collab-intro-highlight {
+  background: rgba(135,206,235,.1);
+  border-left: 4px solid var(--primary-blue);
+  padding: 1.5rem;
+  border-radius: 0 12px 12px 0;
+  margin-top: 2rem;
+}
+
+.collab-intro-highlight :global(p) {
+  font-size: var(--text-lg);
+  color: var(--dark-navy);
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.collab-intro-visual {
+  position: relative;
+}
+
+.collab-intro-image {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.1);
+}
+
+.collab-intro-badge {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background: var(--dark-navy);
+  color: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+
+.collab-intro-badge-number {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  display: block;
+  line-height: 1;
+  color: var(--primary-blue);
+}
+
+.collab-intro-badge-text {
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: .3rem;
+}
+
+.collab-target-section {
+  padding: 5rem 0;
+  background: rgba(176,224,230,.15);
+}
+
+.collab-target-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.collab-target-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.collab-target-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.collab-target-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 1rem;
+}
+
+.collab-target-subtitle {
+  font-size: var(--text-base);
+  color: var(--text-light);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.collab-target-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 2rem;
+}
+
+.collab-target-item {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.05);
+  border: 1px solid rgba(135,206,235,.15);
+  transition: all .3s ease;
+}
+
+.collab-target-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(135,206,235,.15);
+  border-color: var(--primary-blue);
+}
+
+.collab-target-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem;
+  color: var(--dark-navy);
+  font-size: 1.8rem;
+}
+
+.collab-target-name {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--dark-navy);
+  margin-bottom: .5rem;
+}
+
+.collab-target-age {
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 500;
+}
+
+.collab-progetti-section {
+  padding: 5rem 0;
+  background: #fff;
+}
+
+.collab-progetti-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.collab-progetti-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.collab-progetti-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.collab-progetti-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 1rem;
+}
+
+.collab-progetti-subtitle {
+  font-size: var(--text-base);
+  color: var(--text-light);
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.collab-progetti-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem 4rem;
+}
+
+.collab-progetto-item {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+}
+
+.collab-progetto-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dark-navy);
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.collab-progetto-content {
+}
+
+.collab-progetto-name {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--dark-navy);
+  margin-bottom: .4rem;
+}
+
+.collab-progetto-desc {
+  font-size: var(--text-sm);
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.collab-cta-section {
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.collab-cta-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: center/cover no-repeat;
+  z-index: 1;
+}
+
+.collab-cta-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg,rgba(26,26,26,.9) 0%,rgba(42,42,42,.85) 100%);
+  z-index: 2;
+}
+
+.collab-cta-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
+
+.collab-cta-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.collab-cta-text {
+  font-size: var(--text-lg);
+  color: rgba(255,255,255,.8);
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+
+.collab-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.collab-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: 1rem 2.5rem;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  transition: all .3s ease;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.collab-cta-btn-primary {
+  background: var(--primary-blue);
+  color: var(--dark-navy);
+  box-shadow: 0 4px 15px rgba(135,206,235,.3);
+}
+
+.collab-cta-btn-primary:hover {
+  background: #fff;
+  color: var(--dark-navy);
+}
+
+.collab-cta-btn-secondary {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,.5);
+}
+
+.collab-cta-btn-secondary:hover {
+  background: #fff;
+  color: var(--dark-navy);
+  border-color: #fff;
+}
+
+@media(max-width:992px) {
+  .collab-intro-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .collab-intro-visual {
+    order: -1;
+  }
+
+  .collab-intro-badge {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .collab-target-grid {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px) {
+  .collab-target-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .collab-intro-badge {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 1.5rem;
+    display: inline-block;
+  }
+}
 </style>

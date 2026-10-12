@@ -11,7 +11,7 @@ import Img from './Img.astro';
 
     <ul class="nav-menu">
         <li class="nav-item" data-menu="corsi">
-            <button class="nav-link" aria-expanded="false" aria-haspopup="true">CORSI</button>
+            <a href="/corsi" class="nav-link" aria-expanded="false" aria-haspopup="true">CORSI</a>
             <div class="mega-menu" id="mega-menu-corsi" role="region" aria-label="Menu Corsi">
                 <div class="mega-menu-content">
                     <div class="mega-menu-section">
@@ -76,6 +76,7 @@ import Img from './Img.astro';
                             <li><a href="/spettacoli-eventi">Spettacoli ed Eventi</a></li>
                             <li><a href="/collaborazioni-scuole">Collaborazioni con Scuole</a></li>
                             <li><a href="/sportello-psicologico">Sportello Psicologico</a></li>
+                            <li><a href="/documenti">Documenti</a></li>
                         </ul>
                     </div>
                 </div>
@@ -112,7 +113,6 @@ import Img from './Img.astro';
                 </div>
             </div>
         </li>
-
     </ul>
 
     <a href="/contatti" class="cta-btn">Contattaci</a>
@@ -134,6 +134,7 @@ import Img from './Img.astro';
             <i class="fas fa-chevron-down" aria-hidden="true"></i>
         </button>
         <div class="mobile-submenu" id="corsi-submenu">
+            <a href="/corsi" class="mobile-tutti">Tutti i corsi</a>
             <h4>Danza Classica e Moderna</h4>
             <a href="/avviamento-danza">Avviamento alla Danza</a>
             <a href="/educazione-danza">Educazione alla Danza</a>
@@ -175,6 +176,7 @@ import Img from './Img.astro';
             <a href="/spettacoli-eventi">Spettacoli ed Eventi</a>
             <a href="/collaborazioni-scuole">Collaborazioni con Scuole</a>
             <a href="/sportello-psicologico">Sportello Psicologico</a>
+            <a href="/documenti">Documenti</a>
         </div>
     </div>
 
@@ -207,3 +209,471 @@ import Img from './Img.astro';
         <a href="/contatti" class="cta-btn">Contattaci</a>
     </div>
 </div>
+
+<style>
+.nav-link:focus-visible {
+  outline: 3px solid var(--primary-blue);
+  outline-offset: 2px;
+  background: rgba(135,206,235,.15);
+}
+
+.mega-menu-section :global(a:focus-visible) {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 0;
+  background: rgba(135,206,235,.1);
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  min-height: 80px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo-section :global(img) {
+  height: 65px;
+  width: auto;
+  filter: brightness(1.1);
+  transition: filter var(--transition-base),transform var(--transition-base);
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--white);
+  font-weight: 600;
+  padding: 1rem 2rem;
+  transition: color var(--transition-base),background var(--transition-base);
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: var(--text-sm);
+  line-height: normal;
+  letter-spacing: .5px;
+  border-radius: var(--radius-sm);
+  margin: 0 .2rem;
+  border: none;
+  background: transparent;
+}
+
+.nav-link:hover,
+.nav-item:hover .nav-link {
+  color: var(--white);
+  background: rgba(255,255,255,.1);
+}
+
+.nav-item[data-menu] .nav-link::after {
+  content: "▼";
+  margin-left: .5rem;
+  font-size: var(--text-xs);
+  transition: transform var(--transition-base);
+  color: #fff;
+}
+
+.nav-item[data-menu]:hover .nav-link::after {
+  transform: rotate(180deg);
+}
+
+.cta-btn {
+  background: var(--primary-blue);
+  color: var(--black);
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: var(--radius-xl);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background var(--transition-base),color var(--transition-base);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-size: var(--text-sm);
+  box-shadow: var(--shadow-blue);
+}
+
+.cta-btn:hover {
+  background: rgba(255,255,255,0.95);
+  color: var(--dark-navy);
+}
+
+.mega-menu {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 100vw;
+  height: auto;
+  max-height: calc(100vh - 80px);
+  background: var(--header-dark);
+  box-shadow: 0 10px 20px rgba(0,0,0,.3);
+  padding: 0;
+  display: none;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 999;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mega-menu.active {
+  display: block;
+  opacity: 1;
+}
+
+.mega-menu-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 0;
+  padding: 1.5rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+#mega-menu-scuola .mega-menu-content,
+#mega-menu-formazione .mega-menu-content {
+  max-width: 1000px;
+}
+
+.mega-menu-section {
+  padding: 1rem 2rem;
+  border-right: 1px solid rgba(135,206,235,.2);
+  height: auto;
+}
+
+.mega-menu-section:last-child {
+  border-right: none;
+}
+
+.mega-menu-section :global(h4) {
+  color: var(--primary-blue);
+  margin-bottom: .8rem;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-bottom: .4rem;
+  border-bottom: 2px solid rgba(135,206,235,.3);
+}
+
+.mega-menu-section :global(ul) {
+  list-style: none;
+}
+
+.mega-menu-section :global(li) {
+  margin-bottom: .5rem;
+}
+
+.mega-menu-section :global(a) {
+  color: #ccc;
+  text-decoration: none;
+  transition: color var(--transition-base);
+  padding: .5rem 0;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: var(--text-sm);
+  position: relative;
+  padding-left: 1.2rem;
+  line-height: 1.3;
+}
+
+.mega-menu-section :global(a::before) {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-blue);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  line-height: 1;
+}
+
+.mega-menu-section :global(a:hover) {
+  color: var(--white);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: 0 0;
+  border: none;
+  font-size: var(--text-2xl);
+  cursor: pointer;
+  color: var(--white);
+  z-index: 1001;
+  transition: all .3s ease;
+}
+
+.mobile-menu-btn.active {
+  color: var(--primary-blue);
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 85%;
+  max-width: 400px;
+  height: 100vh;
+  background: var(--header-dark);
+  box-shadow: -10px 0 50px rgba(0,0,0,.3);
+  z-index: 1000;
+  transition: all .4s cubic-bezier(.4,0,.2,1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 80px;
+  padding-bottom: 40px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-blue) var(--header-dark);
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0,0,0,.6);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .4s ease;
+}
+
+.mobile-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: 0 0;
+  border: none;
+  color: var(--primary-blue);
+  font-size: var(--text-2xl);
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+#mobileMenu .mobile-menu-close,
+div.mobile-menu-close {
+  color: #fff;
+}
+
+.mobile-menu-close:hover {
+  opacity: .7;
+}
+
+.mobile-nav-item {
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.mobile-nav-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem;
+  cursor: pointer;
+  transition: all .3s ease;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--white);
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+}
+
+.mobile-nav-toggle.active {
+  background: rgba(255,255,255,.05);
+}
+
+.mobile-nav-toggle :global(i) {
+  transition: transform .3s ease;
+  color: var(--primary-blue);
+  font-size: var(--text-sm);
+}
+
+#mobileMenu .mobile-nav-toggle :global(i),
+div.mobile-menu .mobile-nav-toggle :global(i) {
+  color: #fff;
+}
+
+.mobile-submenu {
+  background: rgba(255,255,255,.05);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease;
+}
+
+.mobile-submenu.active {
+  max-height: 5000px;
+  overflow: visible;
+}
+
+#mobileMenu .mobile-submenu :global(h4),
+div.mobile-menu .mobile-submenu :global(h4) {
+  padding: .5rem 2rem .4rem;
+  margin: 1.2rem 0 .4rem;
+  font-weight: 500;
+  color: rgba(255,255,255,.7);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+  background: 0 0;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  opacity: .7;
+  text-align: left;
+}
+
+#mobileMenu .mobile-submenu :global(h4:first-child) {
+  margin-top: .3rem;
+}
+
+.mobile-submenu :global(a) {
+  display: block;
+  padding: .6rem 1.2rem .6rem 1.8rem;
+  color: #ccc;
+  text-decoration: none;
+  transition: color .3s ease;
+  font-weight: 500;
+  font-size: var(--text-sm);
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  line-height: 1.3;
+}
+
+.mobile-submenu .mobile-tutti {
+  color: var(--primary-blue);
+  font-weight: 600;
+}
+
+.mobile-submenu :global(a:last-child) {
+  border-bottom: none;
+}
+
+#mobileMenu .mobile-submenu :global(a::before),
+div.mobile-submenu :global(a::before) {
+  color: #fff;
+}
+
+.mobile-cta {
+  padding: 1.5rem 1.2rem;
+  text-align: left;
+  float: left;
+  width: 100%;
+}
+
+.mobile-cta .cta-btn {
+  width: 100%;
+  text-align: center;
+  float: left;
+  padding: .85rem 1.5rem;
+  font-size: var(--text-xs);
+}
+
+.mobile-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mobile-menu::-webkit-scrollbar-track {
+  background: var(--header-dark);
+}
+
+.mobile-menu::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: 3px;
+}
+
+.mobile-menu::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue-dark);
+}
+
+@media (max-width:1024px) {
+  .nav-menu,
+  .cta-btn {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+}
+
+@media (max-width:768px) {
+  .nav-container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width:480px) {
+  .mega-menu {
+    width: 100vw;
+    left: 0;
+  }
+
+  .mega-menu-content {
+    padding: 1rem 1.5rem;
+    max-width: none;
+    grid-template-columns: 1fr;
+  }
+
+  #mega-menu-scuola .mega-menu-content,
+  #mega-menu-formazione .mega-menu-content {
+    max-width: none;
+  }
+
+  .mega-menu-section {
+    border-right: none;
+    border-bottom: 1px solid var(--primary-blue);
+    height: auto;
+    padding: .8rem 1.2rem;
+  }
+
+  .mega-menu-section:last-child {
+    border-bottom: none;
+  }
+
+  .mega-menu-section :global(h4) {
+    margin-bottom: .6rem;
+    padding-bottom: .3rem;
+  }
+
+  .mega-menu-section :global(li) {
+    margin-bottom: .4rem;
+  }
+
+  .mega-menu-section :global(a) {
+    padding: .4rem 0;
+    font-size: var(--text-xs);
+  }
+}
+</style>

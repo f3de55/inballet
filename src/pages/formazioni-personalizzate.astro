@@ -11,7 +11,6 @@ const bg: Record<string, string> = {
 <Base
     title="Formazioni Personalizzate - InBallet"
     description="Percorsi formativi personalizzati per insegnanti, scuole e professionisti della danza. Workshop, aggiornamenti e consulenze su misura."
-    keywords="formazione danza personalizzata, workshop danza, aggiornamento insegnanti, consulenza danza, Lainate Milano"
     ogTitle="Formazioni Personalizzate - InBallet"
     ogDescription="Percorsi formativi su misura per professionisti della danza e istituzioni."
 >
@@ -100,29 +99,175 @@ const bg: Record<string, string> = {
         </section>
 </Base>
 
-<style is:global>
-        /* Intro Section */
-        .perso-intro-section{padding:5rem 0;background:#fff}
-        .perso-intro-wrapper{max-width:800px;margin:0 auto;padding:0 2rem;text-align:center}
-        .perso-intro-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .perso-intro-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:2rem}
-        .perso-intro-text{font-size:var(--text-lg);color:var(--text-light);line-height:1.8;margin-bottom:1.5rem}
-        .perso-intro-text strong{color:var(--dark-navy);font-weight:600}
+<style>
+.perso-intro-section {
+  padding: 5rem 0;
+  background: #fff;
+}
 
-        /* Tipologie Section - stile corsi-section */
-        .perso-tipo-section{padding:5rem 0;background:rgba(176,224,230,.25);position:relative;overflow:hidden}
-        .perso-tipo-section::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--primary-blue)}
-        .perso-tipo-section::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--primary-blue)}
-        .perso-tipo-wrapper{max-width:1100px;margin:0 auto;padding:0 2rem}
-        .perso-tipo-header{text-align:center;margin-bottom:3.5rem}
-        .perso-tipo-label{display:block;font-size:var(--text-lg);color:var(--primary-blue-dark);font-weight:500;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem}
-        .perso-tipo-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight)}
-        .perso-tipo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.5rem 4rem;position:relative}
-        .perso-tipo-grid::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(135,206,235,.3);transform:translateX(-50%)}
-        .perso-tipo-item{display:grid;grid-template-columns:45px 1fr;gap:1rem;padding-bottom:2rem;border-bottom:1px solid rgba(135,206,235,.3)}
-        .perso-tipo-item:nth-last-child(-n+2){border-bottom:none;padding-bottom:0}
-        .perso-tipo-num{width:45px;height:45px;background:linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--dark-navy);font-weight:700;font-size:var(--text-lg)}
-        .perso-tipo-content h4{font-size:var(--text-lg);font-weight:700;color:var(--dark-navy);margin-bottom:.4rem}
-        .perso-tipo-content p{font-size:var(--text-sm);color:var(--text-light);margin:0;line-height:1.6}
-        @media(max-width:768px){.perso-tipo-grid{grid-template-columns:1fr;gap:2rem}.perso-tipo-grid::before{display:none}.perso-tipo-item:nth-last-child(2){border-bottom:1px solid rgba(135,206,235,.3);padding-bottom:2rem}}
+.perso-intro-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.perso-intro-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.perso-intro-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 2rem;
+}
+
+.perso-intro-text {
+  font-size: var(--text-lg);
+  color: var(--text-light);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.perso-intro-text :global(strong) {
+  color: var(--dark-navy);
+  font-weight: 600;
+}
+
+.perso-tipo-section {
+  padding: 5rem 0;
+  background: rgba(176,224,230,.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.perso-tipo-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-blue);
+}
+
+.perso-tipo-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-blue);
+}
+
+.perso-tipo-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.perso-tipo-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.perso-tipo-label {
+  display: block;
+  font-size: var(--text-lg);
+  color: var(--primary-blue-dark);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.perso-tipo-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+}
+
+.perso-tipo-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 2.5rem 4rem;
+  position: relative;
+}
+
+.perso-tipo-grid::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(135,206,235,.3);
+  transform: translateX(-50%);
+}
+
+.perso-tipo-item {
+  display: grid;
+  grid-template-columns: 45px 1fr;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(135,206,235,.3);
+}
+
+.perso-tipo-item:nth-last-child(-n+2) {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.perso-tipo-num {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dark-navy);
+  font-weight: 700;
+  font-size: var(--text-lg);
+}
+
+.perso-tipo-content :global(h4) {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--dark-navy);
+  margin-bottom: .4rem;
+}
+
+.perso-tipo-content :global(p) {
+  font-size: var(--text-sm);
+  color: var(--text-light);
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media(max-width:768px) {
+  .perso-tipo-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .perso-tipo-grid::before {
+    display: none;
+  }
+
+  .perso-tipo-item:nth-last-child(2) {
+    border-bottom: 1px solid rgba(135,206,235,.3);
+    padding-bottom: 2rem;
+  }
+}
 </style>

@@ -110,3 +110,154 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 
     customElements.define('event-banner', EventBanner);
 </script>
+
+<style>
+.event-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+  color: var(--dark-navy);
+  padding: 0.7rem 1.5rem;
+  display: none;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+.event-banner.visible {
+  display: block;
+}
+
+.event-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.event-banner-icon {
+  width: 24px;
+  height: 24px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.event-banner-icon :global(i) {
+  font-size: 10px;
+  color: var(--dark-navy);
+}
+
+.event-banner-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding-right: 3rem;
+}
+
+.event-banner-title {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.event-banner-meta {
+  font-size: var(--text-xs);
+}
+
+.event-banner-date {
+  font-weight: 600;
+}
+
+.event-banner-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.9rem;
+  background: rgba(0,0,0,0.15);
+  border-radius: 20px;
+  color: var(--dark-navy);
+  text-decoration: none;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.event-banner-btn:hover {
+  background: rgba(255,255,255,0.4);
+  gap: 0.6rem;
+}
+
+.event-banner-btn :global(i) {
+  font-size: 9px;
+}
+
+.event-banner-close {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  background: rgba(0,0,0,0.1);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dark-navy);
+  transition: background 0.2s;
+}
+
+.event-banner-close:hover {
+  background: rgba(255,255,255,0.4);
+}
+
+.event-banner-close :global(i) {
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .event-banner {
+    padding: 0.6rem 1rem;
+  }
+
+  .event-banner-content {
+    gap: 0.8rem;
+  }
+
+  .event-banner-icon {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .event-banner {
+    padding: 0.5rem 0.8rem;
+  }
+
+  .event-banner-info {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .event-banner-close {
+    width: 24px;
+    height: 24px;
+  }
+
+  .event-banner-close :global(i) {
+    font-size: 10px;
+  }
+}
+</style>

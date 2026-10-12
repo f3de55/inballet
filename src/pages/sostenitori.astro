@@ -11,7 +11,6 @@ const bg: Record<string, string> = {
 <Base
     title="Sostenitori Progetti Sociali - InBallet"
     description="Sostieni i progetti sociali InBallet - Dona ora per supportare l'inclusione attraverso la danza. Dal 2013 accogliamo giovani e adulti con disabilità."
-    keywords="donazione danza, sostieni inclusione, progetti sociali danza, volontariato aziendale, CSR danza, Lainate"
     ogTitle="Sostieni i Progetti Sociali - InBallet"
     ogDescription="La tua donazione supporta l'inclusione attraverso la danza. Aiutaci a continuare il nostro lavoro."
 >
@@ -103,34 +102,167 @@ const bg: Record<string, string> = {
         </section>
 </Base>
 
-<style is:global>
-        /* === SEZIONI SOSTENITORI - MINIMAL === */
+<style>
+.sost-intro-section {
+  padding: 5rem 0;
+  background: #fff;
+}
 
-        /* Intro Section */
-        .sost-intro-section{padding:5rem 0;background:#fff}
-        .sost-intro-wrapper{max-width:900px;margin:0 auto;padding:0 2rem}
-        .sost-intro-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;text-align:center}
-        .sost-intro-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:2rem;text-align:center}
-        .sost-intro-text{font-size:var(--text-lg);line-height:1.8;color:var(--text-light);margin-bottom:1.5rem;text-align:center}
-        .sost-intro-text strong{color:var(--dark-navy);font-weight:600}
+.sost-intro-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
 
-        /* Dona Section - Minimal */
-        .sost-dona-section{padding:5rem 0;background:var(--dark-navy);position:relative;overflow:hidden}
-        .sost-dona-section::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);border-radius:50%}
-        .sost-dona-wrapper{max-width:700px;margin:0 auto;padding:0 2rem;position:relative;z-index:2;text-align:center}
-        .sost-dona-label{display:block;font-size:var(--text-sm);color:var(--primary-blue);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .sost-dona-title{font-size:var(--text-4xl);font-weight:700;color:#fff;line-height:var(--leading-tight);margin-bottom:1.5rem}
-        .sost-dona-text{font-size:var(--text-lg);color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:2.5rem}
-        .sost-dona-btn{display:inline-flex;align-items:center;gap:.8rem;background:#0070ba;color:#fff;padding:1.2rem 3rem;border-radius:10px;font-size:var(--text-lg);font-weight:600;text-decoration:none;transition:all .3s ease}
-        .sost-dona-btn:hover{background:#005a9e;transform:translateY(-2px)}
-        .sost-dona-btn i{font-size:1.4rem}
-        .sost-dona-secure{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:1.5rem;font-size:var(--text-sm);color:rgba(255,255,255,.5)}
-        .sost-dona-secure i{color:#22c55e}
+.sost-intro-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
 
-        /* Progetti Section */
-        .sost-utilizzo-section{padding:5rem 0;background:#fff}
-        .sost-utilizzo-list{display:flex;flex-direction:column;gap:1rem}
-        .sost-utilizzo-item{display:flex;align-items:flex-start;gap:1rem}
-        .sost-utilizzo-item i{width:20px;color:var(--primary-blue-dark);font-size:1rem;margin-top:3px}
-        .sost-utilizzo-item span{font-size:var(--text-base);color:var(--dark-navy);line-height:1.6}
+.sost-intro-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.sost-intro-text {
+  font-size: var(--text-lg);
+  line-height: 1.8;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.sost-intro-text :global(strong) {
+  color: var(--dark-navy);
+  font-weight: 600;
+}
+
+.sost-dona-section {
+  padding: 5rem 0;
+  background: var(--dark-navy);
+  position: relative;
+  overflow: hidden;
+}
+
+.sost-dona-section::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);
+  border-radius: 50%;
+}
+
+.sost-dona-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.sost-dona-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.sost-dona-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: #fff;
+  line-height: var(--leading-tight);
+  margin-bottom: 1.5rem;
+}
+
+.sost-dona-text {
+  font-size: var(--text-lg);
+  color: rgba(255,255,255,.7);
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+}
+
+.sost-dona-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .8rem;
+  background: #0070ba;
+  color: #fff;
+  padding: 1.2rem 3rem;
+  border-radius: 10px;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .3s ease;
+}
+
+.sost-dona-btn:hover {
+  background: #005a9e;
+  transform: translateY(-2px);
+}
+
+.sost-dona-btn :global(i) {
+  font-size: 1.4rem;
+}
+
+.sost-dona-secure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  margin-top: 1.5rem;
+  font-size: var(--text-sm);
+  color: rgba(255,255,255,.5);
+}
+
+.sost-dona-secure :global(i) {
+  color: #22c55e;
+}
+
+.sost-utilizzo-section {
+  padding: 5rem 0;
+  background: #fff;
+}
+
+.sost-utilizzo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sost-utilizzo-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.sost-utilizzo-item :global(i) {
+  width: 20px;
+  color: var(--primary-blue-dark);
+  font-size: 1rem;
+  margin-top: 3px;
+}
+
+.sost-utilizzo-item :global(span) {
+  font-size: var(--text-base);
+  color: var(--dark-navy);
+  line-height: 1.6;
+}
 </style>

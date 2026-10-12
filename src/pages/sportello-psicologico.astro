@@ -11,7 +11,6 @@ const bg: Record<string, string> = {
 <Base
     title="Sportello Psicologico - InBallet"
     description="Sportello Psicologico InBallet - Sostegno alle famiglie, ascolto e supporto psicologico per genitori, bambini e adolescenti a Lainate."
-    keywords="sportello psicologico, supporto famiglie, psicoterapeuta Lainate, consulenza psicologica, danza e benessere"
     ogTitle="Sportello Psicologico - InBallet"
     ogDescription="Sostegno psicologico e ascolto per famiglie. Uno spazio sicuro per affrontare difficoltà e momenti delicati."
 >
@@ -126,54 +125,252 @@ const bg: Record<string, string> = {
         </section>
 </Base>
 
-<style is:global>
-        /* === SEZIONI SPECIFICHE SPORTELLO PSICOLOGICO === */
+<style>
+.sport-intro-section {
+  padding: 5rem 0;
+  background: #fff;
+}
 
-        /* Intro Section */
-        .sport-intro-section{padding:5rem 0;background:#fff}
-        .sport-intro-wrapper{max-width:900px;margin:0 auto;padding:0 2rem}
-        .sport-intro-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;text-align:center}
-        .sport-intro-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:2rem;text-align:center}
-        .sport-intro-text{font-size:var(--text-lg);line-height:1.8;color:var(--text-light);margin-bottom:1.5rem;text-align:center}
-        .sport-intro-text strong{color:var(--dark-navy);font-weight:600}
-        .sport-intro-highlight{background:rgba(135,206,235,.1);border-left:4px solid var(--primary-blue);padding:1.5rem 2rem;border-radius:0 12px 12px 0;margin-top:2.5rem;max-width:750px;margin-left:auto;margin-right:auto}
-        .sport-intro-highlight p{font-size:var(--text-base);color:var(--dark-navy);font-weight:500;margin:0;line-height:1.7}
+.sport-intro-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
 
-        /* Pilastri Section - CARD (unica sezione card) */
-        .sport-pilastri-section{padding:5rem 0;background:rgba(176,224,230,.1)}
-        .sport-pilastri-wrapper{max-width:1100px;margin:0 auto;padding:0 2rem}
-        .sport-pilastri-header{text-align:center;margin-bottom:4rem}
-        .sport-pilastri-label{display:block;font-size:var(--text-sm);color:var(--primary-blue-dark);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .sport-pilastri-title{font-size:var(--text-4xl);font-weight:700;color:var(--dark-navy);line-height:var(--leading-tight);margin-bottom:1rem}
-        .sport-pilastri-subtitle{font-size:var(--text-base);color:var(--text-light);max-width:600px;margin:0 auto}
-        .sport-pilastri-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem}
-        .sport-pilastro-card{background:#fff;padding:2.5rem 2rem;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid rgba(135,206,235,.15);transition:all .3s ease;text-align:center}
-        .sport-pilastro-card:hover{transform:translateY(-8px);box-shadow:0 12px 35px rgba(135,206,235,.2);border-color:var(--primary-blue)}
-        .sport-pilastro-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;color:var(--dark-navy);font-size:2rem}
-        .sport-pilastro-name{font-size:var(--text-xl);font-weight:700;color:var(--dark-navy);margin-bottom:1rem;text-transform:uppercase;letter-spacing:.5px}
-        .sport-pilastro-desc{font-size:var(--text-sm);color:var(--text-light);line-height:1.7}
+.sport-intro-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
 
-        /* Accesso Section - Minimal */
-        .sport-accesso-section{padding:5rem 0;background:var(--dark-navy);position:relative;overflow:hidden}
-        .sport-accesso-section::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);border-radius:50%}
-        .sport-accesso-wrapper{max-width:800px;margin:0 auto;padding:0 2rem;position:relative;z-index:2}
-        .sport-accesso-header{text-align:center;margin-bottom:3rem}
-        .sport-accesso-label{display:block;font-size:var(--text-sm);color:var(--primary-blue);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
-        .sport-accesso-title{font-size:var(--text-4xl);font-weight:700;color:#fff;line-height:var(--leading-tight);margin-bottom:1rem}
-        .sport-accesso-subtitle{font-size:var(--text-lg);color:rgba(255,255,255,.7);max-width:600px;margin:0 auto;line-height:1.7}
-        .sport-accesso-list{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 3rem;margin-top:2.5rem}
-        .sport-accesso-item{display:flex;align-items:center;gap:.8rem}
-        .sport-accesso-item i{color:var(--primary-blue);font-size:1.1rem}
-        .sport-accesso-item span{font-size:var(--text-base);color:#fff;font-weight:500}
-        .sport-accesso-note{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1)}
-        .sport-accesso-note p{font-size:var(--text-base);color:rgba(255,255,255,.7);margin:0}
-        .sport-accesso-note strong{color:var(--primary-blue);font-weight:600}
+.sport-intro-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 2rem;
+  text-align: center;
+}
 
-        /* Responsive */
-        @media(max-width:992px){
-            .sport-pilastri-grid{grid-template-columns:1fr;gap:2rem}
-        }
-        @media(max-width:600px){
-            .sport-accesso-list{grid-template-columns:1fr}
-        }
+.sport-intro-text {
+  font-size: var(--text-lg);
+  line-height: 1.8;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.sport-intro-text :global(strong) {
+  color: var(--dark-navy);
+  font-weight: 600;
+}
+
+.sport-intro-highlight {
+  background: rgba(135,206,235,.1);
+  border-left: 4px solid var(--primary-blue);
+  padding: 1.5rem 2rem;
+  border-radius: 0 12px 12px 0;
+  margin-top: 2.5rem;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sport-intro-highlight :global(p) {
+  font-size: var(--text-base);
+  color: var(--dark-navy);
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.7;
+}
+
+.sport-pilastri-section {
+  padding: 5rem 0;
+  background: rgba(176,224,230,.1);
+}
+
+.sport-pilastri-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.sport-pilastri-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.sport-pilastri-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.sport-pilastri-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  line-height: var(--leading-tight);
+  margin-bottom: 1rem;
+}
+
+.sport-pilastri-subtitle {
+  font-size: var(--text-base);
+  color: var(--text-light);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.sport-pilastri-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 2.5rem;
+}
+
+.sport-pilastro-card {
+  background: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.05);
+  border: 1px solid rgba(135,206,235,.15);
+  transition: all .3s ease;
+  text-align: center;
+}
+
+.sport-pilastro-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(135,206,235,.2);
+  border-color: var(--primary-blue);
+}
+
+.sport-pilastro-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: var(--dark-navy);
+  font-size: 2rem;
+}
+
+.sport-pilastro-name {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--dark-navy);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.sport-pilastro-desc {
+  font-size: var(--text-sm);
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+.sport-accesso-section {
+  padding: 5rem 0;
+  background: var(--dark-navy);
+  position: relative;
+  overflow: hidden;
+}
+
+.sport-accesso-section::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);
+  border-radius: 50%;
+}
+
+.sport-accesso-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.sport-accesso-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sport-accesso-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--primary-blue);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.sport-accesso-title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: #fff;
+  line-height: var(--leading-tight);
+  margin-bottom: 1rem;
+}
+
+.sport-accesso-subtitle {
+  font-size: var(--text-lg);
+  color: rgba(255,255,255,.7);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.sport-accesso-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 3rem;
+  margin-top: 2.5rem;
+}
+
+.sport-accesso-item {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.sport-accesso-item :global(i) {
+  color: var(--primary-blue);
+  font-size: 1.1rem;
+}
+
+.sport-accesso-item :global(span) {
+  font-size: var(--text-base);
+  color: #fff;
+  font-weight: 500;
+}
+
+@media(max-width:992px) {
+  .sport-pilastri-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media(max-width:600px) {
+  .sport-accesso-list {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

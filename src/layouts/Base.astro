@@ -5,7 +5,8 @@
  */
 import '../styles/icons.css';
 import '../styles/global.css';
-import { Font } from 'astro:assets';
+import { Font, getImage } from 'astro:assets';
+import { getAsset } from '../lib/images';
 import Banner from '../components/Banner.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
@@ -13,12 +14,10 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description: string;
-  keywords?: string;
   ogTitle?: string;
   ogDescription?: string;
-  /** Immagine Open Graph / Twitter (solo homepage) */
+  /** Immagine Open Graph / social (default: foto 1200x630 generata) */
   ogImage?: string;
-  twitter?: boolean;
   /** id dello skip link (la homepage usa "skip-link") */
   skipLinkId?: string;
   /** tabindex="-1" su <main> (tutte le pagine tranne il calendario eventi) */
@@ -28,14 +27,18 @@ interface Props {
 const {
   title,
   description,
-  keywords,
   ogTitle,
   ogDescription,
   ogImage,
-  twitter = false,
   skipLinkId,
   mainFocusable = true,
 } = Astro.props;
+
+// URL canonico pulito (come nella sitemap): /chi-siamo, / per la home
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(^|\/)index$/, '/').replace(/(.)\/$/, '$1');
+const canonical = new URL(path, Astro.site).href;
+// Immagine social predefinita 1200x630 (le pagine possono passarne una propria)
+const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
 ---
 
 <!doctype html>
@@ -44,25 +47,24 @@ const {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content={description}>
-    {keywords && <meta name="keywords" content={keywords}>}
-    {ogTitle && (
-        <>
-            <meta name="author" content="InBallet ASD">
-            <meta name="theme-color" content="#87CEEB">
-            <meta property="og:type" content="website">
-            <meta property="og:title" content={ogTitle}>
-            <meta property="og:description" content={ogDescription}>
-        </>
-    )}
-    {ogImage && <meta property="og:image" content={ogImage}>}
-    {twitter && (
-        <>
-            <meta name="twitter:card" content="summary_large_image">
-            <meta name="twitter:title" content={ogTitle}>
-            <meta name="twitter:description" content={ogDescription}>
-            <meta name="twitter:image" content={ogImage}>
-        </>
-    )}
+    <meta name="author" content="InBallet ASD">
+    <meta name="theme-color" content="#87CEEB">
+    <link rel="canonical" href={canonical}>
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="it_IT">
+    <meta property="og:site_name" content="InBallet">
+    <meta property="og:url" content={canonical}>
+    <meta property="og:title" content={ogTitle ?? title}>
+    <meta property="og:description" content={ogDescription ?? description}>
+    <meta property="og:image" content={image}>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content={ogTitle ?? title}>
+    <meta name="twitter:description" content={ogDescription ?? description}>
+    <meta name="twitter:image" content={image}>
 
     <title>{title}</title>
 
@@ -97,3 +99,25 @@ const {
     <slot name="scripts" />
 </body>
 </html>
+
+<style>
+.main-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: var(--header-dark);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  transition: background var(--transition-base);
+  box-shadow: 0 2px 20px rgba(0,0,0,.3);
+  min-height: 80px;
+}
+
+.footer {
+  background: var(--dark-navy);
+  color: #fff;
+  position: relative;
+  z-index: 10;
+  padding: 3rem 0 0;
+}
+</style>

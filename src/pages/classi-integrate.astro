@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { webp } from '../lib/images';
 
 const bg: Record<string, string> = {
-  'gallery-5.jpg': await webp('gallery-5.jpg', 1920),
+  'gallery-9.jpg': await webp('gallery-9.jpg', 1920),
   'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
 };
 ---
@@ -17,28 +18,25 @@ const bg: Record<string, string> = {
 
         <!-- Hero Section -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-5.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-9.jpg']}')`}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
-                <span class="chisiamo-hero-badge">Inclusione & Danza</span>
+                <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Classi Multidisciplinari Integrate</h1>
                 <p class="chisiamo-hero-tagline">Percorsi dove ogni bambino trova il suo spazio per crescere, esprimersi e danzare.</p>
-                <a href="#intro" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
-                    <i class="fas fa-chevron-down"></i>
-                </a>
             </div>
         </section>
 
         <!-- Intro Section -->
         <section id="intro" class="integrate-intro-section">
-            <div class="integrate-intro-wrapper">
+            <div class="integrate-intro-wrapper intro-editoriale">
                 <span class="integrate-intro-label eyebrow">Il Nostro Approccio</span>
-                <h2 class="integrate-intro-title titolo-sezione">Un ambiente dove tutti sono benvenuti</h2>
+                <h2 class="integrate-intro-title titolo-sezione">Un ambiente dove tutti <em>sono benvenuti</em></h2>
                 <p class="integrate-intro-text">
-                    Quasi tutte le classi che proponiamo hanno la <strong>predisposizione tecnica e professionale</strong> per poter accogliere casi speciali, entro i livelli di competenza del nostro istituto.
+                    Quasi tutte le classi che proponiamo hanno la predisposizione tecnica e professionale per poter accogliere casi speciali, entro i livelli di competenza del nostro istituto.
                 </p>
                 <p class="integrate-intro-text">
-                    Crediamo che la danza sia un <strong>linguaggio universale</strong> capace di abbattere barriere e creare connessioni. Per questo abbiamo sviluppato un approccio inclusivo che valorizza le unicità di ogni allievo.
+                    Crediamo che la danza sia un linguaggio universale capace di abbattere barriere e creare connessioni. Per questo abbiamo sviluppato un approccio inclusivo che valorizza le unicità di ogni allievo.
                 </p>
                 <div class="integrate-intro-highlight">
                     <p>Il nostro team di insegnanti è formato per accogliere e supportare bambini con bisogni speciali, creando un ambiente sicuro dove ognuno può esprimersi liberamente attraverso il movimento.</p>
@@ -51,29 +49,29 @@ const bg: Record<string, string> = {
             <div class="integrate-valori-wrapper">
                 <div class="integrate-valori-header">
                     <span class="integrate-valori-label eyebrow">I Nostri Valori</span>
-                    <h2 class="integrate-valori-title titolo-sezione">I principi che ci guidano</h2>
+                    <h2 class="integrate-valori-title titolo-sezione">I principi <em>che ci guidano</em></h2>
                 </div>
                 <div class="integrate-valori-grid">
-                    <div class="integrate-valore-card">
-                        <div class="integrate-valore-icon">
+                    <div class="integrate-valore-card voce">
+                        <div class="integrate-valore-icon voce-icona">
                             <i class="fas fa-hand-holding-heart"></i>
                         </div>
-                        <h3 class="integrate-valore-name">Accoglienza</h3>
-                        <p class="integrate-valore-desc">Ogni bambino viene accolto per quello che è, con le sue unicità e il suo potenziale da esprimere attraverso il movimento.</p>
+                        <h3 class="integrate-valore-name voce-titolo">Accoglienza</h3>
+                        <p class="integrate-valore-desc voce-testo">Ogni bambino viene accolto per quello che è, con le sue unicità e il suo potenziale da esprimere attraverso il movimento.</p>
                     </div>
-                    <div class="integrate-valore-card">
-                        <div class="integrate-valore-icon">
+                    <div class="integrate-valore-card voce">
+                        <div class="integrate-valore-icon voce-icona">
                             <i class="fas fa-users"></i>
                         </div>
-                        <h3 class="integrate-valore-name">Integrazione</h3>
-                        <p class="integrate-valore-desc">Lavoriamo per creare gruppi classe dove le differenze diventano ricchezza e occasione di crescita per tutti.</p>
+                        <h3 class="integrate-valore-name voce-titolo">Integrazione</h3>
+                        <p class="integrate-valore-desc voce-testo">Lavoriamo per creare gruppi classe dove le differenze diventano ricchezza e occasione di crescita per tutti.</p>
                     </div>
-                    <div class="integrate-valore-card">
-                        <div class="integrate-valore-icon">
+                    <div class="integrate-valore-card voce">
+                        <div class="integrate-valore-icon voce-icona">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <h3 class="integrate-valore-name">Professionalità</h3>
-                        <p class="integrate-valore-desc">Insegnanti formati e competenti, capaci di adattare le metodologie alle esigenze specifiche di ogni allievo.</p>
+                        <h3 class="integrate-valore-name voce-titolo">Professionalità</h3>
+                        <p class="integrate-valore-desc voce-testo">Insegnanti formati e competenti, capaci di adattare le metodologie alle esigenze specifiche di ogni allievo.</p>
                     </div>
                 </div>
             </div>
@@ -84,7 +82,7 @@ const bg: Record<string, string> = {
             <div class="integrate-classi-wrapper">
                 <div class="integrate-classi-header">
                     <span class="integrate-classi-label eyebrow">Le Nostre Discipline</span>
-                    <h2 class="integrate-classi-title titolo-sezione">Classi disponibili per l'inserimento</h2>
+                    <h2 class="integrate-classi-title titolo-sezione">Classi disponibili <em>per l'inserimento</em></h2>
                     <p class="integrate-classi-subtitle intro-sezione">Molte delle nostre discipline sono predisposte per accogliere allievi con bisogni speciali.</p>
                 </div>
                 <div class="integrate-classi-list">
@@ -122,7 +120,7 @@ const bg: Record<string, string> = {
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">
-                    <h2 class="titolo-sezione">Parliamo del tuo bambino</h2>
+                    <h2 class="titolo-sezione">Parliamo <em>del tuo bambino</em></h2>
                     <p class="intro-sezione">Contattaci per un colloquio conoscitivo. Insieme troveremo il percorso più adatto.</p>
                     <a href="mailto:info@inballet.it?subject=Classi%20Integrate%20-%20Richiesta%20Informazioni" class="corso-btn-cta btn-primary">
                         Richiedi Informazioni <i class="fas fa-arrow-right"></i>
@@ -216,50 +214,6 @@ const bg: Record<string, string> = {
   display: grid;
   grid-template-columns: repeat(3,1fr);
   gap: 2.5rem;
-}
-
-.integrate-valore-card {
-  background: #fff;
-  padding: 2.5rem 2rem;
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  border: 1px solid var(--border-card);
-  transition: all .3s ease;
-  text-align: center;
-}
-
-.integrate-valore-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-card-hover);
-  border-color: var(--primary-blue);
-}
-
-.integrate-valore-icon {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-  color: var(--dark-navy);
-  font-size: 2rem;
-}
-
-.integrate-valore-name {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-}
-
-.integrate-valore-desc {
-  font-size: var(--text-sm);
-  color: var(--text-light);
-  line-height: 1.7;
 }
 
 .integrate-classi-section {

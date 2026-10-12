@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { webp } from '../lib/images';
 
@@ -18,15 +19,12 @@ const bg: Record<string, string> = {
 
         <!-- Hero Section -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-4.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={`background-image: url('${bg['bg-progetti-territorio.jpg']}')`}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
-                <span class="chisiamo-hero-badge">Per le Scuole</span>
+                <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Collaborazioni con Scuole</h1>
                 <p class="chisiamo-hero-tagline">Progetti educativi di danza e movimento per le scuole.</p>
-                <a href="#intro" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
-                    <i class="fas fa-chevron-down"></i>
-                </a>
             </div>
         </section>
 
@@ -36,23 +34,19 @@ const bg: Record<string, string> = {
                 <div class="collab-intro-layout">
                     <div class="collab-intro-content">
                         <span class="collab-intro-label eyebrow">Chi Siamo</span>
-                        <h2 class="collab-intro-title titolo-sezione">Da oltre 15 anni partner delle scuole del territorio</h2>
+                        <h2 class="collab-intro-title titolo-sezione">Da oltre 15 anni partner <em>delle scuole del territorio</em></h2>
                         <p class="collab-intro-text">
-                            La Direzione <strong>I.N.BALLET</strong> collabora con le scuole del territorio offrendo <strong>progetti personalizzati</strong> che integrano la danza e il movimento nell'attivita educativa.
+                            La Direzione I.N.BALLET collabora con le scuole del territorio offrendo progetti personalizzati che integrano la danza e il movimento nell'attività educativa.
                         </p>
                         <p class="collab-intro-text">
-                            I nostri interventi sono progettati per favorire lo <strong>sviluppo psicomotorio</strong>, la socializzazione e l'integrazione attraverso il linguaggio universale del movimento.
+                            I nostri interventi sono progettati per favorire lo sviluppo psicomotorio, la socializzazione e l'integrazione attraverso il linguaggio universale del movimento.
                         </p>
                         <div class="collab-intro-highlight">
-                            <p>Ogni progetto e costruito insieme alla scuola, rispettando le esigenze specifiche di ogni fascia d'eta e contesto educativo.</p>
+                            <p>Ogni progetto è costruito insieme alla scuola, rispettando le esigenze specifiche di ogni fascia d'età e contesto educativo.</p>
                         </div>
                     </div>
-                    <div class="collab-intro-visual">
-                        <Img src="gallery-7.jpg" alt="Bambini durante un laboratorio di danza a scuola" class="collab-intro-image" />
-                        <div class="collab-intro-badge">
-                            <span class="collab-intro-badge-number">15+</span>
-                            <span class="collab-intro-badge-text">Anni di collaborazioni</span>
-                        </div>
+                    <div class="collab-intro-visual foto-cornice">
+                        <Img src="gallery-7.jpg" alt="Lo staff di InBallet in sala" class="collab-intro-image" />
                     </div>
                 </div>
             </div>
@@ -63,37 +57,37 @@ const bg: Record<string, string> = {
             <div class="collab-target-wrapper">
                 <div class="collab-target-header">
                     <span class="collab-target-label eyebrow">A Chi Ci Rivolgiamo</span>
-                    <h2 class="collab-target-title titolo-sezione">Progetti per ogni fascia d'eta</h2>
+                    <h2 class="collab-target-title titolo-sezione">Progetti per ogni <em>fascia d'età</em></h2>
                     <p class="collab-target-subtitle intro-sezione">Collaboriamo con tutte le tipologie di istituti scolastici, adattando i nostri programmi alle specifiche esigenze.</p>
                 </div>
                 <div class="collab-target-grid">
-                    <div class="collab-target-item">
-                        <div class="collab-target-icon">
+                    <div class="collab-target-item voce">
+                        <div class="collab-target-icon voce-icona">
                             <i class="fas fa-baby"></i>
                         </div>
-                        <h3 class="collab-target-name">Asili Nido</h3>
-                        <p class="collab-target-age">0-3 anni</p>
+                        <h3 class="collab-target-name voce-titolo">Asili Nido</h3>
+                        <p class="collab-target-age voce-testo">0-3 anni</p>
                     </div>
-                    <div class="collab-target-item">
-                        <div class="collab-target-icon">
+                    <div class="collab-target-item voce">
+                        <div class="collab-target-icon voce-icona">
                             <i class="fas fa-child"></i>
                         </div>
-                        <h3 class="collab-target-name">Scuole dell'Infanzia</h3>
-                        <p class="collab-target-age">3-6 anni</p>
+                        <h3 class="collab-target-name voce-titolo">Scuole dell'Infanzia</h3>
+                        <p class="collab-target-age voce-testo">3-6 anni</p>
                     </div>
-                    <div class="collab-target-item">
-                        <div class="collab-target-icon">
+                    <div class="collab-target-item voce">
+                        <div class="collab-target-icon voce-icona">
                             <i class="fas fa-book-open"></i>
                         </div>
-                        <h3 class="collab-target-name">Scuole Primarie</h3>
-                        <p class="collab-target-age">6-11 anni</p>
+                        <h3 class="collab-target-name voce-titolo">Scuole Primarie</h3>
+                        <p class="collab-target-age voce-testo">6-11 anni</p>
                     </div>
-                    <div class="collab-target-item">
-                        <div class="collab-target-icon">
+                    <div class="collab-target-item voce">
+                        <div class="collab-target-icon voce-icona">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <h3 class="collab-target-name">Scuole Secondarie</h3>
-                        <p class="collab-target-age">11-14 anni</p>
+                        <h3 class="collab-target-name voce-titolo">Scuole Secondarie</h3>
+                        <p class="collab-target-age voce-testo">11-14 anni</p>
                     </div>
                 </div>
             </div>
@@ -104,7 +98,7 @@ const bg: Record<string, string> = {
             <div class="collab-progetti-wrapper">
                 <div class="collab-progetti-header">
                     <span class="collab-progetti-label eyebrow">I Nostri Progetti</span>
-                    <h2 class="collab-progetti-title titolo-sezione">Cosa possiamo offrire alla tua scuola</h2>
+                    <h2 class="collab-progetti-title titolo-sezione">Cosa possiamo offrire <em>alla tua scuola</em></h2>
                     <p class="collab-progetti-subtitle intro-sezione">Programmi flessibili e personalizzabili, sviluppati da professionisti con esperienza nel mondo educativo.</p>
                 </div>
                 <div class="collab-progetti-list">
@@ -114,7 +108,7 @@ const bg: Record<string, string> = {
                         </div>
                         <div class="collab-progetto-content">
                             <h3 class="collab-progetto-name">Educazione al Movimento</h3>
-                            <p class="collab-progetto-desc">Percorsi di psicomotricita e movimento creativo per sviluppare coordinazione, equilibrio e consapevolezza corporea fin dalla prima infanzia.</p>
+                            <p class="collab-progetto-desc">Percorsi di psicomotricità e movimento creativo per sviluppare coordinazione, equilibrio e consapevolezza corporea fin dalla prima infanzia.</p>
                         </div>
                     </div>
                     <div class="collab-progetto-item">
@@ -123,7 +117,7 @@ const bg: Record<string, string> = {
                         </div>
                         <div class="collab-progetto-content">
                             <h3 class="collab-progetto-name">Laboratori Espressivi</h3>
-                            <p class="collab-progetto-desc">Attivita che uniscono danza, musica e teatro per stimolare la creativita, l'espressione emotiva e le capacita relazionali dei bambini.</p>
+                            <p class="collab-progetto-desc">Attività che uniscono danza, musica e teatro per stimolare la creatività, l'espressione emotiva e le capacità relazionali dei bambini.</p>
                         </div>
                     </div>
                     <div class="collab-progetto-item">
@@ -132,7 +126,7 @@ const bg: Record<string, string> = {
                         </div>
                         <div class="collab-progetto-content">
                             <h3 class="collab-progetto-name">Progetti Inclusivi</h3>
-                            <p class="collab-progetto-desc">Programmi specifici per l'integrazione e l'inclusione sociale attraverso la danza, favorendo l'accoglienza delle diversita.</p>
+                            <p class="collab-progetto-desc">Programmi specifici per l'integrazione e l'inclusione sociale attraverso la danza, favorendo l'accoglienza delle diversità.</p>
                         </div>
                     </div>
                     <div class="collab-progetto-item">
@@ -141,7 +135,7 @@ const bg: Record<string, string> = {
                         </div>
                         <div class="collab-progetto-content">
                             <h3 class="collab-progetto-name">Spettacoli di Fine Anno</h3>
-                            <p class="collab-progetto-desc">Supporto nella creazione di performance per saggi e eventi scolastici, con coreografie adatte all'eta e al livello dei partecipanti.</p>
+                            <p class="collab-progetto-desc">Supporto nella creazione di performance per saggi e eventi scolastici, con coreografie adatte all'età e al livello dei partecipanti.</p>
                         </div>
                     </div>
                     <div class="collab-progetto-item">
@@ -150,7 +144,7 @@ const bg: Record<string, string> = {
                         </div>
                         <div class="collab-progetto-content">
                             <h3 class="collab-progetto-name">Formazione Docenti</h3>
-                            <p class="collab-progetto-desc">Workshop e corsi di aggiornamento per insegnanti, per integrare il movimento nelle attivita didattiche quotidiane.</p>
+                            <p class="collab-progetto-desc">Workshop e corsi di aggiornamento per insegnanti, per integrare il movimento nelle attività didattiche quotidiane.</p>
                         </div>
                     </div>
                     <div class="collab-progetto-item">
@@ -159,7 +153,7 @@ const bg: Record<string, string> = {
                         </div>
                         <div class="collab-progetto-content">
                             <h3 class="collab-progetto-name">Progetti PON/PTOF</h3>
-                            <p class="collab-progetto-desc">Collaborazione per progetti finanziati, con documentazione completa e supporto nella pianificazione delle attivita.</p>
+                            <p class="collab-progetto-desc">Collaborazione per progetti finanziati, con documentazione completa e supporto nella pianificazione delle attività.</p>
                         </div>
                     </div>
                 </div>
@@ -168,10 +162,10 @@ const bg: Record<string, string> = {
 
         <!-- CTA Section -->
         <section class="collab-cta-section sezione-scura">
-            <div class="collab-cta-bg" style={`background-image: url('${bg['bg-progetti-territorio.jpg']}')`}></div>
+            <div class="collab-cta-bg" style={`background-image: url('${bg['gallery-4.jpg']}')`}></div>
             <div class="collab-cta-overlay"></div>
             <div class="collab-cta-wrapper">
-                <h2 class="collab-cta-title titolo-sezione">Portiamo la danza nella tua scuola</h2>
+                <h2 class="collab-cta-title titolo-sezione">Portiamo la danza <em>nella tua scuola</em></h2>
                 <p class="collab-cta-text intro-sezione">Contattaci per un incontro conoscitivo senza impegno. Saremo lieti di presentarti le nostre proposte e costruire insieme un progetto su misura per la tua scuola.</p>
                 <div class="collab-cta-buttons">
                     <a href="mailto:info@inballet.it?subject=Collaborazione%20Scuola" class="collab-cta-btn collab-cta-btn-primary btn-primary">
@@ -242,39 +236,11 @@ const bg: Record<string, string> = {
 }
 
 .collab-intro-visual {
-  position: relative;
+  align-self: center;
 }
 
 .collab-intro-image {
   width: 100%;
-  border-radius: var(--radius-img);
-  box-shadow: 0 20px 40px rgba(0,0,0,.1);
-}
-
-.collab-intro-badge {
-  position: absolute;
-  bottom: -20px;
-  right: -20px;
-  background: var(--dark-navy);
-  color: #fff;
-  padding: 1.5rem 2rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.2);
-}
-
-.collab-intro-badge-number {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  display: block;
-  line-height: 1;
-  color: var(--primary-blue);
-}
-
-.collab-intro-badge-text {
-  font-size: var(--text-sm);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: .3rem;
 }
 
 .collab-target-section {
@@ -311,48 +277,6 @@ const bg: Record<string, string> = {
   display: grid;
   grid-template-columns: repeat(4,1fr);
   gap: 2rem;
-}
-
-.collab-target-item {
-  text-align: center;
-  padding: 2rem 1.5rem;
-  background: #fff;
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  border: 1px solid var(--border-card);
-  transition: all .3s ease;
-}
-
-.collab-target-item:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-card-hover);
-  border-color: var(--primary-blue);
-}
-
-.collab-target-icon {
-  width: 70px;
-  height: 70px;
-  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.2rem;
-  color: var(--dark-navy);
-  font-size: 1.8rem;
-}
-
-.collab-target-name {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--dark-navy);
-  margin-bottom: .5rem;
-}
-
-.collab-target-age {
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  font-weight: 500;
 }
 
 .collab-progetti-section {
@@ -398,19 +322,14 @@ const bg: Record<string, string> = {
 }
 
 .collab-progetto-icon {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
-  border-radius: 12px;
+  width: 1.75rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--dark-navy);
-  font-size: 1.3rem;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: .15rem;
+  color: var(--primary-blue-dark);
+  font-size: 1.25rem;
   flex-shrink: 0;
-}
-
-.collab-progetto-content {
 }
 
 .collab-progetto-name {
@@ -487,11 +406,6 @@ const bg: Record<string, string> = {
     order: -1;
   }
 
-  .collab-intro-badge {
-    bottom: 20px;
-    right: 20px;
-  }
-
   .collab-target-grid {
     grid-template-columns: repeat(2,1fr);
   }
@@ -502,12 +416,5 @@ const bg: Record<string, string> = {
     grid-template-columns: 1fr;
   }
 
-  .collab-intro-badge {
-    position: relative;
-    bottom: auto;
-    right: auto;
-    margin-top: 1.5rem;
-    display: inline-block;
-  }
 }
 </style>

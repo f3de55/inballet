@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { webp } from '../lib/images';
 import { iscrizioni } from '../data/scuola';
 
-const heroBg = await webp('gallery-7.jpg', 1920);
+const heroBg = await webp('gallery-1.jpg', 1920);
 ---
 
 <Base
@@ -17,11 +18,8 @@ const heroBg = await webp('gallery-7.jpg', 1920);
         <div class="chisiamo-hero-image" style={`background-image: url('${heroBg}')`}></div>
         <div class="chisiamo-hero-overlay"></div>
         <div class="chisiamo-hero-glass">
-            <span class="chisiamo-hero-badge">Iscrizioni {iscrizioni.anno}</span>
+            <Breadcrumb />
             <h1 class="chisiamo-hero-title">Documenti</h1>
-            <a href="#documenti" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
-                <i class="fas fa-chevron-down"></i>
-            </a>
         </div>
     </section>
 

@@ -28,7 +28,7 @@ const gallery = await Promise.all(
 );
 
 // Sfondi in WebP (il CSS definisce solo posizione e dimensione)
-const heroBg = await webp('gallery-3.jpg', 1920);
+const heroBg = await webp('hero-bg.jpg', 1920);
 const progettiBg = await webp('bg-progetti-territorio.jpg', 1920);
 
 // Dati strutturati (immagine social 1200x630)
@@ -39,9 +39,9 @@ const schema = schemaHome(socialImage);
 
 <Base
     title="Scuola di Danza a Lainate e Rho | InBallet"
-    description={`Scuola di danza a Lainate e Rho (MI) dal ${FONDAZIONE}: corsi per bambini dai 3 anni, ragazzi e adulti. Classica, modern, contemporanea, hip-hop, yoga e pilates. Ente formativo CSEN-CONI. Lezione di prova gratuita.`}
+    description={`Scuola di danza a Lainate e Rho (MI) dal ${FONDAZIONE}: corsi per bambini dai 3 anni, ragazzi e adulti. Classica, modern, contemporanea, hip-hop, yoga e pilates. Ente formativo CSEN-CONI. Lezione di prova senza impegno.`}
     ogTitle="InBallet - Scuola di Danza a Lainate e Rho"
-    ogDescription={`${ANNI_ATTIVITA} anni di danza, passione e formazione per tutte le età. Prenota una lezione di prova.`}
+    ogDescription={`${ANNI_ATTIVITA} anni di danza, passione e formazione per tutte le età, a Lainate e Rho.`}
     ogImage={socialImage}
     skipLinkId="skip-link"
 >
@@ -58,24 +58,20 @@ const schema = schemaHome(socialImage);
         <div class="hero-overlay"></div>
 
         <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fas fa-hand-sparkles" aria-hidden="true"></i>
-                InBallet ASD · {ANNI_ATTIVITA} anni di danza
-            </div>
+            <p class="hero-badge">InBallet ASD · {ANNI_ATTIVITA} anni di danza</p>
 
             <h1>Scuola di Danza a Lainate e Rho</h1>
 
             <p class="hero-subtitle">
-                Corsi per <strong>tutte le età</strong>, dai 3 anni agli adulti: <strong>classica</strong>, <strong>contemporanea</strong>, <strong>hip-hop</strong>, <strong>breaking</strong>, <strong>yoga</strong> e <strong>pilates</strong>. Ente formativo riconosciuto <strong>CSEN e CONI</strong>.
+                Corsi per tutte le età, dai 3 anni agli adulti: classica, contemporanea, hip-hop, breaking, yoga e pilates. Ente formativo riconosciuto CSEN e CONI.
             </p>
 
             <div class="hero-cta">
-                <a href="#corsi" class="btn-primary">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                    <span>Scopri i Percorsi</span>
+                <a href="/corsi" class="btn-primary">
+                    <span>Scopri i corsi</span>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
                 <a href="/contatti" class="btn-secondary">
-                    <i class="fas fa-envelope" aria-hidden="true"></i>
                     <span>Contattaci</span>
                 </a>
             </div>
@@ -88,8 +84,8 @@ const schema = schemaHome(socialImage);
             <!-- Header -->
             <div class="corsi-header">
                 <span class="corsi-label eyebrow">La nostra offerta formativa</span>
-                <h2 class="corsi-title titolo-sezione">I Nostri Corsi</h2>
-                <p class="corsi-intro intro-sezione">Scopri i percorsi di danza pensati per <strong>ogni età e livello</strong>. Dalla <strong>tecnica classica</strong> alle <strong>discipline contemporanee e urbane</strong>.</p>
+                <h2 class="corsi-title titolo-sezione">I nostri <em>corsi</em></h2>
+                <p class="corsi-intro intro-sezione">Scopri i percorsi di danza pensati per ogni età e livello. Dalla tecnica classica alle discipline contemporanee e urbane.</p>
             </div>
 
             <div class="corsi-grid">
@@ -127,15 +123,13 @@ const schema = schemaHome(socialImage);
                 <div class="story-content">
                     <div class="section-header chi-siamo-header">
                         <p class="section-tagline eyebrow">Dal {FONDAZIONE} a Lainate e Rho</p>
-                        <h2 class="section-title titolo-sezione">La Nostra Storia</h2>
+                        <h2 class="section-title titolo-sezione">La nostra <em>storia</em></h2>
                     </div>
 
                     <div class="story-text">
-                        <p class="story-lead"><strong>I.N. Ballet</strong> è una scuola di danza <strong>multidisciplinare</strong>: un luogo di vita dedicato alla conoscenza e all'esplorazione dei diversi stili di danza, nelle loro sfumature <strong>tecniche</strong> e <strong>artistiche</strong>.</p>
+                        <p class="story-lead">I.N. Ballet è una scuola di danza multidisciplinare, nata nel {FONDAZIONE} da {scuola.fondatrice}: un luogo dove esplorare stili diversi, dalla tecnica all'espressione artistica.</p>
 
-                        <p>Fondata nel <strong>{FONDAZIONE}</strong> da <strong>{scuola.fondatrice}</strong>, accoglie <strong>bambini dai 3 anni</strong>, ragazzi e adulti, con gruppi di ogni livello fino ai corsi avanzati. È uno spazio di continua ricerca corporea, in dialogo costante con le famiglie, dove la danza incontra le emozioni e le forme espressive di ciascuno.</p>
-
-                        <p>È anche punto di riferimento per la <strong>formazione nazionale dei maestri di danza</strong> e per i professionisti dell'ambito educativo e terapeutico, come <strong>Ente Formativo CSEN e CONI</strong>.</p>
+                        <p>Accoglie bambini dai 3 anni, ragazzi e adulti di ogni livello ed è Ente Formativo CSEN e CONI per la formazione dei maestri di danza.</p>
                     </div>
 
                     <blockquote class="story-quote">
@@ -147,10 +141,6 @@ const schema = schemaHome(socialImage);
                 <div class="story-image">
                     <div class="story-photo">
                         <Img src="ballerina.jpg" alt="Ballerina InBallet" width="450" height="500" loading="lazy" decoding="async" widths={[450, 900]} sizes="450px" />
-                        <div class="image-accent">
-                            <span class="accent-number">{ANNI_ATTIVITA}</span>
-                            <span class="accent-text">anni</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -163,17 +153,17 @@ const schema = schemaHome(socialImage);
             <!-- Header -->
             <div class="formazione-header">
                 <span class="formazione-label eyebrow">Ente Formativo CSEN e CONI</span>
-                <h2 class="formazione-title titolo-sezione">Formazione Professionale</h2>
+                <h2 class="formazione-title titolo-sezione">Formazione <em>professionale</em></h2>
             </div>
 
             <!-- Percorsi Cards -->
             <div class="percorsi-container">
 
                 <!-- Card Insegnante di Danza -->
-                <article class="percorso-card">
-                    <h3 class="percorso-card-title">Formazione Insegnanti di Danza</h3>
+                <article class="percorso-card voce">
+                    <h3 class="percorso-card-title voce-titolo">Formazione Insegnanti di Danza</h3>
                     <p class="percorso-card-description">
-                        Percorso <strong>biennale in danza Modern</strong> con formazione su <strong>tecnica, pedagogia e inclusione</strong>.
+                        Percorso biennale in danza Modern con formazione su tecnica, pedagogia e inclusione.
                     </p>
                     <div class="percorso-highlights">
                         <div class="highlight-item">
@@ -185,17 +175,17 @@ const schema = schemaHome(socialImage);
                             <span>2 anni + 6 master specialistici opzionali</span>
                         </div>
                     </div>
-                    <a href="/formazione-insegnanti" class="percorso-card-btn btn-primary">
+                    <a href="/formazione-insegnanti" class="percorso-card-btn link-cta">
                         <span>Scopri il corso</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
                 </article>
 
                 <!-- Card Formazioni Personalizzate -->
-                <article class="percorso-card">
-                    <h3 class="percorso-card-title">Formazioni Personalizzate</h3>
+                <article class="percorso-card voce">
+                    <h3 class="percorso-card-title voce-titolo">Formazioni Personalizzate</h3>
                     <p class="percorso-card-description">
-                        <strong>Workshop tematici</strong> e <strong>percorsi su misura</strong> per insegnanti, scuole ed enti.
+                        Workshop tematici e percorsi su misura per insegnanti, scuole ed enti.
                     </p>
                     <div class="percorso-highlights">
                         <div class="highlight-item">
@@ -207,7 +197,7 @@ const schema = schemaHome(socialImage);
                             <span>Formazione per scuole ed enti</span>
                         </div>
                     </div>
-                    <a href="/formazioni-personalizzate" class="percorso-card-btn btn-primary">
+                    <a href="/formazioni-personalizzate" class="percorso-card-btn link-cta">
                         <span>Scopri di più</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
@@ -222,7 +212,7 @@ const schema = schemaHome(socialImage);
             <!-- Header sezione -->
             <div class="testimonials-header">
                 <p class="testimonials-tagline eyebrow">Le voci della nostra community</p>
-                <h2 class="testimonials-title titolo-sezione">Dicono di Noi</h2>
+                <h2 class="testimonials-title titolo-sezione">Dicono <em>di noi</em></h2>
                 <p class="testimonials-description intro-sezione">
                     L'esperienza di chi ha scelto InBallet per crescere attraverso la danza. Recensioni autentiche dai nostri allievi e famiglie.
                 </p>
@@ -234,9 +224,6 @@ const schema = schemaHome(socialImage);
                     <!-- Stats sopra su mobile, sidebar su desktop -->
                     <div class="carousel-sidebar">
                         <div class="google-stats-card" id="googleStatsCard" style="display: none;">
-                            <div class="stats-header">
-                                <span class="stats-title">Le nostre recensioni</span>
-                            </div>
                             <div class="stats-content" id="statsContent">
                                 <div class="stat-item">
                                     <span class="stat-label">Caricamento...</span>
@@ -311,8 +298,8 @@ const schema = schemaHome(socialImage);
             <!-- Header -->
             <div class="altri-servizi-header">
                 <span class="altri-servizi-label eyebrow">La danza fuori dalla sala</span>
-                <h2 class="altri-servizi-title titolo-sezione">Progetti Sul Territorio</h2>
-                <p class="altri-servizi-intro intro-sezione">Portiamo la danza nelle <strong>scuole</strong>, nelle <strong>comunità</strong> e accanto a chi ha <strong>bisogno</strong>.</p>
+                <h2 class="altri-servizi-title titolo-sezione">Progetti <em>sul territorio</em></h2>
+                <p class="altri-servizi-intro intro-sezione">Portiamo la danza nelle scuole, nelle comunità e accanto a chi ha bisogno.</p>
             </div>
 
             <!-- Testo Narrativo -->
@@ -320,20 +307,20 @@ const schema = schemaHome(socialImage);
                 <div class="narrativo-colonna">
                     <h3>Eventi e Collaborazioni</h3>
                     <p>
-                        Organizziamo <strong><a href="/spettacoli-eventi">Spettacoli ed Eventi</a></strong> in teatri e spazi pubblici,
-                        portiamo la danza nelle scuole con <strong><a href="/collaborazioni-scuole">Collaborazioni Scolastiche</a></strong>
-                        e offriamo <strong><a href="/sportello-psicologico">Supporto Psicologico</a></strong> per allievi e famiglie.
+                        Organizziamo <a href="/spettacoli-eventi">Spettacoli ed Eventi</a> in teatri e spazi pubblici,
+                        portiamo la danza nelle scuole con <a href="/collaborazioni-scuole">Collaborazioni Scolastiche</a>
+                        e offriamo <a href="/sportello-psicologico">Supporto Psicologico</a> per allievi e famiglie.
                     </p>
                 </div>
 
                 <div class="narrativo-colonna">
                     <h3>Danza Integrativa</h3>
                     <p>
-                        Dal 2013 il <strong><a href="/progetto-noiconvoi">Progetto NoiConVoi</a></strong> accoglie ragazzi con disabilità
+                        Dal 2013 il <a href="/progetto-noiconvoi">Progetto NoiConVoi</a> accoglie ragazzi con disabilità
                         in esperienze di danza con supporto psicomotorio, insieme a un team di volontari.
-                        Con le <strong><a href="/classi-integrate">Classi Integrate</a></strong>, lo
-                        <strong><a href="/sportello-psicologico">Sportello del Bambino</a></strong> e i
-                        <strong><a href="/sostenitori">Sostenitori</a></strong> la danza diventa davvero di tutti.
+                        Con le <a href="/classi-integrate">Classi Integrate</a>, lo
+                        <a href="/sportello-psicologico">Sportello del Bambino</a> e i
+                        <a href="/sostenitori">Sostenitori</a> la danza diventa davvero di tutti.
                     </p>
                 </div>
             </div>
@@ -345,7 +332,7 @@ const schema = schemaHome(socialImage);
         <div class="container">
             <div class="gallery-header">
                 <p class="gallery-tagline eyebrow">I nostri momenti</p>
-                <h2 class="gallery-title titolo-sezione">Emozioni in Movimento</h2>
+                <h2 class="gallery-title titolo-sezione">Emozioni <em>in movimento</em></h2>
                 <p class="gallery-description intro-sezione">Scorri tra i momenti più belli delle nostre lezioni, spettacoli e performance. L'energia e la passione dei nostri allievi in un viaggio visivo.</p>
             </div>
         </div>
@@ -376,7 +363,7 @@ const schema = schemaHome(socialImage);
         <div class="container faq-layout">
             <div class="faq-intro">
                 <p class="faq-label eyebrow">Domande frequenti</p>
-                <h2 class="faq-title titolo-sezione" id="faq-titolo">Tutto quello che vuoi sapere</h2>
+                <h2 class="faq-title titolo-sezione" id="faq-titolo">Tutto quello che <em>vuoi sapere</em></h2>
                 <p class="faq-text intro-sezione">
                     Non trovi la risposta? Scrivici a <a href={`mailto:${scuola.email}`}>{scuola.email}</a>
                     o chiamaci al <a href={scuola.telefonoHref}>{scuola.telefono}</a>.
@@ -438,10 +425,9 @@ const schema = schemaHome(socialImage);
   position: relative;
   overflow: hidden;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
   z-index: 1;
-  padding-top: 80px;
+  padding: 80px 0 4.5rem;
 }
 
 .hero-image {
@@ -461,68 +447,56 @@ const schema = schemaHome(socialImage);
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg,rgba(26,26,26,.6) 0,rgba(42,42,42,.4) 50%,rgba(26,26,26,.6) 100%);
+  background: linear-gradient(to top, rgba(15,15,15,.85) 0%, rgba(15,15,15,.45) 55%, rgba(15,15,15,.2) 100%);
   z-index: 2;
 }
 
 .hero-content {
-  text-align: center;
-  color: var(--white);
+  position: relative;
   z-index: 3;
-  max-width: 800px;
-  margin: 0 2rem;
-  padding: 3rem 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  color: var(--white);
+  text-align: left;
   animation: fadeInUp 1s ease-out;
-  background: rgba(135,206,235,.25);
-  backdrop-filter: blur(6px);
-  border-radius: 20px;
-  border: 1px solid rgba(135,206,235,.2);
 }
 
 .hero-badge {
   display: block;
-  font-size: var(--text-lg);
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: var(--white);
+  font-size: .875rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  color: var(--primary-blue);
   text-transform: uppercase;
   letter-spacing: 2px;
-  text-shadow: 0 2px 8px rgba(0,0,0,.9);
-}
-
-.hero-badge :global(i) {
-  display: none;
 }
 
 .hero :global(h1) {
   text-wrap: balance;
   font-size: var(--text-6xl);
   font-weight: 700;
-  line-height: var(--leading-tight);
-  margin-bottom: 1.5rem;
+  line-height: 1.05;
+  margin-bottom: 1.25rem;
   color: var(--white);
   letter-spacing: -.02em;
-  text-shadow: 0 4px 8px rgba(0,0,0,.3);
+  max-width: 14ch;
 }
 
 .hero-subtitle {
   font-size: var(--text-xl);
-  margin-bottom: 3rem;
-  opacity: .9;
+  margin-bottom: 2.25rem;
+  color: rgba(255,255,255,.88);
   font-weight: 300;
-  line-height: 1.5;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  text-shadow: 0 2px 4px rgba(0,0,0,.2);
+  line-height: 1.55;
+  max-width: 38rem;
 }
 
 .hero-cta {
   display: flex;
   gap: 1rem;
-  justify-content: center;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
 }
 
 .chi-siamo-section,
@@ -664,65 +638,6 @@ const schema = schemaHome(socialImage);
   aspect-ratio: 450/500;
 }
 
-.image-accent {
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
-  color: var(--dark-navy);
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 12px 30px rgba(135,206,235,.4),0 4px 12px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.3);
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-.image-accent::before,
-.image-accent::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  opacity: 0;
-}
-
-.image-accent::before {
-  border: 3px solid rgba(255,255,255,.8);
-  animation: accent-pulse 4s ease-in-out infinite;
-}
-
-.image-accent::after {
-  border: 3px solid rgba(135,206,235,.7);
-  animation: accent-pulse 4s ease-in-out infinite;
-  animation-delay: 2s;
-}
-
-.accent-number {
-  font-size: 2.75rem;
-  font-weight: 700;
-  line-height: .9;
-  letter-spacing: -1px;
-  display: block;
-}
-
-.accent-text {
-  font-size: .85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  display: block;
-  line-height: 1;
-}
-
 .corsi-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
@@ -858,11 +773,8 @@ const schema = schemaHome(socialImage);
 
 .corsi-cta {
   text-align: center;
-  padding: 3rem 2rem;
-  background: linear-gradient(135deg, rgba(135, 206, 235, 0.08) 0%, rgba(176, 224, 230, 0.12) 100% );
-  border-radius: var(--radius-card);
-  border: 1px solid var(--border-card);
-  position: relative;
+  padding: 3rem 0 0;
+  border-top: 1px solid rgba(26, 26, 26, 0.1);
 }
 
 .corsi-cta-text {
@@ -918,14 +830,10 @@ const schema = schemaHome(socialImage);
 }
 
 .percorso-card {
-  background: var(--white);
-  border-radius: var(--radius-card);
-  padding: 2rem;
-  box-shadow: var(--shadow-card);
-  border: 1px solid var(--border-card);
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
 
 .percorso-card-title {
@@ -1578,12 +1486,8 @@ const schema = schemaHome(socialImage);
 }
 
 .google-stats-card {
-  background: linear-gradient(145deg,rgba(255,255,255,.98) 0,rgba(248,250,252,.95) 100%);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-card);
-  padding: 2rem 1.5rem;
-  box-shadow: 0 20px 40px rgba(135,206,235,.1),0 10px 20px rgba(0,0,0,.03);
+  border-top: 2px solid var(--primary-blue);
+  padding: 1.5rem 0 0;
   text-align: center;
 }
 
@@ -1754,10 +1658,6 @@ const schema = schemaHome(socialImage);
     gap: 2rem;
   }
 
-.percorso-card {
-    padding: 2.5rem;
-  }
-
 .percorso-card-title {
     font-size: 1.5rem;
   }
@@ -1874,25 +1774,6 @@ const schema = schemaHome(socialImage);
     font-size: var(--text-lg);
   }
 
-.image-accent {
-    top: -15px;
-    left: 50%;
-    right: auto;
-    width: 80px;
-    height: 80px;
-    transform: translateX(-50%) translateZ(0);
-  }
-
-.accent-number {
-    font-size: 2rem;
-    line-height: .9;
-  }
-
-.accent-text {
-    font-size: .7rem;
-    line-height: 1;
-  }
-
 .story-image {
     min-height: 400px;
     padding-right: 0;
@@ -1921,20 +1802,14 @@ const schema = schemaHome(socialImage);
 
 @media (max-width:768px) {
 .hero {
-    padding-top: 110px;
-    align-items: center;
-    padding-bottom: 50px;
+    padding: 110px 0 3rem;
     height: auto;
-    min-height: 0;
-  }
+    min-height: 78vh;
+}
 
 .hero-content {
-    margin: 0 1rem;
-    padding: 1.8rem 1.5rem 1.5rem;
-    border-radius: 16px;
-    max-width: 95%;
-    will-change: auto;
-  }
+    padding: 0 1.5rem;
+}
 
 .hero-badge {
     font-size: var(--text-sm);
@@ -1956,10 +1831,8 @@ const schema = schemaHome(socialImage);
   }
 
 .hero-cta {
-    gap: 1rem;
-    flex-direction: column;
-    align-items: center;
-  }
+    gap: .75rem;
+}
 
 .formazione-professionale-section .section-header {
     margin-bottom: 4rem;
@@ -2052,14 +1925,11 @@ const schema = schemaHome(socialImage);
 @media (max-width:480px) {
 .hero {
     padding-top: 105px;
-    height: auto;
-    min-height: 0;
-  }
+}
 
 .hero-content {
-    padding: 1.5rem 1.2rem 1.3rem;
-    margin: 0 .8rem;
-  }
+    padding: 0 1rem;
+}
 
 .hero-badge {
     font-size: var(--text-sm);
@@ -2149,7 +2019,7 @@ const schema = schemaHome(socialImage);
   }
 
 .corsi-cta {
-    padding: 2.5rem 1.5rem;
+    padding: 2.5rem 0 0;
   }
 
 .corsi-cta-text {
@@ -2180,10 +2050,6 @@ const schema = schemaHome(socialImage);
     gap: 2rem;
   }
 
-.percorso-card {
-    padding: 2rem;
-  }
-
 .percorso-card-title {
     font-size: 1.4rem;
     margin-bottom: 1rem;
@@ -2202,10 +2068,6 @@ const schema = schemaHome(socialImage);
 .highlight-item {
     font-size: var(--text-lg);
   }
-
-.percorso-card-btn {
-  width: 100%;
-}
 
 .gallery-infinite {
     height: 320px;
@@ -2282,7 +2144,7 @@ const schema = schemaHome(socialImage);
   }
 
 .google-stats-card {
-    padding: 1.2rem;
+    padding: 1.2rem 0 0;
   }
 
 :global(.rating-badge) {

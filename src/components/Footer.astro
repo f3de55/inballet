@@ -1,523 +1,250 @@
 ---
-import { FONDAZIONE, scuola } from '../data/scuola';
+/**
+ * Footer: colonne generate dalla navigazione (src/data/navigazione.ts) e dai
+ * dati ufficiali della scuola, così restano sempre allineate a navbar e contatti.
+ */
+import { categorieCorsi, FONDAZIONE, scuola, sedi } from '../data/scuola';
+import { menu, type Voce } from '../data/navigazione';
 import Img from './Img.astro';
 import Chatbot from './Chatbot.astro';
 
 const anno = new Date().getFullYear();
+
+// Corsi: i cinque percorsi della pagina /corsi; le altre colonne dalle voci del menu
+const colonne = [
+  {
+    titolo: 'Corsi',
+    voci: [{ nome: 'Tutti i corsi', href: '/corsi' }, ...categorieCorsi.map((c) => ({ nome: c.nome, href: `/corsi#${c.id}` }))] as Voce[],
+  },
+  ...menu
+    .filter((m) => m.id !== 'corsi')
+    .map((m) => ({ titolo: m.label, voci: m.sezioni.flatMap((s) => s.voci) })),
+];
 ---
 
 <div class="footer-main">
-    <!-- Logo a sinistra -->
-    <div class="footer-logo">
-        <Img src="logo.png" alt="InBallet Logo" widths={[110, 220, 452]} sizes="110px" loading="lazy" decoding="async" />
-        <p class="footer-desc">Scuola di danza a Lainate e Rho, dal {FONDAZIONE} formiamo ballerini di tutte le età con passione e professionalità.</p>
-        <span>Ente Formativo CSEN • CONI</span>
+  <div class="footer-brand">
+    <a href="/" class="footer-logo" aria-label="InBallet - Torna alla homepage">
+      <Img src="logo.png" alt="InBallet" widths={[120, 240, 452]} sizes="120px" loading="lazy" decoding="async" />
+    </a>
+    <p>Scuola di danza a Lainate e Rho dal {FONDAZIONE}, per bambini dai 3 anni, ragazzi e adulti.</p>
+    <p class="footer-ente">Ente Formativo CSEN · CONI</p>
+    <div class="footer-social">
+      <a href={scuola.social.instagram} target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+      <a href={scuola.social.facebook} target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
     </div>
+  </div>
 
-    <!-- Griglia colonne -->
-    <div class="footer-grid">
-        <div class="footer-col">
-            <h4 class="footer-corsi-title">
-                CORSI
-                <i id="corsiArrow" class="fas fa-chevron-down"></i>
-            </h4>
-            <h4>LA SCUOLA</h4>
-            <a href="/chi-siamo">Chi Siamo</a>
-            <a href="/spettacoli-eventi">Calendario Eventi</a>
-            <a href="/spettacoli-eventi">Spettacoli ed Eventi</a>
-            <a href="/collaborazioni-scuole">Collaborazioni con Scuole</a>
-            <a href="/sportello-psicologico">Sportello Psicologico</a>
-            <a href="/documenti">Documenti</a>
-        </div>
-        <div class="footer-col">
-            <h4>PROGETTI</h4>
-            <a href="/classi-integrate">Classi Multidisciplinari Integrate</a>
-            <a href="/progetto-noiconvoi">Progetto NoiConVoi</a>
-            <a href="/sostenitori">Sostenitori Progetti Sociali</a>
-        </div>
-        <div class="footer-col">
-            <h4>FORMAZIONE</h4>
-            <a href="/formazione-insegnanti">Corso Insegnanti di Danza</a>
-            <a href="/formazioni-personalizzate">Formazioni Personalizzate</a>
-        </div>
-        <div class="footer-col" id="contatti">
-            <h4>CONTATTI</h4>
-            <p><i class="fas fa-phone"></i> <a href="tel:+393937802996">+39 393 780 2996</a></p>
-            <p><i class="fas fa-envelope"></i> <a href="mailto:info@inballet.it">info@inballet.it</a></p>
-            <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=Via+Puccini+14+Lainate+MI" target="_blank" rel="noopener">Via Puccini, 14 - Lainate (MI)</a></p>
-            <div class="footer-social">
-                <a href="https://www.instagram.com/i.n.ballet/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.facebook.com/inballetasd/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
+  <nav class="footer-nav" aria-label="Mappa del sito">
+    {colonne.map((c) => (
+      <div class="footer-col">
+        <h2 class="footer-titolo">{c.titolo}</h2>
+        <ul>
+          {c.voci.map((v) => <li><a href={v.href}>{v.breve ?? v.nome}</a></li>)}
+        </ul>
+      </div>
+    ))}
+  </nav>
 
-<!-- Modale CORSI -->
-<div id="corsiModal" class="corsi-modal">
-    <div class="corsi-modal-content">
-        <div class="corsi-modal-header">
-            <h3>I Nostri Corsi</h3>
-            <button class="corsi-modal-close" aria-label="Chiudi"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="corsi-modal-grid">
-            <div>
-                <strong>Classica e Moderna</strong>
-                <a href="/avviamento-danza">Avviamento alla Danza</a>
-                <a href="/educazione-danza">Educazione alla Danza</a>
-                <a href="/danza-classica">Danza Classica</a>
-                <a href="/modern">Modern</a>
-            </div>
-            <div>
-                <strong>Contemporanea</strong>
-                <a href="/danza-contemporanea">Danza Contemporanea</a>
-                <a href="/contemporanea-adulti">Contemporanea Adulti</a>
-                <a href="/contact-improvisation">Contact Improvisation</a>
-                <a href="/movimento-creativo">Movimento Creativo</a>
-            </div>
-            <div>
-                <strong>Urban Dance</strong>
-                <a href="/hip-hop">Hip-Hop</a>
-                <a href="/heels">Heels</a>
-                <a href="/breaking">Breaking</a>
-                <a href="/danza-acrobatica">Danza Acrobatica</a>
-                <a href="/contaminato">Contaminato</a>
-            </div>
-            <div>
-                <strong>Benessere</strong>
-                <a href="/yoga">Yoga</a>
-                <a href="/pilates">Pilates</a>
-                <a href="/classi">Classi</a>
-                <a href="/lezioni-individuali">Lezioni Individuali</a>
-            </div>
-            <div>
-                <strong>Percorsi per Età</strong>
-                <a href="/prima-infanzia">Prima Infanzia (3-5 anni)</a>
-                <a href="/seconda-infanzia">Seconda Infanzia (6-8 anni)</a>
-                <a href="/bambini">Bambini (9-11 anni)</a>
-                <a href="/ragazzi">Ragazzi (12-16 anni)</a>
-                <a href="/adulti">Adulti</a>
-            </div>
-        </div>
-    </div>
+  <div class="footer-contatti">
+    <h2 class="footer-titolo">Contatti</h2>
+    <ul>
+      <li><a href={scuola.telefonoHref}>{scuola.telefono}</a></li>
+      <li><a href={`mailto:${scuola.email}`}>{scuola.email}</a></li>
+    </ul>
+    <ul class="footer-sedi">
+      {sedi.map((s) => (
+        <li>
+          <span>{s.citta}</span>
+          <a href={s.maps} target="_blank" rel="noopener">{s.via}</a>
+        </li>
+      ))}
+    </ul>
+    <a href="/contatti" class="footer-link">Orari e contatti</a>
+  </div>
 </div>
 
 <div class="footer-bottom">
-    <p>&copy; <span id="footerYear">{anno}</span> {scuola.ragioneSociale} · C.F. {scuola.codiceFiscale} - Tutti i diritti riservati</p>
+  <p>&copy; <span id="footerYear">{anno}</span> {scuola.ragioneSociale} · C.F. {scuola.codiceFiscale}</p>
 </div>
 
 <Chatbot />
 
 <script>
-    import '../scripts/footer';
+  import '../scripts/footer';
 </script>
 
 <style>
-.footer-col :global(a:focus-visible) {
-  color: var(--primary-blue);
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 2px;
-}
-
-.footer-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2.5rem;
-  display: flex;
-  gap: 4rem;
-  align-items: flex-start;
-}
-
-.footer-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: .8rem;
-  max-width: 220px;
-}
-
-.footer-logo :global(img) {
-  width: 110px;
-  height: auto;
-  filter: brightness(1.1);
-}
-
-.footer-desc {
-  color: #aaa;
-  font-size: 14px;
-  line-height: 1.7;
-  margin: 0;
-}
-
-.footer-logo :global(span) {
-  color: var(--primary-blue);
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.footer-grid {
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2.5rem;
-}
-
-.footer-col {
-  display: flex;
-  flex-direction: column;
-}
-
-.footer-col :global(h4) {
-  color: var(--primary-blue);
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 1rem;
-}
-
-.footer-corsi-title {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  transition: color .2s;
-  margin-bottom: .8rem;
-}
-
-.footer-corsi-title:hover {
-  color: #fff;
-}
-
-.footer-corsi-title :global(i) {
-  font-size: 11px;
-  transition: transform .3s;
-}
-
-.footer-col :global(a) {
-  color: #aaa;
-  text-decoration: none;
-  font-size: 14px;
-  padding: .35rem 0;
-  transition: color .2s;
-  display: block;
-}
-
-.footer-col :global(a:hover) {
-  color: #fff;
-}
-
-.footer-col :global(p) {
-  color: #ccc;
-  font-size: var(--text-base);
-  margin-bottom: .5rem;
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-}
-
-.footer-col p :global(i) {
-  color: var(--primary-blue);
-  width: 18px;
-  font-size: 1rem;
-}
-
-.footer-col p :global(a) {
-  display: inline;
-  padding: 0;
-}
-
-.footer-social {
-  display: flex;
-  gap: .6rem;
-  margin-top: 1rem;
-}
-
-.footer-social :global(a) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  background: rgba(135,206,235,.1);
-  border: 1px solid var(--primary-blue);
-  border-radius: 50%;
-  color: var(--primary-blue);
-  text-decoration: none;
-  transition: all .2s;
-  font-size: 1.1rem;
-  padding: 0;
-}
-
-.footer-social :global(a:hover) {
-  background: var(--primary-blue);
-  color: #fff;
-}
-
-.footer-bottom {
-  text-align: center;
-  padding: 1.5rem 2rem;
-  margin-top: 2.5rem;
-  border-top: 1px solid rgba(135,206,235,.1);
-  color: #999;
-  font-size: 14px;
-}
-
-.footer-bottom :global(a) {
-  color: #999;
-  text-decoration: none;
-}
-
-.corsi-modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,.8);
-  z-index: 9999;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
-
-.corsi-modal.open {
-  display: flex;
-}
-
-.corsi-modal-content {
-  background: var(--dark-navy);
-  border: 1px solid rgba(135,206,235,.2);
-  border-radius: 12px;
-  padding: 2rem;
-  max-width: 900px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  animation: modalIn .25s ease;
-}
-
-.corsi-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(135,206,235,.15);
-}
-
-.corsi-modal-header :global(h3) {
-  color: var(--primary-blue);
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-.corsi-modal-header :global(button) {
-  background: none;
-  border: none;
-  color: #888;
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: .4rem;
-  transition: color .2s;
-}
-
-.corsi-modal-header :global(button:hover) {
-  color: #fff;
-}
-
-.corsi-modal-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 2rem;
-}
-
-.corsi-modal-grid :global(strong) {
-  color: var(--primary-blue);
-  font-size: 12px;
-  font-weight: 600;
-  display: block;
-  margin-bottom: .8rem;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-}
-
-.corsi-modal-grid :global(a) {
-  color: #aaa;
-  text-decoration: none;
-  font-size: 14px;
-  padding: .3rem 0;
-  display: block;
-  transition: color .2s;
-}
-
-.corsi-modal-grid :global(a:hover) {
-  color: #fff;
-}
-
-@media (max-width:1024px) {
   .footer-main {
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 4.4fr) minmax(0, 1fr);
+    gap: 3.5rem;
+    max-width: 1340px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 3.5rem;
   }
 
-  .footer-logo {
-    flex-direction: row;
-    align-items: center;
-    gap: 1.5rem;
-    max-width: none;
+  /* ---------- Marchio ---------- */
+  .footer-brand :global(img) {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1.25rem;
   }
 
-  .footer-desc {
-    display: none;
+  .footer-brand p {
+    font-size: .9375rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, .65);
+    max-width: 16rem;
   }
 
-  .footer-grid {
-    width: 100%;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-  }
-
-  .footer-col :global(h4) {
-    font-size: 14px;
-  }
-
-  .footer-col :global(a),
-  .footer-col :global(p) {
-    font-size: var(--text-base);
-  }
-
-  .corsi-modal-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width:768px) {
-  .footer-main {
-    padding: 0 1.5rem;
-  }
-
-  .footer-logo {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    max-width: none;
-  }
-
-  .footer-desc {
-    text-align: center;
-    display: block;
-    font-size: 13px;
-  }
-
-  .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-  }
-
-  .footer-col {
-    text-align: left;
-  }
-
-  .footer-col :global(h4) {
-    font-size: 14px;
-  }
-
-  .footer-col :global(a),
-  .footer-col :global(p) {
-    font-size: var(--text-base);
+  .footer-brand .footer-ente {
+    margin-top: .9rem;
+    font-size: .8125rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--primary-blue);
   }
 
   .footer-social {
-    justify-content: flex-start;
+    display: flex;
+    gap: .6rem;
+    margin-top: 1.5rem;
   }
 
-  .corsi-modal-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-}
-
-@media (max-width:480px) {
-  .footer-main {
-    flex-direction: column;
-    gap: 2rem;
-    padding: 0 1.2rem;
+  .footer-social a {
+    display: flex;
     align-items: center;
-  }
-
-  .footer-logo {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .footer-logo :global(img) {
-    width: 100px;
-  }
-
-  .footer-logo :global(span) {
-    font-size: 12px;
-  }
-
-  .footer-desc {
-    font-size: var(--text-sm);
-    text-align: center;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    text-align: center;
-  }
-
-  .footer-col {
-    align-items: center;
-  }
-
-  .footer-col :global(h4) {
-    font-size: 14px;
-    margin-bottom: .8rem;
-  }
-
-  .footer-col :global(a),
-  .footer-col :global(p) {
-    font-size: var(--text-base);
-  }
-
-  .footer-social {
     justify-content: center;
-  }
-
-  .footer-social :global(a) {
     width: 38px;
     height: 38px;
-    font-size: 1rem;
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 50%;
+    color: var(--white);
+    text-decoration: none;
+    transition: border-color .3s ease, color .3s ease;
   }
 
+  .footer-social a:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+  }
+
+  /* ---------- Colonne ---------- */
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+
+  .footer-titolo {
+    font-size: .8125rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary-blue);
+    margin-bottom: 1.1rem;
+  }
+
+  .footer-main ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+  }
+
+  .footer-main ul a,
+  .footer-link {
+    font-size: .9375rem;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, .72);
+    text-decoration: none;
+    transition: color .3s ease;
+  }
+
+  .footer-main ul a:hover,
+  .footer-link:hover {
+    color: var(--white);
+  }
+
+  .footer-main a:focus-visible {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+  }
+
+  /* ---------- Contatti ---------- */
+  .footer-contatti ul:first-of-type a {
+    color: var(--white);
+  }
+
+  .footer-sedi {
+    margin-top: 1.25rem;
+  }
+
+  .footer-sedi li {
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+  }
+
+  .footer-sedi span {
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .45);
+  }
+
+  .footer-link {
+    display: inline-block;
+    margin-top: 1.25rem;
+    padding-bottom: .2rem;
+    border-bottom: 1px solid var(--primary-blue);
+    color: var(--white);
+  }
+
+  /* ---------- Barra finale ---------- */
   .footer-bottom {
-    font-size: 13px;
-    padding: 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: .5rem 2rem;
+    max-width: 1340px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    font-size: .8125rem;
+    color: rgba(255, 255, 255, .5);
   }
 
-  .corsi-modal-content {
-    padding: 1.5rem;
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1240px) {
+    .footer-main {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .footer-nav {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
   }
 
-  .corsi-modal-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
+  @media (max-width: 700px) {
+    .footer-main {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 2rem 1.5rem 2.5rem;
+    }
 
-  .corsi-modal-grid :global(strong) {
-    font-size: 12px;
-  }
+    .footer-nav {
+      grid-row: auto;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem 1.5rem;
+    }
 
-  .corsi-modal-grid :global(a) {
-    font-size: 13px;
+    .footer-bottom {
+      padding: 1.25rem 1.5rem 5rem;
+    }
   }
-}
 </style>

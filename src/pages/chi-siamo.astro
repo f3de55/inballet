@@ -1,15 +1,27 @@
 ---
-import { ANNI_ATTIVITA, FONDAZIONE, scuola } from '../data/scuola';
+import { ANNI_ATTIVITA, FONDAZIONE, sedi } from '../data/scuola';
 import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { webp } from '../lib/images';
 
 const bg: Record<string, string> = {
-  'gallery-6.jpg': await webp('gallery-6.jpg', 1920),
+  'gallery-7.jpg': await webp('gallery-7.jpg', 1920),
   'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
 };
 
-const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenotare una lezione di prova.')}`;
+
+/** Insegnanti (mostrati nella sezione team). */
+const team = [
+  { nome: 'Ilenia Nobile', ruolo: 'Direttrice Artistica', bio: 'Fondatrice di InBallet. Danza classica e contemporanea.', foto: 'ballerina.jpg' },
+  { nome: 'Marco Bianchi', ruolo: 'Coreografo Hip Hop', bio: '15 anni nelle street dance. Giudice in competizioni nazionali.', foto: 'gallery-2.jpg' },
+  { nome: 'Sofia Russo', ruolo: 'Insegnante Danza Classica', bio: 'Diplomata Accademia Nazionale. Propedeutica e tecnica classica.', foto: 'hero-bg.jpg' },
+  { nome: 'Giulia Ferrara', ruolo: 'Insegnante Modern Jazz', bio: 'Ballerina professionista. Produzioni teatrali e TV.', foto: 'gallery-3.jpg' },
+  { nome: 'Luca Martini', ruolo: 'Insegnante Breaking', bio: 'B-boy dal 2008. Vincitore di battle nazionali.', foto: 'gallery-10.jpg' },
+  { nome: 'Elena Costa', ruolo: 'Insegnante Pilates & Yoga', bio: 'Certificata internazionalmente. Benessere per danzatori.', foto: 'gallery-6.jpg' },
+];
+
+const [lainate, rho] = sedi;
 ---
 
 <Base
@@ -21,15 +33,12 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
         <!-- Hero Chi Siamo -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-6.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-7.jpg']}')`}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
-                <span class="chisiamo-hero-badge">Chi Siamo</span>
+                <Breadcrumb />
                 <h1 class="chisiamo-hero-title">La nostra storia</h1>
                 <p class="chisiamo-hero-tagline">Dal {FONDAZIONE} formiamo ballerini con passione e dedizione.</p>
-                <a href="#fondatrice" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
-                    <i class="fas fa-chevron-down"></i>
-                </a>
             </div>
         </section>
 
@@ -38,89 +47,65 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
             <div class="container">
                 <div class="fondatrice-layout">
                     <div class="fondatrice-visual">
-                        <div class="fondatrice-image-wrapper">
+                        <div class="fondatrice-image-wrapper foto-cornice foto-cornice--sinistra">
                             <Img src="ilenia.jpg" alt="Ilenia Nobile, Fondatrice e Direttrice Artistica di InBallet" loading="lazy" />
-                            <div class="fondatrice-quote-card">
-                                <span class="quote-icon"><i class="fas fa-quote-left"></i></span>
-                                <blockquote>
-                                    "La danza è un linguaggio universale che connette corpo, mente e anima"
-                                </blockquote>
-                                <cite>— Ilenia Nobile</cite>
-                            </div>
                         </div>
                     </div>
                     <div class="fondatrice-content">
                         <span class="fondatrice-label eyebrow">Fondatrice & Direttrice Artistica</span>
-                        <h2 class="fondatrice-name titolo-sezione">Ilenia Nobile</h2>
+                        <h2 class="fondatrice-name titolo-sezione">Ilenia <em>Nobile</em></h2>
                         <div class="fondatrice-bio">
-                            <p>Dallo skate park di Lainate a 3 sedi operative: <strong>Ilenia Nobile</strong> ha trasformato la sua passione in una scuola dove la danza è accessibile a tutti.</p>
-                            <div class="fondatrice-separator"></div>
+                            <p>Dallo skate park di Lainate alle due sedi di Lainate e Rho: Ilenia Nobile ha trasformato la sua passione in una scuola dove la danza è accessibile a tutti.</p>
                             <p>La sua filosofia: il movimento come strumento di crescita personale completa.</p>
                         </div>
+                        <blockquote class="fondatrice-citazione">
+                            <p>La danza è un linguaggio universale che connette corpo, mente e anima.</p>
+                            <cite>Ilenia Nobile</cite>
+                        </blockquote>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Timeline Storia con Serpentina -->
+        <!-- Timeline della storia -->
         <section class="storia-section">
             <div class="container">
                 <div class="storia-header">
                     <span class="storia-label eyebrow">Il Nostro Percorso</span>
-                    <h2 class="storia-title titolo-sezione">Una storia di passione</h2>
+                    <h2 class="storia-title titolo-sezione">Dal {FONDAZIONE} <em>a oggi</em></h2>
                 </div>
-                <div class="timeline-snake">
-                    <!-- SVG Serpentina -->
-                    <svg class="timeline-path" viewBox="-8 0 116 100" preserveAspectRatio="none">
-                        <path class="snake-line" d="
-                            M 17 20 H 83
-                            Q 108 20, 108 30
-                            L 108 40
-                            Q 108 50, 98 50
-                            L 2 50
-                            Q -8 50, -8 60
-                            L -8 70
-                            Q -8 80, 2 80
-                            L 17 80 H 83
-                        "></path>
-                    </svg>
-                    <!-- Riga 1 -->
-                    <div class="timeline-row">
-                        <div class="timeline-card">
-                            <span class="timeline-year">{FONDAZIONE}</span>
-                            <h3>Il Primo Passo</h3>
-                            <p>Ilenia fonda InBallet nello skate park di Lainate.</p>
-                        </div>
-                        <div class="timeline-card">
-                            <span class="timeline-year">2010</span>
-                            <h3>Crescita</h3>
-                            <p>Dalla strada alla prima sede stabile.</p>
-                        </div>
-                        <div class="timeline-card">
-                            <span class="timeline-year">2015</span>
-                            <h3>Espansione</h3>
-                            <p>Apertura della seconda sede a Rho.</p>
-                        </div>
-                    </div>
-                    <!-- Riga 2 -->
-                    <div class="timeline-row">
-                        <div class="timeline-card">
-                            <span class="timeline-year">2020</span>
-                            <h3>Innovazione</h3>
-                            <p>Didattica online durante la pandemia.</p>
-                        </div>
-                        <div class="timeline-card">
-                            <span class="timeline-year">2023</span>
-                            <h3>Riconoscimento</h3>
-                            <p>Ente Formativo CSEN e CONI. Qualità certificata.</p>
-                        </div>
-                        <div class="timeline-card timeline-card-highlight">
-                            <span class="timeline-year">2025</span>
-                            <h3>Oggi</h3>
-                            <p>500+ allievi, 3 sedi operative e un team di professionisti.</p>
-                        </div>
-                    </div>
-                </div>
+                <ol class="timeline">
+                    <li class="voce">
+                        <span class="voce-anno">{FONDAZIONE}</span>
+                        <h3 class="voce-titolo">Il Primo Passo</h3>
+                        <p class="voce-testo">Ilenia fonda InBallet nello skate park di Lainate.</p>
+                    </li>
+                    <li class="voce">
+                        <span class="voce-anno">2010</span>
+                        <h3 class="voce-titolo">Crescita</h3>
+                        <p class="voce-testo">Dalla strada alla prima sede stabile.</p>
+                    </li>
+                    <li class="voce">
+                        <span class="voce-anno">2015</span>
+                        <h3 class="voce-titolo">Espansione</h3>
+                        <p class="voce-testo">Apertura della seconda sede a Rho.</p>
+                    </li>
+                    <li class="voce">
+                        <span class="voce-anno">2020</span>
+                        <h3 class="voce-titolo">Innovazione</h3>
+                        <p class="voce-testo">Didattica online durante la pandemia.</p>
+                    </li>
+                    <li class="voce">
+                        <span class="voce-anno">2023</span>
+                        <h3 class="voce-titolo">Riconoscimento</h3>
+                        <p class="voce-testo">Ente Formativo CSEN e CONI. Qualità certificata.</p>
+                    </li>
+                    <li class="voce">
+                        <span class="voce-anno">2025</span>
+                        <h3 class="voce-titolo">Oggi</h3>
+                        <p class="voce-testo">Oltre 500 allievi, due sedi a Lainate e Rho e un team di insegnanti.</p>
+                    </li>
+                </ol>
             </div>
         </section>
 
@@ -128,8 +113,8 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
         <section class="numeri-section sezione-scura">
             <div class="container">
                 <div class="numeri-header">
-                    <span class="numeri-label eyebrow">InBallet in Numeri</span>
-                    <h2 class="numeri-title titolo-sezione">I risultati parlano da soli</h2>
+                    <span class="numeri-label eyebrow">In sintesi</span>
+                    <h2 class="numeri-title titolo-sezione">InBallet <em>in numeri</em></h2>
                 </div>
                 <div class="numeri-grid">
                     <div class="numero-item">
@@ -159,71 +144,21 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
             <div class="container">
                 <div class="team-header">
                     <span class="team-label eyebrow">Il Nostro Team</span>
-                    <h2 class="team-title titolo-sezione">I professionisti di InBallet</h2>
+                    <h2 class="team-title titolo-sezione">I professionisti <em>di InBallet</em></h2>
                     <p class="team-subtitle intro-sezione">Insegnanti qualificati, uniti dalla passione per la danza.</p>
                 </div>
-                <div class="team-grid">
-                    <article class="team-card">
-                        <div class="team-card-image">
-                            <Img src="gallery-1.jpg" alt="Ilenia Nobile" loading="lazy" />
-                        </div>
-                        <div class="team-card-content">
-                            <h3>Ilenia Nobile</h3>
-                            <span class="team-role">Direttrice Artistica</span>
-                            <p>Fondatrice di InBallet. Danza classica e contemporanea.</p>
-                        </div>
-                    </article>
-                    <article class="team-card">
-                        <div class="team-card-image">
-                            <Img src="gallery-2.jpg" alt="Marco Bianchi" loading="lazy" />
-                        </div>
-                        <div class="team-card-content">
-                            <h3>Marco Bianchi</h3>
-                            <span class="team-role">Coreografo Hip Hop</span>
-                            <p>15 anni nelle street dance. Giudice in competizioni nazionali.</p>
-                        </div>
-                    </article>
-                    <article class="team-card">
-                        <div class="team-card-image">
-                            <Img src="gallery-3.jpg" alt="Sofia Russo" loading="lazy" />
-                        </div>
-                        <div class="team-card-content">
-                            <h3>Sofia Russo</h3>
-                            <span class="team-role">Insegnante Danza Classica</span>
-                            <p>Diplomata Accademia Nazionale. Propedeutica e tecnica classica.</p>
-                        </div>
-                    </article>
-                    <article class="team-card">
-                        <div class="team-card-image">
-                            <Img src="gallery-4.jpg" alt="Giulia Ferrara" loading="lazy" />
-                        </div>
-                        <div class="team-card-content">
-                            <h3>Giulia Ferrara</h3>
-                            <span class="team-role">Insegnante Modern Jazz</span>
-                            <p>Ballerina professionista. Produzioni teatrali e TV.</p>
-                        </div>
-                    </article>
-                    <article class="team-card">
-                        <div class="team-card-image">
-                            <Img src="gallery-7.jpg" alt="Luca Martini" loading="lazy" />
-                        </div>
-                        <div class="team-card-content">
-                            <h3>Luca Martini</h3>
-                            <span class="team-role">Insegnante Breaking</span>
-                            <p>B-boy dal 2008. Vincitore di battle nazionali.</p>
-                        </div>
-                    </article>
-                    <article class="team-card">
-                        <div class="team-card-image">
-                            <Img src="gallery-8.jpg" alt="Elena Costa" loading="lazy" />
-                        </div>
-                        <div class="team-card-content">
-                            <h3>Elena Costa</h3>
-                            <span class="team-role">Insegnante Pilates & Yoga</span>
-                            <p>Certificata internazionalmente. Benessere per danzatori.</p>
-                        </div>
-                    </article>
-                </div>
+                <ul class="team-grid">
+                    {team.map((p) => (
+                        <li class="team-card">
+                            <div class="team-card-image">
+                                <Img src={p.foto} alt={p.nome} loading="lazy" decoding="async" widths={[400, 800]} sizes="(max-width: 700px) 100vw, 33vw" />
+                            </div>
+                            <span class="team-role">{p.ruolo}</span>
+                            <h3 class="team-nome">{p.nome}</h3>
+                            <p class="team-bio">{p.bio}</p>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </section>
 
@@ -232,119 +167,39 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
             <div class="sede-header">
                 <div class="container">
                     <span class="sede-label eyebrow">I Nostri Spazi</span>
-                    <h2 class="sede-title titolo-sezione">Dove nasce la magia</h2>
-                    <p class="sede-subtitle intro-sezione">Spazi progettati per ispirare e far crescere ogni ballerino.</p>
+                    <h2 class="sede-title titolo-sezione">Le nostre <em>sale</em></h2>
+                    <p class="sede-subtitle intro-sezione">Gli spazi di Lainate e Rho in cui facciamo lezione ogni settimana.</p>
                 </div>
             </div>
-            <div class="sede-carousel-wrapper">
-                <div class="sede-carousel">
-                    <div class="sede-slide active">
-                        <div class="sede-slide-image">
-                            <Img src="gallery-9.jpg" alt="Sede Centrale Lainate" />
-                        </div>
-                        <div class="sede-slide-content">
-                            <h3>Sede Centrale</h3>
-                            <p>500mq di spazi dedicati alla danza nel cuore di Lainate.</p>
-                            <ul class="sede-features">
-                                <li><i class="fas fa-check"></i> 3 sale danza professionali</li>
-                                <li><i class="fas fa-check"></i> Pavimentazione tecnica</li>
-                                <li><i class="fas fa-check"></i> Specchi e sbarre</li>
-                                <li><i class="fas fa-check"></i> Climatizzazione</li>
+            <div class="container">
+                <div class="sedi">
+                    <article class="sede">
+                        <figure class="sede-foto foto-cornice foto-cornice--sinistra">
+                            <Img src="gallery-4.jpg" alt="Lezione in una sala della sede di Lainate" loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 45vw" />
+                        </figure>
+                        <div class="sede-testo">
+                            <p class="sede-luogo">{lainate.citta} · {lainate.via}</p>
+                            <h3 class="sede-nome">Sede centrale</h3>
+                            <p class="sede-descrizione">500mq di spazi dedicati alla danza nel cuore di Lainate: tre sale con pavimentazione tecnica, specchi, sbarre e climatizzazione.</p>
+                            <ul class="sede-spazi">
+                                <li><strong>Sale danza</strong><span>Ambienti luminosi, con impianto audio e illuminazione regolabile.</span></li>
+                                <li><strong>Spazio famiglie</strong><span>Un'area di accoglienza dove i genitori possono attendere in tranquillità.</span></li>
+                                <li><strong>Spogliatoi</strong><span>Spazi separati con armadietti e docce, puliti ogni giorno.</span></li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="sede-slide">
-                        <div class="sede-slide-image">
-                            <Img src="gallery-10.jpg" alt="Sale Danza" />
+                    </article>
+
+                    <article class="sede">
+                        <figure class="sede-foto foto-cornice">
+                            <Img src="gallery-9.jpg" alt="Allieve in sala nella sede di Rho" loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 45vw" />
+                        </figure>
+                        <div class="sede-testo">
+                            <p class="sede-luogo">{rho.citta} · {rho.via}</p>
+                            <h3 class="sede-nome">Sede di Rho</h3>
+                            <p class="sede-descrizione">La metodologia InBallet ancora più vicina alle famiglie: due sale danza con gli stessi standard della sede centrale, facili da raggiungere e con parcheggio.</p>
                         </div>
-                        <div class="sede-slide-content">
-                            <h3>Sale Danza</h3>
-                            <p>Ambienti luminosi e attrezzati per ogni disciplina.</p>
-                            <ul class="sede-features">
-                                <li><i class="fas fa-check"></i> Impianto audio professionale</li>
-                                <li><i class="fas fa-check"></i> Illuminazione regolabile</li>
-                                <li><i class="fas fa-check"></i> Ampi spazi per il movimento</li>
-                                <li><i class="fas fa-check"></i> Attrezzature specifiche</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="sede-slide">
-                        <div class="sede-slide-image">
-                            <Img src="gallery-6.jpg" alt="Area Famiglie" />
-                        </div>
-                        <div class="sede-slide-content">
-                            <h3>Spazio Famiglie</h3>
-                            <p>Area accoglienza dove i genitori possono attendere in tranquillità.</p>
-                            <ul class="sede-features">
-                                <li><i class="fas fa-couch"></i> Area relax</li>
-                                <li><i class="fas fa-wifi"></i> WiFi gratuito</li>
-                                <li><i class="fas fa-child"></i> Spazio genitori</li>
-                                <li><i class="fas fa-heart"></i> Atmosfera accogliente</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="sede-slide">
-                        <div class="sede-slide-image">
-                            <Img src="ballerina.jpg" alt="Spogliatoi" />
-                        </div>
-                        <div class="sede-slide-content">
-                            <h3>Spogliatoi</h3>
-                            <p>Spazi puliti e funzionali per prepararsi alle lezioni.</p>
-                            <ul class="sede-features">
-                                <li><i class="fas fa-check"></i> Armadietti personali</li>
-                                <li><i class="fas fa-check"></i> Docce</li>
-                                <li><i class="fas fa-check"></i> Pulizia quotidiana</li>
-                                <li><i class="fas fa-check"></i> Spazi separati</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="sede-slide">
-                        <div class="sede-slide-image">
-                            <Img src="hero-bg.jpg" alt="Sede Rho" />
-                        </div>
-                        <div class="sede-slide-content">
-                            <h3>Sede Rho</h3>
-                            <p>La metodologia InBallet ancora più vicino alle famiglie.</p>
-                            <ul class="sede-features">
-                                <li><i class="fas fa-check"></i> 2 sale danza</li>
-                                <li><i class="fas fa-check"></i> Stessi standard qualitativi</li>
-                                <li><i class="fas fa-check"></i> Facile accessibilità</li>
-                                <li><i class="fas fa-check"></i> Parcheggio</li>
-                            </ul>
-                        </div>
-                    </div>
+                    </article>
                 </div>
-                <button class="sede-nav sede-prev" aria-label="Slide precedente"><i class="fas fa-chevron-left"></i></button>
-                <button class="sede-nav sede-next" aria-label="Slide successiva"><i class="fas fa-chevron-right"></i></button>
-            </div>
-            <div class="sede-thumbnails">
-                <button class="sede-thumb active" data-slide="0">
-                    <Img src="gallery-9.jpg" alt="Sede Centrale" />
-                    <span>Sede Centrale</span>
-                </button>
-                <button class="sede-thumb" data-slide="1">
-                    <Img src="gallery-10.jpg" alt="Sale Danza" />
-                    <span>Sale Danza</span>
-                </button>
-                <button class="sede-thumb" data-slide="2">
-                    <Img src="gallery-6.jpg" alt="Area Famiglie" />
-                    <span>Area Famiglie</span>
-                </button>
-                <button class="sede-thumb" data-slide="3">
-                    <Img src="ballerina.jpg" alt="Spogliatoi" />
-                    <span>Spogliatoi</span>
-                </button>
-                <button class="sede-thumb" data-slide="4">
-                    <Img src="hero-bg.jpg" alt="Sede Rho" />
-                    <span>Sede Rho</span>
-                </button>
-            </div>
-            <div class="sede-dots">
-                <button class="sede-dot active" data-slide="0" aria-label="Vai a slide 1"></button>
-                <button class="sede-dot" data-slide="1" aria-label="Vai a slide 2"></button>
-                <button class="sede-dot" data-slide="2" aria-label="Vai a slide 3"></button>
-                <button class="sede-dot" data-slide="3" aria-label="Vai a slide 4"></button>
-                <button class="sede-dot" data-slide="4" aria-label="Vai a slide 5"></button>
             </div>
         </section>
 
@@ -354,10 +209,10 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">
-                    <h2 class="titolo-sezione">Vuoi far parte della famiglia InBallet?</h2>
-                    <p class="intro-sezione">Prenota una lezione di prova gratuita.</p>
-                    <a href={PROVA} target="_blank" rel="noopener" class="corso-btn-cta btn-primary">
-                        Prenota una Prova <i class="fas fa-arrow-right"></i>
+                    <h2 class="titolo-sezione">Vuoi conoscerci <em>meglio?</em></h2>
+                    <p class="intro-sezione">Scrivici o chiamaci: ti raccontiamo corsi, orari e sedi.</p>
+                    <a href="/contatti" class="corso-btn-cta btn-primary">
+                        Contattaci <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
@@ -390,58 +245,13 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 }
 
 .fondatrice-image-wrapper {
-  position: relative;
+  max-width: 480px;
 }
 
 .fondatrice-image-wrapper :global(img) {
   width: 100%;
-  max-width: 480px;
   height: 550px;
   object-fit: cover;
-  border-radius: var(--radius-img);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-}
-
-.fondatrice-quote-card {
-  position: absolute;
-  bottom: -30px;
-  left: -20px;
-  right: 40px;
-  background: var(--white);
-  padding: 1.8rem 2rem;
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-}
-
-.quote-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: var(--primary-blue);
-  border-radius: 50%;
-  margin-bottom: 1rem;
-}
-
-.quote-icon :global(i) {
-  color: var(--white);
-  font-size: 1rem;
-}
-
-.fondatrice-quote-card :global(blockquote) {
-  font-size: var(--text-lg);
-  font-style: italic;
-  color: var(--text-dark);
-  line-height: 1.6;
-  margin: 0 0 1rem;
-}
-
-.fondatrice-quote-card :global(cite) {
-  font-size: var(--text-base);
-  color: var(--text-light);
-  font-style: normal;
-  font-weight: 600;
 }
 
 .fondatrice-content {
@@ -457,6 +267,28 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
   margin: 0 0 0.5rem;
 }
 
+.fondatrice-citazione {
+  margin: 2rem 0 0;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--primary-blue);
+}
+
+.fondatrice-citazione p {
+  font-size: var(--text-lg);
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--dark-navy);
+}
+
+.fondatrice-citazione cite {
+  display: block;
+  margin-top: .5rem;
+  font-size: var(--text-sm);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
 .fondatrice-bio :global(p) {
   font-size: var(--text-base);
   color: var(--text-dark);
@@ -466,14 +298,6 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
 .fondatrice-bio :global(p:last-child) {
   margin-bottom: 0;
-}
-
-.fondatrice-separator {
-  width: 60px;
-  height: 3px;
-  background: var(--primary-blue);
-  margin: 2rem 0;
-  border-radius: 2px;
 }
 
 .storia-section {
@@ -508,6 +332,28 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
   margin-bottom: 4rem;
 }
 
+.timeline {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem 3.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .timeline {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem 2rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .timeline {
+    grid-template-columns: 1fr;
+  }
+}
+
 .storia-label {
   display: block;
   margin-bottom: 1rem;
@@ -515,95 +361,6 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
 .storia-title {
   margin: 0;
-}
-
-.timeline-snake {
-  max-width: 1000px;
-  margin: 0 auto;
-  position: relative;
-  padding: 0 2rem;
-}
-
-.timeline-path {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.snake-line {
-  fill: none;
-  stroke: var(--primary-blue);
-  stroke-width: 0.6;
-  stroke-dasharray: 3, 2;
-  stroke-linecap: round;
-  animation: snakeFlow 20s linear infinite;
-}
-
-.timeline-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  position: relative;
-  z-index: 1;
-}
-
-.timeline-row:first-of-type {
-  margin-bottom: 4rem;
-}
-
-.timeline-card {
-  background: var(--white);
-  border-radius: var(--radius-card);
-  padding: 2rem;
-  text-align: center;
-  border: 1px solid var(--border-card);
-  box-shadow: var(--shadow-card);
-}
-
-.timeline-year {
-  display: block;
-  font-family: var(--font-rubik);
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  margin-bottom: 0.8rem;
-  line-height: 1;
-}
-
-.timeline-card :global(h3) {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  margin: 0 0 0.8rem;
-}
-
-.timeline-card :global(p) {
-  font-size: var(--text-base);
-  color: var(--dark-navy);
-  line-height: 1.6;
-  margin: 0;
-}
-
-.timeline-card-highlight {
-  background: var(--primary-blue);
-  border-color: var(--primary-blue);
-}
-
-.timeline-card-highlight .timeline-year {
-  color: var(--dark-navy);
-}
-
-.timeline-card-highlight :global(h3) {
-  color: var(--dark-navy);
-}
-
-.timeline-card-highlight :global(p) {
-  color: var(--dark-navy);
 }
 
 .numeri-section {
@@ -681,9 +438,9 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
 .numero-value {
   font-family: var(--font-rubik);
-  font-size: var(--text-5xl);
-  font-weight: 700;
-  color: var(--primary-blue);
+  font-size: var(--text-6xl);
+  font-weight: 300;
+  color: var(--white);
   line-height: 1;
 }
 
@@ -697,12 +454,9 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
 .numero-label {
   display: block;
-  font-size: var(--text-base);
-  color: rgba(255, 255, 255, 0.6);
-  font-weight: 500;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
   line-height: 1.4;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .team-section {
@@ -731,62 +485,75 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
   margin: 0;
 }
 
+/* Team: tre colonne ariose, foto verticale, ruolo sopra il nome */
 .team-grid {
+  list-style: none;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  max-width: 1200px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4rem 3rem;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
-.team-card {
-  background: var(--white);
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
-  border: 1px solid var(--border-card);
-}
-
 .team-card-image {
-  height: 180px;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
+  border-radius: var(--radius-img);
+  margin-bottom: 1.5rem;
 }
 
 .team-card-image :global(img) {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform .6s ease;
 }
 
-.team-card-content {
-  padding: 1.2rem;
-  text-align: center;
-}
-
-.team-card-content :global(h3) {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  margin: 0 0 0.5rem;
+.team-card:hover .team-card-image :global(img) {
+  transform: scale(1.04);
 }
 
 .team-role {
-  display: inline-block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
+  display: block;
+  font-size: .8125rem;
   font-weight: 600;
-  background: rgba(135, 206, 235, 0.15);
-  padding: 0.3rem 0.8rem;
-  border-radius: 12px;
-  margin-bottom: 0.8rem;
-  border: 1px solid rgba(135, 206, 235, 0.3);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary-blue-dark);
+  margin-bottom: .5rem;
 }
 
-.team-card-content :global(p) {
-  font-size: var(--text-base);
+.team-nome {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--dark-navy);
+  margin-bottom: .6rem;
+}
+
+.team-bio {
+  font-size: 1rem;
+  line-height: 1.65;
   color: var(--text-light);
-  line-height: 1.5;
-  margin: 0;
+  max-width: 22rem;
+}
+
+@media (max-width: 900px) {
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem 2rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .team-card-image {
+    aspect-ratio: 4 / 3;
+  }
 }
 
 .sede-section {
@@ -831,208 +598,110 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
   margin: 0;
 }
 
-.sede-carousel-wrapper {
-  position: relative;
-  max-width: 1200px;
-  margin: 0 auto 2rem;
-  padding: 0 1rem;
+/* Sedi: foto e testo alternati, come le righe della pagina Corsi */
+.sedi {
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-.sede-carousel {
-  position: relative;
-  height: 520px;
-  border-radius: var(--radius-img);
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-}
-
-.sede-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
+.sede {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1fr);
+  gap: 4.5rem;
+  align-items: center;
+  padding: 3.5rem 0;
 }
 
-.sede-slide.active {
-  opacity: 1;
-  visibility: visible;
+.sede + .sede {
+  border-top: 1px solid rgba(26, 26, 26, 0.1);
 }
 
-.sede-slide-image {
-  position: absolute;
-  top: 0;
-  left: 0;
+.sede:nth-child(even) .sede-foto {
+  order: 2;
+}
+
+.sede-foto {
+  margin: 0 1.5rem 1.5rem;
+}
+
+.sede-foto :global(img) {
   width: 100%;
-  height: 100%;
-}
-
-.sede-slide-image :global(img) {
-  width: 100%;
-  height: 100%;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
 }
 
-.sede-slide-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 2.5rem 5rem;
-  color: var(--white);
-  z-index: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.95) 25%, rgba(0, 0, 0, 0.85) 45%, rgba(0, 0, 0, 0.7) 65%, rgba(0, 0, 0, 0.4) 85%, transparent 100%);
+.sede-luogo {
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary-blue-dark);
+  margin-bottom: .6rem;
 }
 
-.sede-slide-content :global(h3) {
+.sede-nome {
   font-size: var(--text-3xl);
   font-weight: 700;
-  margin: 0 0 0.8rem;
-}
-
-.sede-slide-content > :global(p) {
-  font-size: var(--text-xl);
-  color: rgba(255, 255, 255, 0.9);
-  margin: 0 0 1.2rem;
-  max-width: 700px;
-  line-height: 1.5;
-}
-
-.sede-features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem 2.5rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sede-features :global(li) {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: var(--text-lg);
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.sede-features :global(i) {
-  color: var(--primary-blue);
-  font-size: 1.1rem;
-}
-
-.sede-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.95);
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 20;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  transition: all 0.2s ease;
-}
-
-.sede-nav:hover {
-  background: var(--white);
-  transform: translateY(-50%) scale(1.05);
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
-}
-
-.sede-nav :global(i) {
-  font-size: 1rem;
+  line-height: 1.2;
   color: var(--dark-navy);
+  margin-bottom: .9rem;
 }
 
-.sede-prev {
-  left: 1.5rem;
+.sede-descrizione {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text-light);
 }
 
-.sede-next {
-  right: 1.5rem;
+.sede-spazi {
+  list-style: none;
+  margin-top: 1.75rem;
 }
 
-.sede-thumbnails {
-  display: flex;
-  justify-content: center;
+.sede-spazi li {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
   gap: 1rem;
-  padding: 0 2rem;
-  margin-bottom: 1.5rem;
-  overflow-x: auto;
-  scrollbar-width: none;
+  padding: .9rem 0;
+  border-top: 1px solid rgba(26, 26, 26, 0.1);
 }
 
-.sede-thumbnails::-webkit-scrollbar {
-  display: none;
+.sede-spazi li:last-child {
+  border-bottom: 1px solid rgba(26, 26, 26, 0.1);
 }
 
-.sede-thumb {
-  flex-shrink: 0;
-  width: 130px;
-  background: var(--white);
-  border: 2px solid rgba(135, 206, 235, 0.3);
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  padding: 0;
-  transition: all 0.3s ease;
-}
-
-.sede-thumb.active {
-  border-color: var(--primary-blue);
-  box-shadow: 0 4px 15px rgba(135, 206, 235, 0.3);
-}
-
-.sede-thumb :global(img) {
-  width: 100%;
-  height: 65px;
-  object-fit: cover;
-}
-
-.sede-thumb :global(span) {
-  display: block;
-  padding: 0.6rem 0.5rem;
-  font-family: var(--font-rubik);
-  font-size: 18px;
+.sede-spazi strong {
   font-weight: 600;
   color: var(--dark-navy);
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  background: var(--white);
 }
 
-.sede-dots {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
+.sede-spazi span {
+  font-size: .9375rem;
+  line-height: 1.6;
+  color: var(--text-light);
 }
 
-.sede-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(135, 206, 235, 0.4);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
+@media (max-width: 900px) {
+  .sede {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 3rem 0;
+  }
+
+  .sede:nth-child(even) .sede-foto {
+    order: 0;
+  }
+
+  .sede-foto {
+    margin: 0 1rem 1rem;
+  }
 }
 
-.sede-dot.active {
-  background: var(--primary-blue);
-  transform: scale(1.2);
+@media (max-width: 560px) {
+  .sede-spazi li {
+    grid-template-columns: 1fr;
+    gap: .2rem;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -1053,79 +722,25 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
     justify-content: center;
   }
 
-  .fondatrice-image-wrapper :global(img) {
+  .fondatrice-image-wrapper {
     max-width: 400px;
-    height: 480px;
   }
 
-  .fondatrice-quote-card {
-    left: 10px;
-    right: 10px;
-    bottom: -20px;
+  .fondatrice-image-wrapper :global(img) {
+    height: 480px;
   }
 
   .fondatrice-content {
     text-align: center;
   }
 
-  .fondatrice-separator {
-    margin: 2rem auto;
-  }
-
-  .timeline-path {
-    display: none;
-  }
-
-  .timeline-row {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .timeline-row:first-of-type {
-    margin-bottom: 1.5rem;
-  }
-
-  .timeline-card {
-    position: relative;
-  }
-
-  .timeline-card:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -1.5rem;
-    width: 0;
-    height: 1.5rem;
-    border-left: 3px dashed var(--primary-blue);
-    transform: translateX(-50%);
-  }
-
   .numero-item {
     padding: 1.5rem 2rem;
   }
 
-  .team-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 @media (max-width: 768px) {
-  .team-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.2rem;
-  }
-
-  .team-card-image {
-    height: 160px;
-  }
-
-  .sede-carousel-wrapper {
-    padding: 0 1rem;
-  }
-
-  .sede-carousel {
-    border-radius: var(--radius-img);
-  }
 
   .fondatrice-section,
   .storia-section,
@@ -1139,111 +754,9 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
     font-size: var(--text-4xl);
   }
 
-  .sede-carousel-wrapper {
-    padding: 0 1rem;
-  }
-
-  .sede-carousel {
-    height: 450px;
-  }
-
-  .sede-nav {
-    width: 40px;
-    height: 40px;
-  }
-
-  .sede-prev {
-    left: 1rem;
-  }
-
-  .sede-next {
-    right: 1rem;
-  }
-
-  .sede-slide-content {
-    padding: 2rem 4rem;
-  }
-
-  .sede-slide-content :global(h3) {
-    font-size: var(--text-2xl);
-  }
-
-  .sede-slide-content > :global(p) {
-    font-size: var(--text-lg);
-    margin-bottom: 0.8rem;
-  }
-
-  .sede-features {
-    gap: 0.5rem 1.5rem;
-  }
-
-  .sede-features :global(li) {
-    font-size: var(--text-base);
-  }
-
-  .sede-thumbnails {
-    gap: 0.8rem;
-  }
-
-  .sede-thumb {
-    width: 115px;
-  }
-
-  .sede-thumb :global(img) {
-    height: 55px;
-  }
-
-  .sede-thumb :global(span) {
-    font-size: 18px;
-  }
-}
-
-@media (max-width: 600px) {
-  .team-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-
-  .team-card-image {
-    height: 150px;
-  }
-
-  .team-card-content {
-    padding: 1rem;
-  }
-
-  .team-card-content :global(h3) {
-    font-size: var(--text-lg);
-  }
-
-  .team-role {
-    font-size: var(--text-xs);
-    padding: 0.25rem 0.6rem;
-  }
-
-  .team-card-content :global(p) {
-    font-size: var(--text-sm);
-    line-height: 1.4;
-  }
-
-  .sede-thumbnails {
-    justify-content: flex-start;
-    gap: 0.7rem;
-  }
-
-  .sede-thumb {
-    width: 95px;
-  }
 }
 
 @media (max-width: 480px) {
-  .sede-carousel-wrapper {
-    padding: 0 1rem;
-  }
-
-  .sede-carousel {
-    border-radius: var(--radius-img);
-  }
 
   .fondatrice-section,
   .storia-section,
@@ -1254,81 +767,13 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
   }
 
   .fondatrice-image-wrapper {
-    display: flex;
-    flex-direction: column-reverse;
+    max-width: none;
   }
 
   .fondatrice-image-wrapper :global(img) {
     max-width: 100%;
     height: 350px;
     border-radius: var(--radius-img);
-  }
-
-  .fondatrice-quote-card {
-    position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin-bottom: 1.5rem;
-    margin-top: 0;
-    margin-left: 0;
-    margin-right: 0;
-    background: transparent;
-    box-shadow: none;
-    padding: 0;
-    border-radius: 0;
-    text-align: center;
-  }
-
-  .fondatrice-quote-card .quote-icon {
-    display: none;
-  }
-
-  .fondatrice-quote-card :global(blockquote) {
-    font-size: var(--text-xl);
-    color: var(--text-dark);
-  }
-
-  .fondatrice-quote-card :global(cite) {
-    font-size: var(--text-base);
-  }
-
-  .team-grid {
-    grid-template-columns: 1fr;
-    max-width: 280px;
-    margin: 0 auto;
-  }
-
-  .team-card-image {
-    height: 200px;
-  }
-
-  .team-card-content :global(h3) {
-    font-size: var(--text-lg);
-  }
-
-  .team-role {
-    font-size: var(--text-xs);
-  }
-
-  .team-card-content :global(p) {
-    font-size: var(--text-sm);
-  }
-
-  .timeline-card {
-    padding: 1.5rem;
-  }
-
-  .timeline-year {
-    font-size: var(--text-3xl);
-  }
-
-  .timeline-card :global(h3) {
-    font-size: var(--text-lg);
-  }
-
-  .timeline-card :global(p) {
-    font-size: var(--text-base);
   }
 
   .numeri-grid {
@@ -1365,69 +810,5 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
     font-size: var(--text-base);
   }
 
-  .sede-carousel-wrapper {
-    padding: 0 1rem;
-  }
-
-  .sede-carousel {
-    height: 380px;
-  }
-
-  .sede-nav {
-    width: 36px;
-    height: 36px;
-  }
-
-  .sede-nav :global(i) {
-    font-size: 0.8rem;
-  }
-
-  .sede-prev {
-    left: 0.8rem;
-  }
-
-  .sede-next {
-    right: 0.8rem;
-  }
-
-  .sede-slide-content {
-    padding: 1.5rem 3.5rem;
-  }
-
-  .sede-slide-content :global(h3) {
-    font-size: var(--text-xl);
-  }
-
-  .sede-slide-content > :global(p) {
-    font-size: var(--text-base);
-    margin-bottom: 0.6rem;
-    line-height: 1.5;
-  }
-
-  .sede-features {
-    gap: 0.4rem 1.2rem;
-  }
-
-  .sede-features :global(li) {
-    font-size: var(--text-base);
-  }
-
-  .sede-thumbnails {
-    gap: 0.6rem;
-    padding: 0 1rem;
-  }
-
-  .sede-thumb {
-    width: 95px;
-  }
-
-  .sede-thumb :global(img) {
-    height: 50px;
-  }
-
-  .sede-thumb :global(span) {
-    font-size: 18px;
-    padding: 0.5rem 0.4rem;
-  }
 }
 </style>

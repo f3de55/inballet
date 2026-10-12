@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { webp } from '../lib/images';
 
 const bg: Record<string, string> = {
-  'gallery-4.jpg': await webp('gallery-4.jpg', 1920),
+  'gallery-5.jpg': await webp('gallery-5.jpg', 1920),
   'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
 };
 ---
@@ -17,25 +18,22 @@ const bg: Record<string, string> = {
 
         <!-- Hero Section -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-4.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-5.jpg']}')`}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
-                <span class="chisiamo-hero-badge">Dal 2013</span>
+                <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Progetto NoiConVoi</h1>
                 <p class="chisiamo-hero-tagline">La danza è per tutti. Inclusione attraverso il movimento.</p>
-                <a href="#intro" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
-                    <i class="fas fa-chevron-down"></i>
-                </a>
             </div>
         </section>
 
         <!-- Intro Section -->
         <section id="intro" class="noi-intro-section">
-            <div class="noi-intro-wrapper">
+            <div class="noi-intro-wrapper intro-editoriale">
                 <span class="noi-intro-label eyebrow">La Nostra Missione</span>
-                <h2 class="noi-intro-title titolo-sezione">La danza come strumento di inclusione</h2>
+                <h2 class="noi-intro-title titolo-sezione">La danza come <em>strumento di inclusione</em></h2>
                 <p class="noi-intro-text">
-                    Il progetto <strong>NoiConVoi</strong> rappresenta un'iniziativa di volontariato fondata nel 2013, nata dalla convinzione della Direttrice Artistica che <strong>la danza è per tutti</strong>.
+                    Il progetto NoiConVoi rappresenta un'iniziativa di volontariato fondata nel 2013, nata dalla convinzione della Direttrice Artistica che la danza è per tutti.
                 </p>
                 <p class="noi-intro-text">
                     Crediamo che chiunque possa contribuire artisticamente secondo le proprie capacità, trasformando le differenze in ricchezza espressiva e creativa.
@@ -51,23 +49,23 @@ const bg: Record<string, string> = {
             <div class="noi-metodo-wrapper">
                 <div class="noi-metodo-header">
                     <span class="noi-metodo-label eyebrow">La Metodologia</span>
-                    <h2 class="noi-metodo-title titolo-sezione">Un approccio pedagogico strutturato</h2>
+                    <h2 class="noi-metodo-title titolo-sezione">Un approccio pedagogico <em>strutturato</em></h2>
                     <p class="noi-metodo-subtitle intro-sezione">La nostra struttura pedagogica si articola in due fasi complementari.</p>
                 </div>
                 <div class="noi-metodo-grid">
-                    <div class="noi-metodo-card">
-                        <div class="noi-metodo-icon">
+                    <div class="noi-metodo-card voce">
+                        <div class="noi-metodo-icon voce-icona">
                             <i class="fas fa-brain"></i>
                         </div>
-                        <h3 class="noi-metodo-name">Pratica Psicomotoria</h3>
-                        <p class="noi-metodo-desc">La prima parte della lezione integra elementi di Pratica Psicomotoria Aucouturier (PPA), favorendo lo sviluppo armonico attraverso il gioco e il movimento spontaneo.</p>
+                        <h3 class="noi-metodo-name voce-titolo">Pratica Psicomotoria</h3>
+                        <p class="noi-metodo-desc voce-testo">La prima parte della lezione integra elementi di Pratica Psicomotoria Aucouturier (PPA), favorendo lo sviluppo armonico attraverso il gioco e il movimento spontaneo.</p>
                     </div>
-                    <div class="noi-metodo-card">
-                        <div class="noi-metodo-icon">
+                    <div class="noi-metodo-card voce">
+                        <div class="noi-metodo-icon voce-icona">
                             <i class="fas fa-music"></i>
                         </div>
-                        <h3 class="noi-metodo-name">Didattica Artistica</h3>
-                        <p class="noi-metodo-desc">La seconda parte propone una didattica artistica adattata alle necessità specifiche dei partecipanti, seguendo la programmazione annuale della scuola.</p>
+                        <h3 class="noi-metodo-name voce-titolo">Didattica Artistica</h3>
+                        <p class="noi-metodo-desc voce-testo">La seconda parte propone una didattica artistica adattata alle necessità specifiche dei partecipanti, seguendo la programmazione annuale della scuola.</p>
                     </div>
                 </div>
             </div>
@@ -78,7 +76,7 @@ const bg: Record<string, string> = {
             <div class="noi-target-wrapper">
                 <div class="noi-target-header">
                     <span class="noi-target-label eyebrow">A Chi è Rivolto</span>
-                    <h2 class="noi-target-title titolo-sezione">Un progetto aperto a tutti</h2>
+                    <h2 class="noi-target-title titolo-sezione">Un progetto <em>aperto a tutti</em></h2>
                     <p class="noi-target-subtitle intro-sezione">NoiConVoi accoglie partecipanti con profili diversi, creando un ambiente di condivisione unico.</p>
                 </div>
                 <div class="noi-target-list">
@@ -107,7 +105,7 @@ const bg: Record<string, string> = {
             <div class="noi-info-wrapper">
                 <div class="noi-info-header">
                     <span class="noi-info-label eyebrow">Come Funziona</span>
-                    <h2 class="noi-info-title titolo-sezione">Informazioni pratiche</h2>
+                    <h2 class="noi-info-title titolo-sezione">Informazioni <em>pratiche</em></h2>
                     <p class="noi-info-subtitle intro-sezione">Tutto quello che serve sapere per partecipare al progetto.</p>
                 </div>
                 <div class="noi-info-grid">
@@ -157,7 +155,7 @@ const bg: Record<string, string> = {
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">
-                    <h2 class="titolo-sezione">Unisciti a NoiConVoi</h2>
+                    <h2 class="titolo-sezione">Unisciti a <em>NoiConVoi</em></h2>
                     <p class="intro-sezione">Vuoi partecipare o diventare volontario? Contattaci per scoprire come far parte di questo progetto.</p>
                     <a href="mailto:info@inballet.it?subject=Progetto%20NoiConVoi%20-%20Richiesta%20Informazioni" class="corso-btn-cta btn-primary">
                         Contattaci <i class="fas fa-arrow-right"></i>
@@ -257,50 +255,6 @@ const bg: Record<string, string> = {
   display: grid;
   grid-template-columns: repeat(2,1fr);
   gap: 2.5rem;
-}
-
-.noi-metodo-card {
-  background: #fff;
-  padding: 2.5rem 2rem;
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  border: 1px solid var(--border-card);
-  transition: all .3s ease;
-  text-align: center;
-}
-
-.noi-metodo-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-card-hover);
-  border-color: var(--primary-blue);
-}
-
-.noi-metodo-icon {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-  color: var(--dark-navy);
-  font-size: 2rem;
-}
-
-.noi-metodo-name {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-}
-
-.noi-metodo-desc {
-  font-size: var(--text-sm);
-  color: var(--text-light);
-  line-height: 1.7;
 }
 
 .noi-target-section {
@@ -416,15 +370,13 @@ const bg: Record<string, string> = {
 }
 
 .noi-info-icon {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
-  border-radius: 12px;
+  width: 1.75rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--dark-navy);
-  font-size: 1.2rem;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: .15rem;
+  color: var(--primary-blue-dark);
+  font-size: 1.25rem;
   flex-shrink: 0;
 }
 

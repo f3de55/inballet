@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { webp } from '../lib/images';
 
 const bg: Record<string, string> = {
-  'gallery-1.jpg': await webp('gallery-1.jpg', 1920),
+  'gallery-4.jpg': await webp('gallery-4.jpg', 1920),
   'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
 };
 ---
@@ -17,28 +18,25 @@ const bg: Record<string, string> = {
 
         <!-- Hero Section -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-1.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-4.jpg']}')`}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
-                <span class="chisiamo-hero-badge">Ente Formativo dal 2023</span>
+                <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Corso Insegnanti di Danza</h1>
                 <p class="chisiamo-hero-tagline">Percorso biennale con specializzazione Modern.</p>
-                <a href="#intro" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
-                    <i class="fas fa-chevron-down"></i>
-                </a>
             </div>
         </section>
 
         <!-- Intro Section -->
         <section id="intro" class="form-intro-section">
-            <div class="form-intro-wrapper">
+            <div class="form-intro-wrapper intro-editoriale">
                 <span class="form-intro-label eyebrow">Il Percorso</span>
-                <h2 class="form-intro-title titolo-sezione">Diventa insegnante di danza</h2>
+                <h2 class="form-intro-title titolo-sezione">Diventa insegnante <em>di danza</em></h2>
                 <p class="form-intro-text">
-                    Un <strong>percorso biennale</strong> con moduli formativi multidisciplinari nella danza, con particolare attenzione alle interconnessioni pedagogiche e allo sviluppo evolutivo.
+                    Un percorso biennale con moduli formativi multidisciplinari nella danza, con particolare attenzione alle interconnessioni pedagogiche e allo sviluppo evolutivo.
                 </p>
                 <p class="form-intro-text">
-                    Il programma copre tutte le fasce d'eta': <strong>dal bambino all'adulto</strong>, fino ai casi più complessi di disabilità. Specializzazione nello stile <strong>Modern</strong> con possibilità di proseguire con sei master successivi.
+                    Il programma copre tutte le fasce d'età: dal bambino all'adulto, fino ai casi più complessi di disabilità. Specializzazione nello stile Modern con possibilità di proseguire con sei master successivi.
                 </p>
             </div>
         </section>
@@ -48,7 +46,7 @@ const bg: Record<string, string> = {
             <div class="form-prog-wrapper">
                 <div class="form-prog-header">
                     <span class="form-prog-label eyebrow">Il Programma</span>
-                    <h2 class="form-prog-title titolo-sezione">Aree di studio</h2>
+                    <h2 class="form-prog-title titolo-sezione">Aree <em>di studio</em></h2>
                 </div>
                 <div class="form-prog-grid">
                     <div class="form-prog-item">
@@ -65,7 +63,7 @@ const bg: Record<string, string> = {
                     </div>
                     <div class="form-prog-item">
                         <div class="form-prog-num">4</div>
-                        <p class="form-prog-text">Metodologie per ogni fascia d'eta'</p>
+                        <p class="form-prog-text">Metodologie per ogni fascia d'età</p>
                     </div>
                     <div class="form-prog-item">
                         <div class="form-prog-num">5</div>
@@ -83,7 +81,7 @@ const bg: Record<string, string> = {
         <section class="form-cert-section sezione-scura">
             <div class="form-cert-wrapper">
                 <span class="form-cert-label eyebrow">Riconoscimenti</span>
-                <h2 class="form-cert-title titolo-sezione">Diploma a valenza nazionale</h2>
+                <h2 class="form-cert-title titolo-sezione">Diploma a <em>valenza nazionale</em></h2>
                 <p class="form-cert-text">Il titolo rilasciato è riconosciuto dallo CSEN e dal CONI, garantendo validità su tutto il territorio nazionale per l'insegnamento della danza.</p>
                 <div class="form-cert-badges">
                     <div class="form-cert-badge">
@@ -104,7 +102,7 @@ const bg: Record<string, string> = {
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">
-                    <h2 class="titolo-sezione">Vuoi saperne di più?</h2>
+                    <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
                     <p class="intro-sezione">Contattaci per informazioni su date, costi e modalità di iscrizione.</p>
                     <a href="mailto:info@inballet.it?subject=Corso%20Formazione%20Insegnanti%20-%20Richiesta%20Informazioni" class="corso-btn-cta btn-primary">
                         Richiedi Informazioni <i class="fas fa-arrow-right"></i>

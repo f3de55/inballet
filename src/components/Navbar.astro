@@ -1,5 +1,11 @@
 ---
 import Img from './Img.astro';
+import { menu, type Menu } from '../data/navigazione';
+
+// Pagina corrente (senza .html e slash finale) per evidenziare voce e sottovoce
+const corrente = Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1');
+const attiva = (href: string) => href === corrente;
+const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s) => s.voci.some((v) => attiva(v.href)));
 ---
 
 <nav class="nav-container" aria-label="Navigazione principale">
@@ -10,113 +16,38 @@ import Img from './Img.astro';
     </div>
 
     <ul class="nav-menu">
-        <li class="nav-item" data-menu="corsi">
-            <a href="/corsi" class="nav-link" aria-expanded="false" aria-haspopup="true">CORSI</a>
-            <div class="mega-menu" id="mega-menu-corsi" role="region" aria-label="Menu Corsi">
-                <div class="mega-menu-content">
-                    <div class="mega-menu-section">
-                        <h4>Danza Classica e Moderna</h4>
-                        <ul>
-                            <li><a href="/avviamento-danza">Avviamento alla Danza</a></li>
-                            <li><a href="/educazione-danza">Educazione alla Danza</a></li>
-                            <li><a href="/danza-classica">Danza Classica</a></li>
-                            <li><a href="/modern">Modern</a></li>
-                        </ul>
+        {menu.map((m) => {
+            const LinkTag = m.href ? 'a' : 'button';
+            return (
+                <li class:list={['nav-item', { 'nav-item--compatto': m.compatto }]} data-menu={m.id}>
+                    <LinkTag
+                        href={m.href}
+                        class:list={['nav-link', { attiva: menuAttivo(m) }]}
+                        aria-current={m.href && attiva(m.href) ? 'page' : undefined}
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                    >{m.label}</LinkTag>
+                    <div class:list={['mega-menu', { 'mega-menu--compatto': m.compatto }]} id={`mega-menu-${m.id}`} role="region" aria-label={`Menu ${m.label}`}>
+                        <div class="mega-menu-content" style={`--voci: ${Math.max(...m.sezioni.map((s) => s.voci.length))}`}>
+                            {m.sezioni.map((s) => (
+                                <div class="mega-menu-section">
+                                    <h4>{s.titolo}</h4>
+                                    <ul>
+                                        {s.voci.map((v) => (
+                                            <li><a href={v.href} class:list={{ attiva: attiva(v.href) }} aria-current={attiva(v.href) ? 'page' : undefined}>{v.nome}</a></li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                    <div class="mega-menu-section">
-                        <h4>Danza Contemporanea</h4>
-                        <ul>
-                            <li><a href="/danza-contemporanea">Danza Contemporanea</a></li>
-                            <li><a href="/contemporanea-adulti">Danza Contemporanea Adulti</a></li>
-                            <li><a href="/contact-improvisation">Contact Improvisation</a></li>
-                            <li><a href="/movimento-creativo">Movimento Creativo</a></li>
-                        </ul>
-                    </div>
-                    <div class="mega-menu-section">
-                        <h4>Urban Dance</h4>
-                        <ul>
-                            <li><a href="/hip-hop">Hip-Hop</a></li>
-                            <li><a href="/heels">Heels</a></li>
-                            <li><a href="/breaking">Breaking</a></li>
-                            <li><a href="/danza-acrobatica">Danza Acrobatica</a></li>
-                            <li><a href="/contaminato">Contaminato</a></li>
-                        </ul>
-                    </div>
-                    <div class="mega-menu-section">
-                        <h4>Benessere e Movimento</h4>
-                        <ul>
-                            <li><a href="/yoga">Yoga</a></li>
-                            <li><a href="/pilates">Pilates</a></li>
-                            <li><a href="/classi">Classi</a></li>
-                            <li><a href="/lezioni-individuali">Lezioni Individuali</a></li>
-                        </ul>
-                    </div>
-                    <div class="mega-menu-section">
-                        <h4>Percorsi per Età</h4>
-                        <ul>
-                            <li><a href="/prima-infanzia">Prima Infanzia</a></li>
-                            <li><a href="/seconda-infanzia">Seconda Infanzia</a></li>
-                            <li><a href="/bambini">Bambini</a></li>
-                            <li><a href="/ragazzi">Ragazzi</a></li>
-                            <li><a href="/adulti">Adulti</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </li>
-
-        <li class="nav-item" data-menu="scuola">
-            <button class="nav-link" aria-expanded="false" aria-haspopup="true">LA SCUOLA</button>
-            <div class="mega-menu" id="mega-menu-scuola" role="region" aria-label="Menu La Scuola">
-                <div class="mega-menu-content">
-                    <div class="mega-menu-section">
-                        <h4>La Scuola</h4>
-                        <ul>
-                            <li><a href="/chi-siamo">Chi Siamo</a></li>
-                            <li><a href="/spettacoli-eventi">Spettacoli ed Eventi</a></li>
-                            <li><a href="/collaborazioni-scuole">Collaborazioni con Scuole</a></li>
-                            <li><a href="/sportello-psicologico">Sportello Psicologico</a></li>
-                            <li><a href="/documenti">Documenti</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </li>
-
-        <li class="nav-item" data-menu="progetti">
-            <button class="nav-link" aria-expanded="false" aria-haspopup="true">PROGETTI</button>
-            <div class="mega-menu" id="mega-menu-progetti" role="region" aria-label="Menu Progetti">
-                <div class="mega-menu-content">
-                    <div class="mega-menu-section">
-                        <h4>Danza Integrativa</h4>
-                        <ul>
-                            <li><a href="/classi-integrate">Classi Multidisciplinari Integrate</a></li>
-                            <li><a href="/progetto-noiconvoi">Progetto NoiConVoi</a></li>
-                            <li><a href="/sostenitori">Sostenitori Progetti Sociali</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </li>
-
-        <li class="nav-item" data-menu="formazione">
-            <button class="nav-link" aria-expanded="false" aria-haspopup="true">FORMAZIONE</button>
-            <div class="mega-menu" id="mega-menu-formazione" role="region" aria-label="Menu Formazione">
-                <div class="mega-menu-content">
-                    <div class="mega-menu-section">
-                        <h4>Percorsi Professionali</h4>
-                        <ul>
-                            <li><a href="/formazione-insegnanti">Corso di Formazione per Insegnanti di Danza</a></li>
-                            <li><a href="/formazioni-personalizzate">Formazioni Personalizzate</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </li>
+                </li>
+            );
+        })}
     </ul>
 
-    <a href="/contatti" class="cta-btn">Contattaci</a>
-    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Apri menu di navigazione">
+    <a href="/contatti" class:list={['cta-btn', { attiva: attiva('/contatti') }]} aria-current={attiva('/contatti') ? 'page' : undefined}>Contattaci</a>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Apri menu di navigazione" aria-expanded="false" aria-controls="mobileMenu">
         <i class="fas fa-bars"></i>
     </button>
 </nav>
@@ -128,82 +59,25 @@ import Img from './Img.astro';
         <i class="fas fa-times"></i>
     </button>
 
-    <div class="mobile-nav-item">
-        <button class="mobile-nav-toggle" data-target="corsi-submenu" aria-expanded="false" aria-controls="corsi-submenu">
-            <span>CORSI</span>
-            <i class="fas fa-chevron-down" aria-hidden="true"></i>
-        </button>
-        <div class="mobile-submenu" id="corsi-submenu">
-            <a href="/corsi" class="mobile-tutti">Tutti i corsi</a>
-            <h4>Danza Classica e Moderna</h4>
-            <a href="/avviamento-danza">Avviamento alla Danza</a>
-            <a href="/educazione-danza">Educazione alla Danza</a>
-            <a href="/danza-classica">Danza Classica</a>
-            <a href="/modern">Modern</a>
-            <h4>Danza Contemporanea</h4>
-            <a href="/danza-contemporanea">Danza Contemporanea</a>
-            <a href="/contemporanea-adulti">Danza Contemporanea Adulti</a>
-            <a href="/contact-improvisation">Contact Improvisation</a>
-            <a href="/movimento-creativo">Movimento Creativo</a>
-            <h4>Urban Dance</h4>
-            <a href="/hip-hop">Hip-Hop</a>
-            <a href="/heels">Heels</a>
-            <a href="/breaking">Breaking</a>
-            <a href="/danza-acrobatica">Danza Acrobatica</a>
-            <a href="/contaminato">Contaminato</a>
-            <h4>Benessere e Movimento</h4>
-            <a href="/yoga">Yoga</a>
-            <a href="/pilates">Pilates</a>
-            <a href="/classi">Classi</a>
-            <a href="/lezioni-individuali">Lezioni Individuali</a>
-            <h4>Percorsi per Età</h4>
-            <a href="/prima-infanzia">Prima Infanzia</a>
-            <a href="/seconda-infanzia">Seconda Infanzia</a>
-            <a href="/bambini">Bambini</a>
-            <a href="/ragazzi">Ragazzi</a>
-            <a href="/adulti">Adulti</a>
+    {menu.map((m) => (
+        <div class="mobile-nav-item">
+            <button class:list={['mobile-nav-toggle', { attiva: menuAttivo(m) }]} data-target={`${m.id}-submenu`} aria-expanded="false" aria-controls={`${m.id}-submenu`}>
+                <span>{m.label}</span>
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="mobile-submenu" id={`${m.id}-submenu`}>
+                {m.href && <a href={m.href} class:list={['mobile-tutti', { attiva: attiva(m.href) }]} aria-current={attiva(m.href) ? 'page' : undefined}>Tutti i corsi</a>}
+                {m.sezioni.map((s) => (
+                    <>
+                        <h4>{s.titolo}</h4>
+                        {s.voci.map((v) => (
+                            <a href={v.href} class:list={{ attiva: attiva(v.href) }} aria-current={attiva(v.href) ? 'page' : undefined}>{v.nome}</a>
+                        ))}
+                    </>
+                ))}
+            </div>
         </div>
-    </div>
-
-    <div class="mobile-nav-item">
-        <button class="mobile-nav-toggle" data-target="scuola-submenu" aria-expanded="false" aria-controls="scuola-submenu">
-            <span>LA SCUOLA</span>
-            <i class="fas fa-chevron-down" aria-hidden="true"></i>
-        </button>
-        <div class="mobile-submenu" id="scuola-submenu">
-            <h4>La Scuola</h4>
-            <a href="/chi-siamo">Chi Siamo</a>
-            <a href="/spettacoli-eventi">Spettacoli ed Eventi</a>
-            <a href="/collaborazioni-scuole">Collaborazioni con Scuole</a>
-            <a href="/sportello-psicologico">Sportello Psicologico</a>
-            <a href="/documenti">Documenti</a>
-        </div>
-    </div>
-
-    <div class="mobile-nav-item">
-        <button class="mobile-nav-toggle" data-target="progetti-submenu" aria-expanded="false" aria-controls="progetti-submenu">
-            <span>PROGETTI</span>
-            <i class="fas fa-chevron-down" aria-hidden="true"></i>
-        </button>
-        <div class="mobile-submenu" id="progetti-submenu">
-            <h4>Danza Integrativa</h4>
-            <a href="/classi-integrate">Classi Multidisciplinari Integrate</a>
-            <a href="/progetto-noiconvoi">Progetto NoiConVoi</a>
-            <a href="/sostenitori">Sostenitori Progetti Sociali</a>
-        </div>
-    </div>
-
-    <div class="mobile-nav-item">
-        <button class="mobile-nav-toggle" data-target="formazione-submenu" aria-expanded="false" aria-controls="formazione-submenu">
-            <span>FORMAZIONE</span>
-            <i class="fas fa-chevron-down" aria-hidden="true"></i>
-        </button>
-        <div class="mobile-submenu" id="formazione-submenu">
-            <h4>Percorsi Professionali</h4>
-            <a href="/formazione-insegnanti">Corso di Formazione per Insegnanti di Danza</a>
-            <a href="/formazioni-personalizzate">Formazioni Personalizzate</a>
-        </div>
-    </div>
+    ))}
 
     <div class="mobile-cta">
         <a href="/contatti" class="cta-btn">Contattaci</a>
@@ -285,6 +159,25 @@ import Img from './Img.astro';
   color: #fff;
 }
 
+.nav-link.attiva,
+.nav-item:hover .nav-link.attiva {
+  color: var(--primary-blue);
+}
+
+.nav-link.attiva::after {
+  color: var(--primary-blue);
+}
+
+.mega-menu-section a.attiva,
+.mega-menu-section a.attiva::before {
+  color: var(--primary-blue);
+}
+
+.cta-btn.attiva {
+  background: var(--white);
+  color: var(--dark-navy);
+}
+
 .nav-item[data-menu]:hover .nav-link::after {
   transform: rotate(180deg);
 }
@@ -310,48 +203,95 @@ import Img from './Img.astro';
   color: var(--dark-navy);
 }
 
+.nav-menu {
+  position: relative;
+}
+
+/* Corsi: pannello largo centrato, stessa posizione verticale delle tendine compatte */
+.nav-item:not(.nav-item--compatto) {
+  position: static;
+}
+
 .mega-menu {
-  position: fixed;
-  top: 80px;
-  left: 0;
-  width: 100vw;
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1240px, calc(100vw - 3rem));
+  border: 1px solid rgba(255,255,255,.08);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
   height: auto;
   max-height: calc(100vh - 80px);
   background: var(--header-dark);
   box-shadow: 0 10px 20px rgba(0,0,0,.3);
   padding: 0;
-  display: none;
+  /* Chiusa: invisibile e leggermente più in basso; aperta: dissolvenza verso l'alto */
+  visibility: hidden;
   opacity: 0;
-  transition: opacity var(--transition-base);
-  border-bottom: 1px solid rgba(255,255,255,.1);
-  overflow-y: auto;
-  overflow-x: hidden;
+  translate: 0 8px;
+  transition: opacity .2s ease, translate .2s ease, visibility 0s linear .2s;
+  overflow: visible;
   z-index: 999;
-  -webkit-overflow-scrolling: touch;
+}
+
+/* Ponte invisibile: il passaggio dalla voce al pannello non lo chiude */
+.mega-menu::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 16px;
 }
 
 .mega-menu.active {
-  display: block;
+  visibility: visible;
   opacity: 1;
+  translate: 0 0;
+  transition-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mega-menu {
+    transition: none;
+  }
 }
 
 .mega-menu-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0;
-  padding: 1.5rem 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  justify-content: center;
+  padding: 1.5rem 1rem;
 }
 
-#mega-menu-scuola .mega-menu-content,
-#mega-menu-formazione .mega-menu-content {
-  max-width: 1000px;
+/* Menu a una sola colonna (La Scuola, Progetti, Formazione): tendina compatta
+   sotto la voce, uguale per tutti; il mega menu a tutta larghezza resta per Corsi */
+.mega-menu--compatto {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 50%;
+  width: 340px;
+  max-height: none;
+  overflow: visible;
+  border: 1px solid rgba(255,255,255,.08);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+.mega-menu--compatto .mega-menu-content {
+  display: block;
+  max-width: none;
+  padding: 1.5rem 1.75rem 1.25rem;
+}
+
+.mega-menu--compatto .mega-menu-section {
+  padding: 0;
+  border: none;
 }
 
 .mega-menu-section {
-  padding: 1rem 2rem;
+  padding: 1rem 1.25rem;
   border-right: 1px solid rgba(135,206,235,.2);
   height: auto;
 }
@@ -361,6 +301,7 @@ import Img from './Img.astro';
 }
 
 .mega-menu-section :global(h4) {
+  align-self: end;
   color: var(--primary-blue);
   margin-bottom: .8rem;
   font-size: var(--text-sm);
@@ -377,6 +318,24 @@ import Img from './Img.astro';
 
 .mega-menu-section :global(li) {
   margin-bottom: .5rem;
+}
+
+/* Mega menu Corsi: le colonne condividono le righe (subgrid), così titoli,
+   filetti e voci restano allineati anche quando un testo va a capo */
+.mega-menu:not(.mega-menu--compatto) .mega-menu-content {
+  grid-template-rows: auto repeat(var(--voci), auto);
+}
+
+.mega-menu:not(.mega-menu--compatto) .mega-menu-section {
+  display: grid;
+  grid-row: 1 / -1;
+  grid-template-rows: subgrid;
+}
+
+.mega-menu:not(.mega-menu--compatto) .mega-menu-section :global(ul) {
+  display: grid;
+  grid-row: 2 / -1;
+  grid-template-rows: subgrid;
 }
 
 .mega-menu-section :global(a) {
@@ -576,6 +535,15 @@ div.mobile-menu .mobile-submenu :global(h4) {
   font-weight: 600;
 }
 
+.mobile-nav-toggle.attiva span {
+  color: var(--primary-blue);
+}
+
+.mobile-submenu a.attiva {
+  color: var(--primary-blue);
+  font-weight: 700;
+}
+
 .mobile-submenu :global(a:last-child) {
   border-bottom: none;
 }
@@ -617,15 +585,20 @@ div.mobile-submenu :global(a::before) {
   background: var(--primary-blue-dark);
 }
 
-@media (max-width:1024px) {
+@media (max-width:1200px) {
   .nav-menu,
-  .cta-btn {
+  .nav-container > .cta-btn {
     display: none;
   }
 
   .mobile-menu-btn {
     display: block;
   }
+}
+
+/* Con il menu mobile aperto il pulsante hamburger lascia il posto alla X */
+:global(html.menu-aperto) .mobile-menu-btn {
+  visibility: hidden;
 }
 
 @media (max-width:768px) {
@@ -646,10 +619,6 @@ div.mobile-submenu :global(a::before) {
     grid-template-columns: 1fr;
   }
 
-  #mega-menu-scuola .mega-menu-content,
-  #mega-menu-formazione .mega-menu-content {
-    max-width: none;
-  }
 
   .mega-menu-section {
     border-right: none;

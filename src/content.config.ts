@@ -19,6 +19,8 @@ const corsi = defineCollection({
     titolo: z.string(),
     tagline: z.string(),
     heroImage: z.string(),
+    /** Inquadratura dell'hero (CSS background-position), es. "right 30%" per banner con soggetto a destra. */
+    heroPosizione: z.string().optional(),
     // Intro (HTML)
     introImage: z.string(),
     intro: z.string(),

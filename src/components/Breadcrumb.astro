@@ -1,0 +1,57 @@
+---
+/**
+ * Breadcrumb delle pagine interne (Home › Sezione › Pagina), ricavato dalla
+ * struttura della navigazione in src/data/navigazione.ts, con i dati
+ * strutturati BreadcrumbList per i motori di ricerca.
+ */
+import { altrePagine, menu } from '../data/navigazione';
+
+interface Props {
+  /** Nome della pagina se non è nel menu né in altrePagine. */
+  nome?: string;
+}
+
+interface Passo {
+  nome: string;
+  href?: string;
+}
+
+const corrente = Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1');
+const passi: Passo[] = [{ nome: 'Home', href: '/' }];
+
+const sezione = menu.find((m) => m.href === corrente || m.sezioni.some((s) => s.voci.some((v) => v.href === corrente)));
+if (sezione?.href === corrente) {
+  passi.push({ nome: sezione.label, href: corrente });
+} else if (sezione) {
+  const voce = sezione.sezioni.flatMap((s) => s.voci).find((v) => v.href === corrente)!;
+  passi.push({ nome: sezione.label, href: sezione.href }, { nome: voce.nome, href: corrente });
+} else {
+  passi.push({ nome: altrePagine[corrente] ?? Astro.props.nome ?? '', href: corrente });
+}
+
+const ultimo = passi.length - 1;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: passi
+    .filter((p) => p.href)
+    .map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.nome, item: new URL(p.href!, Astro.site).href })),
+};
+---
+
+<nav class="breadcrumb" aria-label="Percorso">
+  <ol>
+    {passi.map((p, i) => (
+      <li>
+        {i === ultimo ? (
+          <span aria-current="page">{p.nome}</span>
+        ) : p.href ? (
+          <a href={p.href}>{p.nome}</a>
+        ) : (
+          <span>{p.nome}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

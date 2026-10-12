@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { webp } from '../lib/images';
 
 const bg: Record<string, string> = {
-  'gallery-3.jpg': await webp('gallery-3.jpg', 1920),
+  'gallery-8.jpg': await webp('gallery-8.jpg', 1920),
   'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
 };
 ---
@@ -17,28 +18,25 @@ const bg: Record<string, string> = {
 
         <!-- Hero Section -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-3.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-8.jpg']}')`}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
-                <span class="chisiamo-hero-badge">Benessere & Supporto</span>
+                <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Sportello Psicologico</h1>
                 <p class="chisiamo-hero-tagline">Uno spazio sicuro di ascolto e sostegno per famiglie, genitori e bambini.</p>
-                <a href="#intro" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
-                    <i class="fas fa-chevron-down"></i>
-                </a>
             </div>
         </section>
 
         <!-- Intro Section -->
         <section id="intro" class="sport-intro-section">
-            <div class="sport-intro-wrapper">
+            <div class="sport-intro-wrapper intro-editoriale">
                 <span class="sport-intro-label eyebrow">Il Nostro Servizio</span>
-                <h2 class="sport-intro-title titolo-sezione">Sostegno alle famiglie attraverso l'ascolto</h2>
+                <h2 class="sport-intro-title titolo-sezione">Sostegno alle famiglie <em>attraverso l'ascolto</em></h2>
                 <p class="sport-intro-text">
-                    Il servizio si concentra sull'<strong>ascolto come abilità sociale fondamentale</strong> per instaurare fiducia e comprensione. Offriamo sostegno alle famiglie riconoscendo difficoltà e necessità che spesso rimangono inespresse da bambini e genitori.
+                    Il servizio si concentra sull'ascolto come abilità sociale fondamentale per instaurare fiducia e comprensione. Offriamo sostegno alle famiglie riconoscendo difficoltà e necessità che spesso rimangono inespresse da bambini e genitori.
                 </p>
                 <p class="sport-intro-text">
-                    In un ambiente accogliente e privo di giudizio, creiamo uno spazio dove <strong>la parola e il dialogo</strong> diventano strumenti terapeutici fondamentali per affrontare momenti particolarmente delicati.
+                    In un ambiente accogliente e privo di giudizio, creiamo uno spazio dove la parola e il dialogo diventano strumenti terapeutici fondamentali per affrontare momenti particolarmente delicati.
                 </p>
                 <div class="sport-intro-highlight">
                     <p>Il trattamento psichico agisce sulla psiche umana principalmente attraverso la parola e il dialogo, offrendo un supporto concreto durante i momenti più difficili del percorso educativo e di crescita.</p>
@@ -51,30 +49,30 @@ const bg: Record<string, string> = {
             <div class="sport-pilastri-wrapper">
                 <div class="sport-pilastri-header">
                     <span class="sport-pilastri-label eyebrow">I Tre Pilastri</span>
-                    <h2 class="sport-pilastri-title titolo-sezione">Come possiamo aiutarti</h2>
+                    <h2 class="sport-pilastri-title titolo-sezione">Come possiamo <em>aiutarti</em></h2>
                     <p class="sport-pilastri-subtitle intro-sezione">Tre aree di intervento per supportare il benessere psicologico di individui, coppie e famiglie.</p>
                 </div>
                 <div class="sport-pilastri-grid">
-                    <div class="sport-pilastro-card">
-                        <div class="sport-pilastro-icon">
+                    <div class="sport-pilastro-card voce">
+                        <div class="sport-pilastro-icon voce-icona">
                             <i class="fas fa-question-circle"></i>
                         </div>
-                        <h3 class="sport-pilastro-name">Confusione</h3>
-                        <p class="sport-pilastro-desc">Consultare uno specialista rappresenta un supporto durante momenti particolarmente difficili, quando le emozioni e i pensieri sembrano troppo complessi da gestire da soli.</p>
+                        <h3 class="sport-pilastro-name voce-titolo">Confusione</h3>
+                        <p class="sport-pilastro-desc voce-testo">Consultare uno specialista rappresenta un supporto durante momenti particolarmente difficili, quando le emozioni e i pensieri sembrano troppo complessi da gestire da soli.</p>
                     </div>
-                    <div class="sport-pilastro-card">
-                        <div class="sport-pilastro-icon">
+                    <div class="sport-pilastro-card voce">
+                        <div class="sport-pilastro-icon voce-icona">
                             <i class="fas fa-brain"></i>
                         </div>
-                        <h3 class="sport-pilastro-name">Pensieri</h3>
-                        <p class="sport-pilastro-desc">Il trattamento psichico agisce sulla psiche umana principalmente attraverso la parola e il dialogo come strumenti terapeutici fondamentali per elaborare pensieri ed emozioni.</p>
+                        <h3 class="sport-pilastro-name voce-titolo">Pensieri</h3>
+                        <p class="sport-pilastro-desc voce-testo">Il trattamento psichico agisce sulla psiche umana principalmente attraverso la parola e il dialogo come strumenti terapeutici fondamentali per elaborare pensieri ed emozioni.</p>
                     </div>
-                    <div class="sport-pilastro-card">
-                        <div class="sport-pilastro-icon">
+                    <div class="sport-pilastro-card voce">
+                        <div class="sport-pilastro-icon voce-icona">
                             <i class="fas fa-users"></i>
                         </div>
-                        <h3 class="sport-pilastro-name">Relazioni</h3>
-                        <p class="sport-pilastro-desc">Lo sportello accoglie individui singoli, coppie e si dedica principalmente alla tutela del rapporto genitore-figlio, favorendo comunicazione e comprensione reciproca.</p>
+                        <h3 class="sport-pilastro-name voce-titolo">Relazioni</h3>
+                        <p class="sport-pilastro-desc voce-testo">Lo sportello accoglie individui singoli, coppie e si dedica principalmente alla tutela del rapporto genitore-figlio, favorendo comunicazione e comprensione reciproca.</p>
                     </div>
                 </div>
             </div>
@@ -85,7 +83,7 @@ const bg: Record<string, string> = {
             <div class="sport-accesso-wrapper">
                 <div class="sport-accesso-header">
                     <span class="sport-accesso-label eyebrow">Come Accedere</span>
-                    <h2 class="sport-accesso-title titolo-sezione">Incontri con la dottoressa psicoterapeuta</h2>
+                    <h2 class="sport-accesso-title titolo-sezione">Incontri con la dottoressa <em>psicoterapeuta</em></h2>
                     <p class="sport-accesso-subtitle intro-sezione">Il nostro sportello è attivo su appuntamento. Contatta la Direzione per fissare un primo colloquio conoscitivo.</p>
                 </div>
                 <div class="sport-accesso-list">
@@ -115,7 +113,7 @@ const bg: Record<string, string> = {
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">
-                    <h2 class="titolo-sezione">Prenota un colloquio conoscitivo</h2>
+                    <h2 class="titolo-sezione">Prenota un colloquio <em>conoscitivo</em></h2>
                     <p class="intro-sezione">Il primo passo è sempre il più importante. Siamo qui per ascoltarti.</p>
                     <a href="mailto:info@inballet.it?subject=Richiesta%20Sportello%20Psicologico" class="corso-btn-cta btn-primary">
                         Contattaci <i class="fas fa-arrow-right"></i>
@@ -214,50 +212,6 @@ const bg: Record<string, string> = {
   display: grid;
   grid-template-columns: repeat(3,1fr);
   gap: 2.5rem;
-}
-
-.sport-pilastro-card {
-  background: #fff;
-  padding: 2.5rem 2rem;
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  border: 1px solid var(--border-card);
-  transition: all .3s ease;
-  text-align: center;
-}
-
-.sport-pilastro-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-card-hover);
-  border-color: var(--primary-blue);
-}
-
-.sport-pilastro-icon {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-  color: var(--dark-navy);
-  font-size: 2rem;
-}
-
-.sport-pilastro-name {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-}
-
-.sport-pilastro-desc {
-  font-size: var(--text-sm);
-  color: var(--text-light);
-  line-height: 1.7;
 }
 
 .sport-accesso-section {

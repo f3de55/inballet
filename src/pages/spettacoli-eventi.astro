@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { webp } from '../lib/images';
 
 const bg: Record<string, string> = {
-  'gallery-3.jpg': await webp('gallery-3.jpg', 1920),
+  'ballerina.jpg': await webp('ballerina.jpg', 1920),
 };
 ---
 
@@ -14,15 +15,12 @@ const bg: Record<string, string> = {
 >
         <!-- Hero -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-3.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={`background-image: url('${bg['ballerina.jpg']}')`}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
-                <span class="chisiamo-hero-badge">Calendario</span>
+                <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Spettacoli ed Eventi</h1>
                 <p class="chisiamo-hero-tagline">Scopri tutti gli appuntamenti in programma: spettacoli, workshop, saggi e corsi aperti.</p>
-                <a href="#calendario" class="chisiamo-scroll-arrow" aria-label="Scorri al calendario">
-                    <i class="fas fa-chevron-down"></i>
-                </a>
             </div>
         </section>
 

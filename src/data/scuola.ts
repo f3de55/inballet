@@ -75,7 +75,7 @@ export const categorieCorsi = [
     id: 'classica-moderna',
     nome: 'Danza Classica e Moderna',
     immagine: { src: 'hero-bg.jpg', alt: 'Tutù di danza classica in sala' },
-    descrizione: 'Dalla propedeutica alla tecnica avanzata, un percorso completo per sviluppare <strong>grazia</strong>, <strong>disciplina</strong> e <strong>consapevolezza corporea</strong>.',
+    descrizione: 'Dalla propedeutica alla tecnica avanzata, un percorso completo per sviluppare grazia, disciplina e consapevolezza corporea.',
     corsi: [
       { nome: 'Avviamento alla Danza', url: '/avviamento-danza' },
       { nome: 'Educazione alla Danza', url: '/educazione-danza' },
@@ -86,8 +86,8 @@ export const categorieCorsi = [
   {
     id: 'contemporanea',
     nome: 'Danza Contemporanea',
-    immagine: { src: 'gallery-3.jpg', alt: 'Coreografia di danza contemporanea con costumi bianchi' },
-    descrizione: 'Esplora il <strong>movimento libero e creativo</strong> attraverso tecniche contemporanee, <strong>improvvisazione</strong> e <strong>ricerca artistica</strong> personale.',
+    immagine: { src: 'gallery-6.jpg', alt: 'Coreografia di danza contemporanea sul palco' },
+    descrizione: 'Esplora il movimento libero e creativo attraverso tecniche contemporanee, improvvisazione e ricerca artistica personale.',
     corsi: [
       { nome: 'Danza Contemporanea', url: '/danza-contemporanea' },
       { nome: 'Contemporanea Adulti', url: '/contemporanea-adulti' },
@@ -99,7 +99,7 @@ export const categorieCorsi = [
     id: 'urban',
     nome: 'Urban Dance',
     immagine: { src: 'gallery-2.jpg', alt: 'Gruppo di ballerini sul palco con luci blu' },
-    descrizione: "Dal <strong>breaking</strong> all'<strong>hip-hop</strong>, dai tacchi alla <strong>danza acrobatica</strong>. Stili urbani che uniscono tecnica, <strong>freestyle</strong> e <strong>attitudine</strong>.",
+    descrizione: "Dal breaking all'hip-hop, dai tacchi alla danza acrobatica. Stili urbani che uniscono tecnica, freestyle e attitudine.",
     corsi: [
       { nome: 'Hip-Hop', url: '/hip-hop' },
       { nome: 'Heels', url: '/heels' },
@@ -112,7 +112,7 @@ export const categorieCorsi = [
     id: 'benessere',
     nome: 'Benessere e Movimento',
     immagine: { src: 'gallery-5.jpg', alt: 'Allieve in allungamento sul parquet della sala' },
-    descrizione: '<strong>Yoga</strong>, <strong>Pilates</strong> e discipline per il <strong>benessere fisico e mentale</strong>. Corsi di gruppo e lezioni individuali <strong>personalizzate</strong>.',
+    descrizione: 'Yoga, Pilates e discipline per il benessere fisico e mentale. Corsi di gruppo e lezioni individuali personalizzate.',
     corsi: [
       { nome: 'Yoga', url: '/yoga' },
       { nome: 'Pilates', url: '/pilates' },
@@ -124,7 +124,7 @@ export const categorieCorsi = [
     id: 'eta',
     nome: 'Percorsi per Età',
     immagine: { src: 'gallery-8.jpg', alt: 'Insegnante abbraccia una piccola allieva in sala' },
-    descrizione: 'Corsi pensati per <strong>ogni fase della crescita</strong>, dalla prima infanzia agli adulti, con <strong>programmi didattici specifici</strong> per età.',
+    descrizione: 'Corsi pensati per ogni fase della crescita, dalla prima infanzia agli adulti, con programmi didattici specifici per età.',
     corsi: [
       { nome: 'Prima Infanzia (3-5 anni)', url: '/prima-infanzia' },
       { nome: 'Seconda Infanzia (6-8 anni)', url: '/seconda-infanzia' },
@@ -164,7 +164,7 @@ export const iscrizioni = {
 export const faq = [
   {
     domanda: 'Da che età si può iniziare a danzare a InBallet?',
-    risposta: `Si comincia dai 3 anni con i percorsi di Prima Infanzia (3-5 anni) e Seconda Infanzia (6-8 anni). Seguono i corsi per Ragazzi (9-16 anni) e per Adulti, anche principianti assoluti: non c'è un limite di età per iniziare.`,
+    risposta: `Si comincia dai 3 anni con i percorsi di Prima Infanzia (3-5 anni) e Seconda Infanzia (6-8 anni). Seguono i corsi per Bambini (9-11 anni), Ragazzi (12-16 anni) e Adulti, anche principianti assoluti: non c'è un limite di età per iniziare.`,
   },
   {
     domanda: 'Dove si trovano le sedi?',

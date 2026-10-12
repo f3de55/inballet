@@ -57,17 +57,9 @@ function renderStats(rating: number, total: number) {
   if (!card || !content) return;
   content.innerHTML = `
             <div class="stat-item">
-                <span class="stat-value">${rating ? rating.toFixed(1) : 'N/A'}</span>
+                <span class="stat-value">${rating ? rating.toFixed(1).replace('.', ',') : 'N/A'}</span>
                 <div class="stat-stars">${stars(Math.round(rating))}</div>
-                <span class="stat-label">Valutazione media</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value">${total || 'N/A'}</span>
-                <span class="stat-label">Recensioni</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value">${rating ? Math.round((rating / 5) * 100) : 0}%</span>
-                <span class="stat-label">Gradimento</span>
+                <span class="stat-label">${total ? `${total} recensioni su Google` : 'Recensioni Google'}</span>
             </div>
         `;
   card.style.display = 'block';

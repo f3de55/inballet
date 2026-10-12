@@ -6,6 +6,7 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { webp } from '../lib/images';
 
@@ -19,8 +20,11 @@ interface Props {
 }
 
 const { data } = Astro.props;
-const heroBg = await webp(data.heroImage, 1920);
+const heroBg = await webp(data.heroImage, 2560);
 const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
+
+/** Titolo con l'ultima parola in corsivo azzurro (stile dei titoli di sezione). */
+const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</em>');
 ---
 
 <Base
@@ -32,18 +36,13 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
     <link slot="head" rel="preload" as="image" href={heroBg} fetchpriority="high">
 
     <!-- Hero Corso -->
-    <section class="corso-hero">
-        <div class="corso-hero-image" id="corsoHeroImage" style={`background-image: url('${heroBg}');`}></div>
-        <div class="corso-hero-overlay"></div>
-
-        <div class="corso-hero-glass">
-            <span class="corso-hero-badge" id="corsoBadge">{data.badge}</span>
-            <h1 class="corso-hero-title" id="corsoTitolo">{data.titolo}</h1>
-            <p class="corso-hero-tagline" id="corsoTagline">{data.tagline}</p>
-
-            <a href="#corso-intro" class="corso-scroll-arrow" aria-label="Scorri in basso">
-                <i class="fas fa-chevron-down"></i>
-            </a>
+    <section class="chisiamo-hero">
+        <div class="chisiamo-hero-image" style={`background-image: url('${heroBg}');${data.heroPosizione ? ` background-position: ${data.heroPosizione};` : ''}`}></div>
+        <div class="chisiamo-hero-overlay"></div>
+        <div class="chisiamo-hero-glass">
+            <Breadcrumb />
+            <h1 class="chisiamo-hero-title">{data.titolo}</h1>
+            <p class="chisiamo-hero-tagline">{data.tagline}</p>
         </div>
     </section>
 
@@ -54,7 +53,7 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
                 <div class="corso-story-content">
                     <div class="corso-section-header">
                         <p class="corso-section-tagline eyebrow" id="corsoIntroTagline">Il percorso</p>
-                        <h2 class="corso-section-title titolo-sezione" id="corsoIntroTitolo">Di cosa si tratta</h2>
+                        <h2 class="corso-section-title titolo-sezione" id="corsoIntroTitolo">Di cosa <em>si tratta</em></h2>
                     </div>
 
                     <div class="corso-story-text" id="corsoIntroText" set:html={data.intro} />
@@ -81,7 +80,7 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
                     </div>
                 </div>
 
-                <div class="corso-story-image">
+                <div class="corso-story-image foto-cornice">
                     <Img id="corsoIntroImg" src={data.introImage} alt={data.titolo} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 50vw" />
                 </div>
             </div>
@@ -93,13 +92,13 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
         <div class="corso-metodo-wrapper">
             <div class="corso-metodo-header">
                 <span class="corso-metodo-label eyebrow">Come lavoriamo</span>
-                <h2 id="corsoMetodoTitolo" class="titolo-sezione">{data.metodoTitolo}</h2>
+                <h2 id="corsoMetodoTitolo" class="titolo-sezione" set:html={accento(data.metodoTitolo)} />
             </div>
             <div class="corso-metodo-list" id="corsoMetodoContent">
                 {data.metodo.map((item) => (
-                    <div class="corso-metodo-item">
-                        <h3 set:html={item.titolo} />
-                        <p set:html={item.testo} />
+                    <div class="corso-metodo-item voce">
+                        <h3 class="voce-titolo" set:html={item.titolo} />
+                        <p class="voce-testo" set:html={item.testo} />
                     </div>
                 ))}
             </div>
@@ -111,7 +110,7 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
         <div class="corso-impara-wrapper">
             <div class="corso-impara-header">
                 <span class="corso-impara-label eyebrow">Gli obiettivi</span>
-                <h2 id="corsoImparaTitolo" class="titolo-sezione">{data.imparaTitolo}</h2>
+                <h2 id="corsoImparaTitolo" class="titolo-sezione" set:html={accento(data.imparaTitolo)} />
                 <p class="corso-impara-subtitle intro-sezione">Le competenze che svilupperà durante il percorso</p>
             </div>
             <ul class="corso-impara-list" id="corsoImparaGrid">
@@ -126,10 +125,10 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
         <div class="corso-contatto-overlay"></div>
         <div class="corso-contatto-wrapper">
             <div class="corso-contatto-content">
-                <h2 class="titolo-sezione">Prenota una lezione di prova gratuita</h2>
-                <p class="intro-sezione">Vieni a conoscerci: la prima lezione è sempre senza impegno.</p>
+                <h2 class="titolo-sezione">Hai domande <em>su questo corso?</em></h2>
+                <p class="intro-sezione">Scrivici o chiamaci: ti aiutiamo a scegliere il percorso giusto.</p>
                 <a href="/contatti" class="corso-btn-cta btn-primary">
-                    Contattaci per prenotare
+                    Contattaci
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -138,107 +137,6 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 </Base>
 
 <style>
-.corso-hero {
-  height: 65vh;
-  min-height: 450px;
-  max-height: 580px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 80px;
-}
-
-.corso-hero-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  z-index: 1;
-}
-
-.corso-hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(26,26,26,0.55) 0%, rgba(42,42,42,0.45) 50%, rgba(26,26,26,0.55) 100%);
-  z-index: 2;
-}
-
-.corso-hero-glass {
-  position: relative;
-  z-index: 3;
-  text-align: center;
-  max-width: 620px;
-  margin: 0 2rem;
-  padding: 2.5rem 3rem;
-  background: rgba(135, 206, 235, 0.22);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 20px;
-  border: 1px solid rgba(135, 206, 235, 0.25);
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
-  animation: fadeInUp 0.8s ease-out;
-}
-
-.corso-hero-badge {
-  display: inline-block;
-  font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--white);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 1rem;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-}
-
-.corso-hero-title {
-  font-size: var(--text-6xl);
-  font-weight: 700;
-  color: var(--white);
-  margin: 0 0 1rem;
-  line-height: var(--leading-tight);
-  letter-spacing: -0.02em;
-  text-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.corso-hero-tagline {
-  font-size: var(--text-xl);
-  color: rgba(255,255,255,0.9);
-  margin: 0 0 1.5rem;
-  line-height: 1.5;
-  font-weight: 300;
-}
-
-.corso-scroll-arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  color: var(--white);
-  text-decoration: none;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
-  transition: all 0.3s;
-}
-
-.corso-scroll-arrow :global(i) {
-  font-size: 1.1rem;
-  animation: arrowBounce 2s ease-in-out infinite;
-}
-
-.corso-scroll-arrow:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.1);
-}
-
 .corso-intro-section {
   padding: var(--section-y) 0;
   background: var(--white);
@@ -300,29 +198,25 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
   display: flex;
   align-items: center;
   gap: 1.2rem;
-  padding: 1.2rem 1.8rem;
-  background: rgba(135, 206, 235, 0.12);
-  border-radius: var(--radius-card);
-  border: 1px solid var(--border-card);
+  padding: 1.1rem 0 0;
+  border-top: 1px solid rgba(26, 26, 26, 0.12);
   flex: 1;
   min-width: 180px;
 }
 
 .corso-meta-icon {
-  width: 52px;
-  height: 52px;
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
-  border-radius: 12px;
+  width: 1.75rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: .15rem;
+  color: var(--primary-blue-dark);
+  font-size: 1.25rem;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(135, 206, 235, 0.3);
 }
 
 .corso-meta-icon :global(i) {
-  font-size: 1.4rem;
-  color: var(--dark-navy);
+  color: inherit;
 }
 
 .corso-meta-info {
@@ -347,19 +241,15 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 }
 
 .corso-story-image {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  justify-self: center;
 }
 
 .corso-story-image :global(img) {
   width: 100%;
-  max-width: 400px;
   height: 450px;
   object-fit: cover;
-  border-radius: var(--radius-img);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
 .corso-metodo-section {
@@ -400,40 +290,7 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 .corso-metodo-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-}
-
-.corso-metodo-item {
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: var(--radius-card);
-  padding: 2rem;
-  border: 1px solid var(--border-card);
-  position: relative;
-}
-
-.corso-metodo-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--primary-blue);
-  border-radius: 16px 16px 0 0;
-}
-
-.corso-metodo-item :global(h3) {
-  font-size: var(--text-2xl);
-  color: var(--white);
-  margin: 0 0 1rem;
-  font-weight: 700;
-}
-
-.corso-metodo-item :global(p) {
-  font-size: var(--text-base);
-  color: rgba(255, 255, 255, 0.75);
-  margin: 0;
-  line-height: 1.75;
+  gap: 2.5rem 3rem;
 }
 
 .corso-impara-section {
@@ -511,9 +368,6 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
     gap: 1.5rem;
   }
 
-  .corso-metodo-item {
-    padding: 1.5rem;
-  }
 }
 
 @media (max-width: 900px) {
@@ -532,7 +386,7 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
   }
 
   .corso-story-image {
-    justify-content: center;
+    max-width: none;
   }
 
   .corso-story-image :global(img) {
@@ -551,10 +405,6 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
     gap: 1.5rem;
   }
 
-  .corso-metodo-item {
-    padding: 2rem;
-  }
-
   .corso-intro-meta {
     flex-direction: column;
     gap: 1rem;
@@ -566,29 +416,6 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 }
 
 @media (max-width: 768px) {
-  .corso-hero {
-    height: 60vh;
-    min-height: 400px;
-  }
-
-  .corso-hero-glass {
-    padding: 2rem;
-    margin: 0 1.5rem;
-    max-width: 500px;
-  }
-
-  .corso-hero-badge {
-    font-size: var(--text-base);
-    letter-spacing: 1.5px;
-  }
-
-  .corso-hero-title {
-    font-size: var(--text-5xl);
-  }
-
-  .corso-hero-tagline {
-    font-size: var(--text-lg);
-  }
 
   .corso-intro-section,
   .corso-metodo-section,
@@ -599,11 +426,6 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
   .corso-metodo-wrapper,
   .corso-impara-wrapper {
     padding: 0 1.5rem;
-  }
-
-
-  .corso-metodo-item :global(h3) {
-    font-size: var(--text-xl);
   }
 
   .corso-impara-list {
@@ -622,38 +444,6 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 }
 
 @media (max-width: 480px) {
-  .corso-hero {
-    height: 55vh;
-    min-height: 380px;
-  }
-
-  .corso-hero-glass {
-    padding: 1.5rem;
-    margin: 0 1rem;
-    border-radius: 16px;
-  }
-
-  .corso-hero-badge {
-    font-size: var(--text-sm);
-    letter-spacing: 1px;
-    margin-bottom: 0.8rem;
-  }
-
-  .corso-hero-title {
-    font-size: var(--text-3xl);
-    margin-bottom: 0.8rem;
-  }
-
-  .corso-hero-tagline {
-    font-size: var(--text-base);
-    margin-bottom: 1rem;
-    line-height: 1.5;
-  }
-
-  .corso-scroll-arrow {
-    width: 38px;
-    height: 38px;
-  }
 
   .corso-intro-section,
   .corso-metodo-section,
@@ -666,12 +456,6 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
     padding: 0 1rem;
   }
 
-
-  .corso-metodo-item :global(h3) {
-    font-size: var(--text-lg);
-    margin-bottom: 0.8rem;
-  }
-
   .corso-section-tagline,
   .corso-metodo-label,
   .corso-impara-label {
@@ -679,13 +463,8 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
   }
 
   .corso-meta-card {
-    padding: 1rem 1.2rem;
+    padding: 1rem 0 0;
     gap: 1rem;
-  }
-
-  .corso-meta-icon {
-    width: 44px;
-    height: 44px;
   }
 
   .corso-meta-icon :global(i) {
@@ -702,15 +481,6 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 
   .corso-metodo-header {
     margin-bottom: 2rem;
-  }
-
-  .corso-metodo-item {
-    padding: 1.5rem;
-  }
-
-  .corso-metodo-item :global(p) {
-    font-size: var(--text-sm);
-    line-height: 1.7;
   }
 
   .corso-impara-header {

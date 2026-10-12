@@ -1,9 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { webp } from '../lib/images';
-import { categorieCorsi, scuola } from '../data/scuola';
+import { categorieCorsi } from '../data/scuola';
 
 // Fascia d'età di ogni corso, dalla sua pagina (es. "/hip-hop" → "Ragazzi e adulti")
 const eta = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.data.badge.replace(' - ', ' · ')]));
@@ -11,8 +12,7 @@ const eta = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.dat
 const nomeBreve = (nome: string) => nome.replace(/\s*\(.*\)$/, '');
 const totale = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
-const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenotare una lezione di prova.')}`;
-const heroBg = await webp('gallery-10.jpg', 1920);
+const heroBg = await webp('gallery-3.jpg', 1920);
 ---
 
 <Base
@@ -26,12 +26,9 @@ const heroBg = await webp('gallery-10.jpg', 1920);
         <div class="chisiamo-hero-image" style={`background-image: url('${heroBg}')`}></div>
         <div class="chisiamo-hero-overlay"></div>
         <div class="chisiamo-hero-glass">
-            <span class="chisiamo-hero-badge">Lainate e Rho</span>
+            <Breadcrumb />
             <h1 class="chisiamo-hero-title">I Nostri Corsi</h1>
             <p class="chisiamo-hero-tagline">Dai 3 anni agli adulti, per ogni livello.</p>
-            <a href="#corsi" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
-                <i class="fas fa-chevron-down"></i>
-            </a>
         </div>
     </section>
 
@@ -70,9 +67,9 @@ const heroBg = await webp('gallery-10.jpg', 1920);
             ))}
 
             <footer class="corsi-fine">
-                <p>Non sai quale scegliere? Vieni a provare: ti aiutiamo a trovare il corso giusto.</p>
-                <a href={PROVA} target="_blank" rel="noopener" class="link-cta">
-                    Prenota una lezione di prova
+                <p>Non sai quale scegliere? Ti aiutiamo noi a trovare il corso giusto.</p>
+                <a href="/contatti" class="link-cta">
+                    Contattaci
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </footer>
@@ -147,18 +144,18 @@ const heroBg = await webp('gallery-10.jpg', 1920);
     margin: 0 1.5rem 1.5rem 1.5rem;
   }
 
-  /* Cornice azzurra sfalsata, come in Contatti e nella homepage */
+  /* Cornice azzurra sfalsata verso il testo, come in Contatti e nella homepage */
   .categoria-foto::before {
     content: '';
     position: absolute;
-    inset: 2rem 2rem -1.5rem -1.5rem;
+    inset: 2.5rem -1.5rem -1.5rem 2.5rem;
     border: 2px solid var(--primary-blue);
     border-radius: 24px;
     z-index: -1;
   }
 
   .categoria:nth-of-type(even) .categoria-foto::before {
-    inset: 2rem -1.5rem -1.5rem 2rem;
+    inset: 2.5rem 2.5rem -1.5rem -1.5rem;
   }
 
   .categoria-foto :global(img) {

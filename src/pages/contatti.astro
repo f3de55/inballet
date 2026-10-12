@@ -1,11 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { webp } from '../lib/images';
 import { scuola, sedi } from '../data/scuola';
 
 const { telefono: TEL, telefonoHref: TEL_HREF, email: EMAIL } = scuola;
-const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenotare una lezione di prova.')}`;
 
 const heroBg = await webp('gallery-6.jpg', 1920);
 ---
@@ -21,12 +21,9 @@ const heroBg = await webp('gallery-6.jpg', 1920);
         <div class="chisiamo-hero-image" style={`background-image: url('${heroBg}')`}></div>
         <div class="chisiamo-hero-overlay"></div>
         <div class="chisiamo-hero-glass">
-            <span class="chisiamo-hero-badge">Contatti</span>
+            <Breadcrumb />
             <h1 class="chisiamo-hero-title">Vieni a trovarci</h1>
             <p class="chisiamo-hero-tagline">Due sedi a Lainate e Rho. Siamo pronti ad accoglierti.</p>
-            <a href="#contatti" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
-                <i class="fas fa-chevron-down"></i>
-            </a>
         </div>
     </section>
 
@@ -36,13 +33,9 @@ const heroBg = await webp('gallery-6.jpg', 1920);
                 <p class="eyebrow">Scuola di danza a Lainate e Rho</p>
                 <h2 class="titolo titolo-sezione">Il primo passo<br>è un <em>passo di danza</em></h2>
                 <p class="invito intro-sezione">
-                    Raccontaci chi sei e cosa vorresti imparare: ti aiutiamo a scegliere il corso giusto
-                    e a prenotare una lezione di prova, senza impegno.
+                    Raccontaci chi sei e cosa vorresti imparare:
+                    ti aiutiamo a scegliere il corso giusto per età e livello.
                 </p>
-                <a href={PROVA} target="_blank" rel="noopener" class="link-cta">
-                    Prenota una lezione di prova
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
 
                 <dl class="info">
                     <div class="info-riga">
@@ -248,10 +241,6 @@ const heroBg = await webp('gallery-6.jpg', 1920);
     font-weight: 600;
   }
 
-  /* ---------- Invito alla lezione di prova (link) ---------- */
-  .link-cta {
-    margin-top: 2rem;
-  }
 
   /* ---------- Responsive ---------- */
   @media (max-width: 1024px) {

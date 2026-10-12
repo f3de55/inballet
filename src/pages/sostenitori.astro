@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { webp } from '../lib/images';
 
 const bg: Record<string, string> = {
@@ -20,22 +21,19 @@ const bg: Record<string, string> = {
             <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-2.jpg']}')`}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
-                <span class="chisiamo-hero-badge">Fai la differenza</span>
+                <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Sostieni i Nostri Progetti</h1>
                 <p class="chisiamo-hero-tagline">Sostieni la danza inclusiva per giovani e adulti.</p>
-                <a href="#dona" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
-                    <i class="fas fa-chevron-down"></i>
-                </a>
             </div>
         </section>
 
         <!-- Intro Section -->
         <section class="sost-intro-section">
-            <div class="sost-intro-wrapper">
+            <div class="sost-intro-wrapper intro-editoriale">
                 <span class="sost-intro-label eyebrow">La Nostra Missione</span>
-                <h2 class="sost-intro-title titolo-sezione">Inclusione attraverso la danza</h2>
+                <h2 class="sost-intro-title titolo-sezione">Inclusione <em>attraverso la danza</em></h2>
                 <p class="sost-intro-text">
-                    Dal 2013 accogliamo <strong>giovani e adulti con disabilità</strong> nella provincia di Milano, offrendo percorsi di danza accessibili e inclusivi. Il nostro lavoro è reso possibile grazie al supporto di chi crede nell'importanza dell'arte come strumento educativo.
+                    Dal 2013 accogliamo giovani e adulti con disabilità nella provincia di Milano, offrendo percorsi di danza accessibili e inclusivi. Il nostro lavoro è reso possibile grazie al supporto di chi crede nell'importanza dell'arte come strumento educativo.
                 </p>
                 <p class="sost-intro-text">
                     Oltre 10 anni di attività, 50+ famiglie coinvolte e un team completamente volontario che crede nel potere dell'arte come strumento di inclusione sociale.
@@ -47,7 +45,7 @@ const bg: Record<string, string> = {
         <section id="dona" class="sost-dona-section sezione-scura">
             <div class="sost-dona-wrapper">
                 <span class="sost-dona-label eyebrow">Dona Ora</span>
-                <h2 class="sost-dona-title titolo-sezione">Il tuo contributo fa la differenza</h2>
+                <h2 class="sost-dona-title titolo-sezione">Il tuo contributo <em>fa la differenza</em></h2>
                 <p class="sost-dona-text">Ogni donazione ci aiuta a continuare il nostro lavoro di inclusione. Sostieni i progetti sociali di InBallet e permetti a più persone di vivere l'esperienza della danza.</p>
                 <a href="https://www.paypal.com/cgi-bin/webscr?business=inballetasd%40gmail.com&cmd=_donations&item_name=Custom%20Item&item_number=donazione&currency_code=EUR" target="_blank" rel="noopener" class="sost-dona-btn">
                     <i class="fab fa-paypal"></i>
@@ -62,9 +60,9 @@ const bg: Record<string, string> = {
 
         <!-- Progetti Section -->
         <section class="sost-utilizzo-section">
-            <div class="sost-intro-wrapper">
+            <div class="sost-intro-wrapper intro-editoriale">
                 <span class="sost-intro-label eyebrow">I Progetti che Sostieni</span>
-                <h2 class="sost-intro-title titolo-sezione">Dove va la tua donazione</h2>
+                <h2 class="sost-intro-title titolo-sezione">Dove va <em>la tua donazione</em></h2>
                 <div class="sost-utilizzo-list" style="max-width:600px;margin:2rem auto 0">
                     <div class="sost-utilizzo-item">
                         <i class="fas fa-check"></i>
@@ -92,7 +90,7 @@ const bg: Record<string, string> = {
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">
-                    <h2 class="titolo-sezione">Vuoi saperne di più?</h2>
+                    <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
                     <p class="intro-sezione">Contattaci per informazioni sui progetti o per collaborazioni aziendali.</p>
                     <a href="mailto:info@inballet.it?subject=Informazioni%20Progetti%20Sociali" class="corso-btn-cta btn-primary">
                         Contattaci <i class="fas fa-arrow-right"></i>

@@ -34,12 +34,12 @@ const heroBg = await webp('gallery-6.jpg', 1920);
         <div class="container contatti-layout">
             <div class="contatti-testo">
                 <p class="eyebrow">Scuola di danza a Lainate e Rho</p>
-                <h2 class="titolo">Il primo passo<br>è un <em>passo di danza</em></h2>
-                <p class="invito">
+                <h2 class="titolo titolo-sezione">Il primo passo<br>è un <em>passo di danza</em></h2>
+                <p class="invito intro-sezione">
                     Raccontaci chi sei e cosa vorresti imparare: ti aiutiamo a scegliere il corso giusto
                     e a prenotare una lezione di prova, senza impegno.
                 </p>
-                <a href={PROVA} target="_blank" rel="noopener" class="cta">
+                <a href={PROVA} target="_blank" rel="noopener" class="link-cta">
                     Prenota una lezione di prova
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
@@ -92,7 +92,7 @@ const heroBg = await webp('gallery-6.jpg', 1920);
 
 <style>
   .contatti {
-    padding: 7rem 0 8rem;
+    padding: var(--section-y) 0;
     background: var(--white);
     /* l'ancora #contatti non deve finire sotto l'header fisso (e il banner) */
     scroll-margin-top: calc(80px + var(--banner-height, 0px));
@@ -132,34 +132,12 @@ const heroBg = await webp('gallery-6.jpg', 1920);
   }
 
   /* ---------- Testo ---------- */
-  .eyebrow {
-    font-size: var(--text-sm);
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--primary-blue-dark);
-    margin-bottom: 1.25rem;
-  }
 
   .titolo {
-    font-size: var(--text-5xl);
-    font-weight: 700;
-    line-height: var(--leading-tight);
-    letter-spacing: -0.02em;
-    color: var(--dark-navy);
     margin-bottom: 1.5rem;
   }
 
-  .titolo em {
-    font-style: italic;
-    font-weight: 300;
-    color: var(--primary-blue-dark);
-  }
-
   .invito {
-    font-size: var(--text-lg);
-    line-height: var(--leading-loose);
-    color: var(--text-light);
     max-width: 34rem;
   }
 
@@ -271,34 +249,8 @@ const heroBg = await webp('gallery-6.jpg', 1920);
   }
 
   /* ---------- Invito alla lezione di prova (link) ---------- */
-  .cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
+  .link-cta {
     margin-top: 2rem;
-    padding-bottom: 0.4rem;
-    border-bottom: 2px solid var(--primary-blue);
-    color: var(--dark-navy);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: color 0.3s ease, border-color 0.3s ease;
-  }
-
-  .cta i {
-    color: var(--primary-blue-dark);
-    transition: transform 0.3s ease;
-  }
-
-  .cta:hover {
-    color: var(--primary-blue-dark);
-    border-color: var(--primary-blue-dark);
-  }
-
-  .cta:hover i {
-    transform: translateX(6px);
   }
 
   /* ---------- Responsive ---------- */
@@ -313,9 +265,6 @@ const heroBg = await webp('gallery-6.jpg', 1920);
   }
 
   @media (max-width: 900px) {
-    .contatti {
-      padding: 5rem 0 6rem;
-    }
 
     .contatti-layout {
       grid-template-columns: 1fr;
@@ -336,9 +285,6 @@ const heroBg = await webp('gallery-6.jpg', 1920);
   }
 
   @media (max-width: 600px) {
-    .titolo {
-      font-size: var(--text-4xl);
-    }
 
     .info-riga {
       grid-template-columns: 1fr;

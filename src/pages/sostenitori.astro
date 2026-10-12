@@ -32,8 +32,8 @@ const bg: Record<string, string> = {
         <!-- Intro Section -->
         <section class="sost-intro-section">
             <div class="sost-intro-wrapper">
-                <span class="sost-intro-label">La Nostra Missione</span>
-                <h2 class="sost-intro-title">Inclusione attraverso la danza</h2>
+                <span class="sost-intro-label eyebrow">La Nostra Missione</span>
+                <h2 class="sost-intro-title titolo-sezione">Inclusione attraverso la danza</h2>
                 <p class="sost-intro-text">
                     Dal 2013 accogliamo <strong>giovani e adulti con disabilità</strong> nella provincia di Milano, offrendo percorsi di danza accessibili e inclusivi. Il nostro lavoro è reso possibile grazie al supporto di chi crede nell'importanza dell'arte come strumento educativo.
                 </p>
@@ -44,10 +44,10 @@ const bg: Record<string, string> = {
         </section>
 
         <!-- Dona Section -->
-        <section id="dona" class="sost-dona-section">
+        <section id="dona" class="sost-dona-section sezione-scura">
             <div class="sost-dona-wrapper">
-                <span class="sost-dona-label">Dona Ora</span>
-                <h2 class="sost-dona-title">Il tuo contributo fa la differenza</h2>
+                <span class="sost-dona-label eyebrow">Dona Ora</span>
+                <h2 class="sost-dona-title titolo-sezione">Il tuo contributo fa la differenza</h2>
                 <p class="sost-dona-text">Ogni donazione ci aiuta a continuare il nostro lavoro di inclusione. Sostieni i progetti sociali di InBallet e permetti a più persone di vivere l'esperienza della danza.</p>
                 <a href="https://www.paypal.com/cgi-bin/webscr?business=inballetasd%40gmail.com&cmd=_donations&item_name=Custom%20Item&item_number=donazione&currency_code=EUR" target="_blank" rel="noopener" class="sost-dona-btn">
                     <i class="fab fa-paypal"></i>
@@ -63,12 +63,12 @@ const bg: Record<string, string> = {
         <!-- Progetti Section -->
         <section class="sost-utilizzo-section">
             <div class="sost-intro-wrapper">
-                <span class="sost-intro-label">I Progetti che Sostieni</span>
-                <h2 class="sost-intro-title">Dove va la tua donazione</h2>
+                <span class="sost-intro-label eyebrow">I Progetti che Sostieni</span>
+                <h2 class="sost-intro-title titolo-sezione">Dove va la tua donazione</h2>
                 <div class="sost-utilizzo-list" style="max-width:600px;margin:2rem auto 0">
                     <div class="sost-utilizzo-item">
                         <i class="fas fa-check"></i>
-                        <span>Lezioni gratuite per ragazzi con difficolta' economiche</span>
+                        <span>Lezioni gratuite per ragazzi con difficoltà economiche</span>
                     </div>
                     <div class="sost-utilizzo-item">
                         <i class="fas fa-check"></i>
@@ -80,21 +80,21 @@ const bg: Record<string, string> = {
                     </div>
                     <div class="sost-utilizzo-item">
                         <i class="fas fa-check"></i>
-                        <span>Spettacoli inclusivi aperti alla comunita'</span>
+                        <span>Spettacoli inclusivi aperti alla comunità</span>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- CTA Section -->
-        <section class="corso-contatto-section">
+        <section class="corso-contatto-section sezione-scura">
             <div class="corso-contatto-bg" style={`background: url('${bg['bg-progetti-territorio.jpg']}') center/cover no-repeat`}></div>
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">
-                    <h2>Vuoi saperne di piu'?</h2>
-                    <p>Contattaci per informazioni sui progetti o per collaborazioni aziendali.</p>
-                    <a href="mailto:info@inballet.it?subject=Informazioni%20Progetti%20Sociali" class="corso-btn-cta">
+                    <h2 class="titolo-sezione">Vuoi saperne di più?</h2>
+                    <p class="intro-sezione">Contattaci per informazioni sui progetti o per collaborazioni aziendali.</p>
+                    <a href="mailto:info@inballet.it?subject=Informazioni%20Progetti%20Sociali" class="corso-btn-cta btn-primary">
                         Contattaci <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -104,7 +104,7 @@ const bg: Record<string, string> = {
 
 <style>
 .sost-intro-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: #fff;
 }
 
@@ -116,20 +116,11 @@ const bg: Record<string, string> = {
 
 .sost-intro-label {
   display: block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
   text-align: center;
 }
 
 .sost-intro-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
   margin-bottom: 2rem;
   text-align: center;
 }
@@ -148,7 +139,7 @@ const bg: Record<string, string> = {
 }
 
 .sost-dona-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: var(--dark-navy);
   position: relative;
   overflow: hidden;
@@ -176,19 +167,10 @@ const bg: Record<string, string> = {
 
 .sost-dona-label {
   display: block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .sost-dona-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: #fff;
-  line-height: var(--leading-tight);
   margin-bottom: 1.5rem;
 }
 
@@ -237,7 +219,7 @@ const bg: Record<string, string> = {
 }
 
 .sost-utilizzo-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: #fff;
 }
 

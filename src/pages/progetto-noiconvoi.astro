@@ -22,7 +22,7 @@ const bg: Record<string, string> = {
             <div class="chisiamo-hero-glass">
                 <span class="chisiamo-hero-badge">Dal 2013</span>
                 <h1 class="chisiamo-hero-title">Progetto NoiConVoi</h1>
-                <p class="chisiamo-hero-tagline">La danza e' per tutti. Inclusione attraverso il movimento.</p>
+                <p class="chisiamo-hero-tagline">La danza è per tutti. Inclusione attraverso il movimento.</p>
                 <a href="#intro" class="chisiamo-scroll-arrow" aria-label="Scorri in basso">
                     <i class="fas fa-chevron-down"></i>
                 </a>
@@ -32,8 +32,8 @@ const bg: Record<string, string> = {
         <!-- Intro Section -->
         <section id="intro" class="noi-intro-section">
             <div class="noi-intro-wrapper">
-                <span class="noi-intro-label">La Nostra Missione</span>
-                <h2 class="noi-intro-title">La danza come strumento di inclusione</h2>
+                <span class="noi-intro-label eyebrow">La Nostra Missione</span>
+                <h2 class="noi-intro-title titolo-sezione">La danza come strumento di inclusione</h2>
                 <p class="noi-intro-text">
                     Il progetto <strong>NoiConVoi</strong> rappresenta un'iniziativa di volontariato fondata nel 2013, nata dalla convinzione della Direttrice Artistica che <strong>la danza è per tutti</strong>.
                 </p>
@@ -50,9 +50,9 @@ const bg: Record<string, string> = {
         <section class="noi-metodo-section">
             <div class="noi-metodo-wrapper">
                 <div class="noi-metodo-header">
-                    <span class="noi-metodo-label">La Metodologia</span>
-                    <h2 class="noi-metodo-title">Un approccio pedagogico strutturato</h2>
-                    <p class="noi-metodo-subtitle">La nostra struttura pedagogica si articola in due fasi complementari.</p>
+                    <span class="noi-metodo-label eyebrow">La Metodologia</span>
+                    <h2 class="noi-metodo-title titolo-sezione">Un approccio pedagogico strutturato</h2>
+                    <p class="noi-metodo-subtitle intro-sezione">La nostra struttura pedagogica si articola in due fasi complementari.</p>
                 </div>
                 <div class="noi-metodo-grid">
                     <div class="noi-metodo-card">
@@ -74,12 +74,12 @@ const bg: Record<string, string> = {
         </section>
 
         <!-- Target Section -->
-        <section class="noi-target-section">
+        <section class="noi-target-section sezione-scura">
             <div class="noi-target-wrapper">
                 <div class="noi-target-header">
-                    <span class="noi-target-label">A Chi è Rivolto</span>
-                    <h2 class="noi-target-title">Un progetto aperto a tutti</h2>
-                    <p class="noi-target-subtitle">NoiConVoi accoglie partecipanti con profili diversi, creando un ambiente di condivisione unico.</p>
+                    <span class="noi-target-label eyebrow">A Chi è Rivolto</span>
+                    <h2 class="noi-target-title titolo-sezione">Un progetto aperto a tutti</h2>
+                    <p class="noi-target-subtitle intro-sezione">NoiConVoi accoglie partecipanti con profili diversi, creando un ambiente di condivisione unico.</p>
                 </div>
                 <div class="noi-target-list">
                     <div class="noi-target-item">
@@ -106,9 +106,9 @@ const bg: Record<string, string> = {
         <section class="noi-info-section">
             <div class="noi-info-wrapper">
                 <div class="noi-info-header">
-                    <span class="noi-info-label">Come Funziona</span>
-                    <h2 class="noi-info-title">Informazioni pratiche</h2>
-                    <p class="noi-info-subtitle">Tutto quello che serve sapere per partecipare al progetto.</p>
+                    <span class="noi-info-label eyebrow">Come Funziona</span>
+                    <h2 class="noi-info-title titolo-sezione">Informazioni pratiche</h2>
+                    <p class="noi-info-subtitle intro-sezione">Tutto quello che serve sapere per partecipare al progetto.</p>
                 </div>
                 <div class="noi-info-grid">
                     <div class="noi-info-item">
@@ -152,14 +152,14 @@ const bg: Record<string, string> = {
         </section>
 
         <!-- CTA Section -->
-        <section class="corso-contatto-section">
+        <section class="corso-contatto-section sezione-scura">
             <div class="corso-contatto-bg" style={`background: url('${bg['bg-progetti-territorio.jpg']}') center/cover no-repeat`}></div>
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">
-                    <h2>Unisciti a NoiConVoi</h2>
-                    <p>Vuoi partecipare o diventare volontario? Contattaci per scoprire come far parte di questo progetto.</p>
-                    <a href="mailto:info@inballet.it?subject=Progetto%20NoiConVoi%20-%20Richiesta%20Informazioni" class="corso-btn-cta">
+                    <h2 class="titolo-sezione">Unisciti a NoiConVoi</h2>
+                    <p class="intro-sezione">Vuoi partecipare o diventare volontario? Contattaci per scoprire come far parte di questo progetto.</p>
+                    <a href="mailto:info@inballet.it?subject=Progetto%20NoiConVoi%20-%20Richiesta%20Informazioni" class="corso-btn-cta btn-primary">
                         Contattaci <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -169,7 +169,7 @@ const bg: Record<string, string> = {
 
 <style>
 .noi-intro-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: #fff;
 }
 
@@ -181,20 +181,11 @@ const bg: Record<string, string> = {
 
 .noi-intro-label {
   display: block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
   text-align: center;
 }
 
 .noi-intro-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
   margin-bottom: 2rem;
   text-align: center;
 }
@@ -233,8 +224,8 @@ const bg: Record<string, string> = {
 }
 
 .noi-metodo-section {
-  padding: 5rem 0;
-  background: rgba(176,224,230,.1);
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
 }
 
 .noi-metodo-wrapper {
@@ -250,25 +241,14 @@ const bg: Record<string, string> = {
 
 .noi-metodo-label {
   display: block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .noi-metodo-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
   margin-bottom: 1rem;
 }
 
 .noi-metodo-subtitle {
-  font-size: var(--text-base);
-  color: var(--text-light);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -282,16 +262,16 @@ const bg: Record<string, string> = {
 .noi-metodo-card {
   background: #fff;
   padding: 2.5rem 2rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,.05);
-  border: 1px solid rgba(135,206,235,.15);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-card);
   transition: all .3s ease;
   text-align: center;
 }
 
 .noi-metodo-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 35px rgba(135,206,235,.2);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-card-hover);
   border-color: var(--primary-blue);
 }
 
@@ -324,7 +304,7 @@ const bg: Record<string, string> = {
 }
 
 .noi-target-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: var(--dark-navy);
   position: relative;
   overflow: hidden;
@@ -356,28 +336,16 @@ const bg: Record<string, string> = {
 
 .noi-target-label {
   display: block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .noi-target-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: #fff;
-  line-height: var(--leading-tight);
   margin-bottom: 1rem;
 }
 
 .noi-target-subtitle {
-  font-size: var(--text-lg);
-  color: rgba(255,255,255,.7);
   max-width: 600px;
   margin: 0 auto;
-  line-height: 1.7;
 }
 
 .noi-target-list {
@@ -405,7 +373,7 @@ const bg: Record<string, string> = {
 }
 
 .noi-info-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: #fff;
 }
 
@@ -422,25 +390,14 @@ const bg: Record<string, string> = {
 
 .noi-info-label {
   display: block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .noi-info-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
   margin-bottom: 1rem;
 }
 
 .noi-info-subtitle {
-  font-size: var(--text-base);
-  color: var(--text-light);
   max-width: 600px;
   margin: 0 auto;
 }

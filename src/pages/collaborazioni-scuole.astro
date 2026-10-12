@@ -35,8 +35,8 @@ const bg: Record<string, string> = {
             <div class="container">
                 <div class="collab-intro-layout">
                     <div class="collab-intro-content">
-                        <span class="collab-intro-label">Chi Siamo</span>
-                        <h2 class="collab-intro-title">Da oltre 15 anni partner delle scuole del territorio</h2>
+                        <span class="collab-intro-label eyebrow">Chi Siamo</span>
+                        <h2 class="collab-intro-title titolo-sezione">Da oltre 15 anni partner delle scuole del territorio</h2>
                         <p class="collab-intro-text">
                             La Direzione <strong>I.N.BALLET</strong> collabora con le scuole del territorio offrendo <strong>progetti personalizzati</strong> che integrano la danza e il movimento nell'attivita educativa.
                         </p>
@@ -62,9 +62,9 @@ const bg: Record<string, string> = {
         <section class="collab-target-section">
             <div class="collab-target-wrapper">
                 <div class="collab-target-header">
-                    <span class="collab-target-label">A Chi Ci Rivolgiamo</span>
-                    <h2 class="collab-target-title">Progetti per ogni fascia d'eta</h2>
-                    <p class="collab-target-subtitle">Collaboriamo con tutte le tipologie di istituti scolastici, adattando i nostri programmi alle specifiche esigenze.</p>
+                    <span class="collab-target-label eyebrow">A Chi Ci Rivolgiamo</span>
+                    <h2 class="collab-target-title titolo-sezione">Progetti per ogni fascia d'eta</h2>
+                    <p class="collab-target-subtitle intro-sezione">Collaboriamo con tutte le tipologie di istituti scolastici, adattando i nostri programmi alle specifiche esigenze.</p>
                 </div>
                 <div class="collab-target-grid">
                     <div class="collab-target-item">
@@ -103,9 +103,9 @@ const bg: Record<string, string> = {
         <section class="collab-progetti-section">
             <div class="collab-progetti-wrapper">
                 <div class="collab-progetti-header">
-                    <span class="collab-progetti-label">I Nostri Progetti</span>
-                    <h2 class="collab-progetti-title">Cosa possiamo offrire alla tua scuola</h2>
-                    <p class="collab-progetti-subtitle">Programmi flessibili e personalizzabili, sviluppati da professionisti con esperienza nel mondo educativo.</p>
+                    <span class="collab-progetti-label eyebrow">I Nostri Progetti</span>
+                    <h2 class="collab-progetti-title titolo-sezione">Cosa possiamo offrire alla tua scuola</h2>
+                    <p class="collab-progetti-subtitle intro-sezione">Programmi flessibili e personalizzabili, sviluppati da professionisti con esperienza nel mondo educativo.</p>
                 </div>
                 <div class="collab-progetti-list">
                     <div class="collab-progetto-item">
@@ -167,17 +167,17 @@ const bg: Record<string, string> = {
         </section>
 
         <!-- CTA Section -->
-        <section class="collab-cta-section">
+        <section class="collab-cta-section sezione-scura">
             <div class="collab-cta-bg" style={`background-image: url('${bg['bg-progetti-territorio.jpg']}')`}></div>
             <div class="collab-cta-overlay"></div>
             <div class="collab-cta-wrapper">
-                <h2 class="collab-cta-title">Portiamo la danza nella tua scuola</h2>
-                <p class="collab-cta-text">Contattaci per un incontro conoscitivo senza impegno. Saremo lieti di presentarti le nostre proposte e costruire insieme un progetto su misura per la tua scuola.</p>
+                <h2 class="collab-cta-title titolo-sezione">Portiamo la danza nella tua scuola</h2>
+                <p class="collab-cta-text intro-sezione">Contattaci per un incontro conoscitivo senza impegno. Saremo lieti di presentarti le nostre proposte e costruire insieme un progetto su misura per la tua scuola.</p>
                 <div class="collab-cta-buttons">
-                    <a href="mailto:info@inballet.it?subject=Collaborazione%20Scuola" class="collab-cta-btn collab-cta-btn-primary">
+                    <a href="mailto:info@inballet.it?subject=Collaborazione%20Scuola" class="collab-cta-btn collab-cta-btn-primary btn-primary">
                         <i class="fas fa-envelope"></i> Richiedi Informazioni
                     </a>
-                    <a href="tel:+393937802996" class="collab-cta-btn collab-cta-btn-secondary">
+                    <a href="tel:+393937802996" class="collab-cta-btn collab-cta-btn-secondary btn-secondary">
                         <i class="fas fa-phone"></i> Chiamaci
                     </a>
                 </div>
@@ -187,7 +187,7 @@ const bg: Record<string, string> = {
 
 <style>
 .collab-intro-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: #fff;
 }
 
@@ -206,21 +206,11 @@ const bg: Record<string, string> = {
 
 .collab-intro-label {
   display: block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .collab-intro-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
   margin-bottom: 1.5rem;
-  letter-spacing: -.02em;
 }
 
 .collab-intro-text {
@@ -257,7 +247,7 @@ const bg: Record<string, string> = {
 
 .collab-intro-image {
   width: 100%;
-  border-radius: 16px;
+  border-radius: var(--radius-img);
   box-shadow: 0 20px 40px rgba(0,0,0,.1);
 }
 
@@ -288,8 +278,8 @@ const bg: Record<string, string> = {
 }
 
 .collab-target-section {
-  padding: 5rem 0;
-  background: rgba(176,224,230,.15);
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
 }
 
 .collab-target-wrapper {
@@ -305,25 +295,14 @@ const bg: Record<string, string> = {
 
 .collab-target-label {
   display: block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .collab-target-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
   margin-bottom: 1rem;
 }
 
 .collab-target-subtitle {
-  font-size: var(--text-base);
-  color: var(--text-light);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -338,15 +317,15 @@ const bg: Record<string, string> = {
   text-align: center;
   padding: 2rem 1.5rem;
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,.05);
-  border: 1px solid rgba(135,206,235,.15);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-card);
   transition: all .3s ease;
 }
 
 .collab-target-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(135,206,235,.15);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-card-hover);
   border-color: var(--primary-blue);
 }
 
@@ -377,7 +356,7 @@ const bg: Record<string, string> = {
 }
 
 .collab-progetti-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: #fff;
 }
 
@@ -394,25 +373,14 @@ const bg: Record<string, string> = {
 
 .collab-progetti-label {
   display: block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .collab-progetti-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
   margin-bottom: 1rem;
 }
 
 .collab-progetti-subtitle {
-  font-size: var(--text-base);
-  color: var(--text-light);
   max-width: 650px;
   margin: 0 auto;
 }
@@ -459,7 +427,7 @@ const bg: Record<string, string> = {
 }
 
 .collab-cta-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   position: relative;
   overflow: hidden;
 }
@@ -494,17 +462,11 @@ const bg: Record<string, string> = {
 }
 
 .collab-cta-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: #fff;
   margin-bottom: 1rem;
 }
 
 .collab-cta-text {
-  font-size: var(--text-lg);
-  color: rgba(255,255,255,.8);
   margin-bottom: 2.5rem;
-  line-height: 1.7;
 }
 
 .collab-cta-buttons {
@@ -513,43 +475,6 @@ const bg: Record<string, string> = {
   justify-content: center;
   flex-wrap: wrap;
   margin-bottom: 3rem;
-}
-
-.collab-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: .6rem;
-  padding: 1rem 2.5rem;
-  border-radius: 25px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: var(--text-sm);
-  transition: all .3s ease;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-}
-
-.collab-cta-btn-primary {
-  background: var(--primary-blue);
-  color: var(--dark-navy);
-  box-shadow: 0 4px 15px rgba(135,206,235,.3);
-}
-
-.collab-cta-btn-primary:hover {
-  background: #fff;
-  color: var(--dark-navy);
-}
-
-.collab-cta-btn-secondary {
-  background: transparent;
-  color: #fff;
-  border: 2px solid rgba(255,255,255,.5);
-}
-
-.collab-cta-btn-secondary:hover {
-  background: #fff;
-  color: var(--dark-navy);
-  border-color: #fff;
 }
 
 @media(max-width:992px) {

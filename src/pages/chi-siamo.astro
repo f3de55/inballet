@@ -50,8 +50,8 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
                         </div>
                     </div>
                     <div class="fondatrice-content">
-                        <span class="fondatrice-label">Fondatrice & Direttrice Artistica</span>
-                        <h2 class="fondatrice-name">Ilenia Nobile</h2>
+                        <span class="fondatrice-label eyebrow">Fondatrice & Direttrice Artistica</span>
+                        <h2 class="fondatrice-name titolo-sezione">Ilenia Nobile</h2>
                         <div class="fondatrice-bio">
                             <p>Dallo skate park di Lainate a 3 sedi operative: <strong>Ilenia Nobile</strong> ha trasformato la sua passione in una scuola dove la danza è accessibile a tutti.</p>
                             <div class="fondatrice-separator"></div>
@@ -66,8 +66,8 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
         <section class="storia-section">
             <div class="container">
                 <div class="storia-header">
-                    <span class="storia-label">Il Nostro Percorso</span>
-                    <h2 class="storia-title">Una storia di passione</h2>
+                    <span class="storia-label eyebrow">Il Nostro Percorso</span>
+                    <h2 class="storia-title titolo-sezione">Una storia di passione</h2>
                 </div>
                 <div class="timeline-snake">
                     <!-- SVG Serpentina -->
@@ -125,11 +125,11 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
         </section>
 
         <!-- InBallet in Numeri -->
-        <section class="numeri-section">
+        <section class="numeri-section sezione-scura">
             <div class="container">
                 <div class="numeri-header">
-                    <span class="numeri-label">InBallet in Numeri</span>
-                    <h2 class="numeri-title">I risultati parlano da soli</h2>
+                    <span class="numeri-label eyebrow">InBallet in Numeri</span>
+                    <h2 class="numeri-title titolo-sezione">I risultati parlano da soli</h2>
                 </div>
                 <div class="numeri-grid">
                     <div class="numero-item">
@@ -158,9 +158,9 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
         <section class="team-section">
             <div class="container">
                 <div class="team-header">
-                    <span class="team-label">Il Nostro Team</span>
-                    <h2 class="team-title">I professionisti di InBallet</h2>
-                    <p class="team-subtitle">Insegnanti qualificati, uniti dalla passione per la danza.</p>
+                    <span class="team-label eyebrow">Il Nostro Team</span>
+                    <h2 class="team-title titolo-sezione">I professionisti di InBallet</h2>
+                    <p class="team-subtitle intro-sezione">Insegnanti qualificati, uniti dalla passione per la danza.</p>
                 </div>
                 <div class="team-grid">
                     <article class="team-card">
@@ -231,9 +231,9 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
         <section class="sede-section">
             <div class="sede-header">
                 <div class="container">
-                    <span class="sede-label">I Nostri Spazi</span>
-                    <h2 class="sede-title">Dove nasce la magia</h2>
-                    <p class="sede-subtitle">Spazi progettati per ispirare e far crescere ogni ballerino.</p>
+                    <span class="sede-label eyebrow">I Nostri Spazi</span>
+                    <h2 class="sede-title titolo-sezione">Dove nasce la magia</h2>
+                    <p class="sede-subtitle intro-sezione">Spazi progettati per ispirare e far crescere ogni ballerino.</p>
                 </div>
             </div>
             <div class="sede-carousel-wrapper">
@@ -349,14 +349,14 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
         </section>
 
         <!-- CTA Finale - Stesso stile template corsi -->
-        <section class="corso-contatto-section">
+        <section class="corso-contatto-section sezione-scura">
             <div class="corso-contatto-bg" style={`background: url('${bg['bg-progetti-territorio.jpg']}') center/cover no-repeat`}></div>
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">
-                    <h2>Vuoi far parte della famiglia InBallet?</h2>
-                    <p>Prenota una lezione di prova gratuita.</p>
-                    <a href={PROVA} target="_blank" rel="noopener" class="corso-btn-cta">
+                    <h2 class="titolo-sezione">Vuoi far parte della famiglia InBallet?</h2>
+                    <p class="intro-sezione">Prenota una lezione di prova gratuita.</p>
+                    <a href={PROVA} target="_blank" rel="noopener" class="corso-btn-cta btn-primary">
                         Prenota una Prova <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -372,7 +372,7 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
 <style>
 .fondatrice-section {
-  padding: 6rem 0;
+  padding: var(--section-y) 0;
   background: var(--white);
 }
 
@@ -398,7 +398,7 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
   max-width: 480px;
   height: 550px;
   object-fit: cover;
-  border-radius: 16px;
+  border-radius: var(--radius-img);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
 }
 
@@ -409,8 +409,8 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
   right: 40px;
   background: var(--white);
   padding: 1.8rem 2rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
 }
 
 .quote-icon {
@@ -450,20 +450,11 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
 .fondatrice-label {
   display: block;
-  font-size: var(--text-lg);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .fondatrice-name {
-  font-size: var(--text-5xl);
-  font-weight: 700;
-  color: var(--dark-navy);
   margin: 0 0 0.5rem;
-  letter-spacing: -0.02em;
 }
 
 .fondatrice-bio :global(p) {
@@ -486,8 +477,8 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 }
 
 .storia-section {
-  padding: 6rem 0;
-  background: rgba(176, 224, 230, 0.25);
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
   position: relative;
   overflow: hidden;
 }
@@ -519,20 +510,11 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
 .storia-label {
   display: block;
-  font-size: var(--text-lg);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .storia-title {
-  font-size: var(--text-5xl);
-  font-weight: 700;
-  color: var(--dark-navy);
   margin: 0;
-  letter-spacing: -0.02em;
 }
 
 .timeline-snake {
@@ -576,11 +558,11 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
 .timeline-card {
   background: var(--white);
-  border-radius: 16px;
+  border-radius: var(--radius-card);
   padding: 2rem;
   text-align: center;
-  border: 1px solid rgba(135, 206, 235, 0.25);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--border-card);
+  box-shadow: var(--shadow-card);
 }
 
 .timeline-year {
@@ -625,7 +607,7 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 }
 
 .numeri-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: linear-gradient(135deg, var(--dark-navy) 0%, #1a1a2e 100%);
   position: relative;
   overflow: hidden;
@@ -658,20 +640,11 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
 .numeri-label {
   display: block;
-  font-size: var(--text-lg);
-  color: var(--primary-blue);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 3px;
   margin-bottom: 1rem;
 }
 
 .numeri-title {
-  font-size: var(--text-5xl);
-  font-weight: 700;
-  color: var(--white);
   margin: 0;
-  letter-spacing: -0.02em;
 }
 
 .numeri-grid {
@@ -733,7 +706,7 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 }
 
 .team-section {
-  padding: 6rem 0;
+  padding: var(--section-y) 0;
   background: var(--white);
 }
 
@@ -747,27 +720,15 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
 .team-label {
   display: block;
-  font-size: var(--text-lg);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .team-title {
-  font-size: var(--text-5xl);
-  font-weight: 700;
-  color: var(--dark-navy);
   margin: 0 0 1rem;
-  letter-spacing: -0.02em;
 }
 
 .team-subtitle {
-  font-size: var(--text-xl);
-  color: var(--text-light);
   margin: 0;
-  line-height: var(--leading-relaxed);
 }
 
 .team-grid {
@@ -780,10 +741,10 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
 .team-card {
   background: var(--white);
-  border-radius: 12px;
+  border-radius: var(--radius-card);
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(135, 206, 235, 0.15);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-card);
 }
 
 .team-card-image {
@@ -829,8 +790,8 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 }
 
 .sede-section {
-  padding: 6rem 0 4rem;
-  background: rgba(176, 224, 230, 0.25);
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
   position: relative;
 }
 
@@ -859,27 +820,15 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
 .sede-label {
   display: block;
-  font-size: var(--text-lg);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .sede-title {
-  font-size: var(--text-5xl);
-  font-weight: 700;
-  color: var(--dark-navy);
   margin: 0 0 1rem;
-  letter-spacing: -0.02em;
 }
 
 .sede-subtitle {
-  font-size: var(--text-xl);
-  color: var(--text-light);
   margin: 0;
-  line-height: var(--leading-relaxed);
 }
 
 .sede-carousel-wrapper {
@@ -892,7 +841,7 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 .sede-carousel {
   position: relative;
   height: 520px;
-  border-radius: 20px;
+  border-radius: var(--radius-img);
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
 }
@@ -1175,7 +1124,7 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
   }
 
   .sede-carousel {
-    border-radius: 16px;
+    border-radius: var(--radius-img);
   }
 
   .fondatrice-section,
@@ -1184,17 +1133,6 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
   .team-section,
   .sede-section {
     padding: 4rem 0;
-  }
-
-  .fondatrice-name {
-    font-size: var(--text-4xl);
-  }
-
-  .storia-title,
-  .numeri-title,
-  .team-title,
-  .sede-title {
-    font-size: var(--text-4xl);
   }
 
   .numero-value {
@@ -1304,7 +1242,7 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
   }
 
   .sede-carousel {
-    border-radius: 12px;
+    border-radius: var(--radius-img);
   }
 
   .fondatrice-section,
@@ -1323,7 +1261,7 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
   .fondatrice-image-wrapper :global(img) {
     max-width: 100%;
     height: 350px;
-    border-radius: 12px;
+    border-radius: var(--radius-img);
   }
 
   .fondatrice-quote-card {
@@ -1353,33 +1291,6 @@ const PROVA = `${scuola.whatsapp}?text=${encodeURIComponent('Ciao! Vorrei prenot
 
   .fondatrice-quote-card :global(cite) {
     font-size: var(--text-base);
-  }
-
-  .fondatrice-label {
-    font-size: var(--text-base);
-  }
-
-  .fondatrice-name {
-    font-size: var(--text-3xl);
-  }
-
-  .storia-label,
-  .numeri-label,
-  .team-label,
-  .sede-label {
-    font-size: var(--text-base);
-  }
-
-  .storia-title,
-  .numeri-title,
-  .team-title,
-  .sede-title {
-    font-size: var(--text-3xl);
-  }
-
-  .team-subtitle,
-  .sede-subtitle {
-    font-size: var(--text-lg);
   }
 
   .team-grid {

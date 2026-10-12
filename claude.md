@@ -57,6 +57,16 @@ Uses `GROQ_API_KEY` and `GROQ_MODEL` from env. Default model: `openai/gpt-oss-12
 
 Course pages use Astro Content Collections: `src/data/corsi.json` defines 22 courses, each keyed by slug. `src/pages/[corso].astro` renders them. Schema is in `src/content.config.ts`.
 
+### UI system (use it, don't invent new styles)
+
+Shared classes and tokens live at the top of `src/styles/global.css`. Every content section uses them; page `<style>` blocks define layout only (grid, spacing, alignment), never their own label/title/button typography or colors.
+
+- Section header: `<span class="eyebrow">` → `<h2 class="titolo-sezione">` (optional `<em>` for the light italic accent) → `<p class="intro-sezione">`
+- Dark or photo-background section: add `sezione-scura` on the `<section>` (eyebrow, title and intro switch to light colors)
+- Buttons: `btn-primary` (blue pill), `btn-secondary` (white outline, on photos/dark); text action link: `link-cta`
+- Tokens: `--section-y` (section vertical padding), `--bg-soft` (alternate section background), `--radius-card` / `--border-card` / `--shadow-card` / `--shadow-card-hover` (cards), `--radius-img` (photos, with the offset blue frame used in Contatti/Corsi/homepage story)
+- Page hero: the shared `chisiamo-hero` markup (see any inner page)
+
 ### Icons
 
 `scripts/icons.mjs` generates a Font Awesome subset from `@fortawesome/fontawesome-free`. It scans source files for `fa-*` class usage and builds a minimal subset. Run `npm run icons` after adding any new Font Awesome icon class.

@@ -53,8 +53,8 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
             <div class="corso-story-layout">
                 <div class="corso-story-content">
                     <div class="corso-section-header">
-                        <p class="corso-section-tagline" id="corsoIntroTagline">Il percorso</p>
-                        <h2 class="corso-section-title" id="corsoIntroTitolo">Di cosa si tratta</h2>
+                        <p class="corso-section-tagline eyebrow" id="corsoIntroTagline">Il percorso</p>
+                        <h2 class="corso-section-title titolo-sezione" id="corsoIntroTitolo">Di cosa si tratta</h2>
                     </div>
 
                     <div class="corso-story-text" id="corsoIntroText" set:html={data.intro} />
@@ -89,11 +89,11 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
     </section>
 
     <!-- Il Metodo -->
-    <section class="corso-metodo-section">
+    <section class="corso-metodo-section sezione-scura">
         <div class="corso-metodo-wrapper">
             <div class="corso-metodo-header">
-                <span class="corso-metodo-label">Come lavoriamo</span>
-                <h2 id="corsoMetodoTitolo">{data.metodoTitolo}</h2>
+                <span class="corso-metodo-label eyebrow">Come lavoriamo</span>
+                <h2 id="corsoMetodoTitolo" class="titolo-sezione">{data.metodoTitolo}</h2>
             </div>
             <div class="corso-metodo-list" id="corsoMetodoContent">
                 {data.metodo.map((item) => (
@@ -110,9 +110,9 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
     <section class="corso-impara-section">
         <div class="corso-impara-wrapper">
             <div class="corso-impara-header">
-                <span class="corso-impara-label">Gli obiettivi</span>
-                <h2 id="corsoImparaTitolo">{data.imparaTitolo}</h2>
-                <p class="corso-impara-subtitle">Le competenze che svilupperà durante il percorso</p>
+                <span class="corso-impara-label eyebrow">Gli obiettivi</span>
+                <h2 id="corsoImparaTitolo" class="titolo-sezione">{data.imparaTitolo}</h2>
+                <p class="corso-impara-subtitle intro-sezione">Le competenze che svilupperà durante il percorso</p>
             </div>
             <ul class="corso-impara-list" id="corsoImparaGrid">
                 {data.impara.map((item) => <li set:html={item} />)}
@@ -121,14 +121,14 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
     </section>
 
     <!-- CTA -->
-    <section class="corso-contatto-section">
+    <section class="corso-contatto-section sezione-scura">
         <div class="corso-contatto-bg" style={`background-image: url('${contattoBg}')`}></div>
         <div class="corso-contatto-overlay"></div>
         <div class="corso-contatto-wrapper">
             <div class="corso-contatto-content">
-                <h2>Prenota una lezione di prova gratuita</h2>
-                <p>Vieni a conoscerci: la prima lezione è sempre senza impegno.</p>
-                <a href="/contatti" class="corso-btn-cta">
+                <h2 class="titolo-sezione">Prenota una lezione di prova gratuita</h2>
+                <p class="intro-sezione">Vieni a conoscerci: la prima lezione è sempre senza impegno.</p>
+                <a href="/contatti" class="corso-btn-cta btn-primary">
                     Contattaci per prenotare
                     <i class="fas fa-arrow-right"></i>
                 </a>
@@ -240,7 +240,7 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 }
 
 .corso-intro-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: var(--white);
   position: relative;
 }
@@ -263,21 +263,11 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 }
 
 .corso-section-tagline {
-  font-size: var(--text-lg);
-  color: var(--primary-blue-dark);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
   margin-bottom: 0.5rem;
 }
 
 .corso-section-title {
-  font-size: var(--text-5xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
   margin: 0;
-  letter-spacing: -0.02em;
 }
 
 .corso-story-text {
@@ -312,8 +302,8 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
   gap: 1.2rem;
   padding: 1.2rem 1.8rem;
   background: rgba(135, 206, 235, 0.12);
-  border-radius: 14px;
-  border: 1px solid rgba(135, 206, 235, 0.25);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-card);
   flex: 1;
   min-width: 180px;
 }
@@ -368,12 +358,12 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
   max-width: 400px;
   height: 450px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: var(--radius-img);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
 .corso-metodo-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: var(--dark-navy);
   position: relative;
 }
@@ -400,20 +390,11 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 }
 
 .corso-metodo-label {
-  font-size: var(--text-lg);
-  color: var(--primary-blue);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
   margin-bottom: 0.5rem;
 }
 
 .corso-metodo-header :global(h2) {
-  font-size: var(--text-5xl);
-  color: var(--white);
   margin: 0;
-  font-weight: 700;
-  letter-spacing: -0.02em;
 }
 
 .corso-metodo-list {
@@ -424,9 +405,9 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 
 .corso-metodo-item {
   background: rgba(255, 255, 255, 0.03);
-  border-radius: 16px;
+  border-radius: var(--radius-card);
   padding: 2rem;
-  border: 1px solid rgba(135, 206, 235, 0.15);
+  border: 1px solid var(--border-card);
   position: relative;
 }
 
@@ -456,8 +437,8 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 }
 
 .corso-impara-section {
-  padding: 5rem 0;
-  background: rgba(176, 224, 230, 0.12);
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
   position: relative;
 }
 
@@ -483,29 +464,16 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 }
 
 .corso-impara-label {
-  font-size: var(--text-lg);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 0.8rem;
   display: block;
 }
 
 .corso-impara-header :global(h2) {
-  font-size: var(--text-5xl);
-  color: var(--dark-navy);
   margin: 0 0 1rem 0;
-  font-weight: 700;
-  letter-spacing: -0.02em;
 }
 
 .corso-impara-subtitle {
-  font-size: var(--text-xl);
-  color: var(--text-light);
   margin: 0;
-  font-weight: 400;
-  line-height: 1.5;
 }
 
 .corso-impara-list {
@@ -633,24 +601,9 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
     padding: 0 1.5rem;
   }
 
-  .corso-section-title,
-  .corso-metodo-header :global(h2),
-  .corso-impara-header :global(h2) {
-    font-size: var(--text-4xl);
-  }
 
   .corso-metodo-item :global(h3) {
     font-size: var(--text-xl);
-  }
-
-  .corso-section-tagline,
-  .corso-metodo-label,
-  .corso-impara-label {
-    font-size: var(--text-base);
-  }
-
-  .corso-impara-subtitle {
-    font-size: var(--text-lg);
   }
 
   .corso-impara-list {
@@ -713,11 +666,6 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
     padding: 0 1rem;
   }
 
-  .corso-section-title,
-  .corso-metodo-header :global(h2),
-  .corso-impara-header :global(h2) {
-    font-size: var(--text-3xl);
-  }
 
   .corso-metodo-item :global(h3) {
     font-size: var(--text-lg);
@@ -727,12 +675,7 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
   .corso-section-tagline,
   .corso-metodo-label,
   .corso-impara-label {
-    font-size: var(--text-sm);
     margin-bottom: 0.5rem;
-  }
-
-  .corso-impara-subtitle {
-    font-size: var(--text-base);
   }
 
   .corso-meta-card {
@@ -787,7 +730,7 @@ const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
 
   .corso-story-image :global(img) {
     height: 260px;
-    border-radius: 10px;
+    border-radius: var(--radius-img);
   }
 
   .corso-story-text :global(p) {

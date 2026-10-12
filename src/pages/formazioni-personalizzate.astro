@@ -32,13 +32,13 @@ const bg: Record<string, string> = {
         <!-- Intro Section -->
         <section id="intro" class="perso-intro-section">
             <div class="perso-intro-wrapper">
-                <span class="perso-intro-label">Formazione su Misura</span>
-                <h2 class="perso-intro-title">Progettiamo insieme il tuo percorso</h2>
+                <span class="perso-intro-label eyebrow">Formazione su Misura</span>
+                <h2 class="perso-intro-title titolo-sezione">Progettiamo insieme il tuo percorso</h2>
                 <p class="perso-intro-text">
                     Ogni professionista ha esigenze diverse. Offriamo <strong>percorsi formativi personalizzati</strong> per insegnanti che vogliono aggiornarsi, scuole che cercano consulenza didattica e istituti interessati a progetti di danza.
                 </p>
                 <p class="perso-intro-text">
-                    Workshop, aggiornamenti metodologici, approfondimenti tecnici: costruiamo insieme il programma piu' adatto ai tuoi obiettivi.
+                    Workshop, aggiornamenti metodologici, approfondimenti tecnici: costruiamo insieme il programma più adatto ai tuoi obiettivi.
                 </p>
             </div>
         </section>
@@ -47,8 +47,8 @@ const bg: Record<string, string> = {
         <section class="perso-tipo-section">
             <div class="perso-tipo-wrapper">
                 <div class="perso-tipo-header">
-                    <span class="perso-tipo-label">I Percorsi</span>
-                    <h2 class="perso-tipo-title">Tipologie di formazione</h2>
+                    <span class="perso-tipo-label eyebrow">I Percorsi</span>
+                    <h2 class="perso-tipo-title titolo-sezione">Tipologie di formazione</h2>
                 </div>
                 <div class="perso-tipo-grid">
                     <div class="perso-tipo-item">
@@ -84,14 +84,14 @@ const bg: Record<string, string> = {
         </section>
 
         <!-- CTA Section -->
-        <section class="corso-contatto-section">
+        <section class="corso-contatto-section sezione-scura">
             <div class="corso-contatto-bg" style={`background: url('${bg['bg-progetti-territorio.jpg']}') center/cover no-repeat`}></div>
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">
-                    <h2>Hai un progetto in mente?</h2>
-                    <p>Contattaci per un colloquio gratuito. Definiremo insieme obiettivi e contenuti del tuo percorso formativo.</p>
-                    <a href="mailto:info@inballet.it?subject=Formazione%20Personalizzata%20-%20Richiesta%20Info" class="corso-btn-cta">
+                    <h2 class="titolo-sezione">Hai un progetto in mente?</h2>
+                    <p class="intro-sezione">Contattaci per un colloquio gratuito. Definiremo insieme obiettivi e contenuti del tuo percorso formativo.</p>
+                    <a href="mailto:info@inballet.it?subject=Formazione%20Personalizzata%20-%20Richiesta%20Info" class="corso-btn-cta btn-primary">
                         Richiedi Informazioni <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -101,7 +101,7 @@ const bg: Record<string, string> = {
 
 <style>
 .perso-intro-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: #fff;
 }
 
@@ -114,19 +114,10 @@ const bg: Record<string, string> = {
 
 .perso-intro-label {
   display: block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .perso-intro-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
   margin-bottom: 2rem;
 }
 
@@ -143,8 +134,8 @@ const bg: Record<string, string> = {
 }
 
 .perso-tipo-section {
-  padding: 5rem 0;
-  background: rgba(176,224,230,.25);
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
   position: relative;
   overflow: hidden;
 }
@@ -182,19 +173,7 @@ const bg: Record<string, string> = {
 
 .perso-tipo-label {
   display: block;
-  font-size: var(--text-lg);
-  color: var(--primary-blue-dark);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
   margin-bottom: 1rem;
-}
-
-.perso-tipo-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
 }
 
 .perso-tipo-grid {

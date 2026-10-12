@@ -32,13 +32,13 @@ const bg: Record<string, string> = {
         <!-- Intro Section -->
         <section id="intro" class="form-intro-section">
             <div class="form-intro-wrapper">
-                <span class="form-intro-label">Il Percorso</span>
-                <h2 class="form-intro-title">Diventa insegnante di danza</h2>
+                <span class="form-intro-label eyebrow">Il Percorso</span>
+                <h2 class="form-intro-title titolo-sezione">Diventa insegnante di danza</h2>
                 <p class="form-intro-text">
                     Un <strong>percorso biennale</strong> con moduli formativi multidisciplinari nella danza, con particolare attenzione alle interconnessioni pedagogiche e allo sviluppo evolutivo.
                 </p>
                 <p class="form-intro-text">
-                    Il programma copre tutte le fasce d'eta': <strong>dal bambino all'adulto</strong>, fino ai casi piu' complessi di disabilita'. Specializzazione nello stile <strong>Modern</strong> con possibilita' di proseguire con sei master successivi.
+                    Il programma copre tutte le fasce d'eta': <strong>dal bambino all'adulto</strong>, fino ai casi più complessi di disabilità. Specializzazione nello stile <strong>Modern</strong> con possibilità di proseguire con sei master successivi.
                 </p>
             </div>
         </section>
@@ -47,8 +47,8 @@ const bg: Record<string, string> = {
         <section class="form-prog-section">
             <div class="form-prog-wrapper">
                 <div class="form-prog-header">
-                    <span class="form-prog-label">Il Programma</span>
-                    <h2 class="form-prog-title">Aree di studio</h2>
+                    <span class="form-prog-label eyebrow">Il Programma</span>
+                    <h2 class="form-prog-title titolo-sezione">Aree di studio</h2>
                 </div>
                 <div class="form-prog-grid">
                     <div class="form-prog-item">
@@ -69,7 +69,7 @@ const bg: Record<string, string> = {
                     </div>
                     <div class="form-prog-item">
                         <div class="form-prog-num">5</div>
-                        <p class="form-prog-text">Approccio alla disabilita'</p>
+                        <p class="form-prog-text">Approccio alla disabilità</p>
                     </div>
                     <div class="form-prog-item">
                         <div class="form-prog-num">6</div>
@@ -80,11 +80,11 @@ const bg: Record<string, string> = {
         </section>
 
         <!-- Certificazione Section -->
-        <section class="form-cert-section">
+        <section class="form-cert-section sezione-scura">
             <div class="form-cert-wrapper">
-                <span class="form-cert-label">Riconoscimenti</span>
-                <h2 class="form-cert-title">Diploma a valenza nazionale</h2>
-                <p class="form-cert-text">Il titolo rilasciato e' riconosciuto dallo CSEN e dal CONI, garantendo validita' su tutto il territorio nazionale per l'insegnamento della danza.</p>
+                <span class="form-cert-label eyebrow">Riconoscimenti</span>
+                <h2 class="form-cert-title titolo-sezione">Diploma a valenza nazionale</h2>
+                <p class="form-cert-text">Il titolo rilasciato è riconosciuto dallo CSEN e dal CONI, garantendo validità su tutto il territorio nazionale per l'insegnamento della danza.</p>
                 <div class="form-cert-badges">
                     <div class="form-cert-badge">
                         <div class="form-cert-badge-name">CSEN</div>
@@ -99,14 +99,14 @@ const bg: Record<string, string> = {
         </section>
 
         <!-- CTA Section -->
-        <section class="corso-contatto-section">
+        <section class="corso-contatto-section sezione-scura">
             <div class="corso-contatto-bg" style={`background: url('${bg['bg-progetti-territorio.jpg']}') center/cover no-repeat`}></div>
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">
-                    <h2>Vuoi saperne di piu'?</h2>
-                    <p>Contattaci per informazioni su date, costi e modalita' di iscrizione.</p>
-                    <a href="mailto:info@inballet.it?subject=Corso%20Formazione%20Insegnanti%20-%20Richiesta%20Informazioni" class="corso-btn-cta">
+                    <h2 class="titolo-sezione">Vuoi saperne di più?</h2>
+                    <p class="intro-sezione">Contattaci per informazioni su date, costi e modalità di iscrizione.</p>
+                    <a href="mailto:info@inballet.it?subject=Corso%20Formazione%20Insegnanti%20-%20Richiesta%20Informazioni" class="corso-btn-cta btn-primary">
                         Richiedi Informazioni <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -116,7 +116,7 @@ const bg: Record<string, string> = {
 
 <style>
 .form-intro-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: #fff;
 }
 
@@ -129,19 +129,10 @@ const bg: Record<string, string> = {
 
 .form-intro-label {
   display: block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .form-intro-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
   margin-bottom: 2rem;
 }
 
@@ -158,8 +149,8 @@ const bg: Record<string, string> = {
 }
 
 .form-prog-section {
-  padding: 5rem 0;
-  background: rgba(176,224,230,.25);
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
   position: relative;
   overflow: hidden;
 }
@@ -197,19 +188,7 @@ const bg: Record<string, string> = {
 
 .form-prog-label {
   display: block;
-  font-size: var(--text-lg);
-  color: var(--primary-blue-dark);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
   margin-bottom: 1rem;
-}
-
-.form-prog-title {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
 }
 
 .form-prog-grid {
@@ -281,7 +260,7 @@ const bg: Record<string, string> = {
 }
 
 .form-cert-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   background: var(--dark-navy);
   position: relative;
   overflow: hidden;
@@ -309,19 +288,10 @@ const bg: Record<string, string> = {
 
 .form-cert-label {
   display: block;
-  font-size: var(--text-sm);
-  color: var(--primary-blue);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 1rem;
 }
 
 .form-cert-title {
-  font-size: var(--text-3xl);
-  font-weight: 700;
-  color: #fff;
-  line-height: var(--leading-tight);
   margin-bottom: 1.5rem;
 }
 

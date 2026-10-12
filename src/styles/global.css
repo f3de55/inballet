@@ -117,6 +117,14 @@ html::-webkit-scrollbar-thumb:hover {
   --shadow-md: 0 4px 16px rgba(0,0,0,.08);
   --shadow-lg: 0 8px 24px rgba(0,0,0,.12);
   --shadow-blue: 0 4px 15px rgba(135,206,235,.3);
+  /* Sistema UI condiviso */
+  --section-y: clamp(4.5rem, 3rem + 4vw, 6rem);
+  --bg-soft: #eef7fa;
+  --radius-card: 20px;
+  --radius-img: 24px;
+  --border-card: rgba(135,206,235,.22);
+  --shadow-card: 0 4px 20px rgba(0,0,0,.05);
+  --shadow-card-hover: 0 12px 32px rgba(135,206,235,.2);
 }
 
 body {
@@ -140,66 +148,139 @@ body {
   transform: rotate(180deg);
 }
 
+/* ==========================================================================
+   SISTEMA UI CONDIVISO
+   Etichetta, titolo e sottotitolo di sezione, bottoni e link CTA: ogni
+   sezione del sito usa queste classi, le pagine definiscono solo il layout.
+   ========================================================================== */
+
+.eyebrow {
+  display: block;
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--primary-blue-dark);
+}
+
+.titolo-sezione {
+  font-size: var(--text-5xl);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--dark-navy);
+}
+
+.titolo-sezione em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--primary-blue-dark);
+}
+
+.intro-sezione {
+  font-size: clamp(1.0625rem, 0.9rem + 0.3vw, 1.1875rem);
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--text-light);
+}
+
+/* Sezioni su fondo scuro o fotografico */
+.sezione-scura .eyebrow,
+.sezione-scura .titolo-sezione em {
+  color: var(--primary-blue);
+}
+
+.sezione-scura .titolo-sezione {
+  color: var(--white);
+}
+
+.sezione-scura .intro-sezione {
+  color: rgba(255,255,255,.78);
+}
+
+/* Bottoni: pieno azzurro (principale) e contorno bianco (su foto/scuro) */
 .btn-primary,
 .btn-secondary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: .6rem;
-  padding: 1rem 2.5rem;
-  border-radius: 25px;
-  text-decoration: none;
-  font-weight: 600;
+  padding: 1rem 2.25rem;
+  border-radius: 999px;
   font-size: var(--text-sm);
-  transition: background .3s ease,color .3s ease,border-color .3s ease;
+  font-weight: 600;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  letter-spacing: .5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
 }
 
 .btn-primary {
-  background: var(--dark-navy);
+  background: var(--primary-blue);
+  color: var(--dark-navy);
+  border: 2px solid var(--primary-blue);
+  box-shadow: var(--shadow-blue);
+}
+
+.btn-primary:hover {
+  background: var(--primary-blue-dark);
+  border-color: var(--primary-blue-dark);
   color: var(--white);
-  border: none;
-  box-shadow: 0 4px 15px rgba(26,26,26,.3);
 }
 
 .btn-secondary {
-  background: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,.15);
   color: var(--white);
   border: 2px solid rgba(255,255,255,.85);
   backdrop-filter: blur(10px);
 }
 
-.btn-primary:hover {
-  background: #0a0a0a;
-  color: var(--white);
-}
-
 .btn-secondary:hover {
   background: var(--white);
-  color: var(--text-dark);
   border-color: var(--white);
+  color: var(--dark-navy);
 }
 
 .btn-primary i,
 .btn-secondary i {
-  font-size: var(--text-base);
+  font-size: 1em;
+}
+
+/* Link d'azione testuale, sottolineato */
+.link-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  padding-bottom: .4rem;
+  border-bottom: 2px solid var(--primary-blue);
+  color: var(--dark-navy);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color .3s ease, border-color .3s ease;
+}
+
+.link-cta i {
+  color: var(--primary-blue-dark);
+  transition: transform .3s ease;
+}
+
+.link-cta:hover {
+  color: var(--primary-blue-dark);
+  border-color: var(--primary-blue-dark);
+}
+
+.link-cta:hover i {
+  transform: translateX(6px);
 }
 
 .section-title {
-  font-size: var(--text-5xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-tight);
   margin-bottom: 1.5rem;
-  letter-spacing: -0.02em;
-}
-
-.section-tagline {
-  font-size: var(--text-lg);
-  color: var(--primary-blue-dark);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .chi-siamo-header .section-tagline {
@@ -445,7 +526,7 @@ body {
 }
 
 .corso-contatto-section {
-  padding: 5rem 0;
+  padding: var(--section-y) 0;
   position: relative;
   overflow: hidden;
 }
@@ -483,40 +564,11 @@ body {
 }
 
 .corso-contatto-content h2 {
-  font-size: var(--text-5xl);
-  color: var(--white);
   margin: 0 0 1rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
 }
 
 .corso-contatto-content > p {
-  font-size: var(--text-xl);
-  color: rgba(255, 255, 255, 0.8);
   margin: 0 0 2rem;
-  line-height: 1.7;
-}
-
-.corso-btn-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 1rem 2.5rem;
-  background: var(--primary-blue);
-  color: var(--black);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: var(--text-sm);
-  border-radius: 25px;
-  transition: background 0.3s ease, color 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 4px 15px rgba(135, 206, 235, 0.3);
-}
-
-.corso-btn-cta:hover {
-  background: rgba(255, 255, 255, 0.95);
-  color: var(--dark-navy);
 }
 
 .corso-btn-cta i {
@@ -524,44 +576,19 @@ body {
 }
 
 @media (max-width: 768px) {
-  .corso-contatto-section {
-    padding: 4rem 0;
-  }
-
   .corso-contatto-wrapper {
     padding: 0 1.5rem;
   }
 
-  .corso-contatto-content h2 {
-    font-size: var(--text-4xl);
-  }
-
-  .corso-contatto-content > p {
-    font-size: var(--text-lg);
-  }
 }
 
 @media (max-width: 480px) {
-  .corso-contatto-section {
-    padding: 2.5rem 0;
-  }
-
   .corso-contatto-wrapper {
     padding: 0 1rem;
   }
 
-  .corso-contatto-content h2 {
-    font-size: var(--text-3xl);
-  }
-
-  .corso-contatto-content > p {
-    font-size: var(--text-base);
-  }
-
   .corso-btn-cta {
     width: 100%;
-    justify-content: center;
-    padding: 1rem 2rem;
   }
 }
 

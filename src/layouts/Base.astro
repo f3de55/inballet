@@ -70,7 +70,7 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <Font cssVariable="--font-rubik" preload={[{ style: 'normal', subset: 'latin' }]} />
-    <style is:inline>body{min-height:100vh}.main-header{min-height:80px}</style>
+    <style is:inline>body{min-height:100vh}.main-header{min-height:var(--header-h,80px)}</style>
     <slot name="head" />
 </head>
 <body>
@@ -106,11 +106,10 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
   top: 0;
   width: 100%;
   background: var(--header-dark);
-  backdrop-filter: blur(10px);
   z-index: 1000;
   transition: background var(--transition-base);
   box-shadow: 0 2px 20px rgba(0,0,0,.3);
-  min-height: 80px;
+  min-height: var(--header-h);
 }
 
 .main-header.is-scrolled {

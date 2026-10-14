@@ -81,7 +81,7 @@ const heroBg = await webp('gallery-3.jpg', 1920);
   .corsi {
     padding: var(--section-y) 0;
     background: var(--white);
-    scroll-margin-top: calc(80px + var(--banner-height, 0px));
+    scroll-margin-top: calc(var(--header-h) + var(--banner-height, 0px));
   }
 
   /* ---------- Introduzione ---------- */
@@ -131,7 +131,7 @@ const heroBg = await webp('gallery-3.jpg', 1920);
     margin: 0 auto;
     padding: 3.5rem 0;
     border-top: 1px solid rgba(26, 26, 26, 0.1);
-    scroll-margin-top: calc(90px + var(--banner-height, 0px));
+    scroll-margin-top: calc(var(--header-h) + 10px + var(--banner-height, 0px));
   }
 
   .categoria:nth-of-type(even) .categoria-foto {

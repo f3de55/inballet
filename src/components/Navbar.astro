@@ -54,10 +54,13 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
 
 <!-- Mobile Menu -->
 <div class="mobile-overlay" id="mobileOverlay"></div>
-<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Chiudi menu">
-        <i class="fas fa-times"></i>
-    </button>
+<div class="mobile-menu sezione-scura" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu-top">
+        <span class="eyebrow">Menu</span>
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Chiudi menu">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
 
     {menu.map((m) => (
         <div class="mobile-nav-item">
@@ -66,22 +69,24 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
                 <i class="fas fa-chevron-down" aria-hidden="true"></i>
             </button>
             <div class="mobile-submenu" id={`${m.id}-submenu`}>
-                {m.href && <a href={m.href} class:list={['mobile-tutti', { attiva: attiva(m.href) }]} aria-current={attiva(m.href) ? 'page' : undefined}>Tutti i corsi</a>}
-                {m.sezioni.map((s) => (
-                    <>
-                        <h4>{s.titolo}</h4>
-                        {s.voci.map((v) => (
-                            <a href={v.href} class:list={{ attiva: attiva(v.href) }} aria-current={attiva(v.href) ? 'page' : undefined}>{v.nome}</a>
-                        ))}
-                    </>
-                ))}
+                <div class="mobile-submenu-inner">
+                    {m.sezioni.map((s) => (
+                        <div class="mobile-gruppo">
+                            {s.titolo !== m.label && <span class="mobile-gruppo-titolo">{s.titolo}</span>}
+                            <ul>
+                                {s.voci.map((v) => (
+                                    <li><a href={v.href} class:list={{ attiva: attiva(v.href) }} aria-current={attiva(v.href) ? 'page' : undefined}>{v.nome}</a></li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                    {m.href && <a href={m.href} class="link-cta mobile-tutti" aria-current={attiva(m.href) ? 'page' : undefined}>Tutti i corsi <i class="fas fa-arrow-right"></i></a>}
+                </div>
             </div>
         </div>
     ))}
 
-    <div class="mobile-cta">
-        <a href="/contatti" class="cta-btn">Contattaci</a>
-    </div>
+    <a href="/contatti" class="btn-primary mobile-cta" aria-current={attiva('/contatti') ? 'page' : undefined}>Contattaci <i class="fas fa-arrow-right"></i></a>
 </div>
 
 <style>
@@ -104,8 +109,8 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
-  min-height: 80px;
+  height: var(--header-h);
+  min-height: var(--header-h);
 }
 
 .logo-section {
@@ -222,7 +227,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   border-top: none;
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
   height: auto;
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - var(--header-h));
   background: var(--header-dark);
   box-shadow: 0 10px 20px rgba(0,0,0,.3);
   padding: 0;
@@ -368,82 +373,99 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   color: var(--white);
 }
 
+/* Area di tocco 44px, icona a filo destro come la X del menu */
 .mobile-menu-btn {
   display: none;
+  width: 44px;
+  height: 44px;
+  margin-right: -2px;
+  place-items: center end;
   background: 0 0;
   border: none;
-  font-size: var(--text-2xl);
+  font-size: 1.5rem;
   cursor: pointer;
   color: var(--white);
   z-index: 1001;
   transition: all .3s ease;
 }
 
-.mobile-menu-btn.active {
-  color: var(--primary-blue);
-}
-
+/* Menu mobile/tablet: pannello scuro editoriale da destra, sotto l'eventuale banner */
 .mobile-menu {
   position: fixed;
-  top: 0;
-  right: -100%;
-  width: 85%;
-  max-width: 400px;
-  height: 100vh;
-  background: var(--header-dark);
-  box-shadow: -10px 0 50px rgba(0,0,0,.3);
+  top: var(--banner-height, 0px);
+  right: 0;
+  width: min(480px, 100%);
+  height: calc(100dvh - var(--banner-height, 0px));
+  display: flex;
+  flex-direction: column;
+  padding: 0 2rem 2.5rem;
+  background: var(--dark-navy);
+  box-shadow: -20px 0 60px rgba(0,0,0,.35);
   z-index: 1000;
-  transition: all .4s cubic-bezier(.4,0,.2,1);
   overflow-y: auto;
-  overflow-x: hidden;
-  padding-top: 80px;
-  padding-bottom: 40px;
-  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   scrollbar-width: thin;
-  scrollbar-color: var(--primary-blue) var(--header-dark);
+  scrollbar-color: rgba(255,255,255,.2) transparent;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform .4s cubic-bezier(.4,0,.2,1), visibility 0s linear .4s;
 }
 
 .mobile-menu.active {
-  right: 0;
+  transform: none;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .mobile-overlay {
   position: fixed;
-  top: 0;
+  top: var(--banner-height, 0px);
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: calc(100dvh - var(--banner-height, 0px));
   background: rgba(0,0,0,.6);
   z-index: 999;
   opacity: 0;
   visibility: hidden;
-  transition: all .4s ease;
+  transition: opacity .4s ease, visibility 0s linear .4s;
 }
 
 .mobile-overlay.active {
   opacity: 1;
   visibility: visible;
+  transition-delay: 0s;
 }
 
+.mobile-menu-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--header-h);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.mobile-menu-top .eyebrow {
+  margin: 0;
+}
+
+/* Icona a filo destro, in colonna con le frecce delle voci; area di tocco 44px */
 .mobile-menu-close {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  background: 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 44px;
+  height: 44px;
   border: none;
-  color: var(--primary-blue);
-  font-size: var(--text-2xl);
+  background: transparent;
+  color: var(--white);
+  font-size: 1.375rem;
   cursor: pointer;
-  transition: all .3s ease;
-}
-
-#mobileMenu .mobile-menu-close,
-div.mobile-menu-close {
-  color: #fff;
+  transition: color .3s ease;
 }
 
 .mobile-menu-close:hover {
-  opacity: .7;
+  color: var(--primary-blue);
 }
 
 .mobile-nav-item {
@@ -454,135 +476,123 @@ div.mobile-menu-close {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.2rem;
-  cursor: pointer;
-  transition: all .3s ease;
-  font-weight: 600;
-  font-size: var(--text-sm);
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  color: var(--white);
   width: 100%;
+  padding: 1.15rem 0;
   border: none;
   background: transparent;
+  color: var(--white);
+  font-family: inherit;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   text-align: left;
+  cursor: pointer;
+  transition: color .3s ease;
 }
 
-.mobile-nav-toggle.active {
-  background: rgba(255,255,255,.05);
+.mobile-nav-toggle:hover,
+.mobile-nav-toggle.attiva {
+  color: var(--primary-blue);
 }
 
 .mobile-nav-toggle :global(i) {
-  transition: transform .3s ease;
+  font-size: .875rem;
   color: var(--primary-blue);
-  font-size: var(--text-sm);
+  transition: transform .3s ease;
 }
 
-#mobileMenu .mobile-nav-toggle :global(i),
-div.mobile-menu .mobile-nav-toggle :global(i) {
-  color: #fff;
+.mobile-nav-toggle.active :global(i) {
+  transform: rotate(180deg);
 }
 
 .mobile-submenu {
-  background: rgba(255,255,255,.05);
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height .3s ease;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .35s ease;
 }
 
 .mobile-submenu.active {
-  max-height: 5000px;
-  overflow: visible;
+  grid-template-rows: 1fr;
 }
 
-#mobileMenu .mobile-submenu :global(h4),
-div.mobile-menu .mobile-submenu :global(h4) {
-  padding: .5rem 2rem .4rem;
-  margin: 1.2rem 0 .4rem;
-  font-weight: 500;
-  color: rgba(255,255,255,.7);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
+.mobile-submenu-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mobile-gruppo {
+  padding-bottom: 1rem;
+}
+
+.mobile-gruppo + .mobile-gruppo {
+  padding-top: .75rem;
+}
+
+.mobile-gruppo-titolo {
+  display: block;
+  margin-bottom: .35rem;
+  font-size: .75rem;
+  font-weight: 600;
   letter-spacing: 2px;
-  border: none;
-  border-bottom: 1px solid rgba(255,255,255,.2);
-  background: 0 0;
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  opacity: .7;
-  text-align: left;
+  text-transform: uppercase;
+  color: var(--primary-blue);
 }
 
-#mobileMenu .mobile-submenu :global(h4:first-child) {
-  margin-top: .3rem;
+.mobile-gruppo ul {
+  list-style: none;
 }
 
-.mobile-submenu :global(a) {
+.mobile-gruppo a {
   display: block;
-  padding: .6rem 1.2rem .6rem 1.8rem;
-  color: #ccc;
+  padding: .45rem 0;
+  color: rgba(255,255,255,.75);
+  font-size: 1rem;
+  line-height: 1.35;
   text-decoration: none;
   transition: color .3s ease;
-  font-weight: 500;
-  font-size: var(--text-sm);
-  border-bottom: 1px solid rgba(255,255,255,.05);
-  line-height: 1.3;
 }
 
-.mobile-submenu .mobile-tutti {
+.mobile-gruppo a:hover {
+  color: var(--white);
+}
+
+.mobile-gruppo a.attiva {
   color: var(--primary-blue);
   font-weight: 600;
 }
 
-.mobile-nav-toggle.attiva span {
+.mobile-tutti {
+  margin: .25rem 0 1.5rem;
+  color: var(--white);
+  font-size: .8125rem;
+}
+
+.mobile-tutti:hover {
   color: var(--primary-blue);
+  border-color: var(--primary-blue);
 }
 
-.mobile-submenu a.attiva {
+.mobile-tutti :global(i) {
   color: var(--primary-blue);
-  font-weight: 700;
-}
-
-.mobile-submenu :global(a:last-child) {
-  border-bottom: none;
-}
-
-#mobileMenu .mobile-submenu :global(a::before),
-div.mobile-submenu :global(a::before) {
-  color: #fff;
 }
 
 .mobile-cta {
-  padding: 1.5rem 1.2rem;
-  text-align: left;
-  float: left;
-  width: 100%;
+  margin-top: 2rem;
+  flex-shrink: 0;
 }
 
-.mobile-cta .cta-btn {
-  width: 100%;
-  text-align: center;
-  float: left;
-  padding: .85rem 1.5rem;
-  font-size: var(--text-xs);
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu,
+  .mobile-overlay,
+  .mobile-submenu {
+    transition: none;
+  }
 }
 
-.mobile-menu::-webkit-scrollbar {
-  width: 6px;
-}
-
-.mobile-menu::-webkit-scrollbar-track {
-  background: var(--header-dark);
-}
-
-.mobile-menu::-webkit-scrollbar-thumb {
-  background: var(--primary-blue);
-  border-radius: 3px;
-}
-
-.mobile-menu::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-blue-dark);
+@media (max-width: 480px) {
+  .mobile-menu {
+    padding: 0 1.5rem 2rem;
+  }
 }
 
 @media (max-width:1200px) {
@@ -592,7 +602,11 @@ div.mobile-submenu :global(a::before) {
   }
 
   .mobile-menu-btn {
-    display: block;
+    display: grid;
+  }
+
+  .logo-section :global(img) {
+    height: 44px;
   }
 }
 

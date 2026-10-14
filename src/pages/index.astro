@@ -27,6 +27,20 @@ const gallery = await Promise.all(
   }),
 );
 
+// Progetti sul territorio: due gruppi di link alle pagine dei progetti
+const progetti = [
+  { titolo: 'Eventi e collaborazioni', voci: [
+    { nome: 'Spettacoli ed Eventi', href: '/spettacoli-eventi', testo: 'Saggi, spettacoli e workshop in teatri e spazi pubblici' },
+    { nome: 'Collaborazioni con le Scuole', href: '/collaborazioni-scuole', testo: 'Progetti educativi dal nido alle secondarie' },
+    { nome: 'Sportello Psicologico', href: '/sportello-psicologico', testo: 'Ascolto e supporto per famiglie, bambini e ragazzi' },
+  ] },
+  { titolo: 'Danza integrativa', voci: [
+    { nome: 'Progetto NoiConVoi', href: '/progetto-noiconvoi', testo: "Dal 2013, danza e volontariato per l'inclusione" },
+    { nome: 'Classi Integrate', href: '/classi-integrate', testo: 'Percorsi di danza inclusivi per ogni bambino' },
+    { nome: 'Sostenitori', href: '/sostenitori', testo: 'Come sostenere i progetti sociali' },
+  ] },
+];
+
 // Sfondi in WebP (il CSS definisce solo posizione e dimensione)
 const heroBg = await webp('hero-bg.jpg', 1920);
 const progettiBg = await webp('bg-progetti-territorio.jpg', 1920);
@@ -88,30 +102,33 @@ const schema = schemaHome(socialImage);
                 <p class="corsi-intro intro-sezione">Scopri i percorsi di danza pensati per ogni età e livello. Dalla tecnica classica alle discipline contemporanee e urbane.</p>
             </div>
 
-            <div class="corsi-grid">
+            <div class="corsi-griglia">
                 {categorieCorsi.map((cat, i) => (
-                    <article class="corso-item">
-                        <div class="corso-numero">{String(i + 1).padStart(2, '0')}</div>
-                        <div class="corso-contenuto">
-                            <h3 class="corso-titolo">{cat.nome}</h3>
-                            <p class="corso-descrizione" set:html={cat.descrizione} />
-                            <div class="corso-livelli">
-                                {cat.corsi.map((c) => <a class="livello" href={c.url}>{c.nome}</a>)}
-                            </div>
-                        </div>
+                    <article class="corso-card voce" aria-labelledby={`home-${cat.id}`}>
+                        <span class="voce-anno" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                        <h3 class="voce-titolo" id={`home-${cat.id}`}>{cat.nome}</h3>
+                        <p class="voce-testo" set:html={cat.descrizione} />
+                        <ul class="corso-link">
+                            {cat.corsi.map((c) => (
+                                <li><a href={c.url}><span>{c.nome.replace(/ \((.+)\)$/, '')}{c.nome.endsWith(')') && <> <span class="corso-eta">{c.nome.slice(c.nome.lastIndexOf('('))}</span></>}</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a></li>
+                            ))}
+                        </ul>
                     </article>
                 ))}
             </div>
 
-            <!-- Bottom CTA -->
             <div class="corsi-cta">
-                <p class="corsi-cta-text">Non sai quale corso scegliere?</p>
-                <a href="/contatti" class="corsi-cta-btn btn-primary">
-                    <span>Parliamone insieme</span>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
+                <p class="corsi-cta-text">Non sai quale corso scegliere? <span>Ti aiutiamo a trovare quello giusto.</span></p>
+                <div class="corsi-cta-azioni">
+                    <a href="/contatti" class="btn-primary">
+                        <span>Parliamone insieme</span>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                    <a href="/corsi" class="link-cta">
+                        Tutti i corsi
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -134,13 +151,18 @@ const schema = schemaHome(socialImage);
 
                     <blockquote class="story-quote">
                         <p>La Danza è capace di creare racconti in tutti i corpi ed in tutte le menti.</p>
-                        <cite>I.N.</cite>
+                        <cite>{scuola.fondatrice}, fondatrice</cite>
                     </blockquote>
+
+                    <a href="/chi-siamo" class="link-cta story-cta">
+                        Scopri chi siamo
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
                 </div>
 
                 <div class="story-image">
-                    <div class="story-photo">
-                        <Img src="ballerina.jpg" alt="Ballerina InBallet" width="450" height="500" loading="lazy" decoding="async" widths={[450, 900]} sizes="450px" />
+                    <div class="foto-cornice">
+                        <Img src="ballerina.jpg" alt="Allievi e insegnanti InBallet sul palco per il saluto finale dello spettacolo" width="640" height="480" loading="lazy" decoding="async" widths={[640, 960, 1280]} sizes="(max-width: 900px) 100vw, 640px" />
                     </div>
                 </div>
             </div>
@@ -150,140 +172,72 @@ const schema = schemaHome(socialImage);
     <!-- Sezione Formazione Professionale -->
     <section class="formazione-professionale-section">
         <div class="formazione-wrapper">
-            <!-- Header -->
-            <div class="formazione-header">
-                <span class="formazione-label eyebrow">Ente Formativo CSEN e CONI</span>
-                <h2 class="formazione-title titolo-sezione">Formazione <em>professionale</em></h2>
+            <div class="formazione-intro">
+                <span class="eyebrow">Ente Formativo CSEN e CONI</span>
+                <h2 class="titolo-sezione">Formazione <em>professionale</em></h2>
+                <p class="intro-sezione">Oltre ai corsi, formiamo chi insegna danza e chi lavora in ambito educativo: percorsi riconosciuti e formazioni costruite su misura.</p>
             </div>
 
-            <!-- Percorsi Cards -->
-            <div class="percorsi-container">
-
-                <!-- Card Insegnante di Danza -->
-                <article class="percorso-card voce">
-                    <h3 class="percorso-card-title voce-titolo">Formazione Insegnanti di Danza</h3>
-                    <p class="percorso-card-description">
-                        Percorso biennale in danza Modern con formazione su tecnica, pedagogia e inclusione.
-                    </p>
-                    <div class="percorso-highlights">
-                        <div class="highlight-item">
-                            <i class="fas fa-certificate"></i>
-                            <span>Titolo riconosciuto CSEN e CONI</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-clock"></i>
-                            <span>2 anni + 6 master specialistici opzionali</span>
-                        </div>
-                    </div>
-                    <a href="/formazione-insegnanti" class="percorso-card-btn link-cta">
-                        <span>Scopri il corso</span>
-                        <i class="fas fa-arrow-right"></i>
+            <!-- Percorsi: righe intere cliccabili, separate da filetti -->
+            <ul class="percorsi-lista">
+                <li>
+                    <a href="/formazione-insegnanti" class="percorso">
+                        <span class="percorso-tipo">Percorso biennale</span>
+                        <h3 class="percorso-titolo">Formazione Insegnanti di Danza</h3>
+                        <p class="percorso-testo">Due anni in danza Modern con formazione su tecnica, pedagogia e inclusione.</p>
+                        <p class="percorso-dettagli">Titolo riconosciuto CSEN e CONI · 6 master specialistici opzionali</p>
+                        <i class="fas fa-arrow-right percorso-freccia" aria-hidden="true"></i>
                     </a>
-                </article>
-
-                <!-- Card Formazioni Personalizzate -->
-                <article class="percorso-card voce">
-                    <h3 class="percorso-card-title voce-titolo">Formazioni Personalizzate</h3>
-                    <p class="percorso-card-description">
-                        Workshop tematici e percorsi su misura per insegnanti, scuole ed enti.
-                    </p>
-                    <div class="percorso-highlights">
-                        <div class="highlight-item">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                            <span>Workshop e masterclass tematiche</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-school"></i>
-                            <span>Formazione per scuole ed enti</span>
-                        </div>
-                    </div>
-                    <a href="/formazioni-personalizzate" class="percorso-card-btn link-cta">
-                        <span>Scopri di più</span>
-                        <i class="fas fa-arrow-right"></i>
+                </li>
+                <li>
+                    <a href="/formazioni-personalizzate" class="percorso">
+                        <span class="percorso-tipo">Su misura</span>
+                        <h3 class="percorso-titolo">Formazioni Personalizzate</h3>
+                        <p class="percorso-testo">Workshop tematici e percorsi costruiti per insegnanti, scuole ed enti.</p>
+                        <p class="percorso-dettagli">Workshop e masterclass · Formazione per scuole ed enti</p>
+                        <i class="fas fa-arrow-right percorso-freccia" aria-hidden="true"></i>
                     </a>
-                </article>
-
-            </div>
+                </li>
+            </ul>
         </div>
     </section>
 
-     <section class="dicono-di-noi-section">
-        <div class="container">
-            <!-- Header sezione -->
-            <div class="testimonials-header">
-                <p class="testimonials-tagline eyebrow">Le voci della nostra community</p>
-                <h2 class="testimonials-title titolo-sezione">Dicono <em>di noi</em></h2>
-                <p class="testimonials-description intro-sezione">
-                    L'esperienza di chi ha scelto InBallet per crescere attraverso la danza. Recensioni autentiche dai nostri allievi e famiglie.
-                </p>
+     <section class="dicono-di-noi-section" aria-labelledby="recensioni-titolo">
+        <div class="container recensioni-layout">
+            <div class="recensioni-intro">
+                <p class="eyebrow">Le voci della nostra community</p>
+                <h2 class="titolo-sezione" id="recensioni-titolo">Dicono <em>di noi</em></h2>
+                <p class="intro-sezione">L'esperienza di chi ha scelto InBallet per crescere attraverso la danza. Recensioni autentiche dai nostri allievi e famiglie.</p>
             </div>
 
-            <!-- Layout principale con carousel e sidebar -->
-            <div class="testimonials-container">
-                <div class="carousel-with-cta">
-                    <!-- Stats sopra su mobile, sidebar su desktop -->
-                    <div class="carousel-sidebar">
-                        <div class="google-stats-card" id="googleStatsCard" style="display: none;">
-                            <div class="stats-content" id="statsContent">
-                                <div class="stat-item">
-                                    <span class="stat-label">Caricamento...</span>
-                                    <span class="stat-value">...</span>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Valutazione media (compilata da home.ts) e link a tutte le recensioni -->
+            <div class="recensioni-sintesi">
+                <div class="sintesi-google" id="googleStatsCard" hidden></div>
+                <a href="https://www.google.com/search?sa=X&sca_esv=ccb8066356fd07b7&tbm=lcl&sxsrf=AE3TifONsbUe8wj4bCgnW_SAO2k4jfCpMg:1750798486383&q=I.N.+Ballet+Recensioni&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxI2NDG1NDU3sDAHMowtDSwMLcw3MDK-YhTz1PPTU3BKzMlJLVEISk1OzSvOzM_LXMSKQwIA6ENBIkwAAAA&rldimm=1459570871453908187&hl=it-IT&ved=2ahUKEwiGturO-IqOAxUihP0HHdBWAj4Q9fQKegQIUhAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
+                   target="_blank"
+                   rel="noopener"
+                   class="link-cta">
+                    Tutte le recensioni su Google
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
 
-                        <!-- Bottone CTA -->
-                        <div class="view-all-reviews" id="viewAllSection">
-                            <a href="https://www.google.com/search?sa=X&sca_esv=ccb8066356fd07b7&tbm=lcl&sxsrf=AE3TifONsbUe8wj4bCgnW_SAO2k4jfCpMg:1750798486383&q=I.N.+Ballet+Recensioni&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxI2NDG1NDU3sDAHMowtDSwMLcw3MDK-YhTz1PPTU3BKzMlJLVEISk1OzSvOzM_LXMSKQwIA6ENBIkwAAAA&rldimm=1459570871453908187&hl=it-IT&ved=2ahUKEwiGturO-IqOAxUihP0HHdBWAj4Q9fQKegQIUhAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
-                               target="_blank"
-                               rel="noopener"
-                               class="view-all-btn btn-primary">
-                                <div class="btn-google-icon">
-                                    <i class="fab fa-google"></i>
-                                </div>
-                                <span class="btn-main-text">Tutte le recensioni</span>
-                            </a>
-                        </div>
+            <!-- Recensioni: una alla volta, frecce e indicatori sotto -->
+            <div class="recensioni-carousel testimonials-carousel">
+                <div class="testimonials-track" id="reviewsContainer" aria-live="polite">
+                    <div class="testimonials-slide active">
+                        <p class="recensioni-messaggio">Caricamento recensioni…</p>
                     </div>
+                </div>
 
-                    <!-- Carousel principale -->
-                    <div class="carousel-main">
-                        <div class="testimonials-carousel">
-                            <div class="testimonials-track" id="reviewsContainer">
-                                <!-- Loading state iniziale -->
-                                <div class="testimonials-slide active">
-                                    <div class="testimonial-card">
-                                        <div class="testimonial-header">
-                                            <div class="google-rating">
-                                                <div class="rating-badge">
-                                                    <div class="loading-spinner"></div>
-                                                    <span>Caricamento...</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="testimonial-content">
-                                            <div class="loading-reviews">
-                                                <p>Caricamento recensioni Google Maps...</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Navigation -->
-                            <button class="carousel-nav carousel-prev" id="prevBtn">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="carousel-nav carousel-next" id="nextBtn">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-
-                        <!-- Indicators -->
-                        <div class="carousel-indicators" id="indicatorsContainer">
-                            <div class="indicator active" data-slide="0"></div>
-                        </div>
-                    </div>
+                <div class="recensioni-controlli" id="reviewsControls" hidden>
+                    <button type="button" class="recensioni-nav" id="prevBtn" aria-label="Recensione precedente">
+                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+                    <div class="carousel-indicators" id="indicatorsContainer"></div>
+                    <button type="button" class="recensioni-nav" id="nextBtn" aria-label="Recensione successiva">
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -294,36 +248,29 @@ const schema = schemaHome(socialImage);
         <div class="altri-servizi-bg" style={`background-image: url('${progettiBg}')`}></div>
         <div class="altri-servizi-overlay"></div>
 
-        <div class="altri-servizi-wrapper">
-            <!-- Header -->
-            <div class="altri-servizi-header">
-                <span class="altri-servizi-label eyebrow">La danza fuori dalla sala</span>
-                <h2 class="altri-servizi-title titolo-sezione">Progetti <em>sul territorio</em></h2>
-                <p class="altri-servizi-intro intro-sezione">Portiamo la danza nelle scuole, nelle comunità e accanto a chi ha bisogno.</p>
-            </div>
+        <div class="intro-editoriale progetti-intro">
+            <span class="eyebrow">La danza fuori dalla sala</span>
+            <h2 class="titolo-sezione">Progetti <em>sul territorio</em></h2>
+            <p class="intro-sezione">Portiamo la danza nelle scuole, nelle comunità e accanto a chi ha bisogno: spettacoli aperti al territorio, progetti educativi e, dal 2013, percorsi di inclusione con il progetto NoiConVoi e un team di volontari.</p>
+        </div>
 
-            <!-- Testo Narrativo -->
-            <div class="progetti-narrativo">
-                <div class="narrativo-colonna">
-                    <h3>Eventi e Collaborazioni</h3>
-                    <p>
-                        Organizziamo <a href="/spettacoli-eventi">Spettacoli ed Eventi</a> in teatri e spazi pubblici,
-                        portiamo la danza nelle scuole con <a href="/collaborazioni-scuole">Collaborazioni Scolastiche</a>
-                        e offriamo <a href="/sportello-psicologico">Supporto Psicologico</a> per allievi e famiglie.
-                    </p>
+        <div class="progetti-gruppi">
+            {progetti.map((g) => (
+                <div class="progetti-gruppo">
+                    <h3 class="progetti-gruppo-titolo">{g.titolo}</h3>
+                    <ul class="progetti-lista">
+                        {g.voci.map((v) => (
+                            <li>
+                                <a href={v.href}>
+                                    <span class="progetto-nome">{v.nome}</span>
+                                    <span class="progetto-testo">{v.testo}</span>
+                                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-
-                <div class="narrativo-colonna">
-                    <h3>Danza Integrativa</h3>
-                    <p>
-                        Dal 2013 il <a href="/progetto-noiconvoi">Progetto NoiConVoi</a> accoglie ragazzi con disabilità
-                        in esperienze di danza con supporto psicomotorio, insieme a un team di volontari.
-                        Con le <a href="/classi-integrate">Classi Integrate</a>, lo
-                        <a href="/sportello-psicologico">Sportello del Bambino</a> e i
-                        <a href="/sostenitori">Sostenitori</a> la danza diventa davvero di tutti.
-                    </p>
-                </div>
-            </div>
+            ))}
         </div>
     </section>
 
@@ -337,17 +284,17 @@ const schema = schemaHome(socialImage);
             </div>
         </div>
 
+        <!-- Due serie identiche: la seconda serve solo alla continuità dello scorrimento
+             ed è nascosta a tastiera e screen reader -->
         <div class="gallery-infinite">
             <div class="gallery-track" id="galleryTrack">
                 {[0, 1].map((set) =>
                     gallery.map((img, i) => (
-                        <div class="gallery-item" data-index={i} data-full={img.full}>
-                            <Img src={img.file} alt={img.alt} width="300" height="400" loading="lazy" decoding="async" widths={[300, 600]} sizes="300px" aria-hidden={set === 1 ? 'true' : undefined} />
-                            <div class="gallery-overlay">
-                                <div class="gallery-zoom-icon">
-                                    <i class="fas fa-expand"></i>
-                                </div>
-                            </div>
+                        <div class="gallery-item" aria-hidden={set === 1 ? 'true' : undefined}>
+                            <button type="button" class="gallery-apri" data-index={i} data-full={img.full} data-alt={img.alt} aria-label={`Ingrandisci: ${img.alt}`} tabindex={set === 1 ? -1 : undefined}>
+                                <Img src={img.file} alt="" width="300" height="420" loading="lazy" decoding="async" widths={[300, 600]} sizes="300px" />
+                                <span class="gallery-zoom-icon" aria-hidden="true"><i class="fas fa-expand"></i></span>
+                            </button>
                         </div>
                     ))
                 )}
@@ -371,7 +318,7 @@ const schema = schemaHome(socialImage);
             </div>
             <div class="faq-list">
                 {faq.map((f, i) => (
-                    <details class="faq-item" open={i === 0}>
+                    <details class="faq-item" name="faq" open={i === 0}>
                         <summary>{f.domanda}</summary>
                         <p>{f.risposta}</p>
                     </details>
@@ -380,24 +327,25 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-content">
-            <img class="lightbox-image" id="lightbox-image" src="" alt="">
-            <button class="lightbox-close" id="lightbox-close" aria-label="Chiudi galleria">
-                <i class="fas fa-times"></i>
-            </button>
-            <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Immagine precedente">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Immagine successiva">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-            <div class="lightbox-counter" id="lightbox-counter">
-                1 / 10
-            </div>
-        </div>
-    </div>
+    <!-- Lightbox galleria: dialog nativo (focus intrappolato, Esc, sfondo inerte) -->
+    <dialog class="galleria-dialog" id="lightbox" aria-label="Galleria fotografica">
+        <button type="button" class="galleria-chiudi" id="lightbox-close" aria-label="Chiudi galleria">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+        <figure class="galleria-figura">
+            <img class="galleria-foto" id="lightbox-image" src="data:," alt="">
+            <figcaption class="galleria-didascalia">
+                <span id="lightbox-caption"></span>
+                <span class="galleria-contatore" id="lightbox-counter" aria-live="polite"></span>
+            </figcaption>
+        </figure>
+        <button type="button" class="galleria-nav galleria-prev" id="lightbox-prev" aria-label="Foto precedente">
+            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="galleria-nav galleria-next" id="lightbox-next" aria-label="Foto successiva">
+            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        </button>
+    </dialog>
 
     <Fragment slot="scripts">
         <script>
@@ -406,19 +354,7 @@ const schema = schemaHome(socialImage);
     </Fragment>
 </Base>
 
-<style>
-.carousel-nav:focus-visible,
-.lightbox-nav:focus-visible {
-  box-shadow: 0 0 0 3px var(--primary-blue);
-}
-
-:global(.indicator:focus-visible) {
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 2px;
-  transform: scale(1.1);
-}
-
-.hero {
+<style>.hero {
   height: 72vh;
   min-height: 560px;
   max-height: 800px;
@@ -427,7 +363,7 @@ const schema = schemaHome(socialImage);
   display: flex;
   align-items: flex-end;
   z-index: 1;
-  padding: 80px 0 4.5rem;
+  padding: var(--header-h) 0 4.5rem;
 }
 
 .hero-image {
@@ -500,20 +436,16 @@ const schema = schemaHome(socialImage);
 }
 
 .chi-siamo-section,
-.formazione-professionale-section,
-.dicono-di-noi-section,
 .gallery-section {
   background: #fff;
   position: relative;
 }
 
-.chi-siamo-section,
-.formazione-professionale-section {
+.chi-siamo-section {
   padding: var(--section-y) 0;
 }
 
-.gallery-section::before,
-.dicono-di-noi-section::before {
+.gallery-section::before {
   content: '';
   position: absolute;
   top: 0;
@@ -533,47 +465,43 @@ const schema = schemaHome(socialImage);
 
 .chi-siamo-header {
   text-align: left;
-  margin-bottom: 3rem;
+  margin-bottom: 2.25rem;
 }
 
+/* Testo a sinistra, foto orizzontale (saluto finale di gruppo) più larga a destra */
 .story-layout {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
   gap: 5rem;
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.story-content {
-  padding: 0;
-}
-
 .story-text {
-  max-width: 580px;
+  max-width: 34rem;
 }
 
 .story-text :global(p) {
-  font-size: var(--text-base);
+  font-size: 1.125rem;
   line-height: 1.8;
-  color: var(--text-dark);
-  margin-bottom: 1.5rem;
+  color: var(--text-light);
+  margin-bottom: 1.25rem;
 }
 
 .story-text :global(p:last-child) {
   margin-bottom: 0;
 }
 
-.story-lead {
+.story-text :global(p.story-lead) {
   font-size: var(--text-xl);
-  line-height: 1.7;
+  line-height: 1.6;
   color: var(--dark-navy);
-  font-weight: 400;
 }
 
 .story-quote {
-  max-width: 580px;
-  margin: 2.5rem 0 0;
+  max-width: 34rem;
+  margin: 2.25rem 0 0;
   padding-left: 1.5rem;
   border-left: 3px solid var(--primary-blue);
 }
@@ -591,51 +519,35 @@ const schema = schemaHome(socialImage);
   font-size: var(--text-sm);
   font-style: normal;
   font-weight: 600;
-  letter-spacing: 1px;
-  color: var(--dark-navy);
+  letter-spacing: .5px;
+  color: var(--text-light);
 }
 
 .story-quote cite::before {
   content: '— ';
 }
 
+.story-cta {
+  margin-top: 2.25rem;
+}
+
+/* Spazio per la cornice sfalsata (in basso a sinistra) dentro la colonna */
 .story-image {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 500px;
-  contain: layout;
-  padding-right: 40px;
-  padding-top: 40px;
-}
-
-/* Cornice azzurra sfalsata dietro la foto (come nella pagina Contatti) */
-.story-photo {
-  position: relative;
-  isolation: isolate;
-  width: 100%;
-  max-width: 450px;
-}
-
-.story-photo::before {
-  content: '';
-  position: absolute;
-  inset: 2.5rem 2.5rem -1.5rem -1.5rem;
-  border: 2px solid var(--primary-blue);
-  border-radius: 24px;
-  z-index: -1;
+  padding: 0 0 1.5rem 1.5rem;
 }
 
 .story-image :global(img) {
-  display: block;
   width: 100%;
-  max-width: 450px;
-  height: 500px;
+  height: auto;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 24px;
-  box-shadow: 0 24px 60px rgba(0,0,0,.14);
-  aspect-ratio: 450/500;
+  object-position: 55% center;
+}
+
+@media (max-width: 600px) {
+  .story-image {
+    padding: 0 0 .75rem .75rem;
+  }
 }
 
 .corsi-section {
@@ -693,198 +605,562 @@ const schema = schemaHome(socialImage);
   margin: 0 auto;
 }
 
-.corsi-grid {
+/* Percorsi in griglia: 3 + 2 su desktop (le ultime due più larghe, nessun buco),
+   2 per riga su tablet, 1 su mobile */
+.corsi-griglia {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 3rem 4rem;
-  margin-bottom: 4rem;
-  position: relative;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 3.5rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto 4.5rem;
 }
 
-.corsi-grid::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: rgba(135, 206, 235, 0.3);
-  transform: translateX(-50%);
-}
-
-.corso-item {
-  display: grid;
-  grid-template-columns: 50px 1fr;
-  gap: 1rem;
-  position: relative;
-  padding-bottom: 3rem;
-  border-bottom: 1px solid rgba(135, 206, 235, 0.3);
-}
-
-.corso-item:nth-child(4),
-.corso-item:nth-child(5) {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.corso-numero {
-  font-size: var(--text-4xl);
-  font-weight: 700;
-  font-family: var(--font-rubik);
-  color: rgba(135, 206, 235, 0.5);
-  line-height: var(--leading-none);
-  display: flex;
-  align-items: flex-start;
-}
-
-.corso-contenuto {
+.corso-card {
+  grid-column: span 2;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
 }
 
-.corso-titolo {
-  font-size: var(--text-2xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-snug);
-  letter-spacing: -0.01em;
-  margin: 0;
+.corso-card:nth-child(n + 4) {
+  grid-column: span 3;
 }
 
-.corso-descrizione {
-  font-size: var(--text-base);
-  line-height: 1.7;
-  color: var(--text-light);
-  margin: 0;
-  font-weight: 400;
-}
-
-.corso-descrizione :global(strong) {
+.corso-card .voce-testo :global(strong) {
   color: var(--dark-navy);
   font-weight: 600;
 }
 
-.corso-livelli {
+/* I corsi si dispongono in quante colonne ci stanno nella card */
+.corso-link {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  column-gap: 1.5rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+}
+
+.corso-link a {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 44px;
+  padding: .55rem 0;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+  color: var(--dark-navy);
+  font-size: .9375rem;
+  font-weight: 500;
+  line-height: 1.3;
+  text-decoration: none;
+  transition: color .3s ease, border-color .3s ease;
+}
+
+.corso-link a i {
+  flex-shrink: 0;
+  font-size: .75rem;
+  color: var(--primary-blue-dark);
+  transition: transform .3s ease;
+}
+
+.corso-link a:hover {
+  color: var(--primary-blue-dark);
+  border-color: var(--primary-blue);
+}
+
+.corso-link a:hover i {
+  transform: translateX(4px);
+}
+
+.corso-eta {
+  white-space: nowrap;
 }
 
 .corsi-cta {
-  text-align: center;
-  padding: 3rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 2.5rem;
   border-top: 1px solid rgba(26, 26, 26, 0.1);
 }
 
 .corsi-cta-text {
   font-size: var(--text-xl);
-  color: var(--text-dark);
+  color: var(--dark-navy);
   font-weight: 600;
-  margin-bottom: 2rem;
   letter-spacing: -0.01em;
   line-height: var(--leading-snug);
+  margin: 0;
 }
 
-.corsi-cta-btn :global(i) {
-  font-size: var(--text-base);
-}
-
-.formazione-professionale-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-  position: relative;
-}
-
-.formazione-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  position: relative;
-  z-index: 0;
-}
-
-.formazione-header {
-  text-align: center;
-  margin-bottom: 4rem;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.formazione-label {
+.corsi-cta-text span {
   display: block;
-  margin-bottom: 1.5rem;
-}
-
-.formazione-title {
-  margin-bottom: 1.5rem;
-}
-
-.percorsi-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2.5rem;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.percorso-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.percorso-card-title {
-  font-size: var(--text-2xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  line-height: var(--leading-snug);
-  margin-bottom: 1.2rem;
-  letter-spacing: -0.01em;
-}
-
-.percorso-card-description {
-  font-size: var(--text-base);
-  line-height: 1.7;
+  margin-top: .35rem;
+  font-size: 1.0625rem;
+  font-weight: 400;
+  letter-spacing: 0;
   color: var(--text-light);
-  margin-bottom: 2rem;
-  flex-grow: 1;
 }
 
-.percorso-card-description :global(strong) {
-  color: var(--dark-navy);
-  font-weight: 600;
-}
-
-.percorso-highlights {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  margin-bottom: 2rem;
-}
-
-.highlight-item {
+.corsi-cta-azioni {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  font-size: var(--text-lg);
-  color: var(--text-dark);
-}
-
-.highlight-item :global(i) {
-  color: var(--primary-blue);
-  font-size: 1rem;
+  gap: 2rem;
   flex-shrink: 0;
 }
 
-.highlight-item :global(span) {
-  font-weight: 500;
+@media (max-width: 1024px) {
+  .corsi-griglia {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem 2.5rem;
+  }
+
+  .corso-card,
+  .corso-card:nth-child(n + 4) {
+    grid-column: span 1;
+  }
+
+  /* Numero dispari: l'ultima card prende tutta la riga */
+  .corso-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .corsi-cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
-.percorso-card-btn {
-  align-self: flex-start;
+@media (max-width: 600px) {
+  .corsi-griglia {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .corso-card .voce-anno {
+    font-size: var(--text-2xl);
+  }
+
+  .corsi-wrapper {
+    padding: 0 1.5rem;
+  }
+
+  .corsi-cta-azioni {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .corsi-cta-azioni .btn-primary {
+    width: 100%;
+  }
+}
+
+/* Card strette (tablet verticale e mobile): corsi compatti su due colonne,
+   celle della stessa riga alte uguali così le linee restano allineate */
+@media (max-width: 900px) {
+  .corso-link {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .corso-link li {
+    display: flex;
+  }
+
+  .corso-link a {
+    display: block;
+    flex: 1;
+    padding: .7rem 0;
+    font-size: .875rem;
+  }
+
+  .corso-link a i {
+    display: none;
+  }
+}
+
+/* Formazione: fondo azzurrino, intro a sinistra e percorsi come elenco a destra */
+.formazione-professionale-section {
+  position: relative;
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
+}
+
+.formazione-wrapper {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 5rem;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.formazione-intro .titolo-sezione {
+  margin-bottom: 1.5rem;
+}
+
+.percorsi-lista {
+  list-style: none;
+  border-top: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.percorsi-lista li {
+  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+/* Tutta la riga è il link; la freccia sta a destra, centrata */
+.percorso {
+  position: relative;
+  display: block;
+  padding: 2rem 4rem 2rem 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.percorso-tipo {
+  display: block;
+  margin-bottom: .5rem;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--primary-blue-dark);
+}
+
+.percorso-titolo {
+  margin: 0 0 .6rem;
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  letter-spacing: -0.01em;
+  color: var(--dark-navy);
+  transition: color .3s ease;
+}
+
+.percorso-testo {
+  margin: 0;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--text-light);
+}
+
+.percorso-dettagli {
+  margin: .75rem 0 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--dark-navy);
+}
+
+.percorso-freccia {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-top: -1.375rem;
+  border: 1px solid rgba(26, 26, 26, 0.2);
+  border-radius: 50%;
+  font-size: .875rem;
+  color: var(--primary-blue-dark);
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease, transform .3s ease;
+}
+
+.percorso:hover .percorso-titolo {
+  color: var(--primary-blue-dark);
+}
+
+.percorso:hover .percorso-freccia {
+  background: var(--primary-blue);
+  border-color: var(--primary-blue);
+  color: var(--dark-navy);
+  transform: translateX(4px);
+}
+
+@media (max-width: 1024px) {
+  .formazione-wrapper {
+    gap: 3.5rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .formazione-wrapper {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .percorso {
+    padding: 1.75rem 3.25rem 1.75rem 0;
+  }
+
+  .percorso-freccia {
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-top: -1.125rem;
+    font-size: .75rem;
+  }
+}
+
+/* ---------- Dicono di noi: intro e sintesi a sinistra, una recensione alla volta a destra ---------- */
+.dicono-di-noi-section {
+  padding: var(--section-y) 0;
+  background: var(--white);
+}
+
+.recensioni-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  grid-template-areas:
+    "intro carosello"
+    "sintesi carosello";
+  grid-template-rows: auto 1fr;
+  gap: 2.5rem 5rem;
+}
+
+.recensioni-intro {
+  grid-area: intro;
+}
+
+.recensioni-intro .titolo-sezione {
+  margin-bottom: 1.5rem;
+}
+
+.recensioni-sintesi {
+  grid-area: sintesi;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.75rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.sintesi-google {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "voto stelle"
+    "voto totale";
+  column-gap: 1rem;
+  align-items: center;
+}
+
+.sintesi-google[hidden] {
+  display: none;
+}
+
+.sintesi-google :global(.sintesi-voto) {
+  grid-area: voto;
+  font-size: 3.25rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--dark-navy);
+}
+
+.sintesi-google :global(.sintesi-stelle) {
+  grid-area: stelle;
+  align-self: end;
+  font-size: .875rem;
+  color: #f5b301;
+  letter-spacing: 2px;
+}
+
+.sintesi-google :global(.sintesi-totale) {
+  grid-area: totale;
+  align-self: start;
+  font-size: var(--text-sm);
+  color: var(--text-light);
+}
+
+/* Recensione come citazione libera, senza card */
+.recensioni-carousel {
+  grid-area: carosello;
+  align-self: center;
+}
+
+.testimonials-track {
+  position: relative;
+}
+
+:global(.testimonials-slide) {
+  display: none;
+  margin: 0;
+  opacity: 0;
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+:global(.testimonials-slide.active) {
+  display: block;
+  opacity: 1;
+}
+
+.recensioni-carousel :global(.recensione-stelle) {
+  margin-bottom: 1.25rem;
+  font-size: .875rem;
+  color: #f5b301;
+  letter-spacing: 2px;
+}
+
+.recensioni-carousel :global(.recensione-stelle .far),
+.sintesi-google :global(.sintesi-stelle .far) {
+  color: rgba(26, 26, 26, 0.15);
+}
+
+.recensioni-carousel :global(.recensione-testo) {
+  position: relative;
+  margin: 0;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--primary-blue);
+}
+
+.recensioni-carousel :global(.recensione-testo p) {
+  font-size: clamp(1.125rem, 1rem + .4vw, 1.375rem);
+  line-height: 1.6;
+  color: var(--dark-navy);
+}
+
+.recensioni-carousel :global(.review-text) {
+  transition: opacity .15s ease;
+}
+
+.recensioni-carousel :global(.read-more-btn) {
+  margin-left: .35rem;
+  padding: 0 0 1px;
+  border: none;
+  border-bottom: 1px solid var(--primary-blue);
+  background: none;
+  font: inherit;
+  font-size: .9375rem;
+  font-weight: 600;
+  color: var(--primary-blue-dark);
+  cursor: pointer;
+}
+
+.recensioni-carousel :global(.recensione-autore) {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  margin-top: 1.75rem;
+  padding-left: 1.5rem;
+}
+
+.recensioni-carousel :global(.author-avatar) {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--bg-soft);
+  font-size: .8125rem;
+  font-weight: 700;
+  color: var(--primary-blue-dark);
+}
+
+.recensioni-carousel :global(.recensione-autore strong) {
+  display: block;
+  font-weight: 600;
+  color: var(--dark-navy);
+}
+
+.recensioni-carousel :global(.recensione-fonte) {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--text-light);
+}
+
+.recensioni-carousel :global(.recensioni-messaggio) {
+  font-size: 1.0625rem;
+  color: var(--text-light);
+}
+
+.recensioni-controlli {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+  padding-left: 1.5rem;
+}
+
+.recensioni-controlli[hidden] {
+  display: none;
+}
+
+.recensioni-nav {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(26, 26, 26, 0.2);
+  border-radius: 50%;
+  background: transparent;
+  font-size: .8125rem;
+  color: var(--primary-blue-dark);
+  cursor: pointer;
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+}
+
+.recensioni-nav:hover {
+  background: var(--primary-blue);
+  border-color: var(--primary-blue);
+  color: var(--dark-navy);
+}
+
+.carousel-indicators {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.carousel-indicators :global(.indicator) {
+  width: .5rem;
+  height: .5rem;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(26, 26, 26, 0.15);
+  cursor: pointer;
+  transition: width .3s ease, background-color .3s ease;
+}
+
+.carousel-indicators :global(.indicator.active) {
+  width: 1.5rem;
+  background: var(--primary-blue-dark);
+}
+
+@media (max-width: 900px) {
+  .recensioni-layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "intro"
+      "carosello"
+      "sintesi";
+    grid-template-rows: auto;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .recensioni-carousel :global(.recensione-testo),
+  .recensioni-carousel :global(.recensione-autore),
+  .recensioni-controlli {
+    padding-left: 1.1rem;
+  }
+
+  .sintesi-google :global(.sintesi-voto) {
+    font-size: 2.75rem;
+  }
 }
 
 .gallery-section {
@@ -892,181 +1168,307 @@ const schema = schemaHome(socialImage);
   overflow: hidden;
 }
 
-.gallery-header,
-.testimonials-header {
+.gallery-header {
   text-align: center;
   margin-bottom: 3rem;
   position: relative;
   z-index: 2;
 }
 
-.gallery-tagline,
-.testimonials-tagline {
+.gallery-tagline {
   margin-bottom: 1.5rem;
 }
 
-.gallery-title,
-.testimonials-title {
+.gallery-title {
   margin-bottom: 1.5rem;
 }
 
-.gallery-description,
-.testimonials-description {
+.gallery-description {
   max-width: 700px;
   margin: 0 auto;
 }
 
+/* ---------- Galleria a scorrimento continuo ---------- */
+/* Due serie identiche di foto: la traslazione del 50% riporta all'inizio senza salti,
+   qualunque sia la larghezza delle foto */
 .gallery-infinite {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
   overflow: hidden;
-  height: 420px;
-  position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
 }
 
 .gallery-track {
   display: flex;
-  gap: 8px;
-  width: calc((308px) * 20);
-  animation: scroll-infinite 80s linear infinite;
-  will-change: transform;
+  width: max-content;
+  animation: galleria-scorri 80s linear infinite;
 }
 
-.gallery-track:hover {
+.gallery-infinite:hover .gallery-track,
+.gallery-track:focus-within,
+.gallery-track.paused {
   animation-play-state: paused;
 }
 
-.gallery-item {
-  width: 300px;
-  height: 420px;
-  flex-shrink: 0;
-  position: relative;
-  cursor: pointer;
-  overflow: hidden;
-  border-radius: 12px;
+@keyframes galleria-scorri {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-.gallery-item :global(img) {
+.gallery-item {
+  flex: 0 0 auto;
+  width: 300px;
+  height: 420px;
+  margin-right: 8px;
+}
+
+.gallery-apri {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-soft);
+  cursor: zoom-in;
+}
+
+.gallery-apri :global(img) {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .4s ease;
+  transition: transform .5s ease, filter .3s ease;
 }
 
-.gallery-item:hover :global(img) {
-  transform: scale(1.03);
+.gallery-apri:focus-visible {
+  outline-offset: -3px;
 }
 
-.gallery-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(26,26,26,.4);
-  opacity: 0;
-  transition: opacity .3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.gallery-item:hover .gallery-overlay {
-  opacity: 1;
-}
-
+/* Icona ingrandisci: compare al passaggio del mouse o col focus da tastiera */
 .gallery-zoom-icon {
-  width: 48px;
-  height: 48px;
+  position: absolute;
+  right: .9rem;
+  bottom: .9rem;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
-  background: rgba(255,255,255,.95);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: scale(.8);
-  opacity: 0;
-  transition: all .3s ease;
-}
-
-.gallery-zoom-icon :global(i) {
-  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.92);
+  font-size: .875rem;
   color: var(--dark-navy);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .3s ease, transform .3s ease;
 }
 
-.gallery-item:hover .gallery-zoom-icon {
-  transform: scale(1);
+.gallery-apri:hover :global(img),
+.gallery-apri:focus-visible :global(img) {
+  transform: scale(1.04);
+  filter: brightness(.88);
+}
+
+.gallery-apri:hover .gallery-zoom-icon,
+.gallery-apri:focus-visible .gallery-zoom-icon {
   opacity: 1;
+  transform: none;
 }
 
-.lightbox-content {
-  position: relative;
+/* Movimento ridotto: niente animazione, la galleria si scorre a mano */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-infinite {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .gallery-track {
+    animation: none;
+    padding: 0 1.5rem;
+  }
+
+  .gallery-item[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .gallery-item {
+    width: 280px;
+    height: 380px;
+  }
+
+  .gallery-zoom-icon {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-track {
+    animation-duration: 70s;
+  }
+
+  .gallery-item {
+    width: min(44vw, 240px);
+    height: 340px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-track {
+    animation-duration: 60s;
+  }
+
+  .gallery-item {
+    height: 300px;
+  }
+}
+
+/* ---------- Lightbox: dialog a tutto schermo ---------- */
+:global(html.galleria-aperta) {
+  overflow: hidden;
+}
+
+.galleria-dialog {
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 4.5rem 6rem 2rem;
+  border: none;
+  background: rgba(12, 12, 12, 0.96);
+  color: var(--white);
 }
 
-.lightbox-image {
+.galleria-dialog[open] {
+  display: grid;
+  place-items: center;
+  animation: galleria-entra .25s ease;
+}
+
+.galleria-dialog::backdrop {
+  background: transparent;
+}
+
+@keyframes galleria-entra {
+  from {
+    opacity: 0;
+  }
+}
+
+/* La figura è larga quanto la foto; la didascalia non la allarga */
+.galleria-figura {
+  display: grid;
+  justify-items: start;
+  width: fit-content;
   max-width: 100%;
-  max-height: 100%;
+  margin: 0;
+}
+
+.galleria-foto {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100dvh - 10rem);
   width: auto;
   height: auto;
   border-radius: 8px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.5);
-  transform: scale(.95);
-  transition: transform .3s ease;
+  transition: opacity .25s ease;
 }
 
-.lightbox.active .lightbox-image {
-  transform: scale(1);
+.galleria-foto.in-caricamento {
+  opacity: 0;
 }
 
-.lightbox-nav {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,.1);
-  border: 1px solid rgba(255,255,255,.2);
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
+.galleria-didascalia {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: var(--text-xl);
-  cursor: pointer;
-  transition: all .2s ease;
-  backdrop-filter: blur(10px);
-  z-index: 200001;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  width: 0;
+  min-width: 100%;
+  margin-top: 1rem;
+  font-size: .9375rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
 }
 
-.lightbox-nav:hover {
-  background: rgba(255,255,255,.2);
-  border-color: rgba(255,255,255,.4);
-  transform: translateY(-50%) scale(1.05);
-}
-
-.lightbox-prev {
-  left: 20px;
-}
-
-.lightbox-next {
-  right: 20px;
-}
-
-.lightbox-counter {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255,255,255,.1);
-  border: 1px solid rgba(255,255,255,.2);
-  border-radius: 20px;
-  padding: .6rem 1.2rem;
-  color: #fff;
-  font-weight: 500;
+.galleria-contatore {
+  flex-shrink: 0;
   font-size: var(--text-sm);
-  backdrop-filter: blur(10px);
-  z-index: 200001;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.galleria-chiudi,
+.galleria-nav {
+  position: fixed;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--white);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+}
+
+.galleria-chiudi {
+  top: 1.25rem;
+  right: 1.25rem;
+  font-size: 1.125rem;
+}
+
+.galleria-nav {
+  top: 50%;
+  margin-top: -1.5rem;
+}
+
+.galleria-prev {
+  left: 1.5rem;
+}
+
+.galleria-next {
+  right: 1.5rem;
+}
+
+.galleria-chiudi:hover,
+.galleria-nav:hover {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--dark-navy);
+}
+
+/* Su schermi stretti le frecce scendono in basso, la foto usa tutta la larghezza */
+@media (max-width: 768px) {
+  .galleria-dialog {
+    padding: 4.5rem 1rem 6rem;
+  }
+
+  .galleria-foto {
+    max-height: calc(100dvh - 14rem);
+  }
+
+  .galleria-nav {
+    top: auto;
+    bottom: 1.25rem;
+    margin-top: 0;
+  }
+
+  .galleria-prev {
+    left: calc(50% - 3.75rem);
+  }
+
+  .galleria-next {
+    right: calc(50% - 3.75rem);
+  }
 }
 
 .altri-servizi-section {
@@ -1082,527 +1484,107 @@ const schema = schemaHome(socialImage);
   width: 100%;
   height: 100%;
   background: center/cover no-repeat;
+  filter: grayscale(.5);
   z-index: 1;
 }
 
+/* La foto resta atmosfera: velo scuro uniforme, più denso in basso dove ci sono le liste */
 .altri-servizi-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(26, 26, 26, 0.85) 0%, rgba(42, 42, 42, 0.82) 50%, rgba(26, 26, 26, 0.85) 100%);
+  background: linear-gradient(to bottom, rgba(18, 18, 18, 0.84) 0%, rgba(18, 18, 18, 0.92) 100%);
   z-index: 2;
 }
 
-.altri-servizi-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.progetti-intro,
+.progetti-gruppi {
   position: relative;
   z-index: 3;
 }
 
-.altri-servizi-header {
-  text-align: center;
-  margin-bottom: 3rem;
+/* Stesse colonne dei gruppi sotto: il testo dell'intro si allinea al secondo gruppo */
+@media (min-width: 901px) {
+  section > .progetti-intro {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
-.altri-servizi-label {
-  margin-bottom: 1.5rem;
-  display: block;
-}
-
-.altri-servizi-title {
-  margin-bottom: 1.5rem;
-}
-
-.altri-servizi-intro {
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.progetti-narrativo {
+.progetti-gruppi {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-}
-
-.narrativo-colonna :global(h3) {
-  font-size: var(--text-2xl);
-  font-weight: 700;
-  color: var(--primary-blue);
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid rgba(135, 206, 235, 0.3);
-  line-height: var(--leading-snug);
-}
-
-.narrativo-colonna :global(p) {
-  font-size: var(--text-base);
-  line-height: var(--leading-loose);
-  color: rgba(255, 255, 255, 0.85);
-  margin: 0;
-}
-
-.narrativo-colonna :global(a) {
-  color: var(--white);
-  font-weight: 600;
-  text-decoration: none;
-  border-bottom: 2px solid var(--primary-blue);
-  padding-bottom: 2px;
-  transition: all 0.3s ease;
-}
-
-.narrativo-colonna :global(a:hover) {
-  color: var(--primary-blue);
-}
-
-@media (max-width: 768px) {
-.progetti-narrativo {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-}
-
-.dicono-di-noi-section {
-  padding: var(--section-y) 0;
-  overflow: hidden;
-}
-
-.dicono-di-noi-section::after {
-  content: '';
-  position: absolute;
-  top: -30%;
-  left: -10%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle,rgba(135,206,235,.05) 0,transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.testimonials-header {
-  margin-bottom: 3rem;
-  z-index: 3;
-}
-
-.loading-reviews {
-  text-align: center;
-  padding: 2rem;
-  color: var(--text-light);
-}
-
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid var(--primary-blue-light);
-  border-top: 4px solid var(--primary-blue);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 1rem;
-}
-
-.testimonials-container {
-  position: relative;
-  z-index: 2;
-}
-
-.carousel-with-cta {
-  display: flex;
-  align-items: flex-start;
-  gap: 2rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem 5rem;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 3.5rem auto 0;
   padding: 0 2rem;
 }
 
-.carousel-main {
-  flex: 1;
-  position: relative;
-}
-
-.carousel-sidebar {
-  width: 280px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  align-self: center;
-}
-
-.testimonials-carousel {
-  position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 80px;
-}
-
-.testimonials-track {
-  overflow: hidden;
-  border-radius: 12px;
-  min-height: 400px;
-}
-
-:global(.testimonials-slide) {
-  display: none;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity .35s ease, transform .35s ease;
-}
-
-:global(.testimonials-slide.active) {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-:global(.testimonial-card) {
-  background: linear-gradient(145deg,rgba(255,255,255,.98) 0,rgba(248,250,252,.95) 100%);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-card);
-  padding: 0;
-  position: relative;
-  box-shadow: 0 24px 48px rgba(135,206,235,.1),0 12px 24px rgba(0,0,0,.03);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-:global(.testimonial-header) {
-  padding: 2rem 2.5rem 1.5rem;
-  position: relative;
-  z-index: 3;
-  flex-shrink: 0;
-}
-
-:global(.google-rating) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 0;
-}
-
-:global(.rating-badge) {
-  display: flex;
-  align-items: center;
-  gap: .8rem;
-  background: rgba(135,206,235,.12);
-  padding: .85rem 1.6rem;
-  border-radius: 50px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(135,206,235,.15);
-}
-
-:global(.stars) {
-  display: flex;
-  gap: .3rem;
-}
-
-:global(.stars i) {
-  color: #ffd700;
-  font-size: var(--text-lg);
-  filter: drop-shadow(0 1px 2px rgba(255,215,0,.3));
-}
-
-:global(.rating-text) {
-  font-weight: 700;
-  font-size: var(--text-base);
-  color: var(--primary-blue-dark);
-  margin-left: .5rem;
-}
-
-:global(.testimonial-content) {
-  position: relative;
-  z-index: 2;
-  padding: 0 2.5rem 2rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-:global(.testimonial-text) {
-  font-size: var(--text-lg);
-  line-height: var(--leading-relaxed);
-  color: var(--text-dark);
-  font-style: italic;
-  margin-bottom: 2rem;
-  font-weight: 400;
-  text-align: center;
-  position: relative;
-  transition: all .3s ease;
-}
-
-:global(.testimonial-footer) {
-  background: rgba(248,250,252,.95);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(135,206,235,.12);
-  padding: 2rem 2.5rem;
-  position: relative;
-  flex-shrink: 0;
-  margin-top: auto;
-}
-
-:global(.testimonial-author) {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  justify-content: center;
-}
-
-:global(.author-avatar) {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  background: linear-gradient(135deg,var(--primary-blue-light) 0,var(--primary-blue) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--text-xl);
-  color: #fff;
-  font-weight: 700;
-  border: 3px solid rgba(255,255,255,.8);
-  box-shadow: 0 8px 24px rgba(135,206,235,.2),inset 0 1px 0 rgba(255,255,255,.3);
-}
-
-:global(.author-info) {
-  text-align: left;
-}
-
-:global(.author-info h4) {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--dark-navy);
-  margin-bottom: .4rem;
-  letter-spacing: -.02em;
-}
-
-:global(.author-meta) {
-  font-size: var(--text-sm);
-  color: var(--text-light);
-  font-weight: 500;
-}
-
-:global(.read-more-btn) {
-  background: 0 0;
-  border: none;
+.progetti-gruppo-titolo {
+  margin: 0 0 1rem;
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   color: var(--primary-blue);
-  font-weight: 700;
-  font-size: var(--text-sm);
-  cursor: pointer;
-  margin-left: .5rem;
+}
+
+.progetti-lista {
+  list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.progetti-lista li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.progetti-lista a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 1.5rem;
+  align-items: center;
+  padding: 1.15rem 0;
+  color: var(--white);
   text-decoration: none;
-  font-style: normal;
-  padding: 0;
-  transition: color .2s ease;
-  border-bottom: 2px solid var(--primary-blue);
-  padding-bottom: 2px;
 }
 
-:global(.read-more-btn:active) {
-  transform: scale(.98);
+.progetto-nome {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  transition: color .3s ease;
 }
 
-.carousel-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--white);
-  border: 1px solid rgba(135,206,235,.25);
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all .25s ease;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 12px rgba(135,206,235,.12);
-  z-index: 5;
-}
-
-.carousel-nav:hover {
-  background: var(--primary-blue);
-  border-color: var(--primary-blue);
-  transform: translateY(-50%) scale(1.05);
-  box-shadow: 0 6px 18px rgba(135,206,235,.25);
-}
-
-.carousel-nav:active {
-  transform: translateY(-50%) scale(1);
-}
-
-.carousel-nav :global(i) {
-  font-size: var(--text-base);
-  color: var(--primary-blue-dark);
-  transition: color .25s ease;
-}
-
-.carousel-nav:hover :global(i) {
-  color: #fff;
-}
-
-.carousel-prev {
-  left: 20px;
-}
-
-.carousel-next {
-  right: 20px;
-}
-
-.carousel-indicators {
-  display: flex;
-  justify-content: center;
-  gap: .8rem;
-  margin-top: 2.5rem;
-}
-
-:global(.indicator) {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(135,206,235,.25);
-  cursor: pointer;
-  transition: all .25s ease;
-  position: relative;
-}
-
-:global(.indicator:hover) {
-  background: rgba(135,206,235,.5);
-}
-
-:global(.indicator.active) {
-  background: var(--primary-blue);
-  width: 28px;
-  border-radius: 5px;
-}
-
-:global(.indicator.active:hover) {
-  background: var(--primary-blue-dark);
-}
-
-.google-stats-card {
-  border-top: 2px solid var(--primary-blue);
-  padding: 1.5rem 0 0;
-  text-align: center;
-}
-
-.stats-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .8rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid rgba(135,206,235,.15);
-}
-
-.stats-title {
-  font-size: var(--text-base);
-  font-weight: 700;
-  color: var(--dark-navy);
-  letter-spacing: .3px;
-}
-
-.stats-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-
-:global(.stat-item) {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .5rem;
-  padding: 0;
-}
-
-:global(.stat-stars) {
-  display: flex;
-  gap: .3rem;
+.progetto-testo {
+  grid-row: 2;
   margin-top: .2rem;
-}
-
-:global(.stat-stars i) {
-  font-size: 1rem;
-  color: #ffd700;
-  filter: drop-shadow(0 1px 2px rgba(255,215,0,.3));
-}
-
-.view-all-reviews {
-  margin: 0;
-  padding: 0;
-}
-
-.view-all-btn {
-  width: 100%;
-}
-
-.btn-google-icon {
-  width: 20px;
-  height: 20px;
-  background: linear-gradient(135deg,#4285f4,#34a853);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.btn-google-icon :global(i) {
-  color: #fff;
-  font-size: 11px;
-}
-
-.btn-main-text {
+  font-size: .9375rem;
   line-height: 1.5;
+  color: rgba(255, 255, 255, 0.68);
 }
 
-:global(.no-reviews-message) {
-  display: flex;
-  justify-content: center;
-  padding: 2rem 0;
+.progetti-lista a i {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  font-size: .875rem;
+  color: var(--primary-blue);
+  transition: transform .3s ease;
 }
 
-:global(.alert-box) {
-  background: linear-gradient(135deg,rgba(255,255,255,.95) 0,rgba(176,224,230,.1) 100%);
-  border: 1px solid rgba(135,206,235,.3);
-  border-radius: 15px;
-  padding: 2rem 3rem;
-  max-width: 600px;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  box-shadow: 0 8px 25px rgba(135,206,235,.1);
-  backdrop-filter: blur(10px);
+.progetti-lista a:hover .progetto-nome {
+  color: var(--primary-blue);
 }
 
-:global(.alert-box i) {
-  color: var(--primary-blue-dark);
-  font-size: var(--text-2xl);
-  flex-shrink: 0;
+.progetti-lista a:hover i {
+  transform: translateX(4px);
 }
 
-:global(.alert-box p) {
-  color: var(--text-dark);
-  font-size: var(--text-base);
-  font-weight: 500;
-  margin: 0;
-  line-height: 1.4;
-}
-
-@media (max-width:1200px) {
-.carousel-with-cta {
-    gap: 1.5rem;
-  }
-
-.carousel-sidebar {
-    width: 260px;
+@media (max-width: 900px) {
+  .progetti-gruppi {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 2.5rem;
+    padding: 0 1.5rem;
   }
 }
 
@@ -1611,198 +1593,27 @@ const schema = schemaHome(socialImage);
     gap: 4rem;
   }
 
-.percorsi-container {
-    grid-template-columns: 1fr;
-  }
-
-.corsi-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem 4rem;
-  }
-
-.corsi-grid::before {
-    display: none;
-  }
-
-.corso-item {
-    grid-template-columns: 45px 1fr;
-    gap: 1rem;
-    padding-bottom: 3rem;
-    margin-bottom: 3rem;
-    border-bottom: 1px solid rgba(135, 206, 235, 0.3);
-  }
-
-.corso-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-    margin-bottom: 0;
-  }
-
-.corso-numero {
-    font-size: 2rem;
-  }
-
-.corso-titolo {
-    font-size: 1.5rem;
-  }
-
-.corso-descrizione {
-    font-size: var(--text-base);
-  }
-
-.corso-livelli {
-    gap: 0.6rem;
-  }
-
-.percorsi-container {
-    gap: 2rem;
-  }
-
-.percorso-card-title {
-    font-size: 1.5rem;
-  }
-
-.percorso-card-description {
-    font-size: var(--text-base);
-  }
-
-.highlight-item {
-    font-size: var(--text-lg);
-  }
-
-.gallery-infinite {
-    height: 380px;
-  }
-
-.gallery-item {
-    width: 280px;
-    height: 380px;
-    border-radius: 10px;
-  }
-
-.gallery-item:hover :global(img) {
-    transform: none;
-  }
-
-.gallery-overlay {
-    display: none;
-  }
-
-.gallery-track {
-    gap: 6px;
-    width: calc(286px * 20);
-  }
-
-.lightbox-nav {
-    width: 44px;
-    height: 44px;
-    font-size: var(--text-lg);
-  }
-
-.lightbox-prev {
-    left: 15px;
-  }
-
-.lightbox-next {
-    right: 15px;
-  }
-
-.lightbox-counter {
-    bottom: 15px;
-    padding: .5rem 1rem;
-    font-size: var(--text-xs);
-  }
-
-.carousel-with-cta {
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-  }
-
-.carousel-main {
-    order: 2;
-    width: 100%;
-  }
-
-.carousel-sidebar {
-    order: 1;
-    width: 100%;
-    max-width: 600px;
-    flex-direction: column;
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-
-.google-stats-card {
-    width: 100%;
-  }
-
-.view-all-reviews {
-    order: 3;
-    margin-top: 2rem;
-    width: 100%;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-.testimonials-carousel {
-    padding: 0 20px;
-    touch-action: pan-y;
-  }
-
-.carousel-nav {
-    display: none;
-  }
 }
 
 @media (max-width:900px) {
 .story-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 3rem;
   }
 
-.story-text {
-    max-width: 100%;
-  }
-
-.story-text :global(p) {
-    font-size: var(--text-base);
-  }
-
-.story-lead {
-    font-size: var(--text-lg);
-  }
-
-.story-image {
-    min-height: 400px;
-    padding-right: 0;
-    padding-top: 40px;
-    justify-content: center;
+.story-text,
+.story-quote {
+    max-width: none;
   }
 
 .story-image :global(img) {
-    height: 400px;
-    max-width: none;
-    aspect-ratio: auto;
-  }
-
-.story-photo {
-    max-width: none;
-  }
-
-.story-content {
-    order: 1;
-  }
-
-.story-image {
-    order: 2;
+    aspect-ratio: 3 / 2;
   }
 }
 
 @media (max-width:768px) {
 .hero {
-    padding: 110px 0 3rem;
+    padding: calc(var(--header-h) + 2rem) 0 3rem;
     height: auto;
     min-height: 78vh;
 }
@@ -1834,99 +1645,9 @@ const schema = schemaHome(socialImage);
     gap: .75rem;
 }
 
-.formazione-professionale-section .section-header {
-    margin-bottom: 4rem;
-  }
-
-.percorsi-container {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
-.altri-servizi-header {
-    margin-bottom: 3rem;
-  }
-
-.progetti-narrativo {
-    gap: 2.5rem;
-  }
-
-.carousel-with-cta {
-    padding: 0 1rem;
-  }
-
-.carousel-sidebar {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-.testimonials-carousel {
-    padding: 0 15px;
-  }
-
-.testimonials-track {
-    min-height: 350px;
-  }
-
-:global(.testimonial-header) {
-    padding: 1.2rem 1.5rem .8rem;
-  }
-
-:global(.testimonial-content) {
-    padding: 0 1.5rem 1.2rem;
-  }
-
-:global(.testimonial-footer) {
-    padding: 1.2rem 1.5rem;
-  }
-
-:global(.testimonial-author) {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-  }
-
-:global(.author-info) {
-    text-align: center;
-  }
-
-.gallery-infinite {
-    height: 340px;
-  }
-
-.gallery-item {
-    width: calc(50vw - 35px);
-    max-width: 240px;
-    height: 340px;
-    border-radius: 10px;
-  }
-
-.gallery-item:hover :global(img) {
-    transform: none;
-  }
-
-.gallery-overlay {
-    display: none;
-  }
-
-.gallery-track {
-    gap: 8px;
-    width: calc((calc(50vw - 27px)) * 20);
-    animation-duration: 70s;
-  }
-
-.lightbox-nav {
-    width: 40px;
-    height: 40px;
-    font-size: var(--text-base);
-  }
 }
 
 @media (max-width:480px) {
-.hero {
-    padding-top: 105px;
-}
-
 .hero-content {
     padding: 0 1rem;
 }
@@ -1946,243 +1667,15 @@ const schema = schemaHome(socialImage);
     margin-bottom: 1.5rem;
   }
 
-.chi-siamo-header {
-    margin-bottom: 2.5rem;
-  }
-
 .story-text :global(p) {
-    font-size: var(--text-base);
-    line-height: 1.7;
-    margin-bottom: 1.2rem;
-  }
-
-.story-lead {
-    font-size: var(--text-base);
-  }
-
-.story-image {
-    min-height: 350px;
-    padding-right: 0;
-    padding-top: 40px;
-    justify-content: center;
-  }
-
-.story-image :global(img) {
-    height: 350px;
-    aspect-ratio: auto;
+    font-size: 1.0625rem;
+    line-height: 1.75;
   }
 
 .corsi-header {
     margin-bottom: 3rem;
   }
 
-.corsi-grid {
-    grid-template-columns: 1fr;
-    gap: 0;
-    margin-bottom: 3rem;
-  }
-
-.corsi-grid::before {
-    display: none;
-  }
-
-.corso-item {
-    grid-template-columns: 40px 1fr;
-    gap: 0.9rem;
-    padding-bottom: 2.5rem;
-    margin-bottom: 2.5rem;
-    border-bottom: 1px solid rgba(135, 206, 235, 0.3);
-  }
-
-.corso-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-    margin-bottom: 0;
-  }
-
-.corso-numero {
-    font-size: 1.75rem;
-  }
-
-.corso-titolo {
-    font-size: 1.4rem;
-    margin-bottom: 0.4rem;
-  }
-
-.corso-descrizione {
-    font-size: var(--text-base);
-    line-height: 1.6;
-  }
-
-.corso-livelli {
-    gap: 0.5rem;
-  }
-
-.corsi-cta {
-    padding: 2.5rem 0 0;
-  }
-
-.corsi-cta-text {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-  }
-
-.altri-servizi-header {
-    margin-bottom: 2.5rem;
-  }
-
-.narrativo-colonna :global(h3) {
-    font-size: var(--text-2xl);
-    margin-bottom: 1rem;
-  }
-
-.narrativo-colonna :global(p) {
-    font-size: var(--text-base);
-    line-height: 1.8;
-  }
-
-.formazione-header {
-    margin-bottom: 3rem;
-  }
-
-.percorsi-container {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-.percorso-card-title {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-  }
-
-.percorso-card-description {
-    font-size: var(--text-base);
-    margin-bottom: 1.5rem;
-  }
-
-.percorso-highlights {
-    gap: 0.6rem;
-    margin-bottom: 1.5rem;
-  }
-
-.highlight-item {
-    font-size: var(--text-lg);
-  }
-
-.gallery-infinite {
-    height: 320px;
-  }
-
-.gallery-item {
-    width: calc(50vw - 30px);
-    max-width: 220px;
-    height: 320px;
-    border-radius: 8px;
-  }
-
-.gallery-track {
-    gap: 8px;
-    width: calc((calc(50vw - 22px)) * 20);
-    animation-duration: 60s;
-  }
-
-.gallery-zoom-icon {
-    width: 38px;
-    height: 38px;
-  }
-
-.gallery-zoom-icon :global(i) {
-    font-size: .85rem;
-  }
-
-.lightbox-nav {
-    width: 40px;
-    height: 40px;
-    font-size: var(--text-base);
-  }
-
-.lightbox-prev {
-    left: 10px;
-  }
-
-.lightbox-next {
-    right: 10px;
-  }
-
-.lightbox-counter {
-    bottom: 12px;
-    padding: .4rem .8rem;
-    font-size: var(--text-xs);
-  }
-
-.carousel-with-cta {
-    padding: 0 1rem;
-  }
-
-.testimonials-carousel {
-    padding: 0 10px;
-  }
-
-.testimonials-track {
-    min-height: 320px;
-  }
-
-:global(.testimonial-header) {
-    padding: 1rem 1.2rem .6rem;
-  }
-
-:global(.testimonial-content) {
-    padding: 0 1.2rem 1rem;
-  }
-
-:global(.testimonial-footer) {
-    padding: 1rem 1.2rem;
-  }
-
-:global(.testimonial-text) {
-    margin-bottom: .5rem;
-  }
-
-.google-stats-card {
-    padding: 1.2rem 0 0;
-  }
-
-:global(.rating-badge) {
-    padding: .6rem 1.2rem;
-    gap: .6rem;
-  }
-}
-
-@media (max-width:380px) {
-.lightbox-nav {
-    display: none;
-  }
-
-.lightbox-counter {
-    bottom: 10px;
-    padding: .35rem .7rem;
-  }
-
-.gallery-infinite {
-    height: 280px;
-  }
-
-.gallery-item {
-    height: 280px;
-  }
-}
-
-/* ---------- Corsi: ogni livello porta alla pagina del corso ---------- */
-a.livello {
-  text-decoration: none;
-  transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease, transform 0.25s ease;
-}
-
-a.livello:hover {
-  border-color: var(--primary-blue);
-  background: rgba(135, 206, 235, 0.15);
-  color: var(--dark-navy);
-  transform: translateY(-2px);
 }
 
 /* ---------- Domande frequenti ---------- */
@@ -2193,9 +1686,15 @@ a.livello:hover {
 
 .faq-layout {
   display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
   gap: 5rem;
   align-items: start;
+}
+
+/* L'intro resta in vista mentre si scorre l'elenco */
+.faq-intro {
+  position: sticky;
+  top: calc(var(--header-h) + var(--banner-height, 0px) + 2rem);
 }
 
 .faq-label {
@@ -2210,6 +1709,7 @@ a.livello:hover {
   color: var(--dark-navy);
   font-weight: 600;
   text-decoration: none;
+  white-space: nowrap;
   border-bottom: 1px solid var(--primary-blue);
 }
 
@@ -2226,12 +1726,14 @@ a.livello:hover {
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
-  padding: 1.5rem 0;
-  font-size: var(--text-lg);
+  padding: 1.1rem 0;
+  font-size: 1.125rem;
   font-weight: 600;
+  line-height: 1.4;
   color: var(--dark-navy);
   cursor: pointer;
   list-style: none;
+  transition: color .3s ease;
 }
 
 .faq-item summary::-webkit-details-marker {
@@ -2250,7 +1752,7 @@ a.livello:hover {
   font-size: 1.25rem;
   font-weight: 400;
   color: var(--primary-blue-dark);
-  transition: transform 0.3s ease, background 0.3s ease;
+  transition: transform .3s ease, background-color .3s ease, border-color .3s ease;
 }
 
 .faq-item[open] summary::after {
@@ -2265,25 +1767,55 @@ a.livello:hover {
 }
 
 .faq-item p {
-  padding: 0 3.5rem 1.6rem 0;
-  font-size: var(--text-base);
-  line-height: var(--leading-relaxed);
+  max-width: 38rem;
+  padding: 0 3.5rem 1.25rem 0;
+  font-size: 1.0625rem;
+  line-height: 1.7;
   color: var(--text-light);
 }
 
-@media (max-width: 900px) {
+/* Apertura e chiusura morbide dove il browser lo supporta (altrove si apre di colpo) */
+@supports (interpolate-size: allow-keywords) {
+  .faq-list {
+    interpolate-size: allow-keywords;
+  }
 
+  .faq-item::details-content {
+    height: 0;
+    overflow: clip;
+    transition: height .3s ease, content-visibility .3s allow-discrete;
+  }
+
+  .faq-item[open]::details-content {
+    height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item::details-content {
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
   .faq-layout {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .faq-intro {
+    position: static;
   }
 }
 
 @media (max-width: 600px) {
+  .faq-item summary {
+    font-size: 1.0625rem;
+  }
 
   .faq-item p {
     padding-right: 0;
+    font-size: 1rem;
   }
-
 }
 </style>

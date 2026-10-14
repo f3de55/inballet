@@ -13,187 +13,112 @@ const sponsors = [
 ];
 ---
 
-<!-- Sezione Sostenitori -->
-<section class="sostenitori-section">
-    <div class="sostenitori-container">
-        <h2 class="sostenitori-title titolo-sezione">I nostri <em>sostenitori</em></h2>
+<section class="sostenitori-section" aria-labelledby="sostenitori-titolo">
+    <div class="intro-editoriale sostenitori-intro">
+        <span class="eyebrow">Grazie a chi ci sostiene</span>
+        <h2 class="titolo-sezione" id="sostenitori-titolo">I nostri <em>sostenitori</em></h2>
+        <p class="intro-sezione">Il nostro lavoro è reso possibile anche grazie a chi crede nell'arte come strumento educativo.</p>
+        <a href="/sostenitori" class="link-cta">
+            Sostieni i nostri progetti
+            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </a>
+    </div>
 
-        <div class="sostenitori-slider-wrapper">
-            <div class="sostenitori-track">
-                <!-- Set 1 + Set 2 duplicato per scroll infinito -->
-                {[0, 1].map((set) =>
-                    sponsors.map((s) => (
-                        <div class="sponsor-slide" aria-hidden={set === 1 ? 'true' : undefined}>
-                            <Img src={`sponsors/${s.file}`} alt={s.alt} widths={[388]} sizes="(max-width: 768px) 210px, 260px" loading="lazy" decoding="async" />
-                        </div>
-                    ))
-                )}
-            </div>
-        </div>
+    <!-- Loghi in griglia separata da filetti: i loghi hanno fondo bianco, la sezione resta bianca -->
+    <div class="container">
+        <ul class="sostenitori-loghi">
+            {sponsors.map((s) => (
+                <li>
+                    <Img src={`sponsors/${s.file}`} alt={s.alt} widths={[388]} sizes="(max-width: 600px) 45vw, 280px" loading="lazy" decoding="async" />
+                </li>
+            ))}
+        </ul>
     </div>
 </section>
 
 <style>
 .sostenitori-section {
-  padding: 3rem 0;
+  padding: var(--section-y) 0;
   background: var(--white);
-  position: relative;
-  overflow: hidden;
+  border-top: 1px solid rgba(26, 26, 26, 0.08);
 }
 
-.sostenitori-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.sostenitori-intro .link-cta {
+  justify-self: start;
+  margin-top: .5rem;
 }
 
-.sostenitori-title {
-  text-align: center;
-  margin-bottom: 2.5rem;
+/* Colonne dell'intro come la griglia dei loghi: il testo parte dal terzo logo */
+@media (min-width: 901px) {
+  section > .sostenitori-intro {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0;
+  }
 }
 
-.sostenitori-slider-wrapper {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  overflow: hidden;
-  position: relative;
-  padding: 2rem 0;
+/* Il gap da 1px sul fondo grigio disegna i filetti solo tra un logo e l'altro */
+.sostenitori-loghi {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 9.5rem;
+  gap: 1px;
+  max-width: 1200px;
+  margin: 3.5rem auto 0;
+  background: rgba(26, 26, 26, 0.1);
 }
 
-.sostenitori-slider-wrapper::before,
-.sostenitori-slider-wrapper::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.sostenitori-slider-wrapper::before {
-  left: 0;
-  background: linear-gradient(90deg, var(--white) 0%, transparent 100%);
-}
-
-.sostenitori-slider-wrapper::after {
-  right: 0;
-  background: linear-gradient(270deg, var(--white) 0%, transparent 100%);
-}
-
-.sostenitori-track {
-  display: flex;
-  gap: 3rem;
-  width: fit-content;
-  animation: scroll-sponsors 40s linear infinite;
-  will-change: transform;
-}
-
-.sostenitori-track:hover {
-  animation-play-state: paused;
-}
-
-.sponsor-slide {
-  flex-shrink: 0;
-  width: 300px;
-  height: 140px;
+/* Flex (non grid): così il max-height del logo si riferisce all'altezza fissa della cella */
+.sostenitori-loghi li {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(248, 250, 252, 0.6);
-  border: 1px solid rgba(135, 206, 235, 0.12);
-  border-radius: 12px;
-  padding: 1.25rem 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.sponsor-slide:hover {
+  min-height: 0;
+  padding: .75rem 1.5rem;
   background: var(--white);
-  border-color: rgba(135, 206, 235, 0.25);
-  box-shadow: 0 4px 16px rgba(135, 206, 235, 0.1);
-  transform: translateY(-3px);
 }
 
-.sponsor-slide :global(img) {
+.sostenitori-loghi :global(img) {
+  display: block;
   max-width: 100%;
   max-height: 100%;
   width: auto;
   height: auto;
   object-fit: contain;
-  filter: grayscale(30%) opacity(0.85);
-  transition: filter 0.3s ease;
+  filter: grayscale(1);
+  opacity: .8;
+  transition: filter .3s ease, opacity .3s ease;
 }
 
-.sponsor-slide:hover :global(img) {
-  filter: grayscale(0%) opacity(1);
+.sostenitori-loghi li:hover :global(img) {
+  filter: none;
+  opacity: 1;
 }
 
-@keyframes scroll-sponsors {
-  0% {
-  transform: translateX(0);
-}
-
-  100% {
-  transform: translateX(calc(-300px * 8 - 3rem * 8));
-}
-}
-
-@media (max-width: 768px) {
-  .sostenitori-section {
-    padding: 2.5rem 0;
+@media (max-width: 900px) {
+  .sostenitori-loghi {
+    margin-top: 2.5rem;
   }
 
-  .sostenitori-title {
-    margin-bottom: 2rem;
+  .sostenitori-loghi li {
+    padding: .75rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .sostenitori-loghi {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 7rem;
   }
 
-  .sostenitori-slider-wrapper {
-    padding: 1.5rem 0;
+  .sostenitori-loghi li {
+    padding: .5rem .75rem;
   }
 
-  .sostenitori-slider-wrapper::before,
-  .sostenitori-slider-wrapper::after {
-    width: 50px;
+  /* Sul touch non c'è hover: loghi a colori, appena attenuati */
+  .sostenitori-loghi :global(img) {
+    filter: none;
+    opacity: .9;
   }
-
-  .sostenitori-track {
-    gap: 2rem;
-  }
-
-  .sponsor-slide {
-    width: 240px;
-    height: 115px;
-    padding: 1rem;
-  }
-
-  @keyframes scroll-sponsors {
-  0% {
-  transform: translateX(0);
-}
-
-  100% {
-  transform: translateX(calc(-240px * 8 - 2rem * 8));
-}
-}
-
-}
-
-@media (max-width: 480px) {
-
-  .sponsor-slide {
-    width: 200px;
-    height: 95px;
-  }
-
-  @keyframes scroll-sponsors {
-  0% {
-  transform: translateX(0);
-}
-
-  100% {
-  transform: translateX(calc(-200px * 8 - 2rem * 8));
-}
-}
-
 }
 </style>

@@ -52,70 +52,48 @@ async function fetchReviews(placeId: string): Promise<{ rating: number; total: n
 }
 
 function renderStats(rating: number, total: number) {
-  const card = document.getElementById('googleStatsCard');
-  const content = document.getElementById('statsContent');
-  if (!card || !content) return;
-  content.innerHTML = `
-            <div class="stat-item">
-                <span class="stat-value">${rating ? rating.toFixed(1).replace('.', ',') : 'N/A'}</span>
-                <div class="stat-stars">${stars(Math.round(rating))}</div>
-                <span class="stat-label">${total ? `${total} recensioni su Google` : 'Recensioni Google'}</span>
-            </div>
+  const box = document.getElementById('googleStatsCard');
+  if (!box || !rating) return;
+  box.innerHTML = `
+            <span class="sintesi-voto">${rating.toFixed(1).replace('.', ',')}</span>
+            <span class="sintesi-stelle" aria-hidden="true">${stars(Math.round(rating))}</span>
+            <span class="sintesi-totale">${total ? `${total} recensioni su Google` : 'Recensioni su Google'}</span>
         `;
-  card.style.display = 'block';
+  box.setAttribute('aria-label', `Valutazione media ${rating.toFixed(1)} su 5${total ? `, ${total} recensioni su Google` : ''}`);
+  box.hidden = false;
 }
 
-function renderError(message: string | null) {
-  document.querySelectorAll<HTMLElement>('.carousel-sidebar, .carousel-main').forEach((el) => (el.style.display = 'none'));
-  const wrapper = document.querySelector('.carousel-with-cta');
-  if (!wrapper) return;
-  wrapper.innerHTML = `
-                    <div class="no-reviews-message" style="width: 100%; display: flex; justify-content: center; padding: 3rem 0;">
-                        <div class="alert-box">
-                            <i class="fas fa-info-circle"></i>
-                            <p>Le recensioni sono temporaneamente non disponibili. ${message ? `<br><code style="background:#333;padding:4px 8px;border-radius:4px;font-size:12px;margin-top:8px;display:inline-block;">${escapeHtml(message)}</code>` : ''}<br>
-                            <small style="opacity: 0.7; margin-top: 0.5rem; display: block;">
-                            Visualizza tutte le nostre recensioni direttamente su Google Maps.
-                            </small></p>
-                        </div>
-                    </div>
-                `;
+function renderError() {
+  const track = document.getElementById('reviewsContainer');
+  if (!track) return;
+  track.innerHTML = `
+            <div class="testimonials-slide active">
+                <p class="recensioni-messaggio">Le recensioni non sono disponibili in questo momento: puoi leggerle direttamente su Google.</p>
+            </div>
+        `;
 }
 
 function createSlide(review: Review, index: number) {
-  const slide = document.createElement('div');
+  const slide = document.createElement('figure');
   slide.className = `testimonials-slide ${index === 0 ? 'active' : ''}`;
   const full = review.text;
   const isLong = full.length > 200;
   const short = isLong ? full.substring(0, 200) : full;
   slide.innerHTML = `
-            <div class="testimonial-card">
-                <div class="testimonial-header">
-                    <div class="google-rating">
-                        <div class="rating-badge">
-                            <div class="stars">${stars(review.rating)}</div>
-                            <span class="rating-text">${review.rating}.0</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-content">
-                    <p class="testimonial-text">
-                        <span class="review-text">${escapeHtml(short)}${isLong ? '...' : ''}</span>
-                        ${isLong ? '<button class="read-more-btn">Leggi tutto</button>' : ''}
-                    </p>
-                </div>
-                <div class="testimonial-footer">
-                    <div class="testimonial-author">
-                        <div class="author-avatar">${escapeHtml(initials(review.author_name))}</div>
-                        <div class="author-info">
-                            <h4>${escapeHtml(review.author_name)}</h4>
-                            <div class="author-meta">
-                                <span>Recensione su Google Maps</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="recensione-stelle" role="img" aria-label="${review.rating} stelle su 5">${stars(review.rating)}</div>
+            <blockquote class="recensione-testo">
+                <p>
+                    <span class="review-text">${escapeHtml(short)}${isLong ? '…' : ''}</span>
+                    ${isLong ? '<button type="button" class="read-more-btn">Leggi tutto</button>' : ''}
+                </p>
+            </blockquote>
+            <figcaption class="recensione-autore">
+                <span class="author-avatar" aria-hidden="true">${escapeHtml(initials(review.author_name))}</span>
+                <span>
+                    <strong>${escapeHtml(review.author_name)}</strong>
+                    <span class="recensione-fonte">Recensione su Google</span>
+                </span>
+            </figcaption>
         `;
   if (isLong) {
     const text = slide.querySelector<HTMLElement>('.review-text')!;
@@ -124,7 +102,7 @@ function createSlide(review: Review, index: number) {
       text.style.opacity = '0.7';
       setTimeout(() => {
         const expand = button.textContent === 'Leggi tutto';
-        text.textContent = expand ? full : short + '...';
+        text.textContent = expand ? full : short + '…';
         button.textContent = expand ? 'Leggi meno' : 'Leggi tutto';
         text.style.opacity = '1';
       }, 150);
@@ -140,14 +118,15 @@ function renderReviews(reviews: Review[]) {
   container.replaceChildren(...reviews.map(createSlide));
   indicators.replaceChildren(
     ...reviews.map((_, i) => {
-      const dot = document.createElement('div');
+      const dot = document.createElement('button');
+      dot.type = 'button';
       dot.className = `indicator ${i === 0 ? 'active' : ''}`;
-      dot.dataset.slide = String(i);
+      dot.setAttribute('aria-label', `Recensione ${i + 1} di ${reviews.length}`);
       return dot;
     }),
   );
-  const viewAll = document.getElementById('viewAllSection');
-  if (viewAll) viewAll.style.display = 'block';
+  const controls = document.getElementById('reviewsControls');
+  if (controls) controls.hidden = reviews.length < 2;
 }
 
 class TestimonialsCarousel {
@@ -271,13 +250,13 @@ async function initReviews() {
   try {
     await loadGoogleMaps();
     const { rating, total, reviews } = await fetchReviews(PUBLIC_GOOGLE_PLACE_ID);
-    if (!reviews.length) return renderError(null);
-    renderReviews(reviews);
     renderStats(rating, total);
+    if (!reviews.length) return renderError();
+    renderReviews(reviews);
     new TestimonialsCarousel();
   } catch (error) {
     console.error('Reviews error:', error);
-    renderError((error as Error).message);
+    renderError();
   }
 }
 
@@ -287,95 +266,77 @@ if (reviewsSection) whenNear(reviewsSection, () => void initReviews());
 // === 2. GALLERIA INFINITA CON LIGHTBOX ===
 
 const track = document.getElementById('galleryTrack');
-const lightbox = document.getElementById('lightbox');
-const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement | null;
-const lightboxCounter = document.getElementById('lightbox-counter');
+const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
+const foto = document.getElementById('lightbox-image') as HTMLImageElement | null;
+const didascalia = document.getElementById('lightbox-caption');
+const contatore = document.getElementById('lightbox-counter');
 
-if (track && lightbox && lightboxImage && lightboxCounter) {
-  const items = [...document.querySelectorAll<HTMLElement>('.gallery-item')];
-  // Le prime 10 sono le immagini uniche (le altre sono il duplicato per lo scroll)
-  const images = items.slice(0, 10).map((item) => {
-    const img = item.querySelector('img')!;
-    return { src: item.dataset.full || img.currentSrc || img.src, alt: img.alt };
-  });
-  const controls = ['lightbox-close', 'lightbox-prev', 'lightbox-next', 'lightbox-counter'].map((id) => document.getElementById(id));
+if (track && dialog && foto && didascalia && contatore) {
+  const bottoni = [...track.querySelectorAll<HTMLButtonElement>('.gallery-apri')];
+  // Le prime 10 sono le foto uniche (le altre sono il duplicato per lo scorrimento)
+  const foto10 = bottoni.slice(0, 10).map((b) => ({ src: b.dataset.full!, alt: b.dataset.alt ?? '' }));
+  const n = foto10.length;
   let index = 0;
-  let swipeStart = 0;
+  let opener: HTMLElement | null = null;
 
-  const ensureControls = () =>
-    controls.forEach((c) => c && Object.assign(c.style, { zIndex: '10001', visibility: 'visible', opacity: '1' }));
-
-  const preloadAdjacent = () => {
-    const n = images.length;
-    [(index - 1 + n) % n, (index + 1) % n].forEach((i) => (new Image().src = images[i].src));
+  const mostra = (i: number) => {
+    index = (i + n) % n;
+    const { src, alt } = foto10[index];
+    foto.classList.add('in-caricamento');
+    foto.onload = () => foto.classList.remove('in-caricamento');
+    foto.src = src;
+    foto.alt = alt;
+    didascalia.textContent = alt;
+    contatore.textContent = `${index + 1} / ${n}`;
+    [(index - 1 + n) % n, (index + 1) % n].forEach((j) => (new Image().src = foto10[j].src));
   };
 
-  const show = (i: number) => {
-    index = (i + images.length) % images.length;
-    lightboxImage.src = images[index].src;
-    lightboxImage.alt = images[index].alt;
-    lightboxCounter.textContent = `${index + 1} / ${images.length}`;
-    lightboxImage.style.opacity = '0';
-    setTimeout(() => {
-      lightboxImage.style.opacity = '1';
-      ensureControls();
-    }, 100);
-    preloadAdjacent();
+  const apri = (i: number, da: HTMLElement) => {
+    opener = da;
+    mostra(i);
+    document.documentElement.classList.add('galleria-aperta');
+    dialog.showModal();
   };
 
-  const open = (i: number) => {
-    show(i);
-    lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    ensureControls();
-  };
+  // Esc, pulsante chiudi o clic fuori dalla foto: chiusura unica, focus restituito alla miniatura
+  dialog.addEventListener('close', () => {
+    document.documentElement.classList.remove('galleria-aperta');
+    opener?.focus({ preventScroll: true });
+  });
 
-  const close = () => {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = 'auto';
-  };
+  bottoni.forEach((b) => b.addEventListener('click', () => apri(Number(b.dataset.index), bottoni[Number(b.dataset.index)])));
 
-  items.forEach((item) => item.addEventListener('click', () => open(Number(item.dataset.index))));
+  document.getElementById('lightbox-close')?.addEventListener('click', () => dialog.close());
+  document.getElementById('lightbox-prev')?.addEventListener('click', () => mostra(index - 1));
+  document.getElementById('lightbox-next')?.addEventListener('click', () => mostra(index + 1));
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+  dialog.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') mostra(index - 1);
+    else if (e.key === 'ArrowRight') mostra(index + 1);
+  });
 
-  // Pausa dello scroll automatico al tocco (mobile)
-  let resumeTimer = 0;
+  let swipeX = 0;
+  dialog.addEventListener('touchstart', (e) => (swipeX = e.changedTouches[0].clientX), { passive: true });
+  dialog.addEventListener(
+    'touchend',
+    (e) => {
+      const diff = swipeX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) mostra(diff > 0 ? index + 1 : index - 1);
+    },
+    { passive: true },
+  );
+
+  // Al tocco lo scorrimento si ferma, e riparte dopo 2 secondi
+  let ripresa = 0;
   track.addEventListener(
     'touchstart',
     () => {
-      if (window.innerWidth > 768) return;
       track.classList.add('paused');
-      clearTimeout(resumeTimer);
+      clearTimeout(ripresa);
     },
     { passive: true },
   );
-  track.addEventListener(
-    'touchend',
-    () => {
-      if (window.innerWidth > 768) return;
-      resumeTimer = window.setTimeout(() => track.classList.remove('paused'), 2000);
-    },
-    { passive: true },
-  );
-
-  document.getElementById('lightbox-close')?.addEventListener('click', close);
-  document.getElementById('lightbox-prev')?.addEventListener('click', () => show(index - 1));
-  document.getElementById('lightbox-next')?.addEventListener('click', () => show(index + 1));
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) close();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('active')) return;
-    if (e.key === 'Escape') close();
-    else if (e.key === 'ArrowLeft') show(index - 1);
-    else if (e.key === 'ArrowRight') show(index + 1);
-  });
-  lightboxImage.addEventListener('touchstart', (e) => (swipeStart = e.changedTouches[0].screenX), { passive: true });
-  lightboxImage.addEventListener(
-    'touchend',
-    (e) => {
-      const diff = swipeStart - e.changedTouches[0].screenX;
-      if (Math.abs(diff) > 50) show(diff > 0 ? index + 1 : index - 1);
-    },
-    { passive: true },
-  );
+  track.addEventListener('touchend', () => (ripresa = window.setTimeout(() => track.classList.remove('paused'), 2000)), { passive: true });
 }

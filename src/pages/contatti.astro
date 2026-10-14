@@ -88,7 +88,7 @@ const heroBg = await webp('gallery-6.jpg', 1920);
     padding: var(--section-y) 0;
     background: var(--white);
     /* l'ancora #contatti non deve finire sotto l'header fisso (e il banner) */
-    scroll-margin-top: calc(80px + var(--banner-height, 0px));
+    scroll-margin-top: calc(var(--header-h) + var(--banner-height, 0px));
   }
 
   .contatti-layout {
@@ -101,7 +101,7 @@ const heroBg = await webp('gallery-6.jpg', 1920);
   /* ---------- Foto ---------- */
   .contatti-foto {
     position: sticky;
-    top: calc(110px + var(--banner-height, 0px));
+    top: calc(var(--header-h) + 30px + var(--banner-height, 0px));
     margin: 0;
     isolation: isolate;
   }

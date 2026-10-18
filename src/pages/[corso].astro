@@ -9,6 +9,7 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { webp } from '../lib/images';
+import { schemaCorso } from '../lib/schema';
 
 export const getStaticPaths = (async () => {
   const corsi = await getCollection('corsi');
@@ -22,6 +23,8 @@ interface Props {
 const { data } = Astro.props;
 const heroBg = await webp(data.heroImage, 2560);
 const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
+// Stesso URL del canonical (senza .html)
+const schema = schemaCorso(data, new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1'), Astro.site).href);
 
 /** Titolo con l'ultima parola in corsivo azzurro (stile dei titoli di sezione). */
 const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</em>');
@@ -33,7 +36,10 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
     ogTitle={data.ogTitle}
     ogDescription={data.ogDescription}
 >
-    <link slot="head" rel="preload" as="image" href={heroBg} fetchpriority="high">
+    <Fragment slot="head">
+        <link rel="preload" as="image" href={heroBg} fetchpriority="high">
+        <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    </Fragment>
 
     <!-- Hero Corso -->
     <section class="chisiamo-hero">

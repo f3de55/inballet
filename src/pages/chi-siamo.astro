@@ -26,8 +26,8 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 ---
 
 <Base
-    title="Chi Siamo - InBallet"
-    description={`Scopri la storia di InBallet, la scuola di danza fondata da Ilenia Nobile. Dal ${FONDAZIONE} formiamo ballerini a Lainate e Rho con passione e professionalità.`}
+    title="Chi siamo: scuola di danza multidisciplinare | InBallet"
+    description={`I.N. Ballet è la scuola di danza multidisciplinare di Lainate e Rho fondata nel ${FONDAZIONE} da Ilenia Nobile: corsi dai 3 anni in su, inclusione e formazione CSEN-CONI.`}
     ogTitle="Chi Siamo - InBallet"
     ogDescription={`La storia, la visione e il team di InBallet. Dal ${FONDAZIONE} formiamo ballerini con passione.`}
 >
@@ -60,10 +60,25 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
                             <p>La sua filosofia: il movimento come strumento di crescita personale completa.</p>
                         </div>
                         <blockquote class="fondatrice-citazione">
-                            <p>La danza è un linguaggio universale che connette corpo, mente e anima.</p>
+                            <p>La Danza è capace di creare racconti in tutti i corpi ed in tutte le menti.</p>
                             <cite>Ilenia Nobile</cite>
                         </blockquote>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- La scuola: intestazione editoriale con la visione -->
+        <section class="scuola-section" aria-labelledby="scuola-titolo">
+            <div class="intro-editoriale">
+                <span class="eyebrow">La scuola</span>
+                <h2 class="titolo-sezione" id="scuola-titolo">Un luogo <em>di vita</em></h2>
+                <p>I.N. Ballet è una scuola di danza multidisciplinare: un luogo di vita dedicato alla conoscenza e all'esplorazione dei diversi stili di danza, nelle loro sfumature tecniche e artistiche.</p>
+                <p>È un ambiente che si lascia modificare ogni giorno, attraverso un agire e un pensiero quotidiano legati a ciò che emerge da bambini, ragazzi e adulti che lo vivono. Uno spazio di continua ricerca corporea, dove la danza, con i suoi infiniti linguaggi, incontra emozioni sottili e intime e forme espressive diverse: uno spazio di incontro fatto di stupore, relazioni e curiosità, in continua comunicazione con le famiglie.</p>
+                <p>La scuola accoglie bambini dai 3 anni e allievi di tutte le età, con gruppi di diversi livelli fino ai corsi avanzati e per adulti. Propone a professionisti dell'ambito educativo e terapeutico e a pedagogisti <a href="/formazioni-personalizzate">corsi di formazione</a> che intrecciano linguaggi espressivi, corporeità, motricità ed esplorazione del sé, ed è un punto di riferimento sul territorio per la <a href="/formazione-insegnanti">formazione nazionale dei maestri di danza</a>.</p>
+                <p>L'inclusione è centrale per tutte le fasce d'età: dal 2013 il <a href="/progetto-noiconvoi">progetto NoiConVoi</a> accoglie ragazzi con disabilità in esperienze di danza con supporto psicomotorio, insieme a un team di volontari e alla coordinatrice del progetto.</p>
+                <div class="scuola-highlight">
+                    <p>I progetti evolvono ogni giorno e fanno della scuola una comunità educante ed educativa, che riconosce nell'arte della danza un potente strumento di espressione, comunicazione e conoscenza.</p>
                 </div>
             </div>
         </section>
@@ -320,9 +335,14 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
   margin-bottom: 0;
 }
 
-.storia-section {
+.scuola-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
+}
+
+.storia-section {
+  padding: var(--section-y) 0;
+  background: var(--white);
   position: relative;
   overflow: hidden;
 }

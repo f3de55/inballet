@@ -14,7 +14,7 @@ const bg: Record<string, string> = {
 const paypal = 'https://www.paypal.com/cgi-bin/webscr?business=inballetasd%40gmail.com&cmd=_donations&item_name=Custom%20Item&item_number=donazione&currency_code=EUR';
 
 const destinazioni: { nome: string; href?: string }[] = [
-  { nome: 'Lezioni gratuite per ragazzi con difficoltà economiche' },
+  { nome: 'Accoglienza di giovani e adulti con disabilità e delle loro famiglie' },
   { nome: 'Progetto NoiConVoi, danza inclusiva dal 2013', href: '/progetto-noiconvoi' },
   { nome: 'Classi integrate per bambini con bisogni speciali', href: '/classi-integrate' },
   { nome: 'Spettacoli inclusivi aperti alla comunità' },
@@ -22,10 +22,10 @@ const destinazioni: { nome: string; href?: string }[] = [
 ---
 
 <Base
-    title="Sostenitori Progetti Sociali - InBallet"
-    description="Sostieni i progetti sociali InBallet - Dona ora per supportare l'inclusione attraverso la danza. Dal 2013 accogliamo giovani e adulti con disabilità."
-    ogTitle="Sostieni i Progetti Sociali - InBallet"
-    ogDescription="La tua donazione supporta l'inclusione attraverso la danza. Aiutaci a continuare il nostro lavoro."
+    title="Sostieni i progetti sociali di danza inclusiva | InBallet"
+    description="Dal 2013 InBallet accoglie giovani e adulti con disabilità in provincia di Milano. Sostieni i progetti sociali con una donazione o con il volontariato d'impresa."
+    ogTitle="Sostieni i progetti sociali | InBallet"
+    ogDescription="Donazioni e volontariato d'impresa per la danza inclusiva: dal 2013 in provincia di Milano."
 >
 
         <!-- Hero Section -->
@@ -35,7 +35,7 @@ const destinazioni: { nome: string; href?: string }[] = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Sostieni i Nostri Progetti</h1>
-                <p class="chisiamo-hero-tagline">Sostieni la danza inclusiva per giovani e adulti.</p>
+                <p class="chisiamo-hero-tagline">Donazioni e volontariato d'impresa per la danza inclusiva, dal 2013.</p>
             </div>
         </section>
 
@@ -46,12 +46,26 @@ const destinazioni: { nome: string; href?: string }[] = [
                     <span class="sost-intro-label eyebrow">La nostra missione</span>
                     <h2 class="sost-intro-title titolo-sezione">Inclusione <em>attraverso la danza</em></h2>
                     <div class="sost-intro-testo">
-                        <p>Dal 2013 accogliamo giovani e adulti con disabilità nella provincia di Milano, offrendo percorsi di danza accessibili e inclusivi. Il nostro lavoro è reso possibile grazie al supporto di chi crede nell'importanza dell'arte come strumento educativo.</p>
-                        <p>Oltre 10 anni di attività, più di 50 famiglie coinvolte e un team completamente volontario che crede nel potere dell'arte come strumento di inclusione sociale.</p>
+                        <p>Dal 2013 l'Associazione Sportiva Dilettantistica I.N. Ballet si occupa, oltre che dell'arte della danza, della sua diffusione come disciplina educativa e di sostegno a numerose difficoltà.</p>
+                        <p>Ogni anno costruiamo progetti di grande impegno per offrire al territorio della provincia di Milano spazio e tempo per accogliere giovani e adulti con disabilità, come il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>. L'accoglienza parte dalle famiglie, con un momento di conoscenza accurata.</p>
                     </div>
                 </div>
                 <div class="sost-intro-visual foto-cornice">
                     <Img src="gallery-6.jpg" alt="Allievi in scena durante uno spettacolo" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
+                </div>
+            </div>
+        </section>
+
+        <!-- Volontariato d'impresa: intestazione editoriale -->
+        <section class="sost-impresa-section" aria-labelledby="impresa-titolo">
+            <div class="intro-editoriale">
+                <span class="eyebrow">Aziende ed enti, dal 2024</span>
+                <h2 class="titolo-sezione" id="impresa-titolo">Volontariato <em>d'impresa</em></h2>
+                <p>Dal 2024 abbiamo ampliato i nostri progetti cercando società, aziende, imprese, ditte ed enti con cui collaborare in modo concreto: chi lo desidera può vivere un'esperienza di volontariato, inserendosi nel contesto educativo e di sostegno ai ragazzi.</p>
+                <p>Crediamo servano esperienze di vita, anche nel contesto del lavoro, capaci di far nascere riflessioni utili e di spingere ognuno di noi verso azioni di umanità per il prossimo, anche dentro le grandi aziende.</p>
+                <p>Il nostro team interno di volontari e i volontari che arrivano dalle realtà lavorative, guidati da chi dirige il progetto educativo, continuano a creare esperienze ricche e indimenticabili, da cui nascono sempre nuovi progetti.</p>
+                <div class="sost-impresa-highlight">
+                    <p>Siamo sempre alla ricerca di realtà interessate al volontariato e di sostenitori per i nostri progetti sociali: scrivi alla Direzione progettuale ed educativa della scuola.</p>
                 </div>
             </div>
         </section>
@@ -114,7 +128,7 @@ const destinazioni: { nome: string; href?: string }[] = [
             <div class="sost-cta-overlay"></div>
             <div class="sost-cta-wrapper">
                 <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
-                <p class="intro-sezione">Contattaci per informazioni sui progetti o per proporre una collaborazione aziendale.</p>
+                <p class="intro-sezione">Contatta la Direzione per informazioni sui progetti o per proporre un'esperienza di volontariato con la tua azienda.</p>
                 <div class="sost-cta-buttons">
                     <a href={`mailto:${scuola.email}?subject=Informazioni%20Progetti%20Sociali`} class="btn-primary">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici
@@ -172,6 +186,12 @@ const destinazioni: { nome: string; href?: string }[] = [
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
+}
+
+/* ---------- Volontariato d'impresa ---------- */
+.sost-impresa-section {
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
 }
 
 /* ---------- Dona ---------- */

@@ -10,27 +10,27 @@ const bg: Record<string, string> = {
   'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
 };
 
-const valori = [
-  { nome: 'Accoglienza', testo: 'Ogni bambino viene accolto per quello che è, con le sue unicità e il suo potenziale da esprimere attraverso il movimento.' },
-  { nome: 'Integrazione', testo: 'Lavoriamo per creare gruppi classe dove le differenze diventano ricchezza e occasione di crescita per tutti.' },
-  { nome: 'Professionalità', testo: 'Insegnanti formati e competenti, capaci di adattare le metodologie alle esigenze specifiche di ogni allievo.' },
+const passi = [
+  { nome: 'Consulto con la Direzione', testo: 'Il primo passo è un contatto con la Direzione della scuola, per raccontare il bambino o il ragazzo e le sue esigenze.' },
+  { nome: 'Colloquio conoscitivo', testo: 'La Direzione fissa un colloquio per conoscere la famiglia e capire insieme quale percorso può essere il più adatto.' },
+  { nome: 'Accoglienza nel gruppo', testo: "Si progetta l'eventuale accoglienza nel gruppo classe più adeguato, tra i corsi predisposti ad accogliere casi speciali." },
 ];
 
 const classi = [
+  { nome: 'Avviamento alla Danza', href: '/avviamento-danza' },
+  { nome: 'Educazione alla Danza', href: '/educazione-danza' },
   { nome: 'Danza Classica', href: '/danza-classica' },
-  { nome: 'Danza Moderna', href: '/modern' },
+  { nome: 'Modern', href: '/modern' },
   { nome: 'Danza Contemporanea', href: '/danza-contemporanea' },
-  { nome: 'Movimento Creativo', href: '/movimento-creativo' },
-  { nome: 'Hip Hop', href: '/hip-hop' },
-  { nome: 'Propedeutica alla Danza', href: '/avviamento-danza' },
+  { nome: 'Hip-Hop', href: '/hip-hop' },
 ];
 ---
 
 <Base
-    title="Classi Multidisciplinari Integrate - InBallet"
-    description="Classi Multidisciplinari Integrate InBallet - Percorsi di danza inclusivi per accogliere ogni bambino con professionalità e attenzione personalizzata."
-    ogTitle="Classi Multidisciplinari Integrate - InBallet"
-    ogDescription="Percorsi di danza inclusivi dove ogni bambino trova il suo spazio per crescere ed esprimersi."
+    title="Classi integrate: danza inclusiva a Lainate e Rho | InBallet"
+    description="Classi di danza integrate a Lainate e Rho (MI) per bambini e ragazzi con bisogni speciali: colloquio con la famiglia e inserimento nel gruppo classe più adatto."
+    ogTitle="Classi Multidisciplinari Integrate | InBallet"
+    ogDescription="Quasi tutti i corsi InBallet possono accogliere bambini e ragazzi con bisogni speciali, dopo un colloquio con la famiglia."
 >
 
         <!-- Hero Section -->
@@ -40,7 +40,7 @@ const classi = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Classi Multidisciplinari Integrate</h1>
-                <p class="chisiamo-hero-tagline">Percorsi dove ogni bambino trova il suo spazio per crescere, esprimersi e danzare.</p>
+                <p class="chisiamo-hero-tagline">Quasi tutti i nostri corsi possono accogliere bambini e ragazzi con bisogni speciali.</p>
             </div>
         </section>
 
@@ -51,11 +51,11 @@ const classi = [
                     <span class="integrate-intro-label eyebrow">Il nostro approccio</span>
                     <h2 class="integrate-intro-title titolo-sezione">Un ambiente dove tutti <em>sono benvenuti</em></h2>
                     <div class="integrate-intro-testo">
-                        <p>Quasi tutte le classi che proponiamo hanno la predisposizione tecnica e professionale per poter accogliere casi speciali, entro i livelli di competenza del nostro istituto.</p>
-                        <p>Crediamo che la danza sia un linguaggio universale capace di abbattere barriere e creare connessioni. Per questo abbiamo sviluppato un approccio inclusivo che valorizza le unicità di ogni allievo.</p>
+                        <p>Le Classi Multidisciplinari Integrate sono il modo in cui InBallet accoglie bambini e ragazzi con bisogni speciali: quasi tutte le classi che proponiamo hanno la predisposizione tecnica e professionale per farlo, entro il nostro livello di preparazione.</p>
+                        <p>Il percorso parte sempre da un consulto con la Direzione, che fissa un colloquio conoscitivo per incontrare la famiglia e progettare insieme l'eventuale accoglienza nel gruppo classe più adeguato.</p>
                     </div>
                     <div class="integrate-intro-highlight">
-                        <p>Il nostro team di insegnanti è formato per accogliere e supportare bambini con bisogni speciali, in un ambiente sicuro dove ognuno può esprimersi liberamente attraverso il movimento.</p>
+                        <p>La danza è capace di creare racconti in tutti i corpi e in tutte le menti: per questo l'inclusione è centrale in ogni fascia d'età.</p>
                     </div>
                 </div>
                 <div class="integrate-intro-visual foto-cornice">
@@ -67,19 +67,20 @@ const classi = [
         <!-- Valori: intestazione editoriale e tre voci -->
         <section class="integrate-valori-section" aria-labelledby="valori-titolo">
             <div class="intro-editoriale">
-                <span class="eyebrow">I nostri valori</span>
-                <h2 class="titolo-sezione" id="valori-titolo">I principi <em>che ci guidano</em></h2>
-                <p>Tre principi che orientano il lavoro in sala, dalla prima lezione all'inserimento nel gruppo classe.</p>
+                <span class="eyebrow">Come funziona</span>
+                <h2 class="titolo-sezione" id="valori-titolo">Dal primo contatto <em>alla classe</em></h2>
+                <p>Tre passaggi per costruire un'accoglienza su misura, insieme alla famiglia.</p>
             </div>
             <div class="container">
-                <ul class="valori-lista">
-                    {valori.map((v) => (
+                <ol class="valori-lista">
+                    {passi.map((v, i) => (
                         <li class="voce">
+                            <span class="voce-anno" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                             <h3 class="voce-titolo">{v.nome}</h3>
                             <p class="voce-testo">{v.testo}</p>
                         </li>
                     ))}
-                </ul>
+                </ol>
             </div>
         </section>
 
@@ -89,7 +90,7 @@ const classi = [
                 <div class="integrate-classi-header">
                     <span class="eyebrow">Le nostre discipline</span>
                     <h2 class="titolo-sezione" id="classi-titolo">Classi disponibili <em>per l'inserimento</em></h2>
-                    <p class="intro-sezione">Molte delle nostre discipline sono predisposte per accogliere allievi con bisogni speciali. Apri un corso per conoscerne livelli e orari.</p>
+                    <p class="intro-sezione">Alcuni dei corsi predisposti per l'inserimento: apri un corso per conoscerne età e livelli. Per i ragazzi con disabilità c'è anche il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, il lunedì sera.</p>
                 </div>
                 <ul class="classi-lista">
                     {classi.map((c) => (
@@ -110,7 +111,7 @@ const classi = [
             <div class="integrate-cta-overlay"></div>
             <div class="integrate-cta-wrapper">
                 <h2 class="titolo-sezione">Parliamo <em>del tuo bambino</em></h2>
-                <p class="intro-sezione">Contattaci per un colloquio conoscitivo: insieme troveremo il percorso più adatto.</p>
+                <p class="intro-sezione">Contatta la Direzione per fissare un colloquio conoscitivo: insieme troveremo il gruppo classe più adatto.</p>
                 <div class="integrate-cta-buttons">
                     <a href={`mailto:${scuola.email}?subject=Classi%20Integrate%20-%20Richiesta%20Informazioni`} class="btn-primary">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Richiedi informazioni

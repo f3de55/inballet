@@ -176,7 +176,15 @@ export const faq = [
   },
   {
     domanda: 'Quali corsi di danza proponete?',
-    risposta: 'Danza classica, modern, contemporanea, contact improvisation, hip-hop, heels, breaking, danza acrobatica, yoga e pilates, oltre a lezioni individuali e percorsi specifici per età.',
+    risposta: 'Avviamento alla Danza (dai 3 anni) ed Educazione alla Danza (4-5 anni) per i più piccoli, poi danza classica, modern (dai 6 anni), contemporanea (dai 10 anni), contact improvisation, movimento creativo, hip-hop e breaking (dai 6 anni), heels, danza acrobatica, contaminato (dai 16 anni), hatha yoga e pilates, oltre a lezioni individuali e percorsi specifici per età.',
+  },
+  {
+    domanda: 'Ci sono corsi di danza per adulti principianti?',
+    risposta: 'Sì. Danza Contemporanea Adulti è dedicata a chi ha dai 40 anni in su, senza limiti di età, anche per chi ricomincia dopo anni di stop o parte da zero. Movimento Creativo è aperto agli adulti dai 18 anni, danzatori e non. Per il benessere ci sono Hatha Yoga e Pilates.',
+  },
+  {
+    domanda: 'InBallet accoglie bambini e ragazzi con disabilità?',
+    risposta: "Sì. Quasi tutte le classi sono predisposte per accogliere casi speciali: dopo un consulto con la Direzione si fissa un colloquio con la famiglia per scegliere il gruppo classe più adatto. Dal 2013, inoltre, il progetto NoiConVoi accoglie il lunedì sera ragazzi con disabilità in esperienze di danza con supporto psicomotorio, insieme a un team di volontari.",
   },
   {
     domanda: 'InBallet forma anche insegnanti di danza?',

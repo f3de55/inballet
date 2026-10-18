@@ -13,16 +13,16 @@ const bg: Record<string, string> = {
 const inBreve = [
   { valore: '2', unita: 'anni', testo: 'Percorso biennale' },
   { valore: 'Modern', unita: '', testo: 'Stile di specializzazione' },
-  { valore: '6', unita: 'master', testo: 'Per proseguire dopo il diploma' },
+  { valore: '6', unita: 'master', testo: 'Possibili dopo il biennio' },
 ];
 
 const aree = [
   'Tecnica e didattica della danza Modern',
+  'Moduli multidisciplinari nella danza',
   'Pedagogia applicata alla danza',
-  'Psicologia dello sviluppo',
-  "Metodologie per ogni fascia d'età",
-  'Approccio alla disabilità',
-  'Tirocinio pratico',
+  "Sviluppo dalla prima infanzia all'età adulta",
+  'Danza e disabilità, anche nei casi più complessi',
+  'Sei master di approfondimento dopo il biennio',
 ];
 
 const enti = [
@@ -32,10 +32,10 @@ const enti = [
 ---
 
 <Base
-    title="Corso Formazione Insegnanti di Danza - InBallet"
-    description="Corso di Formazione per Insegnanti di Danza - Percorso biennale riconosciuto CSEN e CONI. Specializzazione Modern con moduli pedagogici."
-    ogTitle="Corso Formazione Insegnanti di Danza - InBallet"
-    ogDescription="Percorso biennale per diventare insegnante di danza. Diploma riconosciuto CSEN e CONI a valenza nazionale."
+    title="Corso per Insegnanti di Danza Modern CSEN e CONI | InBallet"
+    description="Corso biennale per Insegnanti di Danza Modern di InBallet, ente formativo dal 2023: titolo riconosciuto CSEN e CONI a valenza nazionale e sei master successivi."
+    ogTitle="Corso di formazione per Insegnanti di Danza | InBallet"
+    ogDescription="Percorso biennale con specializzazione Modern: titolo riconosciuto CSEN e CONI a valenza nazionale."
 >
 
         <!-- Hero Section -->
@@ -45,7 +45,7 @@ const enti = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Corso Insegnanti di Danza</h1>
-                <p class="chisiamo-hero-tagline">Percorso biennale con specializzazione Modern.</p>
+                <p class="chisiamo-hero-tagline">Percorso biennale con specializzazione Modern, riconosciuto CSEN e CONI.</p>
             </div>
         </section>
 
@@ -56,8 +56,9 @@ const enti = [
                     <span class="form-intro-label eyebrow">Il percorso</span>
                     <h2 class="form-intro-title titolo-sezione">Diventa insegnante <em>di danza</em></h2>
                     <div class="form-intro-testo">
-                        <p>Un percorso biennale con moduli formativi multidisciplinari nella danza, con particolare attenzione alle interconnessioni pedagogiche e allo sviluppo evolutivo.</p>
-                        <p>Il programma copre tutte le fasce d'età: dal bambino all'adulto, fino ai casi più complessi di disabilità. La specializzazione è nello stile Modern, con la possibilità di proseguire con sei master successivi.</p>
+                        <p>Nel 2023 l'Associazione Sportiva Dilettantistica I.N. Ballet è stata riconosciuta come ente formativo per il percorso di studio con titolo di Insegnante di Danza, con formazione specifica nello stile <a href="/modern">Modern</a>.</p>
+                        <p>È un percorso biennale, a cui possono seguire sei master. La formazione è organizzata in moduli multidisciplinari nella danza, ricchi di intersezioni con la pedagogia e con tutto il mondo dello sviluppo: dalla primissima infanzia all'adulto, fino ai casi più complessi di disabilità.</p>
+                        <p>Il titolo è riconosciuto dallo CSEN e dal CONI con valenza nazionale e rende la scuola un punto di riferimento sul territorio per la formazione dei maestri di danza.</p>
                     </div>
                 </div>
                 <div class="form-intro-visual foto-cornice">
@@ -82,7 +83,7 @@ const enti = [
                 <div class="form-aree-header">
                     <span class="eyebrow">Il programma</span>
                     <h2 class="titolo-sezione" id="aree-titolo">Aree <em>di studio</em></h2>
-                    <p class="intro-sezione">Sei aree tra tecnica, pedagogia e pratica in sala, per insegnare a ogni età.</p>
+                    <p class="intro-sezione">Moduli multidisciplinari tra danza, pedagogia e sviluppo, per insegnare a ogni età e a ogni corpo.</p>
                 </div>
                 <ol class="aree-lista">
                     {aree.map((a, i) => (
@@ -101,7 +102,7 @@ const enti = [
                 <div class="form-cert-header">
                     <span class="eyebrow">Riconoscimenti</span>
                     <h2 class="titolo-sezione" id="cert-titolo">Diploma a <em>valenza nazionale</em></h2>
-                    <p class="intro-sezione">Il titolo rilasciato è riconosciuto dallo CSEN e dal CONI e vale su tutto il territorio nazionale per l'insegnamento della danza.</p>
+                    <p class="intro-sezione">Il titolo di Insegnante di Danza è riconosciuto dallo CSEN e dal CONI, con valenza nazionale. InBallet è ente formativo riconosciuto dal 2023.</p>
                 </div>
                 <ul class="enti-lista">
                     {enti.map((e) => (

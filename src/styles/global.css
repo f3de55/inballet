@@ -171,6 +171,24 @@ body {
   overflow-x: hidden;
 }
 
+/* Link dentro il testo corrente (collegamenti tra corsi e pagine): link senza
+   classe propria, al massimo con quella di scoping di Astro (astro-xxxx) */
+main p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
+  color: var(--primary-blue-dark);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+  transition: color var(--transition-base);
+}
+
+main p a:is(:not([class]), [class^="astro-"]:not([class*=" "])):hover {
+  color: var(--dark-navy);
+}
+
+main .sezione-scura p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
+  color: var(--white);
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;

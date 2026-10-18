@@ -11,24 +11,24 @@ const bg: Record<string, string> = {
 };
 
 const pilastri = [
-  { nome: 'Confusione', testo: 'Consultare uno specialista rappresenta un supporto durante momenti particolarmente difficili, quando le emozioni e i pensieri sembrano troppo complessi da gestire da soli.' },
-  { nome: 'Pensieri', testo: 'Il trattamento psichico agisce sulla psiche umana principalmente attraverso la parola e il dialogo come strumenti terapeutici fondamentali per elaborare pensieri ed emozioni.' },
-  { nome: 'Relazioni', testo: 'Lo sportello accoglie individui singoli, coppie e si dedica principalmente alla tutela del rapporto genitore-figlio, favorendo comunicazione e comprensione reciproca.' },
+  { nome: 'Confusione', testo: 'Parlare con uno specialista diventa un sostegno, soprattutto nei momenti più complessi, quando emozioni e pensieri sono difficili da gestire da soli.' },
+  { nome: 'Pensieri', testo: "Non solo mente: «psiche» è una parola greca che significa anima. Il trattamento psichico, scriveva Sigmund Freud, parte dall'anima e agisce sulla psiche anzitutto attraverso la parola." },
+  { nome: 'Relazioni', testo: 'Lo sportello di ascolto è rivolto a singole persone e a coppie, ma soprattutto alla tutela del rapporto genitore-figlio.' },
 ];
 
 const servizi = [
-  'Colloqui individuali per genitori',
-  'Consulenze di coppia',
-  'Supporto al rapporto genitore-figlio',
+  'Colloqui individuali',
+  'Incontri per coppie',
+  'Tutela del rapporto genitore-figlio',
   'Riservatezza garantita',
 ];
 ---
 
 <Base
-    title="Sportello Psicologico - InBallet"
-    description="Sportello Psicologico InBallet - Sostegno alle famiglie, ascolto e supporto psicologico per genitori, bambini e adolescenti a Lainate."
-    ogTitle="Sportello Psicologico - InBallet"
-    ogDescription="Sostegno psicologico e ascolto per famiglie. Uno spazio sicuro per affrontare difficoltà e momenti delicati."
+    title="Sportello psicologico per famiglie a Lainate | InBallet"
+    description="Sportello psicologico di InBallet a Lainate (MI): ascolto e sostegno per genitori, bambini e coppie, con incontri con la psicoterapeuta su richiesta alla Direzione."
+    ogTitle="Sportello Psicologico | InBallet"
+    ogDescription="Ascolto e sostegno per le famiglie: incontri con la psicoterapeuta, su richiesta alla Direzione."
 >
 
         <!-- Hero Section -->
@@ -38,7 +38,7 @@ const servizi = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Sportello Psicologico</h1>
-                <p class="chisiamo-hero-tagline">Uno spazio sicuro di ascolto e sostegno per famiglie, genitori e bambini.</p>
+                <p class="chisiamo-hero-tagline">Ascolto e sostegno per famiglie, genitori e bambini, con una psicoterapeuta.</p>
             </div>
         </section>
 
@@ -49,11 +49,11 @@ const servizi = [
                     <span class="sport-intro-label eyebrow">Il nostro servizio</span>
                     <h2 class="sport-intro-title titolo-sezione">Sostegno alle famiglie <em>attraverso l'ascolto</em></h2>
                     <div class="sport-intro-testo">
-                        <p>Il servizio si concentra sull'ascolto come abilità sociale fondamentale per instaurare fiducia e comprensione. Offriamo sostegno alle famiglie riconoscendo difficoltà e necessità che spesso rimangono inespresse da bambini e genitori.</p>
-                        <p>In un ambiente accogliente e privo di giudizio, creiamo uno spazio dove la parola e il dialogo diventano strumenti fondamentali per affrontare i momenti più delicati.</p>
+                        <p>Lo Sportello Psicologico di InBallet è uno spazio di ascolto per le famiglie. L'ascolto è un'abilità sociale che permette di costruire un rapporto di fiducia e comprensione tra le due parti.</p>
+                        <p>Il sostegno alle famiglie è un aiuto importante: valorizza la capacità di cogliere le fatiche e i bisogni che spesso bambini e genitori non riescono a esprimere apertamente. Su richiesta alla Direzione è possibile fissare incontri con la dottoressa psicoterapeuta.</p>
                     </div>
                     <div class="sport-intro-highlight">
-                        <p>Un supporto concreto durante i momenti più difficili del percorso educativo e di crescita.</p>
+                        <p>«Le parole dei nostri discorsi di tutti i giorni sono solo magia attenuata.» (Sigmund Freud)</p>
                     </div>
                 </div>
                 <div class="sport-intro-visual foto-cornice">
@@ -67,7 +67,7 @@ const servizi = [
             <div class="intro-editoriale">
                 <span class="eyebrow">I tre pilastri</span>
                 <h2 class="titolo-sezione" id="pilastri-titolo">Come possiamo <em>aiutarti</em></h2>
-                <p>Tre aree di intervento per sostenere il benessere psicologico di individui, coppie e famiglie.</p>
+                <p>Perché rivolgersi a uno specialista, come lavora la parola e a chi si rivolge lo sportello.</p>
             </div>
             <div class="container">
                 <ul class="pilastri-lista">
@@ -87,7 +87,7 @@ const servizi = [
                 <div class="sport-accesso-header">
                     <span class="eyebrow">Come accedere</span>
                     <h2 class="titolo-sezione" id="accesso-titolo">Incontri con la dottoressa <em>psicoterapeuta</em></h2>
-                    <p class="intro-sezione">Lo sportello è attivo su appuntamento. Contatta la Direzione per fissare un primo colloquio conoscitivo.</p>
+                    <p class="intro-sezione">Lo sportello è attivo su richiesta: contatta la Direzione per fissare un primo colloquio con la dottoressa psicoterapeuta.</p>
                 </div>
                 <ul class="servizi-lista">
                     {servizi.map((s) => (

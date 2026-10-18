@@ -24,6 +24,28 @@ const orariSchema = orari.map((o) => ({
   closes: o.chiude,
 }));
 
+/** JSON-LD di una pagina corso: il corso, tenuto in sede a Lainate e Rho dalla scuola. */
+export function schemaCorso(corso: { titolo: string; description: string; eta: string; frequenza: string; impara: string[] }, url: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    '@id': `${url}#corso`,
+    name: corso.titolo,
+    description: corso.description,
+    url,
+    inLanguage: 'it-IT',
+    provider: { '@type': 'DanceSchool', '@id': ID, name: scuola.nome, url: `${site}/` },
+    audience: { '@type': 'PeopleAudience', audienceType: corso.eta },
+    teaches: corso.impara,
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'Onsite',
+      courseSchedule: { '@type': 'Schedule', description: corso.frequenza },
+      location: sedi.map((s) => ({ '@type': 'Place', name: `${scuola.nome} - ${s.citta}`, address: indirizzo(s) })),
+    },
+  };
+}
+
 /** Grafo JSON-LD della homepage. */
 export function schemaHome(immagine: string) {
   const [principale, ...altre] = sedi;

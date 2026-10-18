@@ -11,30 +11,30 @@ const bg: Record<string, string> = {
 };
 
 const fasi = [
-  { nome: 'Pratica psicomotoria', testo: 'La prima parte della lezione integra elementi di Pratica Psicomotoria Aucouturier (PPA), favorendo lo sviluppo armonico attraverso il gioco e il movimento spontaneo.' },
-  { nome: 'Didattica artistica', testo: 'La seconda parte propone una didattica artistica adattata alle necessità specifiche dei partecipanti, seguendo la programmazione annuale della scuola.' },
+  { nome: 'Pratica psicomotoria', testo: 'La prima parte di ogni lezione è composta da elementi di Pratica Psicomotoria Aucouturier (PPA): il supporto psicomotorio è la base primaria del progetto.' },
+  { nome: 'Didattica artistica', testo: 'Segue una parte più artistica, con una didattica costruita sui bisogni variabili dei ragazzi e sulla progettualità annuale della scuola di danza.' },
 ];
 
 const destinatari = [
-  'Ragazzi con difficoltà e bisogni speciali',
-  'Normodotati in classi integrate',
-  'Volontari, non necessariamente danzatori',
-  "Famiglie che credono nell'inclusione",
+  'Ragazzi con disabilità',
+  'Le loro famiglie, accolte fin dal primo incontro',
+  'Volontari, anche non danzatori',
+  'Aziende e realtà che vogliono fare volontariato',
 ];
 
 const info = [
-  { nome: 'Quando', testo: 'Le lezioni si tengono ogni lunedì sera presso la nostra sede di Lainate.' },
-  { nome: 'Spettacolo di fine anno', testo: 'Ogni anno i partecipanti salgono sul palco dello spettacolo insieme ai compagni delle classi integrate.' },
-  { nome: 'Volontariato', testo: 'Il progetto si basa sul volontariato: non serve essere danzatori per partecipare e contribuire.' },
-  { nome: 'Ambiente inclusivo', testo: 'Un gruppo dove le differenze diventano ricchezza e occasione di crescita per tutti.' },
+  { nome: 'Quando', testo: 'Il progetto si svolge il lunedì sera, presso la nostra sede di Lainate.' },
+  { nome: 'Spettacolo di fine anno', testo: 'Ogni anno i ragazzi salgono sul palco dello spettacolo di fine anno insieme a tutti gli altri allievi e ai compagni delle classi integrate.' },
+  { nome: 'Volontariato', testo: 'Il progetto accoglie volontari, non necessariamente danzatori, in un team guidato dalla responsabile e coordinatrice del progetto.' },
+  { nome: 'Dal 2013', testo: 'Il progetto evolve ogni anno e fa della scuola una comunità educante, che riconosce nella danza uno strumento di espressione, comunicazione e conoscenza.' },
 ];
 ---
 
 <Base
-    title="Progetto NoiConVoi - InBallet"
-    description="Progetto NoiConVoi InBallet - Iniziativa di volontariato per l'inclusione attraverso la danza. La danza è per tutti, dal 2013."
-    ogTitle="Progetto NoiConVoi - InBallet"
-    ogDescription="Iniziativa di volontariato dove la danza diventa strumento di inclusione. Perché la danza è per tutti."
+    title="Progetto NoiConVoi: danza e disabilità dal 2013 | InBallet"
+    description="NoiConVoi è il progetto di volontariato di InBallet che dal 2013 accoglie ragazzi con disabilità in esperienze di danza con supporto psicomotorio, a Lainate (MI)."
+    ogTitle="Progetto NoiConVoi, la danza è per tutti | InBallet"
+    ogDescription="Dal 2013 ragazzi con disabilità e volontari insieme in sala: psicomotricità, danza e spettacolo di fine anno."
 >
 
         <!-- Hero Section -->
@@ -44,7 +44,7 @@ const info = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Progetto NoiConVoi</h1>
-                <p class="chisiamo-hero-tagline">La danza è per tutti. Inclusione attraverso il movimento.</p>
+                <p class="chisiamo-hero-tagline">Dal 2013 la danza è per tutti: ragazzi con disabilità, volontari e famiglie insieme in sala.</p>
             </div>
         </section>
 
@@ -55,11 +55,11 @@ const info = [
                     <span class="noi-intro-label eyebrow">La nostra missione</span>
                     <h2 class="noi-intro-title titolo-sezione">La danza come <em>strumento di inclusione</em></h2>
                     <div class="noi-intro-testo">
-                        <p>Il progetto NoiConVoi è un'iniziativa di volontariato fondata nel 2013, nata dalla convinzione della Direttrice Artistica che la danza è per tutti.</p>
-                        <p>Crediamo che chiunque possa contribuire artisticamente secondo le proprie capacità, trasformando le differenze in ricchezza espressiva e creativa.</p>
+                        <p>NoiConVoi è il progetto di volontariato di InBallet nato nel 2013 per volontà della Direttrice Artistica {scuola.fondatrice}, che ha sempre creduto che la danza sia per tutti: in modo adeguato e secondo le proprie possibilità, ognuno può portare il proprio contributo artistico a se stesso e al pubblico.</p>
+                        <p>Il progetto accoglie ragazzi con disabilità in esperienze di danza con supporto primario psicomotorio, insieme a un team di volontari e con la guida della coordinatrice del progetto. L'inclusione resta un tema centrale per tutte le fasce d'età: quasi tutti i corsi della scuola sono predisposti anche come <a href="/classi-integrate">classi integrate</a>.</p>
                     </div>
                     <div class="noi-intro-highlight">
-                        <p>La danza non conosce barriere. Ogni persona porta con sé un universo di possibilità espressive che meritano di essere scoperte e valorizzate.</p>
+                        <p>«La danza è capace di creare racconti in tutti i corpi e in tutte le menti.» ({scuola.fondatrice})</p>
                     </div>
                 </div>
                 <div class="noi-intro-visual foto-cornice">
@@ -73,7 +73,7 @@ const info = [
             <div class="intro-editoriale">
                 <span class="eyebrow">La metodologia</span>
                 <h2 class="titolo-sezione" id="metodo-titolo">Un approccio pedagogico <em>strutturato</em></h2>
-                <p>Ogni lezione si articola in due fasi complementari.</p>
+                <p>Ogni lezione del lunedì sera si articola in due momenti: prima la pratica psicomotoria, poi la danza.</p>
             </div>
             <div class="container">
                 <ol class="fasi-lista">
@@ -94,7 +94,7 @@ const info = [
                 <div class="noi-target-header">
                     <span class="eyebrow">A chi è rivolto</span>
                     <h2 class="titolo-sezione" id="target-titolo">Un progetto <em>aperto a tutti</em></h2>
-                    <p class="intro-sezione">NoiConVoi accoglie partecipanti con profili diversi, creando un ambiente di condivisione unico.</p>
+                    <p class="intro-sezione">NoiConVoi mette insieme ragazzi, famiglie e volontari. Dal 2024 accoglie anche volontari da aziende e realtà del territorio, grazie ai <a href="/sostenitori">sostenitori dei progetti sociali</a>.</p>
                 </div>
                 <ul class="target-lista">
                     {destinatari.map((d) => (

@@ -85,7 +85,7 @@ Sessions via Astro's built-in session API (fsLite driver, 24h TTL). `src/lib/aut
 
 ---
 
-## Deploy (Docker + Cloudflare Tunnel)
+## Deploy (Docker)
 
 ### First deploy
 
@@ -99,12 +99,6 @@ docker build -t inballet-site .
 # 3. Start container
 docker rm -f inballet-web
 docker run -d --name inballet-web -p 3000:8080 --env-file .env -v inballet-data:/app/data inballet-site
-
-# 4. Start Cloudflare tunnel
-docker run -d --network host cloudflare/cloudflared:latest tunnel --url http://localhost:3000
-
-# 5. Get public URL (wait a few seconds first)
-docker logs <cloudflared-container-id> | grep "https://"
 ```
 
 ### After code changes (one-liner)
@@ -113,17 +107,13 @@ docker logs <cloudflared-container-id> | grep "https://"
 docker build -t inballet-site . && docker rm -f inballet-web && docker run -d --name inballet-web -p 3000:8080 --env-file .env -v inballet-data:/app/data inballet-site
 ```
 
-The Cloudflare tunnel keeps running — no need to restart it.
-
 ### Notes
 
-- The tunnel URL changes every time cloudflared restarts
-- Login is accepted only from `localhost`, `*.trycloudflare.com`, and `inballet.it` (see `security.allowedDomains` in `astro.config.mjs` to add more)
+- Login is accepted only from `localhost`, `*.up.railway.app`, and `inballet.it` (see `security.allowedDomains` in `astro.config.mjs` to add more)
 - `docker volume rm inballet-data` permanently deletes events and uploads
-- Port conflict: use `-p 3001:8080` and `--url http://localhost:3001` in the tunnel
+- Port conflict: use `-p 3001:8080`
 
 ### Troubleshooting
 
 - **Login 403**: host not in `allowedDomains`
 - **Password rejected**: check `.env` — no quotes around `DASHBOARD_PASSWORD`
-- **Tunnel no URL**: `docker logs <container-id>` for errors

@@ -43,10 +43,9 @@ export default defineConfig({
   security: {
     // Upload locandine dalla dashboard: fino a 5 immagini da 20MB per richiesta
     actionBodySizeLimit: 100 * 1024 * 1024,
-    // Il sito gira dietro Cloudflare Tunnel: fidati degli header X-Forwarded-*
+    // Il sito gira dietro un proxy: fidati degli header X-Forwarded-*
     // solo per questi host, così il controllo Origin dei form funziona.
     allowedDomains: [
-      { hostname: '**.trycloudflare.com', protocol: 'https' },
       { hostname: '**.up.railway.app', protocol: 'https' },
       { hostname: 'inballet.it', protocol: 'https' },
       { hostname: 'www.inballet.it', protocol: 'https' },

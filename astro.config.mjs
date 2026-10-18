@@ -47,6 +47,7 @@ export default defineConfig({
     // solo per questi host, così il controllo Origin dei form funziona.
     allowedDomains: [
       { hostname: '**.trycloudflare.com', protocol: 'https' },
+      { hostname: '**.up.railway.app', protocol: 'https' },
       { hostname: 'inballet.it', protocol: 'https' },
       { hostname: 'www.inballet.it', protocol: 'https' },
       // Accesso locale (http://localhost:3000 dal container Docker)

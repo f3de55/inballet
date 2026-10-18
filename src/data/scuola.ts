@@ -74,7 +74,7 @@ export const categorieCorsi = [
   {
     id: 'classica-moderna',
     nome: 'Danza Classica e Moderna',
-    immagine: { src: 'hero-bg.jpg', alt: 'Tutù di danza classica in sala' },
+    immagine: { src: 'foto/tutu-classica.jpg', alt: 'Tutù rosa di danza classica', fuoco: { desktop: '60% 50%', mobile: '50% 45%' } },
     descrizione: 'Si comincia a 3 anni con Avviamento alla Danza, a 4-5 anni con Educazione alla Danza; dai 6 anni Danza Classica e Modern, fino ai livelli avanzati.',
     corsi: [
       { nome: 'Avviamento alla Danza', url: '/avviamento-danza' },
@@ -86,7 +86,7 @@ export const categorieCorsi = [
   {
     id: 'contemporanea',
     nome: 'Danza Contemporanea',
-    immagine: { src: 'gallery-6.jpg', alt: 'Coreografia di danza contemporanea sul palco' },
+    immagine: { src: 'foto/contact-improvisation-img2.jpg', alt: 'Due danzatori a terra durante una sequenza di contact improvisation', fuoco: { desktop: '50% 50%' } },
     descrizione: "L'arte più libera del movimento: Danza Contemporanea dai 10 anni, un corso per adulti over 40, Contact Improvisation e Movimento Creativo dai 18 anni.",
     corsi: [
       { nome: 'Danza Contemporanea', url: '/danza-contemporanea' },
@@ -98,7 +98,7 @@ export const categorieCorsi = [
   {
     id: 'urban',
     nome: 'Urban Dance',
-    immagine: { src: 'gallery-2.jpg', alt: 'Gruppo di ballerini sul palco con luci blu' },
+    immagine: { src: 'foto/breaking-img2.jpg', alt: 'Allievi di breaking in freeze sul parquet della sala', fuoco: { desktop: '50% 50%', mobile: '50% 60%' } },
     descrizione: 'Hip-Hop e Breaking dai 6 anni, Heels, Danza Acrobatica e, dai 16 anni, il Contaminato: gli stili urbani tra energia, tecnica e cultura Hip-Hop.',
     corsi: [
       { nome: 'Hip-Hop', url: '/hip-hop' },
@@ -111,7 +111,7 @@ export const categorieCorsi = [
   {
     id: 'benessere',
     nome: 'Benessere e Movimento',
-    immagine: { src: 'gallery-5.jpg', alt: 'Allieve in allungamento sul parquet della sala' },
+    immagine: { src: 'foto/yoga-img2.jpg', alt: 'Lezione di yoga in sala, con le mani giunte sopra la testa', fuoco: { desktop: '55% 50%', mobile: '50% 35%' } },
     descrizione: "Hatha Yoga, Pilates per livelli e lezioni individuali: per il benessere di corpo e mente, da soli o accanto a un corso di danza.",
     corsi: [
       { nome: 'Yoga', url: '/yoga' },
@@ -123,7 +123,7 @@ export const categorieCorsi = [
   {
     id: 'eta',
     nome: 'Percorsi per Età',
-    immagine: { src: 'gallery-8.jpg', alt: 'Insegnante abbraccia una piccola allieva in sala' },
+    immagine: { src: 'foto/bambini-gioco.jpg', alt: 'Bambine piccole giocano a danzare in sala', fuoco: { desktop: '50% 50%', mobile: '50% 35%' } },
     descrizione: "Quali corsi scegliere in ogni fase della crescita, dai 3 anni all'età adulta: una guida per fascia d'età, anche per chi inizia da grande.",
     corsi: [
       { nome: 'Prima Infanzia (3-5 anni)', url: '/prima-infanzia' },

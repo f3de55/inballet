@@ -2,12 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { webp } from '../lib/images';
+import { sfondo } from '../lib/images';
 import { scuola } from '../data/scuola';
 
-const bg: Record<string, string> = {
-  'gallery-4.jpg': await webp('gallery-4.jpg', 1920),
-  'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
+const bg = {
+  hero: await sfondo('gallery-4.jpg', { desktop: '50% 10%', tablet: '50% 30%' }),
+  cta: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
 };
 
 const inBreve = [
@@ -40,7 +40,7 @@ const enti = [
 
         <!-- Hero Section -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-4.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -117,7 +117,7 @@ const enti = [
 
         <!-- CTA -->
         <section class="form-cta-section sezione-scura">
-            <div class="form-cta-bg" style={`background-image: url('${bg['bg-progetti-territorio.jpg']}')`}></div>
+            <div class="form-cta-bg" style={bg.cta.style}></div>
             <div class="form-cta-overlay"></div>
             <div class="form-cta-wrapper">
                 <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>

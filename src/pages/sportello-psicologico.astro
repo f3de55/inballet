@@ -2,12 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { webp } from '../lib/images';
+import { sfondo } from '../lib/images';
 import { scuola } from '../data/scuola';
 
-const bg: Record<string, string> = {
-  'gallery-8.jpg': await webp('gallery-8.jpg', 1920),
-  'gallery-5.jpg': await webp('gallery-5.jpg', 1920),
+const bg = {
+  hero: await sfondo({ desktop: 'foto/sportello-banner.jpg', tablet: 'foto/sportellopsicologico-adulti.jpg' }, { desktop: '50% 50%', tablet: '50% 50%', mobile: '58% 50%' }),
+  cta: await sfondo('foto/sportello-psicologico-img2.jpg', {}),
 };
 
 const pilastri = [
@@ -33,7 +33,7 @@ const servizi = [
 
         <!-- Hero Section -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-8.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -57,7 +57,7 @@ const servizi = [
                     </div>
                 </div>
                 <div class="sport-intro-visual foto-cornice">
-                    <Img src="gallery-9.jpg" alt="Due allieve abbracciate in sala" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
+                    <Img src="foto/sportello-psicologico-img4.jpg" alt="Due mani si sfiorano con la punta delle dita" fuoco={{ desktop: '50% 50%' }} widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
                 </div>
             </div>
         </section>
@@ -102,7 +102,7 @@ const servizi = [
 
         <!-- CTA -->
         <section class="sport-cta-section sezione-scura">
-            <div class="sport-cta-bg" style={`background-image: url('${bg['gallery-5.jpg']}')`}></div>
+            <div class="sport-cta-bg" style={bg.cta.style}></div>
             <div class="sport-cta-overlay"></div>
             <div class="sport-cta-wrapper">
                 <h2 class="titolo-sezione">Prenota un colloquio <em>conoscitivo</em></h2>

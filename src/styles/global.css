@@ -785,6 +785,36 @@ section [class*="-intro-highlight"] p {
   background-repeat: no-repeat;
 }
 
+/* Sfondi e foto ritagliate (sfondo() e <Img fuoco> in src/lib/images.ts): sorgente e
+   punto focale per desktop, tablet (<=900px) e mobile (<=600px), usati dallo stile inline */
+[style*="--sfondo-lg"] {
+  --sfondo: var(--sfondo-lg);
+}
+
+[style*="--fuoco-lg"] {
+  --fuoco: var(--fuoco-lg);
+}
+
+@media (max-width: 900px) {
+  [style*="--sfondo-lg"] {
+    --sfondo: var(--sfondo-md);
+  }
+
+  [style*="--fuoco-lg"] {
+    --fuoco: var(--fuoco-md);
+  }
+}
+
+@media (max-width: 600px) {
+  [style*="--sfondo-lg"] {
+    --sfondo: var(--sfondo-sm);
+  }
+
+  [style*="--fuoco-lg"] {
+    --fuoco: var(--fuoco-sm);
+  }
+}
+
 .chisiamo-hero-overlay {
   position: absolute;
   top: 0;

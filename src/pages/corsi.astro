@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { webp } from '../lib/images';
+import { sfondo } from '../lib/images';
 import { categorieCorsi } from '../data/scuola';
 
 // Fascia d'età di ogni corso, dalla sua pagina (es. "/hip-hop" → "Ragazzi e adulti")
@@ -12,7 +12,7 @@ const eta = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.dat
 const nomeBreve = (nome: string) => nome.replace(/\s*\(.*\)$/, '');
 const totale = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
-const heroBg = await webp('gallery-3.jpg', 1920);
+const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50%' });
 ---
 
 <Base
@@ -23,7 +23,7 @@ const heroBg = await webp('gallery-3.jpg', 1920);
 >
     <!-- Hero -->
     <section class="chisiamo-hero">
-        <div class="chisiamo-hero-image" style={`background-image: url('${heroBg}')`}></div>
+        <div class="chisiamo-hero-image" style={hero.style}></div>
         <div class="chisiamo-hero-overlay"></div>
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
@@ -46,7 +46,7 @@ const heroBg = await webp('gallery-3.jpg', 1920);
             {categorieCorsi.map((cat, i) => (
                 <article class="categoria" id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
                     <figure class="categoria-foto">
-                        <Img src={cat.immagine.src} alt={cat.immagine.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 40vw" />
+                        <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 40vw" />
                     </figure>
                     <div class="categoria-testo">
                         <span class="categoria-numero">{String(i + 1).padStart(2, '0')}</span>

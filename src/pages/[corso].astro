@@ -8,7 +8,8 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { webp } from '../lib/images';
+import { getImage } from 'astro:assets';
+import { getAsset, sfondo } from '../lib/images';
 import { schemaCorso } from '../lib/schema';
 
 export const getStaticPaths = (async () => {
@@ -21,8 +22,10 @@ interface Props {
 }
 
 const { data } = Astro.props;
-const heroBg = await webp(data.heroImage, 2560);
-const contattoBg = await webp('bg-progetti-territorio.jpg', 1920);
+const hero = await sfondo(data.heroImage, data.heroFuoco);
+const contatto = await sfondo(data.ctaImage ?? 'bg-progetti-territorio.jpg', data.ctaFuoco);
+// Anteprima social 1200x630 dalla foto del corso
+const ogImage = new URL((await getImage({ src: getAsset(data.heroImage), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
 // Stesso URL del canonical (senza .html)
 const schema = schemaCorso(data, new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1'), Astro.site).href);
 
@@ -35,15 +38,16 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
     description={data.description}
     ogTitle={data.ogTitle}
     ogDescription={data.ogDescription}
+    ogImage={ogImage}
 >
     <Fragment slot="head">
-        <link rel="preload" as="image" href={heroBg} fetchpriority="high">
+        {hero.preload.map((p) => <link rel="preload" as="image" href={p.href} media={p.media} fetchpriority="high">)}
         <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     </Fragment>
 
     <!-- Hero Corso -->
     <section class="chisiamo-hero">
-        <div class="chisiamo-hero-image" style={`background-image: url('${heroBg}');${data.heroPosizione ? ` background-position: ${data.heroPosizione};` : ''}`}></div>
+        <div class="chisiamo-hero-image" style={hero.style}></div>
         <div class="chisiamo-hero-overlay"></div>
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
@@ -87,7 +91,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                 </div>
 
                 <div class="corso-story-image foto-cornice">
-                    <Img id="corsoIntroImg" src={data.introImage} alt={data.titolo} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 50vw" />
+                    <Img id="corsoIntroImg" src={data.introImage} alt={data.introAlt} fuoco={data.introFuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 400px" />
                 </div>
             </div>
         </div>
@@ -127,7 +131,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
 
     <!-- CTA -->
     <section class="corso-contatto-section sezione-scura">
-        <div class="corso-contatto-bg" style={`background-image: url('${contattoBg}')`}></div>
+        <div class="corso-contatto-bg" style={contatto.style}></div>
         <div class="corso-contatto-overlay"></div>
         <div class="corso-contatto-wrapper">
             <div class="corso-contatto-content">

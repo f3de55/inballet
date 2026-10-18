@@ -1,11 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import { webp } from '../lib/images';
+import { sfondo } from '../lib/images';
 
-const bg: Record<string, string> = {
-  'gallery-10.jpg': await webp('gallery-10.jpg', 1920),
-  'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
+const bg = {
+  hero: await sfondo('gallery-10.jpg', {}),
+  cta: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
 };
 ---
 
@@ -18,7 +18,7 @@ const bg: Record<string, string> = {
 
         <!-- Hero Section -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-10.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -86,7 +86,7 @@ const bg: Record<string, string> = {
 
         <!-- CTA Section -->
         <section class="corso-contatto-section sezione-scura">
-            <div class="corso-contatto-bg" style={`background: url('${bg['bg-progetti-territorio.jpg']}') center/cover no-repeat`}></div>
+            <div class="corso-contatto-bg" style={bg.cta.style}></div>
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">

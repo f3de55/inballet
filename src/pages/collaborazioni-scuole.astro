@@ -2,12 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { webp } from '../lib/images';
+import { sfondo } from '../lib/images';
 import { scuola } from '../data/scuola';
 
-const bg: Record<string, string> = {
-  'gallery-4.jpg': await webp('gallery-4.jpg', 1920),
-  'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
+const bg = {
+  hero: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%', tablet: '50% 50%' }),
+  cta: await sfondo('gallery-4.jpg', { desktop: '50% 20%' }),
 };
 
 const fasce = [
@@ -36,7 +36,7 @@ const progetti = [
 
         <!-- Hero Section -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['bg-progetti-territorio.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -108,7 +108,7 @@ const progetti = [
 
         <!-- CTA -->
         <section class="collab-cta-section sezione-scura">
-            <div class="collab-cta-bg" style={`background-image: url('${bg['gallery-4.jpg']}')`}></div>
+            <div class="collab-cta-bg" style={bg.cta.style}></div>
             <div class="collab-cta-overlay"></div>
             <div class="collab-cta-wrapper">
                 <h2 class="titolo-sezione">Portiamo la danza <em>nella tua scuola</em></h2>

@@ -3,11 +3,11 @@ import { ANNI_ATTIVITA, categorieCorsi, FONDAZIONE, sedi } from '../data/scuola'
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { webp } from '../lib/images';
+import { sfondo } from '../lib/images';
 
-const bg: Record<string, string> = {
-  'gallery-7.jpg': await webp('gallery-7.jpg', 1920),
-  'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
+const bg = {
+  hero: await sfondo('gallery-7.jpg', { desktop: '50% 40%', tablet: '50% 55%' }),
+  cta: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
 };
 
 
@@ -34,7 +34,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
         <!-- Hero Chi Siamo -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-7.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -237,7 +237,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
         <!-- CTA Finale - Stesso stile template corsi -->
         <section class="corso-contatto-section sezione-scura">
-            <div class="corso-contatto-bg" style={`background: url('${bg['bg-progetti-territorio.jpg']}') center/cover no-repeat`}></div>
+            <div class="corso-contatto-bg" style={bg.cta.style}></div>
             <div class="corso-contatto-overlay"></div>
             <div class="corso-contatto-wrapper">
                 <div class="corso-contatto-content">

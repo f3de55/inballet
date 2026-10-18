@@ -1,12 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import { webp } from '../lib/images';
+import { sfondo } from '../lib/images';
 import { iscrizioni, scuola } from '../data/scuola';
 
-const bg: Record<string, string> = {
-  'gallery-1.jpg': await webp('gallery-1.jpg', 1920),
-  'gallery-2.jpg': await webp('gallery-2.jpg', 1920),
+const bg = {
+  hero: await sfondo('gallery-1.jpg', { desktop: '50% 30%', tablet: '50% 50%' }),
+  cta: await sfondo('gallery-2.jpg', {}),
 };
 
 const passi = [
@@ -24,7 +24,7 @@ const passi = [
 >
     <!-- Hero -->
     <section class="chisiamo-hero">
-        <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-1.jpg']}')`}></div>
+        <div class="chisiamo-hero-image" style={bg.hero.style}></div>
         <div class="chisiamo-hero-overlay"></div>
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
@@ -111,7 +111,7 @@ const passi = [
 
     <!-- CTA -->
     <section class="doc-cta-section sezione-scura">
-        <div class="doc-cta-bg" style={`background-image: url('${bg['gallery-2.jpg']}')`}></div>
+        <div class="doc-cta-bg" style={bg.cta.style}></div>
         <div class="doc-cta-overlay"></div>
         <div class="doc-cta-wrapper">
             <h2 class="titolo-sezione">Dubbi sull'<em>iscrizione</em>?</h2>

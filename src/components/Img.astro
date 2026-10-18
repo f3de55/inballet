@@ -3,18 +3,21 @@
  * <img> con immagine locale convertita in WebP + srcset responsive.
  * Tutti gli altri attributi (alt, width, height, loading, class…) vengono
  * passati invariati, così il markup resta identico all'originale.
+ * `fuoco`: punto focale per desktop/tablet/mobile quando la foto è ritagliata (object-fit: cover).
  */
 import type { HTMLAttributes } from 'astro/types';
-import { webpSrcset } from '../lib/images';
+import { varFuoco, webpSrcset, type Fuoco } from '../lib/images';
 
 interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'srcset'> {
   src: string;
   widths?: number[];
   sizes?: string;
+  fuoco?: Fuoco;
 }
 
-const { src, widths = [480, 800, 1280], sizes = '100vw', ...attrs } = Astro.props;
+const { src, widths = [480, 800, 1280], sizes = '100vw', fuoco, style, ...attrs } = Astro.props;
 const img = await webpSrcset(src, widths);
+const stile = fuoco ? `${varFuoco(fuoco)}object-position:var(--fuoco);${style ?? ''}` : style;
 ---
 
-<img src={img.src} srcset={img.srcset} sizes={sizes} {...attrs} />
+<img src={img.src} srcset={img.srcset} sizes={sizes} style={stile} {...attrs} />

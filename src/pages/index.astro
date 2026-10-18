@@ -4,7 +4,7 @@ import Img from '../components/Img.astro';
 import SostenitoriSection from '../components/SostenitoriSection.astro';
 import { getImage } from 'astro:assets';
 import { ANNI_ATTIVITA, categorieCorsi, faq, FONDAZIONE, scuola } from '../data/scuola';
-import { getAsset, webp } from '../lib/images';
+import { getAsset, sfondo, webp } from '../lib/images';
 import { schemaHome } from '../lib/schema';
 
 // Galleria: miniature responsive + versione grande per il lightbox
@@ -41,9 +41,9 @@ const progetti = [
   ] },
 ];
 
-// Sfondi in WebP (il CSS definisce solo posizione e dimensione)
-const heroBg = await webp('hero-bg.jpg', 1920);
-const progettiBg = await webp('bg-progetti-territorio.jpg', 1920);
+// Sfondi responsive: foto e punto focale per desktop, tablet e mobile
+const hero = await sfondo('foto/tutu-classica.jpg', { desktop: '50% 35%', tablet: '55% 50%', mobile: '58% 50%' });
+const progettiSfondo = await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' });
 
 // Dati strutturati (immagine social 1200x630)
 const socialImage = new URL((await getImage({ src: getAsset('gallery-3.jpg'), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
@@ -60,14 +60,14 @@ const schema = schemaHome(socialImage);
     skipLinkId="skip-link"
 >
     <Fragment slot="head">
-        <link rel="preload" as="image" href={heroBg} fetchpriority="high">
+        {hero.preload.map((p) => <link rel="preload" as="image" href={p.href} media={p.media} fetchpriority="high">)}
         <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     </Fragment>
 
 
     <!-- Hero Section Personalizzata -->
     <section class="hero">
-        <div class="hero-image" style={`background-image: url('${heroBg}')`}></div>
+        <div class="hero-image" style={hero.style}></div>
 
         <div class="hero-overlay"></div>
 
@@ -249,7 +249,7 @@ const schema = schemaHome(socialImage);
 
      <!-- Sezione Progetti Sul Territorio -->
     <section class="altri-servizi-section sezione-scura">
-        <div class="altri-servizi-bg" style={`background-image: url('${progettiBg}')`}></div>
+        <div class="altri-servizi-bg" style={progettiSfondo.style}></div>
         <div class="altri-servizi-overlay"></div>
 
         <div class="intro-editoriale progetti-intro">

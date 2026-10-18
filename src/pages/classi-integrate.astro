@@ -2,12 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { webp } from '../lib/images';
+import { sfondo } from '../lib/images';
 import { scuola } from '../data/scuola';
 
-const bg: Record<string, string> = {
-  'gallery-9.jpg': await webp('gallery-9.jpg', 1920),
-  'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
+const bg = {
+  hero: await sfondo('gallery-9.jpg', { desktop: '50% 15%', tablet: '50% 40%' }),
+  cta: await sfondo('foto/bambini-mani.jpg', {}),
 };
 
 const passi = [
@@ -35,7 +35,7 @@ const classi = [
 
         <!-- Hero Section -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-9.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -107,7 +107,7 @@ const classi = [
 
         <!-- CTA -->
         <section class="integrate-cta-section sezione-scura">
-            <div class="integrate-cta-bg" style={`background-image: url('${bg['bg-progetti-territorio.jpg']}')`}></div>
+            <div class="integrate-cta-bg" style={bg.cta.style}></div>
             <div class="integrate-cta-overlay"></div>
             <div class="integrate-cta-wrapper">
                 <h2 class="titolo-sezione">Parliamo <em>del tuo bambino</em></h2>

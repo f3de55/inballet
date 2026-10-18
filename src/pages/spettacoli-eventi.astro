@@ -1,10 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import { webp } from '../lib/images';
+import { sfondo } from '../lib/images';
 
-const bg: Record<string, string> = {
-  'ballerina.jpg': await webp('ballerina.jpg', 1920),
+const bg = {
+  hero: await sfondo('ballerina.jpg', {}),
 };
 
 /** Eventi curati dalla Direzione oltre al calendario della scuola. */
@@ -27,7 +27,7 @@ const tipiEvento = [
 >
         <!-- Hero -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['ballerina.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />

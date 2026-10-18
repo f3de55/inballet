@@ -6,6 +6,9 @@ import { defineCollection } from 'astro:content';
 import { file } from 'astro/loaders';
 import { z } from 'astro/zod';
 
+/** Punto focale per desktop, tablet e mobile (vedi Fuoco in src/lib/images.ts). */
+const fuoco = z.object({ desktop: z.string(), tablet: z.string(), mobile: z.string() }).partial().optional();
+
 const corsi = defineCollection({
   loader: file('src/data/corsi.json'),
   schema: z.object({
@@ -19,10 +22,13 @@ const corsi = defineCollection({
     titolo: z.string(),
     tagline: z.string(),
     heroImage: z.string(),
-    /** Inquadratura dell'hero (CSS background-position), es. "right 30%" per banner con soggetto a destra. */
-    heroPosizione: z.string().optional(),
+    /** Punto focale dell'hero per formato (CSS position, es. "100% 30%" per banner con soggetto a destra). */
+    heroFuoco: fuoco,
     // Intro (HTML)
     introImage: z.string(),
+    /** Descrizione della foto dell'intro (alt). */
+    introAlt: z.string(),
+    introFuoco: fuoco,
     intro: z.string(),
     eta: z.string(),
     frequenza: z.string(),
@@ -31,6 +37,9 @@ const corsi = defineCollection({
     metodo: z.array(z.object({ titolo: z.string(), testo: z.string() })),
     imparaTitolo: z.string(),
     impara: z.array(z.string()),
+    /** Sfondo della sezione contatti in fondo alla pagina (default: foto generica della scuola). */
+    ctaImage: z.string().optional(),
+    ctaFuoco: fuoco,
   }),
 });
 

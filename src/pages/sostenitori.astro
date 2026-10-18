@@ -3,12 +3,12 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import SostenitoriSection from '../components/SostenitoriSection.astro';
-import { webp } from '../lib/images';
+import { sfondo } from '../lib/images';
 import { scuola } from '../data/scuola';
 
-const bg: Record<string, string> = {
-  'gallery-2.jpg': await webp('gallery-2.jpg', 1920),
-  'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
+const bg = {
+  hero: await sfondo('gallery-2.jpg', {}),
+  cta: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
 };
 
 const paypal = 'https://www.paypal.com/cgi-bin/webscr?business=inballetasd%40gmail.com&cmd=_donations&item_name=Custom%20Item&item_number=donazione&currency_code=EUR';
@@ -30,7 +30,7 @@ const destinazioni: { nome: string; href?: string }[] = [
 
         <!-- Hero Section -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-2.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -124,7 +124,7 @@ const destinazioni: { nome: string; href?: string }[] = [
 
         <!-- CTA -->
         <section class="sost-cta-section sezione-scura">
-            <div class="sost-cta-bg" style={`background-image: url('${bg['bg-progetti-territorio.jpg']}')`}></div>
+            <div class="sost-cta-bg" style={bg.cta.style}></div>
             <div class="sost-cta-overlay"></div>
             <div class="sost-cta-wrapper">
                 <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>

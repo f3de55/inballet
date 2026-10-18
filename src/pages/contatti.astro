@@ -2,14 +2,13 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { webp } from '../lib/images';
+import { sfondo } from '../lib/images';
 import { scuola, sedi, orari } from '../data/scuola';
 
 const { telefono: TEL, telefonoHref: TEL_HREF, email: EMAIL } = scuola;
 
-const bg: Record<string, string> = {
-  'gallery-6.jpg': await webp('gallery-6.jpg', 1920),
-  'gallery-3.jpg': await webp('gallery-3.jpg', 1920),
+const bg = {
+  hero: await sfondo('gallery-6.jpg', { desktop: '50% 40%', tablet: '50% 50%' }),
 };
 
 /** Settimana da lunedì con gli orari di scuola.ts (aggiornati poi da Google, se disponibile). */
@@ -28,7 +27,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
 >
     <!-- Hero -->
     <section class="chisiamo-hero">
-        <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-6.jpg']}')`}></div>
+        <div class="chisiamo-hero-image" style={bg.hero.style}></div>
         <div class="chisiamo-hero-overlay"></div>
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
@@ -103,25 +102,6 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
             <figure class="contatti-foto foto-cornice">
                 <Img src="gallery-4.jpg" alt="Lezione di danza in sala a InBallet" loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 35vw" />
             </figure>
-        </div>
-    </section>
-
-    <!-- CTA: lezione di prova -->
-    <section class="contatti-cta-section sezione-scura">
-        <div class="contatti-cta-bg" style={`background-image: url('${bg['gallery-3.jpg']}')`}></div>
-        <div class="contatti-cta-overlay"></div>
-        <div class="contatti-cta-wrapper">
-            <span class="eyebrow">Lezione di prova</span>
-            <h2 class="titolo-sezione">La prima lezione <em>è di prova</em></h2>
-            <p class="intro-sezione">È senza impegno: per prenotarla chiamaci o scrivici su WhatsApp, ti proponiamo il corso e l'orario più adatti.</p>
-            <div class="contatti-cta-buttons">
-                <a href={TEL_HREF} class="btn-primary">
-                    <i class="fas fa-phone" aria-hidden="true"></i> Chiamaci
-                </a>
-                <a href={scuola.whatsapp} target="_blank" rel="noopener" class="btn-secondary">
-                    <i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp
-                </a>
-            </div>
         </div>
     </section>
 
@@ -308,55 +288,6 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     font-weight: 600;
   }
 
-  /* ---------- CTA ---------- */
-  .contatti-cta-section {
-    position: relative;
-    padding: var(--section-y) 0;
-    overflow: hidden;
-  }
-
-  .contatti-cta-bg,
-  .contatti-cta-overlay {
-    position: absolute;
-    inset: 0;
-  }
-
-  .contatti-cta-bg {
-    background: center / cover no-repeat;
-  }
-
-  .contatti-cta-overlay {
-    background: linear-gradient(135deg, rgba(26, 26, 26, .9) 0%, rgba(42, 42, 42, .85) 100%);
-  }
-
-  .contatti-cta-wrapper {
-    position: relative;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    text-align: center;
-  }
-
-  .contatti-cta-wrapper .eyebrow {
-    display: block;
-    margin-bottom: 1rem;
-  }
-
-  .contatti-cta-wrapper .titolo-sezione {
-    margin-bottom: 1.25rem;
-  }
-
-  .contatti-cta-wrapper .intro-sezione {
-    margin-bottom: 2.5rem;
-  }
-
-  .contatti-cta-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-
   /* ---------- Responsive ---------- */
   @media (max-width: 1024px) {
     .contatti-layout {
@@ -401,15 +332,6 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     .contatti-foto {
       width: calc(100% - .75rem);
       margin-bottom: .75rem;
-    }
-
-    .contatti-cta-wrapper {
-      padding: 0 1.5rem;
-    }
-
-    .contatti-cta-buttons {
-      flex-direction: column;
-      align-items: stretch;
     }
   }
 </style>

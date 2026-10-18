@@ -2,12 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { webp } from '../lib/images';
+import { sfondo } from '../lib/images';
 import { scuola } from '../data/scuola';
 
-const bg: Record<string, string> = {
-  'gallery-5.jpg': await webp('gallery-5.jpg', 1920),
-  'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
+const bg = {
+  hero: await sfondo('gallery-8.jpg', { desktop: '50% 40%', tablet: '50% 45%' }),
+  cta: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
 };
 
 const fasi = [
@@ -39,7 +39,7 @@ const info = [
 
         <!-- Hero Section -->
         <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-5.jpg']}')`}></div>
+            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -63,7 +63,7 @@ const info = [
                     </div>
                 </div>
                 <div class="noi-intro-visual foto-cornice">
-                    <Img src="gallery-8.jpg" alt="Un'insegnante abbraccia una bambina in sala" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
+                    <Img src="foto/bambini-mani.jpg" alt="Una mano adulta stringe quella di una bambina durante la lezione" fuoco={{ desktop: '55% 50%' }} widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
                 </div>
             </div>
         </section>
@@ -128,7 +128,7 @@ const info = [
 
         <!-- CTA -->
         <section class="noi-cta-section sezione-scura">
-            <div class="noi-cta-bg" style={`background-image: url('${bg['bg-progetti-territorio.jpg']}')`}></div>
+            <div class="noi-cta-bg" style={bg.cta.style}></div>
             <div class="noi-cta-overlay"></div>
             <div class="noi-cta-wrapper">
                 <h2 class="titolo-sezione">Unisciti a <em>NoiConVoi</em></h2>

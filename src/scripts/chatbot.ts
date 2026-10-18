@@ -1,4 +1,6 @@
-/* Chatbot Bella - Assistente AI InBallet */
+/* Chat con Étoile, l'assistente virtuale di InBallet */
+
+export {}; // modulo: nomi non condivisi con gli altri script
 
 type Tipo = 'usr' | 'bot';
 interface Messaggio {
@@ -9,32 +11,46 @@ interface Messaggio {
 
 const STORAGE_KEY = 'inballet_chatbot_session';
 const COUNT_KEY = 'inballet_chatbot_count';
-const WELCOME = "Ciao! 👋 Sono <b>Bella</b>, l'assistente virtuale di InBallet.<br><br>Chiedimi di <b>corsi</b>, <b>sedi</b>, <b>orari</b> o <b>iscrizioni</b>! 💃";
+const WELCOME = "Ciao! Sono <b>Étoile</b>, l'assistente di InBallet. Posso aiutarti con corsi, sedi, orari e iscrizioni: cosa vorresti sapere?";
 const MAX_MESSAGGI = 50;
+const PAUSA_MIN = 2000; // ms tra un messaggio e l'altro
 
 const box = document.getElementById('cb-box')!;
 const toggle = document.getElementById('cb-toggle')!;
 const msgs = document.getElementById('cb-msgs')!;
+const form = document.getElementById('cb-inp') as HTMLFormElement;
 const input = document.getElementById('cb-txt') as HTMLInputElement;
+const invia = document.getElementById('cb-send') as HTMLButtonElement;
+const suggerimenti = document.getElementById('cb-suggerimenti')!;
+const mobile = matchMedia('(max-width: 600px)');
 
 let ultimoInvio = 0;
 let conteggio = 0;
+let inAttesa = false;
+let caricata = false;
 
 const ora = () => {
   const d = new Date();
   return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 };
 
+const inFondo = () => msgs.scrollTo({ top: msgs.scrollHeight });
+
 function appendMsg(type: Tipo, html: string, time = ora()) {
   const d = document.createElement('div');
   d.className = `cb-m ${type}`;
   d.innerHTML = `<span class="cb-txt">${html}</span><span class="cb-time">${time}</span>`;
   msgs.appendChild(d);
-  msgs.scrollTop = msgs.scrollHeight;
+  inFondo();
   return d;
 }
 
-// Sessione salvata nel browser (ultimi 100 messaggi)
+/** Domande suggerite: solo finché la conversazione non è iniziata. */
+function aggiornaSuggerimenti() {
+  suggerimenti.hidden = msgs.querySelectorAll('.cb-m.usr').length > 0;
+}
+
+// Conversazione salvata nel browser (ultimi 100 messaggi)
 function loadSession() {
   try {
     conteggio = parseInt(localStorage.getItem(COUNT_KEY) ?? '', 10) || 0;
@@ -56,10 +72,9 @@ function saveMessage(type: Tipo, content: string) {
   }
 }
 
-function addBot(html: string, skipSave = false) {
-  const d = appendMsg('bot', html);
-  if (!skipSave) saveMessage('bot', html);
-  return d;
+function addBot(html: string) {
+  saveMessage('bot', html);
+  return appendMsg('bot', html);
 }
 
 function addUser(text: string) {
@@ -68,69 +83,127 @@ function addUser(text: string) {
   saveMessage('usr', escaped);
 }
 
-function toggleChat() {
-  const isOpen = box.classList.toggle('open');
-  box.setAttribute('aria-hidden', String(!isOpen));
-  toggle.setAttribute('aria-pressed', String(isOpen));
-  toggle.style.display = isOpen ? 'none' : 'flex';
-  if (isOpen) {
-    input.focus();
-    // Carica sessione o mostra benvenuto
-    if (!msgs.children.length) {
-      loadSession();
-      if (!msgs.children.length) addBot(WELCOME);
-    }
-  }
+/** Risposta in preparazione: tre puntini. */
+function addAttesa() {
+  const d = document.createElement('div');
+  d.className = 'cb-m bot load';
+  d.setAttribute('aria-label', 'Étoile sta scrivendo');
+  d.innerHTML = '<span></span><span></span><span></span>';
+  msgs.appendChild(d);
+  inFondo();
+  return d;
 }
 
-async function send() {
-  const testo = input.value.trim();
-  if (!testo) return;
-  const now = Date.now();
-  if (now - ultimoInvio < 2000) {
-    alert('Aspetta 2 secondi tra i messaggi');
+// === APERTURA E CHIUSURA ===
+
+/** Su telefono la chat segue l'area visibile: la tastiera non copre il campo di scrittura. */
+function adattaAllaTastiera() {
+  const vv = window.visualViewport;
+  if (!vv || !mobile.matches || box.hidden) {
+    box.style.height = '';
+    box.style.top = '';
     return;
   }
-  ultimoInvio = now;
+  box.style.height = `${vv.height}px`;
+  box.style.top = `${vv.offsetTop}px`;
+  inFondo();
+}
+window.visualViewport?.addEventListener('resize', adattaAllaTastiera);
+window.visualViewport?.addEventListener('scroll', adattaAllaTastiera);
+
+function apri() {
+  box.hidden = false;
+  toggle.setAttribute('aria-expanded', 'true');
+  document.documentElement.classList.add('cb-aperto');
+  if (!caricata) {
+    caricata = true;
+    loadSession();
+    if (!msgs.children.length) addBot(WELCOME);
+  }
+  aggiornaSuggerimenti();
+  inFondo();
+  adattaAllaTastiera();
+  // Su telefono la tastiera aspetta che si tocchi il campo (prima si vedono le domande suggerite)
+  if (!mobile.matches) input.focus();
+  else box.focus();
+}
+
+function chiudi() {
+  box.hidden = true;
+  toggle.setAttribute('aria-expanded', 'false');
+  document.documentElement.classList.remove('cb-aperto');
+  adattaAllaTastiera();
+  toggle.focus();
+}
+
+function nuovaConversazione() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {}
+  msgs.replaceChildren();
+  addBot(WELCOME);
+  aggiornaSuggerimenti();
+  if (!mobile.matches) input.focus();
+}
+
+// === INVIO ===
+
+async function send(testo = input.value.trim()) {
+  if (!testo || inAttesa) return;
+  // Troppo veloce: il testo resta nel campo, si riprova tra poco
+  if (Date.now() - ultimoInvio < PAUSA_MIN) return;
+  ultimoInvio = Date.now();
+
   if (conteggio >= MAX_MESSAGGI) {
-    addBot('Hai raggiunto il limite di messaggi. Contattaci: <a href="tel:+393937802996" class="cb-link">+39 393 780 2996</a> 📞');
+    const tel = box.dataset.tel!;
+    addBot(`Hai raggiunto il limite di messaggi per oggi. Per altre domande chiamaci al <a href="${box.dataset.telHref}" class="cb-link">${tel}</a>.`);
     return;
   }
   conteggio++;
   addUser(testo);
   input.value = '';
-  const loading = addBot('<i>Sto scrivendo...</i>', true);
-  loading.classList.add('load');
+  aggiornaSuggerimenti();
 
+  inAttesa = true;
+  invia.disabled = true;
+  const attesa = addAttesa();
   try {
     // Client delle Actions scaricato solo al primo messaggio
     const { actions } = await import('astro:actions');
     const { data, error } = await actions.chatbot.invia({ message: testo });
-    addBot(data?.response ?? (error ? 'Errore di connessione. Riprova!' : 'Errore'));
+    attesa.remove();
+    addBot(data?.response ?? (error ? 'Non riesco a rispondere in questo momento. Riprova tra poco!' : 'Non ho capito, puoi riformulare?'));
   } catch {
-    addBot('Errore di connessione. Riprova!');
+    attesa.remove();
+    addBot('Problema di connessione. Controlla la rete e riprova.');
   } finally {
-    loading.remove();
+    inAttesa = false;
+    invia.disabled = false;
   }
 }
 
-toggle.addEventListener('click', toggleChat);
-document.getElementById('cb-close')!.addEventListener('click', toggleChat);
-document.getElementById('cb-inp')!.addEventListener('submit', (e) => {
+toggle.addEventListener('click', apri);
+document.getElementById('cb-close')!.addEventListener('click', chiudi);
+document.getElementById('cb-reset')!.addEventListener('click', nuovaConversazione);
+form.addEventListener('submit', (e) => {
   e.preventDefault();
   void send();
 });
+suggerimenti.addEventListener('click', (e) => {
+  const chip = (e.target as Element).closest<HTMLButtonElement>('.cb-chip');
+  if (chip) void send(chip.textContent!.trim());
+});
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && box.classList.contains('open')) toggleChat();
+  if (e.key === 'Escape' && !box.hidden) chiudi();
 });
 
-// Pulisci sessione (utile da console)
+// Pulisci conversazione e contatore (utile da console)
 Object.assign(window, {
   cbClearSession() {
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(COUNT_KEY);
+    try {
+      localStorage.removeItem(COUNT_KEY);
+    } catch {}
     conteggio = 0;
-    msgs.innerHTML = '';
-    addBot(WELCOME);
+    nuovaConversazione();
   },
 });

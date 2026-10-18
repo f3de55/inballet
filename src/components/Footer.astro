@@ -6,7 +6,6 @@
 import { categorieCorsi, FONDAZIONE, scuola, sedi } from '../data/scuola';
 import { menu, type Voce } from '../data/navigazione';
 import Img from './Img.astro';
-import Chatbot from './Chatbot.astro';
 
 const anno = new Date().getFullYear();
 
@@ -25,10 +24,10 @@ const colonne = [
 <div class="footer-main">
   <div class="footer-brand">
     <a href="/" class="footer-logo" aria-label="InBallet - Torna alla homepage">
-      <Img src="logo.png" alt="InBallet" widths={[120, 240, 452]} sizes="120px" loading="lazy" decoding="async" />
+      <Img src="logo.png" alt="InBallet" width="376" height="133" widths={[120, 240, 376]} sizes="120px" loading="lazy" decoding="async" />
     </a>
     <p>Scuola di danza a Lainate e Rho dal {FONDAZIONE}, per bambini dai 3 anni, ragazzi e adulti.</p>
-    <p class="footer-ente">Ente Formativo CSEN · CONI</p>
+    <p class="footer-ente">Ente Formativo<br>CSEN · CONI</p>
     <div class="footer-social">
       <a href={scuola.social.instagram} target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
       <a href={scuola.social.facebook} target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
@@ -36,13 +35,14 @@ const colonne = [
   </div>
 
   <nav class="footer-nav" aria-label="Mappa del sito">
+    {/* Colonne sempre aperte; su mobile footer.ts le chiude e diventano a fisarmonica */}
     {colonne.map((c) => (
-      <div class="footer-col">
-        <h2 class="footer-titolo">{c.titolo}</h2>
+      <details class="footer-col" open>
+        <summary><h2 class="footer-titolo">{c.titolo}</h2></summary>
         <ul>
           {c.voci.map((v) => <li><a href={v.href}>{v.breve ?? v.nome}</a></li>)}
         </ul>
-      </div>
+      </details>
     ))}
   </nav>
 
@@ -68,8 +68,6 @@ const colonne = [
   <p>&copy; <span id="footerYear">{anno}</span> {scuola.ragioneSociale} · C.F. {scuola.codiceFiscale}</p>
 </div>
 
-<Chatbot />
-
 <script>
   import '../scripts/footer';
 </script>
@@ -78,10 +76,10 @@ const colonne = [
   .footer-main {
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 4.4fr) minmax(0, 1fr);
-    gap: 3.5rem;
-    max-width: 1340px;
+    gap: 2.5rem;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 2.5rem 2rem 3.5rem;
+    padding: 1rem 2rem 3rem;
   }
 
   /* ---------- Marchio ---------- */
@@ -103,6 +101,7 @@ const colonne = [
     font-size: .8125rem;
     font-weight: 600;
     letter-spacing: 1px;
+    line-height: 1.5;
     text-transform: uppercase;
     color: var(--primary-blue);
   }
@@ -134,8 +133,20 @@ const colonne = [
   /* ---------- Colonne ---------- */
   .footer-nav {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 2.5rem;
+    /* Colonne larghe quanto le loro voci: meno link spezzati a capo */
+    grid-template-columns: repeat(4, auto);
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .footer-col summary {
+    display: block;
+    list-style: none;
+    cursor: default;
+  }
+
+  .footer-col summary::-webkit-details-marker {
+    display: none;
   }
 
   .footer-titolo {
@@ -166,6 +177,11 @@ const colonne = [
   .footer-main ul a:hover,
   .footer-link:hover {
     color: var(--white);
+  }
+
+  .footer-main ul a.attiva {
+    color: var(--white);
+    font-weight: 700;
   }
 
   .footer-main a:focus-visible {
@@ -210,10 +226,9 @@ const colonne = [
     flex-wrap: wrap;
     justify-content: space-between;
     gap: .5rem 2rem;
-    max-width: 1340px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 1.5rem 2rem;
-    border-top: 1px solid rgba(255, 255, 255, .1);
+    padding: 0 2rem 2rem;
     font-size: .8125rem;
     color: rgba(255, 255, 255, .5);
   }
@@ -230,21 +245,77 @@ const colonne = [
     }
   }
 
+  @media (max-width: 1024px) {
+    .footer-main {
+      padding-top: 0;
+      padding-bottom: 2rem;
+    }
+
+    .footer-bottom {
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  /* Mobile: contatti subito dopo il marchio, mappa del sito a fisarmonica */
   @media (max-width: 700px) {
     .footer-main {
       grid-template-columns: 1fr;
       gap: 2.5rem;
-      padding: 2rem 1.5rem 2.5rem;
+      padding: 0 1.5rem 2rem;
+    }
+
+    .footer-contatti {
+      order: 1;
     }
 
     .footer-nav {
+      order: 2;
       grid-row: auto;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 2rem 1.5rem;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      border-top: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    .footer-col {
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    .footer-col summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 52px;
+      cursor: pointer;
+    }
+
+    .footer-col summary::after {
+      content: "+";
+      font-size: 1.25rem;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--primary-blue);
+      transition: transform .3s ease;
+    }
+
+    .footer-col[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .footer-col .footer-titolo {
+      margin: 0;
+    }
+
+    .footer-col ul {
+      padding: .25rem 0 1.25rem;
     }
 
     .footer-bottom {
-      padding: 1.25rem 1.5rem 5rem;
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    /* Il testo va a capo prima del pulsante della chat, fisso in basso a destra */
+    .footer-bottom p {
+      padding-right: 4.5rem;
     }
   }
 </style>

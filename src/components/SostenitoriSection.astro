@@ -1,6 +1,13 @@
 ---
 import Img from './Img.astro';
 
+interface Props {
+  /** Link alla pagina Sostieni (falso sulla pagina stessa). */
+  link?: boolean;
+}
+
+const { link = true } = Astro.props;
+
 const sponsors = [
   { file: 'panta-rei.png', alt: 'Panta Rei' },
   { file: 'clifford-chance.png', alt: 'Clifford Chance' },
@@ -18,10 +25,12 @@ const sponsors = [
         <span class="eyebrow">Grazie a chi ci sostiene</span>
         <h2 class="titolo-sezione" id="sostenitori-titolo">I nostri <em>sostenitori</em></h2>
         <p class="intro-sezione">Il nostro lavoro è reso possibile anche grazie a chi crede nell'arte come strumento educativo.</p>
-        <a href="/sostenitori" class="link-cta">
-            Sostieni i nostri progetti
-            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-        </a>
+        {link && (
+            <a href="/sostenitori" class="link-cta">
+                Sostieni i nostri progetti
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        )}
     </div>
 
     <!-- Loghi in griglia separata da filetti: i loghi hanno fondo bianco, la sezione resta bianca -->
@@ -85,14 +94,6 @@ const sponsors = [
   width: auto;
   height: auto;
   object-fit: contain;
-  filter: grayscale(1);
-  opacity: .8;
-  transition: filter .3s ease, opacity .3s ease;
-}
-
-.sostenitori-loghi li:hover :global(img) {
-  filter: none;
-  opacity: 1;
 }
 
 @media (max-width: 900px) {
@@ -108,17 +109,11 @@ const sponsors = [
 @media (max-width: 600px) {
   .sostenitori-loghi {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 7rem;
+    grid-auto-rows: 6.5rem;
   }
 
   .sostenitori-loghi li {
     padding: .5rem .75rem;
-  }
-
-  /* Sul touch non c'è hover: loghi a colori, appena attenuati */
-  .sostenitori-loghi :global(img) {
-    filter: none;
-    opacity: .9;
   }
 }
 </style>

@@ -1,0 +1,32 @@
+---
+/** Barra in alto della dashboard: logo, sezioni, link al sito e uscita. */
+import { Image } from 'astro:assets';
+import logo from '../../assets/images/logo.png';
+
+interface Props {
+  sezione: 'eventi' | 'bot';
+}
+
+const { sezione } = Astro.props;
+const voci = [
+  { id: 'eventi', label: 'Eventi' },
+  { id: 'bot', label: 'Chatbot' },
+] as const;
+---
+
+<header class="topbar">
+    <div class="topbar-inner">
+        <a href="/dashboard" class="topbar-logo" aria-label="Dashboard InBallet">
+            <Image src={logo} alt="" width={240} format="webp" loading="eager" />
+        </a>
+        <nav class="topbar-nav" aria-label="Sezioni">
+            {voci.map((v) => (
+                <a href={`?s=${v.id}`} class:list={{ attiva: sezione === v.id }} aria-current={sezione === v.id ? 'page' : undefined}>{v.label}</a>
+            ))}
+        </nav>
+        <div class="topbar-azioni">
+            <a href="/" target="_blank" rel="noopener"><i class="fas fa-external-link-alt" aria-hidden="true"></i><span>Vedi il sito</span></a>
+            <a href="?logout"><i class="fas fa-sign-out-alt" aria-hidden="true"></i><span>Esci</span></a>
+        </div>
+    </div>
+</header>

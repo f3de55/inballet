@@ -1,5 +1,5 @@
 ---
-import { ANNI_ATTIVITA, FONDAZIONE, sedi } from '../data/scuola';
+import { ANNI_ATTIVITA, categorieCorsi, FONDAZIONE, sedi } from '../data/scuola';
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
@@ -22,6 +22,7 @@ const team = [
 ];
 
 const [lainate, rho] = sedi;
+const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 ---
 
 <Base
@@ -109,33 +110,40 @@ const [lainate, rho] = sedi;
             </div>
         </section>
 
-        <!-- InBallet in Numeri -->
-        <section class="numeri-section sezione-scura">
-            <div class="container">
-                <div class="numeri-header">
-                    <span class="numeri-label eyebrow">In sintesi</span>
-                    <h2 class="numeri-title titolo-sezione">InBallet <em>in numeri</em></h2>
+        <!-- InBallet in Numeri: intro a sinistra, griglia 2x2 di numeri a destra -->
+        <section class="numeri-section sezione-scura" aria-labelledby="numeri-titolo">
+            <div class="container numeri-layout">
+                <div class="numeri-intro">
+                    <span class="eyebrow">In sintesi</span>
+                    <h2 class="titolo-sezione" id="numeri-titolo">InBallet <em>in numeri</em></h2>
+                    <p class="intro-sezione">Dal {FONDAZIONE} a oggi: discipline, percorsi e sedi pensati per accompagnare ogni allievo, dai primi passi a 3 anni fino all'età adulta.</p>
+                    <a href="/corsi" class="link-cta numeri-cta">
+                        Scopri i corsi
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
                 </div>
-                <div class="numeri-grid">
+                <dl class="numeri-grid">
                     <div class="numero-item">
-                        <div class="numero-value-wrapper">
-                            <span class="numero-value" data-target={ANNI_ATTIVITA}>0</span>
-                        </div>
-                        <span class="numero-label">Anni di esperienza</span>
+                        <dt class="numero-label">Anni di danza</dt>
+                        <dd class="numero-value-wrapper"><span class="numero-value" data-target={ANNI_ATTIVITA}>{ANNI_ATTIVITA}</span></dd>
+                        <dd class="numero-nota">Dal {FONDAZIONE} a Lainate e Rho</dd>
                     </div>
                     <div class="numero-item">
-                        <div class="numero-value-wrapper">
-                            <span class="numero-value" data-target="500">0</span><span class="numero-suffix">+</span>
-                        </div>
-                        <span class="numero-label">Allievi formati</span>
+                        <dt class="numero-label">Corsi</dt>
+                        <dd class="numero-value-wrapper"><span class="numero-value" data-target={totaleCorsi}>{totaleCorsi}</span></dd>
+                        <dd class="numero-nota">In {categorieCorsi.length} percorsi, dai 3 anni agli adulti</dd>
                     </div>
                     <div class="numero-item">
-                        <div class="numero-value-wrapper">
-                            <span class="numero-value" data-target="2">0</span>
-                        </div>
-                        <span class="numero-label">Sedi a Lainate e Rho</span>
+                        <dt class="numero-label">Allievi formati</dt>
+                        <dd class="numero-value-wrapper"><span class="numero-value" data-target="500">500</span><span class="numero-suffix">+</span></dd>
+                        <dd class="numero-nota">Bambini, ragazzi e adulti</dd>
                     </div>
-                </div>
+                    <div class="numero-item">
+                        <dt class="numero-label">Sedi</dt>
+                        <dd class="numero-value-wrapper"><span class="numero-value" data-target="2">2</span></dd>
+                        <dd class="numero-nota">{lainate.citta} e {rho.citta}</dd>
+                    </div>
+                </dl>
             </div>
         </section>
 
@@ -147,15 +155,29 @@ const [lainate, rho] = sedi;
                     <h2 class="team-title titolo-sezione">I professionisti <em>di InBallet</em></h2>
                     <p class="team-subtitle intro-sezione">Insegnanti qualificati, uniti dalla passione per la danza.</p>
                 </div>
-                <ul class="team-grid">
-                    {team.map((p) => (
-                        <li class="team-card">
-                            <div class="team-card-image">
-                                <Img src={p.foto} alt={p.nome} loading="lazy" decoding="async" widths={[400, 800]} sizes="(max-width: 700px) 100vw, 33vw" />
+                <!-- Desktop: nomi a destra, foto e bio del selezionato a sinistra.
+                     Tablet/mobile: fisarmonica, il pannello si apre sotto il nome -->
+                <ul class="team-roster" style={`--persone: ${team.length}`}>
+                    {team.map((p, i) => (
+                        <li class="team-persona">
+                            <button type="button" class="team-voce" id={`team-voce-${i}`} aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`team-pannello-${i}`}>
+                                <span class="team-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                                <span class="team-voce-testo">
+                                    <span class="team-voce-nome">{p.nome}</span>
+                                    <span class="team-voce-ruolo">{p.ruolo}</span>
+                                </span>
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </button>
+                            <div class="team-pannello" id={`team-pannello-${i}`} role="region" aria-labelledby={`team-voce-${i}`} hidden={i !== 0}>
+                                <div class="team-foto">
+                                    <Img src={p.foto} alt={p.nome} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 45vw" />
+                                </div>
+                                <div class="team-pannello-testo">
+                                    <span class="team-role">{p.ruolo}</span>
+                                    <h3 class="team-nome">{p.nome}</h3>
+                                    <p class="team-bio">{p.bio}</p>
+                                </div>
                             </div>
-                            <span class="team-role">{p.ruolo}</span>
-                            <h3 class="team-nome">{p.nome}</h3>
-                            <p class="team-bio">{p.bio}</p>
                         </li>
                     ))}
                 </ul>
@@ -236,8 +258,6 @@ const [lainate, rho] = sedi;
   grid-template-columns: 1fr 1fr;
   gap: 5rem;
   align-items: center;
-  max-width: 1100px;
-  margin: 0 auto;
 }
 
 .fondatrice-visual {
@@ -250,7 +270,7 @@ const [lainate, rho] = sedi;
 
 .fondatrice-image-wrapper :global(img) {
   width: 100%;
-  height: 550px;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
 }
 
@@ -290,7 +310,7 @@ const [lainate, rho] = sedi;
 }
 
 .fondatrice-bio :global(p) {
-  font-size: var(--text-base);
+  font-size: 1.125rem;
   color: var(--text-dark);
   line-height: 1.8;
   margin-bottom: 1.5rem;
@@ -307,26 +327,6 @@ const [lainate, rho] = sedi;
   overflow: hidden;
 }
 
-.storia-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--primary-blue);
-}
-
-.storia-section::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--primary-blue);
-}
-
 .storia-header {
   text-align: center;
   margin-bottom: 4rem;
@@ -337,8 +337,6 @@ const [lainate, rho] = sedi;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 3rem 3.5rem;
-  max-width: 1100px;
-  margin: 0 auto;
 }
 
 @media (max-width: 900px) {
@@ -350,7 +348,19 @@ const [lainate, rho] = sedi;
 
 @media (max-width: 520px) {
   .timeline {
-    grid-template-columns: 1fr;
+    gap: 2rem 1.25rem;
+  }
+
+  .timeline :global(.voce-anno) {
+    font-size: var(--text-2xl);
+  }
+
+  .timeline :global(.voce-titolo) {
+    font-size: 1.0625rem;
+  }
+
+  .timeline :global(.voce-testo) {
+    font-size: .9375rem;
   }
 }
 
@@ -363,100 +373,121 @@ const [lainate, rho] = sedi;
   margin: 0;
 }
 
+/* ---------- InBallet in numeri ---------- */
 .numeri-section {
   padding: var(--section-y) 0;
-  background: linear-gradient(135deg, var(--dark-navy) 0%, #1a1a2e 100%);
-  position: relative;
-  overflow: hidden;
+  background: var(--dark-navy);
 }
 
-.numeri-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
+.numeri-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 5rem;
+  align-items: center;
 }
 
-.numeri-section::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
+.numeri-intro .titolo-sezione {
+  margin-bottom: 1.5rem;
 }
 
-.numeri-header {
-  text-align: center;
-  margin-bottom: 3.5rem;
+.numeri-cta {
+  margin-top: 2rem;
+  color: var(--white);
 }
 
-.numeri-label {
-  display: block;
-  margin-bottom: 1rem;
+.numeri-cta:hover {
+  color: var(--primary-blue);
+  border-color: var(--primary-blue);
 }
 
-.numeri-title {
-  margin: 0;
-}
-
+/* Griglia 2x2: il gap da 1px sul fondo chiaro disegna i filetti solo tra le celle */
 .numeri-grid {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 0;
-  max-width: 1000px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.14);
 }
 
 .numero-item {
-  text-align: center;
-  padding: 2rem 3.5rem;
-  position: relative;
-  flex: 1;
-}
-
-.numero-item:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 50%;
-  background: rgba(135, 206, 235, 0.3);
-}
-
-.numero-value-wrapper {
-  display: block;
-  margin-bottom: 0.8rem;
-}
-
-.numero-value {
-  font-family: var(--font-rubik);
-  font-size: var(--text-6xl);
-  font-weight: 300;
-  color: var(--white);
-  line-height: 1;
-}
-
-.numero-suffix {
-  font-family: var(--font-rubik);
-  font-size: var(--text-3xl);
-  font-weight: 700;
-  color: var(--primary-blue);
-  vertical-align: top;
+  display: flex;
+  flex-direction: column;
+  padding: 2.25rem 2.5rem;
+  background: var(--dark-navy);
 }
 
 .numero-label {
-  display: block;
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.4;
+  order: 2;
+  margin-top: .9rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.numero-value-wrapper {
+  order: 1;
+  margin: 0;
+  line-height: 1;
+}
+
+.numero-value {
+  font-size: clamp(2.25rem, 1.75rem + 1.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+
+.numero-suffix {
+  margin-left: .1em;
+  font-size: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--primary-blue);
+}
+
+.numero-nota {
+  order: 3;
+  margin: .3rem 0 0;
+  font-size: .9375rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 900px) {
+  .numeri-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  /* Colonna sinistra dei numeri allineata al testo sopra */
+  .numero-item:nth-child(odd) {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .numero-item {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .numero-value {
+    font-size: 2.25rem;
+  }
+
+  .numero-suffix {
+    font-size: 1.75rem;
+  }
+
+  .numero-label {
+    margin-top: .6rem;
+    font-size: 1rem;
+  }
+
+  .numero-nota {
+    font-size: .8125rem;
+  }
 }
 
 .team-section {
@@ -465,11 +496,8 @@ const [lainate, rho] = sedi;
 }
 
 .team-header {
-  text-align: center;
-  margin-bottom: 4rem;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-bottom: 3rem;
+  max-width: 44rem;
 }
 
 .team-label {
@@ -485,32 +513,121 @@ const [lainate, rho] = sedi;
   margin: 0;
 }
 
-/* Team: tre colonne ariose, foto verticale, ruolo sopra il nome */
-.team-grid {
+/* Team come "roster": desktop elenco di nomi a destra e pannello del selezionato a
+   sinistra (tutti i pannelli occupano la stessa cella, si vede solo l'attivo);
+   sotto i 900px fisarmonica con il pannello che si apre sotto il nome */
+.team-roster {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 4rem 3rem;
-  max-width: 1100px;
-  margin: 0 auto;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  grid-template-rows: repeat(var(--persone), auto) 1fr;
+  column-gap: 5rem;
 }
 
-.team-card-image {
-  aspect-ratio: 4 / 5;
+.team-persona:first-child .team-voce {
+  border-top: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.team-persona {
+  display: contents;
+}
+
+.team-voce {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.25rem 0;
+  border: none;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: var(--dark-navy);
+  cursor: pointer;
+}
+
+.team-num {
+  font-size: .9375rem;
+  font-weight: 300;
+  color: var(--primary-blue-dark);
+}
+
+.team-voce-testo {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+
+.team-voce-nome {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: 1.25;
+  transition: color .3s ease;
+}
+
+.team-voce-ruolo {
+  font-size: .875rem;
+  color: var(--text-light);
+}
+
+/* Desktop: niente icona, il selezionato si riconosce dal colore */
+.team-voce i {
+  display: none;
+  font-size: .875rem;
+  color: var(--primary-blue-dark);
+  transition: transform .3s ease;
+}
+
+.team-voce[aria-expanded="true"] .team-num {
+  font-weight: 600;
+}
+
+/* Desktop: il nome attivo è evidenziato e la croce diventa una freccia verso il pannello */
+.team-voce[aria-expanded="true"] .team-voce-nome {
+  color: var(--primary-blue-dark);
+}
+
+.team-voce[aria-expanded="true"] i {
+  transform: rotate(45deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .team-voce:hover .team-voce-nome {
+    color: var(--primary-blue-dark);
+  }
+}
+
+.team-pannello {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  align-self: start;
+}
+
+.team-pannello[hidden] {
+  display: none;
+}
+
+.team-foto {
   overflow: hidden;
   border-radius: var(--radius-img);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
 
-.team-card-image :global(img) {
+.team-foto :global(img) {
+  display: block;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  transition: transform .6s ease;
+  animation: team-entra .4s ease;
 }
 
-.team-card:hover .team-card-image :global(img) {
-  transform: scale(1.04);
+@keyframes team-entra {
+  from {
+    opacity: 0;
+  }
 }
 
 .team-role {
@@ -524,35 +641,87 @@ const [lainate, rho] = sedi;
 }
 
 .team-nome {
-  font-size: var(--text-2xl);
+  font-size: var(--text-3xl);
   font-weight: 700;
   line-height: 1.2;
   color: var(--dark-navy);
-  margin-bottom: .6rem;
+  margin-bottom: .75rem;
 }
 
 .team-bio {
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: 1.0625rem;
+  line-height: 1.7;
   color: var(--text-light);
-  max-width: 22rem;
+  max-width: 32rem;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .team-foto :global(img) {
+    animation: none;
+  }
+}
+
+/* Tablet e mobile: fisarmonica, foto e bio sotto il nome aperto */
 @media (max-width: 900px) {
-  .team-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 3rem 2rem;
+  .team-roster {
+    display: block;
+  }
+
+  .team-persona {
+    display: block;
+    border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+  }
+
+  .team-voce,
+  .team-persona:first-child .team-voce {
+    border: none;
+  }
+
+  .team-persona:first-child {
+    border-top: 1px solid rgba(26, 26, 26, 0.12);
+  }
+
+  /* Fisarmonica: + per aprire, x per chiudere */
+  .team-voce i {
+    display: block;
+  }
+
+  .team-pannello {
+    padding: 0 0 1.75rem;
+  }
+
+  /* Nome e ruolo sono già nella riga: nel pannello restano foto e bio */
+  .team-pannello .team-role,
+  .team-pannello .team-nome {
+    display: none;
+  }
+
+  .team-foto {
+    margin-bottom: 1.25rem;
+  }
+
+  .team-foto :global(img) {
+    aspect-ratio: 16 / 9;
   }
 }
 
-@media (max-width: 560px) {
-  .team-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+@media (max-width: 600px) {
+  .team-voce {
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    gap: .75rem;
+    padding: 1.1rem 0;
   }
 
-  .team-card-image {
+  .team-voce-nome {
+    font-size: 1.125rem;
+  }
+
+  .team-foto :global(img) {
     aspect-ratio: 4 / 3;
+  }
+
+  .team-bio {
+    font-size: 1rem;
   }
 }
 
@@ -560,24 +729,6 @@ const [lainate, rho] = sedi;
   padding: var(--section-y) 0;
   background: var(--bg-soft);
   position: relative;
-}
-
-.sede-section::before,
-.sede-section::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--primary-blue);
-}
-
-.sede-section::before {
-  top: 0;
-}
-
-.sede-section::after {
-  bottom: 0;
 }
 
 .sede-header {
@@ -599,21 +750,12 @@ const [lainate, rho] = sedi;
 }
 
 /* Sedi: foto e testo alternati, come le righe della pagina Corsi */
-.sedi {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
 .sede {
   display: grid;
   grid-template-columns: minmax(0, .9fr) minmax(0, 1fr);
   gap: 4.5rem;
   align-items: center;
   padding: 3.5rem 0;
-}
-
-.sede + .sede {
-  border-top: 1px solid rgba(26, 26, 26, 0.1);
 }
 
 .sede:nth-child(even) .sede-foto {
@@ -683,17 +825,37 @@ const [lainate, rho] = sedi;
 
 @media (max-width: 900px) {
   .sede {
-    grid-template-columns: 1fr;
     gap: 2.5rem;
-    padding: 3rem 0;
+    align-items: start;
+    padding: 2.5rem 0;
+  }
+
+  .sede:first-child {
+    padding-top: 0;
+  }
+
+  .sede-foto {
+    margin: 0 1rem 1rem;
+  }
+
+  .sede-nome {
+    font-size: var(--text-2xl);
+  }
+}
+
+@media (max-width: 640px) {
+  .sede {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
   }
 
   .sede:nth-child(even) .sede-foto {
     order: 0;
   }
 
+  /* Sotto i 600px la cornice sporge a sinistra e in basso: spazio solo da quei lati */
   .sede-foto {
-    margin: 0 1rem 1rem;
+    margin: 0 0 .75rem .75rem;
   }
 }
 
@@ -704,66 +866,31 @@ const [lainate, rho] = sedi;
   }
 }
 
-@media (max-width: 1024px) {
-  .numero-item {
-    padding: 1.5rem 2rem;
-  }
-}
-
 @media (max-width: 900px) {
   .fondatrice-layout {
-    grid-template-columns: 1fr;
-    gap: 4rem;
-  }
-
-  .fondatrice-visual {
-    order: -1;
     display: flex;
-    justify-content: center;
-  }
-
-  .fondatrice-image-wrapper {
-    max-width: 400px;
-  }
-
-  .fondatrice-image-wrapper :global(img) {
-    height: 480px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
   }
 
   .fondatrice-content {
-    text-align: center;
+    display: contents;
   }
 
-  .numero-item {
-    padding: 1.5rem 2rem;
+  .fondatrice-label {
+    order: 1;
   }
 
-}
-
-@media (max-width: 768px) {
-
-  .fondatrice-section,
-  .storia-section,
-  .numeri-section,
-  .team-section,
-  .sede-section {
-    padding: 4rem 0;
+  .fondatrice-name {
+    order: 2;
+    margin-bottom: 1.75rem;
   }
 
-  .numero-value {
-    font-size: var(--text-4xl);
-  }
-
-}
-
-@media (max-width: 480px) {
-
-  .fondatrice-section,
-  .storia-section,
-  .numeri-section,
-  .team-section,
-  .sede-section {
-    padding: 3rem 0;
+  /* La cornice "--sinistra" sporge a destra e in basso: spazio dentro i margini */
+  .fondatrice-visual {
+    order: 3;
+    margin: 0 1.5rem 2.75rem 0;
   }
 
   .fondatrice-image-wrapper {
@@ -771,43 +898,62 @@ const [lainate, rho] = sedi;
   }
 
   .fondatrice-image-wrapper :global(img) {
-    max-width: 100%;
-    height: 350px;
-    border-radius: var(--radius-img);
+    aspect-ratio: 3 / 2;
+    object-position: center 25%;
   }
 
-  .numeri-grid {
-    flex-direction: column;
-    gap: 0;
+  .fondatrice-bio {
+    order: 4;
   }
 
-  .numero-item {
-    padding: 2rem;
-    flex: none;
-    width: 100%;
+  .fondatrice-citazione {
+    order: 5;
   }
 
-  .numero-item:not(:last-child)::after {
-    right: auto;
-    left: 50%;
-    transform: translateX(-50%);
-    top: auto;
-    bottom: 0;
-    width: 80%;
-    height: 1px;
-    background: rgba(135, 206, 235, 0.4);
+  /* Intestazioni a sinistra, allineate ai contenuti sotto */
+  .storia-header,
+  .team-header,
+  .sede-header {
+    text-align: left;
+    margin-bottom: 2.5rem;
   }
 
-  .numero-value {
-    font-size: var(--text-4xl);
+  .team-header {
+    margin-left: 0;
   }
 
-  .numero-suffix {
-    font-size: var(--text-2xl);
+}
+
+@media (max-width: 768px) {
+
+  .fondatrice-section,
+.storia-section,
+.team-section,
+.sede-section {
+    padding: 4rem 0;
   }
 
-  .numero-label {
-    font-size: var(--text-base);
+}
+
+@media (max-width: 480px) {
+
+  .fondatrice-section,
+.storia-section,
+.team-section,
+.sede-section {
+    padding: 3rem 0;
+  }
+
+  .fondatrice-visual {
+    margin: 0 0 2rem .75rem;
+  }
+
+  .fondatrice-image-wrapper :global(img) {
+    aspect-ratio: 4 / 3;
+  }
+
+  .fondatrice-bio :global(p) {
+    font-size: 1rem;
   }
 
 }

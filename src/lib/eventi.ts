@@ -20,9 +20,11 @@ export interface Evento {
   costo: string;
   creato: string;
   modificato: string;
+  /** Creato dal generatore demo della dashboard */
+  demo?: boolean;
 }
 
-export type EventoInput = Partial<Record<Exclude<keyof Evento, 'creato' | 'modificato'>, string>>;
+export type EventoInput = Partial<Record<Exclude<keyof Evento, 'creato' | 'modificato' | 'demo'>, string>>;
 
 /** Errore di validazione con messaggio da mostrare all'utente. */
 export class ErroreEvento extends Error {}
@@ -134,6 +136,8 @@ export async function salvaEvento(input: EventoInput): Promise<{ evento: Evento;
       costo: pulito(costo),
       creato: esistente?.creato ?? adesso,
       modificato: adesso,
+      // Un evento demo modificato resta demo (si rimuove con gli altri)
+      ...(esistente?.demo && { demo: true }),
     };
 
     const idx = eventi.findIndex((e) => e.id === evento.id);

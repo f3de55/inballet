@@ -1,0 +1,100 @@
+---
+/**
+ * Generatore di dati demo (eventi o messaggi del chatbot) con rimozione.
+ * Logica in src/scripts/dashboard/demo.ts, backend in src/lib/demo.ts.
+ */
+import { MAX_EVENTI, MAX_MESSAGGI } from '../../lib/demo';
+
+interface Props {
+  tipo: 'eventi' | 'chatbot';
+  /** Elementi demo già presenti */
+  presenti: number;
+  /** Solo chatbot: posti liberi nel registro (max 10.000 righe) */
+  liberi?: number;
+}
+
+const { tipo, presenti, liberi } = Astro.props;
+const eventi = tipo === 'eventi';
+const max = eventi ? MAX_EVENTI : Math.max(0, Math.min(MAX_MESSAGGI, liberi ?? MAX_MESSAGGI));
+const iniziale = Math.min(eventi ? 10 : 300, max);
+const rapidi = (eventi ? [5, 10, 20, 40] : [100, 300, 1000, 2000]).filter((n) => n <= max);
+const unita = eventi ? 'eventi' : 'messaggi';
+---
+
+<div class="modal modal--piccola" id="modalDemo" role="dialog" aria-modal="true" aria-labelledby="demoTitolo"
+     data-demo={tipo} data-presenti={presenti}>
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2 id="demoTitolo">Dati demo</h2>
+            <button type="button" class="modal-close" data-chiudi-demo aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body">
+            <p class="demo-intro">
+                {eventi
+                    ? 'Crea eventi di prova completi (titolo, data, ora, tipo, luogo, descrizione, destinatari, costo e locandina) per vedere come appaiono qui e nel calendario del sito.'
+                    : 'Crea messaggi di prova nel registro del chatbot (domande, risposte, orari e persone diverse) per riempire numeri e grafici. Il chatbot vero non viene usato.'}
+                {' '}Restano segnati come demo e si tolgono con un clic.
+            </p>
+
+            {max > 0 ? (
+                <form id="formDemo" data-unita={unita}>
+                    <div class="campo">
+                        <label for="demoQuanti">Quanti {unita}</label>
+                        <div class="quantita">
+                            <button type="button" data-passo="-1" aria-label="Meno">−</button>
+                            <input type="number" id="demoQuanti" min="1" max={max} value={iniziale} inputmode="numeric" required>
+                            <button type="button" data-passo="1" aria-label="Più">+</button>
+                        </div>
+                        <div class="chips">
+                            {rapidi.map((n) => <button type="button" class="chip" data-valore={n}>{n}</button>)}
+                        </div>
+                        <small class="nota">Massimo {max.toLocaleString('it-IT')} per volta.</small>
+                    </div>
+
+                    {eventi ? (
+                        <label class="spunta">
+                            <input type="checkbox" id="demoPassati" checked>
+                            <span>Includi anche qualche evento passato</span>
+                        </label>
+                    ) : (
+                        <div class="campo">
+                            <label for="demoGiorni">Distribuiti negli ultimi</label>
+                            <select id="demoGiorni">
+                                <option value="7">7 giorni</option>
+                                <option value="30" selected>30 giorni</option>
+                                <option value="90">90 giorni</option>
+                            </select>
+                        </div>
+                    )}
+
+                    <button type="submit" class="btn btn-primary btn-pieno" id="demoGenera">Genera {iniziale} {unita}</button>
+                </form>
+            ) : (
+                <p class="nota">Il registro del chatbot è pieno (10.000 righe): rimuovi i messaggi demo per crearne altri.</p>
+            )}
+
+            <div class="demo-presenti">
+                {presenti > 0 ? (
+                    <>
+                        <p>{eventi ? 'Eventi' : 'Messaggi'} demo presenti: <strong>{presenti.toLocaleString('it-IT')}</strong></p>
+                        <button type="button" class="btn-link btn-link--rosso" id="demoRimuovi">Rimuovi tutti i {unita} demo</button>
+                    </>
+                ) : (
+                    <p class="nota">Nessun {eventi ? 'evento' : 'messaggio'} demo presente.</p>
+                )}
+            </div>
+
+            <div class="zona-pericolo">
+                <div>
+                    <p><strong>Elimina tutto</strong></p>
+                    <p class="nota">Eventi, locandine e dati del chatbot, anche quelli veri.</p>
+                </div>
+                <button type="button" class="btn btn-danger-contorno" data-apri-elimina>Elimina tutto…</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    import '../../scripts/dashboard/demo';
+</script>

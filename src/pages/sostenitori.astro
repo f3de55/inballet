@@ -1,12 +1,24 @@
 ---
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import Img from '../components/Img.astro';
+import SostenitoriSection from '../components/SostenitoriSection.astro';
 import { webp } from '../lib/images';
+import { scuola } from '../data/scuola';
 
 const bg: Record<string, string> = {
   'gallery-2.jpg': await webp('gallery-2.jpg', 1920),
   'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
 };
+
+const paypal = 'https://www.paypal.com/cgi-bin/webscr?business=inballetasd%40gmail.com&cmd=_donations&item_name=Custom%20Item&item_number=donazione&currency_code=EUR';
+
+const destinazioni: { nome: string; href?: string }[] = [
+  { nome: 'Lezioni gratuite per ragazzi con difficoltà economiche' },
+  { nome: 'Progetto NoiConVoi, danza inclusiva dal 2013', href: '/progetto-noiconvoi' },
+  { nome: 'Classi integrate per bambini con bisogni speciali', href: '/classi-integrate' },
+  { nome: 'Spettacoli inclusivi aperti alla comunità' },
+];
 ---
 
 <Base
@@ -27,73 +39,88 @@ const bg: Record<string, string> = {
             </div>
         </section>
 
-        <!-- Intro Section -->
+        <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo) -->
         <section class="sost-intro-section">
-            <div class="sost-intro-wrapper intro-editoriale">
-                <span class="sost-intro-label eyebrow">La Nostra Missione</span>
-                <h2 class="sost-intro-title titolo-sezione">Inclusione <em>attraverso la danza</em></h2>
-                <p class="sost-intro-text">
-                    Dal 2013 accogliamo giovani e adulti con disabilità nella provincia di Milano, offrendo percorsi di danza accessibili e inclusivi. Il nostro lavoro è reso possibile grazie al supporto di chi crede nell'importanza dell'arte come strumento educativo.
-                </p>
-                <p class="sost-intro-text">
-                    Oltre 10 anni di attività, 50+ famiglie coinvolte e un team completamente volontario che crede nel potere dell'arte come strumento di inclusione sociale.
-                </p>
-            </div>
-        </section>
-
-        <!-- Dona Section -->
-        <section id="dona" class="sost-dona-section sezione-scura">
-            <div class="sost-dona-wrapper">
-                <span class="sost-dona-label eyebrow">Dona Ora</span>
-                <h2 class="sost-dona-title titolo-sezione">Il tuo contributo <em>fa la differenza</em></h2>
-                <p class="sost-dona-text">Ogni donazione ci aiuta a continuare il nostro lavoro di inclusione. Sostieni i progetti sociali di InBallet e permetti a più persone di vivere l'esperienza della danza.</p>
-                <a href="https://www.paypal.com/cgi-bin/webscr?business=inballetasd%40gmail.com&cmd=_donations&item_name=Custom%20Item&item_number=donazione&currency_code=EUR" target="_blank" rel="noopener" class="sost-dona-btn">
-                    <i class="fab fa-paypal"></i>
-                    Dona con PayPal
-                </a>
-                <div class="sost-dona-secure">
-                    <i class="fas fa-lock"></i>
-                    <span>Pagamento sicuro tramite PayPal</span>
+            <div class="container sost-intro-layout">
+                <div class="sost-intro-content">
+                    <span class="sost-intro-label eyebrow">La nostra missione</span>
+                    <h2 class="sost-intro-title titolo-sezione">Inclusione <em>attraverso la danza</em></h2>
+                    <div class="sost-intro-testo">
+                        <p>Dal 2013 accogliamo giovani e adulti con disabilità nella provincia di Milano, offrendo percorsi di danza accessibili e inclusivi. Il nostro lavoro è reso possibile grazie al supporto di chi crede nell'importanza dell'arte come strumento educativo.</p>
+                        <p>Oltre 10 anni di attività, più di 50 famiglie coinvolte e un team completamente volontario che crede nel potere dell'arte come strumento di inclusione sociale.</p>
+                    </div>
+                </div>
+                <div class="sost-intro-visual foto-cornice">
+                    <Img src="gallery-6.jpg" alt="Allievi in scena durante uno spettacolo" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
                 </div>
             </div>
         </section>
 
-        <!-- Progetti Section -->
-        <section class="sost-utilizzo-section">
-            <div class="sost-intro-wrapper intro-editoriale">
-                <span class="sost-intro-label eyebrow">I Progetti che Sostieni</span>
-                <h2 class="sost-intro-title titolo-sezione">Dove va <em>la tua donazione</em></h2>
-                <div class="sost-utilizzo-list" style="max-width:600px;margin:2rem auto 0">
-                    <div class="sost-utilizzo-item">
-                        <i class="fas fa-check"></i>
-                        <span>Lezioni gratuite per ragazzi con difficoltà economiche</span>
-                    </div>
-                    <div class="sost-utilizzo-item">
-                        <i class="fas fa-check"></i>
-                        <span>Progetto NoiConVoi - danza inclusiva dal 2013</span>
-                    </div>
-                    <div class="sost-utilizzo-item">
-                        <i class="fas fa-check"></i>
-                        <span>Classi integrate per bambini con bisogni speciali</span>
-                    </div>
-                    <div class="sost-utilizzo-item">
-                        <i class="fas fa-check"></i>
-                        <span>Spettacoli inclusivi aperti alla comunità</span>
-                    </div>
+        <!-- Dona: testo a sinistra, pulsante PayPal a destra -->
+        <section id="dona" class="sost-dona-section sezione-scura" aria-labelledby="dona-titolo">
+            <div class="container sost-dona-layout">
+                <div class="sost-dona-testo">
+                    <span class="eyebrow">Dona ora</span>
+                    <h2 class="titolo-sezione" id="dona-titolo">Il tuo contributo <em>fa la differenza</em></h2>
+                    <p class="intro-sezione">Ogni donazione ci aiuta a continuare il nostro lavoro di inclusione e permette a più persone di vivere l'esperienza della danza.</p>
+                </div>
+                <div class="sost-dona-azione">
+                    <a href={paypal} target="_blank" rel="noopener" class="btn-primary sost-dona-btn">
+                        <i class="fab fa-paypal" aria-hidden="true"></i> Dona con PayPal
+                    </a>
+                    <p class="sost-dona-nota">
+                        <i class="fas fa-lock" aria-hidden="true"></i>
+                        Pagamento sicuro tramite PayPal
+                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="corso-contatto-section sezione-scura">
-            <div class="corso-contatto-bg" style={`background: url('${bg['bg-progetti-territorio.jpg']}') center/cover no-repeat`}></div>
-            <div class="corso-contatto-overlay"></div>
-            <div class="corso-contatto-wrapper">
-                <div class="corso-contatto-content">
-                    <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
-                    <p class="intro-sezione">Contattaci per informazioni sui progetti o per collaborazioni aziendali.</p>
-                    <a href="mailto:info@inballet.it?subject=Informazioni%20Progetti%20Sociali" class="corso-btn-cta btn-primary">
-                        Contattaci <i class="fas fa-arrow-right"></i>
+        <!-- Destinazioni: intestazione a sinistra, elenco a destra (con link ai progetti che hanno una pagina) -->
+        <section class="sost-utilizzo-section" aria-labelledby="utilizzo-titolo">
+            <div class="container sost-utilizzo-layout">
+                <div class="sost-utilizzo-header">
+                    <span class="eyebrow">I progetti che sostieni</span>
+                    <h2 class="titolo-sezione" id="utilizzo-titolo">Dove va <em>la tua donazione</em></h2>
+                    <p class="intro-sezione">Le donazioni sostengono i progetti sociali di InBallet.</p>
+                </div>
+                <ul class="utilizzo-lista">
+                    {destinazioni.map((d) => (
+                        <li>
+                            {d.href ? (
+                                <a class="utilizzo utilizzo--link" href={d.href}>
+                                    <i class="fas fa-check" aria-hidden="true"></i>
+                                    <span class="utilizzo-nome">{d.nome}</span>
+                                    <i class="fas fa-arrow-right utilizzo-freccia" aria-hidden="true"></i>
+                                </a>
+                            ) : (
+                                <div class="utilizzo">
+                                    <i class="fas fa-check" aria-hidden="true"></i>
+                                    <span class="utilizzo-nome">{d.nome}</span>
+                                </div>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </section>
+
+        <!-- Loghi dei sostenitori (stessa sezione della homepage, senza il link a questa pagina) -->
+        <SostenitoriSection link={false} />
+
+        <!-- CTA -->
+        <section class="sost-cta-section sezione-scura">
+            <div class="sost-cta-bg" style={`background-image: url('${bg['bg-progetti-territorio.jpg']}')`}></div>
+            <div class="sost-cta-overlay"></div>
+            <div class="sost-cta-wrapper">
+                <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
+                <p class="intro-sezione">Contattaci per informazioni sui progetti o per proporre una collaborazione aziendale.</p>
+                <div class="sost-cta-buttons">
+                    <a href={`mailto:${scuola.email}?subject=Informazioni%20Progetti%20Sociali`} class="btn-primary">
+                        <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici
+                    </a>
+                    <a href={scuola.telefonoHref} class="btn-secondary">
+                        <i class="fas fa-phone" aria-hidden="true"></i> Chiamaci
                     </a>
                 </div>
             </div>
@@ -101,148 +128,311 @@ const bg: Record<string, string> = {
 </Base>
 
 <style>
+/* ---------- Intro ---------- */
 .sost-intro-section {
   padding: var(--section-y) 0;
-  background: #fff;
+  background: var(--white);
 }
 
-.sost-intro-wrapper {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.sost-intro-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 5rem;
+  align-items: center;
 }
 
 .sost-intro-label {
   display: block;
   margin-bottom: 1rem;
-  text-align: center;
 }
 
 .sost-intro-title {
-  margin-bottom: 2rem;
-  text-align: center;
+  margin-bottom: 1.75rem;
 }
 
-.sost-intro-text {
-  font-size: var(--text-lg);
+.sost-intro-testo p {
+  margin-bottom: 1.25rem;
+  font-size: 1.125rem;
   line-height: 1.8;
-  color: var(--text-light);
-  margin-bottom: 1.5rem;
-  text-align: center;
+  color: var(--text-dark);
 }
 
-.sost-intro-text :global(strong) {
-  color: var(--dark-navy);
-  font-weight: 600;
+.sost-intro-testo p:last-child {
+  margin-bottom: 0;
 }
 
+/* La cornice sporge a sinistra e in basso: spazio dentro la colonna */
+.sost-intro-visual {
+  max-width: 520px;
+  margin: 0 0 1.5rem 1.5rem;
+  justify-self: end;
+}
+
+.sost-intro-visual :global(img) {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* ---------- Dona ---------- */
 .sost-dona-section {
   padding: var(--section-y) 0;
   background: var(--dark-navy);
-  position: relative;
-  overflow: hidden;
 }
 
-.sost-dona-section::before {
-  content: '';
-  position: absolute;
-  top: -30%;
-  right: -10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);
-  border-radius: 50%;
+.sost-dona-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  gap: 5rem;
+  align-items: center;
 }
 
-.sost-dona-wrapper {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  position: relative;
-  z-index: 2;
-  text-align: center;
-}
-
-.sost-dona-label {
+.sost-dona-testo .eyebrow {
   display: block;
   margin-bottom: 1rem;
 }
 
-.sost-dona-title {
-  margin-bottom: 1.5rem;
+.sost-dona-testo .titolo-sezione {
+  margin-bottom: 1.25rem;
 }
 
-.sost-dona-text {
-  font-size: var(--text-lg);
-  color: rgba(255,255,255,.7);
-  line-height: 1.8;
-  margin-bottom: 2.5rem;
+.sost-dona-azione {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding-left: 3rem;
+  border-left: 2px solid var(--primary-blue);
 }
 
 .sost-dona-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: .8rem;
-  background: #0070ba;
-  color: #fff;
-  padding: 1.2rem 3rem;
-  border-radius: 10px;
-  font-size: var(--text-lg);
-  font-weight: 600;
-  text-decoration: none;
-  transition: all .3s ease;
+  padding: 1.15rem 2.75rem;
+  font-size: 1rem;
 }
 
-.sost-dona-btn:hover {
-  background: #005a9e;
-  transform: translateY(-2px);
+.sost-dona-btn i {
+  font-size: 1.25rem;
 }
 
-.sost-dona-btn :global(i) {
-  font-size: 1.4rem;
-}
-
-.sost-dona-secure {
+.sost-dona-nota {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: .5rem;
-  margin-top: 1.5rem;
-  font-size: var(--text-sm);
-  color: rgba(255,255,255,.5);
+  gap: .6rem;
+  margin: 0;
+  font-size: .9375rem;
+  color: rgba(255, 255, 255, .65);
 }
 
-.sost-dona-secure :global(i) {
-  color: #22c55e;
+.sost-dona-nota i {
+  color: var(--primary-blue);
 }
 
+/* ---------- Destinazioni ---------- */
 .sost-utilizzo-section {
   padding: var(--section-y) 0;
-  background: #fff;
+  background: var(--bg-soft);
 }
 
-.sost-utilizzo-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.sost-utilizzo-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 5rem;
+  align-items: start;
 }
 
-.sost-utilizzo-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
+.sost-utilizzo-header .titolo-sezione {
+  margin-bottom: 1.25rem;
 }
 
-.sost-utilizzo-item :global(i) {
-  width: 20px;
-  color: var(--primary-blue-dark);
-  font-size: 1rem;
-  margin-top: 3px;
+.utilizzo-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.sost-utilizzo-item :global(span) {
-  font-size: var(--text-base);
+.utilizzo-lista li {
+  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.utilizzo-lista li:last-child {
+  border-bottom: none;
+}
+
+.utilizzo {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: .75rem;
+  padding: 1.5rem 0;
   color: var(--dark-navy);
-  line-height: 1.6;
+  text-decoration: none;
+}
+
+.utilizzo-lista li:first-child .utilizzo {
+  padding-top: .5rem;
+}
+
+.utilizzo > .fa-check {
+  font-size: 1rem;
+  color: var(--primary-blue-dark);
+}
+
+.utilizzo-nome {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  transition: color .3s ease;
+}
+
+.utilizzo-freccia {
+  font-size: .9375rem;
+  color: var(--primary-blue-dark);
+  transition: transform .3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .utilizzo--link:hover .utilizzo-nome {
+    color: var(--primary-blue-dark);
+  }
+
+  .utilizzo--link:hover .utilizzo-freccia {
+    transform: translateX(6px);
+  }
+}
+
+/* ---------- CTA ---------- */
+.sost-cta-section {
+  position: relative;
+  padding: var(--section-y) 0;
+  overflow: hidden;
+}
+
+.sost-cta-bg,
+.sost-cta-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.sost-cta-bg {
+  background: center / cover no-repeat;
+}
+
+.sost-cta-overlay {
+  background: linear-gradient(135deg, rgba(26, 26, 26, .9) 0%, rgba(42, 42, 42, .85) 100%);
+}
+
+.sost-cta-wrapper {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.sost-cta-wrapper .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
+.sost-cta-wrapper .intro-sezione {
+  margin-bottom: 2.5rem;
+}
+
+.sost-cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  /* Intro: etichetta e titolo, foto, testo */
+  .sost-intro-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .sost-intro-content {
+    display: contents;
+  }
+
+  .sost-intro-label {
+    order: 1;
+  }
+
+  .sost-intro-title {
+    order: 2;
+  }
+
+  .sost-intro-visual {
+    order: 3;
+    max-width: none;
+    margin: 0 0 2.75rem 1.5rem;
+  }
+
+  .sost-intro-visual :global(img) {
+    aspect-ratio: 3 / 2;
+  }
+
+  .sost-intro-testo {
+    order: 4;
+  }
+
+  /* Dona e destinazioni: una colonna */
+  .sost-dona-layout,
+  .sost-utilizzo-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  .sost-dona-azione {
+    padding: .25rem 0 .25rem 1.5rem;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .sost-intro-visual {
+    margin: 0 0 2rem .75rem;
+  }
+
+  .sost-intro-visual :global(img) {
+    aspect-ratio: 4 / 3;
+  }
+
+  .sost-intro-testo p {
+    font-size: 1rem;
+  }
+
+  /* Dona: pulsante a tutta larghezza, senza filetto laterale */
+  .sost-dona-azione {
+    align-items: stretch;
+    padding: 0;
+    border-left: none;
+  }
+
+  .sost-dona-nota {
+    justify-content: center;
+    font-size: .875rem;
+  }
+
+  .utilizzo {
+    padding: 1.25rem 0;
+  }
+
+  .utilizzo-nome {
+    font-size: 1.125rem;
+  }
+
+  .sost-cta-wrapper {
+    padding: 0 1.5rem;
+  }
+
+  .sost-cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 </style>

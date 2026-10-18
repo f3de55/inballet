@@ -9,6 +9,8 @@ import { isLoggedIn, login, logout, passwordValida } from '../lib/auth';
 import { rispondi } from '../lib/chatbot';
 import { aggiungiTipo, eliminaEvento, ErroreEvento, eventiOrdinati, leggiTipi, rimuoviTipo, salvaEvento } from '../lib/eventi';
 import { caricaImmagini, elencaImmagini, eliminaImmagine } from '../lib/uploads';
+import { generaChat, generaEventi, MAX_EVENTI, MAX_MESSAGGI, rimuoviChatDemo, rimuoviEventiDemo } from '../lib/demo';
+import { eliminaTutto, PAROLA_CONFERMA } from '../lib/pulizia';
 
 /** Blocca le azioni della dashboard senza sessione valida. */
 async function soloAdmin(context: ActionAPIContext) {
@@ -129,6 +131,50 @@ export const server = {
         await soloAdmin(context);
         const errore = await eliminaImmagine(nome);
         if (errore) throw new ActionError({ code: 'BAD_REQUEST', message: errore });
+      },
+    }),
+  },
+
+  /** Dati demo della dashboard (sempre marcati `demo`, rimovibili senza toccare i dati veri). */
+  demo: {
+    eventi: defineAction({
+      input: z.object({ quanti: z.number().int().min(1).max(MAX_EVENTI), passati: z.boolean() }),
+      handler: async ({ quanti, passati }, context) => {
+        await soloAdmin(context);
+        return { creati: await generaEventi(quanti, passati) };
+      },
+    }),
+
+    rimuoviEventi: defineAction({
+      handler: async (_, context) => {
+        await soloAdmin(context);
+        return { rimossi: await rimuoviEventiDemo() };
+      },
+    }),
+
+    chatbot: defineAction({
+      input: z.object({ quanti: z.number().int().min(1).max(MAX_MESSAGGI), giorni: z.number().int().min(1).max(365) }),
+      handler: async ({ quanti, giorni }, context) => {
+        await soloAdmin(context);
+        return { creati: await generaChat(quanti, giorni) };
+      },
+    }),
+
+    rimuoviChatbot: defineAction({
+      handler: async (_, context) => {
+        await soloAdmin(context);
+        return { rimossi: await rimuoviChatDemo() };
+      },
+    }),
+
+    /** Elimina TUTTI i dati scelti (anche quelli veri). Serve la parola di conferma. */
+    eliminaTutto: defineAction({
+      input: z.object({ eventi: z.boolean(), chatbot: z.boolean(), conferma: z.string() }),
+      handler: async ({ eventi, chatbot, conferma }, context) => {
+        await soloAdmin(context);
+        if (conferma.trim().toUpperCase() !== PAROLA_CONFERMA) throw new ActionError({ code: 'BAD_REQUEST', message: `Scrivi ${PAROLA_CONFERMA} per confermare` });
+        if (!eventi && !chatbot) throw new ActionError({ code: 'BAD_REQUEST', message: 'Scegli cosa eliminare' });
+        return eliminaTutto({ eventi, chatbot });
       },
     }),
   },

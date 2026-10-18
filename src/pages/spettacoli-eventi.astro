@@ -24,111 +24,97 @@ const bg: Record<string, string> = {
             </div>
         </section>
 
-        <!-- Calendario -->
-        <section id="calendario" class="eventi-section">
-            <div class="eventi-wrapper">
-                <!-- Messaggio Nessun Evento -->
-                <div id="noEventiMsg" style="display:none;text-align:center;padding:4rem 2rem">
-                    <i class="fas fa-calendar-times" style="font-size:4rem;color:#ccc;margin-bottom:1.5rem"></i>
-                    <h3 style="font-size:1.5rem;color:var(--dark-navy);margin-bottom:.5rem">Nessun evento disponibile</h3>
-                    <p style="color:var(--text-light);font-size:1rem">Al momento non ci sono eventi in programma. Torna presto per scoprire le novità!</p>
+        <!-- Calendario: elenco dei prossimi appuntamenti (vista principale) o griglia del mese -->
+        <section id="calendario" class="eventi-section" aria-labelledby="eventi-titolo">
+            <div class="container">
+                <header class="eventi-header">
+                    <div class="eventi-intro">
+                        <span class="eyebrow">Calendario</span>
+                        <h2 class="titolo-sezione" id="eventi-titolo">Prossimi <em>appuntamenti</em></h2>
+                        <p class="intro-sezione">Spettacoli, saggi, workshop e lezioni aperte a Lainate e Rho. Apri un evento per leggere i dettagli e aggiungerlo al tuo calendario.</p>
+                    </div>
+                    <div class="vista-switch" id="vistaSwitch" role="group" aria-label="Visualizzazione" hidden>
+                        <button type="button" data-vista="elenco" aria-pressed="true"><i class="fas fa-list" aria-hidden="true"></i> Elenco</button>
+                        <button type="button" data-vista="calendario" aria-pressed="false"><i class="fas fa-calendar-alt" aria-hidden="true"></i> Calendario</button>
+                    </div>
+                </header>
+
+                <p class="eventi-stato" id="eventiStato" aria-live="polite">Caricamento degli appuntamenti…</p>
+
+                <!-- Nessun appuntamento futuro (gli eventi passati restano consultabili sotto) -->
+                <div class="eventi-vuoto" id="eventiVuoto" hidden>
+                    <h3>Nessun appuntamento in programma</h3>
+                    <p>Stiamo preparando le prossime date: spettacoli, saggi e workshop vengono pubblicati qui appena confermati.</p>
+                    <a href="/contatti" class="link-cta">
+                        Chiedi informazioni
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
                 </div>
 
-                <!-- Calendario Content -->
-                <div id="calendarioContent">
-                    <!-- Tabs -->
-                    <div class="vista-tabs">
-                        <button class="vista-tab active" data-vista="mese">Mese</button>
-                        <button class="vista-tab" data-vista="settimana">Settimana</button>
-                    </div>
+                <!-- Vista elenco -->
+                <div class="vista-elenco" id="vistaElenco" hidden>
+                    <div id="agendaProssimi"></div>
+                    <details class="agenda-passati" id="agendaPassatiWrap" hidden>
+                        <summary>
+                            Eventi passati <span class="agenda-passati-n" id="passatiConteggio"></span>
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </summary>
+                        <div id="agendaPassati"></div>
+                    </details>
+                </div>
 
-                    <!-- Vista Mese -->
-                    <div class="vista-mese active" id="vistaMese">
+                <!-- Vista calendario: griglia del mese -->
+                <div class="vista-calendario" id="vistaCalendario" hidden>
                     <div class="calendario-nav">
-                        <div class="nav-mese"><button id="btnMesePrev" title="Mese precedente"><i class="fas fa-chevron-left"></i></button></div>
-                        <h2 class="mese-corrente" id="meseCorrente"></h2>
-                        <div class="nav-mese"><button id="btnMeseNext" title="Mese successivo"><i class="fas fa-chevron-right"></i></button></div>
+                        <h3 class="calendario-mese" id="meseCorrente" aria-live="polite"></h3>
+                        <div class="calendario-frecce">
+                            <button type="button" id="btnMesePrev" aria-label="Mese precedente"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+                            <button type="button" id="btnMeseNext" aria-label="Mese successivo"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+                        </div>
                     </div>
-                    <div class="calendario-container">
-                        <div class="calendario-grid" id="calendarioGrid"></div>
-                    </div>
-                </div>
-
-                <!-- Vista Settimana -->
-                <div class="vista-settimana" id="vistaSettimana">
-                    <div class="calendario-nav">
-                        <div class="nav-mese"><button id="btnSettPrev" title="Settimana precedente"><i class="fas fa-chevron-left"></i></button></div>
-                        <h2 class="mese-corrente" id="rangeSettimana"></h2>
-                        <div class="nav-mese"><button id="btnSettNext" title="Settimana successiva"><i class="fas fa-chevron-right"></i></button></div>
-                    </div>
-                    <div class="settimana-calendario-container">
-                        <div class="settimana-headers" id="settimanaHeaders"></div>
-                        <div class="settimana-grid" id="settimanaGrid"></div>
-                    </div>
-                </div>
+                    <div class="calendario-grid" id="calendarioGrid"></div>
                 </div>
             </div>
         </section>
 
     <Fragment slot="after-main">
-    <!-- Modale Evento -->
-    <div class="evento-modal" id="eventoModal">
-        <div class="modal-content">
-            <button type="button" class="modal-close" data-chiudi-evento title="Chiudi" aria-label="Chiudi"><i class="fas fa-times"></i></button>
-            <div class="modal-header">
-                <div class="modal-badges" id="modalBadges"></div>
-                <h2 class="modal-titolo" id="modalTitolo"></h2>
-                <div class="modal-data-row">
-                    <span class="modal-data" id="modalData"></span>
-                    <button type="button" class="modal-share-btn" id="btnCondividi" title="Condividi evento" aria-label="Condividi evento"><i class="fas fa-share-alt"></i></button>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="modal-main-grid" id="modalMainGrid">
-                    <div class="modal-dettagli">
-                        <div class="modal-dettagli-title">Dettagli dell'Evento</div>
-                        <p class="modal-descrizione" id="modalDescrizione"></p>
+    <!-- Dettaglio evento -->
+    <dialog class="evento-dialog" id="eventoDialog" aria-labelledby="dialogTitolo">
+        <div class="evento-dialog-barra">
+            <button type="button" class="evento-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+        </div>
+        <div class="evento-dialog-corpo" id="dialogCorpo">
+            <button type="button" class="evento-locandina" id="dialogLocandinaBtn" aria-label="Ingrandisci la locandina" hidden>
+                <img id="dialogLocandina" src="data:," alt="">
+                <span class="evento-locandina-zoom" aria-hidden="true"><i class="fas fa-expand"></i></span>
+            </button>
+            <div class="evento-dialog-testo">
+                <p class="evento-etichette" id="dialogEtichette"></p>
+                <h2 class="evento-dialog-titolo" id="dialogTitolo"></h2>
+                <dl class="evento-dettagli" id="dialogDettagli"></dl>
+                <div class="evento-descrizione" id="dialogDescrizione"></div>
+                <div class="evento-azioni">
+                    <div class="evento-azioni-calendario" id="dialogCalendario">
+                        <span class="evento-azioni-label">Aggiungi al calendario</span>
+                        <div class="evento-azioni-btn">
+                            <button type="button" class="evento-azione" id="btnGoogle">Google Calendar</button>
+                            <button type="button" class="evento-azione" id="btnApple">Apple / Outlook</button>
+                        </div>
                     </div>
-                    <div class="modal-locandina" id="modalLocandinaWrap" style="display:none">
-                        <img id="modalLocandina" alt="Locandina evento">
-                    </div>
-                </div>
-
-                <div class="modal-info-grid" id="modalInfoGrid"></div>
-
-                <div class="modal-calendar-section">
-                    <div class="modal-calendar-title"><i class="fas fa-calendar-plus"></i> Aggiungi al tuo calendario</div>
-                    <div class="modal-calendar-btns">
-                        <button type="button" class="btn-calendar" id="btnGoogle" style="border:none;cursor:pointer">
-                            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-                            Google Calendar
-                        </button>
-                        <button type="button" class="btn-calendar" id="btnApple" style="border:none;cursor:pointer">
-                            <i class="fab fa-apple"></i>
-                            Apple Calendar
-                        </button>
-                    </div>
+                    <button type="button" class="evento-condividi" id="btnCondividi">
+                        <i class="fas fa-share-alt" aria-hidden="true"></i>
+                        <span id="btnCondividiTesto">Condividi</span>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
+    </dialog>
 
-    <!-- Modale Lista Eventi (multi-evento) -->
-    <div class="lista-modal" id="listaModal">
-        <div class="lista-modal-content">
-            <div class="lista-modal-header">
-                <h3 id="listaModalTitolo">Eventi del giorno</h3>
-                <button type="button" class="modal-close" data-chiudi-lista aria-label="Chiudi"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="lista-modal-body" id="listaModalBody"></div>
-        </div>
-    </div>
-
-    <!-- Lightbox Immagine -->
-    <div class="lightbox" id="lightbox">
-        <button type="button" class="lightbox-close" data-chiudi-lightbox title="Chiudi" aria-label="Chiudi"><i class="fas fa-times"></i></button>
-        <img id="lightboxImg" alt="Locandina ingrandita">
-    </div>
+    <!-- Locandina a tutto schermo -->
+    <dialog class="locandina-dialog" id="locandinaDialog" aria-label="Locandina">
+        <button type="button" class="locandina-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+        <img id="locandinaGrande" src="data:," alt="">
+    </dialog>
     </Fragment>
 
     <Fragment slot="scripts">
@@ -141,984 +127,954 @@ const bg: Record<string, string> = {
 <style>
 .eventi-section {
   padding: var(--section-y) 0;
-  background: #fff;
+  background: var(--white);
 }
 
-.eventi-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.eventi-section [hidden],
+.evento-dialog [hidden] {
+  display: none !important;
 }
 
-.vista-tabs {
+/* ---------- Intestazione: testo a sinistra, scelta della vista a destra ---------- */
+.eventi-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem 4rem;
+  margin-bottom: 3rem;
+}
+
+.eventi-intro {
+  max-width: 40rem;
+}
+
+.eventi-intro .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
+.eventi-intro .intro-sezione {
+  margin: 0;
+}
+
+.vista-switch {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--bg-soft);
+}
+
+.vista-switch button {
+  display: inline-flex;
+  align-items: center;
   gap: .5rem;
-  margin-bottom: 2rem;
-}
-
-.vista-tab {
-  padding: .8rem 1.5rem;
-  background: #f0f4f8;
+  min-height: 44px;
+  padding: 0 1.25rem;
   border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: 600;
+  border-radius: 999px;
+  background: none;
+  font: inherit;
   font-size: var(--text-sm);
+  font-weight: 600;
   color: var(--text-light);
-  transition: all .3s;
+  cursor: pointer;
+  transition: background-color .3s ease, color .3s ease;
 }
 
-.vista-tab.active {
-  background: var(--primary-blue);
+.vista-switch button i {
+  font-size: .8125rem;
+}
+
+.vista-switch button[aria-pressed="true"] {
+  background: var(--white);
+  color: var(--dark-navy);
+  box-shadow: var(--shadow-sm);
+}
+
+.eventi-stato {
+  padding: 2rem 0;
+  color: var(--text-light);
+}
+
+/* ---------- Nessun evento futuro ---------- */
+.eventi-vuoto {
+  max-width: 40rem;
+  padding: 2.5rem 0 1rem;
+}
+
+.eventi-vuoto h3 {
+  margin-bottom: .75rem;
+  font-size: var(--text-xl);
+  font-weight: 700;
   color: var(--dark-navy);
 }
 
-.vista-tab:hover:not(.active) {
-  background: #e2e8f0;
+.eventi-vuoto p {
+  margin-bottom: 1.75rem;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--text-light);
 }
 
+/* ---------- Elenco: mese, poi righe con data grande, testo e freccia ---------- */
+.eventi-section :global(.agenda-mese) {
+  margin: 3rem 0 0;
+  padding-bottom: 1rem;
+  font-size: .875rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--primary-blue-dark);
+  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.eventi-section :global(.agenda-mese:first-child) {
+  margin-top: 0;
+}
+
+.eventi-section :global(.agenda) {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.eventi-section :global(.agenda > li) {
+  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.eventi-section :global(.agenda-voce) {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.75rem 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.eventi-section :global(.agenda-data) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+}
+
+.eventi-section :global(.agenda-giorno) {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--dark-navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.eventi-section :global(.agenda-settimana) {
+  margin-top: .4rem;
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+
+.eventi-section :global(.agenda-testo) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .4rem;
+}
+
+.eventi-section :global(.agenda-sopra) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem .75rem;
+}
+
+.eventi-section :global(.agenda-vicino) {
+  padding: .2rem .6rem;
+  border-radius: 999px;
+  background: var(--primary-blue);
+  font-size: .6875rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--dark-navy);
+}
+
+.eventi-section :global(.agenda-tipo) {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--primary-blue-dark);
+}
+
+.eventi-section :global(.agenda-titolo) {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  color: var(--dark-navy);
+  transition: color .3s ease;
+}
+
+.eventi-section :global(.agenda-meta) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1.25rem;
+  font-size: .9375rem;
+  color: var(--text-light);
+}
+
+.eventi-section :global(.agenda-meta i) {
+  margin-right: .4rem;
+  font-size: .8125rem;
+  color: var(--primary-blue-dark);
+}
+
+.eventi-section :global(.agenda-cta) {
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .eventi-section :global(.agenda-voce:hover .agenda-titolo),
+  .eventi-section :global(.agenda-voce:hover .agenda-cta) {
+    color: var(--primary-blue-dark);
+  }
+
+  .eventi-section :global(.agenda-voce:hover .agenda-cta) {
+    border-color: var(--primary-blue-dark);
+  }
+
+  .eventi-section :global(.agenda-voce:hover .agenda-cta i) {
+    transform: translateX(6px);
+  }
+}
+
+/* Eventi passati: in fondo, chiusi, con colori spenti */
+.agenda-passati {
+  margin-top: 3.5rem;
+}
+
+.agenda-passati summary {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  min-height: 44px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--dark-navy);
+  cursor: pointer;
+  list-style: none;
+}
+
+.agenda-passati summary::-webkit-details-marker {
+  display: none;
+}
+
+.agenda-passati-n {
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+.agenda-passati summary i {
+  font-size: .75rem;
+  color: var(--primary-blue-dark);
+  transition: transform .3s ease;
+}
+
+.agenda-passati[open] summary i {
+  transform: rotate(180deg);
+}
+
+.agenda-passati[open] summary {
+  margin-bottom: 1.5rem;
+}
+
+.eventi-section :global(.passato .agenda-giorno),
+.eventi-section :global(.passato .agenda-titolo) {
+  color: var(--text-light);
+}
+
+/* ---------- Calendario del mese ---------- */
 .calendario-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-  padding: 1rem 1.5rem;
-  background: #f8fafc;
-  border-radius: 16px;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
 }
 
-.mese-corrente {
+.calendario-mese {
   font-size: var(--text-2xl);
   font-weight: 700;
   color: var(--dark-navy);
 }
 
-.nav-mese {
+.calendario-frecce {
   display: flex;
   gap: .5rem;
 }
 
-.nav-mese :global(button) {
+.calendario-frecce button {
+  display: grid;
+  place-items: center;
   width: 44px;
   height: 44px;
-  border: 1px solid rgba(135,206,235,.3);
-  background: #fff;
+  border: 1px solid rgba(26, 26, 26, 0.2);
   border-radius: 50%;
+  background: var(--white);
+  font-size: .875rem;
+  color: var(--dark-navy);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all .2s;
-  color: var(--text-dark);
-  font-size: 1rem;
+  transition: background-color .3s ease, border-color .3s ease;
 }
 
-.nav-mese :global(button:hover:not(:disabled)) {
-  background: var(--primary-blue);
-  border-color: var(--primary-blue);
-}
-
-.nav-mese :global(button:disabled) {
+.calendario-frecce button:disabled {
   opacity: .3;
-  cursor: not-allowed;
-}
-
-:global(.nav-mese button.hidden) {
-  visibility: hidden;
-}
-
-.calendario-container {
-  background: #fff;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid #e2e8f0;
-}
-
-.calendario-grid {
-  display: grid;
-  grid-template-columns: repeat(7,1fr);
-}
-
-:global(.giorno-header) {
-  padding: 1rem .5rem;
-  text-align: center;
-  font-weight: 600;
-  font-size: var(--text-xs);
-  color: var(--primary-blue-dark);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  background: #f8fafc;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-:global(.giorno-cella) {
-  min-height: 110px;
-  background: #fff;
-  padding: .8rem;
-  position: relative;
-  border-right: 1px solid #e9ecef;
-  border-bottom: 1px solid #e9ecef;
-  transition: all .2s;
-  cursor: pointer;
-}
-
-:global(.giorno-cella:nth-child(7n)) {
-  border-right: none;
-}
-
-:global(.giorno-cella:hover) {
-  background: #f8fafc;
-}
-
-:global(.giorno-cella.vuoto) {
-  background: #fafafa;
   cursor: default;
 }
 
-:global(.giorno-cella.vuoto:hover) {
-  background: #fafafa;
+@media (hover: hover) and (pointer: fine) {
+  .calendario-frecce button:not(:disabled):hover {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+  }
 }
 
-:global(.giorno-cella.oggi) {
-  background: rgba(135,206,235,.15);
-  border: 2px solid var(--primary-blue);
-}
-
-:global(.giorno-cella.passato) {
-  background: #f7f7f7;
-}
-
-:global(.giorno-cella.passato .giorno-numero) {
-  color: #aaa;
-}
-
-:global(.giorno-numero) {
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--dark-navy);
-  margin-bottom: .5rem;
-}
-
-:global(.giorno-cella.oggi .giorno-numero) {
-  color: var(--primary-blue-dark);
-  font-size: 1.2rem;
-}
-
-:global(.evento-mini) {
-  font-size: 11px;
-  padding: 5px 8px;
-  margin-bottom: 4px;
-  border-radius: 6px;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 500;
-  background: rgba(135,206,235,.3);
-  color: var(--dark-navy);
-  transition: all .2s;
-}
-
-:global(.evento-mini:hover) {
-  background: rgba(135,206,235,.5);
-}
-
-:global(.evento-mini.passato) {
-  background: #e0e0e0;
-  color: #888;
-}
-
-:global(.piu-eventi) {
-  font-size: 11px;
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  cursor: pointer;
-  padding: 2px 0;
-}
-
-.vista-settimana {
-  display: none;
-}
-
-.vista-settimana.active,
-.vista-mese.active {
-  display: block;
-}
-
-.vista-mese {
-  display: none;
-}
-
-.settimana-calendario-container {
-  background: #fff;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid #e2e8f0;
-}
-
-.settimana-headers {
-  display: none;
-}
-
-.settimana-grid {
+/* Il gap da 1px sul fondo grigio disegna i filetti tra le celle */
+.calendario-grid {
   display: grid;
-  grid-template-columns: repeat(7,1fr);
-  gap: 1rem;
-  padding: 1rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(26, 26, 26, 0.1);
+  border: 1px solid rgba(26, 26, 26, 0.1);
 }
 
-:global(.settimana-giorno) {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.2rem;
-  min-height: 200px;
-  border: 1px solid #e2e8f0;
-  position: relative;
-  cursor: pointer;
+.calendario-grid :global(.cal-intestazione) {
+  padding: .75rem .5rem;
+  background: var(--white);
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-align: center;
+  color: var(--primary-blue-dark);
 }
 
-:global(.settimana-giorno.oggi) {
-  border-color: var(--primary-blue);
-  background: rgba(135,206,235,.08);
-}
-
-:global(.settimana-giorno.passato) {
-  background: #f9f9f9;
-}
-
-:global(.settimana-giorno-info) {
-  margin-bottom: .8rem;
-}
-
-:global(.settimana-giorno-eventi) {
+.calendario-grid :global(.cal-giorno) {
   display: flex;
   flex-direction: column;
   gap: .3rem;
+  min-height: 7rem;
+  padding: .6rem;
+  background: var(--white);
 }
 
-:global(.settimana-data) {
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: var(--dark-navy);
-  margin-bottom: .3rem;
+.calendario-grid :global(.cal-giorno.vuoto) {
+  background: #fafafa;
 }
 
-:global(.settimana-nome) {
-  font-size: var(--text-xs);
-  color: var(--text-light);
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  margin-bottom: .3rem;
-}
-
-:global(.piu-eventi-sett) {
-  font-size: 11px;
-  color: var(--primary-blue-dark);
-  font-weight: 600;
-  cursor: pointer;
-  padding: 2px 0;
-}
-
-.evento-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.65);
-  z-index: 100000;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  backdrop-filter: blur(4px);
-}
-
-.evento-modal.open {
-  display: flex;
-}
-
-.modal-content {
-  background: #fff;
-  border-radius: 20px;
-  max-width: 680px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 25px 80px rgba(0,0,0,.25);
-  animation: modalSlide .3s ease;
-  position: relative;
-}
-
-@keyframes modalSlide {from{opacity:0;transform:translateY(30px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-
-.modal-close {
-  position: absolute;
-  top: 1.2rem;
-  right: 1.2rem;
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: #f5f5f5;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background .2s,color .2s;
-  color: #666;
-  font-size: 1rem;
-  z-index: 10;
-}
-
-.modal-close:hover {
-  background: #eee;
-  color: #333;
-}
-
-.modal-header {
-  padding: 2rem 2rem 1.5rem;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.modal-badges {
-  display: flex;
-  gap: .5rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-}
-
-:global(.modal-tipo-badge) {
-  display: inline-block;
-  padding: .4rem 1rem;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  background: var(--primary-blue);
-  color: var(--dark-navy);
-}
-
-:global(.modal-tipo-badge.passato) {
-  background: #e0e0e0;
-  color: #666;
-}
-
-.modal-titolo {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--dark-navy);
-  margin: 0 0 .8rem;
-  line-height: 1.25;
-  letter-spacing: -.02em;
-}
-
-.modal-data-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.modal-data {
-  color: var(--primary-blue-dark);
-  font-weight: 500;
-  font-size: 1rem;
-}
-
-.modal-share-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: var(--primary-blue);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--dark-navy);
-  transition: all .2s;
-  flex-shrink: 0;
-}
-
-.modal-share-btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 4px 12px rgba(135,206,235,.4);
-}
-
-.modal-body {
-  padding: 1.5rem 2rem 2rem;
-}
-
-.modal-main-grid {
+.calendario-grid :global(.cal-numero) {
   display: grid;
-  grid-template-columns: 1fr 180px;
-  gap: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-.modal-main-grid.no-image {
-  grid-template-columns: 1fr;
-}
-
-.modal-dettagli-title {
-  font-size: .85rem;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-size: .9375rem;
   font-weight: 600;
-  color: var(--text-light);
-  text-transform: uppercase;
-  letter-spacing: .8px;
-  margin-bottom: .8rem;
+  color: var(--dark-navy);
 }
 
-.modal-descrizione {
+.calendario-grid :global(.cal-giorno.passato .cal-numero) {
+  color: #aaa;
+}
+
+.calendario-grid :global(.cal-giorno.oggi .cal-numero) {
+  background: var(--dark-navy);
+  color: var(--white);
+}
+
+.calendario-grid :global(.cal-evento) {
+  display: block;
+  width: 100%;
+  padding: .3rem .5rem;
+  border: none;
+  border-left: 3px solid var(--primary-blue);
+  border-radius: 4px;
+  background: var(--bg-soft);
+  font: inherit;
+  font-size: .75rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: left;
+  color: var(--dark-navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: background-color .3s ease;
+}
+
+.calendario-grid :global(.cal-evento.passato) {
+  border-left-color: #ccc;
+  background: #f3f3f3;
+  color: var(--text-light);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .calendario-grid :global(.cal-evento:hover) {
+    background: rgba(135, 206, 235, 0.35);
+  }
+}
+
+/* Punto sotto il numero: usato al posto dei titoli sugli schermi stretti */
+.calendario-grid :global(.cal-punti) {
+  display: none;
+}
+
+/* ---------- Dialog dettaglio evento ---------- */
+.evento-dialog {
+  width: min(52rem, calc(100% - 3rem));
+  max-height: min(48rem, calc(100dvh - 3rem));
+  margin: auto;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-card);
+  background: var(--white);
+  color: var(--text-dark);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* Non la barra della pagina (blu su nero): sottile e discreta sul bianco */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(26, 26, 26, 0.22) transparent;
+}
+
+.evento-dialog[open] {
+  animation: evento-entra .3s ease;
+}
+
+.evento-dialog::backdrop {
+  background: rgba(12, 12, 12, 0.6);
+}
+
+@keyframes evento-entra {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+:global(html:has(dialog[open])) {
+  overflow: hidden;
+}
+
+/* Barra con la X: resta in alto mentre il contenuto scorre */
+.evento-dialog-barra {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  height: 0;
+}
+
+.evento-chiudi {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: 1rem 1rem 0 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow-sm);
   font-size: 1rem;
+  color: var(--dark-navy);
+  cursor: pointer;
+}
+
+.evento-dialog-corpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.5rem;
+  padding: 3rem;
+}
+
+/* PC: locandina a sinistra, ferma mentre il testo scorre */
+.evento-dialog-corpo.con-locandina {
+  grid-template-columns: 17rem minmax(0, 1fr);
+  align-items: start;
+}
+
+/* Locandina: stesso riquadro per tutti gli eventi. L'immagine è sempre intera
+   (contain); attorno, la stessa immagine sfocata. */
+.evento-locandina {
+  position: sticky;
+  top: 3rem;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--dark-navy);
+  overflow: hidden;
+  isolation: isolate;
+  cursor: zoom-in;
+}
+
+.evento-locandina::before {
+  content: '';
+  position: absolute;
+  inset: -2rem;
+  z-index: -1;
+  background: var(--locandina, none) center / cover no-repeat;
+  filter: blur(24px) brightness(.75);
+}
+
+.evento-locandina img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.evento-locandina-zoom {
+  position: absolute;
+  right: .6rem;
+  bottom: .6rem;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  font-size: .8125rem;
+  color: var(--white);
+}
+
+.evento-etichette {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem 1rem;
+  margin: 0 3rem .75rem 0;
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--primary-blue-dark);
+}
+
+.evento-etichette:empty {
+  display: none;
+}
+
+.evento-etichette :global(.evento-concluso) {
+  padding: .2rem .6rem;
+  border-radius: 999px;
+  background: #eee;
+  font-size: .6875rem;
+  letter-spacing: 1px;
+  color: var(--text-light);
+}
+
+.evento-dialog-titolo {
+  margin: 0 3rem 1.75rem 0;
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--dark-navy);
+}
+
+.evento-dialog-corpo.con-locandina .evento-dialog-titolo,
+.evento-dialog-corpo.con-locandina .evento-etichette {
+  margin-right: 1.5rem;
+}
+
+/* Dettagli: etichetta e valore su righe separate da filetti */
+.evento-dettagli {
+  margin: 0 0 1.75rem;
+}
+
+.evento-dettagli :global(div) {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: .8rem 0;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+}
+
+.evento-dettagli :global(div:first-child) {
+  padding-top: 0;
+}
+
+.evento-dettagli :global(dt) {
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1.6;
+  color: var(--text-light);
+}
+
+.evento-dettagli :global(dd) {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--dark-navy);
+}
+
+.evento-descrizione {
+  font-size: 1.0625rem;
   line-height: 1.75;
   color: var(--text-dark);
 }
 
-.modal-descrizione :global(ul) {
-  margin: .8rem 0;
-  padding-left: 1.5rem;
+.evento-descrizione:empty {
+  display: none;
 }
 
-.modal-descrizione :global(li) {
-  margin: .4rem 0;
+.evento-descrizione :global(ul) {
+  margin: .75rem 0;
+  padding-left: 1.25rem;
 }
 
-.modal-descrizione :global(b),
-.modal-descrizione :global(strong) {
+.evento-descrizione :global(li) {
+  margin: .3rem 0;
+}
+
+.evento-descrizione :global(b),
+.evento-descrizione :global(strong) {
   font-weight: 600;
 }
 
-.modal-descrizione :global(i),
-.modal-descrizione :global(em) {
+.evento-descrizione :global(i),
+.evento-descrizione :global(em) {
   font-style: italic;
 }
 
-.modal-locandina {
-  width: 180px;
-  height: auto;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0,0,0,.12);
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.modal-locandina :global(img) {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.modal-info-grid {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: .8rem;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #f0f0f0;
-}
-
-:global(.modal-info-card) {
+.evento-azioni {
   display: flex;
-  align-items: center;
-  gap: .7rem;
-  padding: .7rem .9rem;
-  background: #f8fafc;
-  border-radius: 10px;
-}
-
-:global(.modal-info-icon) {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: rgba(135,206,235,.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--primary-blue-dark);
-  flex-shrink: 0;
-  font-size: .85rem;
-}
-
-:global(.modal-info-text) {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-:global(.modal-info-label) {
-  font-weight: 600;
-  color: var(--dark-navy);
-  font-size: .7rem;
-  text-transform: uppercase;
-  letter-spacing: .3px;
-}
-
-:global(.modal-info-value) {
-  color: var(--text-dark);
-  font-size: .9rem;
-}
-
-.modal-calendar-section {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #f0f0f0;
-}
-
-.modal-calendar-title {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  font-size: .8rem;
-  font-weight: 600;
-  color: var(--text-light);
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  margin-bottom: 1rem;
-}
-
-.modal-calendar-title :global(i) {
-  color: var(--primary-blue-dark);
-}
-
-.modal-calendar-btns {
-  display: flex;
-  gap: .8rem;
   flex-wrap: wrap;
-}
-
-.btn-calendar {
-  display: flex;
-  align-items: center;
-  gap: .7rem;
-  padding: .9rem 1.3rem;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: .9rem;
-  transition: all .2s;
-  border: 1px solid var(--primary-blue);
-  background: rgba(135,206,235,.08);
-  color: var(--dark-navy);
-  cursor: pointer;
-}
-
-.btn-calendar :global(svg),
-.btn-calendar :global(i) {
-  flex-shrink: 0;
-}
-
-.btn-calendar :global(i) {
-  font-size: 1.1rem;
-}
-
-.lista-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.65);
-  z-index: 100000;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  backdrop-filter: blur(4px);
-}
-
-.lista-modal.open {
-  display: flex;
-}
-
-.lista-modal-content {
-  background: #fff;
-  border-radius: 16px;
-  max-width: 400px;
-  width: 100%;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 0 25px 80px rgba(0,0,0,.25);
-  animation: modalSlide .3s ease;
-}
-
-.lista-modal-header {
-  padding: 1.5rem;
-  border-bottom: 1px solid #f0f0f0;
-  display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
+  gap: 1.25rem 2rem;
+  margin-top: 2rem;
 }
 
-.lista-modal-header :global(h3) {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--dark-navy);
-  margin: 0;
-}
-
-.lista-modal-header .modal-close {
-  position: static;
-  width: 36px;
-  height: 36px;
-}
-
-.lista-modal-body {
-  padding: 1rem;
-}
-
-:global(.lista-evento-item) {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background .2s;
-  border: 1px solid #f0f0f0;
-  margin-bottom: .5rem;
-}
-
-:global(.lista-evento-item:last-child) {
-  margin-bottom: 0;
-}
-
-:global(.lista-evento-item:hover) {
-  background: #f8fafc;
-}
-
-:global(.lista-evento-dot) {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--primary-blue);
-  flex-shrink: 0;
-}
-
-:global(.lista-evento-dot.passato) {
-  background: #ccc;
-}
-
-:global(.lista-evento-info) {
-  flex: 1;
-  min-width: 0;
-}
-
-:global(.lista-evento-titolo) {
+.evento-azioni-label {
+  display: block;
+  margin-bottom: .6rem;
+  font-size: .75rem;
   font-weight: 600;
-  color: var(--dark-navy);
-  font-size: .95rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-:global(.lista-evento-ora) {
-  font-size: .8rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
   color: var(--text-light);
 }
 
-.lightbox {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.92);
-  z-index: 200000;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  cursor: zoom-out;
-  opacity: 0;
-}
-
-.lightbox.open {
+.evento-azioni-btn {
   display: flex;
-  opacity: 1;
+  flex-wrap: wrap;
+  gap: .5rem;
 }
 
-.lightbox :global(img) {
-  max-width: 90%;
-  max-height: 90vh;
-  border-radius: 8px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.5);
-  cursor: default;
-  opacity: 1;
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  width: 50px;
-  height: 50px;
-  border: none;
-  background: rgba(255,255,255,.15);
-  border-radius: 50%;
+.evento-azione {
+  min-height: 44px;
+  padding: 0 1.25rem;
+  border: 1px solid rgba(70, 130, 180, 0.35);
+  border-radius: 999px;
+  background: var(--white);
+  font: inherit;
+  font-size: .9375rem;
+  font-weight: 600;
+  color: var(--dark-navy);
   cursor: pointer;
-  display: flex;
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+}
+
+.evento-condividi {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 1.5rem;
-  transition: all .2s;
+  gap: .5rem;
+  min-height: 44px;
+  padding: 0 .25rem;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: .9375rem;
+  font-weight: 600;
+  color: var(--primary-blue-dark);
+  cursor: pointer;
 }
 
-.lightbox-close:hover {
-  background: rgba(255,255,255,.25);
+@media (hover: hover) and (pointer: fine) {
+  .evento-azione:hover {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+  }
+
+  .evento-condividi:hover {
+    color: var(--dark-navy);
+  }
 }
 
-@media(max-width:992px) {
-  .settimana-calendario-container {
-    border-radius: 12px;
+/* ---------- Locandina a tutto schermo ---------- */
+.locandina-dialog {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 4.5rem 1.5rem 2rem;
+  border: none;
+  background: rgba(12, 12, 12, 0.96);
+  cursor: zoom-out;
+}
+
+.locandina-dialog[open] {
+  display: grid;
+  place-items: center;
+  animation: locandina-entra .25s ease;
+}
+
+.locandina-dialog::backdrop {
+  background: transparent;
+}
+
+@keyframes locandina-entra {
+  from {
+    opacity: 0;
+  }
+}
+
+.locandina-dialog img {
+  max-width: 100%;
+  max-height: calc(100dvh - 7rem);
+  border-radius: 8px;
+}
+
+.locandina-chiudi {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  font-size: 1.125rem;
+  color: var(--white);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evento-dialog[open],
+  .locandina-dialog[open] {
+    animation: none;
+  }
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .eventi-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
   }
 
-  .settimana-headers {
-    display: grid;
-    grid-template-columns: repeat(7,1fr);
-    background: #f8fafc;
-    border-bottom: 1px solid #e2e8f0;
+  /* Calendario: niente titoli nelle celle, solo un punto; il tocco apre il primo evento del giorno */
+  .calendario-grid :global(.cal-giorno) {
+    align-items: center;
+    min-height: 4.5rem;
+    padding: .5rem 0;
   }
 
-  :global(.settimana-header-giorno) {
-    padding: .7rem .2rem;
-    text-align: center;
-    font-weight: 600;
-    font-size: 10px;
-    color: var(--primary-blue-dark);
-    text-transform: uppercase;
+  .calendario-grid :global(.cal-evento) {
+    display: none;
+  }
+
+  .calendario-grid :global(.cal-punti) {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary-blue-dark);
+  }
+
+  .calendario-grid :global(.cal-giorno.passato .cal-punti) {
+    background: #bbb;
+  }
+
+  .calendario-grid :global(.cal-giorno.ha-eventi) {
+    cursor: pointer;
+  }
+
+  .evento-dialog-corpo {
+    padding: 2.5rem 2rem 2rem;
+  }
+
+  /* Tablet: locandina sopra il testo */
+  .evento-dialog-corpo.con-locandina {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .evento-locandina {
+    position: relative;
+    top: auto;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .eventi-header {
+    gap: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .vista-switch {
+    display: flex;
+    width: 100%;
+  }
+
+  .vista-switch button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .eventi-section :global(.agenda-mese) {
+    margin-top: 2.5rem;
+    padding-bottom: .75rem;
+    font-size: .8125rem;
+  }
+
+  .eventi-section :global(.agenda-voce) {
+    grid-template-columns: 3.25rem minmax(0, 1fr);
+    align-items: start;
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+  }
+
+  .eventi-section :global(.agenda-cta) {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .eventi-section :global(.agenda-giorno) {
+    font-size: 2rem;
+  }
+
+  .eventi-section :global(.agenda-settimana) {
+    font-size: .75rem;
     letter-spacing: 1px;
   }
 
-  .settimana-grid {
-    grid-template-columns: repeat(7,1fr);
-    gap: 0;
-    padding: 0;
+  .eventi-section :global(.agenda-titolo) {
+    font-size: 1.125rem;
   }
 
-  :global(.settimana-giorno) {
-    min-height: 60px;
-    padding: .5rem;
+  .eventi-section :global(.agenda-meta) {
+    font-size: .875rem;
+  }
+
+  .agenda-passati {
+    margin-top: 2.5rem;
+  }
+
+  .calendario-mese {
+    font-size: 1.25rem;
+  }
+
+  .calendario-grid :global(.cal-intestazione) {
+    padding: .6rem 0;
+    font-size: .6875rem;
+    letter-spacing: .5px;
+  }
+
+  .calendario-grid :global(.cal-giorno) {
+    min-height: 3.5rem;
+    padding: .35rem 0;
+  }
+
+  /* Dialog: a schermo intero */
+  .evento-dialog {
+    width: 100%;
+    max-width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
     border-radius: 0;
-    border: none;
-    border-right: 1px solid #e9ecef;
-    border-bottom: 1px solid #e9ecef;
-    display: block;
-    background: #fff;
+    box-shadow: none;
   }
 
-  :global(.settimana-giorno:nth-child(7n)) {
-    border-right: none;
+  .evento-chiudi {
+    margin: .75rem .75rem 0 0;
   }
 
-  :global(.settimana-giorno-info) {
-    display: block;
-    padding: 0;
-    border: none;
+  .evento-dialog-corpo,
+  .evento-dialog-corpo.con-locandina {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+    padding: 1.5rem 1.5rem 2rem;
   }
 
-  :global(.settimana-nome) {
-    display: none;
+  /* Con locandina il testo inizia sotto: la X sta sopra l'immagine */
+  .evento-dialog-corpo:not(.con-locandina) {
+    padding-top: 2rem;
   }
 
-  :global(.settimana-data) {
-    font-size: .95rem;
-    margin-bottom: 0;
-    font-weight: 700;
+  .evento-locandina {
+    aspect-ratio: 4 / 5;
   }
 
-  :global(.settimana-giorno-eventi) {
-    display: none;
+  .evento-dialog-corpo.con-locandina .evento-dialog-titolo,
+  .evento-dialog-corpo.con-locandina .evento-etichette {
+    margin-right: 0;
   }
 
-  :global(.settimana-giorno .evento-mini) {
-    display: none;
+  .evento-dialog-titolo {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
-  :global(.settimana-giorno.ha-eventi::after) {
-    content: '\f25a';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    bottom: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 18px;
-    color: var(--primary-blue);
-    z-index: 2;
-    animation: pulseIcon 2s infinite;
+  .evento-dettagli :global(div) {
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: .75rem;
   }
 
-  :global(.settimana-giorno.ha-eventi::before) {
-    content: '';
-    position: absolute;
-    bottom: 6px;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: rgba(135,206,235,0.3);
-    animation: pulseRing 2s infinite;
-    z-index: 1;
-  }
-}
-
-@media(max-width:900px) {
-  :global(.calendario-grid .giorno-cella) {
-    min-height: 85px;
-    padding: .6rem;
-  }
-
-  :global(.giorno-numero) {
+  .evento-descrizione {
     font-size: 1rem;
   }
 
-  :global(.evento-mini) {
-    font-size: 10px;
-    padding: 3px 6px;
-  }
-
-  .modal-main-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .modal-locandina {
-    width: 100%;
-    max-width: 200px;
-    margin: 0 auto 1rem;
-  }
-
-  .modal-info-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media(max-width:600px) {
-  .eventi-wrapper {
-    padding: 0 .5rem;
-    max-width: 100%;
-  }
-
-  .calendario-container {
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-  }
-
-  :global(.calendario-grid .giorno-header) {
-    font-size: 10px;
-    padding: .7rem .2rem;
-  }
-
-  :global(.giorno-cella) {
-    min-height: 60px;
-    padding: .5rem;
-  }
-
-  :global(.giorno-numero) {
-    font-size: .95rem;
-  }
-
-  :global(.giorno-cella.oggi .giorno-numero) {
-    font-size: .95rem;
-  }
-
-  :global(.evento-mini) {
-    display: none;
-  }
-
-  :global(.giorno-cella.ha-eventi) {
-    position: relative;
-  }
-
-  :global(.giorno-cella.ha-eventi::after) {
-    content: '\f25a';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    bottom: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 18px;
-    color: var(--primary-blue);
-    cursor: pointer;
-    z-index: 2;
-    animation: pulseIcon 2s infinite;
-  }
-
-  :global(.giorno-cella.ha-eventi::before) {
-    content: '';
-    position: absolute;
-    bottom: 6px;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: rgba(135,206,235,0.3);
-    animation: pulseRing 2s infinite;
-    z-index: 1;
-  }
-
-  @keyframes pulseIcon {0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.15)}}
-
-  @keyframes pulseRing {0%{transform:translate(-50%,-50%) scale(0.8);opacity:0.8}50%{transform:translate(-50%,-50%) scale(1.5);opacity:0.3}100%{transform:translate(-50%,-50%) scale(2);opacity:0}}
-
-  .nav-mese :global(button) {
-    width: 36px;
-    height: 36px;
-    font-size: .85rem;
-  }
-
-  .mese-corrente {
-    font-size: 1.1rem;
-  }
-
-  .calendario-nav {
-    padding: .8rem 1rem;
-  }
-
-  .evento-modal {
-    padding: 0;
-  }
-
-  .modal-content {
-    border-radius: 0;
-    max-height: 100vh;
-    height: 100%;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-  }
-
-  .modal-calendar-btns {
+  .evento-azioni {
     flex-direction: column;
+    align-items: stretch;
   }
 
-  .modal-header {
-    padding: 1.5rem 1.5rem 1.2rem;
+  .evento-azioni-btn {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .modal-body {
-    padding: 1.2rem 1.5rem 1.5rem;
+  .evento-azione {
+    padding: 0 .75rem;
+    font-size: .875rem;
   }
 
-  .modal-titolo {
-    font-size: 1.4rem;
+  .evento-condividi {
+    align-self: flex-start;
   }
 
-  .modal-locandina {
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .modal-locandina :global(img) {
-    width: 100%;
-  }
-
-  .lista-modal-content {
-    max-width: 90%;
-    border-radius: 16px;
-    height: auto;
-    max-height: 70vh;
-    margin: auto;
+  .locandina-dialog {
+    padding: 4.5rem 1rem 1.5rem;
   }
 }
 </style>

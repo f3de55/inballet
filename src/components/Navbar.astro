@@ -11,7 +11,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
 <nav class="nav-container" aria-label="Navigazione principale">
     <div class="logo-section">
         <a href="/" aria-label="InBallet - Torna alla homepage">
-            <Img src="logo.png" alt="InBallet Logo" widths={[130, 260, 452]} sizes="130px" fetchpriority="high" />
+            <Img src="logo.png" alt="InBallet Logo" width="376" height="133" widths={[116, 150, 232, 300, 376]} sizes="(max-width: 1200px) 116px, 150px" fetchpriority="high" />
         </a>
     </div>
 
@@ -28,7 +28,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
                         aria-haspopup="true"
                     >{m.label}</LinkTag>
                     <div class:list={['mega-menu', { 'mega-menu--compatto': m.compatto }]} id={`mega-menu-${m.id}`} role="region" aria-label={`Menu ${m.label}`}>
-                        <div class="mega-menu-content" style={`--voci: ${Math.max(...m.sezioni.map((s) => s.voci.length))}`}>
+                        <div class="mega-menu-content">
                             {m.sezioni.map((s) => (
                                 <div class="mega-menu-section">
                                     <h4>{s.titolo}</h4>
@@ -109,8 +109,9 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: var(--header-h);
-  min-height: var(--header-h);
+  height: var(--nav-h);
+  min-height: var(--nav-h);
+  transition: height .3s ease, min-height .3s ease;
 }
 
 .logo-section {
@@ -119,10 +120,15 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
 }
 
 .logo-section :global(img) {
-  height: 65px;
-  width: auto;
+  display: block;
+  width: 150px;
+  height: auto;
   filter: brightness(1.1);
-  transition: filter var(--transition-base),transform var(--transition-base);
+  transition: width .3s ease, filter var(--transition-base);
+}
+
+:global(.main-header.is-scrolled) .logo-section :global(img) {
+  width: 120px;
 }
 
 .nav-menu {
@@ -138,7 +144,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   color: var(--white);
   font-weight: 600;
   padding: 1rem 2rem;
-  transition: color var(--transition-base),background var(--transition-base);
+  transition: color var(--transition-base),background var(--transition-base),font-size .3s ease;
   cursor: pointer;
   text-transform: uppercase;
   font-size: var(--text-sm);
@@ -153,7 +159,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
 .nav-link:hover,
 .nav-item:hover .nav-link {
   color: var(--white);
-  background: rgba(255,255,255,.1);
+  background: rgba(255,255,255,.15);
 }
 
 .nav-item[data-menu] .nav-link::after {
@@ -169,13 +175,13 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   color: var(--primary-blue);
 }
 
-.nav-link.attiva::after {
+.nav-item[data-menu] .nav-link.attiva::after {
   color: var(--primary-blue);
 }
 
 .mega-menu-section a.attiva,
 .mega-menu-section a.attiva::before {
-  color: var(--primary-blue);
+  color: var(--white);
 }
 
 .cta-btn.attiva {
@@ -195,12 +201,22 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   border-radius: var(--radius-xl);
   text-decoration: none;
   font-weight: 600;
-  transition: background var(--transition-base),color var(--transition-base);
+  transition: background var(--transition-base),color var(--transition-base),padding .3s ease,font-size .3s ease;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: .5px;
   font-size: var(--text-sm);
   box-shadow: var(--shadow-blue);
+}
+
+/* Navbar ridotta dopo lo scroll: pulsante più compatto, voci appena più piccole */
+:global(.main-header.is-scrolled) .nav-link {
+  font-size: calc(var(--text-sm) - 1px);
+}
+
+:global(.main-header.is-scrolled) .cta-btn {
+  padding: .75rem 2rem;
+  font-size: calc(var(--text-sm) - 1px);
 }
 
 .cta-btn:hover {
@@ -227,7 +243,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   border-top: none;
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
   height: auto;
-  max-height: calc(100vh - var(--header-h));
+  max-height: calc(100vh - var(--nav-h));
   background: var(--header-dark);
   box-shadow: 0 10px 20px rgba(0,0,0,.3);
   padding: 0;
@@ -258,7 +274,9 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mega-menu {
+  .mega-menu,
+  .nav-container,
+  .logo-section :global(img) {
     transition: none;
   }
 }
@@ -325,21 +343,15 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   margin-bottom: .5rem;
 }
 
-/* Mega menu Corsi: le colonne condividono le righe (subgrid), così titoli,
-   filetti e voci restano allineati anche quando un testo va a capo */
+/* Mega menu Corsi: le colonne condividono solo la riga dei titoli (subgrid), così
+   i filetti restano allineati; le voci scorrono in ogni colonna con passo regolare */
 .mega-menu:not(.mega-menu--compatto) .mega-menu-content {
-  grid-template-rows: auto repeat(var(--voci), auto);
+  grid-template-rows: auto auto;
 }
 
 .mega-menu:not(.mega-menu--compatto) .mega-menu-section {
   display: grid;
   grid-row: 1 / -1;
-  grid-template-rows: subgrid;
-}
-
-.mega-menu:not(.mega-menu--compatto) .mega-menu-section :global(ul) {
-  display: grid;
-  grid-row: 2 / -1;
   grid-template-rows: subgrid;
 }
 
@@ -361,7 +373,8 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   content: "•";
   position: absolute;
   left: 0;
-  top: 50%;
+  /* Centrato sulla prima riga, anche se la voce va a capo */
+  top: calc(.5rem + .65em);
   transform: translateY(-50%);
   color: var(--primary-blue);
   font-weight: 700;
@@ -385,8 +398,9 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   font-size: 1.5rem;
   cursor: pointer;
   color: var(--white);
-  z-index: 1001;
-  transition: all .3s ease;
+  /* Nessuno z-index: resta sotto il pannello del menu, che lo copre mentre entra ed esce.
+     Transizione solo sul colore: con "all" anche la scomparsa veniva ritardata */
+  transition: color .3s ease;
 }
 
 /* Menu mobile/tablet: pannello scuro editoriale da destra, sotto l'eventuale banner */
@@ -440,7 +454,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: var(--header-h);
+  min-height: var(--nav-h);
   margin-bottom: 1rem;
   border-bottom: 1px solid rgba(255,255,255,.1);
 }
@@ -557,8 +571,8 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
 }
 
 .mobile-gruppo a.attiva {
-  color: var(--primary-blue);
-  font-weight: 600;
+  color: var(--white);
+  font-weight: 700;
 }
 
 .mobile-tutti {
@@ -576,8 +590,11 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   color: var(--primary-blue);
 }
 
+/* Centrato, larghezza del contenuto (non tutto il pannello) */
 .mobile-cta {
+  align-self: center;
   margin-top: 2rem;
+  padding-inline: 3rem;
   flex-shrink: 0;
 }
 
@@ -606,7 +623,11 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   }
 
   .logo-section :global(img) {
-    height: 44px;
+    width: 116px;
+  }
+
+  :global(.main-header.is-scrolled) .logo-section :global(img) {
+    width: 100px;
   }
 }
 
@@ -657,6 +678,10 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   .mega-menu-section :global(a) {
     padding: .4rem 0;
     font-size: var(--text-xs);
+  }
+
+  .mega-menu-section :global(a::before) {
+    top: calc(.4rem + .65em);
   }
 }
 </style>

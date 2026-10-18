@@ -1,6 +1,7 @@
 /**
- * Calendario /spettacoli-eventi: vista mese e settimana, modale evento con
- * locandina, aggiunta a Google/Apple Calendar e condivisione.
+ * Calendario /spettacoli-eventi: elenco dei prossimi appuntamenti (vista
+ * principale) o griglia del mese, dialog con i dettagli dell'evento,
+ * aggiunta a Google/Apple Calendar e condivisione.
  * Gli eventi arrivano dall'Action pubblica `eventi.pubblici`.
  */
 import { actions } from 'astro:actions';
@@ -20,7 +21,7 @@ interface Evento {
 
 const MESI = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
 const GIORNI = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
-const GIORNI_SHORT = ['LUN', 'MAR', 'MER', 'GIO', 'VEN', 'SAB', 'DOM'];
+const GIORNI_BREVI = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -33,259 +34,247 @@ const parseData = (s: string) => {
 };
 /** Testo salvato con escape HTML → testo semplice. */
 const testo = (html: string) => new DOMParser().parseFromString(html, 'text/html').documentElement.textContent ?? '';
-const tronca = (s: string, n: number) => (s.length > n ? s.substring(0, n) + '...' : s);
 const escapeHtml = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+/** Campo salvato con escape → HTML sicuro da inserire. */
+const sicuro = (s: string) => escapeHtml(testo(s));
 
 const oggi = isoLocale(new Date());
+const domani = isoLocale(new Date(Date.now() + 864e5));
+const meseOggi = oggi.slice(0, 7);
 let eventi: Evento[] = [];
-let mesiConEventi: string[] = []; // "YYYY-MM" ordinati
+let mesi: string[] = []; // "YYYY-MM" consecutivi, dal primo all'ultimo mese con eventi
 let meseIndex = 0;
-let vista: 'mese' | 'settimana' = 'mese';
 let eventoCorrente: Evento | null = null;
 
 const eventiDel = (data: string) => eventi.filter((e) => e.data === data);
+const passato = (e: Evento) => e.data < oggi;
 
 // === INIZIALIZZAZIONE ===
 
 async function init() {
-  const { data } = await actions.eventi.pubblici();
-  eventi = data?.eventi ?? [];
-
-  if (!eventi.length) {
-    $('noEventiMsg').style.display = 'block';
-    $('calendarioContent').style.display = 'none';
+  const { data, error } = await actions.eventi.pubblici();
+  if (error) {
+    $('eventiStato').textContent = 'Non riusciamo a caricare il calendario in questo momento. Riprova tra poco.';
     return;
   }
-  $('noEventiMsg').style.display = 'none';
-  $('calendarioContent').style.display = 'block';
+  eventi = [...(data?.eventi ?? [])].sort((a, b) => (a.data + a.ora).localeCompare(b.data + b.ora));
+  $('eventiStato').hidden = true;
 
-  mesiConEventi = [...new Set(eventi.map((e) => e.data.slice(0, 7)))].sort();
-  // Primo mese con eventi futuri, altrimenti il primo disponibile
-  const meseCorrente = oggi.slice(0, 7);
-  meseIndex = Math.max(0, mesiConEventi.findIndex((m) => m >= meseCorrente));
+  const prossimi = eventi.filter((e) => !passato(e));
+  const passati = eventi.filter(passato).reverse();
 
-  render();
+  $('eventiVuoto').hidden = prossimi.length > 0;
+  if (!eventi.length) return;
 
-  // Apertura diretta di un evento (link dal banner: ?evento=ID)
+  $('vistaSwitch').hidden = false;
+  $('vistaElenco').hidden = false;
+  $('agendaProssimi').innerHTML = agenda(prossimi);
+  if (passati.length) {
+    $('agendaPassatiWrap').hidden = false;
+    $('passatiConteggio').textContent = `(${passati.length})`;
+    $('agendaPassati').innerHTML = agenda(passati);
+  }
+
+  mesi = elencoMesi(eventi[0].data.slice(0, 7), eventi[eventi.length - 1].data.slice(0, 7));
+  // Mese corrente se ha senso, altrimenti il primo con eventi futuri, altrimenti l'ultimo
+  const corrente = mesi.indexOf(meseOggi);
+  const futuro = mesi.findIndex((m) => m >= meseOggi);
+  meseIndex = corrente >= 0 ? corrente : futuro >= 0 ? futuro : mesi.length - 1;
+
+  // Apertura diretta di un evento (link dal banner o condiviso: ?evento=ID)
   const eventoId = new URLSearchParams(location.search).get('evento');
-  if (eventoId) setTimeout(() => apriModal(eventoId), 300);
+  if (eventoId) apriEvento(eventoId);
 }
 
-function meseAnno() {
-  const [anno, mese] = mesiConEventi[meseIndex].split('-').map(Number);
-  return { anno, mese: mese - 1 };
+function elencoMesi(da: string, a: string) {
+  const out: string[] = [];
+  let [y, m] = da.split('-').map(Number);
+  while (`${y}-${pad(m)}` <= a) {
+    out.push(`${y}-${pad(m)}`);
+    m++;
+    if (m > 12) {
+      m = 1;
+      y++;
+    }
+  }
+  return out;
 }
 
-function render() {
-  if (vista === 'mese') renderMese();
-  else renderSettimana();
+// === ELENCO ===
+
+function voce(e: Evento) {
+  const d = parseData(e.data);
+  const vicino = e.data === oggi ? '<span class="agenda-vicino">Oggi</span>' : e.data === domani ? '<span class="agenda-vicino">Domani</span>' : '';
+  const meta = [
+    e.ora ? `<span><i class="fas fa-clock" aria-hidden="true"></i>${escapeHtml(e.ora)}</span>` : '',
+    e.luogo ? `<span><i class="fas fa-map-marker-alt" aria-hidden="true"></i>${sicuro(e.luogo)}</span>` : '',
+  ].join('');
+  return `<li data-giorno="${e.data}"${passato(e) ? ' class="passato"' : ''}>
+    <a class="agenda-voce" href="?evento=${encodeURIComponent(e.id)}" data-evento="${escapeHtml(e.id)}">
+      <span class="agenda-data">
+        <span class="agenda-giorno">${d.getDate()}</span>
+        <span class="agenda-settimana">${GIORNI_BREVI[d.getDay()]}</span>
+      </span>
+      <span class="agenda-testo">
+        ${e.tipo || vicino ? `<span class="agenda-sopra">${vicino}${e.tipo ? `<span class="agenda-tipo">${sicuro(e.tipo)}</span>` : ''}</span>` : ''}
+        <span class="agenda-titolo">${sicuro(e.titolo)}</span>
+        ${meta ? `<span class="agenda-meta">${meta}</span>` : ''}
+      </span>
+      <span class="link-cta agenda-cta" aria-hidden="true">Vedi dettagli <i class="fas fa-arrow-right"></i></span>
+    </a>
+  </li>`;
 }
 
-function updateNavButtons() {
-  const [prev, next] = vista === 'mese' ? ['btnMesePrev', 'btnMeseNext'] : ['btnSettPrev', 'btnSettNext'];
-  $(prev).classList.toggle('hidden', meseIndex <= 0);
-  $(next).classList.toggle('hidden', meseIndex >= mesiConEventi.length - 1);
+/** Eventi raggruppati per mese, nell'ordine ricevuto. */
+function agenda(lista: Evento[]) {
+  const gruppi = new Map<string, Evento[]>();
+  for (const e of lista) {
+    const k = e.data.slice(0, 7);
+    gruppi.set(k, [...(gruppi.get(k) ?? []), e]);
+  }
+  return [...gruppi]
+    .map(([k, ev]) => {
+      const [y, m] = k.split('-').map(Number);
+      return `<h3 class="agenda-mese">${MESI[m - 1]} ${y}</h3><ul class="agenda">${ev.map(voce).join('')}</ul>`;
+    })
+    .join('');
 }
 
-function cambiaMese(dir: number) {
-  const nuovo = meseIndex + dir;
-  if (nuovo < 0 || nuovo >= mesiConEventi.length) return;
-  meseIndex = nuovo;
-  render();
-}
-
-// === RENDER ===
-
-function eventoMini(e: Evento, max: number) {
-  // Tronca il testo (non le entità HTML con cui il titolo è salvato)
-  const titolo = escapeHtml(tronca(testo(e.titolo), max));
-  return `<div class="evento-mini${e.data < oggi ? ' passato' : ''}" data-evento="${e.id}">${titolo}</div>`;
-}
+// === CALENDARIO ===
 
 function renderMese() {
-  const { anno, mese } = meseAnno();
+  const [anno, m] = mesi[meseIndex].split('-').map(Number);
+  const mese = m - 1;
   $('meseCorrente').textContent = `${MESI[mese]} ${anno}`;
 
   const inizio = (new Date(anno, mese, 1).getDay() + 6) % 7;
   const giorni = new Date(anno, mese + 1, 0).getDate();
 
-  let html = GIORNI_SHORT.map((g) => `<div class="giorno-header">${g}</div>`).join('');
-  html += '<div class="giorno-cella vuoto"></div>'.repeat(inizio);
+  let html = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((g) => `<div class="cal-intestazione">${g}</div>`).join('');
+  html += '<div class="cal-giorno vuoto" aria-hidden="true"></div>'.repeat(inizio);
   for (let g = 1; g <= giorni; g++) {
-    const data = `${anno}-${pad(mese + 1)}-${pad(g)}`;
+    const data = `${anno}-${pad(m)}-${pad(g)}`;
     const evG = eventiDel(data);
-    const cls = ['giorno-cella'];
+    const cls = ['cal-giorno'];
     if (data === oggi) cls.push('oggi');
     else if (data < oggi) cls.push('passato');
-    if (new Date(anno, mese, g).getDay() === 0) cls.push('domenica');
     if (evG.length) cls.push('ha-eventi');
 
-    html += `<div class="${cls.join(' ')}" data-giorno="${data}"><div class="giorno-numero">${g}</div>`;
-    html += evG.slice(0, 2).map((e) => eventoMini(e, 10)).join('');
-    if (evG.length > 2) {
-      const n = evG.length - 2;
-      html += `<div class="piu-eventi" data-giorno="${data}">+${n} ${n === 1 ? 'altro' : 'altri'}</div>`;
-    }
-    html += '</div>';
+    html += `<div class="${cls.join(' ')}" data-giorno="${data}">
+      <span class="cal-numero">${g}</span>
+      ${evG.map((e) => `<button type="button" class="cal-evento${passato(e) ? ' passato' : ''}" data-evento="${escapeHtml(e.id)}">${sicuro(e.titolo)}</button>`).join('')}
+      ${evG.length ? '<span class="cal-punti" aria-hidden="true"></span>' : ''}
+    </div>`;
   }
+  // Completa l'ultima riga
+  const resto = (7 - ((inizio + giorni) % 7)) % 7;
+  html += '<div class="cal-giorno vuoto" aria-hidden="true"></div>'.repeat(resto);
   $('calendarioGrid').innerHTML = html;
-  updateNavButtons();
+
+  $<HTMLButtonElement>('btnMesePrev').disabled = meseIndex <= 0;
+  $<HTMLButtonElement>('btnMeseNext').disabled = meseIndex >= mesi.length - 1;
 }
 
-function renderSettimana() {
-  const { anno, mese } = meseAnno();
-  const eventiMese = eventi.filter((e) => e.data.startsWith(`${anno}-${pad(mese + 1)}`));
-
-  if (!eventiMese.length) {
-    $('rangeSettimana').textContent = `${MESI[mese]} ${anno} - Nessun evento`;
-    $('settimanaGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-light)">Nessun evento in questo mese</div>';
-    updateNavButtons();
-    return;
-  }
-
-  // Lunedì delle settimane che contengono eventi del mese
-  const lunedi = [
-    ...new Set(
-      eventiMese.map((e) => {
-        const d = parseData(e.data);
-        d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
-        return isoLocale(d);
-      }),
-    ),
-  ].sort();
-
-  $('rangeSettimana').textContent = `${MESI[mese]} ${anno}`;
-  $('settimanaHeaders').innerHTML = GIORNI_SHORT.map((g) => `<div class="settimana-header-giorno">${g}</div>`).join('');
-
-  let html = '';
-  for (const key of lunedi) {
-    const inizio = parseData(key);
-    for (let i = 0; i < 7; i++) {
-      const d = new Date(inizio.getFullYear(), inizio.getMonth(), inizio.getDate() + i);
-      const data = isoLocale(d);
-      const evG = eventiDel(data);
-      const cls = ['settimana-giorno'];
-      if (data === oggi) cls.push('oggi');
-      else if (data < oggi) cls.push('passato');
-      if (evG.length) cls.push('ha-eventi');
-
-      html += `<div class="${cls.join(' ')}" data-giorno="${data}">
-                    <div class="settimana-giorno-info">
-                        <div class="settimana-nome">${GIORNI_SHORT[i]}</div>
-                        <div class="settimana-data">${d.getDate()}</div>
-                    </div>
-                    <div class="settimana-giorno-eventi">`;
-      html += evG.slice(0, 2).map((e) => eventoMini(e, 15)).join('');
-      if (evG.length > 2) {
-        const n = evG.length - 2;
-        html += `<div class="piu-eventi-sett" data-giorno="${data}">+${n} ${n === 1 ? 'altro' : 'altri'}</div>`;
-      }
-      html += '</div></div>';
-    }
-  }
-  $('settimanaGrid').innerHTML = html;
-  updateNavButtons();
+function cambiaMese(dir: number) {
+  const nuovo = meseIndex + dir;
+  if (nuovo < 0 || nuovo >= mesi.length) return;
+  meseIndex = nuovo;
+  renderMese();
 }
 
-// === MODALI ===
-
-function clickGiorno(data: string) {
-  const evG = eventiDel(data);
-  if (evG.length === 1) apriModal(evG[0].id);
-  else if (evG.length > 1) apriListaModal(data, evG);
+function mostraVista(vista: string) {
+  document.querySelectorAll<HTMLButtonElement>('#vistaSwitch button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.vista === vista)));
+  $('vistaElenco').hidden = vista !== 'elenco';
+  $('vistaCalendario').hidden = vista !== 'calendario';
+  if (vista === 'calendario') renderMese();
 }
 
-function apriListaModal(data: string, eventiGiorno: Evento[]) {
-  const d = parseData(data);
-  $('listaModalTitolo').textContent = `Eventi del ${d.getDate()} ${MESI[d.getMonth()]}`;
-  $('listaModalBody').innerHTML = eventiGiorno
-    .map(
-      (e) => `<div class="lista-evento-item" data-lista-evento="${e.id}">
-                <div class="lista-evento-dot${e.data < oggi ? ' passato' : ''}"></div>
-                <div class="lista-evento-info">
-                    <div class="lista-evento-titolo">${e.titolo}</div>
-                    ${e.ora ? `<div class="lista-evento-ora"><i class="fas fa-clock"></i> ${e.ora}</div>` : ''}
-                </div>
-                <i class="fas fa-chevron-right" style="color:var(--text-light);font-size:.8rem"></i>
-            </div>`,
-    )
-    .join('');
-  $('listaModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
+/** Tocco su un giorno (schermi stretti, dove le celle mostrano solo un punto). */
+function apriGiorno(data: string) {
+  const [primo] = eventiDel(data);
+  if (primo) apriEvento(primo.id);
 }
 
-function chiudiListaModal() {
-  $('listaModal').classList.remove('open');
-  document.body.style.overflow = '';
+// === DIALOG EVENTO ===
+
+const dialog = $<HTMLDialogElement>('eventoDialog');
+const dialogLocandina = $<HTMLDialogElement>('locandinaDialog');
+
+function riga(label: string, valore: string) {
+  return `<div><dt>${label}</dt><dd>${valore}</dd></div>`;
 }
 
-function infoCard(icon: string, label: string, value: string) {
-  return `<div class="modal-info-card">
-                <div class="modal-info-icon"><i class="fas ${icon}"></i></div>
-                <div class="modal-info-text"><span class="modal-info-label">${label}</span><span class="modal-info-value">${value}</span></div>
-            </div>`;
-}
-
-function apriModal(id: string) {
+function apriEvento(id: string) {
   const e = eventi.find((ev) => ev.id === id);
   if (!e) return;
   eventoCorrente = e;
   const d = parseData(e.data);
+  const concluso = passato(e);
 
-  let badges = '';
-  if (e.tipo) badges += `<span class="modal-tipo-badge"></span>`;
-  if (e.data < oggi) badges += '<span class="modal-tipo-badge passato">Evento Passato</span>';
-  $('modalBadges').innerHTML = badges;
-  if (e.tipo) $('modalBadges').firstElementChild!.textContent = e.tipo;
+  $('dialogEtichette').innerHTML =
+    (e.tipo ? `<span>${sicuro(e.tipo)}</span>` : '') + (concluso ? '<span class="evento-concluso">Evento concluso</span>' : '');
+  $('dialogTitolo').textContent = testo(e.titolo);
 
-  $('modalTitolo').textContent = testo(e.titolo);
-  $('modalData').textContent = `${GIORNI[d.getDay()]} ${d.getDate()} ${MESI[d.getMonth()]} ${d.getFullYear()}${e.ora ? ' alle ' + e.ora : ''}`;
-  $('modalDescrizione').innerHTML = e.descrizione || 'Maggiori informazioni disponibili contattando la segreteria.';
+  const quando = `${GIORNI[d.getDay()]} ${d.getDate()} ${MESI[d.getMonth()].toLowerCase()} ${d.getFullYear()}${e.ora ? `, ore ${escapeHtml(e.ora)}` : ''}`;
+  $('dialogDettagli').innerHTML =
+    riga('Quando', quando) +
+    (e.luogo ? riga('Dove', sicuro(e.luogo)) : '') +
+    (e.destinatari ? riga('Per chi', sicuro(e.destinatari)) : '') +
+    (e.costo ? riga('Costo', sicuro(e.costo)) : '');
+  $('dialogDescrizione').innerHTML = e.descrizione || '';
 
-  // Locandina
-  const wrap = $('modalLocandinaWrap');
-  if (e.immagine) {
-    $<HTMLImageElement>('modalLocandina').src = e.immagine;
-    wrap.style.display = 'block';
-  } else {
-    wrap.style.display = 'none';
-  }
-  $('modalMainGrid').classList.toggle('no-image', !e.immagine);
+  const img = $<HTMLImageElement>('dialogLocandina');
+  const btnLocandina = $('dialogLocandinaBtn');
+  btnLocandina.hidden = !e.immagine;
+  $('dialogCorpo').classList.toggle('con-locandina', !!e.immagine);
+  // Stessa immagine, sfocata, come fondo del riquadro (riempie lo spazio attorno alla locandina).
+  // URL assoluto: in una custom property sarebbe risolto rispetto al foglio di stile.
+  btnLocandina.style.setProperty('--locandina', e.immagine ? `url("${new URL(e.immagine, location.href).href}")` : 'none');
+  img.src = e.immagine || 'data:,';
+  img.alt = e.immagine ? `Locandina: ${testo(e.titolo)}` : '';
 
-  // Info (l'orario è già nella data)
-  const info =
-    (e.luogo ? infoCard('fa-map-marker-alt', 'Sede', e.luogo) : '') +
-    (e.destinatari ? infoCard('fa-users', 'Destinatari', e.destinatari) : '') +
-    (e.costo ? infoCard('fa-euro-sign', 'Costo', e.costo) : '');
-  $('modalInfoGrid').innerHTML = info;
-  $('modalInfoGrid').style.display = info ? 'grid' : 'none';
+  // Per un evento concluso non ha senso aggiungerlo al calendario
+  $('dialogCalendario').hidden = concluso;
+  $('btnCondividiTesto').textContent = 'Condividi';
 
-  $('eventoModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  history.replaceState(null, '', `?evento=${encodeURIComponent(e.id)}`);
+  if (!dialog.open) dialog.showModal();
+  dialog.scrollTop = 0;
 }
 
-function chiudiModal() {
-  $('eventoModal').classList.remove('open');
-  document.body.style.overflow = '';
+dialog.addEventListener('close', () => {
   eventoCorrente = null;
+  history.replaceState(null, '', location.pathname);
+});
+
+// Chiusura: X o clic sullo sfondo (il dialog stesso, fuori dal contenuto)
+for (const dlg of [dialog, dialogLocandina]) {
+  dlg.addEventListener('click', (ev) => {
+    const t = ev.target as Element;
+    if (t === dlg || t.closest('[data-chiudi]') || dlg === dialogLocandina) dlg.close();
+  });
 }
 
-function apriLightbox() {
+$('dialogLocandinaBtn').addEventListener('click', () => {
   if (!eventoCorrente?.immagine) return;
-  $<HTMLImageElement>('lightboxImg').src = eventoCorrente.immagine;
-  $('lightbox').classList.add('open');
-}
-
-const chiudiLightbox = () => $('lightbox').classList.remove('open');
+  const img = $<HTMLImageElement>('locandinaGrande');
+  img.src = eventoCorrente.immagine;
+  img.alt = `Locandina: ${testo(eventoCorrente.titolo)}`;
+  dialogLocandina.showModal();
+});
 
 // === CALENDARI E CONDIVISIONE ===
 
 /** Inizio/fine per i calendari: evento di 1 ora o giornata intera. */
 function intervallo(e: Evento) {
   const giorno = e.data.replace(/-/g, '');
-  if (e.ora) {
-    const [h, m] = e.ora.split(':');
-    return { start: `${giorno}T${pad(+h)}${m}00`, end: `${giorno}T${pad(+h + 1)}${m}00`, allDay: false };
+  const ora = /^(\d{1,2}):(\d{2})/.exec(e.ora);
+  if (ora) {
+    const inizio = parseData(e.data);
+    inizio.setHours(+ora[1], +ora[2]);
+    const fine = new Date(inizio.getTime() + 60 * 60 * 1000);
+    const fmt = (d: Date) => `${isoLocale(d).replace(/-/g, '')}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+    return { start: fmt(inizio), end: fmt(fine), allDay: false };
   }
   const domani = parseData(e.data);
   domani.setDate(domani.getDate() + 1);
@@ -295,13 +284,16 @@ function intervallo(e: Evento) {
 function googleCalendarUrl(e: Evento) {
   const { start, end } = intervallo(e);
   const enc = encodeURIComponent;
-  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${enc(testo(e.titolo))}&dates=${start}/${end}&details=${enc(e.descrizione || '')}&location=${enc(testo(e.luogo || ''))}`;
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${enc(testo(e.titolo))}&dates=${start}/${end}&details=${enc(testo(e.descrizione || ''))}&location=${enc(testo(e.luogo || ''))}`;
 }
+
+/** Testo per un campo iCalendar (RFC 5545). */
+const ics = (s: string) => s.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
 
 function generateICS(e: Evento) {
   const { start, end, allDay } = intervallo(e);
   const now = new Date();
-  const stamp = `${isoLocale(now).replace(/-/g, '')}T${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+  const stamp = `${now.getUTCFullYear()}${pad(now.getUTCMonth() + 1)}${pad(now.getUTCDate())}T${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}${pad(now.getUTCSeconds())}Z`;
   const tipo = allDay ? ';VALUE=DATE' : '';
   return [
     'BEGIN:VCALENDAR',
@@ -314,17 +306,17 @@ function generateICS(e: Evento) {
     `DTSTAMP:${stamp}`,
     `DTSTART${tipo}:${start}`,
     `DTEND${tipo}:${end}`,
-    `SUMMARY:${testo(e.titolo)}`,
-    `DESCRIPTION:${(e.descrizione || '').replace(/\n/g, '\\n')}`,
-    `LOCATION:${testo(e.luogo || '')}`,
+    `SUMMARY:${ics(testo(e.titolo))}`,
+    `DESCRIPTION:${ics(testo(e.descrizione || ''))}`,
+    `LOCATION:${ics(testo(e.luogo || ''))}`,
     'END:VEVENT',
     'END:VCALENDAR',
-  ].join('\n');
+  ].join('\r\n');
 }
 
 function scaricaICS(e: Evento) {
   const url = URL.createObjectURL(new Blob([generateICS(e)], { type: 'text/calendar;charset=utf-8' }));
-  const a = Object.assign(document.createElement('a'), { href: url, download: `${testo(e.titolo).replace(/[^a-zA-Z0-9]/g, '_')}.ics` });
+  const a = Object.assign(document.createElement('a'), { href: url, download: `${testo(e.titolo).replace(/[^a-zA-Z0-9]+/g, '_')}.ics` });
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -332,64 +324,42 @@ function scaricaICS(e: Evento) {
 async function condividi() {
   if (!eventoCorrente) return;
   const e = eventoCorrente;
-  const url = location.href.split('?')[0];
-  const txt = `${testo(e.titolo)} - ${e.data}${e.luogo ? ' @ ' + testo(e.luogo) : ''}\n\nInBallet - Scuola di Danza`;
+  const url = `${location.origin}${location.pathname}?evento=${encodeURIComponent(e.id)}`;
+  const d = parseData(e.data);
+  const txt = `${testo(e.titolo)}, ${d.getDate()} ${MESI[d.getMonth()].toLowerCase()} ${d.getFullYear()}${e.luogo ? ' - ' + testo(e.luogo) : ''}`;
   if (navigator.share) {
     await navigator.share({ title: testo(e.titolo), text: txt, url }).catch(() => {});
-  } else {
-    await navigator.clipboard.writeText(`${txt}\n${url}`);
-    alert('Link copiato negli appunti!');
+    return;
   }
+  try {
+    await navigator.clipboard.writeText(url);
+    $('btnCondividiTesto').textContent = 'Link copiato';
+  } catch {
+    $('btnCondividiTesto').textContent = 'Copia non riuscita';
+  }
+  setTimeout(() => ($('btnCondividiTesto').textContent = 'Condividi'), 2500);
 }
 
 // === EVENTI ===
 
 $('btnMesePrev').addEventListener('click', () => cambiaMese(-1));
 $('btnMeseNext').addEventListener('click', () => cambiaMese(1));
-$('btnSettPrev').addEventListener('click', () => cambiaMese(-1));
-$('btnSettNext').addEventListener('click', () => cambiaMese(1));
 
-document.querySelectorAll<HTMLElement>('.vista-tab').forEach((tab) => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.vista-tab').forEach((t) => t.classList.remove('active'));
-    tab.classList.add('active');
-    vista = tab.dataset.vista === 'settimana' ? 'settimana' : 'mese';
-    $('vistaMese').classList.toggle('active', vista === 'mese');
-    $('vistaSettimana').classList.toggle('active', vista === 'settimana');
-    render();
-  });
+$('vistaSwitch').addEventListener('click', (ev) => {
+  const b = (ev.target as Element).closest<HTMLButtonElement>('button[data-vista]');
+  if (b) mostraVista(b.dataset.vista!);
 });
 
-// Clic su eventi e giorni (delegato: le celle sono generate dinamicamente)
-for (const grid of [$('calendarioGrid'), $('settimanaGrid')]) {
-  grid.addEventListener('click', (ev) => {
-    const target = ev.target as Element;
-    const evento = target.closest<HTMLElement>('[data-evento]');
-    if (evento) return apriModal(evento.dataset.evento!);
-    const giorno = target.closest<HTMLElement>('[data-giorno]');
-    if (giorno) clickGiorno(giorno.dataset.giorno!);
-  });
-}
-
-$('listaModalBody').addEventListener('click', (ev) => {
-  const item = (ev.target as Element).closest<HTMLElement>('[data-lista-evento]');
-  if (!item) return;
-  chiudiListaModal();
-  apriModal(item.dataset.listaEvento!);
-});
-$('listaModal').addEventListener('click', (ev) => {
-  if (ev.target === ev.currentTarget || (ev.target as Element).closest('[data-chiudi-lista]')) chiudiListaModal();
-});
-
-$('eventoModal').addEventListener('click', (ev) => {
-  if (ev.target === ev.currentTarget || (ev.target as Element).closest('[data-chiudi-evento]')) chiudiModal();
-});
-$('modalLocandinaWrap').addEventListener('click', (ev) => {
-  ev.stopPropagation();
-  apriLightbox();
-});
-$('lightbox').addEventListener('click', (ev) => {
-  if (ev.target === ev.currentTarget || (ev.target as Element).closest('[data-chiudi-lightbox]')) chiudiLightbox();
+// Clic su eventi e giorni (delegato: il contenuto è generato dinamicamente)
+$('calendario').addEventListener('click', (ev) => {
+  const t = ev.target as Element;
+  const evento = t.closest<HTMLElement>('[data-evento]');
+  if (evento) {
+    ev.preventDefault();
+    return apriEvento(evento.dataset.evento!);
+  }
+  const giorno = t.closest<HTMLElement>('.cal-giorno.ha-eventi');
+  if (giorno) apriGiorno(giorno.dataset.giorno!);
 });
 
 $('btnCondividi').addEventListener('click', () => void condividi());
@@ -398,12 +368,6 @@ $('btnGoogle').addEventListener('click', () => {
 });
 $('btnApple').addEventListener('click', () => {
   if (eventoCorrente) scaricaICS(eventoCorrente);
-});
-
-document.addEventListener('keydown', (ev) => {
-  if (ev.key !== 'Escape') return;
-  if ($('lightbox').classList.contains('open')) chiudiLightbox();
-  else chiudiModal();
 });
 
 void init();

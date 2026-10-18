@@ -1,10 +1,11 @@
 /**
  * Dashboard › Eventi: modale crea/modifica, eliminazione, filtri e ricerca,
- * locandine (upload/selezione/eliminazione) e gestione tipi evento.
- * Il backend è chiamato tramite Astro Actions.
+ * locandine (upload anche trascinando, selezione, eliminazione) e gestione
+ * tipi evento. Il backend è chiamato tramite Astro Actions.
  */
 import { actions } from 'astro:actions';
 import { createEditor } from './editor';
+import { conferma } from './conferma';
 import { toast } from './toast';
 
 interface Evento {
@@ -45,6 +46,8 @@ const campi = {
 let tipiEvento: string[] = JSON.parse($('tipiEventoData').textContent || '[]');
 let immagini: Immagine[] = [];
 let immagineSelezionata = '';
+/** Modifiche non salvate nel modulo aperto. */
+let modificato = false;
 
 // === CONTATORI CARATTERI ===
 
@@ -52,53 +55,79 @@ function updateCounter(input: HTMLInputElement) {
   const max = Number(input.dataset.counter);
   const counter = $(`${input.id}-counter`);
   const len = input.value.length;
-  counter.textContent = `${len}/${max}`;
-  counter.style.color = len > max * 0.9 ? 'var(--warning)' : 'var(--text-muted)';
+  // Solo vicino al limite: altrimenti è rumore
+  counter.textContent = len > max * 0.8 ? `${len}/${max}` : '';
+  counter.classList.toggle('vicino', len > max * 0.9);
 }
 
 function updateEditorCounter() {
   const counter = $('descrizione-counter');
-  const len = editor.text.length;
-  counter.textContent = `${len}/1000`;
-  counter.style.color = len > 900 ? 'var(--warning)' : 'var(--text-muted)';
+  const len = editor.text.trim().length;
+  counter.textContent = len > 800 ? `${len}/1000` : '';
+  counter.classList.toggle('vicino', len > 900);
 }
 
-const editor = createEditor($('descrizione'), modalEvento.querySelector<HTMLElement>('.editor-toolbar')!, updateEditorCounter);
+const editor = createEditor($('descrizione'), modalEvento.querySelector<HTMLElement>('.editor-toolbar')!, () => {
+  modificato = true;
+  updateEditorCounter();
+});
 campi.titolo.addEventListener('input', () => updateCounter(campi.titolo));
+form.addEventListener('input', () => (modificato = true));
 
 // === MODALE EVENTO ===
 
 function apriModal(ev?: Evento) {
-  modalEvento.classList.add('open');
-  $('modalTitle').textContent = ev ? 'Modifica Evento' : 'Nuovo Evento';
   form.reset();
+  $('modalTitle').textContent = ev ? 'Modifica evento' : 'Nuovo evento';
   campi.id.value = ev?.id ?? '';
   editor.html = ev?.descrizione ?? '';
   if (ev) {
     campi.titolo.value = ev.titolo;
     campi.data.value = ev.data;
-    campi.ora.value = ev.ora || '';
+    // <input type="time"> vuole "09:30": alcune ore sono salvate come "9:30"
+    campi.ora.value = ev.ora ? ev.ora.padStart(5, '0') : '';
     if (tipiEvento.length) campi.tipo.value = ev.tipo && tipiEvento.includes(ev.tipo) ? ev.tipo : tipiEvento[0];
     campi.luogo.value = ev.luogo || '';
-    campi.immagine.value = ev.immagine || '';
     campi.destinatari.value = ev.destinatari || '';
     campi.costo.value = ev.costo || '';
   }
-  immagineSelezionata = ev?.immagine ?? '';
+  impostaLocandina(ev?.immagine ?? '');
+  $<HTMLDetailsElement>('libreria').open = false;
   updateCounter(campi.titolo);
   updateEditorCounter();
+  modificato = false;
+
+  modalEvento.classList.add('open');
+  document.documentElement.classList.add('modal-aperta');
+  modalEvento.querySelector('.modal-body')!.scrollTop = 0;
+  // Su touch il focus aprirebbe subito la tastiera: solo con mouse
+  if (matchMedia('(hover: hover)').matches) campi.titolo.focus();
   void caricaImmagini();
 }
 
-const chiudiModal = () => modalEvento.classList.remove('open');
+async function chiudiModal(forza = false) {
+  if (!modalEvento.classList.contains('open')) return;
+  if (!forza && modificato && !(await conferma({ titolo: 'Chiudere senza salvare?', testo: 'Le modifiche a questo evento andranno perse.', ok: 'Chiudi senza salvare', pericolo: true }))) return;
+  modalEvento.classList.remove('open');
+  document.documentElement.classList.remove('modal-aperta');
+}
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const titolo = campi.titolo.value.trim();
-  if (titolo.length < 3) return toast('Il titolo deve avere almeno 3 caratteri', 'error');
-  if (!campi.data.value) return toast('La data è obbligatoria', 'error');
-  if (editor.text.length > 1000) return toast('La descrizione non può superare i 1000 caratteri', 'error');
+  if (titolo.length < 3) {
+    campi.titolo.focus();
+    return toast('Il titolo deve avere almeno 3 caratteri', 'error');
+  }
+  if (!campi.data.value) {
+    campi.data.focus();
+    return toast('Manca la data', 'error');
+  }
+  if (editor.text.length > 1000) return toast('La descrizione supera i 1000 caratteri', 'error');
 
+  const salva = $<HTMLButtonElement>('btnSalva');
+  salva.disabled = true;
+  salva.textContent = 'Salvataggio…';
   const { data, error } = await actions.eventi.salva({
     id: campi.id.value || undefined,
     titolo,
@@ -111,51 +140,97 @@ form.addEventListener('submit', async (e) => {
     destinatari: campi.destinatari.value.trim(),
     costo: campi.costo.value.trim(),
   });
-  if (error) return toast(error.message || 'Errore nel salvataggio', 'error');
+  if (error) {
+    salva.disabled = false;
+    salva.textContent = 'Salva evento';
+    return toast(error.message || 'Errore nel salvataggio', 'error');
+  }
 
   new Set(data.warnings).forEach((w) => toast(w, 'warning'));
-  toast('Evento salvato!', 'success');
-  chiudiModal();
-  setTimeout(() => location.reload(), 1200);
+  toast('Evento salvato', 'success');
+  void chiudiModal(true);
+  setTimeout(() => location.reload(), data.warnings.length ? 2500 : 700);
 });
 
-async function eliminaEvento(id: string, titolo: string) {
-  if (!confirm(`Sei sicuro di voler eliminare l'evento "${titolo}"?\n\nQuesta azione non può essere annullata.`)) return;
-  const { error } = await actions.eventi.elimina({ id });
+// Sedi: un tocco compila il luogo
+modalEvento.addEventListener('click', (e) => {
+  const chip = (e.target as Element).closest<HTMLElement>('[data-luogo]');
+  if (!chip) return;
+  campi.luogo.value = chip.dataset.luogo!;
+  modificato = true;
+});
+
+async function eliminaEvento(row: HTMLElement) {
+  const ev = JSON.parse(row.dataset.modifica!) as Evento;
+  if (!(await conferma({ titolo: `Eliminare «${ev.titolo}»?`, testo: "L'evento sparirà dal calendario del sito. L'operazione non si può annullare.", ok: 'Elimina', pericolo: true }))) return;
+  const { error } = await actions.eventi.elimina({ id: ev.id });
   if (error) return toast(error.message || "Errore durante l'eliminazione", 'error');
 
-  toast('Evento eliminato con successo!', 'success');
-  const row = document.querySelector<HTMLElement>(`tr[data-id="${CSS.escape(id)}"]`);
-  if (row) {
-    row.style.transition = 'opacity 0.3s, transform 0.3s';
-    row.style.opacity = '0';
-    row.style.transform = 'translateX(-20px)';
-    setTimeout(() => row.remove(), 300);
-  }
-  setTimeout(() => location.reload(), 1000); // aggiorna i contatori
+  toast('Evento eliminato', 'success');
+  row.style.transition = 'opacity .25s';
+  row.style.opacity = '0';
+  setTimeout(() => location.reload(), 700); // aggiorna conteggi e gruppi
 }
 
 // === FILTRI E RICERCA ===
 
-function filtraEventi(tab: HTMLElement) {
-  document.querySelectorAll('.tabs .tab').forEach((t) => t.classList.remove('active'));
-  tab.classList.add('active');
-  const filtro = tab.dataset.filtro;
-  document.querySelectorAll<HTMLElement>('.evento-row').forEach((r) => {
-    const visibile =
-      filtro === 'tutti' || (filtro === 'futuri' ? r.classList.contains('futuro') : r.classList.contains('passato'));
-    r.style.display = visibile ? '' : 'none';
+const cerca = document.getElementById('searchEventi') as HTMLInputElement | null;
+let filtro = 'futuri';
+
+function aggiornaElenco() {
+  const q = cerca?.value.trim().toLowerCase() ?? '';
+  let trovati = 0;
+  document.querySelectorAll<HTMLElement>('.ev-gruppo').forEach((gruppo) => {
+    // La ricerca guarda in tutti gli eventi, non solo nel filtro scelto
+    const nelFiltro = q || filtro === 'tutti' || gruppo.dataset.gruppo === filtro;
+    let visibiliGruppo = 0;
+    gruppo.querySelectorAll<HTMLElement>('.ev-mese').forEach((mese) => {
+      let visibiliMese = 0;
+      mese.querySelectorAll<HTMLElement>('.ev').forEach((r) => {
+        const ok = !q || r.dataset.cerca!.includes(q);
+        r.hidden = !ok;
+        if (ok) visibiliMese++;
+      });
+      mese.hidden = !visibiliMese;
+      visibiliGruppo += visibiliMese;
+    });
+    const vuotoGruppo = gruppo.querySelector<HTMLElement>(':scope > .ev-vuoto');
+    if (vuotoGruppo) vuotoGruppo.hidden = !!q;
+    gruppo.hidden = !nelFiltro || (!!q && !visibiliGruppo);
+    if (!gruppo.hidden) trovati += visibiliGruppo;
   });
+  const nessuno = document.getElementById('nessunRisultato');
+  if (nessuno) nessuno.hidden = !q || trovati > 0;
 }
 
-document.getElementById('searchEventi')?.addEventListener('input', (e) => {
-  const q = (e.target as HTMLInputElement).value.toLowerCase();
-  document.querySelectorAll<HTMLElement>('.evento-row').forEach((r) => {
-    r.style.display = r.textContent!.toLowerCase().includes(q) ? '' : 'none';
+function scegliFiltro(btn: HTMLElement) {
+  filtro = btn.dataset.filtro!;
+  document.querySelectorAll<HTMLElement>('.filtro').forEach((b) => {
+    b.classList.toggle('attivo', b === btn);
+    b.setAttribute('aria-pressed', String(b === btn));
   });
-});
+  aggiornaElenco();
+}
+
+cerca?.addEventListener('input', aggiornaElenco);
 
 // === LOCANDINE ===
+
+/** Imposta la locandina scelta: campo nascosto, anteprima e griglia. */
+function impostaLocandina(path: string) {
+  immagineSelezionata = path;
+  campi.immagine.value = path;
+  const anteprima = $('locandinaAnteprima');
+  anteprima.hidden = !path;
+  if (path) $<HTMLImageElement>('locandinaImg').src = `/${path}`;
+  $('uploadTesto').textContent = path ? 'Carica un’altra locandina' : 'Carica una locandina';
+  renderImmagini();
+}
+
+$('locandinaTogli').addEventListener('click', () => {
+  impostaLocandina('');
+  modificato = true;
+});
 
 async function caricaImmagini() {
   const { data, error } = await actions.immagini.lista();
@@ -166,8 +241,9 @@ async function caricaImmagini() {
 
 function renderImmagini() {
   const grid = $('imagesGrid');
+  $('libreriaN').textContent = immagini.length ? `(${immagini.length})` : '';
   if (!immagini.length) {
-    grid.innerHTML = '<p style="color:var(--text-muted);font-size:.85rem;grid-column:1/-1">Nessuna immagine caricata</p>';
+    grid.innerHTML = '<p class="nota">Nessuna locandina caricata finora.</p>';
     return;
   }
   grid.replaceChildren(
@@ -175,48 +251,78 @@ function renderImmagini() {
       const item = document.createElement('div');
       item.className = `img-item${img.path === immagineSelezionata ? ' selected' : ''}`;
       item.dataset.path = img.path;
+      item.tabIndex = 0;
+      item.setAttribute('role', 'button');
+      item.setAttribute('aria-pressed', String(img.path === immagineSelezionata));
+      item.setAttribute('aria-label', `Usa ${img.nome}`);
       const el = document.createElement('img');
       el.src = `/${img.path}`;
-      el.alt = img.nome;
+      el.alt = '';
       el.loading = 'lazy';
       const del = document.createElement('button');
       del.type = 'button';
       del.className = 'delete-img';
-      del.title = 'Elimina';
+      del.title = 'Elimina definitivamente';
+      del.setAttribute('aria-label', `Elimina ${img.nome}`);
       del.dataset.nome = img.nome;
-      del.innerHTML = '<i class="fas fa-times"></i>';
+      del.innerHTML = '<i class="fas fa-times" aria-hidden="true"></i>';
       item.append(el, del);
       return item;
     }),
   );
 }
 
-function selezionaImmagine(path: string) {
-  // Toggle: clic sull'immagine già selezionata la deseleziona
-  immagineSelezionata = immagineSelezionata === path ? '' : path;
-  campi.immagine.value = immagineSelezionata;
-  renderImmagini();
-}
-
-$('imagesGrid').addEventListener('click', async (e) => {
-  const target = e.target as Element;
+async function gestisciGriglia(target: Element) {
   const del = target.closest<HTMLElement>('.delete-img');
   if (del) {
     const nome = del.dataset.nome!;
-    if (!confirm('Eliminare questa immagine?')) return;
+    if (!(await conferma({ titolo: 'Eliminare questa locandina?', testo: 'Il file viene cancellato definitivamente: gli eventi che la usano resteranno senza immagine.', ok: 'Elimina', pericolo: true }))) return;
     const { error } = await actions.immagini.elimina({ nome });
     if (error) return toast(error.message || 'Errore eliminazione', 'error');
-    toast('Immagine eliminata', 'success');
+    toast('Locandina eliminata', 'success');
     immagini = immagini.filter((i) => i.nome !== nome);
-    if (campi.immagine.value.includes(nome)) {
-      campi.immagine.value = '';
-      immagineSelezionata = '';
-    }
-    return renderImmagini();
+    if (campi.immagine.value.includes(nome)) impostaLocandina('');
+    else renderImmagini();
+    return;
   }
   const item = target.closest<HTMLElement>('.img-item');
-  if (item) selezionaImmagine(item.dataset.path!);
+  if (!item) return;
+  // Clic sulla locandina già scelta: la toglie
+  impostaLocandina(immagineSelezionata === item.dataset.path ? '' : item.dataset.path!);
+  modificato = true;
+}
+
+const grid = $('imagesGrid');
+grid.addEventListener('click', (e) => void gestisciGriglia(e.target as Element));
+grid.addEventListener('keydown', (e) => {
+  if ((e.key === 'Enter' || e.key === ' ') && (e.target as Element).classList.contains('img-item')) {
+    e.preventDefault();
+    void gestisciGriglia(e.target as Element);
+  }
 });
+
+async function caricaFile(files: Iterable<File>) {
+  const formData = new FormData();
+  for (const file of files) {
+    if (!file.type.startsWith('image/')) toast(`${file.name}: non è un'immagine`, 'error');
+    else if (file.size > MAX_SIZE) toast(`${file.name}: troppo grande (max 20 MB)`, 'error');
+    else formData.append('immagini', file);
+  }
+  if (!formData.has('immagini')) return;
+
+  uploadZone.classList.add('in-corso');
+  const { data, error } = await actions.immagini.carica(formData);
+  uploadZone.classList.remove('in-corso');
+  if (error) return toast(error.message || 'Errore nel caricamento', 'error');
+
+  const n = data.immagini.length;
+  toast(n > 1 ? `${n} locandine caricate` : 'Locandina caricata', 'success');
+  immagini.unshift(...data.immagini);
+  // Un evento ha una sola locandina: si usa la prima caricata
+  impostaLocandina(data.immagini[0].path);
+  modificato = true;
+  data.errori.forEach((err) => toast(err, 'warning'));
+}
 
 const fileInput = $<HTMLInputElement>('fileInput');
 const uploadZone = modalEvento.querySelector<HTMLElement>('[data-upload]')!;
@@ -229,81 +335,62 @@ uploadZone.addEventListener('keydown', (e) => {
     fileInput.click();
   }
 });
-
-fileInput.addEventListener('change', async () => {
-  const formData = new FormData();
-  for (const file of fileInput.files ?? []) {
-    if (file.size > MAX_SIZE) toast(`${file.name}: troppo grande (max 20MB)`, 'error');
-    else formData.append('immagini', file);
-  }
+fileInput.addEventListener('change', () => {
+  const files = [...(fileInput.files ?? [])];
   fileInput.value = '';
-  if (!formData.has('immagini')) return;
+  void caricaFile(files);
+});
 
-  const { data, error } = await actions.immagini.carica(formData);
-  if (error) return toast(error.message || 'Errore upload', 'error');
-
-  const n = data.immagini.length;
-  toast(`${n} immagin${n > 1 ? 'i caricate' : 'e caricata'}!`, 'success');
-  immagini.unshift(...data.immagini);
-  // Un evento ha una sola immagine: seleziona la prima caricata
-  immagineSelezionata = '';
-  selezionaImmagine(data.immagini[0].path);
-  data.errori.forEach((err) => toast(err, 'warning'));
+// Trascinamento dal computer
+uploadZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  uploadZone.classList.add('sopra');
+});
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('sopra'));
+uploadZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadZone.classList.remove('sopra');
+  void caricaFile(e.dataTransfer?.files ?? []);
 });
 
 // === TIPI EVENTO ===
 
 function apriModalTipi() {
   modalTipi.classList.add('open');
+  document.documentElement.classList.add('modal-aperta');
   renderTipi();
 }
-const chiudiModalTipi = () => modalTipi.classList.remove('open');
+function chiudiModalTipi() {
+  modalTipi.classList.remove('open');
+  if (!modalEvento.classList.contains('open')) document.documentElement.classList.remove('modal-aperta');
+}
 
 function renderTipi() {
   const list = $('tipiList');
   if (!tipiEvento.length) {
-    list.innerHTML = '<span style="color:var(--text-muted);font-size:.9rem">Nessun tipo creato</span>';
+    list.innerHTML = '<li class="nota">Nessun tipo creato.</li>';
     return;
   }
   list.replaceChildren(
     ...tipiEvento.map((t) => {
-      const tag = document.createElement('span');
-      tag.className = 'tipo-tag';
+      const li = document.createElement('li');
+      const nome = document.createElement('span');
+      nome.textContent = t;
       const remove = document.createElement('button');
       remove.type = 'button';
-      remove.className = 'remove';
-      remove.title = 'Rimuovi';
+      remove.className = 'btn-link btn-link--rosso';
       remove.dataset.tipo = t;
-      remove.innerHTML = '<i class="fas fa-times"></i>';
-      tag.append(t, remove);
-      return tag;
+      remove.textContent = 'Rimuovi';
+      remove.setAttribute('aria-label', `Rimuovi ${t}`);
+      li.append(nome, remove);
+      return li;
     }),
   );
 }
 
 function aggiornaSelectTipo() {
-  const label = document.querySelector('#tipoFormGroup label')!;
-  let cogBtn = document.getElementById('tipoCogBtn') as HTMLButtonElement | null;
-  if (!tipiEvento.length) {
-    campi.tipo.style.display = 'none';
-    campi.tipo.replaceChildren();
-    $('noTipoMsg').style.display = '';
-    cogBtn?.remove();
-    return;
-  }
-  campi.tipo.style.display = '';
-  $('noTipoMsg').style.display = 'none';
-  if (!cogBtn) {
-    cogBtn = document.createElement('button');
-    cogBtn.type = 'button';
-    cogBtn.id = 'tipoCogBtn';
-    cogBtn.className = 'btn btn-sm';
-    cogBtn.style.cssText = 'margin-left:.5rem;padding:.2rem .5rem;font-size:.7rem';
-    cogBtn.dataset.apriTipi = '';
-    cogBtn.setAttribute('aria-label', 'Gestisci tipi');
-    cogBtn.innerHTML = '<i class="fas fa-cog"></i>';
-    label.append(' ', cogBtn);
-  }
+  campi.tipo.hidden = !tipiEvento.length;
+  $('noTipoMsg').hidden = tipiEvento.length > 0;
   const corrente = campi.tipo.value;
   campi.tipo.replaceChildren(...tipiEvento.map((t) => new Option(t, t)));
   if (tipiEvento.includes(corrente)) campi.tipo.value = corrente;
@@ -313,27 +400,27 @@ $<HTMLFormElement>('formTipo').addEventListener('submit', async (e) => {
   e.preventDefault();
   const input = $<HTMLInputElement>('nuovoTipo');
   const tipo = input.value.trim();
-  if (!tipo) return toast('Inserisci il nome del tipo', 'error');
+  if (!tipo) return toast('Scrivi il nome del tipo', 'error');
   const { data, error } = await actions.tipi.aggiungi({ tipo });
   if (error) return toast(error.message || 'Errore', 'error');
   tipiEvento = data.tipi;
   renderTipi();
   aggiornaSelectTipo();
+  campi.tipo.value = tipo;
   input.value = '';
-  toast('Tipo aggiunto!', 'success');
+  toast('Tipo aggiunto', 'success');
 });
 
 $('tipiList').addEventListener('click', async (e) => {
-  const btn = (e.target as Element).closest<HTMLElement>('.remove');
-  const tipo = btn?.dataset.tipo;
+  const tipo = (e.target as Element).closest<HTMLElement>('[data-tipo]')?.dataset.tipo;
   if (!tipo) return;
-  if (!confirm(`Eliminare il tipo "${tipo}"?\n\nIl tipo verrà rimosso dalla lista e non sarà più selezionabile per nuovi eventi.`)) return;
+  if (!(await conferma({ titolo: `Rimuovere il tipo «${tipo}»?`, testo: 'Gli eventi che lo usano lo mantengono, ma non sarà più selezionabile.', ok: 'Rimuovi', pericolo: true }))) return;
   const { data, error } = await actions.tipi.rimuovi({ tipo });
-  if (error) return toast(error.message || 'Errore sconosciuto', 'error');
+  if (error) return toast(error.message || 'Errore', 'error');
   tipiEvento = data.tipi;
   renderTipi();
   aggiornaSelectTipo();
-  toast('Tipo eliminato', 'success');
+  toast('Tipo rimosso', 'success');
 });
 
 // === EVENTI DI PAGINA (delegati) ===
@@ -341,23 +428,26 @@ $('tipiList').addEventListener('click', async (e) => {
 document.addEventListener('click', (e) => {
   const t = e.target as Element;
   if (t.closest('[data-nuovo-evento]')) return apriModal();
-  if (t.closest('[data-chiudi-evento]') || t === modalEvento) return chiudiModal();
+  if (t.closest('[data-chiudi-evento]')) return void chiudiModal();
   if (t.closest('[data-apri-tipi]')) {
     e.preventDefault();
     return apriModalTipi();
   }
   if (t.closest('[data-chiudi-tipi]') || t === modalTipi) return chiudiModalTipi();
 
-  const modifica = t.closest<HTMLElement>('[data-modifica]');
-  if (modifica) return apriModal(JSON.parse(modifica.dataset.modifica!));
-  const elimina = t.closest<HTMLElement>('[data-elimina]');
-  if (elimina) return void eliminaEvento(elimina.dataset.elimina!, elimina.dataset.titolo ?? '');
-  const tab = t.closest<HTMLElement>('.tabs .tab');
-  if (tab) return filtraEventi(tab);
+  const azione = t.closest<HTMLElement>('[data-azione]');
+  const row = azione?.closest<HTMLElement>('.ev');
+  if (azione && row) {
+    if (azione.dataset.azione === 'elimina') return void eliminaEvento(row);
+    return apriModal(JSON.parse(row.dataset.modifica!));
+  }
+  const btnFiltro = t.closest<HTMLElement>('.filtro');
+  if (btnFiltro) return scegliFiltro(btnFiltro);
 });
 
 document.addEventListener('keydown', (e) => {
-  if (e.key !== 'Escape') return;
+  // Con un popup di conferma aperto, Esc chiude solo quello
+  if (e.key !== 'Escape' || document.querySelector('dialog[open]')) return;
   if (modalTipi.classList.contains('open')) chiudiModalTipi();
-  else chiudiModal();
+  else void chiudiModal();
 });

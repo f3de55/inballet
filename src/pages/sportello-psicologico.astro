@@ -1,12 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import Img from '../components/Img.astro';
 import { webp } from '../lib/images';
+import { scuola } from '../data/scuola';
 
 const bg: Record<string, string> = {
   'gallery-8.jpg': await webp('gallery-8.jpg', 1920),
-  'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
+  'gallery-5.jpg': await webp('gallery-5.jpg', 1920),
 };
+
+const pilastri = [
+  { nome: 'Confusione', testo: 'Consultare uno specialista rappresenta un supporto durante momenti particolarmente difficili, quando le emozioni e i pensieri sembrano troppo complessi da gestire da soli.' },
+  { nome: 'Pensieri', testo: 'Il trattamento psichico agisce sulla psiche umana principalmente attraverso la parola e il dialogo come strumenti terapeutici fondamentali per elaborare pensieri ed emozioni.' },
+  { nome: 'Relazioni', testo: 'Lo sportello accoglie individui singoli, coppie e si dedica principalmente alla tutela del rapporto genitore-figlio, favorendo comunicazione e comprensione reciproca.' },
+];
+
+const servizi = [
+  'Colloqui individuali per genitori',
+  'Consulenze di coppia',
+  'Supporto al rapporto genitore-figlio',
+  'Riservatezza garantita',
+];
 ---
 
 <Base
@@ -27,96 +42,77 @@ const bg: Record<string, string> = {
             </div>
         </section>
 
-        <!-- Intro Section -->
+        <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo) -->
         <section id="intro" class="sport-intro-section">
-            <div class="sport-intro-wrapper intro-editoriale">
-                <span class="sport-intro-label eyebrow">Il Nostro Servizio</span>
-                <h2 class="sport-intro-title titolo-sezione">Sostegno alle famiglie <em>attraverso l'ascolto</em></h2>
-                <p class="sport-intro-text">
-                    Il servizio si concentra sull'ascolto come abilità sociale fondamentale per instaurare fiducia e comprensione. Offriamo sostegno alle famiglie riconoscendo difficoltà e necessità che spesso rimangono inespresse da bambini e genitori.
-                </p>
-                <p class="sport-intro-text">
-                    In un ambiente accogliente e privo di giudizio, creiamo uno spazio dove la parola e il dialogo diventano strumenti terapeutici fondamentali per affrontare momenti particolarmente delicati.
-                </p>
-                <div class="sport-intro-highlight">
-                    <p>Il trattamento psichico agisce sulla psiche umana principalmente attraverso la parola e il dialogo, offrendo un supporto concreto durante i momenti più difficili del percorso educativo e di crescita.</p>
+            <div class="container sport-intro-layout">
+                <div class="sport-intro-content">
+                    <span class="sport-intro-label eyebrow">Il nostro servizio</span>
+                    <h2 class="sport-intro-title titolo-sezione">Sostegno alle famiglie <em>attraverso l'ascolto</em></h2>
+                    <div class="sport-intro-testo">
+                        <p>Il servizio si concentra sull'ascolto come abilità sociale fondamentale per instaurare fiducia e comprensione. Offriamo sostegno alle famiglie riconoscendo difficoltà e necessità che spesso rimangono inespresse da bambini e genitori.</p>
+                        <p>In un ambiente accogliente e privo di giudizio, creiamo uno spazio dove la parola e il dialogo diventano strumenti fondamentali per affrontare i momenti più delicati.</p>
+                    </div>
+                    <div class="sport-intro-highlight">
+                        <p>Un supporto concreto durante i momenti più difficili del percorso educativo e di crescita.</p>
+                    </div>
+                </div>
+                <div class="sport-intro-visual foto-cornice">
+                    <Img src="gallery-9.jpg" alt="Due allieve abbracciate in sala" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
                 </div>
             </div>
         </section>
 
-        <!-- Pilastri Section - CARD -->
-        <section class="sport-pilastri-section">
-            <div class="sport-pilastri-wrapper">
-                <div class="sport-pilastri-header">
-                    <span class="sport-pilastri-label eyebrow">I Tre Pilastri</span>
-                    <h2 class="sport-pilastri-title titolo-sezione">Come possiamo <em>aiutarti</em></h2>
-                    <p class="sport-pilastri-subtitle intro-sezione">Tre aree di intervento per supportare il benessere psicologico di individui, coppie e famiglie.</p>
-                </div>
-                <div class="sport-pilastri-grid">
-                    <div class="sport-pilastro-card voce">
-                        <div class="sport-pilastro-icon voce-icona">
-                            <i class="fas fa-question-circle"></i>
-                        </div>
-                        <h3 class="sport-pilastro-name voce-titolo">Confusione</h3>
-                        <p class="sport-pilastro-desc voce-testo">Consultare uno specialista rappresenta un supporto durante momenti particolarmente difficili, quando le emozioni e i pensieri sembrano troppo complessi da gestire da soli.</p>
-                    </div>
-                    <div class="sport-pilastro-card voce">
-                        <div class="sport-pilastro-icon voce-icona">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h3 class="sport-pilastro-name voce-titolo">Pensieri</h3>
-                        <p class="sport-pilastro-desc voce-testo">Il trattamento psichico agisce sulla psiche umana principalmente attraverso la parola e il dialogo come strumenti terapeutici fondamentali per elaborare pensieri ed emozioni.</p>
-                    </div>
-                    <div class="sport-pilastro-card voce">
-                        <div class="sport-pilastro-icon voce-icona">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h3 class="sport-pilastro-name voce-titolo">Relazioni</h3>
-                        <p class="sport-pilastro-desc voce-testo">Lo sportello accoglie individui singoli, coppie e si dedica principalmente alla tutela del rapporto genitore-figlio, favorendo comunicazione e comprensione reciproca.</p>
-                    </div>
-                </div>
+        <!-- Pilastri: intestazione editoriale e tre voci -->
+        <section class="sport-pilastri-section" aria-labelledby="pilastri-titolo">
+            <div class="intro-editoriale">
+                <span class="eyebrow">I tre pilastri</span>
+                <h2 class="titolo-sezione" id="pilastri-titolo">Come possiamo <em>aiutarti</em></h2>
+                <p>Tre aree di intervento per sostenere il benessere psicologico di individui, coppie e famiglie.</p>
+            </div>
+            <div class="container">
+                <ul class="pilastri-lista">
+                    {pilastri.map((p) => (
+                        <li class="voce">
+                            <h3 class="voce-titolo">{p.nome}</h3>
+                            <p class="voce-testo">{p.testo}</p>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </section>
 
-        <!-- Accesso Section -->
-        <section class="sport-accesso-section sezione-scura">
-            <div class="sport-accesso-wrapper">
+        <!-- Accesso: intestazione a sinistra, elenco dei servizi a destra -->
+        <section class="sport-accesso-section" aria-labelledby="accesso-titolo">
+            <div class="container sport-accesso-layout">
                 <div class="sport-accesso-header">
-                    <span class="sport-accesso-label eyebrow">Come Accedere</span>
-                    <h2 class="sport-accesso-title titolo-sezione">Incontri con la dottoressa <em>psicoterapeuta</em></h2>
-                    <p class="sport-accesso-subtitle intro-sezione">Il nostro sportello è attivo su appuntamento. Contatta la Direzione per fissare un primo colloquio conoscitivo.</p>
+                    <span class="eyebrow">Come accedere</span>
+                    <h2 class="titolo-sezione" id="accesso-titolo">Incontri con la dottoressa <em>psicoterapeuta</em></h2>
+                    <p class="intro-sezione">Lo sportello è attivo su appuntamento. Contatta la Direzione per fissare un primo colloquio conoscitivo.</p>
                 </div>
-                <div class="sport-accesso-list">
-                    <div class="sport-accesso-item">
-                        <i class="fas fa-check"></i>
-                        <span>Colloqui individuali per genitori</span>
-                    </div>
-                    <div class="sport-accesso-item">
-                        <i class="fas fa-check"></i>
-                        <span>Consulenze di coppia</span>
-                    </div>
-                    <div class="sport-accesso-item">
-                        <i class="fas fa-check"></i>
-                        <span>Supporto rapporto genitore-figlio</span>
-                    </div>
-                    <div class="sport-accesso-item">
-                        <i class="fas fa-check"></i>
-                        <span>Riservatezza garantita</span>
-                    </div>
-                </div>
+                <ul class="servizi-lista">
+                    {servizi.map((s) => (
+                        <li class="servizio">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>{s}</span>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </section>
 
-        <!-- CTA Section - Stile corso-contatto -->
-        <section class="corso-contatto-section sezione-scura">
-            <div class="corso-contatto-bg" style={`background: url('${bg['bg-progetti-territorio.jpg']}') center/cover no-repeat`}></div>
-            <div class="corso-contatto-overlay"></div>
-            <div class="corso-contatto-wrapper">
-                <div class="corso-contatto-content">
-                    <h2 class="titolo-sezione">Prenota un colloquio <em>conoscitivo</em></h2>
-                    <p class="intro-sezione">Il primo passo è sempre il più importante. Siamo qui per ascoltarti.</p>
-                    <a href="mailto:info@inballet.it?subject=Richiesta%20Sportello%20Psicologico" class="corso-btn-cta btn-primary">
-                        Contattaci <i class="fas fa-arrow-right"></i>
+        <!-- CTA -->
+        <section class="sport-cta-section sezione-scura">
+            <div class="sport-cta-bg" style={`background-image: url('${bg['gallery-5.jpg']}')`}></div>
+            <div class="sport-cta-overlay"></div>
+            <div class="sport-cta-wrapper">
+                <h2 class="titolo-sezione">Prenota un colloquio <em>conoscitivo</em></h2>
+                <p class="intro-sezione">Il primo passo è sempre il più importante. Scrivici o chiamaci: fissiamo insieme il primo incontro, nella massima riservatezza.</p>
+                <div class="sport-cta-buttons">
+                    <a href={`mailto:${scuola.email}?subject=Richiesta%20Sportello%20Psicologico`} class="btn-primary">
+                        <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici
+                    </a>
+                    <a href={scuola.telefonoHref} class="btn-secondary">
+                        <i class="fas fa-phone" aria-hidden="true"></i> Chiamaci
                     </a>
                 </div>
             </div>
@@ -124,175 +120,251 @@ const bg: Record<string, string> = {
 </Base>
 
 <style>
+/* ---------- Intro ---------- */
 .sport-intro-section {
   padding: var(--section-y) 0;
-  background: #fff;
+  background: var(--white);
 }
 
-.sport-intro-wrapper {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.sport-intro-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 5rem;
+  align-items: center;
 }
 
 .sport-intro-label {
   display: block;
   margin-bottom: 1rem;
-  text-align: center;
 }
 
 .sport-intro-title {
-  margin-bottom: 2rem;
-  text-align: center;
+  margin-bottom: 1.75rem;
 }
 
-.sport-intro-text {
-  font-size: var(--text-lg);
+.sport-intro-testo p {
+  margin-bottom: 1.25rem;
+  font-size: 1.125rem;
   line-height: 1.8;
-  color: var(--text-light);
-  margin-bottom: 1.5rem;
-  text-align: center;
+  color: var(--text-dark);
 }
 
-.sport-intro-text :global(strong) {
-  color: var(--dark-navy);
-  font-weight: 600;
+.sport-intro-testo p:last-child {
+  margin-bottom: 0;
 }
 
-.sport-intro-highlight {
-  background: rgba(135,206,235,.1);
-  border-left: 4px solid var(--primary-blue);
-  padding: 1.5rem 2rem;
-  border-radius: 0 12px 12px 0;
-  margin-top: 2.5rem;
-  max-width: 750px;
-  margin-left: auto;
-  margin-right: auto;
+/* La cornice sporge a sinistra e in basso: spazio dentro la colonna */
+.sport-intro-visual {
+  max-width: 520px;
+  margin: 0 0 1.5rem 1.5rem;
+  justify-self: end;
 }
 
-.sport-intro-highlight :global(p) {
-  font-size: var(--text-base);
-  color: var(--dark-navy);
-  font-weight: 500;
-  margin: 0;
-  line-height: 1.7;
+.sport-intro-visual :global(img) {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
 }
 
+/* ---------- Pilastri ---------- */
 .sport-pilastri-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
 }
 
-.sport-pilastri-wrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.sport-pilastri-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
-
-.sport-pilastri-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.sport-pilastri-title {
-  margin-bottom: 1rem;
-}
-
-.sport-pilastri-subtitle {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.sport-pilastri-grid {
+.pilastri-lista {
+  list-style: none;
   display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 2.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3rem;
+  margin: 3.5rem 0 0;
+  padding: 0;
 }
 
+.pilastri-lista .voce-testo {
+  font-size: 1.0625rem;
+}
+
+/* ---------- Accesso ---------- */
 .sport-accesso-section {
   padding: var(--section-y) 0;
-  background: var(--dark-navy);
+  background: var(--white);
+}
+
+.sport-accesso-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 5rem;
+  align-items: start;
+}
+
+.sport-accesso-header .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
+.servizi-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.servizio {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: .75rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.servizio:first-child {
+  padding-top: .5rem;
+}
+
+.servizio:last-child {
+  border-bottom: none;
+}
+
+.servizio i {
+  font-size: 1rem;
+  color: var(--primary-blue-dark);
+}
+
+.servizio span {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  color: var(--dark-navy);
+}
+
+/* ---------- CTA ---------- */
+.sport-cta-section {
   position: relative;
+  padding: var(--section-y) 0;
   overflow: hidden;
 }
 
-.sport-accesso-section::before {
-  content: '';
+.sport-cta-bg,
+.sport-cta-overlay {
   position: absolute;
-  top: -30%;
-  right: -10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);
-  border-radius: 50%;
+  inset: 0;
 }
 
-.sport-accesso-wrapper {
+.sport-cta-bg {
+  background: center / cover no-repeat;
+}
+
+.sport-cta-overlay {
+  background: linear-gradient(135deg, rgba(26, 26, 26, .9) 0%, rgba(42, 42, 42, .85) 100%);
+}
+
+.sport-cta-wrapper {
+  position: relative;
   max-width: 800px;
   margin: 0 auto;
   padding: 0 2rem;
-  position: relative;
-  z-index: 2;
-}
-
-.sport-accesso-header {
   text-align: center;
-  margin-bottom: 3rem;
 }
 
-.sport-accesso-label {
-  display: block;
-  margin-bottom: 1rem;
+.sport-cta-wrapper .titolo-sezione {
+  margin-bottom: 1.25rem;
 }
 
-.sport-accesso-title {
-  margin-bottom: 1rem;
+.sport-cta-wrapper .intro-sezione {
+  margin-bottom: 2.5rem;
 }
 
-.sport-accesso-subtitle {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.sport-accesso-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem 3rem;
-  margin-top: 2.5rem;
-}
-
-.sport-accesso-item {
+.sport-cta-buttons {
   display: flex;
-  align-items: center;
-  gap: .8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
 }
 
-.sport-accesso-item :global(i) {
-  color: var(--primary-blue);
-  font-size: 1.1rem;
-}
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  /* Intro: etichetta e titolo, foto, testo, citazione */
+  .sport-intro-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
 
-.sport-accesso-item :global(span) {
-  font-size: var(--text-base);
-  color: #fff;
-  font-weight: 500;
-}
+  .sport-intro-content {
+    display: contents;
+  }
 
-@media(max-width:992px) {
-  .sport-pilastri-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+  .sport-intro-label {
+    order: 1;
+  }
+
+  .sport-intro-title {
+    order: 2;
+  }
+
+  .sport-intro-visual {
+    order: 3;
+    max-width: none;
+    margin: 0 0 2.75rem 1.5rem;
+  }
+
+  .sport-intro-visual :global(img) {
+    aspect-ratio: 3 / 2;
+  }
+
+  .sport-intro-testo {
+    order: 4;
+  }
+
+  .sport-intro-highlight {
+    order: 5;
+  }
+
+  /* Pilastri: una colonna */
+  .pilastri-lista {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  /* Accesso: intestazione sopra l'elenco */
+  .sport-accesso-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
   }
 }
 
-@media(max-width:600px) {
-  .sport-accesso-list {
-    grid-template-columns: 1fr;
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .sport-intro-visual {
+    margin: 0 0 2rem .75rem;
+  }
+
+  .sport-intro-visual :global(img) {
+    aspect-ratio: 4 / 3;
+  }
+
+  .sport-intro-testo p,
+  .pilastri-lista .voce-testo {
+    font-size: 1rem;
+  }
+
+  .servizio {
+    padding: 1.25rem 0;
+  }
+
+  .servizio span {
+    font-size: 1.125rem;
+  }
+
+  .sport-cta-wrapper {
+    padding: 0 1.5rem;
+  }
+
+  .sport-cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 </style>

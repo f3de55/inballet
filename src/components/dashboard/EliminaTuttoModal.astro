@@ -1,0 +1,49 @@
+---
+/**
+ * Eliminazione totale (eventi + locandine e/o dati del chatbot), anche dei dati veri.
+ * Si conferma scrivendo la parola di conferma. Logica in src/scripts/dashboard/elimina.ts
+ */
+import { PAROLA_CONFERMA, totali } from '../../lib/pulizia';
+
+const t = await totali();
+const n = (x: number) => x.toLocaleString('it-IT');
+---
+
+<div class="modal modal--piccola" id="modalElimina" role="dialog" aria-modal="true" aria-labelledby="eliminaTitolo">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2 id="eliminaTitolo">Elimina tutto</h2>
+            <button type="button" class="modal-close" data-chiudi-elimina aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+        </div>
+        <form class="modal-body" id="formElimina" data-parola={PAROLA_CONFERMA}>
+            <p class="elimina-avviso">
+                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                <span>Cancella <strong>anche i dati veri</strong>, non solo quelli demo. Non si può annullare.</span>
+            </p>
+
+            <fieldset class="elimina-scelte">
+                <legend>Cosa eliminare</legend>
+                <label class="spunta">
+                    <input type="checkbox" name="eventi" checked>
+                    <span>Tutti gli eventi e le locandine <span class="nota">({n(t.eventi)} eventi, {n(t.locandine)} locandine)</span></span>
+                </label>
+                <label class="spunta">
+                    <input type="checkbox" name="chatbot" checked>
+                    <span>Tutti i dati del chatbot <span class="nota">({n(t.messaggi)} messaggi e risposte salvate)</span></span>
+                </label>
+            </fieldset>
+            <p class="nota elimina-resta">I tipi di evento restano.</p>
+
+            <div class="campo">
+                <label for="eliminaParola">Per confermare scrivi <strong>{PAROLA_CONFERMA}</strong></label>
+                <input type="text" id="eliminaParola" autocomplete="off" autocapitalize="characters" spellcheck="false">
+            </div>
+
+            <button type="submit" class="btn btn-danger btn-pieno" id="eliminaVai" disabled>Elimina definitivamente</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    import '../../scripts/dashboard/elimina';
+</script>

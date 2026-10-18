@@ -3,11 +3,21 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { webp } from '../lib/images';
-import { scuola, sedi } from '../data/scuola';
+import { scuola, sedi, orari } from '../data/scuola';
 
 const { telefono: TEL, telefonoHref: TEL_HREF, email: EMAIL } = scuola;
 
-const heroBg = await webp('gallery-6.jpg', 1920);
+const bg: Record<string, string> = {
+  'gallery-6.jpg': await webp('gallery-6.jpg', 1920),
+  'gallery-3.jpg': await webp('gallery-3.jpg', 1920),
+};
+
+/** Settimana da lunedì con gli orari di scuola.ts (aggiornati poi da Google, se disponibile). */
+const ABBR: Record<string, string> = { Monday: 'Lun', Tuesday: 'Mar', Wednesday: 'Mer', Thursday: 'Gio', Friday: 'Ven', Saturday: 'Sab', Sunday: 'Dom' };
+const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno) => {
+  const o = orari.find((x) => x.giorni.some((d) => ABBR[d] === giorno));
+  return { giorno, apre: o?.apre, chiude: o?.chiude };
+});
 ---
 
 <Base
@@ -18,7 +28,7 @@ const heroBg = await webp('gallery-6.jpg', 1920);
 >
     <!-- Hero -->
     <section class="chisiamo-hero">
-        <div class="chisiamo-hero-image" style={`background-image: url('${heroBg}')`}></div>
+        <div class="chisiamo-hero-image" style={`background-image: url('${bg['gallery-6.jpg']}')`}></div>
         <div class="chisiamo-hero-overlay"></div>
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
@@ -27,11 +37,12 @@ const heroBg = await webp('gallery-6.jpg', 1920);
         </div>
     </section>
 
+    <!-- Contatti: testo e informazioni a sinistra, foto a destra (fissa su desktop) -->
     <section id="contatti" class="contatti">
         <div class="container contatti-layout">
             <div class="contatti-testo">
-                <p class="eyebrow">Scuola di danza a Lainate e Rho</p>
-                <h2 class="titolo titolo-sezione">Il primo passo<br>è un <em>passo di danza</em></h2>
+                <span class="eyebrow">Scuola di danza a Lainate e Rho</span>
+                <h2 class="titolo titolo-sezione">Il primo passo è un <em>passo di danza</em></h2>
                 <p class="invito intro-sezione">
                     Raccontaci chi sei e cosa vorresti imparare:
                     ti aiutiamo a scegliere il corso giusto per età e livello.
@@ -43,13 +54,20 @@ const heroBg = await webp('gallery-6.jpg', 1920);
                         <dd>
                             <a href={TEL_HREF}>{TEL}</a>
                             <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+                            <a href={scuola.whatsapp} target="_blank" rel="noopener">WhatsApp</a>
                         </dd>
                     </div>
 
-                    {sedi.map((sede) => (
+                    {sedi.map((sede, i) => (
                         <div class="info-riga">
-                            <dt>{sede.titolo}</dt>
-                            <dd><a href={sede.maps} target="_blank" rel="noopener">{sede.indirizzo}</a></dd>
+                            <dt>Sede di {sede.citta}</dt>
+                            <dd>
+                                <a href={sede.maps} target="_blank" rel="noopener">{sede.via}</a>
+                                <span class="info-nota">{sede.cap} {sede.citta} ({sede.provincia}){i === 0 && ' · sede centrale'}</span>
+                                <a href={sede.maps} target="_blank" rel="noopener" class="link-cta info-mappa">
+                                    Indicazioni <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                </a>
+                            </dd>
                         </div>
                     ))}
 
@@ -60,19 +78,50 @@ const heroBg = await webp('gallery-6.jpg', 1920);
                         </dt>
                         <dd>
                             <ul class="orari-grid" id="orari-grid">
-                                <li class="orario-item">
-                                    <span class="orario-day">Caricamento orari…</span>
-                                    <span class="orario-time"></span>
-                                </li>
+                                {settimana.map((s) => (
+                                    <li class="orario-item" data-giorno={s.giorno} data-apre={s.apre} data-chiude={s.chiude}>
+                                        <span class="orario-day">{s.giorno}</span>
+                                        {s.apre
+                                            ? <span class="orario-time">{s.apre}–{s.chiude}</span>
+                                            : <span class="orario-time chiuso">Chiuso</span>}
+                                    </li>
+                                ))}
                             </ul>
+                        </dd>
+                    </div>
+
+                    <div class="info-riga">
+                        <dt>Social</dt>
+                        <dd class="info-social">
+                            <a href={scuola.social.instagram} target="_blank" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i> Instagram</a>
+                            <a href={scuola.social.facebook} target="_blank" rel="noopener"><i class="fab fa-facebook" aria-hidden="true"></i> Facebook</a>
                         </dd>
                     </div>
                 </dl>
             </div>
 
-            <figure class="contatti-foto">
+            <figure class="contatti-foto foto-cornice">
                 <Img src="gallery-4.jpg" alt="Lezione di danza in sala a InBallet" loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 35vw" />
             </figure>
+        </div>
+    </section>
+
+    <!-- CTA: lezione di prova -->
+    <section class="contatti-cta-section sezione-scura">
+        <div class="contatti-cta-bg" style={`background-image: url('${bg['gallery-3.jpg']}')`}></div>
+        <div class="contatti-cta-overlay"></div>
+        <div class="contatti-cta-wrapper">
+            <span class="eyebrow">Lezione di prova</span>
+            <h2 class="titolo-sezione">La prima lezione <em>è di prova</em></h2>
+            <p class="intro-sezione">È senza impegno: per prenotarla chiamaci o scrivici su WhatsApp, ti proponiamo il corso e l'orario più adatti.</p>
+            <div class="contatti-cta-buttons">
+                <a href={TEL_HREF} class="btn-primary">
+                    <i class="fas fa-phone" aria-hidden="true"></i> Chiamaci
+                </a>
+                <a href={scuola.whatsapp} target="_blank" rel="noopener" class="btn-secondary">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                </a>
+            </div>
         </div>
     </section>
 
@@ -93,38 +142,29 @@ const heroBg = await webp('gallery-6.jpg', 1920);
 
   .contatti-layout {
     display: grid;
-    grid-template-columns: 1.6fr 1fr;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
     gap: 5.5rem;
     align-items: start;
   }
 
-  /* ---------- Foto ---------- */
+  /* ---------- Foto (cornice condivisa: .foto-cornice) ---------- */
   .contatti-foto {
     position: sticky;
     top: calc(var(--header-h) + 30px + var(--banner-height, 0px));
-    margin: 0;
-    isolation: isolate;
-  }
-
-  .contatti-foto::before {
-    content: '';
-    position: absolute;
-    inset: 2.5rem 2.5rem -1.5rem -1.5rem;
-    border: 2px solid var(--primary-blue);
-    border-radius: 24px;
-    z-index: -1;
+    margin: 0 0 1.5rem 1.5rem;
   }
 
   .contatti-foto :global(img) {
-    display: block;
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
-    border-radius: 24px;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14);
   }
 
   /* ---------- Testo ---------- */
+  .contatti-testo .eyebrow {
+    display: block;
+    margin-bottom: 1rem;
+  }
 
   .titolo {
     margin-bottom: 1.5rem;
@@ -141,7 +181,7 @@ const heroBg = await webp('gallery-6.jpg', 1920);
 
   .info-riga {
     display: grid;
-    grid-template-columns: 11rem 1fr;
+    grid-template-columns: 11rem minmax(0, 1fr);
     gap: 1.5rem;
     padding: 1.6rem 0;
     border-top: 1px solid rgba(26, 26, 26, 0.1);
@@ -163,25 +203,49 @@ const heroBg = await webp('gallery-6.jpg', 1920);
   .info-riga dd {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 0.35rem;
+    margin: 0;
   }
 
-  .info-riga dd > a {
-    align-self: flex-start;
+  .info-riga dd > a:not(.link-cta) {
     font-size: var(--text-xl);
     font-weight: 500;
     color: var(--dark-navy);
     text-decoration: none;
+    overflow-wrap: anywhere;
     background: linear-gradient(var(--primary-blue), var(--primary-blue)) 0 100% / 0 2px no-repeat;
     transition: background-size 0.3s ease, color 0.3s ease;
   }
 
-  .info-riga dd > a:hover {
+  .info-riga dd > a:not(.link-cta):hover {
     color: var(--primary-blue-dark);
     background-size: 100% 2px;
   }
 
-  /* Orari e stato: generati da src/scripts/contatti.ts */
+  .info-nota {
+    font-size: 1rem;
+    color: var(--text-light);
+  }
+
+  .info-mappa {
+    margin-top: .6rem;
+  }
+
+  /* Social: affiancati, con icona */
+  .info-riga dd.info-social {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: .5rem 2rem;
+  }
+
+  .info-social a i {
+    margin-right: .4rem;
+    font-size: 1.125rem;
+    color: var(--primary-blue-dark);
+  }
+
+  /* Orari e stato: stato e giorno corrente da src/scripts/contatti.ts */
   :global(.orari-status) {
     display: flex;
     align-items: center;
@@ -209,7 +273,10 @@ const heroBg = await webp('gallery-6.jpg', 1920);
 
   .orari-grid {
     list-style: none;
+    width: 100%;
     max-width: 22rem;
+    margin: 0;
+    padding: 0;
   }
 
   :global(.orario-item) {
@@ -241,6 +308,54 @@ const heroBg = await webp('gallery-6.jpg', 1920);
     font-weight: 600;
   }
 
+  /* ---------- CTA ---------- */
+  .contatti-cta-section {
+    position: relative;
+    padding: var(--section-y) 0;
+    overflow: hidden;
+  }
+
+  .contatti-cta-bg,
+  .contatti-cta-overlay {
+    position: absolute;
+    inset: 0;
+  }
+
+  .contatti-cta-bg {
+    background: center / cover no-repeat;
+  }
+
+  .contatti-cta-overlay {
+    background: linear-gradient(135deg, rgba(26, 26, 26, .9) 0%, rgba(42, 42, 42, .85) 100%);
+  }
+
+  .contatti-cta-wrapper {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+  }
+
+  .contatti-cta-wrapper .eyebrow {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .contatti-cta-wrapper .titolo-sezione {
+    margin-bottom: 1.25rem;
+  }
+
+  .contatti-cta-wrapper .intro-sezione {
+    margin-bottom: 2.5rem;
+  }
+
+  .contatti-cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
 
   /* ---------- Responsive ---------- */
   @media (max-width: 1024px) {
@@ -249,14 +364,13 @@ const heroBg = await webp('gallery-6.jpg', 1920);
     }
 
     .info-riga {
-      grid-template-columns: 9rem 1fr;
+      grid-template-columns: 9rem minmax(0, 1fr);
     }
   }
 
   @media (max-width: 900px) {
-
     .contatti-layout {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       gap: 4rem;
     }
 
@@ -265,7 +379,7 @@ const heroBg = await webp('gallery-6.jpg', 1920);
       top: auto;
       max-width: 520px;
       width: calc(100% - 1.5rem);
-      margin-left: auto;
+      margin: 0 0 1.5rem auto;
     }
 
     .contatti-foto :global(img) {
@@ -274,16 +388,28 @@ const heroBg = await webp('gallery-6.jpg', 1920);
   }
 
   @media (max-width: 600px) {
-
     .info-riga {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       gap: 0.75rem;
       padding: 1.4rem 0;
     }
 
-    .contatti-foto::before {
-      inset: 1.5rem 1.5rem -0.75rem -0.75rem;
+    .info-riga dd > a:not(.link-cta) {
+      font-size: 1.125rem;
     }
 
+    .contatti-foto {
+      width: calc(100% - .75rem);
+      margin-bottom: .75rem;
+    }
+
+    .contatti-cta-wrapper {
+      padding: 0 1.5rem;
+    }
+
+    .contatti-cta-buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
   }
 </style>

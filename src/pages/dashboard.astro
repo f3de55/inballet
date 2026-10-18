@@ -1,13 +1,15 @@
 ---
 /**
- * InBallet Dashboard: analytics chatbot e gestione eventi.
+ * InBallet Dashboard: gestione eventi e statistiche del chatbot.
  * Renderizzata on-demand e protetta dalla sessione di login.
  */
 import '../styles/dashboard.css';
 import Admin from '../layouts/Admin.astro';
-import Sidebar from '../components/dashboard/Sidebar.astro';
+import Topbar from '../components/dashboard/Topbar.astro';
 import BotAnalytics from '../components/dashboard/BotAnalytics.astro';
 import EventiManager from '../components/dashboard/EventiManager.astro';
+import Conferma from '../components/dashboard/Conferma.astro';
+import EliminaTuttoModal from '../components/dashboard/EliminaTuttoModal.astro';
 import { isLoggedIn, logout } from '../lib/auth';
 
 export const prerender = false;
@@ -19,13 +21,17 @@ if (Astro.url.searchParams.has('logout')) {
   return Astro.redirect('/login');
 }
 
-const sezione = Astro.url.searchParams.get('s') === 'eventi' ? 'eventi' : 'bot';
+// Gli eventi sono il lavoro di tutti i giorni: sezione predefinita
+const sezione = Astro.url.searchParams.get('s') === 'bot' ? 'bot' : 'eventi';
 ---
 
-<Admin title="Dashboard - InBallet" rubik>
-    <Sidebar sezione={sezione} />
+<Admin title={sezione === 'eventi' ? 'Eventi - Dashboard InBallet' : 'Chatbot - Dashboard InBallet'}>
+    <Topbar sezione={sezione} />
 
     <main class="main">
-        {sezione === 'bot' ? <BotAnalytics /> : <EventiManager />}
+        {sezione === 'eventi' ? <EventiManager /> : <BotAnalytics />}
     </main>
+
+    <Conferma />
+    <EliminaTuttoModal />
 </Admin>

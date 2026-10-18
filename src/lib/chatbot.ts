@@ -1,5 +1,5 @@
 /**
- * InBallet AI Chatbot - BELLA
+ * InBallet AI Chatbot - ÉTOILE
  * Validazione input, filtri contenuto, rate limiting per IP, cache risposte,
  * logging analytics (letto dalla dashboard) e chiamata al modello Groq.
  */
@@ -67,7 +67,7 @@ async function checkRateLimit(ipHash: string): Promise<string | null> {
     return 'Limite superato. Bloccato per 1 ora. 🚫';
   }
   if (lastHour >= CONFIG.rateLimitHour) return `Limite orario raggiunto (${CONFIG.rateLimitHour}/ora). Riprova tra poco! ⏰`;
-  if (data.requests.length >= CONFIG.rateLimitDay) return 'Limite giornaliero raggiunto. Contattaci: +39 393 780 2996 📞';
+  if (data.requests.length >= CONFIG.rateLimitDay) return 'Limite giornaliero raggiunto. Contattaci: +39 393 780 2996';
 
   data.requests.push(now);
   data.last = now;
@@ -111,6 +111,8 @@ export interface LogEntry {
   type: 'success' | 'blocked' | 'filtered' | 'cached' | 'error';
   cached: boolean;
   user_agent: string;
+  /** Creato dal generatore demo della dashboard */
+  demo?: boolean;
 }
 
 function logMessage(ipHash: string, userAgent: string, msg: string, response: string, type: LogEntry['type'], cached = false) {
@@ -156,8 +158,12 @@ async function cacheSet(msg: string, response: string) {
 
 function makeLinks(text: string): string {
   return escapeHtml(text)
+    // **grassetto** del modello (il testo è già senza HTML)
+    .replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>')
     .replace(/(\+?\d{2,3}[\s-]?\d{2,3}[\s-]?\d{3}[\s-]?\d{4})/g, '<a href="tel:$1" class="cb-link">$1</a>')
     .replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, '<a href="mailto:$1" class="cb-link">$1</a>')
+    // Pagine del sito citate come percorso, es. "/documenti"
+    .replace(/(^|[\s(])(\/[a-z][a-z0-9-]*)(?=[\s.,;:!?)]|$)/gm, '$1<a href="$2" class="cb-link">$2</a>')
     .replace(/(\r\n|\n\r|\n|\r)/g, '<br />$1');
 }
 
@@ -180,20 +186,34 @@ async function getSiteData(origin: string): Promise<string> {
   return '';
 }
 
-const elencoSedi = sedi.map((s) => `📍 ${s.indirizzo} (${s.titolo.toLowerCase()})`).join('\n');
+const elencoSedi = sedi.map((s) => `${s.indirizzo} (${s.titolo.toLowerCase()})`).join('\n');
 const elencoOrari = orari.map((o) => `${o.etichetta} ${o.apre}-${o.chiude}`).join(', ') + ', Dom chiuso';
 
-const prompt = (site: string, msg: string) => `Sei BELLA, l'assistente virtuale di InBallet - scuola di danza multidisciplinare a Lainate e Rho (Milano), fondata nel ${FONDAZIONE} da ${scuola.fondatrice}. Oltre 200 allievi ogni anno.
+const prompt = (site: string, msg: string) => `Sei ÉTOILE (come la prima ballerina di una compagnia), l'assistente virtuale di I.N. BALLET, scuola di danza multidisciplinare a Lainate e Rho (Milano), fondata nel ${FONDAZIONE} da ${scuola.fondatrice}. Rispondi ai visitatori del sito.
+
+CHI È LA SCUOLA (dai testi ufficiali):
+- Luogo di vita dedicato alla conoscenza e all'esplorazione dei diversi stili di Danza; accoglie bambini dai 3 anni e ragazzi e adulti di tutte le età, con gruppi di livelli diversi fino ai corsi avanzati e per adulti.
+- L'inclusività è centrale: classi multidisciplinari integrate e, dal 2013, il progetto di volontariato NoiConVoi (lezioni il lunedì sera a Lainate).
+- Formazione per professionisti dell'ambito educativo e terapeutico; corso biennale per Insegnanti di Danza (specializzazione Modern), titolo riconosciuto da CSEN e CONI con valenza nazionale.
+- Sportello psicologico: incontri con la dottoressa psicoterapeuta su richiesta alla Direzione.
+- Collaborazioni con le scuole del territorio, spettacoli ed eventi (di norma uno spettacolo annuale in teatro).
+
+ETÀ DI INGRESSO AI CORSI:
+- Avviamento alla Danza: dai 3 anni (classe mono-settimanale a numero chiuso); Educazione alla Danza: 4-5 anni
+- Modern: dai 6 anni; Danza Contemporanea: dai 10 anni; Contemporanea Adulti: dai 40 anni; Contaminato: dai 16 anni
+- Hip-Hop e Breaking: dai 6 anni; Movimento Creativo: dai 18 anni
+- Heels, Danza Acrobatica, Contact Improvisation, Yoga, Pilates (anche mono o bi-settimanale) e Lezioni Individuali: per i dettagli rimanda alla pagina del corso o alla segreteria
 
 STILE:
-- Cordiale, entusiasta, professionale
-- Risposte concise (2-4 frasi max)
-- Emoji appropriati: 💃🩰✨📞📧📍
+- Cordiale, entusiasta e professionale, dai del "tu"
+- Risposte brevi (2-4 frasi), in italiano semplice
+- Qualche emoji adatta, senza esagerare: 💃🩰✨📞📍
+- Se citi una pagina del sito scrivi il percorso, per esempio /documenti o /contatti
 
 CONTATTI:
-📞 ${scuola.telefono}
-📧 ${scuola.email}
-🕐 Orari: ${elencoOrari}
+Telefono: ${scuola.telefono}
+E-mail: ${scuola.email}
+Orari: ${elencoOrari}
 
 SEDI:
 ${elencoSedi}
@@ -206,7 +226,7 @@ ISCRIZIONI ${iscrizioni.anno}:
 
 REGOLE STRICT:
 1. Rispondi SOLO su InBallet
-2. OFF-TOPIC → 'Mi occupo solo di InBallet! Posso aiutarti con info sui nostri corsi? 💃'
+2. OFF-TOPIC → 'Mi occupo solo di InBallet! Posso aiutarti con corsi, sedi, orari o iscrizioni? 💃'
 3. Mai inventare info
 4. Prezzi/orari specifici → invita a contattare
 
@@ -242,7 +262,7 @@ export async function rispondi(message: string, ctx: ChatContext): Promise<strin
     logMessage(ipHash, ctx.userAgent, msg, response, type, cached);
 
   const msg = sanitizeInput(message);
-  if (!msg) return 'Scrivi qualcosa! 💃';
+  if (!msg) return 'Scrivi la tua domanda.';
 
   if (INJECTION_PATTERNS.some((p) => p.test(msg))) {
     log(msg, 'Injection tentato', 'blocked');
@@ -254,7 +274,7 @@ export async function rispondi(message: string, ctx: ChatContext): Promise<strin
   }
   if (isSpamPattern(msg)) {
     log(msg, 'Pattern spam', 'filtered');
-    return 'Messaggio non valido. Scrivi una domanda normale! 😊';
+    return 'Messaggio non valido. Scrivi una domanda sulla scuola.';
   }
 
   const limite = await checkRateLimit(ipHash);
@@ -274,11 +294,11 @@ export async function rispondi(message: string, ctx: ChatContext): Promise<strin
     answer = await chiediAlModello(prompt(await getSiteData(ctx.origin), msg));
   } catch (e) {
     log(msg, `API Error: ${(e as Error).message}`, 'error');
-    return 'Momentaneamente non disponibile. Contattaci: <a href="tel:+393937802996" class="cb-link">+39 393 780 2996</a> 📞';
+    return 'Momentaneamente non disponibile. Contattaci: <a href="tel:+393937802996" class="cb-link">+39 393 780 2996</a>';
   }
   if (!answer) {
     log(msg, 'Risposta vuota da API', 'error');
-    return 'Contattaci per info: <a href="mailto:info@inballet.it" class="cb-link">info@inballet.it</a> 📧';
+    return 'Contattaci per info: <a href="mailto:info@inballet.it" class="cb-link">info@inballet.it</a>';
   }
 
   await cacheSet(msg, answer).catch(() => {});

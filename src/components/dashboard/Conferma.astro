@@ -1,0 +1,14 @@
+---
+/** Popup di conferma della dashboard (al posto di confirm()). Logica in src/scripts/dashboard/conferma.ts */
+---
+
+<dialog class="conferma" id="dlgConferma" aria-labelledby="confermaTitolo" aria-describedby="confermaTesto">
+    <form method="dialog">
+        <h2 id="confermaTitolo"></h2>
+        <p id="confermaTesto"></p>
+        <div class="conferma-azioni">
+            <button type="submit" value="no" class="btn btn-secondary" id="confermaNo">Annulla</button>
+            <button type="submit" value="si" class="btn btn-primary" id="confermaOk">Conferma</button>
+        </div>
+    </form>
+</dialog>

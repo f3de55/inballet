@@ -2,22 +2,19 @@
 /** Modale gestione tipi evento (aggiunta e rimozione). */
 ---
 
-<div class="modal" id="modalTipi" role="dialog" aria-modal="true" aria-labelledby="modalTipiTitle">
-    <div class="modal-box" style="max-width:400px">
+<div class="modal modal--piccola" id="modalTipi" role="dialog" aria-modal="true" aria-labelledby="modalTipiTitle">
+    <div class="modal-box">
         <div class="modal-header">
-            <h3 id="modalTipiTitle">Gestione Tipi Evento</h3>
-            <button type="button" class="modal-close" data-chiudi-tipi aria-label="Chiudi"><i class="fas fa-times"></i></button>
+            <h2 id="modalTipiTitle">Tipi di evento</h2>
+            <button type="button" class="modal-close" data-chiudi-tipi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
         </div>
         <div class="modal-body">
-            <div class="form-group">
-                <label>Tipi esistenti</label>
-                <div class="tipi-list" id="tipiList"></div>
-            </div>
-            <form class="form-group" id="formTipo">
-                <label for="nuovoTipo">Aggiungi nuovo tipo</label>
-                <div style="display:flex;gap:.5rem">
-                    <input type="text" id="nuovoTipo" placeholder="Es: Masterclass" maxlength="30" style="flex:1">
-                    <button type="submit" class="btn btn-primary" aria-label="Aggiungi tipo"><i class="fas fa-plus"></i></button>
+            <ul class="tipi-list" id="tipiList"></ul>
+            <form class="campo tipo-nuovo" id="formTipo">
+                <label for="nuovoTipo">Aggiungi un tipo</label>
+                <div class="tipo-nuovo-riga">
+                    <input type="text" id="nuovoTipo" placeholder="Es. Masterclass" maxlength="30" autocomplete="off">
+                    <button type="submit" class="btn btn-primary">Aggiungi</button>
                 </div>
             </form>
         </div>

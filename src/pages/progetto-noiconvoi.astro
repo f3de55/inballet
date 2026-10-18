@@ -1,12 +1,33 @@
 ---
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import Img from '../components/Img.astro';
 import { webp } from '../lib/images';
+import { scuola } from '../data/scuola';
 
 const bg: Record<string, string> = {
   'gallery-5.jpg': await webp('gallery-5.jpg', 1920),
   'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
 };
+
+const fasi = [
+  { nome: 'Pratica psicomotoria', testo: 'La prima parte della lezione integra elementi di Pratica Psicomotoria Aucouturier (PPA), favorendo lo sviluppo armonico attraverso il gioco e il movimento spontaneo.' },
+  { nome: 'Didattica artistica', testo: 'La seconda parte propone una didattica artistica adattata alle necessità specifiche dei partecipanti, seguendo la programmazione annuale della scuola.' },
+];
+
+const destinatari = [
+  'Ragazzi con difficoltà e bisogni speciali',
+  'Normodotati in classi integrate',
+  'Volontari, non necessariamente danzatori',
+  "Famiglie che credono nell'inclusione",
+];
+
+const info = [
+  { nome: 'Quando', testo: 'Le lezioni si tengono ogni lunedì sera presso la nostra sede di Lainate.' },
+  { nome: 'Spettacolo di fine anno', testo: 'Ogni anno i partecipanti salgono sul palco dello spettacolo insieme ai compagni delle classi integrate.' },
+  { nome: 'Volontariato', testo: 'Il progetto si basa sul volontariato: non serve essere danzatori per partecipare e contribuire.' },
+  { nome: 'Ambiente inclusivo', testo: 'Un gruppo dove le differenze diventano ricchezza e occasione di crescita per tutti.' },
+];
 ---
 
 <Base
@@ -27,138 +48,97 @@ const bg: Record<string, string> = {
             </div>
         </section>
 
-        <!-- Intro Section -->
+        <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo) -->
         <section id="intro" class="noi-intro-section">
-            <div class="noi-intro-wrapper intro-editoriale">
-                <span class="noi-intro-label eyebrow">La Nostra Missione</span>
-                <h2 class="noi-intro-title titolo-sezione">La danza come <em>strumento di inclusione</em></h2>
-                <p class="noi-intro-text">
-                    Il progetto NoiConVoi rappresenta un'iniziativa di volontariato fondata nel 2013, nata dalla convinzione della Direttrice Artistica che la danza è per tutti.
-                </p>
-                <p class="noi-intro-text">
-                    Crediamo che chiunque possa contribuire artisticamente secondo le proprie capacità, trasformando le differenze in ricchezza espressiva e creativa.
-                </p>
-                <div class="noi-intro-highlight">
-                    <p>"La danza non conosce barriere. Ogni persona porta con sé un universo di possibilità espressive che meritano di essere scoperte e valorizzate."</p>
+            <div class="container noi-intro-layout">
+                <div class="noi-intro-content">
+                    <span class="noi-intro-label eyebrow">La nostra missione</span>
+                    <h2 class="noi-intro-title titolo-sezione">La danza come <em>strumento di inclusione</em></h2>
+                    <div class="noi-intro-testo">
+                        <p>Il progetto NoiConVoi è un'iniziativa di volontariato fondata nel 2013, nata dalla convinzione della Direttrice Artistica che la danza è per tutti.</p>
+                        <p>Crediamo che chiunque possa contribuire artisticamente secondo le proprie capacità, trasformando le differenze in ricchezza espressiva e creativa.</p>
+                    </div>
+                    <div class="noi-intro-highlight">
+                        <p>La danza non conosce barriere. Ogni persona porta con sé un universo di possibilità espressive che meritano di essere scoperte e valorizzate.</p>
+                    </div>
+                </div>
+                <div class="noi-intro-visual foto-cornice">
+                    <Img src="gallery-8.jpg" alt="Un'insegnante abbraccia una bambina in sala" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
                 </div>
             </div>
         </section>
 
-        <!-- Metodo Section - CARD -->
-        <section class="noi-metodo-section">
-            <div class="noi-metodo-wrapper">
-                <div class="noi-metodo-header">
-                    <span class="noi-metodo-label eyebrow">La Metodologia</span>
-                    <h2 class="noi-metodo-title titolo-sezione">Un approccio pedagogico <em>strutturato</em></h2>
-                    <p class="noi-metodo-subtitle intro-sezione">La nostra struttura pedagogica si articola in due fasi complementari.</p>
-                </div>
-                <div class="noi-metodo-grid">
-                    <div class="noi-metodo-card voce">
-                        <div class="noi-metodo-icon voce-icona">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h3 class="noi-metodo-name voce-titolo">Pratica Psicomotoria</h3>
-                        <p class="noi-metodo-desc voce-testo">La prima parte della lezione integra elementi di Pratica Psicomotoria Aucouturier (PPA), favorendo lo sviluppo armonico attraverso il gioco e il movimento spontaneo.</p>
-                    </div>
-                    <div class="noi-metodo-card voce">
-                        <div class="noi-metodo-icon voce-icona">
-                            <i class="fas fa-music"></i>
-                        </div>
-                        <h3 class="noi-metodo-name voce-titolo">Didattica Artistica</h3>
-                        <p class="noi-metodo-desc voce-testo">La seconda parte propone una didattica artistica adattata alle necessità specifiche dei partecipanti, seguendo la programmazione annuale della scuola.</p>
-                    </div>
-                </div>
+        <!-- Metodo: intestazione editoriale e due fasi -->
+        <section class="noi-metodo-section" aria-labelledby="metodo-titolo">
+            <div class="intro-editoriale">
+                <span class="eyebrow">La metodologia</span>
+                <h2 class="titolo-sezione" id="metodo-titolo">Un approccio pedagogico <em>strutturato</em></h2>
+                <p>Ogni lezione si articola in due fasi complementari.</p>
+            </div>
+            <div class="container">
+                <ol class="fasi-lista">
+                    {fasi.map((f, i) => (
+                        <li class="voce">
+                            <span class="voce-anno" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                            <h3 class="voce-titolo">{f.nome}</h3>
+                            <p class="voce-testo">{f.testo}</p>
+                        </li>
+                    ))}
+                </ol>
             </div>
         </section>
 
-        <!-- Target Section -->
-        <section class="noi-target-section sezione-scura">
-            <div class="noi-target-wrapper">
+        <!-- Destinatari: intestazione a sinistra, elenco a destra -->
+        <section class="noi-target-section" aria-labelledby="target-titolo">
+            <div class="container noi-target-layout">
                 <div class="noi-target-header">
-                    <span class="noi-target-label eyebrow">A Chi è Rivolto</span>
-                    <h2 class="noi-target-title titolo-sezione">Un progetto <em>aperto a tutti</em></h2>
-                    <p class="noi-target-subtitle intro-sezione">NoiConVoi accoglie partecipanti con profili diversi, creando un ambiente di condivisione unico.</p>
+                    <span class="eyebrow">A chi è rivolto</span>
+                    <h2 class="titolo-sezione" id="target-titolo">Un progetto <em>aperto a tutti</em></h2>
+                    <p class="intro-sezione">NoiConVoi accoglie partecipanti con profili diversi, creando un ambiente di condivisione unico.</p>
                 </div>
-                <div class="noi-target-list">
-                    <div class="noi-target-item">
-                        <i class="fas fa-check"></i>
-                        <span>Ragazzi con difficoltà e bisogni speciali</span>
-                    </div>
-                    <div class="noi-target-item">
-                        <i class="fas fa-check"></i>
-                        <span>Normodotati in classi integrate</span>
-                    </div>
-                    <div class="noi-target-item">
-                        <i class="fas fa-check"></i>
-                        <span>Volontari (non necessariamente danzatori)</span>
-                    </div>
-                    <div class="noi-target-item">
-                        <i class="fas fa-check"></i>
-                        <span>Famiglie che credono nell'inclusione</span>
-                    </div>
-                </div>
+                <ul class="target-lista">
+                    {destinatari.map((d) => (
+                        <li class="target">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>{d}</span>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </section>
 
-        <!-- Info Section -->
-        <section class="noi-info-section">
-            <div class="noi-info-wrapper">
-                <div class="noi-info-header">
-                    <span class="noi-info-label eyebrow">Come Funziona</span>
-                    <h2 class="noi-info-title titolo-sezione">Informazioni <em>pratiche</em></h2>
-                    <p class="noi-info-subtitle intro-sezione">Tutto quello che serve sapere per partecipare al progetto.</p>
-                </div>
-                <div class="noi-info-grid">
-                    <div class="noi-info-item">
-                        <div class="noi-info-icon">
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                        <div class="noi-info-content">
-                            <h3>Quando</h3>
-                            <p>Le lezioni si tengono ogni lunedì sera presso la nostra sede di Lainate.</p>
-                        </div>
-                    </div>
-                    <div class="noi-info-item">
-                        <div class="noi-info-icon">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="noi-info-content">
-                            <h3>Spettacolo di Fine Anno</h3>
-                            <p>Partecipazione annuale allo spettacolo, esibendosi insieme ai compagni delle classi integrate.</p>
-                        </div>
-                    </div>
-                    <div class="noi-info-item">
-                        <div class="noi-info-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="noi-info-content">
-                            <h3>Volontariato</h3>
-                            <p>Progetto basato sul volontariato: non serve essere danzatori per partecipare e contribuire.</p>
-                        </div>
-                    </div>
-                    <div class="noi-info-item">
-                        <div class="noi-info-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="noi-info-content">
-                            <h3>Ambiente Inclusivo</h3>
-                            <p>Un gruppo dove le differenze diventano ricchezza e occasione di crescita per tutti.</p>
-                        </div>
-                    </div>
-                </div>
+        <!-- Informazioni pratiche: intestazione editoriale e quattro voci -->
+        <section class="noi-info-section" aria-labelledby="info-titolo">
+            <div class="intro-editoriale">
+                <span class="eyebrow">Come funziona</span>
+                <h2 class="titolo-sezione" id="info-titolo">Informazioni <em>pratiche</em></h2>
+                <p>Tutto quello che serve sapere per partecipare al progetto.</p>
+            </div>
+            <div class="container">
+                <ul class="info-lista">
+                    {info.map((v) => (
+                        <li class="voce">
+                            <h3 class="voce-titolo">{v.nome}</h3>
+                            <p class="voce-testo">{v.testo}</p>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="corso-contatto-section sezione-scura">
-            <div class="corso-contatto-bg" style={`background: url('${bg['bg-progetti-territorio.jpg']}') center/cover no-repeat`}></div>
-            <div class="corso-contatto-overlay"></div>
-            <div class="corso-contatto-wrapper">
-                <div class="corso-contatto-content">
-                    <h2 class="titolo-sezione">Unisciti a <em>NoiConVoi</em></h2>
-                    <p class="intro-sezione">Vuoi partecipare o diventare volontario? Contattaci per scoprire come far parte di questo progetto.</p>
-                    <a href="mailto:info@inballet.it?subject=Progetto%20NoiConVoi%20-%20Richiesta%20Informazioni" class="corso-btn-cta btn-primary">
-                        Contattaci <i class="fas fa-arrow-right"></i>
+        <!-- CTA -->
+        <section class="noi-cta-section sezione-scura">
+            <div class="noi-cta-bg" style={`background-image: url('${bg['bg-progetti-territorio.jpg']}')`}></div>
+            <div class="noi-cta-overlay"></div>
+            <div class="noi-cta-wrapper">
+                <h2 class="titolo-sezione">Unisciti a <em>NoiConVoi</em></h2>
+                <p class="intro-sezione">Vuoi partecipare o diventare volontario? Contattaci per scoprire come far parte del progetto.</p>
+                <div class="noi-cta-buttons">
+                    <a href={`mailto:${scuola.email}?subject=Progetto%20NoiConVoi%20-%20Richiesta%20Informazioni`} class="btn-primary">
+                        <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici
+                    </a>
+                    <a href={scuola.telefonoHref} class="btn-secondary">
+                        <i class="fas fa-phone" aria-hidden="true"></i> Chiamaci
                     </a>
                 </div>
             </div>
@@ -166,248 +146,272 @@ const bg: Record<string, string> = {
 </Base>
 
 <style>
+/* ---------- Intro ---------- */
 .noi-intro-section {
   padding: var(--section-y) 0;
-  background: #fff;
+  background: var(--white);
 }
 
-.noi-intro-wrapper {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.noi-intro-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 5rem;
+  align-items: center;
 }
 
 .noi-intro-label {
   display: block;
   margin-bottom: 1rem;
-  text-align: center;
 }
 
 .noi-intro-title {
-  margin-bottom: 2rem;
-  text-align: center;
+  margin-bottom: 1.75rem;
 }
 
-.noi-intro-text {
-  font-size: var(--text-lg);
+.noi-intro-testo p {
+  margin-bottom: 1.25rem;
+  font-size: 1.125rem;
   line-height: 1.8;
-  color: var(--text-light);
-  margin-bottom: 1.5rem;
-  text-align: center;
+  color: var(--text-dark);
 }
 
-.noi-intro-text :global(strong) {
-  color: var(--dark-navy);
-  font-weight: 600;
+.noi-intro-testo p:last-child {
+  margin-bottom: 0;
 }
 
-.noi-intro-highlight {
-  background: rgba(135,206,235,.1);
-  border-left: 4px solid var(--primary-blue);
-  padding: 1.5rem 2rem;
-  border-radius: 0 12px 12px 0;
-  margin-top: 2.5rem;
-  max-width: 750px;
-  margin-left: auto;
-  margin-right: auto;
+/* La cornice sporge a sinistra e in basso: spazio dentro la colonna */
+.noi-intro-visual {
+  max-width: 520px;
+  margin: 0 0 1.5rem 1.5rem;
+  justify-self: end;
 }
 
-.noi-intro-highlight :global(p) {
-  font-size: var(--text-base);
-  color: var(--dark-navy);
-  font-weight: 500;
-  margin: 0;
-  line-height: 1.7;
-  font-style: italic;
+.noi-intro-visual :global(img) {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
 }
 
-.noi-metodo-section {
+/* ---------- Metodo e informazioni: voci in colonne ---------- */
+.noi-metodo-section,
+.noi-info-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
 }
 
-.noi-metodo-wrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.noi-metodo-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
-
-.noi-metodo-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.noi-metodo-title {
-  margin-bottom: 1rem;
-}
-
-.noi-metodo-subtitle {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.noi-metodo-grid {
+.fasi-lista,
+.info-lista {
+  list-style: none;
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  gap: 3rem;
+  margin: 3.5rem 0 0;
+  padding: 0;
+}
+
+.fasi-lista {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.info-lista {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 2.5rem;
 }
 
+.fasi-lista .voce-testo {
+  font-size: 1.0625rem;
+}
+
+/* ---------- Destinatari ---------- */
 .noi-target-section {
   padding: var(--section-y) 0;
-  background: var(--dark-navy);
+  background: var(--white);
+}
+
+.noi-target-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 5rem;
+  align-items: start;
+}
+
+.noi-target-header .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
+.target-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.target {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: .75rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.target:first-child {
+  padding-top: .5rem;
+}
+
+.target:last-child {
+  border-bottom: none;
+}
+
+.target i {
+  font-size: 1rem;
+  color: var(--primary-blue-dark);
+}
+
+.target span {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  color: var(--dark-navy);
+}
+
+/* ---------- CTA ---------- */
+.noi-cta-section {
   position: relative;
+  padding: var(--section-y) 0;
   overflow: hidden;
 }
 
-.noi-target-section::before {
-  content: '';
+.noi-cta-bg,
+.noi-cta-overlay {
   position: absolute;
-  top: -30%;
-  right: -10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);
-  border-radius: 50%;
+  inset: 0;
 }
 
-.noi-target-wrapper {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.noi-cta-bg {
+  background: center / cover no-repeat;
+}
+
+.noi-cta-overlay {
+  background: linear-gradient(135deg, rgba(26, 26, 26, .9) 0%, rgba(42, 42, 42, .85) 100%);
+}
+
+.noi-cta-wrapper {
   position: relative;
-  z-index: 2;
-}
-
-.noi-target-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.noi-target-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.noi-target-title {
-  margin-bottom: 1rem;
-}
-
-.noi-target-subtitle {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.noi-target-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem 3rem;
-  margin-top: 2.5rem;
-}
-
-.noi-target-item {
-  display: flex;
-  align-items: center;
-  gap: .8rem;
-}
-
-.noi-target-item :global(i) {
-  color: var(--primary-blue);
-  font-size: 1.1rem;
-}
-
-.noi-target-item :global(span) {
-  font-size: var(--text-base);
-  color: #fff;
-  font-weight: 500;
-}
-
-.noi-info-section {
-  padding: var(--section-y) 0;
-  background: #fff;
-}
-
-.noi-info-wrapper {
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 0 2rem;
-}
-
-.noi-info-header {
   text-align: center;
-  margin-bottom: 3rem;
 }
 
-.noi-info-label {
-  display: block;
-  margin-bottom: 1rem;
+.noi-cta-wrapper .titolo-sezione {
+  margin-bottom: 1.25rem;
 }
 
-.noi-info-title {
-  margin-bottom: 1rem;
+.noi-cta-wrapper .intro-sezione {
+  margin-bottom: 2.5rem;
 }
 
-.noi-info-subtitle {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.noi-info-grid {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 2rem;
-  margin-top: 2.5rem;
-}
-
-.noi-info-item {
+.noi-cta-buttons {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
-  align-items: flex-start;
 }
 
-.noi-info-icon {
-  width: 1.75rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding-top: .15rem;
-  color: var(--primary-blue-dark);
-  font-size: 1.25rem;
-  flex-shrink: 0;
-}
-
-.noi-info-content :global(h3) {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--dark-navy);
-  margin-bottom: .3rem;
-}
-
-.noi-info-content :global(p) {
-  font-size: var(--text-sm);
-  color: var(--text-light);
-  line-height: 1.6;
-  margin: 0;
-}
-
-@media(max-width:992px) {
-  .noi-metodo-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+/* ---------- Tablet ---------- */
+@media (max-width: 1024px) {
+  /* Informazioni: griglia 2x2 */
+  .info-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media(max-width:600px) {
-  .noi-target-list {
-    grid-template-columns: 1fr;
+@media (max-width: 900px) {
+  /* Intro: etichetta e titolo, foto, testo, citazione */
+  .noi-intro-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
   }
 
-  .noi-info-grid {
-    grid-template-columns: 1fr;
+  .noi-intro-content {
+    display: contents;
+  }
+
+  .noi-intro-label {
+    order: 1;
+  }
+
+  .noi-intro-title {
+    order: 2;
+  }
+
+  .noi-intro-visual {
+    order: 3;
+    max-width: none;
+    margin: 0 0 2.75rem 1.5rem;
+  }
+
+  .noi-intro-visual :global(img) {
+    aspect-ratio: 3 / 2;
+  }
+
+  .noi-intro-testo {
+    order: 4;
+  }
+
+  .noi-intro-highlight {
+    order: 5;
+  }
+
+  .fasi-lista,
+  .info-lista {
+    margin-top: 2.5rem;
+  }
+
+  /* Destinatari: intestazione sopra l'elenco */
+  .noi-target-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .noi-intro-visual {
+    margin: 0 0 2rem .75rem;
+  }
+
+  .noi-intro-visual :global(img) {
+    aspect-ratio: 4 / 3;
+  }
+
+  .noi-intro-testo p,
+  .fasi-lista .voce-testo {
+    font-size: 1rem;
+  }
+
+  .fasi-lista,
+  .info-lista {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.25rem;
+  }
+
+  .target {
+    padding: 1.25rem 0;
+  }
+
+  .target span {
+    font-size: 1.125rem;
+  }
+
+  .noi-cta-wrapper {
+    padding: 0 1.5rem;
+  }
+
+  .noi-cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 </style>

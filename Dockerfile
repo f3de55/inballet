@@ -24,6 +24,9 @@ COPY --from=build /app/dist ./dist
 COPY package.json ./
 # Dati iniziali (eventi, tipi evento); in produzione montare un volume su /app/data
 COPY --chown=node:node data/eventi.json data/tipi_evento.json ./data/
+# Generatore demo della dashboard: font (Rubik, licenza OFL) e foto per le locandine
+COPY demo/fonts ./demo/fonts
+COPY src/assets/images/*.jpg ./demo/foto/
 RUN chown node:node /app/data
 USER node
 

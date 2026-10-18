@@ -1,18 +1,16 @@
 ---
 /**
- * Layout dell'area riservata (login e dashboard): tema scuro, nessuna
- * indicizzazione, nessuna cache.
+ * Layout dell'area riservata (login e dashboard): tema chiaro come il sito,
+ * barra scura in alto, nessuna indicizzazione, nessuna cache.
  */
 import '../styles/icons.css';
 import { Font } from 'astro:assets';
 
 interface Props {
   title: string;
-  /** Carica il font Rubik (usato dalla dashboard) */
-  rubik?: boolean;
 }
 
-const { title, rubik = false } = Astro.props;
+const { title } = Astro.props;
 Astro.response.headers.set('Cache-Control', 'no-store');
 ---
 
@@ -22,9 +20,10 @@ Astro.response.headers.set('Cache-Control', 'no-store');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#2a2a2a">
     <title>{title}</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    {rubik && <Font cssVariable="--font-rubik" />}
+    <Font cssVariable="--font-rubik" />
 </head>
 <body>
     <slot />
@@ -32,6 +31,14 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 </html>
 
 <style is:global>
-    :root{--primary:#87CEEB;--primary-dark:#5bb8e0;--bg:#0a0a0a;--bg-card:#141414;--bg-card-2:#1a1a1a;--text:#fff;--text-muted:#888;--success:#4ade80;--warning:#fbbf24;--danger:#f87171;--info:#60a5fa}
+    :root{
+        --primary:#87CEEB;--primary-dark:#4682B4;
+        --bar:#2a2a2a;--bg:#f4f5f6;--surface:#fff;--soft:#eef7fa;
+        --line:#e3e6e9;--line-strong:#cfd4d9;
+        --text:#1a1a1a;--text-muted:#6a6f75;
+        --success:#2e7d4f;--warning:#a86400;--danger:#c0392b;
+        --radius:10px;
+    }
     *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:var(--font-rubik),'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
 </style>

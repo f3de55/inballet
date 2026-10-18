@@ -1,272 +1,443 @@
-<!-- Chatbot Bella - Assistente AI InBallet -->
-<button id="cb-toggle" aria-label="Apri chat assistente Bella" aria-pressed="false">
+---
+/** Chat con Étoile, l'assistente virtuale di InBallet. Logica in src/scripts/chatbot.ts. */
+import { scuola } from '../data/scuola';
+
+const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come iscriversi'];
+---
+
+<button type="button" id="cb-toggle" aria-controls="cb-box" aria-expanded="false" aria-label="Chiedi a Étoile, l'assistente IA di InBallet">
     <i class="fas fa-comments" aria-hidden="true"></i>
+    <span class="cb-toggle-ia" aria-hidden="true">IA</span>
 </button>
-<div id="cb-box" role="dialog" aria-modal="true" aria-labelledby="cb-title" aria-hidden="true">
-    <div id="cb-head">
-        <span id="cb-title">💃 Bella - Assistente InBallet</span>
-        <button id="cb-close" aria-label="Chiudi chat" title="Chiudi (Esc)">
+
+<section id="cb-box" role="dialog" aria-labelledby="cb-title" tabindex="-1" hidden data-tel={scuola.telefono} data-tel-href={scuola.telefonoHref}>
+    <header id="cb-head">
+        <span class="cb-avatar" aria-hidden="true"><i class="fas fa-star"></i></span>
+        <div class="cb-head-testo">
+            <h2 id="cb-title">Étoile</h2>
+            <p>Assistente virtuale di InBallet</p>
+        </div>
+        <button type="button" id="cb-reset" class="cb-head-btn" aria-label="Nuova conversazione" title="Nuova conversazione">
+            <i class="fas fa-redo-alt" aria-hidden="true"></i>
+        </button>
+        <button type="button" id="cb-close" class="cb-head-btn" aria-label="Chiudi la chat" title="Chiudi (Esc)">
             <i class="fas fa-times" aria-hidden="true"></i>
         </button>
+    </header>
+
+    <div id="cb-msgs" role="log" aria-live="polite" aria-label="Conversazione"></div>
+
+    <div id="cb-suggerimenti" class="cb-suggerimenti" hidden>
+        {domande.map((d) => <button type="button" class="cb-chip">{d}</button>)}
     </div>
-    <div id="cb-msgs" role="log" aria-live="polite" aria-label="Messaggi della chat"></div>
+
     <form id="cb-inp">
-        <label for="cb-txt" class="sr-only">Scrivi il tuo messaggio</label>
-        <input type="text" id="cb-txt" placeholder="Chiedimi dei corsi, sedi, orari..." aria-label="Scrivi la tua domanda" required>
-        <button type="submit" aria-label="Invia messaggio" title="Invia (Enter)">
+        <label for="cb-txt" class="cb-sr-only">Scrivi la tua domanda</label>
+        <input type="text" id="cb-txt" placeholder="Scrivi la tua domanda…" maxlength="500" autocomplete="off" enterkeyhint="send">
+        <button type="submit" id="cb-send" aria-label="Invia">
             <i class="fas fa-paper-plane" aria-hidden="true"></i>
         </button>
     </form>
-</div>
+    <p class="cb-nota">Risposte automatiche: per conferme chiama la segreteria al <a href={scuola.telefonoHref}>{scuola.telefono}</a>.</p>
+</section>
 
 <script>
     import '../scripts/chatbot';
 </script>
 
 <style>
-.sr-only {
+.cb-sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
-  padding: 0;
-  margin: -1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0 0 0 0);
   white-space: nowrap;
-  border-width: 0;
 }
 
+/* ---------- Pulsante ---------- */
+/* Solo icona, con il bollino "IA" in alto a destra */
 #cb-toggle {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg,#87CEEB,#5bb8e0);
+  right: 24px;
+  bottom: 24px;
+  z-index: 998;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  padding: 0;
   border: none;
   border-radius: 50%;
+  background: var(--primary-blue);
+  box-shadow: 0 8px 24px rgba(26, 26, 26, .18);
+  color: var(--dark-navy);
   cursor: pointer;
-  box-shadow: 0 6px 25px rgba(135,206,235,0.5);
-  z-index: 998;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform .3s,box-shadow .3s;
+  transition: background-color .2s ease, color .2s ease;
 }
 
-#cb-toggle:hover {
-  transform: scale(1.1);
-  box-shadow: 0 8px 35px rgba(135,206,235,0.6);
+#cb-toggle i {
+  font-size: 1.35rem;
 }
 
-#cb-toggle :global(i) {
-  font-size: 24px;
-  color: #1a1a1a;
+.cb-toggle-ia {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 22px;
+  padding: 0 6px;
+  border: 2px solid var(--white);
+  border-radius: 999px;
+  background: var(--dark-navy);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+  line-height: 1;
+  color: var(--white);
 }
 
+@media (hover: hover) {
+  #cb-toggle:hover {
+    background: var(--dark-navy);
+    color: var(--white);
+  }
+}
+
+#cb-toggle[aria-expanded="true"] {
+  visibility: hidden;
+}
+
+/* ---------- Pannello ---------- */
 #cb-box {
   position: fixed;
-  bottom: 25px;
-  right: 25px;
-  width: 380px;
-  max-width: calc(100vw - 40px);
-  height: 520px;
-  max-height: 75vh;
-  background: #1a1a1a;
-  border-radius: 20px;
-  display: none;
-  flex-direction: column;
-  z-index: 998;
-  box-shadow: 0 15px 50px rgba(0,0,0,0.7);
-  border: none;
-  overflow: hidden;
-}
-
-#cb-box.open {
+  right: 24px;
+  bottom: 24px;
+  z-index: 1002;
   display: flex;
-  animation: cbSlide .3s ease;
+  flex-direction: column;
+  width: 380px;
+  height: min(600px, calc(100dvh - 48px));
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .22);
+  animation: cb-entra .25s ease;
 }
 
-@keyframes cbSlide {from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#cb-box[hidden] {
+  display: none;
+}
+
+#cb-box:focus {
+  outline: none;
+}
+
+@keyframes cb-entra {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
 
 #cb-head {
-  background: linear-gradient(135deg,#87CEEB,#5bb8e0);
-  color: #1a1a1a;
-  padding: 18px 20px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  font-weight: 700;
-  font-size: 15px;
+  gap: .75rem;
+  padding: .85rem .6rem .85rem 1rem;
+  background: var(--header-dark);
+  color: var(--white);
 }
 
-#cb-head :global(button) {
-  background: rgba(0,0,0,0.1);
-  border: none;
-  color: #1a1a1a;
-  font-size: 16px;
-  cursor: pointer;
-  width: 32px;
-  height: 32px;
+.cb-avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  transition: background .2s;
+  background: var(--primary-blue);
+  font-weight: 700;
+  color: var(--dark-navy);
 }
 
-#cb-head :global(button:hover) {
-  background: rgba(0,0,0,0.2);
+.cb-head-testo {
+  flex: 1;
+  min-width: 0;
 }
 
+#cb-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.cb-head-testo p {
+  font-size: .8rem;
+  color: rgba(255, 255, 255, .65);
+}
+
+.cb-head-btn {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, .75);
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+#cb-reset {
+  font-size: .85rem;
+}
+
+.cb-head-btn:hover {
+  background: rgba(255, 255, 255, .1);
+  color: var(--white);
+}
+
+/* ---------- Messaggi ---------- */
 #cb-msgs {
   flex: 1;
-  padding: 16px;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  background: #1a1a1a;
+  gap: .6rem;
+  padding: 1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #f5f6f7;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(26, 26, 26, .2) transparent;
 }
 
-#cb-msgs::-webkit-scrollbar {
-  width: 6px;
-}
-
-#cb-msgs::-webkit-scrollbar-thumb {
-  background: #444;
-  border-radius: 3px;
-}
-
-:global(.cb-m) {
-  padding: 12px 16px;
-  border-radius: 18px;
+#cb-msgs :global(.cb-m) {
   max-width: 85%;
-  line-height: 1.6;
-  font-size: 14px;
-  word-wrap: break-word;
+  padding: .65rem .9rem;
+  border-radius: 14px;
+  font-size: .9375rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
-:global(.cb-m.usr) {
-  background: linear-gradient(135deg,#87CEEB,#6bb8d9);
-  color: #1a1a1a;
+#cb-msgs :global(.cb-m.bot) {
+  align-self: flex-start;
+  border: 1px solid #e6e8ea;
+  border-bottom-left-radius: 4px;
+  background: var(--white);
+  color: var(--text-dark);
+}
+
+#cb-msgs :global(.cb-m.usr) {
   align-self: flex-end;
   border-bottom-right-radius: 4px;
+  background: var(--primary-blue);
+  color: var(--dark-navy);
 }
 
-:global(.cb-m.bot) {
-  background: #2a2a2a;
-  color: #fff;
-  align-self: flex-start;
-  border-bottom-left-radius: 4px;
-}
-
-:global(.cb-m.load) {
-  opacity: 0.6;
-}
-
-:global(.cb-m .cb-txt) {
+#cb-msgs :global(.cb-txt) {
   display: block;
 }
 
-:global(.cb-m .cb-time) {
+#cb-msgs :global(.cb-time) {
   display: block;
-  font-size: 10px;
-  opacity: 0.5;
-  margin-top: 6px;
+  margin-top: .25rem;
+  font-size: .7rem;
   text-align: right;
+  opacity: .55;
 }
 
-:global(.cb-m a.cb-link) {
-  color: #87CEEB;
-  text-decoration: none;
+#cb-msgs :global(a.cb-link) {
   font-weight: 600;
-  border-bottom: 1px dotted #87CEEB;
-  transition: opacity .2s;
+  color: var(--primary-blue-dark);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
-:global(.cb-m a.cb-link:hover) {
-  opacity: 0.8;
+#cb-msgs :global(.cb-m.usr a.cb-link) {
+  color: var(--dark-navy);
 }
 
-:global(.cb-m.usr a.cb-link) {
-  color: #1a1a1a;
-  border-bottom-color: #1a1a1a;
+/* Risposta in preparazione: tre puntini */
+#cb-msgs :global(.cb-m.load) {
+  display: flex;
+  gap: 4px;
+  padding: .85rem 1rem;
 }
 
+#cb-msgs :global(.cb-m.load span) {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9aa0a6;
+  animation: cb-punto 1.2s infinite ease-in-out;
+}
+
+#cb-msgs :global(.cb-m.load span:nth-child(2)) {
+  animation-delay: .15s;
+}
+
+#cb-msgs :global(.cb-m.load span:nth-child(3)) {
+  animation-delay: .3s;
+}
+
+@keyframes cb-punto {
+  0%, 60%, 100% {
+    opacity: .35;
+    transform: none;
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+/* ---------- Domande suggerite ---------- */
+.cb-suggerimenti {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  padding: 0 1rem .75rem;
+  background: #f5f6f7;
+}
+
+.cb-suggerimenti[hidden] {
+  display: none;
+}
+
+.cb-chip {
+  min-height: 36px;
+  padding: .35rem .85rem;
+  border: 1px solid var(--primary-blue);
+  border-radius: 999px;
+  background: var(--white);
+  font: inherit;
+  font-size: .875rem;
+  color: var(--dark-navy);
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+
+.cb-chip:hover {
+  background: rgba(135, 206, 235, .2);
+}
+
+/* ---------- Scrittura ---------- */
 #cb-inp {
   display: flex;
-  padding: 14px 16px;
-  background: #222;
-  gap: 10px;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  gap: .5rem;
+  padding: .75rem .75rem .5rem;
+  border-top: 1px solid #e6e8ea;
+  background: var(--white);
 }
 
-#cb-inp :global(input) {
+#cb-txt {
   flex: 1;
-  padding: 14px 18px;
-  border: none;
-  border-radius: 25px;
-  background: #333;
-  color: #fff;
-  font-size: 14px;
+  min-width: 0;
+  min-height: 46px;
+  padding: .6rem 1rem;
+  border: 1px solid #cfd4d9;
+  border-radius: 999px;
+  background: var(--white);
+  font: inherit;
+  font-size: 16px;
+  color: var(--text-dark);
+}
+
+#cb-txt:focus {
   outline: none;
-  transition: box-shadow .2s;
+  border-color: var(--primary-blue-dark);
+  box-shadow: 0 0 0 3px rgba(135, 206, 235, .35);
 }
 
-#cb-inp :global(input:focus) {
-  box-shadow: 0 0 0 2px rgba(135,206,235,0.3);
-}
-
-#cb-inp :global(input::placeholder) {
-  color: #999;
-}
-
-#cb-inp :global(button) {
+#cb-send {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
   width: 46px;
   height: 46px;
   border: none;
   border-radius: 50%;
-  background: linear-gradient(135deg,#87CEEB,#5bb8e0);
-  color: #1a1a1a;
+  background: var(--primary-blue);
+  color: var(--dark-navy);
   cursor: pointer;
-  transition: transform .2s;
+  transition: background-color .2s ease, color .2s ease, opacity .2s ease;
 }
 
-#cb-inp :global(button:hover) {
-  transform: scale(1.05);
+#cb-send:hover:not(:disabled) {
+  background: var(--dark-navy);
+  color: var(--white);
 }
 
-@media(max-width:768px) {
-#cb-toggle {
+#cb-send:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.cb-nota {
+  padding: 0 1rem .75rem;
+  background: var(--white);
+  font-size: .72rem;
+  line-height: 1.4;
+  color: var(--text-light);
+}
+
+.cb-nota a {
+  color: inherit;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #cb-box,
+  #cb-msgs :global(.cb-m.load span) {
+    animation: none;
+  }
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  #cb-toggle {
+    right: 20px;
+    bottom: 20px;
+  }
+}
+
+/* ---------- Mobile: chat a schermo intero ---------- */
+@media (max-width: 600px) {
+  #cb-toggle {
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
     width: 54px;
     height: 54px;
-    bottom: 22px;
-    right: 22px;
   }
 
-#cb-toggle :global(i) {
-    font-size: 22px;
-  }
-}
-
-@media(max-width:480px) {
-#cb-box {
-    bottom: 0;
+  #cb-box {
+    top: 0;
     right: 0;
+    bottom: auto;
+    left: 0;
     width: 100%;
-    max-width: 100%;
-    height: 100%;
-    max-height: 100%;
+    height: 100dvh;
     border-radius: 0;
   }
 
-#cb-toggle {
-    width: 50px;
-    height: 50px;
-    bottom: 18px;
-    right: 18px;
+  #cb-head {
+    padding-top: calc(.75rem + env(safe-area-inset-top));
   }
 
-#cb-toggle :global(i) {
-    font-size: 20px;
+  .cb-nota {
+    padding-bottom: calc(.75rem + env(safe-area-inset-bottom));
+  }
+
+  :global(html.cb-aperto) {
+    overflow: hidden;
   }
 }
 </style>

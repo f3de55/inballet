@@ -148,6 +148,22 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
+/* Navbar ridotta dopo lo scroll (classe is-scrolled da navbar.ts). Il layout della
+   pagina continua a usare --header-h: l'header è fisso, quindi nulla si sposta */
+.main-header {
+  --nav-h: var(--header-h);
+}
+
+.main-header.is-scrolled {
+  --nav-h: 64px;
+}
+
+@media (max-width: 1200px) {
+  .main-header.is-scrolled {
+    --nav-h: 56px;
+  }
+}
+
 body {
   font-family: var(--font-rubik);
   line-height: 1.6;
@@ -186,6 +202,7 @@ body {
   font-size: var(--text-5xl);
   font-weight: 700;
   line-height: 1.15;
+  text-wrap: balance;
   letter-spacing: -0.02em;
   text-transform: none;
   color: var(--dark-navy);
@@ -640,7 +657,7 @@ section [class*="-intro-highlight"] p {
   }
 
   .container {
-    padding: 0 1rem;
+    padding: 0 1.5rem;
   }
 }
 
@@ -719,7 +736,7 @@ section [class*="-intro-highlight"] p {
 
 @media (max-width: 480px) {
   .corso-contatto-wrapper {
-    padding: 0 1rem;
+    padding: 0 1.5rem;
   }
 
   .corso-btn-cta {
@@ -851,7 +868,7 @@ section [class*="-intro-highlight"] p {
   }
 
   .chisiamo-hero-glass {
-    padding: 0 1rem;
+    padding: 0 1.5rem;
   }
 
   .chisiamo-hero-title {

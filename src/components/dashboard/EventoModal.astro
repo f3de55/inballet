@@ -1,86 +1,119 @@
 ---
-/** Modale crea/modifica evento con editor descrizione e gestione locandine. */
+/**
+ * Modale crea/modifica evento. Campi nell'ordine in cui servono, con
+ * scorciatoie per le sedi e suggerimenti dai valori già usati.
+ */
 interface Props {
   tipi: string[];
+  sedi: { nome: string; luogo: string }[];
+  luoghi: string[];
+  destinatari: string[];
+  costi: string[];
 }
 
-const { tipi } = Astro.props;
+const { tipi, sedi, luoghi, destinatari, costi } = Astro.props;
 ---
 
 <div class="modal" id="modalEvento" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-box">
-        <div class="modal-header">
-            <h3 id="modalTitle">Nuovo Evento</h3>
-            <button type="button" class="modal-close" data-chiudi-evento aria-label="Chiudi"><i class="fas fa-times"></i></button>
-        </div>
         <form id="formEvento" novalidate>
+            <div class="modal-header">
+                <h2 id="modalTitle">Nuovo evento</h2>
+                <button type="button" class="modal-close" data-chiudi-evento aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+            </div>
+
             <div class="modal-body">
                 <input type="hidden" id="eventoId">
-                <div class="form-group">
-                    <label for="titolo">Titolo * <small style="color:var(--text-muted);font-weight:400">(3-100 caratteri)</small></label>
-                    <input type="text" id="titolo" required placeholder="Es: Workshop Hip-Hop" maxlength="100" data-counter="100">
-                    <small class="char-counter" id="titolo-counter" style="color:var(--text-muted);font-size:.75rem"></small>
+
+                <div class="campo">
+                    <label for="titolo">Titolo <span class="nota">obbligatorio</span></label>
+                    <input type="text" id="titolo" required placeholder="Es. Workshop di Hip-Hop" maxlength="100" data-counter="100" autocomplete="off">
+                    <small class="contatore" id="titolo-counter"></small>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="data">Data *</label>
+
+                <div class="campi-2">
+                    <div class="campo">
+                        <label for="data">Data <span class="nota">obbligatoria</span></label>
                         <input type="date" id="data" required>
                     </div>
-                    <div class="form-group">
+                    <div class="campo">
                         <label for="ora">Ora</label>
                         <input type="time" id="ora">
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group" id="tipoFormGroup">
-                        <label>Tipo {tipi.length > 0 && <button type="button" class="btn btn-sm" id="tipoCogBtn" style="margin-left:.5rem;padding:.2rem .5rem;font-size:.7rem" data-apri-tipi aria-label="Gestisci tipi"><i class="fas fa-cog"></i></button>}</label>
-                        <select id="tipo" style={tipi.length === 0 ? 'display:none' : undefined}>
-                            {tipi.map((t) => <option value={t}>{t}</option>)}
-                        </select>
-                        <span id="noTipoMsg" style={`color:var(--text-muted);font-size:.85rem;${tipi.length === 0 ? '' : 'display:none'}`}>Nessun tipo creato. <a href="#" data-apri-tipi style="color:var(--primary)">Aggiungi tipo</a></span>
+
+                <div class="campo">
+                    <label for="luogo">Luogo</label>
+                    <input type="text" id="luogo" list="luoghiUsati" placeholder="Es. Sede di Lainate, Via Puccini 14" maxlength="150" autocomplete="off">
+                    <div class="chips" aria-label="Sedi">
+                        {sedi.map((s) => <button type="button" class="chip" data-luogo={s.luogo}>Sede di {s.nome}</button>)}
                     </div>
-                    <div class="form-group">
-                        <label for="luogo">Luogo</label>
-                        <input type="text" id="luogo" placeholder="Es: Sede Lainate" maxlength="150">
-                    </div>
+                    <datalist id="luoghiUsati">{luoghi.map((v) => <option value={v} />)}</datalist>
                 </div>
-                <div class="form-group">
-                    <label id="descrizione-label">Descrizione <small style="color:var(--text-muted);font-weight:400">(max 1000 caratteri)</small></label>
-                    <div class="editor-wrapper">
-                        <div class="editor-toolbar" role="toolbar" aria-label="Formattazione">
-                            <button type="button" data-format="bold" title="Grassetto (Ctrl+B)" aria-label="Grassetto"><i class="fas fa-bold"></i></button>
-                            <button type="button" data-format="italic" title="Corsivo (Ctrl+I)" aria-label="Corsivo"><i class="fas fa-italic"></i></button>
-                            <div class="separator"></div>
-                            <button type="button" data-format="list" title="Elenco puntato" aria-label="Elenco puntato"><i class="fas fa-list-ul"></i></button>
-                        </div>
-                        <div class="editor-content" id="descrizione" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="descrizione-label" data-placeholder="Descrizione evento..."></div>
+
+                <div class="campo" id="tipoFormGroup">
+                    <div class="campo-label">
+                        <label for="tipo">Tipo</label>
+                        <button type="button" class="btn-link" data-apri-tipi>Modifica i tipi</button>
                     </div>
-                    <small class="char-counter" id="descrizione-counter" style="color:var(--text-muted);font-size:.75rem"></small>
+                    <select id="tipo" hidden={tipi.length === 0}>
+                        {tipi.map((t) => <option value={t}>{t}</option>)}
+                    </select>
+                    <p class="nota" id="noTipoMsg" hidden={tipi.length > 0}>Nessun tipo ancora: aggiungine uno con «Modifica i tipi».</p>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="destinatari">Destinatari</label>
-                        <input type="text" id="destinatari" placeholder="Es: Tutti i livelli" maxlength="100">
-                    </div>
-                    <div class="form-group">
-                        <label for="costo">Costo</label>
-                        <input type="text" id="costo" placeholder="Es: Gratuito / 15€" maxlength="50">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Immagine</label>
+
+                <div class="campo">
+                    <span class="campo-label"><span>Locandina</span></span>
                     <input type="hidden" id="immagine">
+                    <div class="locandina-anteprima" id="locandinaAnteprima" hidden>
+                        <img id="locandinaImg" src="data:," alt="Locandina selezionata">
+                        <div>
+                            <p>Locandina scelta</p>
+                            <button type="button" class="btn-link" id="locandinaTogli">Togli la locandina</button>
+                        </div>
+                    </div>
                     <div class="upload-zone" role="button" tabindex="0" data-upload>
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Clicca per caricare (max 20MB, multiplo)</p>
+                        <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                        <span><strong id="uploadTesto">Carica una locandina</strong> o trascinala qui</span>
+                        <small>JPG, PNG, WebP o GIF fino a 20 MB</small>
                         <input type="file" id="fileInput" accept="image/jpeg,image/png,image/gif,image/webp" multiple>
                     </div>
-                    <div class="images-grid" id="imagesGrid"></div>
+                    <details class="libreria" id="libreria">
+                        <summary>Usa una locandina già caricata <span id="libreriaN"></span></summary>
+                        <div class="images-grid" id="imagesGrid"></div>
+                    </details>
+                </div>
+
+                <div class="campo">
+                    <span class="campo-label" id="descrizione-label"><span>Descrizione</span></span>
+                    <div class="editor-wrapper">
+                        <div class="editor-toolbar" role="toolbar" aria-label="Formattazione">
+                            <button type="button" data-format="bold" title="Grassetto (Ctrl+B)" aria-label="Grassetto"><i class="fas fa-bold" aria-hidden="true"></i></button>
+                            <button type="button" data-format="italic" title="Corsivo (Ctrl+I)" aria-label="Corsivo"><i class="fas fa-italic" aria-hidden="true"></i></button>
+                            <button type="button" data-format="list" title="Elenco puntato" aria-label="Elenco puntato"><i class="fas fa-list-ul" aria-hidden="true"></i></button>
+                        </div>
+                        <div class="editor-content" id="descrizione" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="descrizione-label" data-placeholder="Cosa si fa, a chi è adatto, cosa portare…"></div>
+                    </div>
+                    <small class="contatore" id="descrizione-counter"></small>
+                </div>
+
+                <div class="campi-2 campi-2--impila">
+                    <div class="campo">
+                        <label for="destinatari">Per chi</label>
+                        <input type="text" id="destinatari" list="destinatariUsati" placeholder="Es. Tutti i livelli, dai 12 anni" maxlength="100" autocomplete="off">
+                        <datalist id="destinatariUsati">{destinatari.map((v) => <option value={v} />)}</datalist>
+                    </div>
+                    <div class="campo">
+                        <label for="costo">Costo</label>
+                        <input type="text" id="costo" list="costiUsati" placeholder="Es. Gratuito, 15 €" maxlength="50" autocomplete="off">
+                        <datalist id="costiUsati">{costi.map((v) => <option value={v} />)}</datalist>
+                    </div>
                 </div>
             </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-chiudi-evento>Annulla</button>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salva</button>
+                <button type="submit" class="btn btn-primary" id="btnSalva">Salva evento</button>
             </div>
         </form>
     </div>

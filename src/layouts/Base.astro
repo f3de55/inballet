@@ -10,6 +10,7 @@ import { getAsset } from '../lib/images';
 import Banner from '../components/Banner.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import Chatbot from '../components/Chatbot.astro';
 
 interface Props {
   title: string;
@@ -70,7 +71,7 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <Font cssVariable="--font-rubik" preload={[{ style: 'normal', subset: 'latin' }]} />
-    <style is:inline>body{min-height:100vh}.main-header{min-height:var(--header-h,80px)}</style>
+    <style is:inline>body{min-height:100vh}.main-header{min-height:var(--nav-h,80px)}</style>
     <slot name="head" />
 </head>
 <body>
@@ -93,6 +94,9 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
         <Footer />
     </footer>
 
+    <!-- Fuori dal footer: il suo z-index terrebbe la chat sotto la barra del sito -->
+    <Chatbot />
+
     <script>
         import '../scripts/navbar';
     </script>
@@ -109,7 +113,7 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
   z-index: 1000;
   transition: background var(--transition-base);
   box-shadow: 0 2px 20px rgba(0,0,0,.3);
-  min-height: var(--header-h);
+  min-height: var(--nav-h);
 }
 
 .main-header.is-scrolled {
@@ -123,5 +127,11 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
   position: relative;
   z-index: 10;
   padding: 3rem 0 0;
+}
+
+@media (max-width: 1024px) {
+  .footer {
+    padding-top: 2rem;
+  }
 }
 </style>

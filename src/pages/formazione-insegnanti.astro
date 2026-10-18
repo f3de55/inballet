@@ -1,12 +1,34 @@
 ---
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import Img from '../components/Img.astro';
 import { webp } from '../lib/images';
+import { scuola } from '../data/scuola';
 
 const bg: Record<string, string> = {
   'gallery-4.jpg': await webp('gallery-4.jpg', 1920),
   'bg-progetti-territorio.jpg': await webp('bg-progetti-territorio.jpg', 1920),
 };
+
+const inBreve = [
+  { valore: '2', unita: 'anni', testo: 'Percorso biennale' },
+  { valore: 'Modern', unita: '', testo: 'Stile di specializzazione' },
+  { valore: '6', unita: 'master', testo: 'Per proseguire dopo il diploma' },
+];
+
+const aree = [
+  'Tecnica e didattica della danza Modern',
+  'Pedagogia applicata alla danza',
+  'Psicologia dello sviluppo',
+  "Metodologie per ogni fascia d'età",
+  'Approccio alla disabilità',
+  'Tirocinio pratico',
+];
+
+const enti = [
+  { sigla: 'CSEN', nome: 'Centro Sportivo Educativo Nazionale' },
+  { sigla: 'CONI', nome: 'Comitato Olimpico Nazionale Italiano' },
+];
 ---
 
 <Base
@@ -27,85 +49,84 @@ const bg: Record<string, string> = {
             </div>
         </section>
 
-        <!-- Intro Section -->
+        <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo); sotto, il corso in breve -->
         <section id="intro" class="form-intro-section">
-            <div class="form-intro-wrapper intro-editoriale">
-                <span class="form-intro-label eyebrow">Il Percorso</span>
-                <h2 class="form-intro-title titolo-sezione">Diventa insegnante <em>di danza</em></h2>
-                <p class="form-intro-text">
-                    Un percorso biennale con moduli formativi multidisciplinari nella danza, con particolare attenzione alle interconnessioni pedagogiche e allo sviluppo evolutivo.
-                </p>
-                <p class="form-intro-text">
-                    Il programma copre tutte le fasce d'età: dal bambino all'adulto, fino ai casi più complessi di disabilità. Specializzazione nello stile Modern con possibilità di proseguire con sei master successivi.
-                </p>
+            <div class="container form-intro-layout">
+                <div class="form-intro-content">
+                    <span class="form-intro-label eyebrow">Il percorso</span>
+                    <h2 class="form-intro-title titolo-sezione">Diventa insegnante <em>di danza</em></h2>
+                    <div class="form-intro-testo">
+                        <p>Un percorso biennale con moduli formativi multidisciplinari nella danza, con particolare attenzione alle interconnessioni pedagogiche e allo sviluppo evolutivo.</p>
+                        <p>Il programma copre tutte le fasce d'età: dal bambino all'adulto, fino ai casi più complessi di disabilità. La specializzazione è nello stile Modern, con la possibilità di proseguire con sei master successivi.</p>
+                    </div>
+                </div>
+                <div class="form-intro-visual foto-cornice">
+                    <Img src="gallery-7.jpg" alt="Le insegnanti di InBallet in sala" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
+                </div>
+            </div>
+            <div class="container">
+                <ul class="breve-lista" aria-label="Il corso in breve">
+                    {inBreve.map((b) => (
+                        <li class="breve">
+                            <span class="breve-valore">{b.valore}{b.unita && <span class="breve-unita"> {b.unita}</span>}</span>
+                            <span class="breve-testo">{b.testo}</span>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </section>
 
-        <!-- Programma Section -->
-        <section class="form-prog-section">
-            <div class="form-prog-wrapper">
-                <div class="form-prog-header">
-                    <span class="form-prog-label eyebrow">Il Programma</span>
-                    <h2 class="form-prog-title titolo-sezione">Aree <em>di studio</em></h2>
+        <!-- Aree di studio: intestazione a sinistra (fissa su desktop), elenco numerato a destra -->
+        <section class="form-aree-section" aria-labelledby="aree-titolo">
+            <div class="container form-aree-layout">
+                <div class="form-aree-header">
+                    <span class="eyebrow">Il programma</span>
+                    <h2 class="titolo-sezione" id="aree-titolo">Aree <em>di studio</em></h2>
+                    <p class="intro-sezione">Sei aree tra tecnica, pedagogia e pratica in sala, per insegnare a ogni età.</p>
                 </div>
-                <div class="form-prog-grid">
-                    <div class="form-prog-item">
-                        <div class="form-prog-num">1</div>
-                        <p class="form-prog-text">Tecnica e didattica della danza Modern</p>
-                    </div>
-                    <div class="form-prog-item">
-                        <div class="form-prog-num">2</div>
-                        <p class="form-prog-text">Pedagogia applicata alla danza</p>
-                    </div>
-                    <div class="form-prog-item">
-                        <div class="form-prog-num">3</div>
-                        <p class="form-prog-text">Psicologia dello sviluppo</p>
-                    </div>
-                    <div class="form-prog-item">
-                        <div class="form-prog-num">4</div>
-                        <p class="form-prog-text">Metodologie per ogni fascia d'età</p>
-                    </div>
-                    <div class="form-prog-item">
-                        <div class="form-prog-num">5</div>
-                        <p class="form-prog-text">Approccio alla disabilità</p>
-                    </div>
-                    <div class="form-prog-item">
-                        <div class="form-prog-num">6</div>
-                        <p class="form-prog-text">Tirocinio pratico</p>
-                    </div>
-                </div>
+                <ol class="aree-lista">
+                    {aree.map((a, i) => (
+                        <li class="area">
+                            <span class="area-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                            <span class="area-nome">{a}</span>
+                        </li>
+                    ))}
+                </ol>
             </div>
         </section>
 
-        <!-- Certificazione Section -->
-        <section class="form-cert-section sezione-scura">
-            <div class="form-cert-wrapper">
-                <span class="form-cert-label eyebrow">Riconoscimenti</span>
-                <h2 class="form-cert-title titolo-sezione">Diploma a <em>valenza nazionale</em></h2>
-                <p class="form-cert-text">Il titolo rilasciato è riconosciuto dallo CSEN e dal CONI, garantendo validità su tutto il territorio nazionale per l'insegnamento della danza.</p>
-                <div class="form-cert-badges">
-                    <div class="form-cert-badge">
-                        <div class="form-cert-badge-name">CSEN</div>
-                        <div class="form-cert-badge-desc">Centro Sportivo Educativo Nazionale</div>
-                    </div>
-                    <div class="form-cert-badge">
-                        <div class="form-cert-badge-name">CONI</div>
-                        <div class="form-cert-badge-desc">Comitato Olimpico Nazionale</div>
-                    </div>
+        <!-- Diploma: intestazione a sinistra, enti che lo riconoscono a destra -->
+        <section class="form-cert-section" aria-labelledby="cert-titolo">
+            <div class="container form-cert-layout">
+                <div class="form-cert-header">
+                    <span class="eyebrow">Riconoscimenti</span>
+                    <h2 class="titolo-sezione" id="cert-titolo">Diploma a <em>valenza nazionale</em></h2>
+                    <p class="intro-sezione">Il titolo rilasciato è riconosciuto dallo CSEN e dal CONI e vale su tutto il territorio nazionale per l'insegnamento della danza.</p>
                 </div>
+                <ul class="enti-lista">
+                    {enti.map((e) => (
+                        <li class="ente">
+                            <span class="ente-sigla">{e.sigla}</span>
+                            <span class="ente-nome">{e.nome}</span>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="corso-contatto-section sezione-scura">
-            <div class="corso-contatto-bg" style={`background: url('${bg['bg-progetti-territorio.jpg']}') center/cover no-repeat`}></div>
-            <div class="corso-contatto-overlay"></div>
-            <div class="corso-contatto-wrapper">
-                <div class="corso-contatto-content">
-                    <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
-                    <p class="intro-sezione">Contattaci per informazioni su date, costi e modalità di iscrizione.</p>
-                    <a href="mailto:info@inballet.it?subject=Corso%20Formazione%20Insegnanti%20-%20Richiesta%20Informazioni" class="corso-btn-cta btn-primary">
-                        Richiedi Informazioni <i class="fas fa-arrow-right"></i>
+        <!-- CTA -->
+        <section class="form-cta-section sezione-scura">
+            <div class="form-cta-bg" style={`background-image: url('${bg['bg-progetti-territorio.jpg']}')`}></div>
+            <div class="form-cta-overlay"></div>
+            <div class="form-cta-wrapper">
+                <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
+                <p class="intro-sezione">Contattaci per informazioni su date, costi e modalità di iscrizione.</p>
+                <div class="form-cta-buttons">
+                    <a href={`mailto:${scuola.email}?subject=Corso%20Formazione%20Insegnanti%20-%20Richiesta%20Informazioni`} class="btn-primary">
+                        <i class="fas fa-envelope" aria-hidden="true"></i> Richiedi informazioni
+                    </a>
+                    <a href={scuola.telefonoHref} class="btn-secondary">
+                        <i class="fas fa-phone" aria-hidden="true"></i> Chiamaci
                     </a>
                 </div>
             </div>
@@ -113,16 +134,17 @@ const bg: Record<string, string> = {
 </Base>
 
 <style>
+/* ---------- Intro ---------- */
 .form-intro-section {
   padding: var(--section-y) 0;
-  background: #fff;
+  background: var(--white);
 }
 
-.form-intro-wrapper {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  text-align: center;
+.form-intro-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 5rem;
+  align-items: center;
 }
 
 .form-intro-label {
@@ -131,195 +153,354 @@ const bg: Record<string, string> = {
 }
 
 .form-intro-title {
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
 }
 
-.form-intro-text {
-  font-size: var(--text-lg);
+.form-intro-testo p {
+  margin-bottom: 1.25rem;
+  font-size: 1.125rem;
   line-height: 1.8;
-  color: var(--text-light);
-  margin-bottom: 1.5rem;
+  color: var(--text-dark);
 }
 
-.form-intro-text :global(strong) {
+.form-intro-testo p:last-child {
+  margin-bottom: 0;
+}
+
+/* La cornice sporge a sinistra e in basso: spazio dentro la colonna */
+.form-intro-visual {
+  max-width: 520px;
+  margin: 0 0 1.5rem 1.5rem;
+  justify-self: end;
+}
+
+.form-intro-visual :global(img) {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* In breve: tre dati separati da filetti (il gap da 1px sul fondo li disegna) */
+.breve-lista {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 5rem 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(26, 26, 26, 0.12);
+  background: rgba(26, 26, 26, 0.12);
+}
+
+.breve {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  padding: 2rem 2rem 0;
+  background: var(--white);
+}
+
+.breve:first-child {
+  padding-left: 0;
+}
+
+.breve-valore {
+  font-size: clamp(2.25rem, 1.75rem + 1.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
   color: var(--dark-navy);
-  font-weight: 600;
+  white-space: nowrap;
 }
 
-.form-prog-section {
+.breve-unita {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--primary-blue-dark);
+}
+
+.breve-testo {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* ---------- Aree di studio ---------- */
+.form-aree-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
-  position: relative;
-  overflow: hidden;
 }
 
-.form-prog-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--primary-blue);
-}
-
-.form-prog-section::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--primary-blue);
-}
-
-.form-prog-wrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.form-prog-header {
-  text-align: center;
-  margin-bottom: 3.5rem;
-}
-
-.form-prog-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.form-prog-grid {
+.form-aree-layout,
+.form-cert-layout {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 2.5rem 4rem;
-  position: relative;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 5rem;
+  align-items: start;
 }
 
-.form-prog-grid::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: rgba(135,206,235,.3);
-  transform: translateX(-50%);
+.form-aree-header {
+  position: sticky;
+  top: calc(var(--header-h) + var(--banner-height, 0px) + 2rem);
 }
 
-.form-prog-item {
+.form-aree-header .titolo-sezione,
+.form-cert-header .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
+.aree-lista,
+.enti-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.area {
   display: grid;
-  grid-template-columns: 45px 1fr;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: baseline;
   gap: 1rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(135,206,235,.3);
+  padding: 1.6rem 0;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
 }
 
-.form-prog-item:nth-last-child(-n+2) {
+.area:first-child {
+  padding-top: .5rem;
+}
+
+.area:last-child {
   border-bottom: none;
-  padding-bottom: 0;
 }
 
-.form-prog-num {
-  width: 45px;
-  height: 45px;
-  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--dark-navy);
+.area-num {
+  font-size: .9375rem;
+  font-weight: 600;
+  color: var(--primary-blue-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+.area-nome {
+  font-size: var(--text-xl);
   font-weight: 700;
-  font-size: var(--text-lg);
-}
-
-.form-prog-text {
-  font-size: var(--text-base);
+  line-height: var(--leading-snug);
   color: var(--dark-navy);
-  line-height: 1.6;
-  font-weight: 500;
-  padding-top: .6rem;
 }
 
-@media(max-width:768px) {
-  .form-prog-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .form-prog-grid::before {
-    display: none;
-  }
-
-  .form-prog-item:nth-last-child(2) {
-    border-bottom: 1px solid rgba(135,206,235,.3);
-    padding-bottom: 2rem;
-  }
-}
-
+/* ---------- Diploma ---------- */
 .form-cert-section {
   padding: var(--section-y) 0;
-  background: var(--dark-navy);
+  background: var(--white);
+}
+
+.ente {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.ente:first-child {
+  padding-top: .5rem;
+}
+
+.ente:last-child {
+  border-bottom: none;
+}
+
+.ente-sigla {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--primary-blue-dark);
+}
+
+.ente-nome {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: var(--leading-snug);
+  color: var(--dark-navy);
+}
+
+/* ---------- CTA ---------- */
+.form-cta-section {
   position: relative;
+  padding: var(--section-y) 0;
   overflow: hidden;
 }
 
-.form-cert-section::before {
-  content: '';
+.form-cta-bg,
+.form-cta-overlay {
   position: absolute;
-  top: -30%;
-  left: -10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle,rgba(135,206,235,.06) 0,transparent 70%);
-  border-radius: 50%;
+  inset: 0;
 }
 
-.form-cert-wrapper {
+.form-cta-bg {
+  background: center / cover no-repeat;
+}
+
+.form-cta-overlay {
+  background: linear-gradient(135deg, rgba(26, 26, 26, .9) 0%, rgba(42, 42, 42, .85) 100%);
+}
+
+.form-cta-wrapper {
+  position: relative;
   max-width: 800px;
   margin: 0 auto;
   padding: 0 2rem;
-  position: relative;
-  z-index: 2;
   text-align: center;
 }
 
-.form-cert-label {
-  display: block;
-  margin-bottom: 1rem;
+.form-cta-wrapper .titolo-sezione {
+  margin-bottom: 1.25rem;
 }
 
-.form-cert-title {
-  margin-bottom: 1.5rem;
+.form-cta-wrapper .intro-sezione {
+  margin-bottom: 2.5rem;
 }
 
-.form-cert-text {
-  font-size: var(--text-lg);
-  color: rgba(255,255,255,.7);
-  line-height: 1.8;
-  margin-bottom: 2rem;
-}
-
-.form-cert-badges {
+.form-cta-buttons {
   display: flex;
-  justify-content: center;
-  gap: 3rem;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
 }
 
-.form-cert-badge {
-  text-align: center;
+/* ---------- Tablet ---------- */
+@media (max-width: 1024px) {
+  .breve {
+    padding: 1.75rem 1.25rem 0;
+  }
 }
 
-.form-cert-badge-name {
-  font-size: var(--text-2xl);
-  font-weight: 700;
-  color: var(--primary-blue);
+@media (max-width: 900px) {
+  /* Intro: etichetta e titolo, foto, testo */
+  .form-intro-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .form-intro-content {
+    display: contents;
+  }
+
+  .form-intro-label {
+    order: 1;
+  }
+
+  .form-intro-title {
+    order: 2;
+  }
+
+  .form-intro-visual {
+    order: 3;
+    max-width: none;
+    margin: 0 0 2.75rem 1.5rem;
+  }
+
+  .form-intro-visual :global(img) {
+    aspect-ratio: 3 / 2;
+  }
+
+  .form-intro-testo {
+    order: 4;
+  }
+
+  .breve-lista {
+    margin-top: 3.5rem;
+  }
+
+  /* Aree e diploma: intestazione sopra l'elenco */
+  .form-aree-layout,
+  .form-cert-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  .form-aree-header {
+    position: static;
+  }
 }
 
-.form-cert-badge-desc {
-  font-size: var(--text-sm);
-  color: rgba(255,255,255,.6);
-  margin-top: .3rem;
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .form-intro-visual {
+    margin: 0 0 2rem .75rem;
+  }
+
+  .form-intro-visual :global(img) {
+    aspect-ratio: 4 / 3;
+  }
+
+  .form-intro-testo p {
+    font-size: 1rem;
+  }
+
+  /* In breve: una riga per dato, valore a sinistra e testo a destra */
+  .breve-lista {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 3rem;
+  }
+
+  .breve,
+  .breve:first-child {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+  }
+
+  .breve-valore {
+    font-size: 2rem;
+  }
+
+  .breve-unita {
+    font-size: .875rem;
+  }
+
+  .breve-testo {
+    font-size: .9375rem;
+    text-align: right;
+  }
+
+  .area {
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: .75rem;
+    padding: 1.25rem 0;
+  }
+
+  .area-nome {
+    font-size: 1.125rem;
+  }
+
+  .ente {
+    grid-template-columns: minmax(0, 1fr);
+    gap: .5rem;
+    padding: 1.25rem 0;
+  }
+
+  .ente-sigla {
+    font-size: 1.75rem;
+  }
+
+  .ente-nome {
+    font-size: 1rem;
+  }
+
+  .form-cta-wrapper {
+    padding: 0 1.5rem;
+  }
+
+  .form-cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 </style>

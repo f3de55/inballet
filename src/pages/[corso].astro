@@ -117,7 +117,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
             <div class="corso-impara-header">
                 <span class="corso-impara-label eyebrow">Gli obiettivi</span>
                 <h2 id="corsoImparaTitolo" class="titolo-sezione" set:html={accento(data.imparaTitolo)} />
-                <p class="corso-impara-subtitle intro-sezione">Le competenze che svilupperà durante il percorso</p>
+                <p class="corso-impara-subtitle intro-sezione">Le competenze che si sviluppano durante il percorso.</p>
             </div>
             <ul class="corso-impara-list" id="corsoImparaGrid">
                 {data.impara.map((item) => <li set:html={item} />)}
@@ -131,8 +131,8 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         <div class="corso-contatto-overlay"></div>
         <div class="corso-contatto-wrapper">
             <div class="corso-contatto-content">
-                <h2 class="titolo-sezione">Hai domande <em>su questo corso?</em></h2>
-                <p class="intro-sezione">Scrivici o chiamaci: ti aiutiamo a scegliere il percorso giusto.</p>
+                <h2 class="titolo-sezione">Prova una lezione <em>senza impegno</em></h2>
+                <p class="intro-sezione">La prima lezione è di prova. Scrivici o chiamaci: ti aiutiamo a scegliere il gruppo e l'orario giusti per età e livello.</p>
                 <a href="/contatti" class="corso-btn-cta btn-primary">
                     Contattaci
                     <i class="fas fa-arrow-right"></i>

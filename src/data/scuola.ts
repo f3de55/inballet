@@ -75,7 +75,7 @@ export const categorieCorsi = [
     id: 'classica-moderna',
     nome: 'Danza Classica e Moderna',
     immagine: { src: 'hero-bg.jpg', alt: 'Tutù di danza classica in sala' },
-    descrizione: 'Dalla propedeutica alla tecnica avanzata, un percorso completo per sviluppare grazia, disciplina e consapevolezza corporea.',
+    descrizione: 'Si comincia a 3 anni con Avviamento alla Danza, a 4-5 anni con Educazione alla Danza; dai 6 anni Danza Classica e Modern, fino ai livelli avanzati.',
     corsi: [
       { nome: 'Avviamento alla Danza', url: '/avviamento-danza' },
       { nome: 'Educazione alla Danza', url: '/educazione-danza' },
@@ -87,7 +87,7 @@ export const categorieCorsi = [
     id: 'contemporanea',
     nome: 'Danza Contemporanea',
     immagine: { src: 'gallery-6.jpg', alt: 'Coreografia di danza contemporanea sul palco' },
-    descrizione: 'Esplora il movimento libero e creativo attraverso tecniche contemporanee, improvvisazione e ricerca artistica personale.',
+    descrizione: "L'arte più libera del movimento: Danza Contemporanea dai 10 anni, un corso per adulti over 40, Contact Improvisation e Movimento Creativo dai 18 anni.",
     corsi: [
       { nome: 'Danza Contemporanea', url: '/danza-contemporanea' },
       { nome: 'Contemporanea Adulti', url: '/contemporanea-adulti' },
@@ -99,7 +99,7 @@ export const categorieCorsi = [
     id: 'urban',
     nome: 'Urban Dance',
     immagine: { src: 'gallery-2.jpg', alt: 'Gruppo di ballerini sul palco con luci blu' },
-    descrizione: "Dal breaking all'hip-hop, dai tacchi alla danza acrobatica. Stili urbani che uniscono tecnica, freestyle e attitudine.",
+    descrizione: 'Hip-Hop e Breaking dai 6 anni, Heels, Danza Acrobatica e, dai 16 anni, il Contaminato: gli stili urbani tra energia, tecnica e cultura Hip-Hop.',
     corsi: [
       { nome: 'Hip-Hop', url: '/hip-hop' },
       { nome: 'Heels', url: '/heels' },
@@ -112,7 +112,7 @@ export const categorieCorsi = [
     id: 'benessere',
     nome: 'Benessere e Movimento',
     immagine: { src: 'gallery-5.jpg', alt: 'Allieve in allungamento sul parquet della sala' },
-    descrizione: 'Yoga, Pilates e discipline per il benessere fisico e mentale. Corsi di gruppo e lezioni individuali personalizzate.',
+    descrizione: "Hatha Yoga, Pilates per livelli e lezioni individuali: per il benessere di corpo e mente, da soli o accanto a un corso di danza.",
     corsi: [
       { nome: 'Yoga', url: '/yoga' },
       { nome: 'Pilates', url: '/pilates' },
@@ -124,7 +124,7 @@ export const categorieCorsi = [
     id: 'eta',
     nome: 'Percorsi per Età',
     immagine: { src: 'gallery-8.jpg', alt: 'Insegnante abbraccia una piccola allieva in sala' },
-    descrizione: 'Corsi pensati per ogni fase della crescita, dalla prima infanzia agli adulti, con programmi didattici specifici per età.',
+    descrizione: "Quali corsi scegliere in ogni fase della crescita, dai 3 anni all'età adulta: una guida per fascia d'età, anche per chi inizia da grande.",
     corsi: [
       { nome: 'Prima Infanzia (3-5 anni)', url: '/prima-infanzia' },
       { nome: 'Seconda Infanzia (6-8 anni)', url: '/seconda-infanzia' },

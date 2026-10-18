@@ -16,10 +16,10 @@ const heroBg = await webp('gallery-3.jpg', 1920);
 ---
 
 <Base
-    title="Corsi di Danza a Lainate e Rho - InBallet"
-    description={`Tutti i ${totale} corsi InBallet a Lainate e Rho: danza classica, modern, contemporanea, hip-hop, heels, breaking, yoga, pilates e percorsi per età dai 3 anni agli adulti.`}
-    ogTitle="I Corsi di InBallet"
-    ogDescription="Danza classica, contemporanea, urban, benessere e percorsi per età: trova il corso giusto per te."
+    title="Corsi di danza a Lainate e Rho per tutte le età | InBallet"
+    description={`I ${totale} corsi di InBallet a Lainate e Rho (MI): classica, modern, contemporanea, hip-hop, breaking, heels, yoga e pilates, dai 3 anni agli adulti over 40.`}
+    ogTitle="I corsi di danza di InBallet"
+    ogDescription="Classica, contemporanea, urban, benessere e percorsi per età: trova il corso giusto per te."
 >
     <!-- Hero -->
     <section class="chisiamo-hero">
@@ -27,8 +27,8 @@ const heroBg = await webp('gallery-3.jpg', 1920);
         <div class="chisiamo-hero-overlay"></div>
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
-            <h1 class="chisiamo-hero-title">I Nostri Corsi</h1>
-            <p class="chisiamo-hero-tagline">Dai 3 anni agli adulti, per ogni livello.</p>
+            <h1 class="chisiamo-hero-title">I nostri corsi di danza</h1>
+            <p class="chisiamo-hero-tagline">Dai 3 anni agli adulti, dalla classica agli stili urbani, per ogni livello.</p>
         </div>
     </section>
 
@@ -37,6 +37,7 @@ const heroBg = await webp('gallery-3.jpg', 1920);
             <header class="corsi-intro intro-sezione">
                 <p class="eyebrow">{totale} corsi in {categorieCorsi.length} percorsi</p>
                 <h2 class="titolo titolo-sezione">Trova il tuo <em>percorso</em></h2>
+                <p class="corsi-lead">A Lainate e Rho si comincia a 3 anni con Avviamento alla Danza e non c'è un'età per smettere: per gli adulti ci sono corsi anche per chi parte da zero. La prima lezione è di prova e senza impegno.</p>
                 <nav class="salti" aria-label="Percorsi">
                     {categorieCorsi.map((cat) => <a href={`#${cat.id}`}>{cat.nome}</a>)}
                 </nav>
@@ -89,6 +90,14 @@ const heroBg = await webp('gallery-3.jpg', 1920);
     max-width: 1100px;
     margin: 0 auto 4rem;
     text-align: center;
+  }
+
+  .corsi-lead {
+    max-width: 44rem;
+    margin: 1.25rem auto 0;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--text-light);
   }
 
   .salti {
@@ -348,6 +357,11 @@ const heroBg = await webp('gallery-3.jpg', 1920);
   @media (max-width: 640px) {
     .corsi-intro {
       text-align: left;
+    }
+
+    .corsi-lead {
+      margin-left: 0;
+      font-size: 1rem;
     }
 
     .salti {

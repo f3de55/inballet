@@ -21,10 +21,10 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
 ---
 
 <Base
-    title="Contatti - InBallet"
-    description="Contatta InBallet - Scuola di danza a Lainate e Rho. Telefono, email, sedi e orari di apertura."
-    ogTitle="Contatti - InBallet"
-    ogDescription="Vieni a trovarci a Lainate o Rho. Contattaci per informazioni sui corsi."
+    title="Contatti e sedi a Lainate e Rho | InBallet"
+    description={`Contatti InBallet: ${TEL}, e-mail e WhatsApp. Sedi in ${sedi[0].via} a Lainate e ${sedi[1].via} a Rho (MI), orari della segreteria e lezione di prova.`}
+    ogTitle="Contatti e sedi | InBallet"
+    ogDescription="Due sedi a Lainate e Rho: chiamaci, scrivici o prenota una lezione di prova."
 >
     <!-- Hero -->
     <section class="chisiamo-hero">
@@ -32,8 +32,8 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
         <div class="chisiamo-hero-overlay"></div>
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
-            <h1 class="chisiamo-hero-title">Vieni a trovarci</h1>
-            <p class="chisiamo-hero-tagline">Due sedi a Lainate e Rho. Siamo pronti ad accoglierti.</p>
+            <h1 class="chisiamo-hero-title">Contatti e sedi</h1>
+            <p class="chisiamo-hero-tagline">Due sedi a Lainate e Rho, a nord-ovest di Milano: chiamaci, scrivici o passa in segreteria.</p>
         </div>
     </section>
 
@@ -44,8 +44,8 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                 <span class="eyebrow">Scuola di danza a Lainate e Rho</span>
                 <h2 class="titolo titolo-sezione">Il primo passo è un <em>passo di danza</em></h2>
                 <p class="invito intro-sezione">
-                    Raccontaci chi sei e cosa vorresti imparare:
-                    ti aiutiamo a scegliere il corso giusto per età e livello.
+                    Raccontaci chi sei e cosa vorresti imparare: ti aiutiamo a scegliere
+                    il corso giusto per età e livello e a prenotare la lezione di prova.
                 </p>
 
                 <dl class="info">

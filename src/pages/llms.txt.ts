@@ -23,6 +23,14 @@ export const GET: APIRoute = async ({ site }) => {
 
 L'inclusione è centrale per tutte le fasce d'età: dal 2013 il [progetto NoiConVoi](${url('/progetto-noiconvoi')}) accoglie ragazzi con disabilità in esperienze di danza con supporto psicomotorio, insieme a un team di volontari. La scuola propone anche formazioni per professionisti dell'ambito educativo e terapeutico.
 
+## Storia
+
+- ${FONDAZIONE}: ${scuola.fondatrice} fonda la scuola a Lainate
+- 2013: nasce il progetto NoiConVoi per ragazzi con disabilità
+- 2023: riconoscimento come ente formativo per il titolo di Insegnante di Danza (CSEN e CONI)
+- 2024: avvio del volontariato d'impresa con aziende ed enti
+- Ogni anno: spettacolo di fine anno in teatro con gli allievi della scuola
+
 ## Contatti
 
 - Telefono: ${scuola.telefono}

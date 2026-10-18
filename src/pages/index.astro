@@ -30,14 +30,14 @@ const gallery = await Promise.all(
 // Progetti sul territorio: due gruppi di link alle pagine dei progetti
 const progetti = [
   { titolo: 'Eventi e collaborazioni', voci: [
-    { nome: 'Spettacoli ed Eventi', href: '/spettacoli-eventi', testo: 'Saggi, spettacoli e workshop in teatri e spazi pubblici' },
-    { nome: 'Collaborazioni con le Scuole', href: '/collaborazioni-scuole', testo: 'Progetti educativi dal nido alle secondarie' },
-    { nome: 'Sportello Psicologico', href: '/sportello-psicologico', testo: 'Ascolto e supporto per famiglie, bambini e ragazzi' },
+    { nome: 'Spettacoli ed Eventi', href: '/spettacoli-eventi', testo: 'Spettacolo annuale in teatro, eventi nelle scuole e team building' },
+    { nome: 'Collaborazioni con le Scuole', href: '/collaborazioni-scuole', testo: 'Progetti su misura dal nido alle secondarie di secondo grado' },
+    { nome: 'Sportello Psicologico', href: '/sportello-psicologico', testo: 'Incontri con una psicoterapeuta per genitori e famiglie' },
   ] },
   { titolo: 'Danza integrativa', voci: [
     { nome: 'Progetto NoiConVoi', href: '/progetto-noiconvoi', testo: "Dal 2013, danza e volontariato per l'inclusione" },
-    { nome: 'Classi Integrate', href: '/classi-integrate', testo: 'Percorsi di danza inclusivi per ogni bambino' },
-    { nome: 'Sostenitori', href: '/sostenitori', testo: 'Come sostenere i progetti sociali' },
+    { nome: 'Classi Integrate', href: '/classi-integrate', testo: 'Quasi tutti i corsi accolgono bambini con bisogni speciali' },
+    { nome: 'Sostenitori', href: '/sostenitori', testo: "Donazioni e volontariato d'impresa per i progetti sociali" },
   ] },
 ];
 
@@ -53,7 +53,7 @@ const schema = schemaHome(socialImage);
 
 <Base
     title="Scuola di Danza a Lainate e Rho | InBallet"
-    description={`Scuola di danza a Lainate e Rho (MI) dal ${FONDAZIONE}: corsi per bambini dai 3 anni, ragazzi e adulti. Classica, modern, contemporanea, hip-hop, yoga e pilates. Ente formativo CSEN-CONI. Lezione di prova senza impegno.`}
+    description={`Scuola di danza a Lainate e Rho (MI) dal ${FONDAZIONE}: classica, modern, contemporanea, hip-hop, yoga e pilates dai 3 anni agli adulti. Lezione di prova senza impegno.`}
     ogTitle="InBallet - Scuola di Danza a Lainate e Rho"
     ogDescription={`${ANNI_ATTIVITA} anni di danza, passione e formazione per tutte le età, a Lainate e Rho.`}
     ogImage={socialImage}
@@ -99,7 +99,7 @@ const schema = schemaHome(socialImage);
             <div class="corsi-header">
                 <span class="corsi-label eyebrow">La nostra offerta formativa</span>
                 <h2 class="corsi-title titolo-sezione">I nostri <em>corsi</em></h2>
-                <p class="corsi-intro intro-sezione">Scopri i percorsi di danza pensati per ogni età e livello. Dalla tecnica classica alle discipline contemporanee e urbane.</p>
+                <p class="corsi-intro intro-sezione">Dai 3 anni agli adulti over 40, dalla tecnica classica agli stili urbani: cinque percorsi per trovare il corso giusto per età e livello.</p>
             </div>
 
             <div class="corsi-griglia">
@@ -175,9 +175,9 @@ const schema = schemaHome(socialImage);
     <section class="formazione-professionale-section">
         <div class="formazione-wrapper">
             <div class="formazione-intro">
-                <span class="eyebrow">Ente Formativo CSEN e CONI</span>
+                <span class="eyebrow">Ente formativo CSEN e CONI</span>
                 <h2 class="titolo-sezione">Formazione <em>professionale</em></h2>
-                <p class="intro-sezione">Oltre ai corsi, formiamo chi insegna danza e chi lavora in ambito educativo: percorsi riconosciuti e formazioni costruite su misura.</p>
+                <p class="intro-sezione">Oltre ai corsi, formiamo chi insegna danza e chi lavora in ambito educativo e terapeutico: un titolo riconosciuto a livello nazionale e formazioni costruite su misura.</p>
             </div>
 
             <!-- Percorsi: righe intere cliccabili, separate da filetti -->
@@ -186,8 +186,8 @@ const schema = schemaHome(socialImage);
                     <a href="/formazione-insegnanti" class="percorso">
                         <span class="percorso-tipo">Percorso biennale</span>
                         <h3 class="percorso-titolo">Formazione Insegnanti di Danza</h3>
-                        <p class="percorso-testo">Due anni in danza Modern con formazione su tecnica, pedagogia e inclusione.</p>
-                        <p class="percorso-dettagli">Titolo riconosciuto CSEN e CONI · 6 master specialistici opzionali</p>
+                        <p class="percorso-testo">Due anni di formazione nello stile Modern, tra danza, pedagogia e sviluppo, fino ai casi più complessi di disabilità.</p>
+                        <p class="percorso-dettagli">Titolo riconosciuto CSEN e CONI · Ente formativo dal 2023 · 6 master successivi</p>
                         <span class="percorso-cta" aria-hidden="true">Scopri il corso <i class="fas fa-arrow-right"></i></span>
                         <i class="fas fa-arrow-right percorso-freccia" aria-hidden="true"></i>
                     </a>
@@ -196,8 +196,8 @@ const schema = schemaHome(socialImage);
                     <a href="/formazioni-personalizzate" class="percorso">
                         <span class="percorso-tipo">Su misura</span>
                         <h3 class="percorso-titolo">Formazioni Personalizzate</h3>
-                        <p class="percorso-testo">Workshop tematici e percorsi costruiti per insegnanti, scuole ed enti.</p>
-                        <p class="percorso-dettagli">Workshop e masterclass · Formazione per scuole ed enti</p>
+                        <p class="percorso-testo">Corsi su misura per educatori, terapeuti, pedagogisti e insegnanti, tra linguaggi espressivi, corporeità e motricità.</p>
+                        <p class="percorso-dettagli">Ambito educativo e terapeutico · Workshop ed eventi formativi</p>
                         <span class="percorso-cta" aria-hidden="true">Scopri di più <i class="fas fa-arrow-right"></i></span>
                         <i class="fas fa-arrow-right percorso-freccia" aria-hidden="true"></i>
                     </a>
@@ -211,7 +211,7 @@ const schema = schemaHome(socialImage);
             <div class="recensioni-intro">
                 <p class="eyebrow">Le voci della nostra community</p>
                 <h2 class="titolo-sezione" id="recensioni-titolo">Dicono <em>di noi</em></h2>
-                <p class="intro-sezione">L'esperienza di chi ha scelto InBallet per crescere attraverso la danza. Recensioni autentiche dai nostri allievi e famiglie.</p>
+                <p class="intro-sezione">L'esperienza di allievi e famiglie che hanno scelto InBallet, nelle loro parole: le recensioni pubblicate su Google.</p>
             </div>
 
             <!-- Valutazione media (compilata da home.ts) e link a tutte le recensioni -->
@@ -284,7 +284,7 @@ const schema = schemaHome(socialImage);
             <div class="gallery-header">
                 <p class="gallery-tagline eyebrow">I nostri momenti</p>
                 <h2 class="gallery-title titolo-sezione">Emozioni <em>in movimento</em></h2>
-                <p class="gallery-description intro-sezione">Lezioni, spettacoli e dietro le quinte: l'energia dei nostri allievi. Apri una foto per vederla a tutto schermo.</p>
+                <p class="gallery-description intro-sezione">Lezioni in sala, spettacoli in teatro e dietro le quinte. Apri una foto per vederla a tutto schermo.</p>
             </div>
         </div>
 
@@ -315,7 +315,7 @@ const schema = schemaHome(socialImage);
             <div class="faq-intro">
                 <p class="faq-label eyebrow">Domande frequenti</p>
                 <h2 class="faq-title titolo-sezione" id="faq-titolo">Tutto quello che <em>vuoi sapere</em></h2>
-                <p class="faq-text intro-sezione">Non trovi la risposta? Scrivici o chiamaci, ti rispondiamo noi.</p>
+                <p class="faq-text intro-sezione">Età, sedi, iscrizioni e lezione di prova. Non trovi la risposta? Scrivici o chiamaci.</p>
                 <ul class="faq-contatti">
                     <li><a href={`mailto:${scuola.email}`}><i class="fas fa-envelope" aria-hidden="true"></i>{scuola.email}</a></li>
                     <li><a href={scuola.telefonoHref}><i class="fas fa-phone" aria-hidden="true"></i>{scuola.telefono}</a></li>

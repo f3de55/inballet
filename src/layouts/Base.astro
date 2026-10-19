@@ -128,12 +128,16 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
   font-size: var(--text-nav);
   position: relative;
   z-index: 10;
-  padding: 3rem 0 0;
+  /* Spazio sopra il logo e sotto il copyright: lo stesso valore */
+  --footer-y: 3rem;
+  /* Testi e link del footer: un solo colore, bianco pieno solo per titoli e hover */
+  --footer-testo: rgba(255, 255, 255, .72);
+  padding: var(--footer-y) 0 0;
 }
 
 @media (max-width: 1024px) {
   .footer {
-    padding-top: 2rem;
+    --footer-y: 2rem;
   }
 }
 

@@ -79,7 +79,7 @@ const colonne = [
     gap: 2.5rem;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 2rem 3rem;
+    padding: 0 2rem;
   }
 
   /* ---------- Marchio ---------- */
@@ -92,7 +92,7 @@ const colonne = [
   .footer-brand p {
     font-size: var(--text-nav);
     line-height: 1.6;
-    color: rgba(255, 255, 255, .65);
+    color: var(--footer-testo);
     max-width: 16rem;
   }
 
@@ -103,7 +103,7 @@ const colonne = [
     letter-spacing: 1px;
     line-height: 1.5;
     text-transform: uppercase;
-    color: var(--primary-blue);
+    color: var(--footer-testo);
   }
 
   .footer-social {
@@ -126,8 +126,7 @@ const colonne = [
   }
 
   .footer-social a:hover {
-    border-color: var(--primary-blue);
-    color: var(--primary-blue);
+    border-color: var(--white);
   }
 
   /* ---------- Colonne ---------- */
@@ -154,7 +153,7 @@ const colonne = [
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--primary-blue);
+    color: var(--white);
     margin-bottom: 1.1rem;
   }
 
@@ -169,7 +168,7 @@ const colonne = [
   .footer-link {
     font-size: var(--text-nav);
     line-height: 1.4;
-    color: rgba(255, 255, 255, .72);
+    color: var(--footer-testo);
     text-decoration: none;
     transition: color .3s ease;
   }
@@ -181,19 +180,15 @@ const colonne = [
 
   .footer-main ul a.attiva {
     color: var(--white);
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .footer-main a:focus-visible {
-    outline: 2px solid var(--primary-blue);
+    outline: 2px solid var(--white);
     outline-offset: 2px;
   }
 
   /* ---------- Contatti ---------- */
-  .footer-contatti ul:first-of-type a {
-    color: var(--white);
-  }
-
   .footer-sedi {
     margin-top: 1.25rem;
   }
@@ -209,7 +204,7 @@ const colonne = [
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, .62);
+    color: var(--footer-testo);
   }
 
   /* Indirizzi cliccabili alti almeno 24px */
@@ -223,8 +218,7 @@ const colonne = [
     min-height: 24px;
     padding: .2rem 0;
     margin-top: 1.25rem;
-    border-bottom: 1px solid var(--primary-blue);
-    color: var(--white);
+    border-bottom: 1px solid rgba(255, 255, 255, .35);
   }
 
   /* ---------- Barra finale ---------- */
@@ -235,9 +229,9 @@ const colonne = [
     gap: .5rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem 2rem;
+    padding: 0 2rem var(--footer-y);
     font-size: var(--text-3xs);
-    color: rgba(255, 255, 255, .5);
+    color: rgba(255, 255, 255, .55);
   }
 
   /* ---------- Responsive ---------- */
@@ -254,12 +248,7 @@ const colonne = [
 
   @media (max-width: 1024px) {
     .footer-main {
-      padding-top: 0;
       padding-bottom: 2rem;
-    }
-
-    .footer-bottom {
-      padding-bottom: 1.5rem;
     }
   }
 
@@ -301,7 +290,7 @@ const colonne = [
       flex-shrink: 0;
       width: 14px;
       height: 14px;
-      color: var(--primary-blue);
+      color: var(--white);
       background:
         linear-gradient(currentColor, currentColor) center / 14px 2px no-repeat,
         linear-gradient(currentColor, currentColor) center / 2px 14px no-repeat;
@@ -312,20 +301,8 @@ const colonne = [
       transform: rotate(45deg);
     }
 
-    /* Fisarmonica: titolo bianco da chiusa, azzurro quando è aperta (stato attivo) */
     .footer-col .footer-titolo {
       margin: 0;
-      color: var(--white);
-      transition: color .3s ease;
-    }
-
-    .footer-col summary::after {
-      color: var(--white);
-    }
-
-    .footer-col[open] .footer-titolo,
-    .footer-col[open] summary::after {
-      color: var(--primary-blue);
     }
 
     .footer-col ul {
@@ -333,13 +310,7 @@ const colonne = [
     }
 
     .footer-bottom {
-      padding: 0 1.5rem 1.5rem;
-    }
-
-    /* Il testo usa tutta la larghezza; sotto resta lo spazio per il pulsante della chat,
-       fisso in basso a destra, quando si arriva in fondo alla pagina */
-    .footer-bottom {
-      padding-bottom: 5rem;
+      padding: 0 1.5rem var(--footer-y);
     }
   }
 </style>

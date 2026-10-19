@@ -136,4 +136,30 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
     padding-top: 2rem;
   }
 }
+
+/* Mobile: illustrazione decorativa (757x2076, sfondo ~#0e0e0e) a tutta larghezza e con le
+   sue proporzioni, ancorata in basso: non si stira né si ripete, qualunque sia l'altezza
+   del footer (cambia con le fisarmoniche). Lo sfondo del footer è lo stesso nero
+   dell'immagine e il bordo superiore sfuma, così non si vedono giunzioni. */
+@media (max-width: 768px) {
+  .footer {
+    background: #0e0e0e;
+    overflow: clip;
+  }
+
+  .footer::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    aspect-ratio: 757 / 2076;
+    background: url('/assets/images/footer-mobile.webp') center bottom / 100% 100% no-repeat;
+    filter: brightness(.75);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 12%);
+    pointer-events: none;
+  }
+}
 </style>

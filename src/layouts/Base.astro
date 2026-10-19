@@ -136,4 +136,14 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
     padding-top: 2rem;
   }
 }
+
+/* Mobile: sfondo illustrato al posto del nero pieno, con un velo scuro sopra
+   perché l'immagine è ancora chiara per testo e link del footer */
+@media (max-width: 768px) {
+  .footer {
+    background:
+      linear-gradient(rgba(0, 0, 0, .45), rgba(0, 0, 0, .45)),
+      var(--dark-navy) url('/assets/images/footer-mobile.webp') center / cover no-repeat;
+  }
+}
 </style>

@@ -55,47 +55,76 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 <script>
     const root = document.documentElement;
 
+    interface EventoBanner {
+        id: string;
+        ts: number;
+        titolo: string;
+        quando: string;
+        href: string;
+    }
+
+    const chiave = (id: string) => `banner_dismissed_${id}`;
+    const chiuso = (id: string) => {
+        try {
+            return localStorage.getItem(chiave(id)) !== null;
+        } catch {
+            return false;
+        }
+    };
+
     class EventBanner extends HTMLElement {
         #interval = 0;
+        #eventi: EventoBanner[] = [];
+        /** Evento corrente (il primo non ancora scaduto), mostrato o chiuso */
+        #corrente: string | null = null;
         // Segue l'altezza a ogni fotogramma, anche mentre si riduce allo scroll:
         // la navbar sotto (top: --banner-height) resta sempre attaccata
         #observer = new ResizeObserver(() => this.#updateHeight());
 
         connectedCallback() {
-            const id = this.dataset.eventoId!;
-            const ts = Number(this.dataset.eventoTs);
-            const banner = this.querySelector<HTMLElement>('.event-banner')!;
+            this.#eventi = JSON.parse(this.dataset.eventi ?? '[]');
 
-            // Evento già scaduto o banner chiuso in precedenza
-            if (ts < Date.now()) return this.remove();
-            if (localStorage.getItem(`banner_dismissed_${id}`)) {
-                banner.style.display = 'none';
-                return;
-            }
-
-            banner.classList.add('visible');
-            document.body.classList.add('has-event-banner');
-            // border-box: allo scroll cambia il padding, non il contenuto
-            this.#observer.observe(banner, { box: 'border-box' });
-
-            // Chiusura con X o con click su "Scopri di più"
+            // Chiusura con X o con click su "Scopri di più": vale solo per l'evento corrente,
+            // alla sua scadenza compare il successivo (se c'è)
             const dismiss = () => {
-                localStorage.setItem(`banner_dismissed_${id}`, '1');
+                if (!this.#corrente) return;
+                try {
+                    localStorage.setItem(chiave(this.#corrente), '1');
+                } catch {}
                 this.#hide();
             };
             this.querySelector('.event-banner-close')!.addEventListener('click', dismiss);
             this.querySelector('.event-banner-link')!.addEventListener('click', dismiss);
 
-            // Rimuovi quando l'evento scade (controllo ogni minuto)
-            this.#interval = window.setInterval(() => {
-                if (ts < Date.now()) this.remove();
-            }, 60000);
+            this.#aggiorna();
+            // Controllo scadenza ogni minuto
+            if (this.isConnected) this.#interval = window.setInterval(() => this.#aggiorna(), 60000);
         }
 
         disconnectedCallback() {
             clearInterval(this.#interval);
             this.#observer.disconnect();
             this.#hide();
+        }
+
+        /** Mostra il primo evento non scaduto, a meno che non sia stato chiuso. */
+        #aggiorna() {
+            const evento = this.#eventi.find((e) => e.ts >= Date.now());
+            // Nessun evento successivo: niente banner
+            if (!evento) return this.remove();
+            if (evento.id === this.#corrente) return;
+            this.#corrente = evento.id;
+
+            if (chiuso(evento.id)) return this.#hide();
+
+            const banner = this.querySelector<HTMLElement>('.event-banner')!;
+            this.querySelector('.event-banner-title')!.textContent = evento.titolo;
+            this.querySelector('.event-banner-date')!.textContent = evento.quando;
+            this.querySelector<HTMLAnchorElement>('.event-banner-link')!.href = evento.href;
+            banner.classList.add('visible');
+            document.body.classList.add('has-event-banner');
+            // border-box: allo scroll cambia il padding, non il contenuto
+            this.#observer.observe(banner, { box: 'border-box' });
         }
 
         #updateHeight() {

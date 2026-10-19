@@ -137,8 +137,9 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
   }
 }
 
-/* Mobile: sfondo illustrato decorativo, una sola immagine che copre tutta l'altezza del
-   footer (le colonne a fisarmonica la cambiano) con "cover" e senza ripetizioni. Il nero
+/* Mobile: sfondo illustrato decorativo, una sola immagine, intera e senza ripetizioni,
+   adattata a tutta l'altezza del footer (le colonne a fisarmonica la cambiano): per questo
+   è "100% 100%" e non "cover", che ne mostrerebbe solo una fascia. Il nero
    dell'immagine (#111) coincide con lo sfondo; un filtro la scurisce perché resti un
    elemento d'accento. */
 @media (max-width: 768px) {
@@ -152,7 +153,7 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: url('/assets/images/footer-mobile.webp') center / cover no-repeat;
+    background: url('/assets/images/footer-mobile.webp') 0 0 / 100% 100% no-repeat;
     filter: brightness(.38);
     pointer-events: none;
   }

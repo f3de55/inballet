@@ -5,24 +5,24 @@
  * richiesta leggendo gli eventi aggiornati dalla dashboard.
  * Il comportamento è un custom element: si attiva quando l'island arriva.
  */
-import { prossimoEvento } from '../lib/eventi';
+import { prossimiEventi } from '../lib/eventi';
 import { decodeHtml, mbLen, mbSlice } from '../lib/text';
 
-const prossimo = await prossimoEvento();
+const giorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+const mesi = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
 
-let titolo = '';
-let quando = '';
-if (prossimo) {
-  const { evento } = prossimo;
-  const giorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-  const mesi = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+// Anche gli eventi successivi: se il primo viene chiuso, alla sua scadenza
+// il banner passa al prossimo senza ricaricare la pagina
+const eventi = (await prossimiEventi()).map(({ evento, ts }) => {
   const [y, m, d] = evento.data.split('-').map(Number);
-  quando = `${giorni[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]} ${d} ${mesi[m - 1]}`;
+  let quando = `${giorni[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]} ${d} ${mesi[m - 1]}`;
   if (evento.ora) quando += ` • ${evento.ora}`;
   // Titolo troncato a 20 caratteri (salvato con escape HTML: si tronca il testo, non le entità)
   const testo = decodeHtml(evento.titolo);
-  titolo = mbLen(testo) > 20 ? mbSlice(testo, 20) + '...' : testo;
-}
+  const titolo = mbLen(testo) > 20 ? mbSlice(testo, 20) + '...' : testo;
+  return { id: evento.id, ts, titolo, quando, href: `/spettacoli-eventi?evento=${encodeURIComponent(evento.id)}` };
+});
+const primo = eventi[0];
 
 // Il frammento non va messo in cache: dipende dagli eventi correnti
 Astro.response.headers.set('Cache-Control', 'no-store');

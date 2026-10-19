@@ -1,0 +1,462 @@
+---
+/**
+ * Galleria fotografica a scorrimento continuo con lightbox (homepage, contatti).
+ * Scorrimento, touch e lightbox in src/scripts/galleria.ts.
+ */
+import Img from './Img.astro';
+import { webp } from '../lib/images';
+
+interface Props {
+  eyebrow?: string;
+  /** Titolo (HTML, con <em> per l'accento). */
+  titolo?: string;
+  testo?: string;
+}
+
+const {
+  eyebrow = 'I nostri momenti',
+  titolo = 'Emozioni <em>in movimento</em>',
+  testo = 'Lezioni in sala, spettacoli in teatro e dietro le quinte. Apri una foto per vederla a tutto schermo.',
+} = Astro.props;
+
+// Galleria: miniature responsive + versione grande per il lightbox
+const alts = [
+  'Allieve si preparano dietro le quinte prima dello spettacolo',
+  'Corpo di ballo sul palco illuminato di blu',
+  'Coreografia di danza contemporanea con costumi bianchi',
+  "Lezione di danza contemporanea in sala con l'insegnante",
+  'Allieve durante il riscaldamento a terra in sala',
+  'Spettacolo di fine anno con tutto il corpo di ballo',
+  'Gruppo di allievi InBallet in sala prove',
+  "Abbraccio tra insegnante e allieva al termine della lezione",
+  'Allieve in allungamento sul parquet della sala',
+  'Coreografia sul palco con luci blu ed elementi scenici',
+];
+const gallery = await Promise.all(
+  alts.map(async (alt, i) => {
+    const file = `gallery-${i + 1}.jpg`;
+    return { file, alt, full: await webp(file, 1280) };
+  }),
+);
+---
+
+<section class="gallery-section">
+    <div class="container">
+        <div class="gallery-header">
+            <p class="gallery-tagline eyebrow">{eyebrow}</p>
+            <h2 class="gallery-title titolo-sezione" set:html={titolo} />
+            <p class="gallery-description intro-sezione">{testo}</p>
+        </div>
+    </div>
+
+    <!-- Due serie identiche: la seconda serve solo alla continuità dello scorrimento
+         ed è nascosta a tastiera e screen reader -->
+    <div class="gallery-infinite">
+        <div class="gallery-track" id="galleryTrack">
+            {[0, 1].map((set) =>
+                gallery.map((img, i) => (
+                    <div class="gallery-item" aria-hidden={set === 1 ? 'true' : undefined}>
+                        <button type="button" class="gallery-apri" data-index={i} data-full={img.full} data-alt={img.alt} aria-label={`Ingrandisci: ${img.alt}`} tabindex={set === 1 ? -1 : undefined}>
+                            <Img src={img.file} alt="" width="300" height="420" loading="lazy" decoding="async" widths={[300, 600]} sizes="300px" />
+                            <span class="gallery-zoom-icon" aria-hidden="true"><i class="fas fa-expand"></i></span>
+                        </button>
+                    </div>
+                ))
+            )}
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox galleria: dialog nativo (focus intrappolato, Esc, sfondo inerte) -->
+<dialog class="galleria-dialog" id="lightbox" aria-label="Galleria fotografica">
+    <button type="button" class="galleria-chiudi" id="lightbox-close" aria-label="Chiudi galleria">
+        <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+    <figure class="galleria-figura">
+        <img class="galleria-foto" id="lightbox-image" src="data:," alt="">
+        <figcaption class="galleria-didascalia">
+            <span id="lightbox-caption"></span>
+            <span class="galleria-contatore" id="lightbox-counter" aria-live="polite"></span>
+        </figcaption>
+    </figure>
+    <button type="button" class="galleria-nav galleria-prev" id="lightbox-prev" aria-label="Foto precedente">
+        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+    </button>
+    <button type="button" class="galleria-nav galleria-next" id="lightbox-next" aria-label="Foto successiva">
+        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+    </button>
+</dialog>
+
+<script>
+    import '../scripts/galleria';
+</script>
+
+<style>
+.gallery-section {
+  background: #fff;
+  position: relative;
+}
+
+.gallery-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-blue);
+}
+
+.gallery-section {
+  padding: var(--section-y) 0;
+  overflow: hidden;
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Mobile: allineata a sinistra come le altre sezioni, più leggibile */
+@media (max-width: 600px) {
+  .gallery-header {
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+
+  .gallery-description {
+    margin: 0;
+  }
+}
+
+.gallery-tagline {
+  margin-bottom: 1.5rem;
+}
+
+.gallery-title {
+  margin-bottom: 1.5rem;
+}
+
+.gallery-description {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ---------- Galleria a scorrimento continuo ---------- */
+/* Due serie identiche di foto: la traslazione del 50% riporta all'inizio senza salti,
+   qualunque sia la larghezza delle foto */
+.gallery-infinite {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
+
+.gallery-track {
+  display: flex;
+  width: max-content;
+  animation: galleria-scorri 80s linear infinite;
+}
+
+/* Pausa solo con focus da tastiera (non dopo un clic o la chiusura della lightbox)
+   e con hover di un mouse vero: sul touch l'hover resterebbe attivo dopo il tocco */
+.gallery-track:has(:focus-visible),
+.gallery-track.paused {
+  animation-play-state: paused;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gallery-infinite:hover .gallery-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes galleria-scorri {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.gallery-item {
+  flex: 0 0 auto;
+  width: 300px;
+  height: 420px;
+  margin-right: 8px;
+}
+
+.gallery-apri {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-soft);
+  cursor: zoom-in;
+}
+
+.gallery-apri :global(img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease, filter .3s ease;
+}
+
+.gallery-apri:focus-visible {
+  outline-offset: -3px;
+}
+
+/* Icona ingrandisci: compare al passaggio del mouse o col focus da tastiera */
+.gallery-zoom-icon {
+  position: absolute;
+  right: .9rem;
+  bottom: .9rem;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.92);
+  font-size: var(--text-sm);
+  color: var(--dark-navy);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+.gallery-apri:hover :global(img),
+.gallery-apri:focus-visible :global(img) {
+  transform: scale(1.04);
+  filter: brightness(.88);
+}
+
+.gallery-apri:hover .gallery-zoom-icon,
+.gallery-apri:focus-visible .gallery-zoom-icon {
+  opacity: 1;
+  transform: none;
+}
+
+/* Telefono e tablet (touch): niente animazione CSS, la fila si trascina col dito e
+   scorre da sola via script (home.ts). Su PC resta l'animazione CSS */
+@media (hover: none), (pointer: coarse) {
+  .gallery-infinite {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .gallery-infinite::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-track {
+    animation: none;
+  }
+}
+
+/* Movimento ridotto: niente scorrimento automatico, solo a mano, senza copie */
+@media (prefers-reduced-motion: reduce) {
+
+  .gallery-infinite {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1.5rem;
+    scrollbar-width: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .gallery-track {
+    animation: none;
+    padding: 0 1.5rem;
+  }
+
+  .gallery-item {
+    scroll-snap-align: start;
+  }
+
+  .gallery-item[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .gallery-item {
+    width: 280px;
+    height: 380px;
+  }
+
+  .gallery-zoom-icon {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-track {
+    animation-duration: 70s;
+  }
+
+  .gallery-item {
+    width: min(44vw, 240px);
+    height: 340px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-track {
+    animation-duration: 60s;
+  }
+
+  .gallery-item {
+    height: 300px;
+  }
+}
+
+/* ---------- Lightbox: dialog a tutto schermo ---------- */
+:global(html.galleria-aperta) {
+  overflow: hidden;
+}
+
+.galleria-dialog {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 4.5rem 6rem 2rem;
+  border: none;
+  background: rgba(12, 12, 12, 0.96);
+  color: var(--white);
+}
+
+.galleria-dialog[open] {
+  display: grid;
+  place-items: center;
+  animation: galleria-entra .25s ease;
+}
+
+.galleria-dialog::backdrop {
+  background: transparent;
+}
+
+@keyframes galleria-entra {
+  from {
+    opacity: 0;
+  }
+}
+
+/* La figura è larga quanto la foto; la didascalia non la allarga */
+.galleria-figura {
+  display: grid;
+  justify-items: start;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+}
+
+.galleria-foto {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100dvh - 10rem);
+  width: auto;
+  height: auto;
+  border-radius: var(--radius-md);
+  transition: opacity .25s ease;
+}
+
+.galleria-foto.in-caricamento {
+  opacity: 0;
+}
+
+.galleria-didascalia {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  width: 0;
+  min-width: 100%;
+  margin-top: 1rem;
+  font-size: var(--text-md);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.galleria-contatore {
+  flex-shrink: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.galleria-chiudi,
+.galleria-nav {
+  position: fixed;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--white);
+  font-size: var(--text-base);
+  cursor: pointer;
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+}
+
+.galleria-chiudi {
+  top: 1.25rem;
+  right: 1.25rem;
+  font-size: var(--text-base);
+}
+
+.galleria-nav {
+  top: 50%;
+  margin-top: -1.5rem;
+}
+
+.galleria-prev {
+  left: 1.5rem;
+}
+
+.galleria-next {
+  right: 1.5rem;
+}
+
+.galleria-chiudi:hover,
+.galleria-nav:hover {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--dark-navy);
+}
+
+/* Su schermi stretti le frecce scendono in basso, la foto usa tutta la larghezza */
+@media (max-width: 768px) {
+  .galleria-dialog {
+    padding: 4.5rem 1rem 6rem;
+  }
+
+  .galleria-foto {
+    max-height: calc(100dvh - 14rem);
+  }
+
+  .galleria-nav {
+    top: auto;
+    bottom: 1.25rem;
+    margin-top: 0;
+  }
+
+  .galleria-prev {
+    left: calc(50% - 3.75rem);
+  }
+
+  .galleria-next {
+    right: calc(50% - 3.75rem);
+  }
+}
+</style>

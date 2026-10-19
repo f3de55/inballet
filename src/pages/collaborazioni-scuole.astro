@@ -18,13 +18,13 @@ const fasce = [
 ];
 
 const progetti = [
-  { nome: 'Progetti su misura', testo: "Ogni intervento nasce dalle richieste educative e didattiche della scuola e viene costruito insieme a lei, per la fascia d'età e il contesto." },
-  { nome: 'Co-progettazione con i docenti', testo: "Lavoriamo in collaborazione con il team degli insegnanti o con l'équipe di lavoro, dalla progettazione alla realizzazione." },
-  { nome: 'Supporto psicomotorio', testo: "In tutti i progetti è previsto il supporto psicomotorio ai bambini, a sostegno dell'integrazione sociale." },
-  { nome: 'Inclusione', testo: "La danza come linguaggio che accoglie tutti, con l'esperienza delle nostre classi integrate e del progetto NoiConVoi, attivo dal 2013." },
-  { nome: 'Momenti ed eventi a scuola', testo: "Momenti personalizzati nelle scuole dell'infanzia, primarie e secondarie, curati dalla Direzione nella parte artistica e organizzativa." },
-  { nome: 'Formazione per i docenti', testo: 'Corsi di formazione per chi lavora in ambito educativo, che intrecciano linguaggi espressivi, corporeità e motricità.' },
-];
+  { nome: 'Progetti su misura', testo: 'Costruiti con la scuola, sulle sue richieste educative e didattiche.' },
+  { nome: 'Co-progettazione con i docenti', testo: "Con il team degli insegnanti o l'équipe, dall'idea alla realizzazione." },
+  { nome: 'Supporto psicomotorio', testo: "Sempre presente, a sostegno dell'integrazione sociale dei bambini." },
+  { nome: 'Inclusione', testo: "L'esperienza delle nostre classi integrate e di NoiConVoi, dal 2013." },
+  { nome: 'Momenti ed eventi a scuola', testo: 'Eventi personalizzati, curati nella parte artistica e organizzativa.' },
+  { nome: 'Formazione per i docenti', testo: 'Corsi su linguaggi espressivi, corporeità e motricità.' },
+]
 ---
 
 <Base
@@ -90,7 +90,7 @@ const progetti = [
                 <div class="collab-progetti-header">
                     <span class="eyebrow">I nostri progetti</span>
                     <h2 class="titolo-sezione" id="progetti-titolo">Cosa possiamo offrire <em>alla tua scuola</em></h2>
-                    <p class="intro-sezione">Programmi flessibili e personalizzabili, sviluppati da professionisti con esperienza nel mondo educativo.</p>
+                    <p class="intro-sezione">Programmi flessibili, costruiti con professionisti del mondo educativo.</p>
                 </div>
                 <ol class="progetti-lista">
                     {progetti.map((p, i) => (
@@ -150,7 +150,7 @@ const progetti = [
 
 .collab-intro-testo p {
   margin-bottom: 1.25rem;
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   line-height: 1.8;
   color: var(--text-dark);
 }
@@ -179,49 +179,50 @@ const progetti = [
 }
 
 /* Il gap da 1px sul fondo scuro disegna i filetti solo tra le celle */
+/* Quattro card bianche separate sul fondo azzurrino della sezione */
 .fasce-lista {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
+  gap: 1.5rem;
   margin: 3.5rem 0 0;
   padding: 0;
-  background: rgba(26, 26, 26, 0.12);
 }
 
 .fascia {
   display: flex;
   flex-direction: column;
-  gap: .6rem;
-  padding: 1.75rem 2rem;
-  background: var(--bg-soft);
-}
-
-.fascia:first-child {
-  padding-left: 0;
+  gap: .75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.75rem;
+  text-align: center;
+  background: var(--white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
 }
 
 .fascia-eta {
-  font-size: clamp(2.25rem, 1.75rem + 1.5vw, 3rem);
-  font-weight: 700;
+  font-size: var(--text-5xl);
+  font-weight: 300;
   line-height: 1;
   letter-spacing: -0.02em;
-  color: var(--dark-navy);
+  color: var(--primary-blue-dark);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
 .fascia-anni {
   margin-left: .1em;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: var(--text-base);
+  font-weight: 400;
   letter-spacing: 0;
   color: var(--primary-blue-dark);
 }
 
 .fascia-nome {
-  font-size: 1.0625rem;
-  font-weight: 600;
+  font-size: var(--text-base);
+  font-weight: 400;
   color: var(--text-dark);
 }
 
@@ -272,8 +273,8 @@ const progetti = [
 
 .progetto-num {
   padding-top: .3rem;
-  font-size: .9375rem;
-  font-weight: 600;
+  font-size: var(--text-xl);
+  font-weight: 300;
   color: var(--primary-blue-dark);
   font-variant-numeric: tabular-nums;
 }
@@ -281,13 +282,13 @@ const progetti = [
 .progetto-nome {
   margin-bottom: .5rem;
   font-size: var(--text-xl);
-  font-weight: 700;
+  font-weight: 500;
   line-height: var(--leading-snug);
   color: var(--dark-navy);
 }
 
 .progetto-testo {
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
   line-height: 1.7;
   color: var(--text-light);
 }
@@ -339,7 +340,7 @@ const progetti = [
 /* ---------- Tablet ---------- */
 @media (max-width: 1024px) {
   .fascia {
-    padding: 1.5rem 1.25rem;
+    padding: 1.75rem 1.5rem;
   }
 }
 
@@ -385,11 +386,8 @@ const progetti = [
   /* Fasce: griglia 2x2 */
   .fasce-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
     margin-top: 2.5rem;
-  }
-
-  .fascia:nth-child(odd) {
-    padding-left: 0;
   }
 
   /* Progetti: intestazione sopra l'elenco */
@@ -413,26 +411,14 @@ const progetti = [
     aspect-ratio: 4 / 3;
   }
 
-  .collab-intro-testo p {
-    font-size: 1rem;
-  }
 
   .fascia {
-    gap: .4rem;
-    padding: 1.25rem 1rem;
+    gap: .5rem;
+    padding: 1.5rem 1.25rem;
   }
 
-  .fascia-eta {
-    font-size: 2.25rem;
-  }
 
-  .fascia-anni {
-    font-size: .875rem;
-  }
 
-  .fascia-nome {
-    font-size: .9375rem;
-  }
 
   .progetto {
     grid-template-columns: 2.25rem minmax(0, 1fr);
@@ -440,13 +426,7 @@ const progetti = [
     padding: 1.5rem 0;
   }
 
-  .progetto-nome {
-    font-size: 1.125rem;
-  }
 
-  .progetto-testo {
-    font-size: 1rem;
-  }
 
   .collab-cta-wrapper {
     padding: 0 1.5rem;
@@ -454,7 +434,13 @@ const progetti = [
 
   .collab-cta-buttons {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
+  }
+}
+/* Schermi molto stretti (320px): una fascia per riga, senza scorrimento orizzontale */
+@media (max-width: 400px) {
+  .fasce-lista {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 </style>

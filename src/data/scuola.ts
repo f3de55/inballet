@@ -171,8 +171,8 @@ export const faq = [
     risposta: `La sede centrale è in ${sedi[0].indirizzo}. L'altra sede è in ${sedi[1].indirizzo}. Entrambe si trovano nell'area nord-ovest di Milano.`,
   },
   {
-    domanda: 'Posso fare una lezione di prova?',
-    risposta: `Sì: la prima lezione è di prova e senza impegno. Per prenotarla basta chiamare il ${scuola.telefono}, scrivere su WhatsApp o inviare un'e-mail a ${scuola.email}.`,
+    domanda: 'Come posso scegliere il corso giusto?',
+    risposta: `Basta contattarci: chiama il ${scuola.telefono}, scrivi su WhatsApp o invia un'e-mail a ${scuola.email}. Ti aiutiamo a scegliere il corso adatto per età e livello e ti diamo tutte le informazioni su orari, sedi e iscrizione.`,
   },
   {
     domanda: 'Quali corsi di danza proponete?',

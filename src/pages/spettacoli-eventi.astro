@@ -4,7 +4,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import { sfondo } from '../lib/images';
 
 const bg = {
-  hero: await sfondo('ballerina.jpg', {}),
+  hero: await sfondo('ballerina.jpg'),
 };
 
 /** Eventi curati dalla Direzione oltre al calendario della scuola. */
@@ -222,7 +222,7 @@ const tipiEvento = [
   display: inline-flex;
   flex-shrink: 0;
   padding: 4px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--bg-soft);
 }
 
@@ -233,7 +233,7 @@ const tipiEvento = [
   min-height: 44px;
   padding: 0 1.25rem;
   border: none;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: none;
   font: inherit;
   font-size: var(--text-sm);
@@ -244,7 +244,7 @@ const tipiEvento = [
 }
 
 .vista-switch button i {
-  font-size: .8125rem;
+  font-size: var(--text-xs);
 }
 
 .vista-switch button[aria-pressed="true"] {
@@ -273,16 +273,33 @@ const tipiEvento = [
 
 .eventi-vuoto p {
   margin-bottom: 1.75rem;
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
   line-height: 1.7;
   color: var(--text-light);
 }
 
 /* ---------- Elenco: mese, poi righe con data grande, testo e freccia ---------- */
+/* Un blocco per mese: azzurrino e bianco con bordo, alternati */
+.eventi-section :global(.agenda-gruppo) {
+  padding: 1.75rem 2rem .25rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-card);
+  background: var(--bg-soft);
+}
+
+.eventi-section :global(.agenda-gruppo:nth-child(even)) {
+  background: var(--white);
+  border-color: rgba(26, 26, 26, 0.12);
+}
+
+.eventi-section :global(.agenda-gruppo + .agenda-gruppo) {
+  margin-top: 1.25rem;
+}
+
 .eventi-section :global(.agenda-mese) {
-  margin: 3rem 0 0;
+  margin: 0;
   padding-bottom: 1rem;
-  font-size: .875rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -304,6 +321,10 @@ const tipiEvento = [
   border-bottom: 1px solid rgba(26, 26, 26, 0.12);
 }
 
+.eventi-section :global(.agenda > li:last-child) {
+  border-bottom: none;
+}
+
 .eventi-section :global(.agenda-voce) {
   display: grid;
   grid-template-columns: 5rem minmax(0, 1fr) auto;
@@ -322,7 +343,7 @@ const tipiEvento = [
 }
 
 .eventi-section :global(.agenda-giorno) {
-  font-size: 2.5rem;
+  font-size: var(--text-4xl);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--dark-navy);
@@ -331,7 +352,7 @@ const tipiEvento = [
 
 .eventi-section :global(.agenda-settimana) {
   margin-top: .4rem;
-  font-size: .8125rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -354,9 +375,9 @@ const tipiEvento = [
 
 .eventi-section :global(.agenda-vicino) {
   padding: .2rem .6rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--primary-blue);
-  font-size: .6875rem;
+  font-size: var(--text-3xs);
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -364,7 +385,7 @@ const tipiEvento = [
 }
 
 .eventi-section :global(.agenda-tipo) {
-  font-size: .75rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -383,13 +404,13 @@ const tipiEvento = [
   display: flex;
   flex-wrap: wrap;
   gap: .25rem 1.25rem;
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   color: var(--text-light);
 }
 
 .eventi-section :global(.agenda-meta i) {
   margin-right: .4rem;
-  font-size: .8125rem;
+  font-size: var(--text-xs);
   color: var(--primary-blue-dark);
 }
 
@@ -441,7 +462,7 @@ const tipiEvento = [
 }
 
 .agenda-passati summary i {
-  font-size: .75rem;
+  font-size: var(--text-xs);
   color: var(--primary-blue-dark);
   transition: transform .3s ease;
 }
@@ -452,6 +473,7 @@ const tipiEvento = [
 
 .agenda-passati[open] summary {
   margin-bottom: 1.5rem;
+  color: var(--primary-blue-dark);
 }
 
 .eventi-section :global(.passato .agenda-giorno),
@@ -485,9 +507,9 @@ const tipiEvento = [
   width: 44px;
   height: 44px;
   border: 1px solid rgba(26, 26, 26, 0.2);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--white);
-  font-size: .875rem;
+  font-size: var(--text-sm);
   color: var(--dark-navy);
   cursor: pointer;
   transition: background-color .3s ease, border-color .3s ease;
@@ -512,12 +534,14 @@ const tipiEvento = [
   gap: 1px;
   background: rgba(26, 26, 26, 0.1);
   border: 1px solid rgba(26, 26, 26, 0.1);
+  border-radius: var(--radius-card);
+  overflow: hidden;
 }
 
 .calendario-grid :global(.cal-intestazione) {
   padding: .75rem .5rem;
   background: var(--white);
-  font-size: .75rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 1.5px;
   text-align: center;
@@ -542,8 +566,8 @@ const tipiEvento = [
   place-items: center;
   width: 2rem;
   height: 2rem;
-  border-radius: 50%;
-  font-size: .9375rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--dark-navy);
 }
@@ -563,10 +587,10 @@ const tipiEvento = [
   padding: .3rem .5rem;
   border: none;
   border-left: 3px solid var(--primary-blue);
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   background: var(--bg-soft);
   font: inherit;
-  font-size: .75rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   line-height: 1.35;
   text-align: left;
@@ -649,10 +673,10 @@ const tipiEvento = [
   height: 44px;
   margin: 1rem 1rem 0 0;
   border: none;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: rgba(255, 255, 255, 0.92);
   box-shadow: var(--shadow-sm);
-  font-size: 1rem;
+  font-size: var(--text-base);
   color: var(--dark-navy);
   cursor: pointer;
 }
@@ -711,9 +735,9 @@ const tipiEvento = [
   place-items: center;
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: rgba(0, 0, 0, 0.55);
-  font-size: .8125rem;
+  font-size: var(--text-xs);
   color: var(--white);
 }
 
@@ -723,7 +747,7 @@ const tipiEvento = [
   align-items: center;
   gap: .5rem 1rem;
   margin: 0 3rem .75rem 0;
-  font-size: .8125rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -736,9 +760,9 @@ const tipiEvento = [
 
 .evento-etichette :global(.evento-concluso) {
   padding: .2rem .6rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: #eee;
-  font-size: .6875rem;
+  font-size: var(--text-3xs);
   letter-spacing: 1px;
   color: var(--text-light);
 }
@@ -775,7 +799,7 @@ const tipiEvento = [
 }
 
 .evento-dettagli :global(dt) {
-  font-size: .8125rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -785,14 +809,14 @@ const tipiEvento = [
 
 .evento-dettagli :global(dd) {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--text-md);
   font-weight: 600;
   line-height: 1.5;
   color: var(--dark-navy);
 }
 
 .evento-descrizione {
-  font-size: 1.0625rem;
+  font-size: var(--text-md);
   line-height: 1.75;
   color: var(--text-dark);
 }
@@ -832,7 +856,7 @@ const tipiEvento = [
 .evento-azioni-label {
   display: block;
   margin-bottom: .6rem;
-  font-size: .75rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -849,10 +873,10 @@ const tipiEvento = [
   min-height: 44px;
   padding: 0 1.25rem;
   border: 1px solid rgba(70, 130, 180, 0.35);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--white);
   font: inherit;
-  font-size: .9375rem;
+  font-size: var(--text-btn);
   font-weight: 600;
   color: var(--dark-navy);
   cursor: pointer;
@@ -868,7 +892,7 @@ const tipiEvento = [
   border: none;
   background: none;
   font: inherit;
-  font-size: .9375rem;
+  font-size: var(--text-btn);
   font-weight: 600;
   color: var(--primary-blue-dark);
   cursor: pointer;
@@ -917,7 +941,7 @@ const tipiEvento = [
 .locandina-dialog img {
   max-width: 100%;
   max-height: calc(100dvh - 7rem);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 
 .locandina-chiudi {
@@ -929,9 +953,9 @@ const tipiEvento = [
   width: 44px;
   height: 44px;
   border: none;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: rgba(255, 255, 255, 0.15);
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   color: var(--white);
   cursor: pointer;
 }
@@ -966,7 +990,7 @@ const tipiEvento = [
     display: block;
     width: 6px;
     height: 6px;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     background: var(--primary-blue-dark);
   }
 
@@ -1012,10 +1036,12 @@ const tipiEvento = [
     justify-content: center;
   }
 
+  .eventi-section :global(.agenda-gruppo) {
+    padding: 1.25rem 1.25rem 0;
+  }
+
   .eventi-section :global(.agenda-mese) {
-    margin-top: 2.5rem;
     padding-bottom: .75rem;
-    font-size: .8125rem;
   }
 
   .eventi-section :global(.agenda-voce) {
@@ -1030,34 +1056,20 @@ const tipiEvento = [
     justify-self: start;
   }
 
-  .eventi-section :global(.agenda-giorno) {
-    font-size: 2rem;
-  }
 
   .eventi-section :global(.agenda-settimana) {
-    font-size: .75rem;
     letter-spacing: 1px;
   }
 
-  .eventi-section :global(.agenda-titolo) {
-    font-size: 1.125rem;
-  }
 
-  .eventi-section :global(.agenda-meta) {
-    font-size: .875rem;
-  }
 
   .agenda-passati {
     margin-top: 2.5rem;
   }
 
-  .calendario-mese {
-    font-size: 1.25rem;
-  }
 
   .calendario-grid :global(.cal-intestazione) {
     padding: .6rem 0;
-    font-size: .6875rem;
     letter-spacing: .5px;
   }
 
@@ -1103,7 +1115,6 @@ const tipiEvento = [
   }
 
   .evento-dialog-titolo {
-    font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
 
@@ -1112,13 +1123,10 @@ const tipiEvento = [
     gap: .75rem;
   }
 
-  .evento-descrizione {
-    font-size: 1rem;
-  }
 
   .evento-azioni {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
   }
 
   .evento-azioni-btn {
@@ -1128,7 +1136,6 @@ const tipiEvento = [
 
   .evento-azione {
     padding: 0 .75rem;
-    font-size: .875rem;
   }
 
   .evento-condividi {

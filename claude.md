@@ -67,7 +67,7 @@ Shared classes and tokens live at the top of `src/styles/global.css`. Every cont
 - Tokens: `--section-y` (section vertical padding), `--bg-soft` (alternate section background), `--radius-card` / `--border-card` / `--shadow-card` / `--shadow-card-hover` (cards), `--radius-img` (photos, with the offset blue frame used in Contatti/Corsi/homepage story)
 - Page hero: the shared `chisiamo-hero` markup (see any inner page): photo, bottom gradient, `<Breadcrumb />` then title, text bottom-left. No glass panels.
 - Navigation data lives in `src/data/navigazione.ts`: the navbar (desktop + mobile, active page highlight) and the breadcrumbs (+ BreadcrumbList JSON-LD) are generated from it. Add new pages there; pages outside the menu go in `altrePagine`.
-- Intro section of an inner page: add `intro-editoriale` to the wrapper (eyebrow on top, title left, text right; a `*-intro-highlight` quote becomes a plain blue rule)
+- Intro section of an inner page: add `intro-editoriale` to the wrapper (eyebrow, title and text stacked, never text to the right of the title; centered on desktop, left-aligned at ≤900px; a `*-highlight` quote becomes a blue rule)
 - Lists of points (pillars, values, timeline…): `voce` / `voce-icona` / `voce-anno` / `voce-titolo` / `voce-testo` (columns with a blue top rule). No cards with icons in colored circles.
 - Style: editorial, not template-like. No decorative bold inside sentences, no gradient icon tiles, no floating badges over photos, no invented metrics.
 

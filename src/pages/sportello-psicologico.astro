@@ -7,7 +7,7 @@ import { scuola } from '../data/scuola';
 
 const bg = {
   hero: await sfondo({ desktop: 'foto/sportello-banner.jpg', tablet: 'foto/sportellopsicologico-adulti.jpg' }, { desktop: '50% 50%', tablet: '50% 50%', mobile: '58% 50%' }),
-  cta: await sfondo('foto/sportello-psicologico-img2.jpg', {}),
+  cta: await sfondo('foto/sportello-psicologico-img2.jpg'),
 };
 
 const pilastri = [
@@ -144,7 +144,7 @@ const servizi = [
 
 .sport-intro-testo p {
   margin-bottom: 1.25rem;
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   line-height: 1.8;
   color: var(--text-dark);
 }
@@ -182,7 +182,7 @@ const servizi = [
 }
 
 .pilastri-lista .voce-testo {
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
 }
 
 /* ---------- Accesso ---------- */
@@ -226,13 +226,13 @@ const servizi = [
 }
 
 .servizio i {
-  font-size: 1rem;
+  font-size: var(--text-base);
   color: var(--primary-blue-dark);
 }
 
 .servizio span {
-  font-size: var(--text-xl);
-  font-weight: 700;
+  font-size: var(--text-base);
+  font-weight: 500;
   line-height: var(--leading-snug);
   color: var(--dark-navy);
 }
@@ -345,18 +345,10 @@ const servizi = [
     aspect-ratio: 4 / 3;
   }
 
-  .sport-intro-testo p,
-  .pilastri-lista .voce-testo {
-    font-size: 1rem;
-  }
-
   .servizio {
     padding: 1.25rem 0;
   }
 
-  .servizio span {
-    font-size: 1.125rem;
-  }
 
   .sport-cta-wrapper {
     padding: 0 1.5rem;
@@ -364,7 +356,7 @@ const servizi = [
 
   .sport-cta-buttons {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
   }
 }
 </style>

@@ -13,13 +13,14 @@
       "tablet": "45% 50%",
       "mobile": "40% 50%"
     },
+    "introTitolo": "Danza per adulti, <em>anche da zero</em>",
     "introImage": "assets/images/foto/danza-dolce-img3.jpg",
     "introAlt": "Allieve adulte sedute sul parquet durante il riscaldamento",
     "introFuoco": {
       "desktop": "75% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>Per danzare non c'è un'età giusta. Gli adulti possono iniziare da zero, ricominciare dopo anni di stop o continuare a crescere in uno stile che già conoscono.</p>\n<p>Danza Contemporanea Adulti è pensata per chi ha dai 40 anni in su, senza limiti di età. <a href=\"/movimento-creativo\">Movimento Creativo</a> e <a href=\"/contact-improvisation\">Contact Improvisation</a> accolgono adulti dai 18 anni, anche non danzatori. Chi cerca energia trova Hip-Hop e <a href=\"/heels\">Heels</a>, chi cerca benessere Hatha Yoga e Pilates.</p>",
+    "intro": "<p>Per danzare non c'è un'età giusta: a InBallet gli adulti possono iniziare da zero, ricominciare dopo anni o continuare uno stile che già conoscono.</p>\n<p><a href=\"/contemporanea-adulti\">Danza Contemporanea Adulti</a> è pensata per chi ha dai 40 anni in su; <a href=\"/movimento-creativo\">Movimento Creativo</a> e <a href=\"/contact-improvisation\">Contact Improvisation</a> accolgono adulti dai 18 anni, anche non danzatori; per il benessere ci sono Hatha Yoga e Pilates.</p>",
     "eta": "Adulti di tutte le età",
     "frequenza": "1-3 lezioni a settimana",
     "metodoTitolo": "I corsi per adulti",
@@ -59,13 +60,14 @@
     "heroFuoco": {
       "desktop": "50% 30%"
     },
+    "introTitolo": "Cos'è l'Avviamento <em>alla Danza</em>",
     "introImage": "assets/images/foto/bambini-gioco.jpg",
     "introAlt": "Bambine di 3 anni giocano a danzare sul parquet della sala",
     "introFuoco": {
       "desktop": "50% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>Avviamento alla Danza è il percorso di InBallet studiato per il primissimo approccio alla musica e al movimento, riservato ai bambini che hanno compiuto 3 anni.</p>\n<p>In sala il bambino sperimenta giochi interattivi e pratici: impara a orientarsi nello spazio e a svolgere gli esercizi proposti, mentre ogni lezione offre nuovi stimoli per migliorare le capacità cognitive.</p>\n<p>Il cuore delle attività è l'educazione al movimento, che passo dopo passo si evolve in <a href=\"/educazione-danza\">Educazione alla Danza</a>. La classe è a numero chiuso e si incontra una volta a settimana.</p>",
+    "intro": "<p>Avviamento alla Danza è il primo corso di danza di InBallet a Lainate e Rho: è per i bambini che hanno compiuto 3 anni e si svolge una volta a settimana, in una classe a numero chiuso.</p>\n<p>Con giochi interattivi in sala il bambino impara a orientarsi nello spazio, a seguire la musica e a svolgere i primi esercizi. Passo dopo passo l'educazione al movimento diventa <a href=\"/educazione-danza\">Educazione alla Danza</a>.</p>",
     "eta": "Dai 3 anni compiuti",
     "frequenza": "1 lezione a settimana",
     "metodoTitolo": "Coinvolgimento, educazione e divertimento",
@@ -107,12 +109,13 @@
       "desktop": "50% 35%",
       "tablet": "50% 50%"
     },
+    "introTitolo": "Danza per bambini <em>da 9 a 11 anni</em>",
     "introImage": "assets/images/foto/hip-hop-img4.jpg",
     "introAlt": "Gruppo di hip-hop sul palco durante lo spettacolo",
     "introFuoco": {
       "desktop": "50% 50%"
     },
-    "intro": "<p>Tra i 9 e gli 11 anni la tecnica si consolida e ogni allievo comincia a capire quale stile lo rappresenta di più. Si può proseguire con Danza Classica e <a href=\"/modern\">Modern</a>, scegliere gli stili urbani di <a href=\"/hip-hop\">Hip-Hop</a> e <a href=\"/breaking\">Breaking</a> e, dai 10 anni, iniziare <a href=\"/danza-contemporanea\">Danza Contemporanea</a>.</p>\n<p>Molti allievi frequentano più discipline insieme. Ogni anno tutti i corsi portano in teatro il proprio lavoro nello spettacolo di fine anno.</p>",
+    "intro": "<p>Tra i 9 e gli 11 anni la tecnica si consolida: si prosegue con Danza Classica e <a href=\"/modern\">Modern</a>, si scelgono <a href=\"/hip-hop\">Hip-Hop</a> e <a href=\"/breaking\">Breaking</a> e, dai 10 anni, si può iniziare <a href=\"/danza-contemporanea\">Danza Contemporanea</a>.</p>\n<p>Molti allievi frequentano più discipline, e ogni anno tutti i corsi portano il loro lavoro in teatro, nello spettacolo di fine anno.</p>",
     "eta": "Bambini 9-11 anni",
     "frequenza": "2-3 lezioni a settimana",
     "metodoTitolo": "I corsi da 9 a 11 anni",
@@ -154,12 +157,13 @@
       "desktop": "50% 25%",
       "tablet": "50% 50%"
     },
+    "introTitolo": "Cos'è il <em>Breaking</em>",
     "introImage": "assets/images/foto/breaking-img3.jpg",
     "introAlt": "Una breaker in freeze sul parquet della sala",
     "introFuoco": {
       "desktop": "50% 50%"
     },
-    "intro": "<p>La Break Dance, o Breaking, fa parte delle danze urbane e della cultura <a href=\"/hip-hop\">Hip-Hop</a>. A InBallet le lezioni sono suddivise in più livelli e a numero chiuso, con inserimento nei corsi dai 6 anni.</p>\n<p>Si sviluppa soprattutto in modo individuale: quando l'allievo acquisisce sicurezza, la sua danza viene proposta all'interno di un cerchio di persone. Durante la lezione si eseguono passaggi in piedi e una serie di movimenti a terra.</p>",
+    "intro": "<p>Il Breaking, o Break Dance, è la danza della cultura <a href=\"/hip-hop\">Hip-Hop</a> fatta di passi in piedi, movimenti a terra e freeze. A InBallet si inizia dai 6 anni, in classi a numero chiuso divise per livello.</p>\n<p>Si sviluppa prima in modo individuale e poi si condivide nel cerchio, dove a turno un b-boy o una b-girl prova le sue sequenze mentre gli altri tengono vivo il beat.</p>",
     "eta": "Dai 6 anni, per livelli",
     "frequenza": "2 lezioni a settimana",
     "metodoTitolo": "Condivisione, staticità ed equilibrio",
@@ -201,13 +205,14 @@
       "desktop": "50% 45%",
       "tablet": "50% 50%"
     },
+    "introTitolo": "Classi di gruppo <em>per il benessere</em>",
     "introImage": "assets/images/foto/pilates-img4.jpg",
     "introAlt": "Classe di gruppo sui tappetini nella sala di InBallet",
     "introFuoco": {
       "desktop": "40% 50%",
       "tablet": "50% 50%"
     },
-    "intro": "<p>Le classi di gruppo di InBallet sono le attività motorie della scuola: <a href=\"/yoga\">Hatha Yoga</a>, con lezioni di un'ora e mezza, e <a href=\"/pilates\">Pilates</a>, diviso per livelli, una o due volte a settimana.</p>\n<p>Si possono frequentare da sole oppure affiancarle a un corso di danza: è quello che proponiamo per esempio a chi segue Danza Contemporanea Adulti, per lavorare in modo più tecnico e funzionale sul proprio corpo.</p>",
+    "intro": "<p>Le classi di gruppo di InBallet sono le attività motorie della scuola: <a href=\"/yoga\">Hatha Yoga</a>, in lezioni di un'ora e mezza, e <a href=\"/pilates\">Pilates</a> per livelli, una o due volte a settimana.</p>\n<p>Si frequentano da sole o accanto a un corso di danza, per lavorare in modo più tecnico e funzionale sul proprio corpo.</p>",
     "eta": "Adulti di tutte le età",
     "frequenza": "1-2 lezioni a settimana",
     "metodoTitolo": "Respiro, controllo ed equilibrio",
@@ -249,12 +254,13 @@
       "desktop": "50% 35%",
       "tablet": "50% 50%"
     },
+    "introTitolo": "Cos'è la Contact <em>Improvisation</em>",
     "introImage": "assets/images/foto/contact-improvisation-img3.jpg",
     "introAlt": "Due danzatori schiena contro schiena durante la contact improvisation",
     "introFuoco": {
       "desktop": "50% 50%"
     },
-    "intro": "<p>La Contact Improvisation nasce dall'improvvisazione, cioè dalla necessità del danzatore di sperimentarsi e conoscersi meglio. È uno strumento fondamentale per imparare a essere autori di se stessi, confrontandosi con i propri movimenti, le proprie qualità e lo spazio.</p>\n<p>Alla base c'è la <a href=\"/danza-contemporanea\">Danza Contemporanea</a>, che offre spunti di crescita preziosi: la gestione dello spazio tra uno o più individui, il contatto tra due corpi, l'empatia, la complicità e le leve.</p>\n<p>Tutto questo si raccoglie nel Contact: un mondo in sintonia prima con se stessi e poi con almeno un altro corpo, fatto di fusioni e sperimentazioni. Un linguaggio universale, condiviso e trasmesso.</p>",
+    "intro": "<p>La Contact Improvisation è una pratica di improvvisazione basata sul contatto tra due corpi: peso, leve, ascolto ed empatia, sulle basi della <a href=\"/danza-contemporanea\">Danza Contemporanea</a>.</p>\n<p>Prima si impara a conoscersi e a diventare autori del proprio movimento, poi a danzare con almeno un altro corpo, fino a muoversi come un corpo unico.</p>",
     "eta": "Adulti",
     "frequenza": "1 lezione a settimana",
     "metodoTitolo": "Scoperte, unione e fusione",
@@ -296,13 +302,14 @@
       "desktop": "50% 40%",
       "tablet": "50% 50%"
     },
+    "introTitolo": "Cos'è il <em>Contaminato</em>",
     "introImage": "assets/images/foto/contaminato-img2.jpg",
     "introAlt": "Una danzatrice con giacca argentata e tutù alla sbarra",
     "introFuoco": {
       "desktop": "50% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>Contaminato è una sfumatura di danza eclettica e singolare, nata dall'incontro di stimoli diversi: uno stile composto dalle tecniche del piano di studio di InBallet, sia del dipartimento lirico sia di quello urbano.</p>\n<p>È un mix autentico guidato dalla creatività dell'insegnante, che costruisce un piano di lavoro personalizzato e originale in base ad attitudini, propensioni e potenzialità degli allievi.</p>\n<p>Per accedere al corso servono diversi anni di danza alle spalle e un piano di studio, passato e ancora in corso, che comprenda almeno tre discipline. L'ingresso è possibile dai 16 anni.</p>",
+    "intro": "<p>Il Contaminato è uno stile eclettico che fonde le tecniche liriche e urbane del piano di studio di InBallet, con un piano di lavoro personalizzato su ogni allievo.</p>\n<p>Si accede dai 16 anni, con diversi anni di danza alle spalle e almeno tre discipline studiate, ancora oggi in corso.</p>",
     "eta": "Dai 16 anni, con esperienza",
     "frequenza": "1-2 lezioni a settimana",
     "metodoTitolo": "Temperamento, eleganza e fusione",
@@ -345,13 +352,14 @@
       "tablet": "40% 50%",
       "mobile": "35% 50%"
     },
+    "introTitolo": "Danza contemporanea <em>dai 40 anni</em>",
     "introImage": "assets/images/foto/danza-dolce-img4.jpg",
     "introAlt": "Allieve adulte durante una lezione di danza contemporanea in sala",
     "introFuoco": {
       "desktop": "30% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>Il corso di Danza Contemporanea Adulti è dedicato a chi, con qualche anno in più, desidera avvicinarsi alla danza senza alcuna restrizione: si accede dai 40 anni, senza limiti di età.</p>\n<p>È nato dalla richiesta, cresciuta negli anni, di un corso vero e proprio, per ricominciare dopo anni di stop oppure per iniziare da zero. Oggi è una passione intensa per chi ne fa parte.</p>\n<p>La lezione si sviluppa in più sezioni: warm-up per preparare il corpo, training a terra per lavorare sull'elasticità muscolare, sbarra per acquisire la tecnica classica, diagonali e coreografia in chiave contemporanea. Al corso si può affiancare una classe più tecnica o funzionale, come <a href=\"/pilates\">Pilates</a> o <a href=\"/yoga\">Yoga</a>, per lavorare meglio sul proprio corpo.</p>",
+    "intro": "<p>Danza Contemporanea Adulti è il corso di InBallet per chi ha dai 40 anni in su, senza limiti di età: per ricominciare dopo anni di stop o per iniziare da zero.</p>\n<p>La lezione unisce warm-up, training a terra (floor barre), sbarra classica, diagonali e coreografia contemporanea. Si può affiancare <a href=\"/pilates\">Pilates</a> o <a href=\"/yoga\">Yoga</a> per lavorare meglio sul proprio corpo.</p>",
     "eta": "Dai 40 anni, senza limiti di età",
     "frequenza": "Più giorni a settimana",
     "metodoTitolo": "Tecnica, allungamento e dinamismo",
@@ -394,13 +402,14 @@
       "tablet": "45% 50%",
       "mobile": "45% 50%"
     },
+    "introTitolo": "Cos'è la Danza <em>Acrobatica</em>",
     "introImage": "assets/images/foto/modern-contrasti.jpg",
     "introAlt": "Allieve in verticale sul palco durante uno spettacolo",
     "introFuoco": {
       "desktop": "35% 50%",
       "tablet": "50% 50%"
     },
-    "intro": "<p>La Danza Acrobatica è un arricchimento stilistico per i danzatori che desiderano lavorare con il corpo anche attraverso dinamiche aeree, emozionanti e scenografiche.</p>\n<p>Stupire se stessi unendo movimento dinamico e linee precise è un valore aggiunto per l'artista che sa destreggiarsi danzando in qualsiasi stile. L'impegno muscolare è importante: ogni lezione si apre con una parte di allenamento aerobico proposta dall'insegnante.</p>",
+    "intro": "<p>La Danza Acrobatica unisce movimento dinamico e linee precise a elementi aerei, emozionanti e scenografici: un arricchimento per danzatori di qualsiasi stile.</p>\n<p>Ogni lezione si apre con un allenamento aerobico, che prepara i muscoli all'impegno richiesto dagli elementi acrobatici.</p>",
     "eta": "Ragazzi dai 7 anni",
     "frequenza": "1-2 lezioni a settimana",
     "metodoTitolo": "Allenamento, dinamiche aeree e precisione",
@@ -442,12 +451,13 @@
       "desktop": "50% 25%",
       "tablet": "50% 50%"
     },
+    "introTitolo": "Cos'è la Danza <em>Classica</em>",
     "introImage": "assets/images/foto/sbarra-tutu.jpg",
     "introAlt": "Mani di un'allieva in tutù appoggiate alla sbarra",
     "introFuoco": {
       "desktop": "50% 50%"
     },
-    "intro": "<p>La Danza Classica è la tecnica accademica su cui si fondano quasi tutti gli altri stili: postura, allineamento, forza e controllo del corpo, costruiti lezione dopo lezione. A InBallet si studia in classi divise per livello, dai bambini agli adulti.</p>\n<p>Ogni lezione parte dalla sbarra e prosegue al centro, con port de bras, salti e giri. Una buona base classica è consigliata anche a chi vuole studiare <a href=\"/modern\">Modern</a>, e la sbarra fa parte della lezione di <a href=\"/contemporanea-adulti\">Danza Contemporanea Adulti</a>.</p>",
+    "intro": "<p>La Danza Classica è la tecnica accademica alla base di quasi tutti gli stili. A InBallet si studia in classi divise per livello, per bambini, ragazzi e adulti, nelle sedi di Lainate e Rho.</p>\n<p>Ogni lezione parte dalla sbarra e prosegue al centro, con port de bras, salti e giri. Una base classica è consigliata anche a chi vuole studiare <a href=\"/modern\">Modern</a>.</p>",
     "eta": "Bambini, ragazzi e adulti, per livelli",
     "frequenza": "2-3 lezioni a settimana",
     "metodoTitolo": "Sbarra, centro e musicalità",
@@ -490,12 +500,13 @@
       "tablet": "80% 50%",
       "mobile": "80% 50%"
     },
+    "introTitolo": "Cos'è la Danza <em>Contemporanea</em>",
     "introImage": "assets/images/foto/danza-contemporanea-eterogeneo-1.jpg",
     "introAlt": "Coreografia di danza contemporanea con elementi scenici argentati",
     "introFuoco": {
       "desktop": "50% 50%"
     },
-    "intro": "<p>La Danza Contemporanea è l'evoluzione più attuale della danza. Parte dai metodi studiati nel <a href=\"/modern\">Modern</a> e diventa l'arte più libera del movimento: a InBallet si può iniziare a studiarla dai 10 anni.</p>\n<p>È libera perché ogni insegnante può personalizzarla con il proprio stile, dando spazio ai disegni artistici più interessanti creati dai corpi in relazione allo spazio.</p>",
+    "intro": "<p>La Danza Contemporanea è l'evoluzione più attuale della danza: parte dai metodi del <a href=\"/modern\">Modern</a> e diventa l'arte più libera del movimento. A InBallet si può iniziare dai 10 anni.</p>\n<p>Ogni insegnante la personalizza con il proprio stile, dando spazio ai disegni creati dai corpi nello spazio, tra squilibri, sospensioni e passaggi inconsueti da una forma all'altra.</p>",
     "eta": "Dai 10 anni",
     "frequenza": "2-3 lezioni a settimana",
     "metodoTitolo": "Multiforme, contorto ed eterogeneo",
@@ -537,13 +548,14 @@
       "desktop": "50% 40%",
       "tablet": "50% 50%"
     },
+    "introTitolo": "Cos'è l'Educazione <em>alla Danza</em>",
     "introImage": "assets/images/foto/educazione-alla-danza-armonia-1.jpg",
     "introAlt": "Una bambina in tutù rosa apre le braccia davanti alla finestra della sala",
     "introFuoco": {
       "desktop": "45% 50%",
       "tablet": "50% 30%"
     },
-    "intro": "<p>Educazione alla Danza è la classe di InBallet per bambini di 4 e 5 anni: il passo che segue l'<a href=\"/avviamento-danza\">Avviamento alla Danza</a>, con una lezione a settimana.</p>\n<p>La pedagogia della classe porta al centro gli stimoli motori e li trasforma, lezione dopo lezione, in competenze psicomotorie. Ne nasce un'armonia in movimento che connette il corpo, l'ascolto di sé, l'accoglienza del ritmo e la capacità di distinguere le diverse posizioni.</p>\n<p>Con il tempo i bambini vengono accompagnati nella costruzione di piccole sequenze e nel raggiungimento dell'autonomia sulla musicalità.</p>",
+    "intro": "<p>Educazione alla Danza è il corso di InBallet per bambini di 4 e 5 anni, con una lezione a settimana: il passo che segue l'<a href=\"/avviamento-danza\">Avviamento alla Danza</a>.</p>\n<p>Gli stimoli motori diventano competenze psicomotorie: i bambini imparano ad ascoltare il ritmo, a distinguere le posizioni e a costruire piccole sequenze, fino a muoversi in autonomia sulla musica.</p>",
     "eta": "Bambini di 4-5 anni",
     "frequenza": "1 lezione a settimana",
     "metodoTitolo": "Competenze, autonomia e armonia",
@@ -584,13 +596,14 @@
     "heroFuoco": {
       "desktop": "50% 50%"
     },
+    "introTitolo": "Cos'è <em>Heels</em>",
     "introImage": "assets/images/foto/hip-hop-img3.jpg",
     "introAlt": "Una danzatrice muove i capelli sotto la luce di scena",
     "introFuoco": {
       "desktop": "65% 50%",
       "tablet": "50% 50%"
     },
-    "intro": "<p>Heels è il corso per danzatori che desiderano approfondire un linguaggio del corpo sintonizzato sulle onde della femminilità, del portamento e di una fine ricerca della sensualità.</p>\n<p>Lo stile unisce elementi presi da altre discipline e richiede l'elasticità necessaria per performare con aperture, slanci e passaggi veloci tra i passi. Per muoversi con più scioltezza è utile affiancare lo studio di tanta tecnica, fatta di linee e tenute.</p>\n<p>Heels fa parte anche del programma di <a href=\"/hip-hop\">Hip-Hop</a> della scuola.</p>",
+    "intro": "<p>Heels è la danza sui tacchi: un linguaggio del corpo che lavora su femminilità, portamento e sensualità. A InBallet fa parte anche del programma di <a href=\"/hip-hop\">Hip-Hop</a>.</p>\n<p>Unisce elementi di altri stili e richiede elasticità per aperture, slanci e passaggi veloci; per muoversi con scioltezza è utile studiare anche tecnica, linee e tenute.</p>",
     "eta": "Adulti",
     "frequenza": "1 lezione a settimana",
     "metodoTitolo": "Portamento, elasticità e tecnica",
@@ -632,13 +645,14 @@
       "tablet": "45% 50%",
       "mobile": "40% 50%"
     },
+    "introTitolo": "Cos'è l'<em>Hip-Hop</em>",
     "introImage": "assets/images/foto/hip-hop-img2.jpg",
     "introAlt": "Crew di hip-hop sul palco tra il fumo di scena",
     "introFuoco": {
       "desktop": "55% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>L'Hip-Hop è una disciplina di natura urbana che sviluppa energia, linea e stile seguendo principi molto diversi da quelli delle materie tecnico-liriche. A InBallet si inizia dai 6 anni.</p>\n<p>Le lezioni approfondiscono diversi stili: Old School, Popping, Locking, Waacking, Jazz Funk, Vogue, <a href=\"/heels\">Heels</a>, House, New Style e Krump. Ogni anno la programmazione viene costruita in base all'età, per rendere più completa la preparazione degli allievi; da qualche anno il Krump è una delle sezioni che studiamo più a fondo.</p>\n<p>In ogni anno accademico si sviluppano anche moduli disciplinari con interventi di professionisti internazionali, come programma di studio extrascolastico.</p>",
+    "intro": "<p>L'Hip-Hop è la danza della cultura urbana, fatta di energia, groove e stile. A InBallet si inizia dai 6 anni, in gruppi per età, con una programmazione costruita ogni anno.</p>\n<p>Le lezioni approfondiscono Old School, Popping, Locking, Waacking, Jazz Funk, Vogue, <a href=\"/heels\">Heels</a>, House, New Style e Krump, con moduli tenuti da professionisti internazionali.</p>",
     "eta": "Dai 6 anni, gruppi per età",
     "frequenza": "1-2 lezioni a settimana",
     "metodoTitolo": "Determinazione, energia e carattere",
@@ -681,13 +695,14 @@
       "tablet": "50% 30%",
       "mobile": "50% 50%"
     },
+    "introTitolo": "Lezioni individuali <em>di danza</em>",
     "introImage": "assets/images/foto/educazione-alla-danza-competenze.jpg",
     "introAlt": "L'insegnante solleva un'allieva durante una lezione individuale",
     "introFuoco": {
       "desktop": "55% 50%",
       "tablet": "50% 35%"
     },
-    "intro": "<p>«È l'arte suprema dell'insegnante: risvegliare la gioia della creatività e della conoscenza» (Albert Einstein). A volte, per trasmettere meglio, serve dedicarsi a un solo allievo.</p>\n<p>A InBallet la lezione individuale può nascere da un'esigenza specifica oppure dalle opportunità che la scuola offre ai propri allievi, come le borse di studio assegnate in diverse occasioni per premiare l'impegno e stimolare un rendimento maggiore.</p>",
+    "intro": "<p>Le lezioni individuali di InBallet mettono un insegnante a disposizione di un solo allievo, per un'esigenza specifica o per approfondire una disciplina. Nascono anche dalle borse di studio che la scuola assegna per premiare l'impegno.</p>\n<p>«È l'arte suprema dell'insegnante: risvegliare la gioia della creatività e della conoscenza» (Albert Einstein).</p>",
     "eta": "Bambini, ragazzi e adulti",
     "frequenza": "Su appuntamento",
     "metodoTitolo": "Personalizzazione, attenzione e borse di studio",
@@ -728,13 +743,14 @@
       "desktop": "50% 70%",
       "tablet": "50% 50%"
     },
+    "introTitolo": "Cos'è la Danza <em>Modern</em>",
     "introImage": "assets/images/foto/modern-img3.jpg",
     "introAlt": "Allieve di Modern in scena con tessuti in movimento",
     "introFuoco": {
       "desktop": "65% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>La Modern Dance nasce come rottura degli schemi creati nei decenni in cui la Danza Classica aveva il maggior prestigio. A InBallet il corso di Modern è proposto in gradi crescenti di lezione, a partire dai 6 anni.</p>\n<p>Oltre al lavoro fisico e tecnico, è una danza che coinvolge molto anche sul piano emotivo e dell'immaginazione. Si studiano i metodi legati ai danzatori che hanno segnato la storia della disciplina, come Martha Graham, Rudolf Laban, Merce Cunningham e Isadora Duncan.</p>\n<p>Per affrontare al meglio lo studio dello stile è consigliata una base di tecnica classica e lirica. Il Modern è anche lo stile del <a href=\"/formazione-insegnanti\">corso di formazione per insegnanti</a> riconosciuto CSEN e CONI.</p>",
+    "intro": "<p>La Modern Dance nasce come rottura degli schemi della Danza Classica e unisce tecnica, emozione e immaginazione. A InBallet si studia dai 6 anni, in gradi crescenti di lezione.</p>\n<p>Si lavora sui principi di contrazione e rilascio e sui metodi dei grandi maestri, come Martha Graham, Rudolf Laban, Merce Cunningham e Isadora Duncan. È anche lo stile del <a href=\"/formazione-insegnanti\">corso per insegnanti</a> riconosciuto CSEN e CONI.</p>",
     "eta": "Dai 6 anni, per livelli",
     "frequenza": "2-3 lezioni a settimana",
     "metodoTitolo": "Definizione, leggerezza e contrasti",
@@ -775,13 +791,14 @@
     "heroFuoco": {
       "desktop": "50% 50%"
     },
+    "introTitolo": "Cos'è il Movimento <em>Creativo</em>",
     "introImage": "assets/images/foto/movimento-creativo-riflessidise.jpg",
     "introAlt": "Danzatrici in un allestimento immersivo con superfici riflettenti",
     "introFuoco": {
       "desktop": "60% 50%",
       "tablet": "50% 50%"
     },
-    "intro": "<p>Movimento Creativo è il percorso di InBallet per adulti dai 18 anni: si impara a dialogare con il proprio corpo partendo dal centro, la mente. È adatto sia a chi non ha mai danzato sia a danzatori esperti.</p>\n<p>Il percorso favorisce il riconoscimento autentico della propria anima profonda e lascia fluire in modo libero e creativo le energie, verso l'esterno o verso l'interno. Vivendo il proprio movimento creativo, ognuno riconosce qualcosa in più di sé e costruisce nel modo più personale il percorso che in quel momento sente suo.</p>\n<p>Ogni sessione propone una ricerca diversa; i temi più articolati si sviluppano in più incontri. È un momento esclusivo di luce e cura verso di sé: musica, frequenze e un contesto immersivo accompagnano un senso di libertà assoluta di essere e di fare attraverso l'atto creativo.</p>",
+    "intro": "<p>Movimento Creativo è il percorso di InBallet per adulti dai 18 anni, danzatori e non: si impara a dialogare con il proprio corpo partendo dalla mente.</p>\n<p>Ogni sessione ha un tema e un contesto immersivo, tra respiro, musica, voce e materiali: un momento di cura di sé in cui l'energia fluisce in modo libero e creativo.</p>",
     "eta": "Adulti dai 18 anni, danzatori e non",
     "frequenza": "Sessioni a tema",
     "metodoTitolo": "Lentezza, riflessi di sé e stimolazione",
@@ -824,13 +841,14 @@
       "tablet": "60% 50%",
       "mobile": "70% 50%"
     },
+    "introTitolo": "Cos'è il <em>Pilates</em>",
     "introImage": "assets/images/foto/pilates-img3.jpg",
     "introAlt": "Allieve sul tappetino durante un esercizio di Pilates",
     "introFuoco": {
       "desktop": "70% 50%",
       "tablet": "50% 50%"
     },
-    "intro": "<p>Il corso di Pilates di InBallet è un programma di esercizi basato sul metodo ideato da Joseph Pilates, suddiviso in diversi livelli e classi, con allenamento una o due volte a settimana.</p>\n<p>La caratteristica principale del metodo, che trae ispirazione anche dallo Yoga, è insegnare a controllare i propri muscoli attraverso la mente. È una disciplina olistica e dinamica che aiuta la colonna vertebrale a capire come bilanciare il corpo usando i muscoli posturali.</p>\n<p>Il rafforzamento si concentra sulla Power House, cioè tutte le fasce muscolari collegate al tronco: addominali, muscoli della colonna vertebrale, adduttori, glutei e zona pelvica. Una respirazione corretta permette di eseguire bene gli esercizi e di sentirne il massimo beneficio.</p>",
+    "intro": "<p>Il Pilates è il metodo di esercizi ideato da Joseph Pilates per imparare a controllare i muscoli con la mente. A InBallet si pratica per livelli, una o due volte a settimana.</p>\n<p>Il lavoro si concentra sulla Power House, le fasce muscolari del tronco, e sui muscoli posturali della colonna, con una respirazione corretta in ogni esercizio.</p>",
     "eta": "Adulti di tutte le età",
     "frequenza": "1-2 lezioni a settimana",
     "metodoTitolo": "Principi, controllo e sinergia",
@@ -872,13 +890,14 @@
       "desktop": "50% 40%",
       "tablet": "50% 45%"
     },
+    "introTitolo": "Danza per bambini <em>da 3 a 5 anni</em>",
     "introImage": "assets/images/foto/bambini-insegnante.jpg",
     "introAlt": "Bambine piccole in cerchio con l'insegnante durante la lezione",
     "introFuoco": {
       "desktop": "40% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>Per i bambini da 3 a 5 anni la danza comincia dal gioco. A 3 anni compiuti si entra in <a href=\"/avviamento-danza\">Avviamento alla Danza</a>, il primissimo approccio a musica e movimento; a 4 e 5 anni si prosegue con <a href=\"/educazione-danza\">Educazione alla Danza</a>.</p>\n<p>Entrambe le classi si incontrano una volta a settimana. I bambini imparano a orientarsi nello spazio, ad ascoltare il ritmo e a stare in gruppo, e gli stimoli motori diventano, passo dopo passo, competenze psicomotorie. Per i bambini sotto i 6 anni non serve il certificato medico: basta l'autocertificazione firmata dai genitori.</p>",
+    "intro": "<p>Per i bambini da 3 a 5 anni InBallet propone due corsi, una volta a settimana: <a href=\"/avviamento-danza\">Avviamento alla Danza</a> dai 3 anni compiuti ed <a href=\"/educazione-danza\">Educazione alla Danza</a> a 4 e 5 anni.</p>\n<p>Si impara giocando a orientarsi nello spazio, ascoltare il ritmo e stare in gruppo. Sotto i 6 anni basta l'autocertificazione dei genitori al posto del certificato medico.</p>",
     "eta": "Bambini 3-5 anni",
     "frequenza": "1 lezione a settimana",
     "metodoTitolo": "I corsi da 3 a 5 anni",
@@ -919,13 +938,14 @@
       "desktop": "50% 45%",
       "tablet": "50% 50%"
     },
+    "introTitolo": "Danza per ragazzi <em>da 12 a 16 anni</em>",
     "introImage": "assets/images/foto/contaminato-img3.jpg",
     "introAlt": "Una ragazza in arco all'indietro nella sala di danza",
     "introFuoco": {
       "desktop": "60% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>Tra i 12 e i 16 anni si consolida la tecnica e prende forma uno stile personale. I ragazzi possono studiare Danza Classica, <a href=\"/modern\">Modern</a> e <a href=\"/danza-contemporanea\">Danza Contemporanea</a>, gli stili urbani di <a href=\"/hip-hop\">Hip-Hop</a> e <a href=\"/breaking\">Breaking</a> e, dai 16 anni, il <a href=\"/contaminato\">Contaminato</a>, che fonde tecniche liriche e urbane.</p>\n<p>I corsi arrivano fino ai livelli avanzati. Nell'Hip-Hop ogni anno si aggiungono moduli con professionisti internazionali, e lo spettacolo di fine anno in teatro è il momento in cui tutto il lavoro va in scena.</p>",
+    "intro": "<p>Dai 12 ai 16 anni i ragazzi consolidano la tecnica e trovano il proprio stile tra Danza Classica, <a href=\"/modern\">Modern</a>, <a href=\"/danza-contemporanea\">Contemporanea</a>, <a href=\"/hip-hop\">Hip-Hop</a>, <a href=\"/breaking\">Breaking</a> e, dai 16 anni, <a href=\"/contaminato\">Contaminato</a>.</p>\n<p>I corsi arrivano ai livelli avanzati: nell'Hip-Hop ogni anno si aggiungono moduli con professionisti internazionali, e lo spettacolo di fine anno porta tutto il lavoro in teatro.</p>",
     "eta": "Ragazzi 12-16 anni",
     "frequenza": "2-4 lezioni a settimana",
     "metodoTitolo": "I corsi da 12 a 16 anni",
@@ -966,13 +986,14 @@
       "desktop": "50% 30%",
       "tablet": "50% 50%"
     },
+    "introTitolo": "Danza per bambini <em>da 6 a 8 anni</em>",
     "introImage": "assets/images/foto/bambini-mani.jpg",
     "introAlt": "Bambine in cerchio si tengono per mano durante la lezione",
     "introFuoco": {
       "desktop": "60% 50%",
       "tablet": "50% 50%"
     },
-    "intro": "<p>Tra i 6 e gli 8 anni i bambini passano dal gioco alle prime basi tecniche. È l'età in cui si può scegliere il primo stile: Danza Classica, <a href=\"/modern\">Modern</a>, <a href=\"/hip-hop\">Hip-Hop</a> e <a href=\"/breaking\">Breaking</a> accolgono allievi a partire dai 6 anni.</p>\n<p>Le lezioni restano coinvolgenti, ma diventano più strutturate: postura, coordinazione, ritmo e prime sequenze. Dai 6 anni serve il certificato medico per l'attività sportiva non agonistica.</p>",
+    "intro": "<p>Dai 6 anni i bambini possono scegliere il primo stile: Danza Classica, <a href=\"/modern\">Modern</a>, <a href=\"/hip-hop\">Hip-Hop</a> o <a href=\"/breaking\">Breaking</a>.</p>\n<p>Le lezioni restano coinvolgenti ma diventano più strutturate: postura, coordinazione, ritmo e prime sequenze. Dai 6 anni serve il certificato medico per l'attività sportiva non agonistica.</p>",
     "eta": "Bambini 6-8 anni",
     "frequenza": "1-2 lezioni a settimana",
     "metodoTitolo": "I corsi da 6 a 8 anni",
@@ -1012,12 +1033,13 @@
     "heroFuoco": {
       "desktop": "50% 50%"
     },
+    "introTitolo": "Hatha Yoga <em>a InBallet</em>",
     "introImage": "assets/images/foto/yoga-img4.jpg",
     "introAlt": "Allievi seduti in meditazione durante una lezione di Hatha Yoga",
     "introFuoco": {
       "desktop": "50% 50%"
     },
-    "intro": "<p>A InBallet lo Yoga si pratica nella forma dell'Hatha Yoga: un'ora e mezza completamente dedicata a se stessi, da cui trarre il massimo beneficio per il corpo e per la mente.</p>\n<p>È una disciplina antichissima che unisce lavoro fisico e lavoro meditativo, la consapevolezza di sé e il rafforzamento del proprio Io. La mente ha spazio per acquietarsi, mentre l'energia vitale viene indirizzata in modo costruttivo.</p>\n<p>Le asana (posture) portano a una profonda consapevolezza mentale, fisica e spirituale e al giusto equilibrio tra forza e flessibilità muscolare. Il respiro è l'elemento centrale: con gli esercizi di pranayama si percepisce l'allungamento dei muscoli e ci si libera della pesantezza quotidiana.</p>",
+    "intro": "<p>A InBallet lo Yoga si pratica nella forma dell'Hatha Yoga, in lezioni di un'ora e mezza completamente dedicate al corpo e alla mente.</p>\n<p>Le asana, cioè le posture, costruiscono forza, flessibilità ed equilibrio; il pranayama, la respirazione, aiuta ad allungare i muscoli e a liberarsi dalla pesantezza quotidiana.</p>",
     "eta": "Adulti di tutte le età",
     "frequenza": "1-2 lezioni a settimana",
     "metodoTitolo": "Concentrazione, interiorità e rigenerazione",

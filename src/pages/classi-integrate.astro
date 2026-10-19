@@ -7,7 +7,7 @@ import { scuola } from '../data/scuola';
 
 const bg = {
   hero: await sfondo('gallery-9.jpg', { desktop: '50% 15%', tablet: '50% 40%' }),
-  cta: await sfondo('foto/bambini-mani.jpg', {}),
+  cta: await sfondo('foto/bambini-mani.jpg'),
 };
 
 const passi = [
@@ -149,7 +149,7 @@ const classi = [
 
 .integrate-intro-testo p {
   margin-bottom: 1.25rem;
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   line-height: 1.8;
   color: var(--text-dark);
 }
@@ -187,7 +187,7 @@ const classi = [
 }
 
 .valori-lista .voce-testo {
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
 }
 
 /* ---------- Classi ---------- */
@@ -237,13 +237,13 @@ const classi = [
 
 .classe-nome {
   font-size: var(--text-xl);
-  font-weight: 700;
+  font-weight: 500;
   line-height: var(--leading-snug);
   transition: color .3s ease;
 }
 
 .classe i {
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   color: var(--primary-blue-dark);
   transition: transform .3s ease;
 }
@@ -366,18 +366,10 @@ const classi = [
     aspect-ratio: 4 / 3;
   }
 
-  .integrate-intro-testo p,
-  .valori-lista .voce-testo {
-    font-size: 1rem;
-  }
-
   .classe {
     padding: 1.15rem 0;
   }
 
-  .classe-nome {
-    font-size: 1.125rem;
-  }
 
   .integrate-cta-wrapper {
     padding: 0 1.5rem;
@@ -385,7 +377,7 @@ const classi = [
 
   .integrate-cta-buttons {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
   }
 }
 </style>

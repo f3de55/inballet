@@ -90,7 +90,7 @@ const colonne = [
   }
 
   .footer-brand p {
-    font-size: .9375rem;
+    font-size: var(--text-nav);
     line-height: 1.6;
     color: rgba(255, 255, 255, .65);
     max-width: 16rem;
@@ -98,7 +98,7 @@ const colonne = [
 
   .footer-brand .footer-ente {
     margin-top: .9rem;
-    font-size: .8125rem;
+    font-size: var(--text-3xs);
     font-weight: 600;
     letter-spacing: 1px;
     line-height: 1.5;
@@ -119,7 +119,7 @@ const colonne = [
     width: 38px;
     height: 38px;
     border: 1px solid rgba(255, 255, 255, .2);
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     color: var(--white);
     text-decoration: none;
     transition: border-color .3s ease, color .3s ease;
@@ -150,7 +150,7 @@ const colonne = [
   }
 
   .footer-titolo {
-    font-size: .8125rem;
+    font-size: var(--text-3xs);
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -167,7 +167,7 @@ const colonne = [
 
   .footer-main ul a,
   .footer-link {
-    font-size: .9375rem;
+    font-size: var(--text-nav);
     line-height: 1.4;
     color: rgba(255, 255, 255, .72);
     text-decoration: none;
@@ -205,17 +205,24 @@ const colonne = [
   }
 
   .footer-sedi span {
-    font-size: .75rem;
+    font-size: var(--text-3xs);
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, .45);
+    color: rgba(255, 255, 255, .62);
+  }
+
+  /* Indirizzi cliccabili alti almeno 24px */
+  .footer-sedi a {
+    display: inline-block;
+    padding: .2rem 0;
   }
 
   .footer-link {
     display: inline-block;
+    min-height: 24px;
+    padding: .2rem 0;
     margin-top: 1.25rem;
-    padding-bottom: .2rem;
     border-bottom: 1px solid var(--primary-blue);
     color: var(--white);
   }
@@ -229,7 +236,7 @@ const colonne = [
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem 2rem;
-    font-size: .8125rem;
+    font-size: var(--text-3xs);
     color: rgba(255, 255, 255, .5);
   }
 
@@ -288,21 +295,37 @@ const colonne = [
       cursor: pointer;
     }
 
+    /* "+" disegnato con due barre: centrato al pixel anche quando ruota in × */
     .footer-col summary::after {
-      content: "+";
-      font-size: 1.25rem;
-      font-weight: 300;
-      line-height: 1;
+      content: '';
+      flex-shrink: 0;
+      width: 14px;
+      height: 14px;
       color: var(--primary-blue);
-      transition: transform .3s ease;
+      background:
+        linear-gradient(currentColor, currentColor) center / 14px 2px no-repeat,
+        linear-gradient(currentColor, currentColor) center / 2px 14px no-repeat;
+      transition: transform .3s ease, color .3s ease;
     }
 
     .footer-col[open] summary::after {
       transform: rotate(45deg);
     }
 
+    /* Fisarmonica: titolo bianco da chiusa, azzurro quando è aperta (stato attivo) */
     .footer-col .footer-titolo {
       margin: 0;
+      color: var(--white);
+      transition: color .3s ease;
+    }
+
+    .footer-col summary::after {
+      color: var(--white);
+    }
+
+    .footer-col[open] .footer-titolo,
+    .footer-col[open] summary::after {
+      color: var(--primary-blue);
     }
 
     .footer-col ul {

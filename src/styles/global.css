@@ -24,7 +24,7 @@
   z-index: 100000;
   font-weight: 600;
   font-size: var(--text-sm);
-  border-radius: 0 0 8px 0;
+  border-radius: 0 0 var(--radius-sm) 0;
 }
 
 .skip-link:focus {
@@ -37,14 +37,26 @@
   outline-offset: 2px;
 }
 
+/* Focus da tastiera: azzurro scuro sui fondi chiari (5:1), azzurro chiaro su quelli scuri e sulle foto (10:1) */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible,
 [role="button"]:focus-visible {
-  outline: 3px solid var(--primary-blue);
-  outline-offset: 2px;
+  outline: 3px solid var(--primary-blue-dark);
+  outline-offset: 3px;
+}
+
+.main-header :focus-visible,
+.mobile-menu :focus-visible,
+.footer :focus-visible,
+.sezione-scura :focus-visible,
+.hero :focus-visible,
+.chisiamo-hero :focus-visible {
+  outline-color: var(--primary-blue);
 }
 
 html {
@@ -75,17 +87,18 @@ html::-webkit-scrollbar-track {
 
 html::-webkit-scrollbar-thumb {
   background: #87CEEB;
-  border-radius: 5px;
+  border-radius: var(--radius-xs);
 }
 
 html::-webkit-scrollbar-thumb:hover {
-  background: #4682B4;
+  background: var(--primary-blue-dark);
 }
 
 :root {
   --primary-blue: #87CEEB;
   --primary-blue-light: #B0E0E6;
-  --primary-blue-dark: #4682B4;
+  /* Azzurro per testi e link: 5.1:1 sul bianco, 4.7:1 su --bg-soft (WCAG AA) */
+  --primary-blue-dark: #3B72A0;
   --gold: #FFD700;
   --gold-dark: #DAA520;
   --dark-navy: #1a1a1a;
@@ -95,18 +108,32 @@ html::-webkit-scrollbar-thumb:hover {
   --text-light: #555;
   --white: #fff;
   --black: #000;
-  --text-6xl: clamp(2.25rem, 4vw + 0.5rem, 3.5rem);
-  --text-5xl: clamp(2rem, 3.5vw + 0.25rem, 3rem);
-  --text-4xl: clamp(1.75rem, 3vw + 0.2rem, 2.5rem);
-  --text-3xl: clamp(1.5rem, 2.5vw + 0.15rem, 2rem);
-  --text-2xl: clamp(1.25rem, 2.5vw + 0.2rem, 2rem);
-  --text-xl: clamp(1.125rem, 1.5vw + 0.1rem, 1.5rem);
-  --text-lg: clamp(1rem, 1vw + 0.05rem, 1.125rem);
-  --text-base: clamp(1rem, 1vw + 0.5rem, 1.375rem);
-  --text-sm: clamp(0.875rem, 0.4vw, 0.9375rem);
-  --text-xs: clamp(0.75rem, 0.3vw, 0.8125rem);
-  --text-2xs: clamp(0.6875rem, 0.2vw, 0.75rem);
-  --text-3xs: clamp(0.625rem, 0.15vw, 0.6875rem);
+  /* Scala tipografica: unica fonte delle dimensioni del testo del sito pubblico.
+     Ogni gradino cresce in modo lineare tra 360px (minimo, mobile) e 1440px
+     (massimo, desktop) di viewport, senza salti ai breakpoint; in rem, così
+     segue lo zoom e la dimensione del testo scelti dall'utente.
+     Un ruolo = un gradino, su tutte le pagine: nessun font-size nelle media query
+     (tranne i titoli hero su mobile) e nessun valore fisso nei componenti.
+     Ruoli: 6xl titolo homepage · 5xl titolo delle pagine interne, numeri grandi ·
+     4xl titoli di sezione · 3xl numeri e titoli in evidenza · 2xl sottotitoli ·
+     xl titoli di card e voci · base TUTTO il testo (intro, paragrafi, card, liste) ·
+     md testo delle finestre modali · btn pulsanti · nav voci e pulsante della navbar ·
+     sm pill, note · xs etichette maiuscole ed eyebrow ·
+     3xs solo micro-dati in spazi stretti (calendario).
+     Eccezione: il pannello della chat (larghezza fissa) ha una sua scala compatta in Chatbot.astro. */
+  --text-6xl: clamp(2.625rem, 2.1667rem + 2.037vw, 4rem);         /* 42 → 64px */
+  --text-5xl: clamp(2.25rem, 1.8333rem + 1.8519vw, 3.5rem);       /* 36 → 56px */
+  --text-4xl: clamp(2rem, 1.7083rem + 1.2963vw, 2.875rem);        /* 32 → 46px */
+  --text-3xl: clamp(1.6875rem, 1.4583rem + 1.0185vw, 2.375rem);   /* 27 → 38px */
+  --text-2xl: clamp(1.4375rem, 1.2917rem + 0.6481vw, 1.875rem);   /* 23 → 30px */
+  --text-xl: clamp(1.25rem, 1.125rem + 0.5556vw, 1.625rem);      /* 20 → 26px */
+  --text-md: clamp(1.0625rem, 1rem + 0.2778vw, 1.25rem);         /* 17 → 20px */
+  --text-base: clamp(1.0625rem, 0.9583rem + 0.463vw, 1.375rem);    /* 17 → 22px */
+  --text-btn: clamp(0.9375rem, 0.875rem + 0.2778vw, 1.125rem);    /* 15 → 18px */
+  --text-nav: clamp(0.875rem, 0.8542rem + 0.0926vw, 0.9375rem);   /* 14 → 15px */
+  --text-sm: clamp(0.9375rem, 0.875rem + 0.2778vw, 1.125rem);    /* 15 → 18px */
+  --text-xs: clamp(0.8125rem, 0.75rem + 0.2778vw, 1rem);         /* 13 → 16px */
+  --text-3xs: 0.8125rem;                                          /* 13px */
   --leading-none: 1;
   --leading-tight: 1.1;
   --leading-snug: 1.3;
@@ -121,10 +148,14 @@ html::-webkit-scrollbar-thumb:hover {
   --font-extrabold: 800;
   --transition-base: .3s ease;
   --transition-fast: .3s cubic-bezier(.4,0,.2,1);
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 25px;
+  /* Scala degli arrotondamenti: unica fonte per tutto il sito pubblico.
+     xs etichette, celle e dettagli piccoli · sm campi e voci di menu · md popup
+     (mega menu, chat, lightbox) e miniature · card blocchi e griglie · img foto grandi ·
+     pill pulsanti e pill · full cerchi */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
   --radius-full: 50%;
   --shadow-sm: 0 2px 8px rgba(0,0,0,.05);
   --shadow-md: 0 4px 16px rgba(0,0,0,.08);
@@ -166,6 +197,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 body {
   font-family: var(--font-rubik);
+  font-size: var(--text-base);
   line-height: 1.6;
   color: var(--text-dark);
   overflow-x: hidden;
@@ -208,7 +240,7 @@ main .sezione-scura p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
 .eyebrow {
   display: block;
   margin-bottom: 1rem;
-  font-size: .875rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   line-height: 1.4;
   letter-spacing: 2px;
@@ -217,7 +249,7 @@ main .sezione-scura p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
 }
 
 .titolo-sezione {
-  font-size: var(--text-5xl);
+  font-size: var(--text-4xl);
   font-weight: 700;
   line-height: 1.15;
   text-wrap: balance;
@@ -233,7 +265,7 @@ main .sezione-scura p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
 }
 
 .intro-sezione {
-  font-size: clamp(1.0625rem, 0.9rem + 0.3vw, 1.1875rem);
+  font-size: var(--text-base);
   font-weight: 400;
   line-height: 1.75;
   color: var(--text-light);
@@ -260,9 +292,10 @@ main .sezione-scura p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
   align-items: center;
   justify-content: center;
   gap: .6rem;
-  padding: 1rem 2.25rem;
-  border-radius: 999px;
-  font-size: var(--text-sm);
+  padding: .8rem 1.75rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-btn);
+  line-height: 1.2;
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -299,48 +332,47 @@ main .sezione-scura p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
 
 .btn-primary i,
 .btn-secondary i {
-  font-size: 1em;
+  /* Icona alla stessa scala del testo, centrata sulla riga */
+  font-size: .85em;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
-/* Intro editoriale: etichetta e titolo a sinistra, testo a destra */
+/* Intro editoriale: etichetta, titolo e testo uno sotto l'altro.
+   Desktop: blocco centrato (sezioni di solo testo o intestazioni sopra a una griglia);
+   tablet e mobile: allineato a sinistra come il resto dei contenuti. */
 section > .intro-editoriale {
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-  column-gap: 5rem;
-  align-items: start;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
-  text-align: left;
+  text-align: center;
 }
 
 .intro-editoriale > .eyebrow {
-  grid-column: 1 / -1;
+  display: block;
   margin: 0 0 1.25rem;
-  text-align: left;
 }
 
 .intro-editoriale > .titolo-sezione {
-  grid-column: 1;
-  grid-row: 2 / span 8;
-  margin: 0;
-  text-align: left;
+  margin: 0 0 1.5rem;
 }
 
+/* Testo sotto il titolo, con una misura di riga leggibile */
 .intro-editoriale > :not(.eyebrow):not(.titolo-sezione) {
-  grid-column: 2;
-  max-width: 40rem;
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .intro-editoriale > p {
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   line-height: 1.8;
   color: var(--text-dark);
-  text-align: left;
-  margin: 0 0 1.25rem;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
 }
 
-/* Citazione: solo filetto azzurro, niente riquadro */
+/* Citazione: solo filetto azzurro, niente riquadro (sopra il testo quando è centrata) */
 .intro-editoriale > [class*="-highlight"],
 section [class*="-intro-highlight"] {
   background: none;
@@ -353,9 +385,18 @@ section [class*="-intro-highlight"] {
   text-align: left;
 }
 
+.intro-editoriale > [class*="-highlight"] {
+  border-left: none;
+  border-top: 2px solid var(--primary-blue);
+  max-width: 40rem;
+  padding: 1.25rem 0 0;
+  margin: 1.75rem auto 0;
+  text-align: center;
+}
+
 .intro-editoriale > [class*="-highlight"] p,
 section [class*="-intro-highlight"] p {
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   font-weight: 400;
   font-style: italic;
   line-height: 1.65;
@@ -365,17 +406,21 @@ section [class*="-intro-highlight"] p {
 
 @media (max-width: 900px) {
   section > .intro-editoriale {
-    grid-template-columns: 1fr;
     padding: 0 1.5rem;
-  }
-
-  .intro-editoriale > .titolo-sezione {
-    grid-row: auto;
-    margin-bottom: 1.75rem;
+    text-align: left;
   }
 
   .intro-editoriale > :not(.eyebrow):not(.titolo-sezione) {
-    grid-column: 1;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .intro-editoriale > [class*="-highlight"] {
+    border-top: none;
+    border-left: 3px solid var(--primary-blue);
+    padding: .25rem 0 .25rem 1.5rem;
+    margin: 1rem 0 0;
+    text-align: left;
   }
 }
 
@@ -388,7 +433,7 @@ section [class*="-intro-highlight"] p {
 
 .voce-icona {
   display: block;
-  font-size: 1.375rem;
+  font-size: var(--text-xl);
   line-height: 1;
   color: var(--primary-blue-dark);
   margin-bottom: 1.1rem;
@@ -404,7 +449,7 @@ section [class*="-intro-highlight"] p {
 }
 
 .voce-titolo {
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: 0;
@@ -414,7 +459,7 @@ section [class*="-intro-highlight"] p {
 }
 
 .voce-testo {
-  font-size: 1rem;
+  font-size: var(--text-base);
   line-height: 1.7;
   color: var(--text-light);
   margin: 0;
@@ -470,7 +515,7 @@ section [class*="-intro-highlight"] p {
   padding-bottom: .4rem;
   border-bottom: 2px solid var(--primary-blue);
   color: var(--dark-navy);
-  font-size: var(--text-sm);
+  font-size: var(--text-nav);
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -528,14 +573,14 @@ section [class*="-intro-highlight"] p {
   right: 20px;
   background: rgba(255,255,255,.1);
   border: 1px solid rgba(255,255,255,.2);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   width: 44px;
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   cursor: pointer;
   transition: all .2s ease;
   backdrop-filter: blur(10px);
@@ -552,12 +597,12 @@ section [class*="-intro-highlight"] p {
 }
 
 .stat-label {
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   color: var(--text-light);
 }
 
 .stat-value {
-  font-size: 3.25rem;
+  font-size: var(--text-5xl);
   font-weight: 300;
   color: var(--dark-navy);
   line-height: 1;
@@ -589,7 +634,6 @@ section [class*="-intro-highlight"] p {
   .lightbox-close {
     width: 40px;
     height: 40px;
-    font-size: var(--text-base);
     top: 15px;
     right: 15px;
   }
@@ -609,16 +653,10 @@ section [class*="-intro-highlight"] p {
   .btn-primary,
   .btn-secondary {
     width: auto;
-    padding: .8rem 1.5rem;
-    font-size: var(--text-xs);
+    padding: .75rem 1.5rem;
     gap: .4rem;
     text-align: center;
     justify-content: center;
-  }
-
-  .btn-primary i,
-  .btn-secondary i {
-    font-size: var(--text-sm);
   }
 
   .chi-siamo-header .section-tagline {
@@ -641,7 +679,6 @@ section [class*="-intro-highlight"] p {
   .lightbox-close {
     width: 36px;
     height: 36px;
-    font-size: var(--text-sm);
   }
 }
 
@@ -650,7 +687,6 @@ section [class*="-intro-highlight"] p {
   .btn-secondary {
     width: auto;
     padding: .7rem 1.3rem;
-    font-size: var(--text-xs);
   }
 
   .chi-siamo-header .section-tagline {
@@ -669,7 +705,6 @@ section [class*="-intro-highlight"] p {
   .lightbox-close {
     width: 38px;
     height: 38px;
-    font-size: var(--text-sm);
     top: 12px;
     right: 12px;
   }
@@ -741,10 +776,6 @@ section [class*="-intro-highlight"] p {
   margin: 0 0 2rem;
 }
 
-.corso-btn-cta i {
-  font-size: var(--text-base);
-}
-
 @media (max-width: 768px) {
   .corso-contatto-wrapper {
     padding: 0 1.5rem;
@@ -755,10 +786,6 @@ section [class*="-intro-highlight"] p {
 @media (max-width: 480px) {
   .corso-contatto-wrapper {
     padding: 0 1.5rem;
-  }
-
-  .corso-btn-cta {
-    width: 100%;
   }
 }
 
@@ -843,7 +870,7 @@ section [class*="-intro-highlight"] p {
   list-style: none;
   margin: 0 0 1rem;
   padding: 0;
-  font-size: .875rem;
+  font-size: var(--text-xs);
   font-weight: 500;
 }
 
@@ -860,6 +887,8 @@ section [class*="-intro-highlight"] p {
 }
 
 .breadcrumb a {
+  display: inline-block;
+  padding: .2rem 0;
   color: rgba(255,255,255,.85);
   text-decoration: none;
   transition: color .3s ease;
@@ -875,7 +904,7 @@ section [class*="-intro-highlight"] p {
 }
 
 .chisiamo-hero-title {
-  font-size: var(--text-6xl);
+  font-size: var(--text-5xl);
   font-weight: 700;
   color: var(--white);
   margin: 0;
@@ -904,9 +933,6 @@ section [class*="-intro-highlight"] p {
     padding: 0 1.5rem;
   }
 
-  .chisiamo-hero-tagline {
-    font-size: var(--text-lg);
-  }
 }
 
 @media (max-width: 480px) {
@@ -923,9 +949,6 @@ section [class*="-intro-highlight"] p {
     font-size: var(--text-4xl);
   }
 
-  .chisiamo-hero-tagline {
-    font-size: var(--text-base);
-  }
 }
 
 body.has-event-banner .main-header {

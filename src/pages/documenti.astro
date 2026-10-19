@@ -6,7 +6,7 @@ import { iscrizioni, scuola } from '../data/scuola';
 
 const bg = {
   hero: await sfondo('gallery-1.jpg', { desktop: '50% 30%', tablet: '50% 50%' }),
-  cta: await sfondo('gallery-2.jpg', {}),
+  cta: await sfondo('gallery-2.jpg'),
 };
 
 const passi = [
@@ -68,7 +68,7 @@ const passi = [
         <div class="intro-editoriale">
             <span class="eyebrow">Come iscriversi</span>
             <h2 class="titolo-sezione" id="passi-titolo">Tre passi <em>per iniziare</em></h2>
-            <p>La prima lezione è di prova e senza impegno: puoi iscriverti anche dopo averla fatta.</p>
+            <p>Prima di iscriverti puoi contattarci: ti aiutiamo a scegliere il corso giusto per età e livello.</p>
         </div>
         <div class="container">
             <ol class="passi-lista">
@@ -115,7 +115,7 @@ const passi = [
         <div class="doc-cta-overlay"></div>
         <div class="doc-cta-wrapper">
             <h2 class="titolo-sezione">Dubbi sull'<em>iscrizione</em>?</h2>
-            <p class="intro-sezione">Per un preventivo, per prenotare la lezione di prova o per qualsiasi domanda sui documenti, siamo a disposizione.</p>
+            <p class="intro-sezione">Per un preventivo, per scegliere il corso o per qualsiasi domanda sui documenti, siamo a disposizione.</p>
             <div class="doc-cta-buttons">
                 <a href={`mailto:${scuola.email}?subject=Iscrizione%20${encodeURIComponent(iscrizioni.anno)}`} class="btn-primary">
                     <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici
@@ -158,7 +158,7 @@ const passi = [
 }
 
 .documento-icona {
-  font-size: 2rem;
+  font-size: var(--text-3xl);
   color: var(--primary-blue-dark);
 }
 
@@ -170,14 +170,14 @@ const passi = [
 
 .documento-nome {
   font-size: var(--text-xl);
-  font-weight: 700;
+  font-weight: 500;
   line-height: var(--leading-snug);
   color: var(--dark-navy);
   transition: color .3s ease;
 }
 
 .documento-nota {
-  font-size: 1rem;
+  font-size: var(--text-base);
   color: var(--text-light);
 }
 
@@ -188,7 +188,7 @@ const passi = [
 }
 
 .documento-peso {
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   color: var(--text-light);
   white-space: nowrap;
 }
@@ -228,7 +228,7 @@ const passi = [
 }
 
 .passi-lista .voce-testo {
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
 }
 
 /* ---------- Quote ---------- */
@@ -274,21 +274,21 @@ const passi = [
   flex-direction: column;
   gap: .3rem;
   font-size: var(--text-xl);
-  font-weight: 700;
+  font-weight: 500;
   line-height: var(--leading-snug);
   color: var(--dark-navy);
 }
 
 .quota-periodo {
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 400;
   color: var(--text-light);
 }
 
 .quota dd {
   margin: 0;
-  font-size: 1.0625rem;
-  font-weight: 600;
+  font-size: var(--text-base);
+  font-weight: 400;
   color: var(--text-dark);
   text-align: right;
   white-space: nowrap;
@@ -296,7 +296,7 @@ const passi = [
 
 .quota dd.quota-valore {
   font-size: var(--text-3xl);
-  font-weight: 700;
+  font-weight: 300;
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--dark-navy);
@@ -375,17 +375,10 @@ const passi = [
   }
 
   .documento-icona {
-    font-size: 1.5rem;
     padding-top: .15rem;
   }
 
-  .documento-nome {
-    font-size: 1.125rem;
-  }
 
-  .documento-nota {
-    font-size: .9375rem;
-  }
 
   .documento-azione {
     grid-column: 2;
@@ -393,9 +386,6 @@ const passi = [
     margin-top: .75rem;
   }
 
-  .passi-lista .voce-testo {
-    font-size: 1rem;
-  }
 
   /* Quote: voce e scadenza una sotto l'altra */
   .quota {
@@ -409,17 +399,8 @@ const passi = [
     text-align: left;
   }
 
-  .quota dt {
-    font-size: 1.125rem;
-  }
 
-  .quota dd {
-    font-size: 1rem;
-  }
 
-  .quota dd.quota-valore {
-    font-size: 2rem;
-  }
 
   .doc-cta-wrapper {
     padding: 0 1.5rem;
@@ -427,7 +408,7 @@ const passi = [
 
   .doc-cta-buttons {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
   }
 }
 </style>

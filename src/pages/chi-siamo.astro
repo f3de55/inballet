@@ -244,7 +244,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
                     <h2 class="titolo-sezione">Vuoi conoscerci <em>meglio?</em></h2>
                     <p class="intro-sezione">Scrivici o chiamaci: ti raccontiamo corsi, orari e sedi.</p>
                     <a href="/contatti" class="corso-btn-cta btn-primary">
-                        Contattaci <i class="fas fa-arrow-right"></i>
+                        Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
@@ -304,7 +304,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 }
 
 .fondatrice-citazione p {
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   font-style: italic;
   line-height: 1.6;
   color: var(--dark-navy);
@@ -320,7 +320,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 }
 
 .fondatrice-bio :global(p) {
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   color: var(--text-dark);
   line-height: 1.8;
   margin-bottom: 1.5rem;
@@ -371,11 +371,11 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
   }
 
   .timeline :global(.voce-titolo) {
-    font-size: 1.0625rem;
+    font-size: var(--text-base);
   }
 
   .timeline :global(.voce-testo) {
-    font-size: .9375rem;
+    font-size: var(--text-sm);
   }
 }
 
@@ -434,8 +434,8 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 .numero-label {
   order: 2;
   margin-top: .9rem;
-  font-size: 1.0625rem;
-  font-weight: 600;
+  font-size: var(--text-base);
+  font-weight: 400;
   color: var(--white);
 }
 
@@ -446,8 +446,8 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 }
 
 .numero-value {
-  font-size: clamp(2.25rem, 1.75rem + 1.5vw, 3rem);
-  font-weight: 700;
+  font-size: var(--text-5xl);
+  font-weight: 300;
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--white);
@@ -456,8 +456,8 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
 .numero-suffix {
   margin-left: .1em;
-  font-size: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
-  font-weight: 700;
+  font-size: var(--text-3xl);
+  font-weight: 300;
   line-height: 1;
   color: var(--primary-blue);
 }
@@ -465,7 +465,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 .numero-nota {
   order: 3;
   margin: .3rem 0 0;
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -487,22 +487,12 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
     padding: 1.5rem 1.25rem;
   }
 
-  .numero-value {
-    font-size: 2.25rem;
-  }
 
-  .numero-suffix {
-    font-size: 1.75rem;
-  }
 
   .numero-label {
     margin-top: .6rem;
-    font-size: 1rem;
   }
 
-  .numero-nota {
-    font-size: .8125rem;
-  }
 }
 
 .team-section {
@@ -565,7 +555,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 }
 
 .team-num {
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   font-weight: 300;
   color: var(--primary-blue-dark);
 }
@@ -584,14 +574,18 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 }
 
 .team-voce-ruolo {
-  font-size: .875rem;
+  font-size: var(--text-sm);
   color: var(--text-light);
 }
 
 /* Desktop: niente icona, il selezionato si riconosce dal colore */
 .team-voce i {
   display: none;
-  font-size: .875rem;
+  place-items: center;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  font-size: var(--text-sm);
   color: var(--primary-blue-dark);
   transition: transform .3s ease;
 }
@@ -647,7 +641,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
 .team-role {
   display: block;
-  font-size: .8125rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -664,7 +658,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 }
 
 .team-bio {
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
   line-height: 1.7;
   color: var(--text-light);
   max-width: 32rem;
@@ -698,7 +692,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
   /* Fisarmonica: + per aprire, x per chiudere */
   .team-voce i {
-    display: block;
+    display: grid;
   }
 
   .team-pannello {
@@ -727,17 +721,11 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
     padding: 1.1rem 0;
   }
 
-  .team-voce-nome {
-    font-size: 1.125rem;
-  }
 
   .team-foto :global(img) {
     aspect-ratio: 4 / 3;
   }
 
-  .team-bio {
-    font-size: 1rem;
-  }
 }
 
 .sede-section {
@@ -788,7 +776,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 }
 
 .sede-luogo {
-  font-size: .8125rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -805,7 +793,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 }
 
 .sede-descrizione {
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
   line-height: 1.75;
   color: var(--text-light);
 }
@@ -833,7 +821,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 }
 
 .sede-spazi span {
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   line-height: 1.6;
   color: var(--text-light);
 }
@@ -853,9 +841,6 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
     margin: 0 1rem 1rem;
   }
 
-  .sede-nome {
-    font-size: var(--text-2xl);
-  }
 }
 
 @media (max-width: 640px) {
@@ -967,9 +952,6 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
     aspect-ratio: 4 / 3;
   }
 
-  .fondatrice-bio :global(p) {
-    font-size: 1rem;
-  }
 
 }
 </style>

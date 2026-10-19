@@ -2,7 +2,7 @@
 /** Chat con Étoile, l'assistente virtuale di InBallet. Logica in src/scripts/chatbot.ts. */
 import { scuola } from '../data/scuola';
 
-const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come iscriversi'];
+const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come iscriversi'];
 ---
 
 <button type="button" id="cb-toggle" aria-controls="cb-box" aria-expanded="false" aria-label="Chiedi a Étoile, l'assistente IA di InBallet">
@@ -68,7 +68,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
   height: 58px;
   padding: 0;
   border: none;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--primary-blue);
   box-shadow: 0 8px 24px rgba(26, 26, 26, .18);
   color: var(--dark-navy);
@@ -77,7 +77,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
 }
 
 #cb-toggle i {
-  font-size: 1.35rem;
+  font-size: 1.375rem;
 }
 
 .cb-toggle-ia {
@@ -90,18 +90,19 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
   height: 22px;
   padding: 0 6px;
   border: 2px solid var(--white);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--dark-navy);
-  font-size: .68rem;
+  font-size: var(--text-3xs);
   font-weight: 700;
   letter-spacing: .5px;
   line-height: 1;
   color: var(--white);
 }
 
+/* Hover azzurro scuro: resta visibile anche sopra le sezioni con fondo nero */
 @media (hover: hover) {
   #cb-toggle:hover {
-    background: var(--dark-navy);
+    background: var(--primary-blue-dark);
     color: var(--white);
   }
 }
@@ -111,7 +112,16 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
 }
 
 /* ---------- Pannello ---------- */
+/* Pannello di larghezza fissa (380px): scala compatta e fissa, non fluida come il resto del sito.
+   Il campo resta a 16px per evitare lo zoom automatico di iOS. */
 #cb-box {
+  --cb-titolo: 1.0625rem;
+  --cb-testo: .9375rem;
+  --cb-chip: .875rem;
+  --cb-campo: 1rem;
+  --cb-piccolo: .8125rem;
+  --cb-micro: .75rem;
+  font-size: var(--cb-testo);
   position: fixed;
   right: 24px;
   bottom: 24px;
@@ -121,7 +131,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
   width: 380px;
   height: min(600px, calc(100dvh - 48px));
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   background: var(--white);
   box-shadow: 0 20px 60px rgba(0, 0, 0, .22);
   animation: cb-entra .25s ease;
@@ -157,7 +167,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
   flex-shrink: 0;
   width: 38px;
   height: 38px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--primary-blue);
   font-weight: 700;
   color: var(--dark-navy);
@@ -169,13 +179,13 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
 }
 
 #cb-title {
-  font-size: 1rem;
+  font-size: var(--cb-titolo);
   font-weight: 700;
   line-height: 1.2;
 }
 
 .cb-head-testo p {
-  font-size: .8rem;
+  font-size: var(--cb-piccolo);
   color: rgba(255, 255, 255, .65);
 }
 
@@ -186,7 +196,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
   width: 40px;
   height: 40px;
   border: none;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: none;
   font-size: 1rem;
   color: rgba(255, 255, 255, .75);
@@ -195,7 +205,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
 }
 
 #cb-reset {
-  font-size: .85rem;
+  font-size: var(--cb-piccolo);
 }
 
 .cb-head-btn:hover {
@@ -220,8 +230,8 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
 #cb-msgs :global(.cb-m) {
   max-width: 85%;
   padding: .65rem .9rem;
-  border-radius: 14px;
-  font-size: .9375rem;
+  border-radius: var(--radius-md);
+  font-size: var(--cb-testo);
   line-height: 1.55;
   overflow-wrap: anywhere;
 }
@@ -229,14 +239,14 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
 #cb-msgs :global(.cb-m.bot) {
   align-self: flex-start;
   border: 1px solid #e6e8ea;
-  border-bottom-left-radius: 4px;
+  border-bottom-left-radius: var(--radius-xs);
   background: var(--white);
   color: var(--text-dark);
 }
 
 #cb-msgs :global(.cb-m.usr) {
   align-self: flex-end;
-  border-bottom-right-radius: 4px;
+  border-bottom-right-radius: var(--radius-xs);
   background: var(--primary-blue);
   color: var(--dark-navy);
 }
@@ -248,9 +258,10 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
 #cb-msgs :global(.cb-time) {
   display: block;
   margin-top: .25rem;
-  font-size: .7rem;
+  font-size: var(--cb-micro);
   text-align: right;
-  opacity: .55;
+  /* Più tenue del messaggio ma con contrasto AA su entrambi i fumetti */
+  opacity: .8;
 }
 
 #cb-msgs :global(a.cb-link) {
@@ -274,7 +285,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
 #cb-msgs :global(.cb-m.load span) {
   width: 7px;
   height: 7px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: #9aa0a6;
   animation: cb-punto 1.2s infinite ease-in-out;
 }
@@ -315,10 +326,10 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
   min-height: 36px;
   padding: .35rem .85rem;
   border: 1px solid var(--primary-blue);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--white);
   font: inherit;
-  font-size: .875rem;
+  font-size: var(--cb-chip);
   color: var(--dark-navy);
   cursor: pointer;
   transition: background-color .2s ease;
@@ -342,18 +353,18 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
   min-width: 0;
   min-height: 46px;
   padding: .6rem 1rem;
-  border: 1px solid #cfd4d9;
-  border-radius: 999px;
+  border: 1px solid #7b858c;
+  border-radius: var(--radius-pill);
   background: var(--white);
   font: inherit;
-  font-size: 16px;
+  font-size: var(--cb-campo);
   color: var(--text-dark);
 }
 
 #cb-txt:focus {
   outline: none;
   border-color: var(--primary-blue-dark);
-  box-shadow: 0 0 0 3px rgba(135, 206, 235, .35);
+  box-shadow: 0 0 0 2px var(--primary-blue-dark);
 }
 
 #cb-send {
@@ -363,7 +374,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
   width: 46px;
   height: 46px;
   border: none;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--primary-blue);
   color: var(--dark-navy);
   cursor: pointer;
@@ -383,7 +394,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Lezione di prova', 'Come 
 .cb-nota {
   padding: 0 1rem .75rem;
   background: var(--white);
-  font-size: .72rem;
+  font-size: var(--cb-micro);
   line-height: 1.4;
   color: var(--text-light);
 }

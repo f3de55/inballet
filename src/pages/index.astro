@@ -2,30 +2,11 @@
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import SostenitoriSection from '../components/SostenitoriSection.astro';
+import Galleria from '../components/Galleria.astro';
 import { getImage } from 'astro:assets';
 import { ANNI_ATTIVITA, categorieCorsi, faq, FONDAZIONE, scuola } from '../data/scuola';
-import { getAsset, sfondo, webp } from '../lib/images';
+import { getAsset, sfondo } from '../lib/images';
 import { schemaHome } from '../lib/schema';
-
-// Galleria: miniature responsive + versione grande per il lightbox
-const alts = [
-  'Allieve si preparano dietro le quinte prima dello spettacolo',
-  'Corpo di ballo sul palco illuminato di blu',
-  'Coreografia di danza contemporanea con costumi bianchi',
-  "Lezione di danza contemporanea in sala con l'insegnante",
-  'Allieve durante il riscaldamento a terra in sala',
-  'Spettacolo di fine anno con tutto il corpo di ballo',
-  'Gruppo di allievi InBallet in sala prove',
-  "Abbraccio tra insegnante e allieva al termine della lezione",
-  'Allieve in allungamento sul parquet della sala',
-  'Coreografia sul palco con luci blu ed elementi scenici',
-];
-const gallery = await Promise.all(
-  alts.map(async (alt, i) => {
-    const file = `gallery-${i + 1}.jpg`;
-    return { file, alt, full: await webp(file, 1280) };
-  }),
-);
 
 // Progetti sul territorio: due gruppi di link alle pagine dei progetti
 const progetti = [
@@ -53,7 +34,7 @@ const schema = schemaHome(socialImage);
 
 <Base
     title="Scuola di Danza a Lainate e Rho | InBallet"
-    description={`Scuola di danza a Lainate e Rho (MI) dal ${FONDAZIONE}: classica, modern, contemporanea, hip-hop, yoga e pilates dai 3 anni agli adulti. Lezione di prova senza impegno.`}
+    description={`Scuola di danza a Lainate e Rho (MI) dal ${FONDAZIONE}: classica, modern, contemporanea, hip-hop, yoga e pilates dai 3 anni agli adulti. Contattaci per scegliere il corso.`}
     ogTitle="InBallet - Scuola di Danza a Lainate e Rho"
     ogDescription={`${ANNI_ATTIVITA} anni di danza, passione e formazione per tutte le età, a Lainate e Rho.`}
     ogImage={socialImage}
@@ -117,18 +98,20 @@ const schema = schemaHome(socialImage);
                 ))}
             </div>
 
+            <!-- Elenco completo: subito sotto i percorsi -->
+            <div class="corsi-tutti">
+                <a href="/corsi" class="link-cta">
+                    Tutti i corsi
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
+
             <div class="corsi-cta">
                 <p class="corsi-cta-text">Non sai quale corso scegliere? <span>Ti aiutiamo a trovare quello giusto.</span></p>
-                <div class="corsi-cta-azioni">
-                    <a href="/contatti" class="btn-primary">
-                        <span>Parliamone insieme</span>
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                    <a href="/corsi" class="link-cta">
-                        Tutti i corsi
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
+                <a href="/contatti" class="btn-primary">
+                    <span>Parliamone insieme</span>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -146,9 +129,7 @@ const schema = schemaHome(socialImage);
                     <div class="story-text">
                         <p class="story-lead">I.N. Ballet è una scuola di danza multidisciplinare a Lainate e Rho, nata nel {FONDAZIONE} da {scuola.fondatrice}: un luogo di vita dedicato alla conoscenza e all'esplorazione dei diversi stili di danza, nelle loro sfumature tecniche e artistiche.</p>
 
-                        <p>Accoglie bambini dai 3 anni e allievi di tutte le età, con gruppi di diversi livelli fino ai corsi avanzati e per adulti. È ente formativo CSEN e CONI per la formazione dei maestri di danza e propone corsi per professionisti dell'ambito educativo e terapeutico.</p>
-
-                        <p>L'inclusione è centrale per tutte le fasce d'età: dal 2013 il <a href="/progetto-noiconvoi">progetto NoiConVoi</a> accoglie ragazzi con disabilità in esperienze di danza con supporto psicomotorio, insieme a un team di volontari.</p>
+                        <p>Accoglie bambini dai 3 anni e adulti di ogni livello, è ente formativo CSEN e CONI per i maestri di danza e dal 2013, con il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, porta la danza ai ragazzi con disabilità.</p>
                     </div>
 
                     <blockquote class="story-quote">
@@ -162,9 +143,10 @@ const schema = schemaHome(socialImage);
                     </a>
                 </div>
 
+                <!-- Foto verticale, alta quanto il testo accanto (su mobile torna orizzontale) -->
                 <div class="story-image">
                     <div class="foto-cornice">
-                        <Img src="ballerina.jpg" alt="Allievi e insegnanti InBallet sul palco per il saluto finale dello spettacolo" width="640" height="480" loading="lazy" decoding="async" widths={[640, 960, 1280]} sizes="(max-width: 900px) 100vw, 640px" />
+                        <Img src="gallery-7.jpg" alt="Insegnanti e allieve di InBallet insieme in sala" width="640" height="800" fuoco={{ desktop: '50% 50%', tablet: '50% 55%' }} loading="lazy" decoding="async" widths={[640, 960, 1280]} sizes="(max-width: 900px) 100vw, 480px" />
                     </div>
                 </div>
             </div>
@@ -278,33 +260,8 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Sezione Galleria Infinita -->
-    <section class="gallery-section">
-        <div class="container">
-            <div class="gallery-header">
-                <p class="gallery-tagline eyebrow">I nostri momenti</p>
-                <h2 class="gallery-title titolo-sezione">Emozioni <em>in movimento</em></h2>
-                <p class="gallery-description intro-sezione">Lezioni in sala, spettacoli in teatro e dietro le quinte. Apri una foto per vederla a tutto schermo.</p>
-            </div>
-        </div>
-
-        <!-- Due serie identiche: la seconda serve solo alla continuità dello scorrimento
-             ed è nascosta a tastiera e screen reader -->
-        <div class="gallery-infinite">
-            <div class="gallery-track" id="galleryTrack">
-                {[0, 1].map((set) =>
-                    gallery.map((img, i) => (
-                        <div class="gallery-item" aria-hidden={set === 1 ? 'true' : undefined}>
-                            <button type="button" class="gallery-apri" data-index={i} data-full={img.full} data-alt={img.alt} aria-label={`Ingrandisci: ${img.alt}`} tabindex={set === 1 ? -1 : undefined}>
-                                <Img src={img.file} alt="" width="300" height="420" loading="lazy" decoding="async" widths={[300, 600]} sizes="300px" />
-                                <span class="gallery-zoom-icon" aria-hidden="true"><i class="fas fa-expand"></i></span>
-                            </button>
-                        </div>
-                    ))
-                )}
-            </div>
-        </div>
-    </section>
+    <!-- Galleria fotografica a scorrimento, con lightbox -->
+    <Galleria />
 
     <!-- Sezione Sostenitori -->
     <SostenitoriSection />
@@ -315,7 +272,7 @@ const schema = schemaHome(socialImage);
             <div class="faq-intro">
                 <p class="faq-label eyebrow">Domande frequenti</p>
                 <h2 class="faq-title titolo-sezione" id="faq-titolo">Tutto quello che <em>vuoi sapere</em></h2>
-                <p class="faq-text intro-sezione">Età, sedi, iscrizioni e lezione di prova. Non trovi la risposta? Scrivici o chiamaci.</p>
+                <p class="faq-text intro-sezione">Età, sedi, corsi e iscrizioni. Non trovi la risposta? Scrivici o chiamaci.</p>
                 <ul class="faq-contatti">
                     <li><a href={`mailto:${scuola.email}`}><i class="fas fa-envelope" aria-hidden="true"></i>{scuola.email}</a></li>
                     <li><a href={scuola.telefonoHref}><i class="fas fa-phone" aria-hidden="true"></i>{scuola.telefono}</a></li>
@@ -332,25 +289,6 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Lightbox galleria: dialog nativo (focus intrappolato, Esc, sfondo inerte) -->
-    <dialog class="galleria-dialog" id="lightbox" aria-label="Galleria fotografica">
-        <button type="button" class="galleria-chiudi" id="lightbox-close" aria-label="Chiudi galleria">
-            <i class="fas fa-times" aria-hidden="true"></i>
-        </button>
-        <figure class="galleria-figura">
-            <img class="galleria-foto" id="lightbox-image" src="data:," alt="">
-            <figcaption class="galleria-didascalia">
-                <span id="lightbox-caption"></span>
-                <span class="galleria-contatore" id="lightbox-counter" aria-live="polite"></span>
-            </figcaption>
-        </figure>
-        <button type="button" class="galleria-nav galleria-prev" id="lightbox-prev" aria-label="Foto precedente">
-            <i class="fas fa-chevron-left" aria-hidden="true"></i>
-        </button>
-        <button type="button" class="galleria-nav galleria-next" id="lightbox-next" aria-label="Foto successiva">
-            <i class="fas fa-chevron-right" aria-hidden="true"></i>
-        </button>
-    </dialog>
 
     <Fragment slot="scripts">
         <script>
@@ -360,15 +298,14 @@ const schema = schemaHome(socialImage);
 </Base>
 
 <style>.hero {
-  height: 72vh;
-  min-height: 560px;
-  max-height: 800px;
+  /* Altezza minima della foto; il contenuto può allungarla (testi grandi, schermi bassi) */
+  min-height: clamp(560px, 72vh, 800px);
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
   z-index: 1;
-  padding: var(--header-h) 0 4.5rem;
+  padding: calc(var(--header-h) + 2.5rem) 0 4.5rem;
 }
 
 .hero-image {
@@ -406,7 +343,7 @@ const schema = schemaHome(socialImage);
 
 .hero-badge {
   display: block;
-  font-size: .875rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   margin-bottom: 1.25rem;
   color: var(--primary-blue);
@@ -440,24 +377,13 @@ const schema = schemaHome(socialImage);
   flex-wrap: wrap;
 }
 
-.chi-siamo-section,
-.gallery-section {
+.chi-siamo-section {
   background: #fff;
   position: relative;
 }
 
 .chi-siamo-section {
   padding: var(--section-y) 0;
-}
-
-.gallery-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--primary-blue);
 }
 
 .section-header {
@@ -476,9 +402,9 @@ const schema = schemaHome(socialImage);
 /* Testo a sinistra, foto orizzontale (saluto finale di gruppo) più larga a destra */
 .story-layout {
   display: grid;
-  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
   gap: 5rem;
-  align-items: center;
+  align-items: stretch;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -488,7 +414,7 @@ const schema = schemaHome(socialImage);
 }
 
 .story-text :global(p) {
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   line-height: 1.8;
   color: var(--text-light);
   margin-bottom: 1.25rem;
@@ -499,7 +425,7 @@ const schema = schemaHome(socialImage);
 }
 
 .story-text :global(p.story-lead) {
-  font-size: var(--text-xl);
+  font-size: var(--text-base);
   line-height: 1.6;
   color: var(--dark-navy);
 }
@@ -512,7 +438,7 @@ const schema = schemaHome(socialImage);
 }
 
 .story-quote p {
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   font-style: italic;
   line-height: 1.6;
   color: var(--dark-navy);
@@ -538,15 +464,20 @@ const schema = schemaHome(socialImage);
 
 /* Spazio per la cornice sfalsata (in basso a sinistra) dentro la colonna */
 .story-image {
+  display: flex;
   padding: 0 0 1.5rem 1.5rem;
+}
+
+.story-image .foto-cornice {
+  flex: 1;
+  display: flex;
 }
 
 .story-image :global(img) {
   width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
+  height: 100%;
+  min-height: 26rem;
   object-fit: cover;
-  object-position: 55% center;
 }
 
 @media (max-width: 600px) {
@@ -617,7 +548,12 @@ const schema = schemaHome(socialImage);
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 3.5rem 3rem;
   max-width: 1200px;
-  margin: 0 auto 4.5rem;
+  margin: 0 auto;
+}
+
+.corsi-tutti {
+  max-width: 1200px;
+  margin: 2.5rem auto 4.5rem;
 }
 
 .corso-card {
@@ -652,10 +588,10 @@ const schema = schemaHome(socialImage);
   min-height: 40px;
   padding: .5rem 1rem;
   border: 1px solid rgba(70, 130, 180, 0.35);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--white);
   color: var(--dark-navy);
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   font-weight: 500;
   line-height: 1.25;
   text-decoration: none;
@@ -664,7 +600,7 @@ const schema = schemaHome(socialImage);
 
 .corso-link a i {
   flex-shrink: 0;
-  font-size: .6875rem;
+  font-size: var(--text-3xs);
   color: var(--primary-blue-dark);
   transition: transform .25s ease, color .25s ease;
 }
@@ -695,7 +631,7 @@ const schema = schemaHome(socialImage);
 }
 
 .corsi-cta-text {
-  font-size: var(--text-xl);
+  font-size: var(--text-base);
   color: var(--dark-navy);
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -706,16 +642,13 @@ const schema = schemaHome(socialImage);
 .corsi-cta-text span {
   display: block;
   margin-top: .35rem;
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
   font-weight: 400;
   letter-spacing: 0;
   color: var(--text-light);
 }
 
-.corsi-cta-azioni {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+.corsi-cta .btn-primary {
   flex-shrink: 0;
 }
 
@@ -745,7 +678,10 @@ const schema = schemaHome(socialImage);
   .corsi-griglia {
     grid-template-columns: minmax(0, 1fr);
     gap: 2.75rem;
-    margin-bottom: 3rem;
+  }
+
+  .corsi-tutti {
+    margin: 2rem 0 3rem;
   }
 
   .corsi-cta {
@@ -761,16 +697,6 @@ const schema = schemaHome(socialImage);
     padding: 0 1.5rem;
   }
 
-  .corsi-cta-azioni {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
-    width: 100%;
-  }
-
-  .corsi-cta-azioni .btn-primary {
-    width: 100%;
-  }
 }
 
 @media (max-width: 600px) {
@@ -780,7 +706,6 @@ const schema = schemaHome(socialImage);
 
   .corso-link a {
     padding: .45rem .9rem;
-    font-size: .875rem;
   }
 }
 
@@ -826,7 +751,7 @@ const schema = schemaHome(socialImage);
 .percorso-tipo {
   display: block;
   margin-bottom: .5rem;
-  font-size: .75rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -845,7 +770,7 @@ const schema = schemaHome(socialImage);
 
 .percorso-testo {
   margin: 0;
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
   line-height: 1.7;
   color: var(--text-light);
 }
@@ -867,8 +792,8 @@ const schema = schemaHome(socialImage);
   height: 2.75rem;
   margin-top: -1.375rem;
   border: 1px solid rgba(26, 26, 26, 0.2);
-  border-radius: 50%;
-  font-size: .875rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
   color: var(--primary-blue-dark);
   transition: background-color .3s ease, border-color .3s ease, color .3s ease, transform .3s ease;
 }
@@ -923,7 +848,7 @@ const schema = schemaHome(socialImage);
     margin-top: 1rem;
     padding-bottom: .3rem;
     border-bottom: 2px solid var(--primary-blue);
-    font-size: .8125rem;
+    font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -931,7 +856,7 @@ const schema = schemaHome(socialImage);
   }
 
   .percorso-cta i {
-    font-size: .75rem;
+    font-size: var(--text-xs);
     color: var(--primary-blue-dark);
   }
 }
@@ -986,7 +911,7 @@ const schema = schemaHome(socialImage);
 
 .sintesi-google :global(.sintesi-voto) {
   grid-area: voto;
-  font-size: 3.25rem;
+  font-size: var(--text-5xl);
   font-weight: 300;
   line-height: 1;
   color: var(--dark-navy);
@@ -995,7 +920,7 @@ const schema = schemaHome(socialImage);
 .sintesi-google :global(.sintesi-stelle) {
   grid-area: stelle;
   align-self: end;
-  font-size: .875rem;
+  font-size: var(--text-sm);
   color: #f5b301;
   letter-spacing: 2px;
 }
@@ -1031,7 +956,7 @@ const schema = schemaHome(socialImage);
 
 .recensioni-carousel :global(.recensione-stelle) {
   margin-bottom: 1.25rem;
-  font-size: .875rem;
+  font-size: var(--text-sm);
   color: #f5b301;
   letter-spacing: 2px;
 }
@@ -1049,7 +974,7 @@ const schema = schemaHome(socialImage);
 }
 
 .recensioni-carousel :global(.recensione-testo p) {
-  font-size: clamp(1.125rem, 1rem + .4vw, 1.375rem);
+  font-size: var(--text-base);
   line-height: 1.6;
   color: var(--dark-navy);
 }
@@ -1065,7 +990,7 @@ const schema = schemaHome(socialImage);
   border-bottom: 1px solid var(--primary-blue);
   background: none;
   font: inherit;
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--primary-blue-dark);
   cursor: pointer;
@@ -1084,9 +1009,9 @@ const schema = schemaHome(socialImage);
   place-items: center;
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--bg-soft);
-  font-size: .8125rem;
+  font-size: var(--text-xs);
   font-weight: 700;
   color: var(--primary-blue-dark);
 }
@@ -1104,7 +1029,7 @@ const schema = schemaHome(socialImage);
 }
 
 .recensioni-carousel :global(.recensioni-messaggio) {
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
   color: var(--text-light);
 }
 
@@ -1126,9 +1051,9 @@ const schema = schemaHome(socialImage);
   width: 2.75rem;
   height: 2.75rem;
   border: 1px solid rgba(26, 26, 26, 0.2);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: transparent;
-  font-size: .8125rem;
+  font-size: var(--text-xs);
   color: var(--primary-blue-dark);
   cursor: pointer;
   transition: background-color .3s ease, border-color .3s ease, color .3s ease;
@@ -1151,7 +1076,7 @@ const schema = schemaHome(socialImage);
   height: .5rem;
   padding: 0;
   border: none;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: rgba(26, 26, 26, 0.15);
   cursor: pointer;
   transition: width .3s ease, background-color .3s ease;
@@ -1214,361 +1139,6 @@ const schema = schemaHome(socialImage);
     padding-left: 1.1rem;
   }
 
-  .sintesi-google :global(.sintesi-voto) {
-    font-size: 2.75rem;
-  }
-}
-
-.gallery-section {
-  padding: var(--section-y) 0;
-  overflow: hidden;
-}
-
-.gallery-header {
-  text-align: center;
-  margin-bottom: 3rem;
-  position: relative;
-  z-index: 2;
-}
-
-/* Mobile: allineata a sinistra come le altre sezioni, più leggibile */
-@media (max-width: 600px) {
-  .gallery-header {
-    text-align: left;
-    margin-bottom: 2rem;
-  }
-
-  .gallery-description {
-    margin: 0;
-  }
-}
-
-.gallery-tagline {
-  margin-bottom: 1.5rem;
-}
-
-.gallery-title {
-  margin-bottom: 1.5rem;
-}
-
-.gallery-description {
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-/* ---------- Galleria a scorrimento continuo ---------- */
-/* Due serie identiche di foto: la traslazione del 50% riporta all'inizio senza salti,
-   qualunque sia la larghezza delle foto */
-.gallery-infinite {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
-}
-
-.gallery-track {
-  display: flex;
-  width: max-content;
-  animation: galleria-scorri 80s linear infinite;
-}
-
-/* Pausa solo con focus da tastiera (non dopo un clic o la chiusura della lightbox)
-   e con hover di un mouse vero: sul touch l'hover resterebbe attivo dopo il tocco */
-.gallery-track:has(:focus-visible),
-.gallery-track.paused {
-  animation-play-state: paused;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .gallery-infinite:hover .gallery-track {
-    animation-play-state: paused;
-  }
-}
-
-@keyframes galleria-scorri {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.gallery-item {
-  flex: 0 0 auto;
-  width: 300px;
-  height: 420px;
-  margin-right: 8px;
-}
-
-.gallery-apri {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  border: none;
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--bg-soft);
-  cursor: zoom-in;
-}
-
-.gallery-apri :global(img) {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform .5s ease, filter .3s ease;
-}
-
-.gallery-apri:focus-visible {
-  outline-offset: -3px;
-}
-
-/* Icona ingrandisci: compare al passaggio del mouse o col focus da tastiera */
-.gallery-zoom-icon {
-  position: absolute;
-  right: .9rem;
-  bottom: .9rem;
-  display: grid;
-  place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
-  font-size: .875rem;
-  color: var(--dark-navy);
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity .3s ease, transform .3s ease;
-}
-
-.gallery-apri:hover :global(img),
-.gallery-apri:focus-visible :global(img) {
-  transform: scale(1.04);
-  filter: brightness(.88);
-}
-
-.gallery-apri:hover .gallery-zoom-icon,
-.gallery-apri:focus-visible .gallery-zoom-icon {
-  opacity: 1;
-  transform: none;
-}
-
-/* Telefono e tablet (touch): niente animazione CSS, la fila si trascina col dito e
-   scorre da sola via script (home.ts). Su PC resta l'animazione CSS */
-@media (hover: none), (pointer: coarse) {
-  .gallery-infinite {
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-  }
-
-  .gallery-infinite::-webkit-scrollbar {
-    display: none;
-  }
-
-  .gallery-track {
-    animation: none;
-  }
-}
-
-/* Movimento ridotto: niente scorrimento automatico, solo a mano, senza copie */
-@media (prefers-reduced-motion: reduce) {
-  .gallery-infinite {
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 1.5rem;
-    scrollbar-width: none;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
-  .gallery-track {
-    animation: none;
-    padding: 0 1.5rem;
-  }
-
-  .gallery-item {
-    scroll-snap-align: start;
-  }
-
-  .gallery-item[aria-hidden="true"] {
-    display: none;
-  }
-}
-
-@media (max-width: 1024px) {
-  .gallery-item {
-    width: 280px;
-    height: 380px;
-  }
-
-  .gallery-zoom-icon {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .gallery-track {
-    animation-duration: 70s;
-  }
-
-  .gallery-item {
-    width: min(44vw, 240px);
-    height: 340px;
-  }
-}
-
-@media (max-width: 480px) {
-  .gallery-track {
-    animation-duration: 60s;
-  }
-
-  .gallery-item {
-    height: 300px;
-  }
-}
-
-/* ---------- Lightbox: dialog a tutto schermo ---------- */
-:global(html.galleria-aperta) {
-  overflow: hidden;
-}
-
-.galleria-dialog {
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  max-height: none;
-  margin: 0;
-  padding: 4.5rem 6rem 2rem;
-  border: none;
-  background: rgba(12, 12, 12, 0.96);
-  color: var(--white);
-}
-
-.galleria-dialog[open] {
-  display: grid;
-  place-items: center;
-  animation: galleria-entra .25s ease;
-}
-
-.galleria-dialog::backdrop {
-  background: transparent;
-}
-
-@keyframes galleria-entra {
-  from {
-    opacity: 0;
-  }
-}
-
-/* La figura è larga quanto la foto; la didascalia non la allarga */
-.galleria-figura {
-  display: grid;
-  justify-items: start;
-  width: fit-content;
-  max-width: 100%;
-  margin: 0;
-}
-
-.galleria-foto {
-  display: block;
-  max-width: 100%;
-  max-height: calc(100dvh - 10rem);
-  width: auto;
-  height: auto;
-  border-radius: 8px;
-  transition: opacity .25s ease;
-}
-
-.galleria-foto.in-caricamento {
-  opacity: 0;
-}
-
-.galleria-didascalia {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1.5rem;
-  width: 0;
-  min-width: 100%;
-  margin-top: 1rem;
-  font-size: .9375rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.galleria-contatore {
-  flex-shrink: 0;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.galleria-chiudi,
-.galleria-nav {
-  position: fixed;
-  display: grid;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  background: transparent;
-  color: var(--white);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
-}
-
-.galleria-chiudi {
-  top: 1.25rem;
-  right: 1.25rem;
-  font-size: 1.125rem;
-}
-
-.galleria-nav {
-  top: 50%;
-  margin-top: -1.5rem;
-}
-
-.galleria-prev {
-  left: 1.5rem;
-}
-
-.galleria-next {
-  right: 1.5rem;
-}
-
-.galleria-chiudi:hover,
-.galleria-nav:hover {
-  background: var(--white);
-  border-color: var(--white);
-  color: var(--dark-navy);
-}
-
-/* Su schermi stretti le frecce scendono in basso, la foto usa tutta la larghezza */
-@media (max-width: 768px) {
-  .galleria-dialog {
-    padding: 4.5rem 1rem 6rem;
-  }
-
-  .galleria-foto {
-    max-height: calc(100dvh - 14rem);
-  }
-
-  .galleria-nav {
-    top: auto;
-    bottom: 1.25rem;
-    margin-top: 0;
-  }
-
-  .galleria-prev {
-    left: calc(50% - 3.75rem);
-  }
-
-  .galleria-next {
-    right: calc(50% - 3.75rem);
-  }
 }
 
 .altri-servizi-section {
@@ -1605,13 +1175,6 @@ const schema = schemaHome(socialImage);
   z-index: 3;
 }
 
-/* Stesse colonne dei gruppi sotto: il testo dell'intro si allinea al secondo gruppo */
-@media (min-width: 901px) {
-  section > .progetti-intro {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 .progetti-gruppi {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1623,7 +1186,7 @@ const schema = schemaHome(socialImage);
 
 .progetti-gruppo-titolo {
   margin: 0 0 1rem;
-  font-size: .8125rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -1650,8 +1213,8 @@ const schema = schemaHome(socialImage);
 }
 
 .progetto-nome {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: var(--text-base);
+  font-weight: 500;
   line-height: 1.35;
   transition: color .3s ease;
 }
@@ -1659,7 +1222,7 @@ const schema = schemaHome(socialImage);
 .progetto-testo {
   grid-row: 2;
   margin-top: .2rem;
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.68);
 }
@@ -1667,7 +1230,7 @@ const schema = schemaHome(socialImage);
 .progetti-lista a i {
   grid-row: 1 / span 2;
   grid-column: 2;
-  font-size: .875rem;
+  font-size: var(--text-sm);
   color: var(--primary-blue);
   transition: transform .3s ease;
 }
@@ -1697,7 +1260,7 @@ const schema = schemaHome(socialImage);
   }
 
   .progetti-intro .intro-sezione {
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
 
   .progetti-lista a {
@@ -1754,11 +1317,10 @@ const schema = schemaHome(socialImage);
     max-width: none;
   }
 
-.story-text :global(p.story-lead) {
-    font-size: 1.3125rem;
-  }
 
 .story-image :global(img) {
+    height: auto;
+    min-height: 0;
     aspect-ratio: 3 / 2;
   }
 }
@@ -1775,19 +1337,17 @@ const schema = schemaHome(socialImage);
 }
 
 .hero-badge {
-    font-size: var(--text-sm);
     margin-bottom: .8rem;
     letter-spacing: 1.5px;
   }
 
 .hero :global(h1) {
-    font-size: var(--text-4xl);
-    line-height: 1.2;
+    font-size: var(--text-5xl);
+    line-height: 1.1;
     margin-bottom: 1rem;
   }
 
 .hero-subtitle {
-    font-size: var(--text-base);
     line-height: 1.5;
     margin-bottom: 1.8rem;
     max-width: 100%;
@@ -1805,27 +1365,22 @@ const schema = schemaHome(socialImage);
 }
 
 .hero-badge {
-    font-size: var(--text-sm);
     margin-bottom: .6rem;
   }
 
 .hero :global(h1) {
-    font-size: var(--text-3xl);
     margin-bottom: .8rem;
   }
 
 .hero-subtitle {
-    font-size: var(--text-base);
     margin-bottom: 1.5rem;
   }
 
 .story-text :global(p) {
-    font-size: 1rem;
     line-height: 1.75;
   }
 
 .story-text :global(p.story-lead) {
-    font-size: 1.25rem;
     line-height: 1.55;
   }
 
@@ -1876,7 +1431,7 @@ const schema = schemaHome(socialImage);
   align-items: center;
   gap: 1.5rem;
   padding: 1.1rem 0;
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   font-weight: 600;
   line-height: 1.4;
   color: var(--dark-navy);
@@ -1889,24 +1444,33 @@ const schema = schemaHome(socialImage);
   display: none;
 }
 
+/* "+" disegnato con due barre (non un carattere): centrato al pixel, e ruotato diventa una × centrata */
 .faq-item summary::after {
-  content: '+';
+  content: '';
   flex-shrink: 0;
   width: 2rem;
   height: 2rem;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   border: 1px solid rgba(26, 26, 26, 0.2);
-  font-size: 1.25rem;
-  font-weight: 400;
   color: var(--primary-blue-dark);
-  transition: transform .3s ease, background-color .3s ease, border-color .3s ease;
+  background:
+    linear-gradient(currentColor, currentColor) center / 12px 2px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 2px 12px no-repeat;
+  transition: transform .3s ease, background-color .3s ease, border-color .3s ease, color .3s ease;
+}
+
+/* Domanda aperta: titolo azzurro (stato attivo) */
+.faq-item[open] summary {
+  color: var(--primary-blue-dark);
 }
 
 .faq-item[open] summary::after {
   transform: rotate(45deg);
-  background: var(--primary-blue);
+  /* Sfondo completo (barre + colore): il minificatore trasforma background-color nella forma abbreviata */
+  background:
+    linear-gradient(currentColor, currentColor) center / 12px 2px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 2px 12px no-repeat,
+    var(--primary-blue);
   border-color: var(--primary-blue);
   color: var(--dark-navy);
 }
@@ -1931,7 +1495,7 @@ const schema = schemaHome(socialImage);
   align-items: center;
   gap: .75rem;
   min-height: 44px;
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
   font-weight: 600;
   color: var(--dark-navy);
   text-decoration: none;
@@ -1940,7 +1504,7 @@ const schema = schemaHome(socialImage);
 
 .faq-contatti i {
   width: 1rem;
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   color: var(--primary-blue-dark);
 }
 
@@ -1953,7 +1517,7 @@ const schema = schemaHome(socialImage);
 .faq-item p {
   max-width: 38rem;
   padding: 0 3.5rem 1.25rem 0;
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
   line-height: 1.7;
   color: var(--text-light);
 }
@@ -1993,13 +1557,9 @@ const schema = schemaHome(socialImage);
 }
 
 @media (max-width: 600px) {
-  .faq-item summary {
-    font-size: 1.0625rem;
-  }
 
   .faq-item p {
     padding-right: 0;
-    font-size: 1rem;
   }
 }
 </style>

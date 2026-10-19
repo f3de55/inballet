@@ -63,7 +63,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                 <div class="corso-story-content">
                     <div class="corso-section-header">
                         <p class="corso-section-tagline eyebrow" id="corsoIntroTagline">Il percorso</p>
-                        <h2 class="corso-section-title titolo-sezione" id="corsoIntroTitolo">Di cosa <em>si tratta</em></h2>
+                        <h2 class="corso-section-title titolo-sezione" id="corsoIntroTitolo" set:html={data.introTitolo ?? 'Di cosa <em>si tratta</em>'} />
                     </div>
 
                     <div class="corso-story-text" id="corsoIntroText" set:html={data.intro} />
@@ -71,7 +71,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                     <div class="corso-intro-meta">
                         <div class="corso-meta-card">
                             <div class="corso-meta-icon">
-                                <i class="fas fa-child"></i>
+                                <i class="fas fa-child" aria-hidden="true"></i>
                             </div>
                             <div class="corso-meta-info">
                                 <span class="corso-meta-label">Età</span>
@@ -80,7 +80,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                         </div>
                         <div class="corso-meta-card">
                             <div class="corso-meta-icon">
-                                <i class="fas fa-calendar-alt"></i>
+                                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
                             </div>
                             <div class="corso-meta-info">
                                 <span class="corso-meta-label">Frequenza</span>
@@ -135,11 +135,11 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         <div class="corso-contatto-overlay"></div>
         <div class="corso-contatto-wrapper">
             <div class="corso-contatto-content">
-                <h2 class="titolo-sezione">Prova una lezione <em>senza impegno</em></h2>
-                <p class="intro-sezione">La prima lezione è di prova. Scrivici o chiamaci: ti aiutiamo a scegliere il gruppo e l'orario giusti per età e livello.</p>
+                <h2 class="titolo-sezione">Scegliamo insieme <em>il tuo corso</em></h2>
+                <p class="intro-sezione">Scrivici o chiamaci: ti aiutiamo a scegliere il gruppo e l'orario giusti per età e livello.</p>
                 <a href="/contatti" class="corso-btn-cta btn-primary">
                     Contattaci
-                    <i class="fas fa-arrow-right"></i>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>
         </div>
@@ -181,7 +181,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
 }
 
 .corso-story-text :global(p) {
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   line-height: 1.8;
   color: var(--text-dark);
   margin-bottom: 1.2rem;
@@ -219,7 +219,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
   align-items: flex-start;
   padding-top: .15rem;
   color: var(--primary-blue-dark);
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
   flex-shrink: 0;
 }
 
@@ -234,17 +234,17 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
 }
 
 .corso-meta-info .corso-meta-label {
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
   color: var(--text-light);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 500;
+  letter-spacing: 2px;
+  font-weight: 600;
 }
 
 .corso-meta-info :global(strong) {
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   color: var(--dark-navy);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.3;
 }
 
@@ -333,7 +333,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
 .corso-impara-list :global(li) {
   position: relative;
   padding-left: 2.5rem;
-  font-size: var(--text-xl);
+  font-size: var(--text-base);
   color: var(--text-dark);
   line-height: 1.5;
   font-weight: 500;
@@ -347,7 +347,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
   left: 0;
   top: 0.25rem;
   color: var(--primary-blue-dark);
-  font-size: 1.3rem;
+  font-size: var(--text-xl);
 }
 
 /* Tablet e mobile: una colonna con titolo, foto, testo e dati del corso;
@@ -425,7 +425,6 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
   }
 
   .corso-impara-list :global(li) {
-    font-size: var(--text-lg);
     padding-left: 2.2rem;
   }
 }
@@ -436,7 +435,6 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
   }
 
   .corso-story-text :global(p) {
-    font-size: 1rem;
     line-height: 1.75;
   }
 
@@ -449,17 +447,12 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
     gap: 1rem;
   }
 
-  .corso-meta-info :global(strong) {
-    font-size: var(--text-base);
-  }
 
   .corso-impara-list :global(li) {
-    font-size: 1rem;
     padding-left: 2rem;
   }
 
   .corso-impara-list :global(li::before) {
-    font-size: 1rem;
     top: .15rem;
   }
 }

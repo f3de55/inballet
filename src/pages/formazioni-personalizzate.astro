@@ -4,7 +4,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import { sfondo } from '../lib/images';
 
 const bg = {
-  hero: await sfondo('gallery-10.jpg', {}),
+  hero: await sfondo('gallery-10.jpg'),
   cta: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
 };
 ---
@@ -33,13 +33,10 @@ const bg = {
                 <span class="perso-intro-label eyebrow">Formazione su misura</span>
                 <h2 class="perso-intro-title titolo-sezione">Progettiamo insieme <em>il tuo percorso</em></h2>
                 <p class="perso-intro-text">
-                    InBallet offre ai professionisti dell'ambito educativo e terapeutico, ai pedagogisti e agli insegnanti momenti dedicati alla formazione, organizzati e studiati appositamente per le loro esigenze professionali.
+                    Corsi su misura per professionisti dell'educazione e della terapia, pedagogisti e insegnanti, che intrecciano linguaggi espressivi, corporeità, motricità ed esplorazione del sé.
                 </p>
                 <p class="perso-intro-text">
-                    Sono corsi che intrecciano i linguaggi espressivi e la corporeità con la motricità e l'esplorazione del sé. Insieme definiamo obiettivi e contenuti: workshop, eventi formativi o cicli di incontri.
-                </p>
-                <p class="perso-intro-text">
-                    Per chi vuole diventare insegnante di danza c'è invece il <a href="/formazione-insegnanti">corso biennale riconosciuto CSEN e CONI</a>.
+                    Insieme definiamo obiettivi e formato: workshop, eventi formativi o cicli di incontri. Per diventare insegnante di danza c'è il <a href="/formazione-insegnanti">corso biennale riconosciuto CSEN e CONI</a>.
                 </p>
             </div>
         </section>
@@ -93,7 +90,7 @@ const bg = {
                     <h2 class="titolo-sezione">Hai un progetto <em>in mente?</em></h2>
                     <p class="intro-sezione">Contattaci per un primo colloquio. Definiremo insieme obiettivi e contenuti del tuo percorso formativo.</p>
                     <a href="mailto:info@inballet.it?subject=Formazione%20Personalizzata%20-%20Richiesta%20Info" class="corso-btn-cta btn-primary">
-                        Richiedi Informazioni <i class="fas fa-arrow-right"></i>
+                        Richiedi Informazioni <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
@@ -106,13 +103,6 @@ const bg = {
   background: #fff;
 }
 
-.perso-intro-wrapper {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  text-align: center;
-}
-
 .perso-intro-label {
   display: block;
   margin-bottom: 1rem;
@@ -123,7 +113,7 @@ const bg = {
 }
 
 .perso-intro-text {
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   color: var(--text-light);
   line-height: 1.8;
   margin-bottom: 1.5rem;
@@ -212,24 +202,24 @@ const bg = {
   width: 45px;
   height: 45px;
   background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--dark-navy);
-  font-weight: 700;
-  font-size: var(--text-lg);
+  font-weight: 400;
+  font-size: var(--text-base);
 }
 
 .perso-tipo-content :global(h3) {
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-weight: 700;
   color: var(--dark-navy);
   margin-bottom: .4rem;
 }
 
 .perso-tipo-content :global(p) {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-light);
   margin: 0;
   line-height: 1.6;
@@ -248,6 +238,13 @@ const bg = {
   .perso-tipo-item:nth-last-child(2) {
     border-bottom: 1px solid rgba(135,206,235,.3);
     padding-bottom: 2rem;
+  }
+}
+/* Tablet e mobile: intestazione a sinistra, come il resto dei contenuti */
+@media (max-width: 900px) {
+  .perso-tipo-header {
+    text-align: left;
+    margin-bottom: 2rem;
   }
 }
 </style>

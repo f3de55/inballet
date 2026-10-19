@@ -32,15 +32,15 @@ Astro.response.headers.set('Cache-Control', 'no-store');
     <event-banner data-evento-id={prossimo.evento.id} data-evento-ts={prossimo.ts}>
         <div class="event-banner" id="eventBanner">
             <div class="event-banner-content">
-                <div class="event-banner-icon"><i class="fas fa-calendar-alt"></i></div>
+                <div class="event-banner-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></div>
                 <div class="event-banner-info">
                     <div class="event-banner-title">{titolo}</div>
                     <div class="event-banner-meta">
                         <span class="event-banner-date">{quando}</span>
-                        <a href={`/spettacoli-eventi?evento=${encodeURIComponent(prossimo.evento.id)}`} class="event-banner-link">Scopri di più <i class="fas fa-arrow-right"></i></a>
+                        <a href={`/spettacoli-eventi?evento=${encodeURIComponent(prossimo.evento.id)}`} class="event-banner-link">Scopri di più <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
                 </div>
-                <button type="button" class="event-banner-close" aria-label="Chiudi banner"><i class="fas fa-times"></i></button>
+                <button type="button" class="event-banner-close" aria-label="Chiudi banner"><i class="fas fa-times" aria-hidden="true"></i></button>
             </div>
         </div>
     </event-banner>
@@ -142,7 +142,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
   width: 24px;
   height: 24px;
   background: rgba(255,255,255,0.2);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -212,7 +212,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
   height: 24px;
   background: rgba(0,0,0,0.25);
   border: none;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -258,8 +258,5 @@ Astro.response.headers.set('Cache-Control', 'no-store');
     height: 24px;
   }
 
-  .event-banner-close :global(i) {
-    font-size: 10px;
-  }
 }
 </style>

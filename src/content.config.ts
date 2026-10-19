@@ -25,6 +25,8 @@ const corsi = defineCollection({
     /** Punto focale dell'hero per formato (CSS position, es. "100% 30%" per banner con soggetto a destra). */
     heroFuoco: fuoco,
     // Intro (HTML)
+    /** Titolo della sezione intro (HTML, con <em> per l'accento), es. "Cos'è l'<em>Hip-Hop</em>". */
+    introTitolo: z.string().optional(),
     introImage: z.string(),
     /** Descrizione della foto dell'intro (alt). */
     introAlt: z.string(),

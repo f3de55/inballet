@@ -7,7 +7,7 @@ import { sfondo } from '../lib/images';
 import { scuola } from '../data/scuola';
 
 const bg = {
-  hero: await sfondo('gallery-2.jpg', {}),
+  hero: await sfondo('gallery-2.jpg'),
   cta: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
 };
 
@@ -61,11 +61,10 @@ const destinazioni: { nome: string; href?: string }[] = [
             <div class="intro-editoriale">
                 <span class="eyebrow">Aziende ed enti, dal 2024</span>
                 <h2 class="titolo-sezione" id="impresa-titolo">Volontariato <em>d'impresa</em></h2>
-                <p>Dal 2024 abbiamo ampliato i nostri progetti cercando società, aziende, imprese, ditte ed enti con cui collaborare in modo concreto: chi lo desidera può vivere un'esperienza di volontariato, inserendosi nel contesto educativo e di sostegno ai ragazzi.</p>
-                <p>Crediamo servano esperienze di vita, anche nel contesto del lavoro, capaci di far nascere riflessioni utili e di spingere ognuno di noi verso azioni di umanità per il prossimo, anche dentro le grandi aziende.</p>
-                <p>Il nostro team interno di volontari e i volontari che arrivano dalle realtà lavorative, guidati da chi dirige il progetto educativo, continuano a creare esperienze ricche e indimenticabili, da cui nascono sempre nuovi progetti.</p>
+                <p>Dal 2024 collaboriamo con aziende ed enti: chi lo desidera può vivere un'esperienza di volontariato accanto ai ragazzi, nel contesto educativo della scuola.</p>
+                <p>Crediamo che anche il lavoro possa offrire esperienze di umanità: insieme al nostro team di volontari, da ogni collaborazione nascono nuovi progetti.</p>
                 <div class="sost-impresa-highlight">
-                    <p>Siamo sempre alla ricerca di realtà interessate al volontariato e di sostenitori per i nostri progetti sociali: scrivi alla Direzione progettuale ed educativa della scuola.</p>
+                    <p>La tua azienda vuole partecipare o sostenere i progetti sociali? Scrivi alla Direzione della scuola.</p>
                 </div>
             </div>
         </section>
@@ -166,7 +165,7 @@ const destinazioni: { nome: string; href?: string }[] = [
 
 .sost-intro-testo p {
   margin-bottom: 1.25rem;
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   line-height: 1.8;
   color: var(--text-dark);
 }
@@ -226,12 +225,11 @@ const destinazioni: { nome: string; href?: string }[] = [
 }
 
 .sost-dona-btn {
-  padding: 1.15rem 2.75rem;
-  font-size: 1rem;
+  font-size: var(--text-btn);
 }
 
 .sost-dona-btn i {
-  font-size: 1.25rem;
+  font-size: 1em;
 }
 
 .sost-dona-nota {
@@ -239,7 +237,7 @@ const destinazioni: { nome: string; href?: string }[] = [
   align-items: center;
   gap: .6rem;
   margin: 0;
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   color: rgba(255, 255, 255, .65);
 }
 
@@ -293,19 +291,19 @@ const destinazioni: { nome: string; href?: string }[] = [
 }
 
 .utilizzo > .fa-check {
-  font-size: 1rem;
+  font-size: var(--text-base);
   color: var(--primary-blue-dark);
 }
 
 .utilizzo-nome {
   font-size: var(--text-xl);
-  font-weight: 700;
+  font-weight: 500;
   line-height: var(--leading-snug);
   transition: color .3s ease;
 }
 
 .utilizzo-freccia {
-  font-size: .9375rem;
+  font-size: var(--text-sm);
   color: var(--primary-blue-dark);
   transition: transform .3s ease;
 }
@@ -422,29 +420,22 @@ const destinazioni: { nome: string; href?: string }[] = [
     aspect-ratio: 4 / 3;
   }
 
-  .sost-intro-testo p {
-    font-size: 1rem;
-  }
 
   /* Dona: pulsante a tutta larghezza, senza filetto laterale */
   .sost-dona-azione {
-    align-items: stretch;
+    align-items: flex-start;
     padding: 0;
     border-left: none;
   }
 
   .sost-dona-nota {
     justify-content: center;
-    font-size: .875rem;
   }
 
   .utilizzo {
     padding: 1.25rem 0;
   }
 
-  .utilizzo-nome {
-    font-size: 1.125rem;
-  }
 
   .sost-cta-wrapper {
     padding: 0 1.5rem;
@@ -452,7 +443,7 @@ const destinazioni: { nome: string; href?: string }[] = [
 
   .sost-cta-buttons {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
   }
 }
 </style>

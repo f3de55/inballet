@@ -55,8 +55,8 @@ const info = [
                     <span class="noi-intro-label eyebrow">La nostra missione</span>
                     <h2 class="noi-intro-title titolo-sezione">La danza come <em>strumento di inclusione</em></h2>
                     <div class="noi-intro-testo">
-                        <p>NoiConVoi è il progetto di volontariato di InBallet nato nel 2013 per volontà della Direttrice Artistica {scuola.fondatrice}, che ha sempre creduto che la danza sia per tutti: in modo adeguato e secondo le proprie possibilità, ognuno può portare il proprio contributo artistico a se stesso e al pubblico.</p>
-                        <p>Il progetto accoglie ragazzi con disabilità in esperienze di danza con supporto primario psicomotorio, insieme a un team di volontari e con la guida della coordinatrice del progetto. L'inclusione resta un tema centrale per tutte le fasce d'età: quasi tutti i corsi della scuola sono predisposti anche come <a href="/classi-integrate">classi integrate</a>.</p>
+                        <p>NoiConVoi è il progetto di volontariato di InBallet nato nel 2013 da un'idea della Direttrice Artistica {scuola.fondatrice}: la danza è per tutti, e ognuno può portare il proprio contributo artistico.</p>
+                        <p>Accoglie ragazzi con disabilità in esperienze di danza con supporto psicomotorio, insieme a un team di volontari. Quasi tutti i corsi della scuola sono anche <a href="/classi-integrate">classi integrate</a>.</p>
                     </div>
                     <div class="noi-intro-highlight">
                         <p>«La danza è capace di creare racconti in tutti i corpi e in tutte le menti.» ({scuola.fondatrice})</p>
@@ -170,7 +170,7 @@ const info = [
 
 .noi-intro-testo p {
   margin-bottom: 1.25rem;
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   line-height: 1.8;
   color: var(--text-dark);
 }
@@ -218,7 +218,7 @@ const info = [
 }
 
 .fasi-lista .voce-testo {
-  font-size: 1.0625rem;
+  font-size: var(--text-base);
 }
 
 /* ---------- Destinatari ---------- */
@@ -262,13 +262,13 @@ const info = [
 }
 
 .target i {
-  font-size: 1rem;
+  font-size: var(--text-base);
   color: var(--primary-blue-dark);
 }
 
 .target span {
-  font-size: var(--text-xl);
-  font-weight: 700;
+  font-size: var(--text-base);
+  font-weight: 500;
   line-height: var(--leading-snug);
   color: var(--dark-navy);
 }
@@ -386,11 +386,6 @@ const info = [
     aspect-ratio: 4 / 3;
   }
 
-  .noi-intro-testo p,
-  .fasi-lista .voce-testo {
-    font-size: 1rem;
-  }
-
   .fasi-lista,
   .info-lista {
     grid-template-columns: minmax(0, 1fr);
@@ -401,9 +396,6 @@ const info = [
     padding: 1.25rem 0;
   }
 
-  .target span {
-    font-size: 1.125rem;
-  }
 
   .noi-cta-wrapper {
     padding: 0 1.5rem;
@@ -411,7 +403,7 @@ const info = [
 
   .noi-cta-buttons {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
   }
 }
 </style>

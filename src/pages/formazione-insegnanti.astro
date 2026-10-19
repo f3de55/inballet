@@ -4,6 +4,8 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { sfondo } from '../lib/images';
 import { scuola } from '../data/scuola';
+import logoCsen from '../assets/images/csen-logo.svg';
+import logoConi from '../assets/images/logo_coni.svg';
 
 const bg = {
   hero: await sfondo('gallery-4.jpg', { desktop: '50% 10%', tablet: '50% 30%' }),
@@ -26,8 +28,9 @@ const aree = [
 ];
 
 const enti = [
-  { sigla: 'CSEN', nome: 'Centro Sportivo Educativo Nazionale' },
-  { sigla: 'CONI', nome: 'Comitato Olimpico Nazionale Italiano' },
+  // scala: equilibrio ottico (il logo CONI è più largo, a parità di altezza sembrerebbe più grande)
+  { sigla: 'CSEN', nome: 'Centro Sportivo Educativo Nazionale', logo: logoCsen, scala: 1 },
+  { sigla: 'CONI', nome: 'Comitato Olimpico Nazionale Italiano', logo: logoConi, scala: 0.84 },
 ];
 ---
 
@@ -107,7 +110,9 @@ const enti = [
                 <ul class="enti-lista">
                     {enti.map((e) => (
                         <li class="ente">
-                            <span class="ente-sigla">{e.sigla}</span>
+                            <span class="ente-logo">
+                                <img src={e.logo.src} width={e.logo.width} height={e.logo.height} alt={`Logo ${e.sigla}`} style={`height: ${e.scala * 100}%`} loading="lazy" decoding="async">
+                            </span>
                             <span class="ente-nome">{e.nome}</span>
                         </li>
                     ))}
@@ -159,7 +164,7 @@ const enti = [
 
 .form-intro-testo p {
   margin-bottom: 1.25rem;
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   line-height: 1.8;
   color: var(--text-dark);
 }
@@ -206,24 +211,24 @@ const enti = [
 }
 
 .breve-valore {
-  font-size: clamp(2.25rem, 1.75rem + 1.5vw, 3rem);
-  font-weight: 700;
+  font-size: var(--text-5xl);
+  font-weight: 300;
   line-height: 1;
   letter-spacing: -0.02em;
-  color: var(--dark-navy);
+  color: var(--primary-blue-dark);
   white-space: nowrap;
 }
 
 .breve-unita {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: var(--text-base);
+  font-weight: 400;
   letter-spacing: 0;
   color: var(--primary-blue-dark);
 }
 
 .breve-testo {
-  font-size: 1.0625rem;
-  font-weight: 600;
+  font-size: var(--text-base);
+  font-weight: 400;
   color: var(--text-dark);
 }
 
@@ -258,6 +263,7 @@ const enti = [
   padding: 0;
 }
 
+
 .area {
   display: grid;
   grid-template-columns: 3rem minmax(0, 1fr);
@@ -276,15 +282,15 @@ const enti = [
 }
 
 .area-num {
-  font-size: .9375rem;
-  font-weight: 600;
+  font-size: var(--text-xl);
+  font-weight: 300;
   color: var(--primary-blue-dark);
   font-variant-numeric: tabular-nums;
 }
 
 .area-nome {
   font-size: var(--text-xl);
-  font-weight: 700;
+  font-weight: 500;
   line-height: var(--leading-snug);
   color: var(--dark-navy);
 }
@@ -295,34 +301,42 @@ const enti = [
   background: var(--white);
 }
 
-.ente {
+/* Loghi in riquadri della stessa misura: altezza uguale, larghezza libera (CONI è più largo) */
+.enti-lista {
   display: grid;
-  grid-template-columns: 8rem minmax(0, 1fr);
-  align-items: baseline;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
-  padding: 1.75rem 0;
-  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
 }
 
-.ente:first-child {
-  padding-top: .5rem;
+.ente {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 2.25rem 1.5rem;
+  background: var(--bg-soft);
+  border-radius: var(--radius-card);
+  text-align: center;
 }
 
-.ente:last-child {
-  border-bottom: none;
+.ente-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 8.5rem;
 }
 
-.ente-sigla {
-  font-size: var(--text-3xl);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  color: var(--primary-blue-dark);
+.ente-logo img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 .ente-nome {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: var(--text-base);
+  font-weight: 400;
   line-height: var(--leading-snug);
   color: var(--dark-navy);
 }
@@ -439,9 +453,6 @@ const enti = [
     aspect-ratio: 4 / 3;
   }
 
-  .form-intro-testo p {
-    font-size: 1rem;
-  }
 
   /* In breve: una riga per dato, valore a sinistra e testo a destra */
   .breve-lista {
@@ -458,16 +469,9 @@ const enti = [
     padding: 1.25rem 0;
   }
 
-  .breve-valore {
-    font-size: 2rem;
-  }
 
-  .breve-unita {
-    font-size: .875rem;
-  }
 
   .breve-testo {
-    font-size: .9375rem;
     text-align: right;
   }
 
@@ -477,23 +481,16 @@ const enti = [
     padding: 1.25rem 0;
   }
 
-  .area-nome {
-    font-size: 1.125rem;
-  }
 
   .ente {
-    grid-template-columns: minmax(0, 1fr);
-    gap: .5rem;
-    padding: 1.25rem 0;
+    padding: 1.75rem 1rem;
   }
 
-  .ente-sigla {
-    font-size: 1.75rem;
+  .ente-logo {
+    height: 6rem;
   }
 
-  .ente-nome {
-    font-size: 1rem;
-  }
+
 
   .form-cta-wrapper {
     padding: 0 1.5rem;
@@ -501,7 +498,7 @@ const enti = [
 
   .form-cta-buttons {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
   }
 }
 </style>

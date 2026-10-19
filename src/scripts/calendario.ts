@@ -135,7 +135,8 @@ function agenda(lista: Evento[]) {
   return [...gruppi]
     .map(([k, ev]) => {
       const [y, m] = k.split('-').map(Number);
-      return `<h3 class="agenda-mese">${MESI[m - 1]} ${y}</h3><ul class="agenda">${ev.map(voce).join('')}</ul>`;
+      // Un blocco per mese: sfondi alternati rendono riconoscibile dove inizia il mese successivo
+      return `<div class="agenda-gruppo"><h3 class="agenda-mese">${MESI[m - 1]} ${y}</h3><ul class="agenda">${ev.map(voce).join('')}</ul></div>`;
     })
     .join('');
 }

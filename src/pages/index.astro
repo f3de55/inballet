@@ -303,9 +303,10 @@ const schema = schemaHome(socialImage);
   position: relative;
   overflow: hidden;
   display: flex;
-  align-items: flex-end;
+  /* Testo centrato in verticale: stesso spazio sopra (sotto la navbar) e sotto */
+  align-items: center;
   z-index: 1;
-  padding: 2.5rem 0 4.5rem;
+  padding: 4rem 0;
 }
 
 .hero-image {
@@ -1326,7 +1327,7 @@ const schema = schemaHome(socialImage);
 
 @media (max-width:768px) {
 .hero {
-    padding: 2rem 0 3rem;
+    padding: 2.5rem 0;
     height: auto;
     min-height: calc(78vh - var(--header-h));
 }

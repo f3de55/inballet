@@ -795,8 +795,9 @@ section [class*="-intro-highlight"] p {
   position: relative;
   overflow: hidden;
   display: flex;
-  align-items: flex-end;
-  padding: 1.5rem 0 3.5rem;
+  /* Testo centrato in verticale: stesso spazio sopra (sotto la navbar) e sotto */
+  align-items: center;
+  padding: 3.5rem 0;
 }
 
 .chisiamo-hero-image {
@@ -924,7 +925,7 @@ section [class*="-intro-highlight"] p {
 @media (max-width: 768px) {
   .chisiamo-hero {
     min-height: calc(clamp(360px, 52vh, 560px) - var(--header-h));
-    padding-bottom: 2.5rem;
+    padding-block: 2.5rem;
   }
 
   .chisiamo-hero-glass {
@@ -952,7 +953,7 @@ section [class*="-intro-highlight"] p {
 @media (max-width: 480px) {
   .chisiamo-hero {
     min-height: calc(320px - var(--header-h));
-    padding-bottom: 2rem;
+    padding-block: 2rem;
   }
 
   .chisiamo-hero-glass {

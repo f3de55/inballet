@@ -137,11 +137,11 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
   }
 }
 
-/* Mobile: sfondo illustrato al posto del nero pieno. L'immagine è verticale (941x1671)
-   e il footer è molto più lungo: con "cover" ne mostrerebbe solo una striscia, quindi
-   la si tiene intera, a tutta larghezza e ancorata in basso; il nero dell'immagine
-   (#111) si fonde con lo sfondo e il bordo superiore sfuma. Un filtro scurisce il
-   disegno, ancora chiaro per testo e link. */
+/* Mobile: sfondo illustrato decorativo che copre tutta l'altezza del footer, qualunque
+   sia (le colonne a fisarmonica la cambiano). L'immagine è una coppia "originale +
+   specchiata in verticale" (941x3342): ripetuta in verticale a tutta larghezza non ha
+   stacchi. Il nero dell'immagine (#111) coincide con lo sfondo; un filtro la scurisce
+   perché resti un elemento d'accento. */
 @media (max-width: 768px) {
   .footer {
     background: #111;
@@ -151,15 +151,10 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
   .footer::before {
     content: '';
     position: absolute;
-    left: 0;
-    bottom: 0;
+    inset: 0;
     z-index: -1;
-    width: 100%;
-    aspect-ratio: 941 / 1671;
-    background: url('/assets/images/footer-mobile.webp') center bottom / 100% 100% no-repeat;
-    filter: brightness(.6);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%);
-    mask-image: linear-gradient(to bottom, transparent 0, #000 14%);
+    background: url('/assets/images/footer-mobile-tile.webp') center top / 100% auto repeat-y;
+    filter: brightness(.38);
     pointer-events: none;
   }
 }

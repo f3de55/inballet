@@ -139,9 +139,14 @@ DESKTOP.addEventListener('change', (e) => {
   if (!e.matches) chiudiTutte();
 });
 
-// --- Header più scuro dopo lo scroll ---
+// --- Header (e banner evento) ridotti dopo lo scroll ---
+// La classe sulla radice serve al banner, che arriva dopo come Server Island
 const header = document.querySelector<HTMLElement>('.main-header');
-const sentinella = () => header?.classList.toggle('is-scrolled', window.scrollY > 50);
+const sentinella = () => {
+  const scrollata = window.scrollY > 50;
+  header?.classList.toggle('is-scrolled', scrollata);
+  document.documentElement.classList.toggle('is-scrolled', scrollata);
+};
 window.addEventListener('scroll', sentinella, { passive: true });
 sentinella();
 

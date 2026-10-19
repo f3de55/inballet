@@ -57,7 +57,9 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 
     class EventBanner extends HTMLElement {
         #interval = 0;
-        #onResize = () => this.#updateHeight();
+        // Segue l'altezza a ogni fotogramma, anche mentre si riduce allo scroll:
+        // la navbar sotto (top: --banner-height) resta sempre attaccata
+        #observer = new ResizeObserver(() => this.#updateHeight());
 
         connectedCallback() {
             const id = this.dataset.eventoId!;
@@ -73,8 +75,8 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 
             banner.classList.add('visible');
             document.body.classList.add('has-event-banner');
-            requestAnimationFrame(() => requestAnimationFrame(() => this.#updateHeight()));
-            window.addEventListener('resize', this.#onResize);
+            // border-box: allo scroll cambia il padding, non il contenuto
+            this.#observer.observe(banner, { box: 'border-box' });
 
             // Chiusura con X o con click su "Scopri di più"
             const dismiss = () => {
@@ -92,19 +94,27 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 
         disconnectedCallback() {
             clearInterval(this.#interval);
-            window.removeEventListener('resize', this.#onResize);
+            this.#observer.disconnect();
             this.#hide();
         }
 
         #updateHeight() {
             const banner = this.querySelector<HTMLElement>('.event-banner');
-            if (banner) root.style.setProperty('--banner-height', `${banner.offsetHeight}px`);
+            if (!banner) return;
+            const altezza = `${banner.offsetHeight}px`;
+            root.style.setProperty('--banner-height', altezza);
+            // Spazio che sposta la pagina sotto il banner: solo l'altezza piena (in cima),
+            // così quando il banner si riduce allo scroll il contenuto non salta
+            if (!root.classList.contains('is-scrolled') || !root.style.getPropertyValue('--banner-spazio')) {
+                root.style.setProperty('--banner-spazio', altezza);
+            }
         }
 
         #hide() {
             this.querySelector('.event-banner')?.classList.remove('visible');
             document.body.classList.remove('has-event-banner');
             root.style.setProperty('--banner-height', '0px');
+            root.style.removeProperty('--banner-spazio');
         }
     }
 
@@ -123,10 +133,16 @@ Astro.response.headers.set('Cache-Control', 'no-store');
   padding: 0.7rem 1.5rem;
   display: none;
   box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  transition: padding .3s ease;
 }
 
 .event-banner.visible {
   display: block;
+}
+
+/* Ridotto dopo lo scroll, insieme alla navbar (classe is-scrolled da navbar.ts) */
+:global(html.is-scrolled) .event-banner {
+  padding-block: 0.35rem;
 }
 
 .event-banner-content {
@@ -246,6 +262,10 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 @media (max-width: 480px) {
   .event-banner {
     padding: 0.5rem 0.8rem;
+  }
+
+  :global(html.is-scrolled) .event-banner {
+    padding-block: 0.3rem;
   }
 
   .event-banner-info {

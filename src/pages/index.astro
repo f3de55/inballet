@@ -299,13 +299,13 @@ const schema = schemaHome(socialImage);
 
 <style>.hero {
   /* Altezza minima della foto; il contenuto può allungarla (testi grandi, schermi bassi) */
-  min-height: clamp(560px, 72vh, 800px);
+  min-height: calc(clamp(560px, 72vh, 800px) - var(--header-h));
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
   z-index: 1;
-  padding: calc(var(--header-h) + 2.5rem) 0 4.5rem;
+  padding: 2.5rem 0 4.5rem;
 }
 
 .hero-image {
@@ -1326,9 +1326,9 @@ const schema = schemaHome(socialImage);
 
 @media (max-width:768px) {
 .hero {
-    padding: calc(var(--header-h) + 2rem) 0 3rem;
+    padding: 2rem 0 3rem;
     height: auto;
-    min-height: 78vh;
+    min-height: calc(78vh - var(--header-h));
 }
 
 .hero-content {

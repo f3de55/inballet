@@ -252,7 +252,6 @@ main .sezione-scura p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
   font-size: var(--text-4xl);
   font-weight: 700;
   line-height: 1.15;
-  text-wrap: balance;
   letter-spacing: -0.02em;
   text-transform: none;
   color: var(--dark-navy);
@@ -930,6 +929,10 @@ section [class*="-intro-highlight"] p {
 
   .chisiamo-hero-glass {
     padding: 0 1.5rem;
+  }
+
+  .chisiamo-hero-title {
+    max-width: none;
   }
 
   /* Sottotitolo più piccolo e più pieno (su sfondo chiaro il peso 300 si legge male),

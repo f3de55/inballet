@@ -932,6 +932,17 @@ section [class*="-intro-highlight"] p {
     padding: 0 1.5rem;
   }
 
+  /* Sottotitolo più piccolo e più pieno (su sfondo chiaro il peso 300 si legge male),
+     con le righe bilanciate invece dell'ultima parola da sola */
+  .chisiamo-hero-tagline {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-top: .75rem;
+    color: rgba(255,255,255,.95);
+    text-wrap: balance;
+  }
+
 }
 
 @media (max-width: 480px) {

@@ -35,14 +35,14 @@ export const leggiTipi = () => readJson<string[]>(paths.tipi, []);
 /** Eventi ordinati per data crescente. */
 export const eventiOrdinati = async () => (await leggiEventi()).sort((a, b) => a.data.localeCompare(b.data));
 
-/** Evento futuro più vicino (per il banner). */
-export async function prossimoEvento(now = Date.now()): Promise<{ evento: Evento; ts: number } | null> {
-  const futuri = (await leggiEventi())
+/** Prossimi eventi futuri in ordine di data (per il banner). */
+export async function prossimiEventi(limite = 10, now = Date.now()): Promise<{ evento: Evento; ts: number }[]> {
+  return (await leggiEventi())
     .filter((e) => e.data)
     .map((evento) => ({ evento, ts: eventoTimestamp(evento) }))
     .filter(({ ts }) => ts >= now)
-    .sort((a, b) => a.ts - b.ts);
-  return futuri[0] ?? null;
+    .sort((a, b) => a.ts - b.ts)
+    .slice(0, limite);
 }
 
 /** Copia dell'evento con i campi testuali decodificati (per il form di modifica). */

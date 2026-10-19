@@ -865,22 +865,7 @@ section [class*="-intro-highlight"] p {
 
 @media (max-width: 768px) {
   .chisiamo-hero {
-    min-height: clamp(360px, 52vh, 560px);
-    padding-bottom: 2.5rem;
-  }
-
-  .chisiamo-hero-glass {
-    padding: 0 1.5rem;
-  }
-
-  .chisiamo-hero-tagline {
-    font-size: var(--text-lg);
-  }
-}
-
-@media (max-width: 480px) {
-  .chisiamo-hero {
-    min-height: 320px;
+    min-height: clamp(320px, 46vh, 520px);
     padding-bottom: 2rem;
   }
 
@@ -888,12 +873,34 @@ section [class*="-intro-highlight"] p {
     padding: 0 1.5rem;
   }
 
-  .chisiamo-hero-title {
-    font-size: var(--text-4xl);
+  .breadcrumb ol {
+    margin-bottom: .6rem;
+    font-size: .8125rem;
   }
 
+  /* Titolo più compatto e a tutta larghezza: meno righe a capo */
+  .chisiamo-hero-title {
+    font-size: clamp(1.75rem, 7vw, 2.25rem);
+    max-width: none;
+    line-height: 1.12;
+  }
+
+  /* Il testo resta tutto nell'HTML (SEO/GEO): qui se ne mostrano al massimo 2 righe */
   .chisiamo-hero-tagline {
     font-size: var(--text-base);
+    line-height: 1.5;
+    margin-top: .6rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 480px) {
+  .chisiamo-hero {
+    min-height: 300px;
   }
 }
 

@@ -41,7 +41,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
     ogImage={ogImage}
 >
     <Fragment slot="head">
-        {hero.preload.map((p) => <link rel="preload" as="image" href={p.href} media={p.media} fetchpriority="high">)}
+        {hero.preload.filter((p) => !p.media.includes('max-width: 600px')).map((p) => <link rel="preload" as="image" href={p.href} media={p.media} fetchpriority="high">)}
         <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     </Fragment>
 

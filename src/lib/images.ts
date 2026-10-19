@@ -63,11 +63,17 @@ export async function sfondo(sorgenti: Sorgenti, fuoco: Fuoco = {}) {
   };
 }
 
-/** srcset WebP per le larghezze richieste (limitate alla larghezza originale). */
-export async function webpSrcset(name: string, widths: number[]) {
+/**
+ * srcset WebP per le larghezze richieste (limitate all'originale). `rapporto` (altezza /
+ * larghezza) ritaglia al centro in quel formato: una foto orizzontale in un riquadro
+ * verticale arriva già della forma giusta, invece di essere ingrandita (e sgranata) dal browser.
+ */
+export async function webpSrcset(name: string, widths: number[], rapporto?: number) {
   const src = getAsset(name);
-  const ws = [...new Set(widths.map((w) => Math.min(w, src.width)))].sort((a, b) => a - b);
-  const imgs = await Promise.all(ws.map((width) => getImage({ src, width, format: 'webp' })));
+  const max = rapporto ? Math.min(src.width, Math.floor(src.height / rapporto)) : src.width;
+  const ws = [...new Set(widths.map((w) => Math.min(w, max)))].sort((a, b) => a - b);
+  const ritaglio = (width: number) => (rapporto ? { height: Math.round(width * rapporto), fit: 'cover' as const } : {});
+  const imgs = await Promise.all(ws.map((width) => getImage({ src, width, format: 'webp', ...ritaglio(width) })));
   return {
     srcset: imgs.map((img, i) => `${img.src} ${ws[i]}w`).join(', '),
     src: imgs[imgs.length - 1].src,

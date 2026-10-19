@@ -79,7 +79,7 @@ const colonne = [
     gap: 2.5rem;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 2rem 3rem;
   }
 
   /* ---------- Marchio ---------- */
@@ -222,14 +222,16 @@ const colonne = [
   }
 
   /* ---------- Barra finale ---------- */
+  /* Staccata dalle colonne da un filetto largo quanto il contenuto (non fino ai bordi) */
   .footer-bottom {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: .5rem 2rem;
-    max-width: 1200px;
+    width: min(100% - 4rem, 1200px - 4rem);
     margin: 0 auto;
-    padding: 0 2rem var(--footer-y);
+    padding: 1.5rem 0 var(--footer-y);
+    border-top: 1px solid rgba(255, 255, 255, .12);
     font-size: var(--text-3xs);
     color: rgba(255, 255, 255, .55);
   }
@@ -309,8 +311,11 @@ const colonne = [
       padding: .25rem 0 1.25rem;
     }
 
+    /* La fisarmonica chiude già con un filetto: niente secondo filetto */
     .footer-bottom {
+      width: auto;
       padding: 0 1.5rem var(--footer-y);
+      border-top: none;
     }
   }
 </style>

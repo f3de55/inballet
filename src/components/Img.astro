@@ -4,6 +4,7 @@
  * Tutti gli altri attributi (alt, width, height, loading, class…) vengono
  * passati invariati, così il markup resta identico all'originale.
  * `fuoco`: punto focale per desktop/tablet/mobile quando la foto è ritagliata (object-fit: cover).
+ * `rapporto`: altezza/larghezza del riquadro, per generare la foto già ritagliata in quel formato.
  */
 import type { HTMLAttributes } from 'astro/types';
 import { varFuoco, webpSrcset, type Fuoco } from '../lib/images';
@@ -13,10 +14,11 @@ interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'srcset'> {
   widths?: number[];
   sizes?: string;
   fuoco?: Fuoco;
+  rapporto?: number;
 }
 
-const { src, widths = [480, 800, 1280], sizes = '100vw', fuoco, style, ...attrs } = Astro.props;
-const img = await webpSrcset(src, widths);
+const { src, widths = [480, 800, 1280], sizes = '100vw', fuoco, rapporto, style, ...attrs } = Astro.props;
+const img = await webpSrcset(src, widths, rapporto);
 const stile = fuoco ? `${varFuoco(fuoco)}object-position:var(--fuoco);${style ?? ''}` : style;
 ---
 

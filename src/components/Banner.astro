@@ -140,6 +140,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
         }
 
         #hide() {
+            this.#observer.disconnect();
             this.querySelector('.event-banner')?.classList.remove('visible');
             document.body.classList.remove('has-event-banner');
             root.style.setProperty('--banner-height', '0px');

@@ -8,6 +8,13 @@ import { ANNI_ATTIVITA, categorieCorsi, faq, FONDAZIONE, scuola } from '../data/
 import { getAsset, sfondo } from '../lib/images';
 import { schemaHome } from '../lib/schema';
 
+// Video dell'hero (ricodificati da src/assets/video/hero-video-inballet.mp4, senza audio):
+// AV1 per i browser che lo supportano, H.264 per gli altri; 1080p solo sugli schermi larghi
+import heroAv1Lg from '../assets/video/hero-1080.webm?url';
+import heroMp4Lg from '../assets/video/hero-1080.mp4?url';
+import heroAv1 from '../assets/video/hero-720.webm?url';
+import heroMp4 from '../assets/video/hero-720.mp4?url';
+
 // Progetti sul territorio: due gruppi di link alle pagine dei progetti
 const progetti = [
   { titolo: 'Eventi e collaborazioni', voci: [
@@ -22,8 +29,10 @@ const progetti = [
   ] },
 ];
 
-// Sfondi responsive: foto e punto focale per desktop, tablet e mobile
-const hero = await sfondo('foto/tutu-classica.jpg', { desktop: '50% 35%', tablet: '55% 50%', mobile: '58% 50%' });
+// Sfondi responsive: foto e punto focale per desktop, tablet e mobile.
+// Nell'hero è il primo fotogramma del video: si vede finché il video non parte
+// (e resta da sola con "riduci movimento" o risparmio dati)
+const hero = await sfondo('hero-video-poster.jpg');
 const progettiSfondo = await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' });
 
 // Dati strutturati (immagine social 1200x630)
@@ -49,6 +58,14 @@ const schema = schemaHome(socialImage);
     <!-- Hero Section Personalizzata -->
     <section class="hero">
         <div class="hero-image" style={hero.style}></div>
+
+        <!-- Decorativo: parte da hero-video.ts (mai con "riduci movimento" o risparmio dati) -->
+        <video class="hero-video" muted loop playsinline preload="none" disablepictureinpicture disableRemotePlayback aria-hidden="true" tabindex="-1">
+            <source src={heroAv1Lg} type='video/webm; codecs="av01.0.08M.08"' media="(min-width: 1281px)">
+            <source src={heroMp4Lg} type='video/mp4; codecs="avc1.640032"' media="(min-width: 1281px)">
+            <source src={heroAv1} type='video/webm; codecs="av01.0.05M.08"'>
+            <source src={heroMp4} type='video/mp4; codecs="avc1.64001F"'>
+        </video>
 
         <div class="hero-overlay"></div>
 
@@ -292,6 +309,7 @@ const schema = schemaHome(socialImage);
 
     <Fragment slot="scripts">
         <script>
+            import '../scripts/hero-video';
             import '../scripts/home';
         </script>
     </Fragment>
@@ -320,14 +338,44 @@ const schema = schemaHome(socialImage);
   content-visibility: auto;
 }
 
+/* Sopra la foto (primo fotogramma), compare in dissolvenza solo quando il video sta
+   davvero andando: niente riquadro nero mentre carica */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity .8s ease;
+  pointer-events: none;
+}
+
+.hero-video.is-playing {
+  opacity: 1;
+}
+
 .hero-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to top, rgba(15,15,15,.85) 0%, rgba(15,15,15,.45) 55%, rgba(15,15,15,.2) 100%);
+  /* Video in movimento e testo centrato a sinistra: velo più scuro dietro il testo,
+     più leggero a destra dove il video resta protagonista */
+  background:
+    linear-gradient(to right, rgba(10,10,10,.78) 0%, rgba(10,10,10,.48) 55%, rgba(10,10,10,.25) 100%),
+    linear-gradient(to top, rgba(10,10,10,.55) 0%, rgba(10,10,10,.2) 50%, rgba(10,10,10,.3) 100%);
   z-index: 2;
+}
+
+/* Su mobile il testo occupa tutta la larghezza: velo uniforme */
+@media (max-width: 768px) {
+  .hero-overlay {
+    background: linear-gradient(to top, rgba(10,10,10,.85) 0%, rgba(10,10,10,.68) 50%, rgba(10,10,10,.6) 100%);
+  }
 }
 
 .hero-content {

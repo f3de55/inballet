@@ -978,6 +978,30 @@ section [class*="-intro-highlight"] p {
   .breadcrumb [aria-current="page"] {
     color: var(--white);
   }
+
+  /* Breadcrumb su una sola riga: Home e sezione restano intere, la pagina corrente
+     occupa lo spazio che resta e si tronca con i puntini (il testo completo resta nell'HTML) */
+  .breadcrumb ol {
+    flex-wrap: nowrap;
+    gap: 0 .45rem;
+    white-space: nowrap;
+  }
+
+  .breadcrumb li {
+    flex: 0 0 auto;
+    gap: .45rem;
+  }
+
+  .breadcrumb li:last-child {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .breadcrumb li:last-child [aria-current="page"] {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 body.has-event-banner .main-header {

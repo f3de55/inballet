@@ -141,10 +141,10 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
   }
 }
 
-/* Mobile: illustrazione decorativa (757x2076, sfondo ~#0e0e0e) che copre sempre tutto il
-   footer, qualunque sia la sua altezza (cambia con le fisarmoniche): "cover" la scala in
-   modo uniforme (mai stirata né ripetuta) e ne ritaglia solo i lati. Lo sfondo del footer
-   è lo stesso nero dell'immagine. */
+/* Mobile: illustrazione decorativa (757x2076, sfondo ~#0e0e0e) larga quanto il footer e
+   ancorata in alto: la sua scala dipende solo dalla larghezza, quindi resta ferma quando le
+   fisarmoniche allungano il footer. Sotto l'immagine continua lo stesso nero, messo nello
+   pseudo-elemento perché il filtro scurisca allo stesso modo foto e fondo (nessuna giunta). */
 @media (max-width: 768px) {
   .footer {
     background: #0e0e0e;
@@ -156,7 +156,7 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: url('/assets/images/footer-mobile.webp') center / cover no-repeat;
+    background: #0e0e0e url('/assets/images/footer-mobile.webp') center top / 100% auto no-repeat;
     filter: brightness(.2);
     pointer-events: none;
   }

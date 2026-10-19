@@ -42,5 +42,20 @@
       "Bash(npm install *)",
       "Bash(file src/assets/images/sponsors/*.png)"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/auto-commit.cjs",
+            "timeout": 30,
+            "statusMessage": "Auto-committing change..."
+          }
+        ]
+      }
+    ]
   }
 }

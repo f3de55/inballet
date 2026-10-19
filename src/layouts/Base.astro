@@ -137,11 +137,10 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
   }
 }
 
-/* Mobile: sfondo illustrato decorativo che copre tutta l'altezza del footer, qualunque
-   sia (le colonne a fisarmonica la cambiano). L'immagine è una coppia "originale +
-   specchiata in verticale" (941x3342): ripetuta in verticale a tutta larghezza non ha
-   stacchi. Il nero dell'immagine (#111) coincide con lo sfondo; un filtro la scurisce
-   perché resti un elemento d'accento. */
+/* Mobile: sfondo illustrato decorativo, una sola immagine che copre tutta l'altezza del
+   footer (le colonne a fisarmonica la cambiano) con "cover" e senza ripetizioni. Il nero
+   dell'immagine (#111) coincide con lo sfondo; un filtro la scurisce perché resti un
+   elemento d'accento. */
 @media (max-width: 768px) {
   .footer {
     background: #111;
@@ -153,7 +152,7 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: url('/assets/images/footer-mobile-tile.webp') center top / 100% auto repeat-y;
+    background: url('/assets/images/footer-mobile.webp') center / cover no-repeat;
     filter: brightness(.38);
     pointer-events: none;
   }

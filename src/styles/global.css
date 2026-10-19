@@ -51,7 +51,7 @@ html {
   scrollbar-width: thin;
   scrollbar-color: #87CEEB #1a1a1a;
   /* Le ancore non finiscono sotto l'header fisso (e il banner eventi) */
-  scroll-padding-top: calc(var(--header-h) + var(--banner-height, 0px));
+  scroll-padding-top: calc(var(--header-h) + 1.5rem + var(--banner-height, 0px));
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -763,14 +763,14 @@ section [class*="-intro-highlight"] p {
 }
 
 .chisiamo-hero {
-  height: 62vh;
-  min-height: 420px;
-  max-height: 560px;
+  /* Altezza minima (non fissa): se il contenuto è più alto l'hero cresce
+     invece di traboccare sotto la navbar fissa */
+  min-height: clamp(420px, 62vh, 560px);
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  padding: var(--header-h) 0 3.5rem;
+  padding: calc(var(--header-h) + 1.5rem) 0 3.5rem;
 }
 
 .chisiamo-hero-image {
@@ -865,8 +865,7 @@ section [class*="-intro-highlight"] p {
 
 @media (max-width: 768px) {
   .chisiamo-hero {
-    height: 52vh;
-    min-height: 360px;
+    min-height: clamp(360px, 52vh, 560px);
     padding-bottom: 2.5rem;
   }
 
@@ -903,10 +902,10 @@ body.has-event-banner .main-header {
 }
 
 body.has-event-banner .hero {
-  padding-top: calc(var(--header-h) + var(--banner-height, 0px));
+  padding-top: calc(var(--header-h) + 1.5rem + var(--banner-height, 0px));
 }
 
 body.has-event-banner .chisiamo-hero {
-  padding-top: calc(var(--header-h) + var(--banner-height, 0px));
+  padding-top: calc(var(--header-h) + 1.5rem + var(--banner-height, 0px));
 }
 

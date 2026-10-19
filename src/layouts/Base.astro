@@ -136,32 +136,4 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
     padding-top: 2rem;
   }
 }
-
-/* Mobile: sfondo illustrato decorativo. L'immagine ha sempre le sue proporzioni (niente
-   stiramenti, niente ripetizioni) perché non dipende dall'altezza del footer, che cambia
-   con le colonne a fisarmonica: è un pannello alto quanto lo schermo, "appiccicato" in
-   alto mentre si scorre il footer (sticky) e senza ingombro nel layout (margin negativo).
-   Il nero dell'immagine (#111) coincide con lo sfondo; un filtro la scurisce perché resti
-   un elemento d'accento. */
-@media (max-width: 768px) {
-  .footer {
-    background: #111;
-    overflow: clip;
-  }
-
-  .footer::before {
-    content: '';
-    display: block;
-    position: sticky;
-    top: 0;
-    z-index: -1;
-    height: 100vh;
-    height: 100svh;
-    margin-bottom: -100vh;
-    margin-bottom: -100svh;
-    background: url('/assets/images/footer-mobile.webp') center / cover no-repeat;
-    filter: brightness(.38);
-    pointer-events: none;
-  }
-}
 </style>

@@ -38,8 +38,14 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
                 <p class="eyebrow">{totale} corsi in {categorieCorsi.length} percorsi</p>
                 <h2 class="titolo titolo-sezione">Trova il tuo <em>percorso</em></h2>
                 <p class="corsi-lead">A Lainate e Rho si comincia a 3 anni con Avviamento alla Danza e non c'è un'età per smettere: per gli adulti ci sono corsi anche per chi parte da zero. Contattaci: ti aiutiamo a scegliere il corso giusto.</p>
-                <nav class="salti" aria-label="Percorsi">
-                    {categorieCorsi.map((cat) => <a href={`#${cat.id}`}>{cat.nome}</a>)}
+                <nav class="salti" aria-label="Vai al percorso">
+                    {categorieCorsi.map((cat, i) => (
+                        <a href={`#${cat.id}`}>
+                            <span class="salto-numero" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                            <span class="salto-nome">{cat.nome}</span>
+                            <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                        </a>
+                    ))}
                 </nav>
             </header>
 
@@ -104,36 +110,72 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     color: var(--text-light);
   }
 
+  /* Indice dei percorsi: cinque voci con numero, nome e la
+     freccia in giù (portano più sotto nella pagina). Riga blu sopra come le "voce" del sito */
   .salti {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    row-gap: 0.6rem;
-    margin-top: 1.75rem;
-  }
-
-  /* Separatore "|" tra un percorso e l'altro */
-  .salti a + a::before {
-    content: '|';
-    margin: 0 1rem;
-    color: rgba(26, 26, 26, 0.25);
-    font-weight: 400;
-    pointer-events: none;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1.25rem;
+    max-width: 1100px;
+    margin: 2.5rem auto 0;
+    text-align: left;
   }
 
   .salti a {
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--text-light);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "numero freccia"
+      "nome   nome";
+    align-content: start;
+    row-gap: .35rem;
+    padding: 1rem 0 .25rem;
+    border-top: 2px solid var(--primary-blue);
+    color: var(--dark-navy);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: border-color .25s ease;
+  }
+
+  .salto-numero {
+    grid-area: numero;
+    font-size: var(--text-sm);
+    font-weight: 300;
+    color: var(--primary-blue-dark);
+  }
+
+  .salto-nome {
+    grid-area: nome;
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: 1.3;
+    transition: color .25s ease;
+  }
+
+  .salti a i {
+    grid-area: freccia;
+    align-self: center;
+    font-size: var(--text-xs);
+    color: var(--primary-blue-dark);
+    transition: transform .25s ease;
   }
 
   @media (hover: hover) and (pointer: fine) {
     .salti a:hover {
+      border-top-color: var(--primary-blue-dark);
+    }
+
+    .salti a:hover .salto-nome {
       color: var(--primary-blue-dark);
     }
+
+    .salti a:hover i {
+      transform: translateY(3px);
+    }
+  }
+
+  .salti a:focus-visible {
+    outline: 2px solid var(--primary-blue-dark);
+    outline-offset: 4px;
   }
 
   /* ---------- Categorie: foto e corsi, alternate ---------- */
@@ -310,30 +352,28 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     }
   }
 
-  /* Tablet: foto e testo restano affiancati (alternati), corsi su una colonna,
-     percorsi in alto come pillole toccabili */
+  /* Tablet: percorsi a righe; foto e testo restano affiancati (alternati), corsi su una colonna */
   @media (max-width: 900px) {
-    .corsi-intro {
-      margin-bottom: 2.5rem;
-    }
-
+    /* Percorsi a righe (5 colonne non ci stanno): numero, nome, freccia a destra */
     .salti {
-      gap: .5rem;
-    }
-
-    .salti a + a::before {
-      content: none;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      max-width: 640px;
+      margin-top: 1.5rem;
+      border-bottom: 1px solid rgba(26, 26, 26, .12);
     }
 
     .salti a {
-      display: inline-flex;
+      grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+      grid-template-areas: "numero nome freccia";
       align-items: center;
-      min-height: 40px;
-      padding: .45rem 1rem;
-      border: 1px solid rgba(70, 130, 180, 0.35);
-      border-radius: var(--radius-pill);
-      background: var(--white);
-      color: var(--dark-navy);
+      padding: 1rem 0;
+      border-top-width: 1px;
+      border-top-color: rgba(26, 26, 26, .12);
+    }
+
+    .corsi-intro {
+      margin-bottom: 2.5rem;
     }
 
     .categoria {
@@ -354,7 +394,6 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     .categoria:nth-of-type(even) .categoria-foto::before {
       inset: 1.5rem 1.5rem -1rem -1rem;
     }
-
 
     .categoria-descrizione {
       margin-bottom: 1rem;
@@ -377,10 +416,6 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
 
     .corsi-lead {
       margin-left: 0;
-    }
-
-    .salti {
-      justify-content: flex-start;
     }
 
     .categoria {
@@ -419,7 +454,6 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
       column-gap: .75rem;
       padding: .7rem 0;
     }
-
 
     .corso-eta {
       max-width: 9.5rem;

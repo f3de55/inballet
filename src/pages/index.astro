@@ -15,6 +15,11 @@ import heroMp4Lg from '../assets/video/hero-1080.mp4?url';
 import heroAv1 from '../assets/video/hero-720.webm?url';
 import heroMp4 from '../assets/video/hero-720.mp4?url';
 
+// Corsi: i quattro stili come indice (il dettaglio dei corsi è su /corsi); i percorsi
+// per età sono un criterio diverso e stanno in una fascia a parte
+const stili = categorieCorsi.filter((c) => c.id !== 'eta');
+const perEta = categorieCorsi.find((c) => c.id === 'eta')!;
+
 // Progetti sul territorio: due gruppi di link alle pagine dei progetti
 const progetti = [
   { titolo: 'Eventi e collaborazioni', voci: [
@@ -97,22 +102,33 @@ const schema = schemaHome(socialImage);
             <div class="corsi-header">
                 <span class="corsi-label eyebrow">La nostra offerta formativa</span>
                 <h2 class="corsi-title titolo-sezione">I nostri <em>corsi</em></h2>
-                <p class="corsi-intro intro-sezione">Dai 3 anni agli adulti over 40, dalla tecnica classica agli stili urbani: cinque percorsi per trovare il corso giusto per età e livello.</p>
+                <p class="corsi-intro intro-sezione">Dai 3 anni agli adulti over 40, dalla tecnica classica agli stili urbani: scegli per stile o per età il corso giusto per te.</p>
             </div>
 
-            <div class="corsi-griglia">
-                {categorieCorsi.map((cat, i) => (
-                    <article class="corso-card voce" aria-labelledby={`home-${cat.id}`}>
-                        <span class="voce-anno" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                        <h3 class="voce-titolo" id={`home-${cat.id}`}>{cat.nome}</h3>
-                        <p class="voce-testo" set:html={cat.descrizione} />
-                        <ul class="corso-link">
-                            {cat.corsi.map((c) => (
-                                <li><a href={c.url}><span>{c.nome.replace(/ \((.+)\)$/, '')}{c.nome.endsWith(')') && <> <span class="corso-eta">{c.nome.slice(c.nome.lastIndexOf('('))}</span></>}</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a></li>
-                            ))}
-                        </ul>
-                    </article>
+            <ol class="corsi-indice">
+                {stili.map((cat, i) => (
+                    <li>
+                        <a href={`/corsi#${cat.id}`}>
+                            <span class="corsi-indice-numero" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                            <span class="corsi-indice-nome">{cat.nome}</span>
+                            <span class="corsi-indice-testo">{cat.sintesi}</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </li>
                 ))}
+            </ol>
+
+            <!-- Stessi corsi visti per fascia d'età -->
+            <div class="corsi-eta">
+                <div>
+                    <h3 class="voce-titolo">Oppure scegli per età</h3>
+                    <p class="voce-testo">{perEta.sintesi}</p>
+                </div>
+                <ul class="corso-link">
+                    {perEta.corsi.map((c) => (
+                        <li><a href={c.url}><span>{c.nome.replace(/ \((.+)\)$/, '')}{c.nome.endsWith(')') && <> <span class="corso-eta">{c.nome.slice(c.nome.lastIndexOf('('))}</span></>}</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a></li>
+                    ))}
+                </ul>
             </div>
 
             <!-- Elenco completo: subito sotto i percorsi -->
@@ -589,14 +605,84 @@ const schema = schemaHome(socialImage);
   margin: 0 auto;
 }
 
-/* Percorsi in griglia: 3 + 2 su desktop (le ultime due più larghe, nessun buco),
-   2 per riga su tablet, 1 su mobile */
-.corsi-griglia {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 3.5rem 3rem;
+/* Stili come indice editoriale: una riga per stile, tutta cliccabile, separata da filetti.
+   Su desktop numero, nome, frase e freccia sulla stessa riga */
+.corsi-indice {
+  list-style: none;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0;
+  border-bottom: 1px solid rgba(26, 26, 26, .12);
+}
+
+.corsi-indice li {
+  border-top: 1px solid rgba(26, 26, 26, .12);
+}
+
+.corsi-indice a {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) minmax(0, 1.3fr) auto;
+  align-items: center;
+  gap: 1rem 2.5rem;
+  padding: 2rem 0;
+  color: var(--dark-navy);
+  text-decoration: none;
+}
+
+.corsi-indice-numero {
+  font-size: var(--text-2xl);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--primary-blue-dark);
+}
+
+.corsi-indice-nome {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  transition: color .25s ease;
+}
+
+.corsi-indice-testo {
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--text-light);
+}
+
+.corsi-indice a i {
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  transition: transform .25s ease;
+}
+
+.corsi-indice a:hover .corsi-indice-nome {
+  color: var(--primary-blue-dark);
+}
+
+.corsi-indice a:hover i {
+  transform: translateX(5px);
+}
+
+.corsi-indice a:focus-visible {
+  outline: 2px solid var(--primary-blue-dark);
+  outline-offset: 4px;
+}
+
+/* Per età: fascia a parte, con le fasce come pillole (un criterio diverso dagli stili) */
+.corsi-eta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
+  gap: 1.5rem 3rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 4.5rem auto 0;
+  padding-top: 2.5rem;
+  border-top: 2px solid var(--primary-blue);
+}
+
+.corsi-eta .voce-testo {
+  font-size: var(--text-sm);
 }
 
 .corsi-tutti {
@@ -604,28 +690,13 @@ const schema = schemaHome(socialImage);
   margin: 2.5rem auto 4.5rem;
 }
 
-.corso-card {
-  grid-column: span 2;
-  display: flex;
-  flex-direction: column;
-}
-
-.corso-card:nth-child(n + 4) {
-  grid-column: span 3;
-}
-
-.corso-card .voce-testo :global(strong) {
-  color: var(--dark-navy);
-  font-weight: 600;
-}
-
-/* Corsi come pillole: si riconoscono come cliccabili e vanno a capo da sole */
+/* Fasce d'età come pillole: si riconoscono come cliccabili e vanno a capo da sole */
 .corso-link {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   gap: .5rem;
-  margin: 1.5rem 0 0;
+  margin: 0;
   padding: 0;
 }
 
@@ -670,8 +741,9 @@ const schema = schemaHome(socialImage);
 .corsi-cta {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+  /* Domanda e pulsante vicini, al centro: si leggono come un'unica proposta */
+  justify-content: center;
+  gap: 2.5rem;
   max-width: 1200px;
   margin: 0 auto;
   padding-top: 2.5rem;
@@ -701,31 +773,49 @@ const schema = schemaHome(socialImage);
 }
 
 @media (max-width: 1024px) {
-  .corsi-griglia {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 3rem 2.5rem;
+  .corsi-indice a {
+    grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+    gap: .35rem 1rem;
   }
 
-  .corso-card,
-  .corso-card:nth-child(n + 4) {
-    grid-column: span 1;
+  .corsi-indice-testo {
+    grid-column: 2;
+    grid-row: 2;
   }
 
-  /* Numero dispari: l'ultima card prende tutta la riga */
-  .corso-card:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
+  .corsi-indice a i {
+    grid-column: 3;
+    grid-row: 1 / 3;
+  }
+
+  .corsi-eta {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 4rem;
   }
 
   .corsi-cta {
     flex-direction: column;
     align-items: flex-start;
+    gap: 1.25rem;
   }
 }
 
 @media (max-width: 600px) {
-  .corsi-griglia {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.75rem;
+  .corsi-indice a {
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+    padding: 1.5rem 0;
+  }
+
+  .corsi-indice-numero {
+    font-size: var(--text-lg);
+  }
+
+  .corsi-indice-nome {
+    font-size: var(--text-lg);
+  }
+
+  .corsi-eta {
+    margin-top: 3.5rem;
   }
 
   .corsi-tutti {
@@ -737,10 +827,6 @@ const schema = schemaHome(socialImage);
     border-top: none;
   }
 
-  .corso-card .voce-anno {
-    font-size: var(--text-2xl);
-  }
-
   .corsi-wrapper {
     padding: 0 1.5rem;
   }
@@ -748,10 +834,6 @@ const schema = schemaHome(socialImage);
 }
 
 @media (max-width: 600px) {
-  .corso-link {
-    margin-top: 1.25rem;
-  }
-
   .corso-link a {
     padding: .45rem .9rem;
   }

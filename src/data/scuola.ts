@@ -74,6 +74,7 @@ export const categorieCorsi = [
   {
     id: 'classica-moderna',
     nome: 'Danza Classica e Moderna',
+    sintesi: 'La base tecnica di ogni stile: si comincia a 3 anni e si arriva ai livelli avanzati.',
     immagine: { src: 'foto/tutu-classica.jpg', alt: 'Tutù rosa di danza classica', fuoco: { desktop: '60% 50%', mobile: '50% 45%' } },
     descrizione: 'Si comincia a 3 anni con Avviamento alla Danza, a 4-5 anni con Educazione alla Danza; dai 6 anni Danza Classica e Modern, fino ai livelli avanzati.',
     corsi: [
@@ -86,6 +87,7 @@ export const categorieCorsi = [
   {
     id: 'contemporanea',
     nome: 'Danza Contemporanea',
+    sintesi: "L'arte più libera del movimento, dai 10 anni fino agli adulti over 40.",
     immagine: { src: 'foto/contact-improvisation-img2.jpg', alt: 'Due danzatori a terra durante una sequenza di contact improvisation', fuoco: { desktop: '50% 50%' } },
     descrizione: "L'arte più libera del movimento: Danza Contemporanea dai 10 anni, un corso per adulti over 40, Contact Improvisation e Movimento Creativo dai 18 anni.",
     corsi: [
@@ -98,6 +100,7 @@ export const categorieCorsi = [
   {
     id: 'urban',
     nome: 'Urban Dance',
+    sintesi: 'Gli stili urbani tra energia, tecnica e cultura Hip-Hop, dai 6 anni.',
     immagine: { src: 'foto/breaking-img2.jpg', alt: 'Allievi di breaking in freeze sul parquet della sala', fuoco: { desktop: '50% 50%', mobile: '50% 60%' } },
     descrizione: 'Hip-Hop e Breaking dai 6 anni, Heels, Danza Acrobatica e, dai 16 anni, il Contaminato: gli stili urbani tra energia, tecnica e cultura Hip-Hop.',
     corsi: [
@@ -111,6 +114,7 @@ export const categorieCorsi = [
   {
     id: 'benessere',
     nome: 'Benessere e Movimento',
+    sintesi: 'Per il benessere di corpo e mente, da soli o accanto a un corso di danza.',
     immagine: { src: 'foto/yoga-img2.jpg', alt: 'Lezione di yoga in sala, con le mani giunte sopra la testa', fuoco: { desktop: '55% 50%', mobile: '50% 35%' } },
     descrizione: "Hatha Yoga, Pilates per livelli e lezioni individuali: per il benessere di corpo e mente, da soli o accanto a un corso di danza.",
     corsi: [
@@ -123,6 +127,7 @@ export const categorieCorsi = [
   {
     id: 'eta',
     nome: 'Percorsi per Età',
+    sintesi: "Quali corsi scegliere in ogni fase della crescita, anche per chi inizia da grande.",
     immagine: { src: 'foto/bambini-gioco.jpg', alt: 'Bambine piccole giocano a danzare in sala', fuoco: { desktop: '50% 50%', mobile: '50% 35%' } },
     descrizione: "Quali corsi scegliere in ogni fase della crescita, dai 3 anni all'età adulta: una guida per fascia d'età, anche per chi inizia da grande.",
     corsi: [

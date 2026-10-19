@@ -80,14 +80,31 @@ body{min-height:100vh;font-size:16px;line-height:1.5}
 .ev-azioni button{display:grid;place-items:center;width:40px;height:40px;border:none;border-radius:8px;background:none;color:var(--text-muted);cursor:pointer;transition:background-color .15s,color .15s}
 .ev-azioni button:hover{background:var(--soft);color:var(--primary-dark)}
 .ev-azioni .elimina:hover{background:#fbeceb;color:var(--danger)}
+.ev-azioni button:disabled{opacity:.3;cursor:default}
+.ev-azioni button:disabled:hover{background:none;color:var(--text-muted)}
 .ev-vuoto{padding:1rem 0;color:var(--text-muted)}
+
+/* ---------- Documenti ---------- */
+.doc-testi{margin-bottom:2.5rem}
+.doc-gruppo{margin:0 0 1.5rem;padding:0;border:none}
+.doc-gruppo legend{display:block;width:100%;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--line);font-size:.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--primary-dark)}
+.doc-anteprima-titolo{margin:-.5rem 0 1.35rem;font-size:.9rem;color:var(--text-muted)}
+.doc-anteprima-titolo strong{font-weight:600;color:var(--text)}
+.doc-testi-azioni{display:flex;justify-content:flex-end}
+.doc-elenco-titolo{margin-top:0}
+.doc-icona{display:grid;place-items:center;font-size:1.5rem;color:var(--primary-dark)}
+.doc-file{display:flex;align-items:center;gap:1rem;margin-bottom:.75rem;padding:.75rem 1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg)}
+.doc-file i{font-size:1.5rem;color:var(--primary-dark)}
+.doc-file p{margin-bottom:.15rem;font-size:.9rem}
+.upload-zone.scelto{border-style:solid;border-color:var(--primary-dark);background:var(--soft)}
+.upload-zone strong{overflow-wrap:anywhere}
 
 /* ---------- Modali ---------- */
 .modal{display:none;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;padding:2rem 1rem;background:rgba(26,26,26,.45)}
 .modal.open{display:flex}
 .modal-box{display:flex;flex-direction:column;width:100%;max-width:680px;max-height:100%;overflow:hidden;border-radius:14px;background:var(--surface);box-shadow:0 24px 60px rgba(0,0,0,.2)}
 .modal--piccola .modal-box{max-width:440px}
-#formEvento{display:flex;flex-direction:column;min-height:0;flex:1}
+#formEvento,#formDocumento{display:flex;flex-direction:column;min-height:0;flex:1}
 .modal-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1rem 1rem 1.5rem;border-bottom:1px solid var(--line)}
 .modal-header h2{font-size:1.15rem;font-weight:600}
 .modal-close{display:grid;place-items:center;width:40px;height:40px;border:none;border-radius:50%;background:none;color:var(--text-muted);font-size:1rem;cursor:pointer}
@@ -100,10 +117,11 @@ body{min-height:100vh;font-size:16px;line-height:1.5}
 .campo label,.campo-label{display:flex;align-items:baseline;gap:.5rem;margin-bottom:.4rem;font-size:.9rem;font-weight:600}
 .campo-label{justify-content:space-between}
 .campo-label label{margin:0}
-.campo input,.campo select{display:block;width:100%;min-height:46px;padding:.65rem .9rem;border:1px solid var(--line-strong);border-radius:8px;background:#fff;font:inherit;font-size:16px;color:var(--text)}
+.campo input,.campo select,.campo textarea{display:block;width:100%;min-height:46px;padding:.65rem .9rem;border:1px solid var(--line-strong);border-radius:8px;background:#fff;font:inherit;font-size:16px;color:var(--text)}
 .campo select{appearance:none;padding-right:2.5rem;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%236a6f75' stroke-width='1.6'/%3E%3C/svg%3E") right 1rem center no-repeat}
-.campo input::placeholder{color:#a3a8ae}
-.campo input:focus,.campo select:focus{outline:none;border-color:var(--primary-dark);box-shadow:0 0 0 3px rgba(135,206,235,.35)}
+.campo textarea{min-height:110px;resize:vertical;line-height:1.55}
+.campo input::placeholder,.campo textarea::placeholder{color:#a3a8ae}
+.campo input:focus,.campo select:focus,.campo textarea:focus{outline:none;border-color:var(--primary-dark);box-shadow:0 0 0 3px rgba(135,206,235,.35)}
 .campi-2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 1rem}
 .contatore{display:block;margin-top:.3rem;font-size:.75rem;text-align:right;color:var(--text-muted)}
 .contatore:empty{display:none}
@@ -246,6 +264,7 @@ body{min-height:100vh;font-size:16px;line-height:1.5}
     .pagina-azioni{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.6rem;width:100%}
     .pagina-azioni .btn{width:100%;padding-inline:.75rem}
     .pagina-azioni .btn-primary,.pagina-azioni .btn:only-child{grid-column:1/-1;order:-1}
+    .pagina-azioni--due .btn{grid-column:1/-1}
     .barra{flex-direction:column;align-items:stretch}
     .filtri{display:flex}
     .filtro{flex:1;justify-content:center;padding:0 .5rem}

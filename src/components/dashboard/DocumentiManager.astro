@@ -1,0 +1,108 @@
+---
+/**
+ * Gestione della pagina /documenti: testi (titolo, introduzione) e PDF da
+ * scaricare, con aggiunta, modifica, sostituzione del PDF, ordine ed
+ * eliminazione. Logica client in src/scripts/dashboard/documenti.ts.
+ */
+import { leggiDocumenti } from '../../lib/documenti';
+import DocumentoModal from './DocumentoModal.astro';
+
+const { hero, sezione, documenti } = await leggiDocumenti();
+const n = documenti.length;
+---
+
+<div class="pagina-head">
+    <div>
+        <h1>Documenti</h1>
+        <p class="pagina-sotto">{n === 0 ? 'Nessun documento da scaricare' : n === 1 ? '1 documento da scaricare' : `${n} documenti da scaricare`}</p>
+    </div>
+    <div class="pagina-azioni pagina-azioni--due">
+        <a href="/documenti" target="_blank" rel="noopener" class="btn btn-secondary">Vedi la pagina</a>
+        <button type="button" class="btn btn-primary" data-nuovo-documento><i class="fas fa-plus" aria-hidden="true"></i> Nuovo documento</button>
+    </div>
+</div>
+
+<section class="pannello doc-testi" aria-labelledby="testiTitolo">
+    <h2 id="testiTitolo">Testi della pagina</h2>
+    <form id="formTesti" novalidate>
+        <fieldset class="doc-gruppo">
+            <legend>Intestazione in alto</legend>
+            <div class="campo">
+                <label for="heroTitolo">Titolo <span class="nota">obbligatorio</span></label>
+                <input type="text" id="heroTitolo" name="heroTitolo" value={hero.titolo} maxlength="80" data-counter="80" required autocomplete="off">
+                <small class="contatore" id="heroTitolo-counter"></small>
+            </div>
+            <div class="campo">
+                <label for="heroTesto">Testo sotto il titolo</label>
+                <input type="text" id="heroTesto" name="heroTesto" value={hero.testo} maxlength="250" data-counter="250" autocomplete="off">
+                <small class="contatore" id="heroTesto-counter"></small>
+            </div>
+        </fieldset>
+
+        <fieldset class="doc-gruppo">
+            <legend>Sezione dei moduli</legend>
+            <div class="campo">
+                <label for="eyebrow">Etichetta sopra il titolo</label>
+                <input type="text" id="eyebrow" name="eyebrow" value={sezione.eyebrow} maxlength="40" data-counter="40" autocomplete="off">
+                <small class="contatore" id="eyebrow-counter"></small>
+            </div>
+            <div class="campi-2 campi-2--impila">
+                <div class="campo">
+                    <label for="titolo">Titolo <span class="nota">obbligatorio</span></label>
+                    <input type="text" id="titolo" name="titolo" value={sezione.titolo} maxlength="60" data-counter="60" required autocomplete="off">
+                    <small class="contatore" id="titolo-counter"></small>
+                </div>
+                <div class="campo">
+                    <label for="accento">Parola in evidenza <span class="nota">in corsivo azzurro</span></label>
+                    <input type="text" id="accento" name="accento" value={sezione.accento} maxlength="40" data-counter="40" autocomplete="off">
+                    <small class="contatore" id="accento-counter"></small>
+                </div>
+            </div>
+            <p class="doc-anteprima-titolo" aria-live="polite">Anteprima: <strong id="anteprimaTitolo"></strong></p>
+            <div class="campo">
+                <label for="intro">Testo introduttivo</label>
+                <textarea id="intro" name="intro" rows="4" maxlength="600" data-counter="600">{sezione.intro}</textarea>
+                <small class="contatore" id="intro-counter"></small>
+            </div>
+        </fieldset>
+
+        <div class="doc-testi-azioni">
+            <button type="submit" class="btn btn-primary" id="btnSalvaTesti">Salva i testi</button>
+        </div>
+    </form>
+</section>
+
+<h2 class="ev-gruppo-titolo doc-elenco-titolo">Documenti da scaricare <span>{n}</span></h2>
+
+{n > 0 ? (
+    <ul class="ev-lista" id="docLista">
+        {documenti.map((d, i) => (
+            <li class="ev doc" data-id={d.id} data-modifica={JSON.stringify(d)}>
+                <button type="button" class="ev-apri" data-azione="modifica">
+                    <span class="doc-icona" aria-hidden="true"><i class="fas fa-file-pdf"></i></span>
+                    <span class="ev-testo">
+                        <span class="ev-titolo">{d.titolo}</span>
+                        <span class="ev-meta">{[d.nota, d.peso].filter(Boolean).join(' · ')}</span>
+                    </span>
+                </button>
+                <div class="ev-azioni">
+                    <button type="button" data-azione="su" aria-label={`Sposta in alto ${d.titolo}`} title="Sposta in alto" disabled={i === 0}><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
+                    <button type="button" data-azione="giu" aria-label={`Sposta in basso ${d.titolo}`} title="Sposta in basso" disabled={i === n - 1}><i class="fas fa-arrow-down" aria-hidden="true"></i></button>
+                    <button type="button" data-azione="modifica" aria-label={`Modifica ${d.titolo}`} title="Modifica"><i class="fas fa-pen" aria-hidden="true"></i></button>
+                    <button type="button" class="elimina" data-azione="elimina" aria-label={`Elimina ${d.titolo}`} title="Elimina"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                </div>
+            </li>
+        ))}
+    </ul>
+) : (
+    <div class="vuoto" id="docVuoto">
+        <p>Qui compariranno i moduli che le famiglie possono scaricare dalla pagina Documenti.</p>
+        <button type="button" class="btn btn-primary" data-nuovo-documento><i class="fas fa-plus" aria-hidden="true"></i> Aggiungi il primo documento</button>
+    </div>
+)}
+
+<DocumentoModal />
+
+<script>
+    import '../../scripts/dashboard/documenti';
+</script>

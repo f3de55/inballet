@@ -15,6 +15,8 @@ export const paths = {
   chatCache: path.join(dataDir, 'cache'),
   rateLimit: path.join(dataDir, 'ratelimit'),
   immaginiEventi: path.join(dataDir, 'uploads', 'eventi'),
+  documenti: path.join(dataDir, 'documenti.json'),
+  fileDocumenti: path.join(dataDir, 'uploads', 'documenti'),
 };
 
 export async function ensureDir(dir: string): Promise<void> {

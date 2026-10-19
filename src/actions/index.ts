@@ -11,6 +11,7 @@ import { aggiungiTipo, eliminaEvento, ErroreEvento, eventiOrdinati, leggiTipi, r
 import { caricaImmagini, elencaImmagini, eliminaImmagine } from '../lib/uploads';
 import { generaChat, generaEventi, MAX_EVENTI, MAX_MESSAGGI, rimuoviChatDemo, rimuoviEventiDemo } from '../lib/demo';
 import { eliminaTutto, PAROLA_CONFERMA } from '../lib/pulizia';
+import { eliminaDocumento, ErroreDocumenti, ordinaDocumenti, salvaDocumento, salvaTesti } from '../lib/documenti';
 
 /** Blocca le azioni della dashboard senza sessione valida. */
 async function soloAdmin(context: ActionAPIContext) {
@@ -24,7 +25,7 @@ async function conErrori<T>(fn: () => Promise<T>): Promise<T> {
   try {
     return await fn();
   } catch (e) {
-    if (e instanceof ErroreEvento) throw new ActionError({ code: 'BAD_REQUEST', message: e.message });
+    if (e instanceof ErroreEvento || e instanceof ErroreDocumenti) throw new ActionError({ code: 'BAD_REQUEST', message: e.message });
     throw e;
   }
 }
@@ -131,6 +132,55 @@ export const server = {
         await soloAdmin(context);
         const errore = await eliminaImmagine(nome);
         if (errore) throw new ActionError({ code: 'BAD_REQUEST', message: errore });
+      },
+    }),
+  },
+
+  /** Pagina /documenti: testi e PDF da scaricare, modificabili dalla dashboard. */
+  documenti: {
+    salvaTesti: defineAction({
+      input: z.object({
+        heroTitolo: campo,
+        heroTesto: campo,
+        eyebrow: campo,
+        titolo: campo,
+        accento: campo,
+        intro: campo,
+      }),
+      handler: async (input, context) => {
+        await soloAdmin(context);
+        await conErrori(() => salvaTesti(input));
+      },
+    }),
+
+    /** Crea o modifica un documento; con `file` carica (o sostituisce) il PDF. */
+    salva: defineAction({
+      accept: 'form',
+      input: z.object({
+        id: z.string().max(40).optional(),
+        titolo: campo,
+        nota: campo,
+        file: z.instanceof(File).optional(),
+      }),
+      handler: async (input, context) => {
+        await soloAdmin(context);
+        return { documento: await conErrori(() => salvaDocumento(input)) };
+      },
+    }),
+
+    elimina: defineAction({
+      input: z.object({ id: z.string().max(40) }),
+      handler: async ({ id }, context) => {
+        await soloAdmin(context);
+        await conErrori(() => eliminaDocumento(id));
+      },
+    }),
+
+    ordina: defineAction({
+      input: z.object({ ids: z.array(z.string().max(40)).max(50) }),
+      handler: async ({ ids }, context) => {
+        await soloAdmin(context);
+        await conErrori(() => ordinaDocumenti(ids));
       },
     }),
   },

@@ -4,12 +4,13 @@ import { Image } from 'astro:assets';
 import logo from '../../assets/images/logo.png';
 
 interface Props {
-  sezione: 'eventi' | 'bot';
+  sezione: 'eventi' | 'documenti' | 'bot';
 }
 
 const { sezione } = Astro.props;
 const voci = [
   { id: 'eventi', label: 'Eventi' },
+  { id: 'documenti', label: 'Documenti' },
   { id: 'bot', label: 'Chatbot' },
 ] as const;
 ---

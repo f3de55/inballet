@@ -144,20 +144,6 @@ export const iscrizioni = {
     { scadenza: '16 dicembre 2026', periodo: 'gennaio - marzo' },
     { scadenza: '17 marzo 2027', periodo: 'aprile - giugno' },
   ],
-  documenti: [
-    {
-      titolo: 'Modulo di iscrizione 2026/2027',
-      nota: 'Con regolamento e informativa privacy',
-      file: '/assets/files/modulo_iscrizione_2026_2027.pdf',
-      peso: 'PDF, 730 KB',
-    },
-    {
-      titolo: 'Autocertificazione di buona salute',
-      nota: 'Per bambini sotto i 6 anni',
-      file: '/assets/files/autocertificazione_minore_6_anni.pdf',
-      peso: 'PDF, 38 KB',
-    },
-  ],
 };
 
 /** Domande frequenti: mostrate in homepage e pubblicate come FAQPage. */

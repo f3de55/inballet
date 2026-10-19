@@ -43,6 +43,8 @@ File layout in `data/`:
 - `analytics.json` — chatbot logs (capped at 10000 entries)
 - `sessions/` — fsLite session driver
 - `uploads/eventi/` — uploaded event posters
+- `documenti.json` — texts and PDF list of `/documenti` (defaults in `src/data/documenti.ts` until first save)
+- `uploads/documenti/` — PDFs uploaded from the dashboard, served on `/assets/documenti/<file>`
 - `cache/`, `ratelimit/` — chatbot caches and rate limit counters
 
 In Docker, this directory is a named volume (`inballet-data`) so data survives rebuilds.

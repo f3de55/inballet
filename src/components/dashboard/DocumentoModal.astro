@@ -1,0 +1,52 @@
+---
+/** Modale crea/modifica documento: titolo, descrizione breve e PDF. */
+---
+
+<div class="modal" id="modalDocumento" role="dialog" aria-modal="true" aria-labelledby="modalDocumentoTitle">
+    <div class="modal-box">
+        <form id="formDocumento" novalidate>
+            <div class="modal-header">
+                <h2 id="modalDocumentoTitle">Nuovo documento</h2>
+                <button type="button" class="modal-close" data-chiudi-documento aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="documentoId">
+
+                <div class="campo">
+                    <label for="docTitolo">Titolo <span class="nota">obbligatorio</span></label>
+                    <input type="text" id="docTitolo" required placeholder="Es. Modulo di iscrizione 2026/2027" maxlength="100" data-counter="100" autocomplete="off">
+                    <small class="contatore" id="docTitolo-counter"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="docNota">Descrizione breve</label>
+                    <input type="text" id="docNota" placeholder="Es. Per bambini sotto i 6 anni" maxlength="150" data-counter="150" autocomplete="off">
+                    <small class="contatore" id="docNota-counter"></small>
+                </div>
+
+                <div class="campo">
+                    <span class="campo-label"><span>File PDF</span></span>
+                    <div class="doc-file" id="docFileAttuale" hidden>
+                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                        <div>
+                            <p id="docFilePeso"></p>
+                            <a class="btn-link" id="docFileApri" href="/documenti" target="_blank" rel="noopener">Apri il PDF attuale</a>
+                        </div>
+                    </div>
+                    <div class="upload-zone" role="button" tabindex="0" data-upload-pdf>
+                        <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                        <span><strong id="docUploadTesto">Carica il PDF</strong> o trascinalo qui</span>
+                        <small id="docUploadNota">Solo file PDF, fino a 20 MB</small>
+                        <input type="file" id="docFile" accept="application/pdf,.pdf">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-chiudi-documento>Annulla</button>
+                <button type="submit" class="btn btn-primary" id="btnSalvaDocumento">Salva documento</button>
+            </div>
+        </form>
+    </div>
+</div>

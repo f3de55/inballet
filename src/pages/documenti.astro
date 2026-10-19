@@ -1,19 +1,26 @@
 ---
+/**
+ * Pagina Documenti: testi e PDF da scaricare modificabili dalla dashboard
+ * (sezione Documenti), quindi renderizzata dal server a ogni richiesta.
+ */
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { sfondo } from '../lib/images';
-import { iscrizioni } from '../data/scuola';
+import { leggiDocumenti } from '../lib/documenti';
+
+export const prerender = false;
 
 const bg = {
   hero: await sfondo('gallery-1.jpg', { desktop: '50% 30%', tablet: '50% 50%' }),
 };
+const { hero, sezione, documenti } = await leggiDocumenti();
 ---
 
 <Base
-    title={`Iscrizioni ${iscrizioni.anno}: moduli da scaricare | InBallet`}
-    description={`Iscrizioni ${iscrizioni.anno} a InBallet: modulo da scaricare, autocertificazione sotto i 6 anni e certificato medico dai 6 anni.`}
-    ogTitle={`Iscrizioni ${iscrizioni.anno} | InBallet`}
-    ogDescription={`Modulo di iscrizione ${iscrizioni.anno} e autocertificazione per i bambini sotto i 6 anni.`}
+    title={`${hero.titolo} | InBallet`}
+    description={hero.testo || sezione.intro}
+    ogTitle={`${hero.titolo} | InBallet`}
+    ogDescription={hero.testo || sezione.intro}
 >
     <!-- Hero -->
     <section class="chisiamo-hero">
@@ -21,27 +28,28 @@ const bg = {
         <div class="chisiamo-hero-overlay"></div>
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
-            <h1 class="chisiamo-hero-title">Iscrizioni e documenti</h1>
-            <p class="chisiamo-hero-tagline">Modulo di iscrizione, autocertificazione e scadenze per l'anno {iscrizioni.anno}.</p>
+            <h1 class="chisiamo-hero-title">{hero.titolo}</h1>
+            {hero.testo && <p class="chisiamo-hero-tagline">{hero.testo}</p>}
         </div>
     </section>
 
     <!-- Documenti: intestazione editoriale ed elenco dei PDF -->
     <section id="documenti" class="documenti-section" aria-labelledby="documenti-titolo">
         <div class="intro-editoriale">
-            <span class="eyebrow">Iscrizioni {iscrizioni.anno}</span>
-            <h2 class="titolo-sezione" id="documenti-titolo">Moduli da <em>scaricare</em></h2>
-            <p>Scarica il modulo, compilalo e consegnalo firmato in segreteria. Dai 6 anni serve anche il certificato medico per l'attività sportiva non agonistica; per i bambini più piccoli basta l'autocertificazione firmata dai genitori.</p>
+            {sezione.eyebrow && <span class="eyebrow">{sezione.eyebrow}</span>}
+            <h2 class="titolo-sezione" id="documenti-titolo">{sezione.titolo}{sezione.accento && <>{' '}<em>{sezione.accento}</em></>}</h2>
+            {sezione.intro && <p>{sezione.intro}</p>}
         </div>
         <div class="container">
+            {documenti.length > 0 && (
             <ul class="documenti-lista">
-                {iscrizioni.documenti.map((d) => (
+                {documenti.map((d) => (
                     <li>
                         <a class="documento" href={d.file} target="_blank" rel="noopener">
                             <i class="fas fa-file-pdf documento-icona" aria-hidden="true"></i>
                             <span class="documento-testo">
                                 <span class="documento-nome">{d.titolo}</span>
-                                <span class="documento-nota">{d.nota}</span>
+                                {d.nota && <span class="documento-nota">{d.nota}</span>}
                             </span>
                             <span class="documento-azione">
                                 <span class="documento-peso">{d.peso}</span>
@@ -53,6 +61,7 @@ const bg = {
                     </li>
                 ))}
             </ul>
+            )}
         </div>
     </section>
 </Base>

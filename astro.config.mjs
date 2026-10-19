@@ -13,7 +13,13 @@ export default defineConfig({
   adapter: node({ mode: 'standalone' }),
 
   // sitemap-index.xml con tutte le pagine pubbliche (area riservata esclusa)
-  integrations: [sitemap({ filter: (page) => !/\/(login|dashboard)/.test(page) })],
+  // /documenti è renderizzata dal server (contenuti dalla dashboard): va aggiunta a mano
+  integrations: [
+    sitemap({
+      filter: (page) => !/\/(login|dashboard)/.test(page),
+      customPages: ['https://www.inballet.it/documenti'],
+    }),
+  ],
 
   // URL puliti senza slash finale: /chi-siamo -> dist/client/chi-siamo.html
   trailingSlash: 'never',

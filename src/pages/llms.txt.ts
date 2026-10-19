@@ -6,10 +6,15 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { ANNI_ATTIVITA, categorieCorsi, faq, FONDAZIONE, iscrizioni, orari, scuola, sedi } from '../data/scuola';
+import { leggiDocumenti } from '../lib/documenti';
+
+// I documenti di /documenti sono modificabili dalla dashboard: il file si genera a ogni richiesta
+export const prerender = false;
 
 const strip = (html: string) => html.replace(/<[^>]+>/g, '');
 
 export const GET: APIRoute = async ({ site }) => {
+  const { documenti } = await leggiDocumenti();
   const url = (path: string) => new URL(path, site).href;
   // Età e frequenza di ogni corso, dalla collection delle pagine corso
   const corsi = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.data]));
@@ -69,7 +74,7 @@ ${categorieCorsi.map((c) => `### ${c.nome}\n\n${strip(c.descrizione)}\n\n${c.cor
 ## Iscrizioni ${iscrizioni.anno}
 
 - [Documenti per l'iscrizione](${url('/documenti')}): quota associativa annuale ${iscrizioni.quota} €, certificato medico per attività non agonistica dai 6 anni (sotto i 6 anni autocertificazione dei genitori), corso pagato in tre rate.
-${iscrizioni.documenti.map((d) => `- [${d.titolo}](${url(d.file)}): ${d.nota.toLowerCase()}`).join('\n')}
+${documenti.map((d) => `- [${d.titolo}](${url(d.file)})${d.nota ? `: ${d.nota.toLowerCase()}` : ''}`).join('\n')}
 
 ## Pagine principali
 

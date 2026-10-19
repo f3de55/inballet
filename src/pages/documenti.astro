@@ -2,23 +2,16 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { sfondo } from '../lib/images';
-import { iscrizioni, scuola } from '../data/scuola';
+import { iscrizioni } from '../data/scuola';
 
 const bg = {
   hero: await sfondo('gallery-1.jpg', { desktop: '50% 30%', tablet: '50% 50%' }),
-  cta: await sfondo('gallery-2.jpg'),
 };
-
-const passi = [
-  { titolo: 'Compila il modulo', testo: `Scarica il modulo di iscrizione ${iscrizioni.anno}, che contiene anche il regolamento e l'informativa privacy, compilalo e firmalo.` },
-  { titolo: 'Prepara il certificato', testo: "Dai 6 anni serve il certificato medico per l'attività sportiva non agonistica. Per i bambini più piccoli basta l'autocertificazione di buona salute firmata dai genitori." },
-  { titolo: 'Consegna in segreteria', testo: `Porta il modulo firmato e il certificato in segreteria, insieme alla quota associativa annuale di ${iscrizioni.quota} €.` },
-];
 ---
 
 <Base
-    title={`Iscrizioni ${iscrizioni.anno}: moduli e quote | InBallet`}
-    description={`Iscrizioni ${iscrizioni.anno} a InBallet: modulo da scaricare, autocertificazione sotto i 6 anni, certificato medico, quota associativa di ${iscrizioni.quota} € e scadenze delle rate.`}
+    title={`Iscrizioni ${iscrizioni.anno}: moduli da scaricare | InBallet`}
+    description={`Iscrizioni ${iscrizioni.anno} a InBallet: modulo da scaricare, autocertificazione sotto i 6 anni e certificato medico dai 6 anni.`}
     ogTitle={`Iscrizioni ${iscrizioni.anno} | InBallet`}
     ogDescription={`Modulo di iscrizione ${iscrizioni.anno} e autocertificazione per i bambini sotto i 6 anni.`}
 >
@@ -60,70 +53,6 @@ const passi = [
                     </li>
                 ))}
             </ul>
-        </div>
-    </section>
-
-    <!-- Come iscriversi: tre passi -->
-    <section class="passi-section" aria-labelledby="passi-titolo">
-        <div class="intro-editoriale">
-            <span class="eyebrow">Come iscriversi</span>
-            <h2 class="titolo-sezione" id="passi-titolo">Tre passi <em>per iniziare</em></h2>
-            <p>Prima di iscriverti puoi contattarci: ti aiutiamo a scegliere il corso giusto per età e livello.</p>
-        </div>
-        <div class="container">
-            <ol class="passi-lista">
-                {passi.map((p, i) => (
-                    <li class="voce">
-                        <span class="voce-anno" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                        <h3 class="voce-titolo">{p.titolo}</h3>
-                        <p class="voce-testo">{p.testo}</p>
-                    </li>
-                ))}
-            </ol>
-        </div>
-    </section>
-
-    <!-- Quote: intestazione a sinistra, quota e rate a destra -->
-    <section class="quote-section" aria-labelledby="quote-titolo">
-        <div class="container quote-layout">
-            <div class="quote-header">
-                <span class="eyebrow">Quote {iscrizioni.anno}</span>
-                <h2 class="titolo-sezione" id="quote-titolo">Quota associativa <em>e rate</em></h2>
-                <p class="intro-sezione">Il costo dei corsi dipende dalla disciplina e dalla frequenza e si paga in tre rate. Per un preventivo chiamaci o scrivici.</p>
-            </div>
-            <dl class="quote-lista">
-                <div class="quota">
-                    <dt>Quota associativa annuale</dt>
-                    <dd class="quota-valore">{iscrizioni.quota} €</dd>
-                </div>
-                {iscrizioni.rate.map((r, i) => (
-                    <div class="quota">
-                        <dt>
-                            {i + 1}ª rata
-                            <span class="quota-periodo">{r.periodo}</span>
-                        </dt>
-                        <dd>entro il {r.scadenza}</dd>
-                    </div>
-                ))}
-            </dl>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="doc-cta-section sezione-scura">
-        <div class="doc-cta-bg" style={bg.cta.style}></div>
-        <div class="doc-cta-overlay"></div>
-        <div class="doc-cta-wrapper">
-            <h2 class="titolo-sezione">Dubbi sull'<em>iscrizione</em>?</h2>
-            <p class="intro-sezione">Per un preventivo, per scegliere il corso o per qualsiasi domanda sui documenti, siamo a disposizione.</p>
-            <div class="doc-cta-buttons">
-                <a href={`mailto:${scuola.email}?subject=Iscrizione%20${encodeURIComponent(iscrizioni.anno)}`} class="btn-primary">
-                    <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici
-                </a>
-                <a href={scuola.telefonoHref} class="btn-secondary">
-                    <i class="fas fa-phone" aria-hidden="true"></i> Chiamaci
-                </a>
-            </div>
         </div>
     </section>
 </Base>
@@ -212,155 +141,10 @@ const passi = [
   }
 }
 
-/* ---------- Passi ---------- */
-.passi-section {
-  padding: var(--section-y) 0;
-  background: var(--bg-soft);
-}
-
-.passi-lista {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 3rem;
-  margin: 3.5rem 0 0;
-  padding: 0;
-}
-
-.passi-lista .voce-testo {
-  font-size: var(--text-base);
-}
-
-/* ---------- Quote ---------- */
-.quote-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-.quote-layout {
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-  gap: 5rem;
-  align-items: start;
-}
-
-.quote-header .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.quote-lista {
-  margin: 0;
-}
-
-.quota {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1.5rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
-}
-
-.quota:first-child {
-  padding-top: .5rem;
-}
-
-.quota:last-child {
-  border-bottom: none;
-}
-
-.quota dt {
-  display: flex;
-  flex-direction: column;
-  gap: .3rem;
-  font-size: var(--text-xl);
-  font-weight: 500;
-  line-height: var(--leading-snug);
-  color: var(--dark-navy);
-}
-
-.quota-periodo {
-  font-size: var(--text-base);
-  font-weight: 400;
-  color: var(--text-light);
-}
-
-.quota dd {
-  margin: 0;
-  font-size: var(--text-base);
-  font-weight: 400;
-  color: var(--text-dark);
-  text-align: right;
-  white-space: nowrap;
-}
-
-.quota dd.quota-valore {
-  font-size: var(--text-3xl);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--dark-navy);
-}
-
-/* ---------- CTA ---------- */
-.doc-cta-section {
-  position: relative;
-  padding: var(--section-y) 0;
-  overflow: hidden;
-}
-
-.doc-cta-bg,
-.doc-cta-overlay {
-  position: absolute;
-  inset: 0;
-}
-
-.doc-cta-bg {
-  background: center / cover no-repeat;
-}
-
-.doc-cta-overlay {
-  background: linear-gradient(135deg, rgba(26, 26, 26, .9) 0%, rgba(42, 42, 42, .85) 100%);
-}
-
-.doc-cta-wrapper {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  text-align: center;
-}
-
-.doc-cta-wrapper .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.doc-cta-wrapper .intro-sezione {
-  margin-bottom: 2.5rem;
-}
-
-.doc-cta-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-}
-
 /* ---------- Tablet ---------- */
 @media (max-width: 900px) {
-  .documenti-lista,
-  .passi-lista {
+  .documenti-lista {
     margin-top: 2.5rem;
-  }
-
-  .passi-lista {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
-  }
-
-  .quote-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
   }
 }
 
@@ -378,37 +162,10 @@ const passi = [
     padding-top: .15rem;
   }
 
-
-
   .documento-azione {
     grid-column: 2;
     justify-content: space-between;
     margin-top: .75rem;
-  }
-
-
-  /* Quote: voce e scadenza una sotto l'altra */
-  .quota {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: .5rem;
-    padding: 1.25rem 0;
-  }
-
-  .quota dd {
-    text-align: left;
-  }
-
-
-
-
-  .doc-cta-wrapper {
-    padding: 0 1.5rem;
-  }
-
-  .doc-cta-buttons {
-    flex-direction: column;
-    align-items: center;
   }
 }
 </style>

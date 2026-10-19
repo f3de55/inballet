@@ -23,14 +23,14 @@ const perEta = categorieCorsi.find((c) => c.id === 'eta')!;
 // Progetti sul territorio: due gruppi di link alle pagine dei progetti
 const progetti = [
   { titolo: 'Eventi e collaborazioni', voci: [
-    { nome: 'Spettacoli ed Eventi', href: '/spettacoli-eventi', testo: 'Spettacolo annuale in teatro, eventi nelle scuole e team building' },
-    { nome: 'Collaborazioni con le Scuole', href: '/collaborazioni-scuole', testo: 'Progetti su misura dal nido alle secondarie di secondo grado' },
-    { nome: 'Sportello Psicologico', href: '/sportello-psicologico', testo: 'Incontri con una psicoterapeuta per genitori e famiglie' },
+    { nome: 'Spettacoli ed Eventi', href: '/spettacoli-eventi' },
+    { nome: 'Collaborazioni con le Scuole', href: '/collaborazioni-scuole' },
+    { nome: 'Sportello Psicologico', href: '/sportello-psicologico' },
   ] },
   { titolo: 'Danza integrativa', voci: [
-    { nome: 'Progetto NoiConVoi', href: '/progetto-noiconvoi', testo: "Dal 2013, danza e volontariato per l'inclusione" },
-    { nome: 'Classi Integrate', href: '/classi-integrate', testo: 'Quasi tutti i corsi accolgono bambini con bisogni speciali' },
-    { nome: 'Sostenitori', href: '/sostenitori', testo: "Donazioni e volontariato d'impresa per i progetti sociali" },
+    { nome: 'Progetto NoiConVoi', href: '/progetto-noiconvoi' },
+    { nome: 'Classi Integrate', href: '/classi-integrate' },
+    { nome: 'Sostenitori', href: '/sostenitori' },
   ] },
 ];
 
@@ -270,7 +270,7 @@ const schema = schemaHome(socialImage);
         <div class="intro-editoriale progetti-intro">
             <span class="eyebrow">La danza fuori dalla sala</span>
             <h2 class="titolo-sezione">Progetti <em>sul territorio</em></h2>
-            <p class="intro-sezione">Portiamo la danza nelle scuole, nelle comunità e accanto a chi ha bisogno: spettacoli aperti al territorio, progetti educativi e, dal 2013, percorsi di inclusione con il progetto NoiConVoi e un team di volontari.</p>
+            <p class="intro-sezione">Spettacoli, progetti nelle scuole e, dal 2013, danza per l'inclusione.</p>
         </div>
 
         <div class="progetti-gruppi">
@@ -282,7 +282,6 @@ const schema = schemaHome(socialImage);
                             <li>
                                 <a href={v.href}>
                                     <span class="progetto-nome">{v.nome}</span>
-                                    <span class="progetto-testo">{v.testo}</span>
                                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                 </a>
                             </li>
@@ -1337,7 +1336,7 @@ const schema = schemaHome(socialImage);
   grid-template-columns: minmax(0, 1fr) auto;
   column-gap: 1.5rem;
   align-items: center;
-  padding: 1.15rem 0;
+  padding: 1rem 0;
   color: var(--white);
   text-decoration: none;
 }
@@ -1349,17 +1348,7 @@ const schema = schemaHome(socialImage);
   transition: color .3s ease;
 }
 
-.progetto-testo {
-  grid-row: 2;
-  margin-top: .2rem;
-  font-size: var(--text-sm);
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.68);
-}
-
 .progetti-lista a i {
-  grid-row: 1 / span 2;
-  grid-column: 2;
   font-size: var(--text-sm);
   color: var(--primary-blue);
   transition: transform .3s ease;

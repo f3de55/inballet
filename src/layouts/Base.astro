@@ -137,13 +137,30 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
   }
 }
 
-/* Mobile: sfondo illustrato al posto del nero pieno, con un velo scuro sopra
-   perché l'immagine è ancora chiara per testo e link del footer */
+/* Mobile: sfondo illustrato al posto del nero pieno. L'immagine è verticale (941x1671)
+   e il footer è molto più lungo: con "cover" ne mostrerebbe solo una striscia, quindi
+   la si tiene intera, a tutta larghezza e ancorata in basso; il nero dell'immagine
+   (#111) si fonde con lo sfondo e il bordo superiore sfuma. Un filtro scurisce il
+   disegno, ancora chiaro per testo e link. */
 @media (max-width: 768px) {
   .footer {
-    background:
-      linear-gradient(rgba(0, 0, 0, .45), rgba(0, 0, 0, .45)),
-      var(--dark-navy) url('/assets/images/footer-mobile.webp') center / cover no-repeat;
+    background: #111;
+    overflow: clip;
+  }
+
+  .footer::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    aspect-ratio: 941 / 1671;
+    background: url('/assets/images/footer-mobile.webp') center bottom / 100% 100% no-repeat;
+    filter: brightness(.6);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 14%);
+    pointer-events: none;
   }
 }
 </style>

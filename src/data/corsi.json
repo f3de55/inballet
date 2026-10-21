@@ -449,7 +449,10 @@
     "badge": "Tutti i livelli",
     "titolo": "Danza Classica",
     "tagline": "La tecnica che sta alla base di ogni stile, dalla sbarra al centro",
-    "heroImage": "assets/images/foto/danza-classica.jpg",
+    "heroImage": {
+      "desktop": "assets/images/foto/danza-classica.png",
+      "tablet": "assets/images/foto/danza-classica-tablet.png"
+    },
     "heroFuoco": {
       "desktop": "50% 25%",
       "tablet": "50% 50%"

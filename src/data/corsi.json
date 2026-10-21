@@ -56,7 +56,10 @@
     "badge": "Dai 3 anni",
     "titolo": "Avviamento alla Danza",
     "tagline": "Il primo incontro con la musica e il movimento, attraverso il gioco",
-    "heroImage": "assets/images/foto/preeducazione-1.png",
+    "heroImage": {
+      "desktop": "assets/images/foto/preeducazione-1.png",
+      "tablet": "assets/images/foto/preeducazione-1-tablet.png"
+    },
     "heroFuoco": {
       "desktop": "50% 30%"
     },

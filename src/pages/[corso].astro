@@ -25,7 +25,7 @@ const { data } = Astro.props;
 const hero = await sfondo(data.heroImage, data.heroFuoco);
 const contatto = await sfondo(data.ctaImage ?? 'bg-progetti-territorio.jpg', data.ctaFuoco);
 // Anteprima social 1200x630 dalla foto del corso
-const ogImage = new URL((await getImage({ src: getAsset(data.heroImage), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
+const ogImage = new URL((await getImage({ src: getAsset(typeof data.heroImage === 'string' ? data.heroImage : data.heroImage.desktop), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
 // Stesso URL del canonical (senza .html)
 const schema = schemaCorso(data, new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1'), Astro.site).href);
 

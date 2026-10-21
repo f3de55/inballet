@@ -9,6 +9,9 @@ import { z } from 'astro/zod';
 /** Punto focale per desktop, tablet e mobile (vedi Fuoco in src/lib/images.ts). */
 const fuoco = z.object({ desktop: z.string(), tablet: z.string(), mobile: z.string() }).partial().optional();
 
+/** Una foto per tutti i formati, o foto diverse per desktop/tablet/mobile (vedi Sorgenti in src/lib/images.ts). */
+const sorgenti = z.union([z.string(), z.object({ desktop: z.string(), tablet: z.string().optional(), mobile: z.string().optional() })]);
+
 const corsi = defineCollection({
   loader: file('src/data/corsi.json'),
   schema: z.object({
@@ -21,7 +24,8 @@ const corsi = defineCollection({
     badge: z.string(),
     titolo: z.string(),
     tagline: z.string(),
-    heroImage: z.string(),
+    /** Foto dell'hero: stringa, oppure { desktop, tablet, mobile } (tablet: 601-900px, mobile: <=600px). */
+    heroImage: sorgenti,
     /** Punto focale dell'hero per formato (CSS position, es. "100% 30%" per banner con soggetto a destra). */
     heroFuoco: fuoco,
     // Intro (HTML)

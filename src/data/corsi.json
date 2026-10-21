@@ -747,7 +747,10 @@
     "badge": "Dai 6 anni",
     "titolo": "Danza Modern",
     "tagline": "Tecnica, emozione e immaginazione: la danza che ha rotto gli schemi",
-    "heroImage": "assets/images/foto/modern-1.jpg",
+    "heroImage": {
+      "desktop": "assets/images/foto/modern-contrasti.png",
+      "tablet": "assets/images/foto/modern-contrasti-tablet.png"
+    },
     "heroFuoco": {
       "desktop": "50% 70%",
       "tablet": "50% 50%"

@@ -977,7 +977,7 @@ section [class*="-intro-highlight"] p {
   }
 
   .chisiamo-hero-overlay {
-    background: linear-gradient(to top, rgba(26, 62, 94, 0.88) 0%, rgba(40, 88, 128, 0.62) 60%, rgba(59, 114, 160, 0.4) 100%);
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.6) 60%, rgba(10, 10, 10, 0.4) 100%);
   }
 
   .breadcrumb [aria-current="page"] {

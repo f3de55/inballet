@@ -22,7 +22,7 @@ const perEta = categorieCorsi.find((c) => c.id === 'eta')!;
 
 // Progetti sul territorio: due gruppi di link alle pagine dei progetti
 const progetti = [
-  { titolo: 'Eventi e collaborazioni', voci: [
+  { titolo: 'Eventi, scuole e famiglie', voci: [
     { nome: 'Spettacoli ed Eventi', href: '/spettacoli-eventi' },
     { nome: 'Collaborazioni con le Scuole', href: '/collaborazioni-scuole' },
     { nome: 'Sportello Psicologico', href: '/sportello-psicologico' },
@@ -48,9 +48,9 @@ const schema = schemaHome(socialImage);
 
 <Base
     title="Scuola di Danza a Lainate e Rho | InBallet"
-    description={`Scuola di danza a Lainate e Rho (MI) dal ${FONDAZIONE}: classica, modern, contemporanea, hip-hop, yoga e pilates dai 3 anni agli adulti. Contattaci per scegliere il corso.`}
+    description={`Scuola di danza a Lainate e Rho (MI) dal ${FONDAZIONE}: classica, modern, contemporanea, hip-hop, yoga e pilates per bambini dai 3 anni, ragazzi e adulti.`}
     ogTitle="InBallet - Scuola di Danza a Lainate e Rho"
-    ogDescription={`${ANNI_ATTIVITA} anni di danza, passione e formazione per tutte le età, a Lainate e Rho.`}
+    ogDescription={`Corsi di danza per bambini dai 3 anni, ragazzi e adulti a Lainate e Rho, dal ${FONDAZIONE}. Inclusione e formazione insegnanti CSEN e CONI.`}
     ogImage={socialImage}
     skipLinkId="skip-link"
 >
@@ -80,7 +80,7 @@ const schema = schemaHome(socialImage);
             <h1>Scuola di Danza a Lainate e Rho</h1>
 
             <p class="hero-subtitle">
-                Corsi di danza dai 3 anni agli adulti. Ente formativo riconosciuto CSEN e CONI.
+                Danza classica, modern, contemporanea, hip-hop, yoga e pilates: corsi per bambini dai 3 anni, ragazzi e adulti, anche principianti.
             </p>
 
             <div class="hero-cta">
@@ -100,9 +100,9 @@ const schema = schemaHome(socialImage);
         <div class="corsi-wrapper">
             <!-- Header -->
             <div class="corsi-header">
-                <span class="corsi-label eyebrow">La nostra offerta formativa</span>
+                <span class="corsi-label eyebrow">Corsi di danza a Lainate e Rho</span>
                 <h2 class="corsi-title titolo-sezione">I nostri <em>corsi</em></h2>
-                <p class="corsi-intro intro-sezione">Dai 3 anni agli adulti over 40, dalla tecnica classica agli stili urbani: scegli per stile o per età il corso giusto per te.</p>
+                <p class="corsi-intro intro-sezione">Dai 3 anni all'età adulta, dalla danza classica all'hip-hop fino a yoga e pilates: scegli il corso per stile o per età.</p>
             </div>
 
             <ol class="corsi-indice">
@@ -160,9 +160,11 @@ const schema = schemaHome(socialImage);
                     </div>
 
                     <div class="story-text">
-                        <p class="story-lead">I.N. Ballet è una scuola di danza multidisciplinare a Lainate e Rho, nata nel {FONDAZIONE} da {scuola.fondatrice}: un luogo di vita dedicato alla conoscenza e all'esplorazione dei diversi stili di danza, nelle loro sfumature tecniche e artistiche.</p>
+                        <p class="story-lead">I.N. Ballet, per tutti InBallet, è la scuola di danza multidisciplinare di Lainate e Rho fondata nel {FONDAZIONE} da {scuola.fondatrice}: un luogo di vita dedicato alla conoscenza e all'esplorazione dei diversi stili di danza, nelle loro sfumature tecniche e artistiche.</p>
 
-                        <p>Accoglie bambini dai 3 anni e adulti di ogni livello, è ente formativo CSEN e CONI per i maestri di danza e dal 2013, con il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, porta la danza ai ragazzi con disabilità.</p>
+                        <p>Qui danzano bambini dai 3 anni, ragazzi e adulti, dai primi passi fino ai corsi avanzati. È una scuola che cambia insieme a chi la vive, in dialogo continuo con le famiglie.</p>
+
+                        <p>L'inclusione riguarda tutte le età: quasi tutte le <a href="/classi-integrate">classi accolgono allievi con bisogni speciali</a> e dal 2013 il <a href="/progetto-noiconvoi">progetto NoiConVoi</a> porta la danza ai ragazzi con disabilità, con un team di volontari e il supporto psicomotorio.</p>
                     </div>
 
                     <blockquote class="story-quote">
@@ -201,8 +203,8 @@ const schema = schemaHome(socialImage);
                     <a href="/formazione-insegnanti" class="percorso">
                         <span class="percorso-tipo">Percorso biennale</span>
                         <h3 class="percorso-titolo">Formazione Insegnanti di Danza</h3>
-                        <p class="percorso-testo">Due anni di formazione nello stile Modern, tra danza, pedagogia e sviluppo, fino ai casi più complessi di disabilità.</p>
-                        <p class="percorso-dettagli">Titolo riconosciuto CSEN e CONI · Ente formativo dal 2023 · 6 master successivi</p>
+                        <p class="percorso-testo">Due anni nello stile Modern tra danza, pedagogia e sviluppo, dalla prima infanzia all'età adulta, fino ai casi più complessi di disabilità.</p>
+                        <p class="percorso-dettagli">Titolo nazionale CSEN e CONI · Ente formativo dal 2023 · Sei master di approfondimento</p>
                         <span class="percorso-cta" aria-hidden="true">Scopri il corso <i class="fas fa-arrow-right"></i></span>
                         <i class="fas fa-arrow-right percorso-freccia" aria-hidden="true"></i>
                     </a>
@@ -270,7 +272,7 @@ const schema = schemaHome(socialImage);
         <div class="intro-editoriale progetti-intro">
             <span class="eyebrow">La danza fuori dalla sala</span>
             <h2 class="titolo-sezione">Progetti <em>sul territorio</em></h2>
-            <p class="intro-sezione">Spettacoli, progetti nelle scuole e, dal 2013, danza per l'inclusione.</p>
+            <p class="intro-sezione">Spettacoli in teatro, progetti con le scuole del territorio, ascolto per le famiglie e, dal 2013, danza per l'inclusione.</p>
         </div>
 
         <div class="progetti-gruppi">

@@ -87,9 +87,9 @@ export const categorieCorsi = [
   {
     id: 'contemporanea',
     nome: 'Danza Contemporanea',
-    sintesi: "L'arte più libera del movimento, dai 10 anni fino agli adulti over 40.",
+    sintesi: "L'arte più libera del movimento, dai 10 anni all'età adulta.",
     immagine: { src: 'foto/contact-improvisation-img2.jpg', alt: 'Due danzatori a terra durante una sequenza di contact improvisation', fuoco: { desktop: '50% 50%' } },
-    descrizione: "L'arte più libera del movimento: Danza Contemporanea dai 10 anni, un corso per adulti over 40, Contact Improvisation e Movimento Creativo dai 18 anni.",
+    descrizione: "L'arte più libera del movimento: Danza Contemporanea dai 10 anni, Contemporanea Adulti dai 40 anni, Contact Improvisation e Movimento Creativo, aperto dai 18 anni anche a chi non ha mai danzato.",
     corsi: [
       { nome: 'Danza Contemporanea', url: '/danza-contemporanea' },
       { nome: 'Contemporanea Adulti', url: '/contemporanea-adulti' },
@@ -155,34 +155,38 @@ export const iscrizioni = {
 export const faq = [
   {
     domanda: 'Da che età si può iniziare a danzare a InBallet?',
-    risposta: `Si comincia dai 3 anni con i percorsi di Prima Infanzia (3-5 anni) e Seconda Infanzia (6-8 anni). Seguono i corsi per Bambini (9-11 anni), Ragazzi (12-16 anni) e Adulti, anche principianti assoluti: non c'è un limite di età per iniziare.`,
+    risposta: "Si comincia a 3 anni compiuti con Avviamento alla Danza; a 4-5 anni c'è Educazione alla Danza e dai 6 anni si passa a danza classica, modern, hip-hop e breaking. Ci sono corsi per bambini, ragazzi e adulti, anche principianti assoluti: per iniziare non c'è un limite di età.",
   },
   {
     domanda: 'Dove si trovano le sedi?',
-    risposta: `La sede centrale è in ${sedi[0].indirizzo}. L'altra sede è in ${sedi[1].indirizzo}. Entrambe si trovano nell'area nord-ovest di Milano.`,
+    risposta: `InBallet ha due sedi in provincia di Milano, nell'area nord-ovest della città: la sede centrale in ${sedi[0].via} a ${sedi[0].citta} e la sede di ${sedi[1].via} a ${sedi[1].citta}.`,
   },
   {
     domanda: 'Come posso scegliere il corso giusto?',
-    risposta: `Basta contattarci: chiama il ${scuola.telefono}, scrivi su WhatsApp o invia un'e-mail a ${scuola.email}. Ti aiutiamo a scegliere il corso adatto per età e livello e ti diamo tutte le informazioni su orari, sedi e iscrizione.`,
+    risposta: `Chiamaci al ${scuola.telefono}, scrivici su WhatsApp o a ${scuola.email}: ti aiutiamo a scegliere il corso adatto all'età e al livello e ti diamo tutte le informazioni su orari, sedi e iscrizione.`,
   },
   {
     domanda: 'Quali corsi di danza proponete?',
-    risposta: 'Avviamento alla Danza (dai 3 anni) ed Educazione alla Danza (4-5 anni) per i più piccoli, poi danza classica, modern (dai 6 anni), contemporanea (dai 10 anni), contact improvisation, movimento creativo, hip-hop e breaking (dai 6 anni), heels, danza acrobatica, contaminato (dai 16 anni), hatha yoga e pilates, oltre a lezioni individuali e percorsi specifici per età.',
+    risposta: "Per i più piccoli Avviamento alla Danza (dai 3 anni) ed Educazione alla Danza (4-5 anni). Dai 6 anni danza classica, modern, hip-hop e breaking, dai 10 anni danza contemporanea e dai 16 anni, con esperienza, il Contaminato. Poi heels, danza acrobatica e contact improvisation; per gli adulti contemporanea adulti (dai 40 anni), movimento creativo (dai 18 anni), hatha yoga e pilates, oltre alle lezioni individuali.",
   },
   {
     domanda: 'Ci sono corsi di danza per adulti principianti?',
-    risposta: 'Sì. Danza Contemporanea Adulti è dedicata a chi ha dai 40 anni in su, senza limiti di età, anche per chi ricomincia dopo anni di stop o parte da zero. Movimento Creativo è aperto agli adulti dai 18 anni, danzatori e non. Per il benessere ci sono Hatha Yoga e Pilates.',
+    risposta: "Sì, si può iniziare a qualsiasi età. Danza Contemporanea Adulti è pensata per chi ha dai 40 anni in su, anche per chi riparte dopo anni di stop o da zero; Movimento Creativo è aperto dai 18 anni, a danzatori e non. Ci sono anche danza classica per livelli, hatha yoga e pilates.",
   },
   {
     domanda: 'InBallet accoglie bambini e ragazzi con disabilità?',
-    risposta: "Sì. Quasi tutte le classi sono predisposte per accogliere casi speciali: dopo un consulto con la Direzione si fissa un colloquio con la famiglia per scegliere il gruppo classe più adatto. Dal 2013, inoltre, il progetto NoiConVoi accoglie il lunedì sera ragazzi con disabilità in esperienze di danza con supporto psicomotorio, insieme a un team di volontari.",
+    risposta: "Sì. Quasi tutte le classi accolgono allievi con bisogni speciali: dopo un consulto con la Direzione si fissa un colloquio con la famiglia per scegliere il gruppo più adatto. Dal 2013, inoltre, il progetto NoiConVoi accoglie il lunedì sera ragazzi con disabilità in esperienze di danza con supporto psicomotorio, insieme a un team di volontari.",
   },
   {
     domanda: 'InBallet forma anche insegnanti di danza?',
-    risposta: 'Sì. InBallet è Ente Formativo riconosciuto CSEN e CONI: propone un corso biennale di formazione per insegnanti di danza Modern e formazioni personalizzate per insegnanti, scuole ed enti.',
+    risposta: "Sì. Dal 2023 InBallet è ente formativo riconosciuto CSEN e CONI: propone un corso biennale per insegnanti di danza Modern, con titolo a valenza nazionale e sei master di approfondimento, e formazioni personalizzate per educatori, terapeuti, insegnanti, scuole ed enti.",
   },
   {
     domanda: 'Come ci si iscrive e quanto costano i corsi?',
-    risposta: `Basta compilare il modulo di iscrizione (scaricabile dalla pagina Documenti) e consegnarlo in segreteria con il certificato medico per l'attività sportiva non agonistica, obbligatorio dai 6 anni; per i più piccoli basta l'autocertificazione dei genitori. La quota associativa annuale è di ${iscrizioni.quota} €, mentre il costo dei corsi dipende dalla disciplina e dalla frequenza: chiama il ${scuola.telefono} o scrivi a ${scuola.email} per il preventivo.`,
+    risposta: `Si compila il modulo di iscrizione (scaricabile dalla pagina Documenti) e lo si consegna in segreteria con il certificato medico per l'attività sportiva non agonistica, obbligatorio dai 6 anni; per i più piccoli basta l'autocertificazione dei genitori. La quota associativa annuale è di ${iscrizioni.quota} €, mentre il costo dei corsi dipende dalla disciplina e dalla frequenza: chiama il ${scuola.telefono} o scrivi a ${scuola.email} per il preventivo.`,
+  },
+  {
+    domanda: 'Gli allievi si esibiscono in spettacoli?',
+    risposta: "Sì. Ogni anno la scuola porta in teatro uno spettacolo con gli allievi, nato dai progetti artistici e pedagogici dell'anno; durante l'anno partecipa anche a eventi celebrativi e a eventi nelle scuole del territorio.",
   },
 ];

@@ -1,7 +1,7 @@
 {
   "adulti": {
     "title": "Danza per adulti a Lainate e Rho | InBallet",
-    "description": "Danza per adulti a Lainate e Rho (MI), anche principianti: Contemporanea over 40, Movimento Creativo e Contact dai 18 anni, Hip-Hop, Heels, Yoga e Pilates.",
+    "description": "Danza per adulti a Lainate e Rho (MI), anche principianti: Contemporanea dai 40 anni, Movimento Creativo dai 18, Contact Improvisation, Yoga e Pilates.",
     "ogTitle": "Danza per adulti, anche principianti | InBallet",
     "ogDescription": "Iniziare da zero, ricominciare dopo anni o continuare: i corsi per adulti di InBallet.",
     "badge": "Adulti",
@@ -20,7 +20,7 @@
       "desktop": "75% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>Per danzare non c'è un'età giusta: a InBallet gli adulti possono iniziare da zero, ricominciare dopo anni o continuare uno stile che già conoscono.</p>\n<p><a href=\"/contemporanea-adulti\">Danza Contemporanea Adulti</a> è pensata per chi ha dai 40 anni in su; <a href=\"/movimento-creativo\">Movimento Creativo</a> e <a href=\"/contact-improvisation\">Contact Improvisation</a> accolgono adulti dai 18 anni, anche non danzatori; per il benessere ci sono Hatha Yoga e Pilates.</p>",
+    "intro": "<p>Per danzare non c'è un'età giusta: a InBallet gli adulti possono iniziare da zero, ricominciare dopo anni di stop o continuare uno stile che già conoscono, in corsi veri e propri.</p>\n<p><a href=\"/contemporanea-adulti\">Danza Contemporanea Adulti</a> è pensata per chi ha dai 40 anni in su; <a href=\"/movimento-creativo\">Movimento Creativo</a> accoglie adulti dai 18 anni, anche non danzatori; con la <a href=\"/contact-improvisation\">Contact Improvisation</a> si esplora l'improvvisazione in coppia. Per il benessere ci sono <a href=\"/yoga\">Hatha Yoga</a> e <a href=\"/pilates\">Pilates</a>.</p>",
     "eta": "Adulti di tutte le età",
     "frequenza": "1-3 lezioni a settimana",
     "metodoTitolo": "I corsi per adulti",
@@ -30,8 +30,8 @@
         "testo": "Dai 40 anni, senza limiti di età: per chi ricomincia dopo anni di stop o parte da zero, tra floor barre, sbarra e coreografia."
       },
       {
-        "titolo": "Movimento Creativo e Contact",
-        "testo": "Dai 18 anni, danzatori e non: respiro, ascolto di sé, improvvisazione e contatto con un partner."
+        "titolo": "Movimento Creativo",
+        "testo": "Dai 18 anni, danzatori e non: respiro, musica e ascolto di sé, in sessioni a tema dedicate alla cura di sé."
       },
       {
         "titolo": "Yoga e Pilates",
@@ -41,11 +41,11 @@
     "imparaTitolo": "Cosa troverai",
     "impara": [
       "Corsi anche per principianti assoluti",
-      "Classi pensate per chi ricomincia",
-      "Il proprio ritmo, senza confronti",
+      "Classi pensate per chi ricomincia dopo anni di stop",
+      "Lezioni costruite in più fasi, dal warm-up alla coreografia",
       "Benefici per il corpo e per la mente",
       "Un gruppo con cui condividere la passione",
-      "Lo spettacolo di fine anno, se lo desideri"
+      "Una classe tecnica o funzionale da affiancare alla danza"
     ]
   },
   "avviamento-danza": {
@@ -118,7 +118,7 @@
     "introFuoco": {
       "desktop": "50% 50%"
     },
-    "intro": "<p>Tra i 9 e gli 11 anni la tecnica si consolida: si prosegue con Danza Classica e <a href=\"/modern\">Modern</a>, si scelgono <a href=\"/hip-hop\">Hip-Hop</a> e <a href=\"/breaking\">Breaking</a> e, dai 10 anni, si può iniziare <a href=\"/danza-contemporanea\">Danza Contemporanea</a>.</p>\n<p>Molti allievi frequentano più discipline, e ogni anno tutti i corsi portano il loro lavoro in teatro, nello spettacolo di fine anno.</p>",
+    "intro": "<p>Tra i 9 e gli 11 anni la tecnica si consolida: si prosegue con Danza Classica e <a href=\"/modern\">Modern</a>, si scelgono <a href=\"/hip-hop\">Hip-Hop</a> e <a href=\"/breaking\">Breaking</a> e, dai 10 anni, si può iniziare <a href=\"/danza-contemporanea\">Danza Contemporanea</a>.</p>\n<p>Molti allievi frequentano più discipline e ogni anno portano in teatro il lavoro fatto in sala, nello spettacolo di fine anno.</p>",
     "eta": "Bambini 9-11 anni",
     "frequenza": "2-3 lezioni a settimana",
     "metodoTitolo": "I corsi da 9 a 11 anni",
@@ -249,7 +249,7 @@
     "description": "Contact Improvisation a Lainate e Rho (MI): improvvisazione, contatto tra due corpi, leve, empatia e complicità, sulle basi della Danza Contemporanea.",
     "ogTitle": "Contact Improvisation | InBallet",
     "ogDescription": "Improvvisazione e contatto tra due corpi: un linguaggio universale, condiviso e trasmesso.",
-    "badge": "Adulti",
+    "badge": "Improvvisazione",
     "titolo": "Contact Improvisation",
     "tagline": "Due corpi in ascolto, un linguaggio universale",
     "heroImage": "assets/images/foto/contactimprovisation.jpg",
@@ -264,7 +264,7 @@
       "desktop": "50% 50%"
     },
     "intro": "<p>La Contact Improvisation è una pratica di improvvisazione basata sul contatto tra due corpi: peso, leve, ascolto ed empatia, sulle basi della <a href=\"/danza-contemporanea\">Danza Contemporanea</a>.</p>\n<p>Prima si impara a conoscersi e a diventare autori del proprio movimento, poi a danzare con almeno un altro corpo, fino a muoversi come un corpo unico.</p>",
-    "eta": "Adulti",
+    "eta": "Per danzatori",
     "frequenza": "1 lezione a settimana",
     "metodoTitolo": "Scoperte, unione e fusione",
     "metodo": [
@@ -294,7 +294,7 @@
   },
   "contaminato": {
     "title": "Corso Contaminato dai 16 anni a Lainate e Rho | InBallet",
-    "description": "Contaminato a Lainate e Rho (MI): stile eclettico che fonde tecniche liriche e urbane in un piano di lavoro personalizzato. Dai 16 anni, con almeno tre discipline.",
+    "description": "Contaminato a Lainate e Rho (MI): stile eclettico che fonde tecniche liriche e urbane con un piano di lavoro personalizzato. Dai 16 anni, con esperienza.",
     "ogTitle": "Contaminato, la danza eclettica | InBallet",
     "ogDescription": "Tecniche liriche e urbane in un unico stile, con un piano di lavoro personalizzato.",
     "badge": "Dai 16 anni",
@@ -343,7 +343,7 @@
   },
   "contemporanea-adulti": {
     "title": "Danza Contemporanea over 40 a Lainate e Rho | InBallet",
-    "description": "Danza Contemporanea per adulti over 40 a Lainate e Rho (MI), per chi ricomincia o parte da zero: warm-up, floor barre, sbarra classica e coreografia contemporanea.",
+    "description": "Danza Contemporanea per adulti dai 40 anni a Lainate e Rho (MI), per chi ricomincia o parte da zero: warm-up, floor barre, sbarra e coreografia.",
     "ogTitle": "Danza Contemporanea Adulti over 40 | InBallet",
     "ogDescription": "Un corso vero e proprio per chi ricomincia dopo anni di stop o inizia da zero, dai 40 anni.",
     "badge": "Dai 40 anni",
@@ -362,7 +362,7 @@
       "desktop": "30% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>Danza Contemporanea Adulti è il corso di InBallet per chi ha dai 40 anni in su, senza limiti di età: per ricominciare dopo anni di stop o per iniziare da zero.</p>\n<p>La lezione unisce warm-up, training a terra (floor barre), sbarra classica, diagonali e coreografia contemporanea. Si può affiancare <a href=\"/pilates\">Pilates</a> o <a href=\"/yoga\">Yoga</a> per lavorare meglio sul proprio corpo.</p>",
+    "intro": "<p>Danza Contemporanea Adulti è il corso di InBallet per chi ha dai 40 anni in su, senza limiti di età: per ricominciare dopo anni di stop o per iniziare da zero.</p>\n<p>La lezione unisce warm-up, training a terra (floor barre), sbarra classica, diagonali e coreografia contemporanea. Il corso offre più lezioni a settimana e si può affiancare una classe più tecnica o funzionale, per lavorare meglio sul proprio corpo.</p>",
     "eta": "Dai 40 anni, senza limiti di età",
     "frequenza": "Più giorni a settimana",
     "metodoTitolo": "Tecnica, allungamento e dinamismo",
@@ -396,7 +396,7 @@
     "description": "Corso di Danza Acrobatica a Lainate e Rho (MI): dinamiche aeree e scenografiche unite a linee precise, con allenamento aerobico a inizio lezione.",
     "ogTitle": "Danza Acrobatica | InBallet",
     "ogDescription": "Dinamiche aeree, emozionanti e scenografiche per danzatori di ogni stile.",
-    "badge": "Ragazzi",
+    "badge": "Ogni stile",
     "titolo": "Danza Acrobatica",
     "tagline": "Dinamiche aeree e linee precise, per stupire e stupirsi",
     "heroImage": "assets/images/foto/danzacontemporanea.jpg",
@@ -412,8 +412,8 @@
       "desktop": "35% 50%",
       "tablet": "50% 50%"
     },
-    "intro": "<p>La Danza Acrobatica unisce movimento dinamico e linee precise a elementi aerei, emozionanti e scenografici: un arricchimento per danzatori di qualsiasi stile.</p>\n<p>Ogni lezione si apre con un allenamento aerobico, che prepara i muscoli all'impegno richiesto dagli elementi acrobatici.</p>",
-    "eta": "Ragazzi dai 7 anni",
+    "intro": "<p>La Danza Acrobatica unisce movimento dinamico e linee precise a elementi aerei, emozionanti e scenografici: un arricchimento stilistico per i danzatori di qualsiasi stile che vogliono stupire e stupirsi.</p>\n<p>Ogni lezione si apre con un allenamento aerobico, che prepara i muscoli all'impegno richiesto dagli elementi acrobatici.</p>",
+    "eta": "Danzatori di ogni stile",
     "frequenza": "1-2 lezioni a settimana",
     "metodoTitolo": "Allenamento, dinamiche aeree e precisione",
     "metodo": [
@@ -494,7 +494,7 @@
   },
   "danza-contemporanea": {
     "title": "Danza Contemporanea dai 10 anni a Lainate e Rho | InBallet",
-    "description": "Corso di Danza Contemporanea a Lainate e Rho (MI) dai 10 anni: dalle basi del Modern all'arte più libera del movimento, tra spazio, sperimentazione e coreografia.",
+    "description": "Danza Contemporanea a Lainate e Rho (MI) dai 10 anni: dalle basi del Modern all'arte più libera del movimento, tra spazio, sperimentazione e coreografia.",
     "ogTitle": "Danza Contemporanea dai 10 anni | InBallet",
     "ogDescription": "L'evoluzione più attuale della danza: l'arte più libera del movimento.",
     "badge": "Dai 10 anni",
@@ -598,7 +598,7 @@
     "description": "Corso di Heels a Lainate e Rho (MI): danza sui tacchi tra femminilità, portamento e sensualità, con aperture, slanci e passaggi veloci tra i passi.",
     "ogTitle": "Heels, la danza sui tacchi | InBallet",
     "ogDescription": "Femminilità, portamento e sensualità: il linguaggio del corpo sui tacchi.",
-    "badge": "Adulti",
+    "badge": "Urban",
     "titolo": "Heels",
     "tagline": "Portamento, femminilità e sensualità sui tacchi",
     "heroImage": "assets/images/gallery-2.jpg",
@@ -613,7 +613,7 @@
       "tablet": "50% 50%"
     },
     "intro": "<p>Heels è la danza sui tacchi: un linguaggio del corpo che lavora su femminilità, portamento e sensualità. A InBallet fa parte anche del programma di <a href=\"/hip-hop\">Hip-Hop</a>.</p>\n<p>Unisce elementi di altri stili e richiede elasticità per aperture, slanci e passaggi veloci; per muoversi con scioltezza è utile studiare anche tecnica, linee e tenute.</p>",
-    "eta": "Adulti",
+    "eta": "Per danzatori",
     "frequenza": "1 lezione a settimana",
     "metodoTitolo": "Portamento, elasticità e tecnica",
     "metodo": [
@@ -642,7 +642,7 @@
   },
   "hip-hop": {
     "title": "Corso di Hip-Hop dai 6 anni a Lainate e Rho | InBallet",
-    "description": "Corso di Hip-Hop a Lainate e Rho (MI) dai 6 anni: Old School, Popping, Locking, Waacking, House, Krump e altri stili, con moduli di professionisti internazionali.",
+    "description": "Hip-Hop a Lainate e Rho (MI) dai 6 anni: Old School, Popping, Locking, Waacking, House, Krump e altri stili, con moduli di professionisti internazionali.",
     "ogTitle": "Hip-Hop dai 6 anni | InBallet",
     "ogDescription": "Old School, Popping, Locking, House, Krump e molto altro: la cultura Hip-Hop in sala.",
     "badge": "Dai 6 anni",
@@ -692,7 +692,7 @@
   },
   "lezioni-individuali": {
     "title": "Lezioni Individuali di Danza a Lainate e Rho | InBallet",
-    "description": "Lezioni individuali di danza a Lainate e Rho (MI): un percorso one-to-one per esigenze specifiche e borse di studio InBallet per premiare e motivare gli allievi.",
+    "description": "Lezioni individuali di danza a Lainate e Rho (MI): un percorso one-to-one per esigenze specifiche e borse di studio per premiare e motivare gli allievi.",
     "ogTitle": "Lezioni Individuali | InBallet",
     "ogDescription": "Un insegnante dedicato a un solo allievo, per esigenze specifiche o grazie alle borse di studio.",
     "badge": "Tutte le età",
@@ -762,7 +762,7 @@
       "desktop": "65% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>La Modern Dance nasce come rottura degli schemi della Danza Classica e unisce tecnica, emozione e immaginazione. A InBallet si studia dai 6 anni, in gradi crescenti di lezione.</p>\n<p>Si lavora sui principi di contrazione e rilascio e sui metodi dei grandi maestri, come Martha Graham, Rudolf Laban, Merce Cunningham e Isadora Duncan. È anche lo stile del <a href=\"/formazione-insegnanti\">corso per insegnanti</a> riconosciuto CSEN e CONI.</p>",
+    "intro": "<p>La Modern Dance nasce come rottura degli schemi della Danza Classica e unisce tecnica, emozione e immaginazione. A InBallet si studia dai 6 anni, in gradi crescenti di lezione; è consigliata una base di danza classica.</p>\n<p>Si lavora sui principi di contrazione e rilascio e sui metodi dei grandi maestri, come Martha Graham, Rudolf Laban, Merce Cunningham e Isadora Duncan. È anche lo stile del <a href=\"/formazione-insegnanti\">corso per insegnanti</a> riconosciuto CSEN e CONI.</p>",
     "eta": "Dai 6 anni, per livelli",
     "frequenza": "2-3 lezioni a settimana",
     "metodoTitolo": "Definizione, leggerezza e contrasti",
@@ -939,7 +939,7 @@
   },
   "ragazzi": {
     "title": "Danza per ragazzi 12-16 anni a Lainate e Rho | InBallet",
-    "description": "Danza per ragazzi da 12 a 16 anni a Lainate e Rho (MI): Classica, Modern, Contemporanea, Hip-Hop, Breaking e, dai 16 anni, Contaminato. Fino ai livelli avanzati.",
+    "description": "Danza per ragazzi da 12 a 16 anni a Lainate e Rho (MI): Classica, Modern, Contemporanea, Hip-Hop, Breaking e, dai 16 anni, Contaminato.",
     "ogTitle": "Danza per ragazzi da 12 a 16 anni | InBallet",
     "ogDescription": "Tecnica, stile personale e palcoscenico: i corsi per ragazzi dai 12 ai 16 anni.",
     "badge": "12-16 anni",

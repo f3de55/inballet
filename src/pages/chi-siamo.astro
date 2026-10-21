@@ -11,15 +11,8 @@ const bg = {
 };
 
 
-/** Insegnanti (mostrati nella sezione team). */
-const team = [
-  { nome: 'Ilenia Nobile', ruolo: 'Direttrice Artistica', bio: 'Fondatrice di InBallet. Danza classica e contemporanea.', foto: 'ballerina.jpg' },
-  { nome: 'Marco Bianchi', ruolo: 'Coreografo Hip Hop', bio: '15 anni nelle street dance. Giudice in competizioni nazionali.', foto: 'gallery-2.jpg' },
-  { nome: 'Sofia Russo', ruolo: 'Insegnante Danza Classica', bio: 'Diplomata Accademia Nazionale. Propedeutica e tecnica classica.', foto: 'hero-bg.jpg' },
-  { nome: 'Giulia Ferrara', ruolo: 'Insegnante Modern Jazz', bio: 'Ballerina professionista. Produzioni teatrali e TV.', foto: 'gallery-3.jpg' },
-  { nome: 'Luca Martini', ruolo: 'Insegnante Breaking', bio: 'B-boy dal 2008. Vincitore di battle nazionali.', foto: 'gallery-10.jpg' },
-  { nome: 'Elena Costa', ruolo: 'Insegnante Pilates & Yoga', bio: 'Certificata internazionalmente. Benessere per danzatori.', foto: 'gallery-6.jpg' },
-];
+/** Insegnanti (sezione team, mostrata solo se l'elenco non è vuoto): solo persone e bio reali. */
+const team: { nome: string; ruolo: string; bio: string; foto: string }[] = [];
 
 const [lainate, rho] = sedi;
 const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
@@ -27,9 +20,9 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
 <Base
     title="Chi siamo: scuola di danza multidisciplinare | InBallet"
-    description={`I.N. Ballet è la scuola di danza multidisciplinare di Lainate e Rho fondata nel ${FONDAZIONE} da Ilenia Nobile: corsi dai 3 anni in su, inclusione e formazione CSEN-CONI.`}
+    description={`I.N. Ballet è la scuola di danza multidisciplinare di Lainate e Rho fondata nel ${FONDAZIONE} da Ilenia Nobile: corsi dai 3 anni, inclusione e formazione insegnanti CSEN e CONI.`}
     ogTitle="Chi siamo | InBallet"
-    ogDescription={`La storia, la visione e le persone di InBallet, scuola di danza a Lainate e Rho dal ${FONDAZIONE}.`}
+    ogDescription={`La storia e la visione di InBallet, scuola di danza a Lainate e Rho dal ${FONDAZIONE}: un luogo di vita aperto a tutte le età.`}
 >
 
         <!-- Hero Chi Siamo -->
@@ -56,7 +49,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
                         <span class="fondatrice-label eyebrow">Fondatrice & Direttrice Artistica</span>
                         <h2 class="fondatrice-name titolo-sezione">Ilenia <em>Nobile</em></h2>
                         <div class="fondatrice-bio">
-                            <p>Dallo skate park di Lainate alle due sedi di Lainate e Rho: Ilenia Nobile ha trasformato la sua passione in una scuola dove la danza è accessibile a tutti.</p>
+                            <p>Ilenia Nobile ha fondato I.N. Ballet nel {FONDAZIONE} e ne è la Direttrice Artistica: ha costruito una scuola di danza multidisciplinare, oggi con due sedi a Lainate e Rho, in cui la danza è accessibile a tutti.</p>
                             <p>Direttrice Artistica della scuola, nel 2013 ha dato vita al progetto NoiConVoi, convinta che la danza sia per tutti: ognuno, secondo le proprie possibilità, può portare il suo contributo artistico.</p>
                         </div>
                         <blockquote class="fondatrice-citazione">
@@ -74,7 +67,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
                 <span class="eyebrow">La scuola</span>
                 <h2 class="titolo-sezione" id="scuola-titolo">Un luogo <em>di vita</em></h2>
                 <p>I.N. Ballet è una scuola di danza multidisciplinare a Lainate e Rho, attiva dal {FONDAZIONE}: qui si studiano stili diversi, dalla tecnica classica alle danze urbane, con bambini dai 3 anni, ragazzi e adulti che ogni giorno frequentano le sale.</p>
-                <p>Accoglie allievi dai 3 anni a ogni età, fino ai corsi avanzati. Propone <a href="/formazioni-personalizzate">corsi di formazione</a> per educatori, terapeuti e pedagogisti ed è un punto di riferimento per la <a href="/formazione-insegnanti">formazione nazionale dei maestri di danza</a>.</p>
+                <p>Le classi sono divise per livello, fino ai corsi avanzati e per adulti. Ai professionisti propone <a href="/formazioni-personalizzate">corsi di formazione</a> per educatori, terapeuti e pedagogisti ed è un punto di riferimento per la <a href="/formazione-insegnanti">formazione nazionale dei maestri di danza</a>.</p>
                 <p>Dal 2013 il <a href="/progetto-noiconvoi">progetto NoiConVoi</a> accoglie in sala ragazzi con disabilità, con supporto psicomotorio e un team di volontari.</p>
                 <div class="scuola-highlight">
                     <p>Una comunità educante, in dialogo con le famiglie, che vede nella danza uno strumento di espressione, comunicazione e conoscenza.</p>
@@ -93,7 +86,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
                     <li class="voce">
                         <span class="voce-anno">{FONDAZIONE}</span>
                         <h3 class="voce-titolo">La fondazione</h3>
-                        <p class="voce-testo">Ilenia Nobile fonda I.N. Ballet a Lainate, partendo dallo skate park.</p>
+                        <p class="voce-testo">Ilenia Nobile fonda a Lainate I.N. Ballet, scuola di danza multidisciplinare.</p>
                     </li>
                     <li class="voce">
                         <span class="voce-anno">2013</span>
@@ -113,7 +106,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
                     <li class="voce">
                         <span class="voce-anno">Oggi</span>
                         <h3 class="voce-titolo">Due sedi, ogni età</h3>
-                        <p class="voce-testo">Lainate e Rho, {totaleCorsi} corsi dai 3 anni agli adulti over 40 e uno spettacolo in teatro ogni anno.</p>
+                        <p class="voce-testo">Lainate e Rho, {totaleCorsi} corsi dai 3 anni all'età adulta e uno spettacolo in teatro ogni anno.</p>
                     </li>
                 </ol>
             </div>
@@ -157,6 +150,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
         </section>
 
         <!-- Team Professionisti -->
+        {team.length > 0 && (
         <section class="team-section">
             <div class="container">
                 <div class="team-header">
@@ -192,6 +186,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
                 </ul>
             </div>
         </section>
+        )}
 
         <!-- Carosello Sede Fullwidth -->
         <section class="sede-section">
@@ -199,7 +194,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
                 <div class="container">
                     <span class="sede-label eyebrow">I nostri spazi</span>
                     <h2 class="sede-title titolo-sezione">Le nostre <em>sale</em></h2>
-                    <p class="sede-subtitle intro-sezione">Gli spazi di Lainate e Rho in cui facciamo lezione ogni settimana.</p>
+                    <p class="sede-subtitle intro-sezione">Le due sedi di Lainate e Rho, a nord-ovest di Milano, in cui facciamo lezione ogni settimana.</p>
                 </div>
             </div>
             <div class="container">
@@ -211,12 +206,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
                         <div class="sede-testo">
                             <p class="sede-luogo">{lainate.citta} · {lainate.via}</p>
                             <h3 class="sede-nome">Sede centrale</h3>
-                            <p class="sede-descrizione">500mq di spazi dedicati alla danza nel cuore di Lainate: tre sale con pavimentazione tecnica, specchi, sbarre e climatizzazione.</p>
-                            <ul class="sede-spazi">
-                                <li><strong>Sale danza</strong><span>Ambienti luminosi, con impianto audio e illuminazione regolabile.</span></li>
-                                <li><strong>Spazio famiglie</strong><span>Un'area di accoglienza dove i genitori possono attendere in tranquillità.</span></li>
-                                <li><strong>Spogliatoi</strong><span>Spazi separati con armadietti e docce, puliti ogni giorno.</span></li>
-                            </ul>
+                            <p class="sede-descrizione">La sede centrale di I.N. Ballet, a {lainate.citta} ({lainate.provincia}): corsi di danza per bambini dai 3 anni, ragazzi e adulti, dai primi passi ai livelli avanzati.</p>
                         </div>
                     </article>
 
@@ -227,7 +217,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
                         <div class="sede-testo">
                             <p class="sede-luogo">{rho.citta} · {rho.via}</p>
                             <h3 class="sede-nome">Sede di Rho</h3>
-                            <p class="sede-descrizione">La metodologia InBallet ancora più vicina alle famiglie: due sale danza con gli stessi standard della sede centrale, facili da raggiungere e con parcheggio.</p>
+                            <p class="sede-descrizione">La seconda sede della scuola, a {rho.citta} ({rho.provincia}): lo stesso metodo e la stessa cura della sede centrale, più vicini alle famiglie di Rho e dintorni.</p>
                         </div>
                     </article>
                 </div>

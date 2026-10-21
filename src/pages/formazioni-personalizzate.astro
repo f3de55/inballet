@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { sfondo } from '../lib/images';
+import { scuola } from '../data/scuola';
 
 const bg = {
   hero: await sfondo('gallery-10.jpg'),
@@ -36,7 +37,7 @@ const bg = {
                     Corsi su misura per professionisti dell'educazione e della terapia, pedagogisti e insegnanti, che intrecciano linguaggi espressivi, corporeità, motricità ed esplorazione del sé.
                 </p>
                 <p class="perso-intro-text">
-                    Insieme definiamo obiettivi e formato: workshop, eventi formativi o cicli di incontri. Per diventare insegnante di danza c'è il <a href="/formazione-insegnanti">corso biennale riconosciuto CSEN e CONI</a>.
+                    Ogni percorso è organizzato e studiato sulle esigenze professionali di chi lo richiede: insieme definiamo obiettivi, contenuti e formato, dal workshop all'evento formativo. Per diventare insegnante di danza c'è il <a href="/formazione-insegnanti">corso biennale riconosciuto CSEN e CONI</a>.
                 </p>
             </div>
         </section>
@@ -73,8 +74,8 @@ const bg = {
                     <div class="perso-tipo-item">
                         <div class="perso-tipo-num">4</div>
                         <div class="perso-tipo-content">
-                            <h3>Insegnanti di danza</h3>
-                            <p>Aggiornamento su didattica, pedagogia e inclusione, a partire dall'esperienza della scuola</p>
+                            <h3>Scuole, enti ed équipe</h3>
+                            <p>Percorsi per gruppi di lavoro, costruiti con l'esperienza della scuola in pedagogia, psicomotricità e inclusione</p>
                         </div>
                     </div>
                 </div>
@@ -89,7 +90,7 @@ const bg = {
                 <div class="corso-contatto-content">
                     <h2 class="titolo-sezione">Hai un progetto <em>in mente?</em></h2>
                     <p class="intro-sezione">Contattaci per un primo colloquio. Definiremo insieme obiettivi e contenuti del tuo percorso formativo.</p>
-                    <a href="mailto:info@inballet.it?subject=Formazione%20Personalizzata%20-%20Richiesta%20Info" class="corso-btn-cta btn-primary">
+                    <a href={`mailto:${scuola.email}?subject=Formazione%20Personalizzata%20-%20Richiesta%20Info`} class="corso-btn-cta btn-primary">
                         Richiedi Informazioni <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>

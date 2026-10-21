@@ -546,7 +546,10 @@
     "badge": "4-5 anni",
     "titolo": "Educazione alla Danza",
     "tagline": "Dagli stimoli motori a un'armonia in movimento",
-    "heroImage": "assets/images/foto/educazione-alla-danza-1.jpg",
+    "heroImage": {
+      "desktop": "assets/images/foto/educazione-alla-danza-1.png",
+      "tablet": "assets/images/foto/educazione-alla-danza-1-tablet.png"
+    },
     "heroFuoco": {
       "desktop": "50% 40%",
       "tablet": "50% 50%"

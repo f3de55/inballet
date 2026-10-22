@@ -37,6 +37,8 @@ function testoPrincipale(html: string): string {
   return decodifica(
     html
       .slice(inizio, fine)
+      // Sezioni con dati che cambiano spesso (il calendario eventi): già nella parte variabile
+      .replace(/<section\b[^>]*\bdata-chatbot-escludi\b[^>]*>[\s\S]*?<\/section>/gi, ' ')
       .replace(/<(script|style|noscript|svg|template|form|nav|button|select)\b[\s\S]*?<\/\1>/gi, ' ')
       .replace(/<!--[\s\S]*?-->/g, ' ')
       .replace(/<h([1-2])\b[^>]*>/gi, '\n## ')

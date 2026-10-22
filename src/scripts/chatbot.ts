@@ -50,6 +50,10 @@ const ora = () => {
 const inFondo = () => msgs.scrollTo({ top: msgs.scrollHeight });
 const telefono = () => `<a href="${box.dataset.telHref}" class="cb-link">${box.dataset.tel}</a>`;
 
+/** Client delle Actions: scaricato all'apertura della chat, non al caricamento della pagina. */
+let client: Promise<typeof import('astro:actions')> | null = null;
+const azioni = () => (client ??= import('astro:actions'));
+
 function appendMsg(type: Tipo, html: string, time = ora()) {
   const d = document.createElement('div');
   d.className = `cb-m ${type}`;
@@ -179,7 +183,6 @@ async function send(testo = input.value.trim()) {
   invia.disabled = true;
   const attesa = addAttesa();
   try {
-    // Client delle Actions scaricato solo al primo messaggio
     const { actions } = await azioni();
     const { data, error } = await actions.chatbot.invia({ message: testo, conversazione: leggi(CONV_KEY) ?? undefined });
     attesa.remove();

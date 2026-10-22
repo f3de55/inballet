@@ -162,11 +162,13 @@ export interface Scambio {
   risposta: string;
 }
 
-interface Richiesta {
+export interface Domanda {
   sistema: Sistema;
-  essenziale: boolean;
   storia: Scambio[];
   domanda: string;
+}
+
+interface Richiesta extends Domanda {
   signal: AbortSignal;
 }
 

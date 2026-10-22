@@ -17,9 +17,9 @@
  */
 import { createHash } from 'node:crypto';
 import { leggiDocumenti } from '../documenti';
-import { prossimiEventi } from '../eventi';
+import { ETICHETTE_STATO, prossimiEventi, quando, testoDescrizione, urlEvento } from '../eventi';
 import { riepilogoScuola } from '../riepilogo';
-import { decodeHtml, mbSlice, stripTags } from '../text';
+import { mbSlice } from '../text';
 import { scuola } from '../../data/scuola';
 import { leggiSito, testoPagine, type Pagina } from './pagine';
 

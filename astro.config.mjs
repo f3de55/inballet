@@ -13,11 +13,13 @@ export default defineConfig({
   adapter: node({ mode: 'standalone' }),
 
   // sitemap-index.xml con tutte le pagine pubbliche (area riservata esclusa)
-  // /documenti è renderizzata dal server (contenuti dalla dashboard): va aggiunta a mano
+  // /documenti e /spettacoli-eventi sono renderizzate dal server (contenuti dalla
+  // dashboard): vanno aggiunte a mano. Le pagine dei singoli eventi stanno in
+  // /sitemap-eventi.xml (src/pages/sitemap-eventi.xml.ts), indicata in robots.txt.
   integrations: [
     sitemap({
       filter: (page) => !/\/(login|dashboard)/.test(page),
-      customPages: ['https://www.inballet.it/documenti'],
+      customPages: ['https://www.inballet.it/documenti', 'https://www.inballet.it/spettacoli-eventi'],
     }),
   ],
 

@@ -29,6 +29,8 @@ export interface Messaggio {
   conversazione?: string;
   ip: string;
   userAgent: string;
+  /** Indirizzo del sito (da cui il server legge i testi delle pagine) */
+  origine: string;
 }
 
 export interface Risposta {

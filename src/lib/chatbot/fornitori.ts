@@ -336,7 +336,7 @@ export function chiediAlModello(d: Domanda, solo?: Anello): Promise<Esito> {
         .then(({ testo, token }) => {
           inCorso.delete(ac);
           statoDi(a).errori = 0;
-          fine({ ok: true, testo, token, ms: Date.now() - inizio, tentativi, fornitore: a.fornitore, modello: a.modello });
+          fine({ ok: true, testo, token, ms: Date.now() - inizio, tentativi, fornitore: a.fornitore, modello: a.modello }, t0);
         })
         .catch((e) => {
           inCorso.delete(ac);

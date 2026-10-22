@@ -18,8 +18,8 @@ interface Fornitore {
   /** Variabile d'ambiente con la chiave API */
   chiave: string;
   tipo: 'anthropic' | 'openai';
-  /** Base URL dell'API compatibile OpenAI */
-  url?: string;
+  /** Base URL dell'API compatibile OpenAI (o variabile d'ambiente che la contiene) */
+  url?: string | { variabile: string };
   /** Nome del campo per il limite di token in uscita */
   campoMax?: 'max_tokens' | 'max_completion_tokens';
   /** Parametri aggiuntivi (ragionamento breve per i modelli "reasoning") */
@@ -137,7 +137,7 @@ class ErroreFornitore extends Error {
   }
 }
 
-const tropppoLungo = (e: ErroreFornitore) => e.status === 413 || /too large|context.?length|maximum context|too many tokens|reduce the length/i.test(e.message);
+const troppoLungo = (e: ErroreFornitore) => e.status === 413 || /too large|context.?length|maximum context|too many tokens|reduce the length/i.test(e.message);
 
 function registraErrore(a: Anello, e: ErroreFornitore) {
   const s = statoDi(a);
@@ -276,7 +276,7 @@ async function chiama(a: Anello, r: Omit<Richiesta, 'signal' | 'essenziale'>): P
   try {
     return await prova(!!stato.essenziale);
   } catch (e) {
-    if (e instanceof ErroreFornitore && !stato.essenziale && tropppoLungo(e)) {
+    if (e instanceof ErroreFornitore && !stato.essenziale && troppoLungo(e)) {
       stato.essenziale = true;
       return prova(true);
     }

@@ -180,7 +180,7 @@ interface RispostaModello {
 const secondi = (h: string | null) => (h && Number.isFinite(+h) ? +h : undefined);
 
 async function chiamaOpenAI(f: Fornitore, modello: string, chiaveApi: string, r: Richiesta): Promise<RispostaModello> {
-  const sistema = `${r.essenziale ? r.sistema.essenziale : r.sistema.fisso}\n\n${r.sistema.variabile}`;
+  const sistema = `${r.sistema.fisso}\n\n${r.sistema.variabile}`;
   let res: Response;
   try {
     res = await fetch(`${baseUrl(f)}/chat/completions`, {

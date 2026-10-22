@@ -71,7 +71,7 @@ async function ottimizza(buf: Uint8Array, mime: string): Promise<Buffer> {
   return img.resize(LATO, LATO, { fit: 'inside', withoutEnlargement: true }).webp({ quality: 82 }).toBuffer();
 }
 
-async function creaMini(nome: string): Promise<void> {
+export async function creaMini(nome: string): Promise<void> {
   const s = await sharp();
   const buf = await s(filePath(nome)).rotate().resize(LATO_MINI, LATO_MINI, { fit: 'inside', withoutEnlargement: true }).webp({ quality: 75 }).toBuffer();
   await writeFile(filePath(nomeMini(nome)), buf);

@@ -415,7 +415,7 @@ export function datiStrutturati(e: Evento, site: URL) {
           : e.luogo,
       },
     }),
-    ...(e.immagine && { image: [new URL(e.immagine.replace(/^\/?/, '/'), site).href] }),
+    ...(e.immagine && { image: [new URL(srcImmagine(e.immagine), site).href] }),
     ...(descrizione && { description: descrizione.slice(0, 500) }),
     organizer: { '@type': 'Organization', name: scuola.nome, url: site.href },
     ...(costo !== null && costo === 0 && { isAccessibleForFree: true }),

@@ -67,25 +67,11 @@ export const server = {
     }),
   },
 
+  /** Calendario: le pagine pubbliche leggono gli eventi dal server, qui solo la gestione. */
   eventi: {
-    /** Lista pubblica per il calendario di /spettacoli-eventi. */
-    pubblici: defineAction({
-      handler: async () => ({ eventi: await eventiOrdinati() }),
-    }),
-
+    /** Regole di validazione in `inputEvento` (src/lib/eventi.ts): errori per campo nel modulo. */
     salva: defineAction({
-      input: z.object({
-        id: campo,
-        titolo: campo,
-        data: campo,
-        ora: campo,
-        tipo: campo,
-        luogo: campo,
-        descrizione: z.string().max(20000).optional(),
-        immagine: campo,
-        destinatari: campo,
-        costo: campo,
-      }),
+      input: inputEvento,
       handler: async (input, context) => {
         await soloAdmin(context);
         return conErrori(() => salvaEvento(input));

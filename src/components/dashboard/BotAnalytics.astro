@@ -48,6 +48,27 @@ const fmt = new Intl.NumberFormat('it-IT');
 const oggi = romeDate();
 const periodi = [7, 30, 90].map((n) => ({ n, from: giorniFa(n), attivo: filterTo === oggi && filterFrom === giorniFa(n) }));
 const dataIt = (d: string) => d.split('-').reverse().join('/');
+
+// Spesa e affidabilità
+const dalModello = logs.filter((l) => l.type === 'success');
+const somma = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
+const spesa = somma(logs.map((l) => l.costo ?? 0));
+const spesaOggi = somma(tuttiLog.filter((l) => l.date === oggi && !l.demo).map((l) => l.costo ?? 0));
+const costoMedio = dalModello.length ? spesa / dalModello.length : 0;
+const tempi = dalModello.flatMap((l) => (l.ms ? [l.ms] : []));
+const tempoMedio = tempi.length ? somma(tempi) / tempi.length / 1000 : 0;
+const daRiserva = dalModello.filter((l) => (l.fallback ?? 0) > 0).length;
+const senzaModello = logs.filter((l) => l.type === 'offline' || l.type === 'error').length;
+const perModello = new Map<string, number>();
+for (const l of dalModello) if (l.modello) perModello.set(`${l.fornitore}:${l.modello}`, (perModello.get(`${l.fornitore}:${l.modello}`) ?? 0) + 1);
+
+const dollari = (n: number) => `${n < 0.01 && n > 0 ? n.toFixed(4) : n.toFixed(2)} $`.replace('.', ',');
+const orario = (ms: number) => new Intl.DateTimeFormat('it-IT', { timeZone: 'Europe/Rome', hour: '2-digit', minute: '2-digit' }).format(ms);
+const quando = (iso: string) => `${dataIt(iso.slice(0, 10))} ${iso.slice(11, 16)}`;
+
+const catena = statoCatena();
+const conversazioni = await ultimeConversazioni(20);
+const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 'dalle FAQ, senza AI' };
 ---
 
 <div class="pagina-head">

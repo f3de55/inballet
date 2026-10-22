@@ -1,6 +1,7 @@
 /**
  * Ultima rete di sicurezza: quando nessun fornitore risponde (o il tetto di
- * spesa è raggiunto) Étoile risponde lo stesso, senza AI, con la domanda
+ * spesa è raggiunto) Étoile risponde lo stesso, senza AI: i prossimi eventi se
+ * la domanda riguarda eventi, altrimenti la domanda
  * frequente più simile, il link al corso citato e i contatti della segreteria.
  */
 import { prossimiEventi } from '../eventi';

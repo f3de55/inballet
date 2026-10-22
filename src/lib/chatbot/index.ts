@@ -116,7 +116,7 @@ export async function rispondi({ testo, conversazione, ip, userAgent, origine }:
   }
 
   const offline = async (errore: string, fallback: number) => {
-    const risposta = rispostaOffline(msg);
+    const risposta = await rispostaOffline(msg);
     registra({ ...base, message: msg, risposta, type: 'offline', errore, fallback });
     await salva(risposta, 'offline');
     return { html: formatta(risposta), conversazione: id };

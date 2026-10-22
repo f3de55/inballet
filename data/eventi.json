@@ -598,5 +598,19 @@
         "creato": "2026-10-18T23:47:31+02:00",
         "modificato": "2026-10-18T23:47:31+02:00",
         "demo": true
+    },
+    {
+        "id": "evt_015296e9c1d8",
+        "titolo": "Evento Ape",
+        "data": "2026-11-20",
+        "ora": "05:57",
+        "tipo": "efwe",
+        "luogo": "Sede di Lainate, Via Puccini 14",
+        "descrizione": "Si balla e poi si mangia il miele",
+        "immagine": "",
+        "destinatari": "",
+        "costo": "",
+        "creato": "2026-10-22T02:58:02+02:00",
+        "modificato": "2026-10-22T02:58:02+02:00"
     }
 ]

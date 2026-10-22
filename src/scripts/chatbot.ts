@@ -166,12 +166,6 @@ async function send(testo = input.value.trim()) {
   if (Date.now() - ultimoInvio < PAUSA_MIN) return;
   ultimoInvio = Date.now();
 
-  if (conteggio >= MAX_MESSAGGI) {
-    const tel = box.dataset.tel!;
-    addBot(`Hai raggiunto il limite di messaggi per oggi. Per altre domande chiamaci al <a href="${box.dataset.telHref}" class="cb-link">${tel}</a>.`);
-    return;
-  }
-  conteggio++;
   addUser(testo);
   input.value = '';
   aggiornaSuggerimenti();

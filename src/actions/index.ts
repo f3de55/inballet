@@ -50,6 +50,13 @@ export const server = {
       },
     }),
 
+    /** Chat aperta: il server prepara la conoscenza mentre il visitatore scrive. */
+    prepara: defineAction({
+      handler: async (_, context) => {
+        await prepara(context.url.origin);
+      },
+    }),
+
     /** Verifica di qualità: una domanda di prova a un fornitore della catena (dashboard). */
     verifica: defineAction({
       input: z.object({ fornitore: z.string().max(40), modello: z.string().max(120), indice: z.number().int().min(0).max(100) }),

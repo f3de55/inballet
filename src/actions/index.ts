@@ -35,14 +35,25 @@ const campo = z.string().max(2000).optional();
 export const server = {
   chatbot: {
     invia: defineAction({
-      input: z.object({ message: z.string().max(2048) }),
-      handler: async ({ message }, context) => ({
-        response: await rispondi(message, {
-          ip: context.request.headers.get('cf-connecting-ip') ?? context.clientAddress,
+      input: z.object({ message: z.string().max(2048), conversazione: z.string().max(64).optional() }),
+      handler: async ({ message, conversazione }, context) => {
+        const { html, conversazione: id } = await rispondi({
+          testo: message,
+          conversazione,
+          ip: ipVisitatore(context.request.headers, context.clientAddress),
           userAgent: context.request.headers.get('user-agent') ?? '',
-          origin: context.url.origin,
-        }),
-      }),
+        });
+        return { response: html, conversazione: id };
+      },
+    }),
+
+    /** Verifica di qualità: una domanda di prova a un fornitore della catena (dashboard). */
+    verifica: defineAction({
+      input: z.object({ fornitore: z.string().max(40), modello: z.string().max(120), indice: z.number().int().min(0).max(100) }),
+      handler: async ({ fornitore, modello, indice }, context) => {
+        await soloAdmin(context);
+        return verifica({ fornitore, modello }, indice);
+      },
     }),
   },
 

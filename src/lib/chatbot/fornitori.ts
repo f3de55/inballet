@@ -304,7 +304,7 @@ export type Esito =
 export async function chiediAlModello(r: Omit<Richiesta, 'signal' | 'essenziale'>, solo?: Anello): Promise<Esito> {
   const inizio = Date.now();
   const tentativi: Tentativo[] = [];
-  const anelli = solo ? [{ ...solo, attivo: !!getSecret(FORNITORI[solo.fornitore]?.chiave ?? '') }] : catena();
+  const anelli = solo ? [{ ...solo, attivo: !!FORNITORI[solo.fornitore] && configurato(FORNITORI[solo.fornitore]) }] : catena();
   for (const a of anelli) {
     if (!a.attivo) continue;
     if (!solo && statoDi(a).sospesoFino > Date.now()) continue;

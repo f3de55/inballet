@@ -331,6 +331,8 @@ export async function generaChat(quanti: number, giorni: number): Promise<number
         cached: type === 'cached',
         user_agent: p.ua,
         demo: true,
+        ...modello,
+        ...consumo,
       });
     }
     const tutti = [...logs, ...nuovi].sort((a, b) => a.timestamp.localeCompare(b.timestamp));

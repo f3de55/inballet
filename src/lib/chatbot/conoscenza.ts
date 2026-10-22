@@ -49,15 +49,16 @@ const dataLunga = new Intl.DateTimeFormat('it-IT', { timeZone: 'Europe/Rome', we
 async function parteVariabile(): Promise<string> {
   // Gli stessi eventi del calendario del sito (anche quelli demo, finché sono pubblicati)
   const [{ documenti }, eventi] = await Promise.all([leggiDocumenti(), prossimiEventi(30)]);
-  const campo = (etichetta: string, valore?: string) => (valore ? `; ${etichetta}: ${decodeHtml(valore)}` : '');
+  const campo = (etichetta: string, valore?: string) => (valore ? `; ${etichetta}: ${valore}` : '');
   return [
     `## Oggi\n\n${dataLunga.format(new Date())}`,
     `## Documenti per l'iscrizione (pagina /documenti)\n\n${documenti.map((d) => `- ${d.titolo}${d.nota ? `: ${d.nota}` : ''}`).join('\n') || '- Nessun documento pubblicato'}`,
-    `## Prossimi eventi (pagina /spettacoli-eventi)\n\n${
+    `## Prossimi eventi (pagina /spettacoli-eventi; ogni evento ha la sua pagina)\n\n${
       eventi
-        .map(({ evento: e }) => {
-          const descrizione = mbSlice(decodeHtml(stripTags(e.descrizione ?? '')).replace(/\s+/g, ' ').trim(), 300);
-          return `- ${decodeHtml(e.titolo)}: ${e.data}${e.ora ? ` ore ${e.ora}` : ''}${campo('tipo', e.tipo)}${campo('luogo', e.luogo)}${campo('per', e.destinatari)}${campo('costo', e.costo)}${descrizione ? `. ${descrizione}` : ''}`;
+        .map((e) => {
+          const descrizione = mbSlice(testoDescrizione(e.descrizione).replace(/\s+/g, ' '), 300);
+          const stato = e.stato === 'pubblicato' ? '' : ` [${ETICHETTE_STATO[e.stato].toUpperCase()}]`;
+          return `- ${e.titolo}${stato}: ${quando(e)}${campo('tipo', e.tipo)}${campo('luogo', e.luogo)}${campo('per', e.destinatari)}${campo('costo', e.costo)}${campo('prenotazioni', e.prenotazione)}; pagina: ${urlEvento(e)}${descrizione ? `. ${descrizione}` : ''}`;
         })
         .join('\n') || '- Nessun evento in programma al momento'
     }`,

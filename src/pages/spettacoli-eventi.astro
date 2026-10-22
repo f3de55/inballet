@@ -1,7 +1,25 @@
 ---
+/**
+ * Spettacoli ed eventi: calendario degli appuntamenti salvati dalla dashboard,
+ * renderizzato dal server a ogni richiesta (l'elenco è nell'HTML, leggibile dai
+ * motori di ricerca). Ogni evento ha la sua pagina: /spettacoli-eventi/<slug>.
+ * La vista "Calendario" (griglia del mese) è disegnata dal browser con gli
+ * stessi dati.
+ */
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { sfondo } from '../lib/images';
+import { ETICHETTE_STATO, eventiPubblici, passato, trovaEvento, urlEvento, type Evento } from '../lib/eventi';
+import { romeDate } from '../lib/time';
+
+export const prerender = false;
+
+// Vecchi link ?evento=ID (banner, condivisioni): alla pagina dell'evento
+const vecchio = Astro.url.searchParams.get('evento');
+if (vecchio) {
+  const trovato = await trovaEvento(vecchio);
+  return Astro.redirect(trovato ? urlEvento(trovato.evento) : '/spettacoli-eventi', 301);
+}
 
 const bg = {
   hero: await sfondo('ballerina.jpg'),
@@ -16,6 +34,59 @@ const tipiEvento = [
   { nome: 'Eventi formativi', testo: 'Incontri che attivano linguaggi diversi tra loro, come le <a href="/formazioni-personalizzate">formazioni personalizzate</a>.' },
   { nome: 'Sul territorio', testo: 'Spesso ospiti di iniziative a Milano e in provincia.' },
 ];
+
+const MESI = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+const GIORNI_BREVI = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+
+const adesso = Date.now();
+const oggi = romeDate(adesso);
+const domani = romeDate(adesso + 86_400_000);
+
+const eventi = await eventiPubblici();
+const prossimi = eventi.filter((e) => !passato(e, adesso));
+const passati = eventi.filter((e) => passato(e, adesso)).reverse();
+
+/** Eventi raggruppati per mese di inizio, nell'ordine ricevuto. */
+function perMese(lista: Evento[]) {
+  const gruppi = new Map<string, Evento[]>();
+  for (const e of lista) gruppi.set(e.data.slice(0, 7), [...(gruppi.get(e.data.slice(0, 7)) ?? []), e]);
+  return [...gruppi].map(([k, ev]) => {
+    const [y, m] = k.split('-').map(Number);
+    return { titolo: `${MESI[m - 1]} ${y}`, eventi: ev };
+  });
+}
+
+/** Dati di una riga dell'elenco. */
+function voce(e: Evento) {
+  const [y, m, d] = e.data.split('-').map(Number);
+  const finito = passato(e, adesso);
+  const inCorso = !finito && e.data < oggi;
+  const vicino = e.data === oggi || inCorso ? (e.dataFine ? 'In corso' : 'Oggi') : e.data === domani ? 'Domani' : '';
+  let fino = '';
+  if (e.dataFine) {
+    const [, mf, df] = e.dataFine.split('-').map(Number);
+    fino = `Fino a ${GIORNI_BREVI[new Date(Date.UTC(y, mf - 1, df)).getUTCDay()].toLowerCase()} ${df}${mf !== m ? ` ${MESI[mf - 1].toLowerCase()}` : ''}`;
+  }
+  return {
+    e,
+    giorno: d,
+    settimana: GIORNI_BREVI[new Date(Date.UTC(y, m - 1, d)).getUTCDay()],
+    vicino: finito ? '' : vicino,
+    stato: e.stato === 'pubblicato' ? '' : ETICHETTE_STATO[e.stato],
+    ora: e.ora ? `${e.ora}${e.oraFine ? `–${e.oraFine}` : ''}` : '',
+    fino,
+    finito,
+  };
+}
+
+const gruppiProssimi = perMese(prossimi);
+const gruppiPassati = perMese(passati);
+
+// Dati per la vista calendario (griglia del mese disegnata dal browser)
+const datiCalendario = {
+  oggi,
+  eventi: eventi.map((e) => ({ titolo: e.titolo, url: urlEvento(e), data: e.data, dataFine: e.dataFine, passato: passato(e, adesso), annullato: e.stato === 'annullato' })),
+};
 ---
 
 <Base
@@ -23,7 +94,6 @@ const tipiEvento = [
     description="Spettacoli, saggi e workshop di InBallet a Lainate e Rho, più eventi su misura: spettacolo annuale in teatro, eventi nelle scuole e team building aziendali."
     ogTitle="Spettacoli ed Eventi | InBallet"
     ogDescription="Il calendario degli appuntamenti e gli eventi curati dalla Direzione: teatro, scuole, aziende e territorio."
-    mainFocusable={false}
 >
         <!-- Hero -->
         <section class="chisiamo-hero">
@@ -36,8 +106,9 @@ const tipiEvento = [
             </div>
         </section>
 
-        <!-- Calendario: elenco dei prossimi appuntamenti (vista principale) o griglia del mese -->
-        <section id="calendario" class="eventi-section" aria-labelledby="eventi-titolo">
+        <!-- Calendario: elenco dei prossimi appuntamenti (vista principale) o griglia del mese.
+             Escluso dal testo letto dal chatbot: gli eventi gli arrivano già aggiornati. -->
+        <section id="calendario" class="eventi-section" aria-labelledby="eventi-titolo" data-chatbot-escludi>
             <div class="container">
                 <header class="eventi-header">
                     <div class="eventi-intro">
@@ -45,47 +116,90 @@ const tipiEvento = [
                         <h2 class="titolo-sezione" id="eventi-titolo">Prossimi <em>appuntamenti</em></h2>
                         <p class="intro-sezione">Spettacoli, saggi, workshop e lezioni aperte a Lainate e Rho. Apri un evento per leggere i dettagli e aggiungerlo al tuo calendario.</p>
                     </div>
-                    <div class="vista-switch" id="vistaSwitch" role="group" aria-label="Visualizzazione" hidden>
-                        <button type="button" data-vista="elenco" aria-pressed="true"><i class="fas fa-list" aria-hidden="true"></i> Elenco</button>
-                        <button type="button" data-vista="calendario" aria-pressed="false"><i class="fas fa-calendar-alt" aria-hidden="true"></i> Calendario</button>
-                    </div>
+                    {eventi.length > 0 && (
+                        <div class="vista-switch" id="vistaSwitch" role="group" aria-label="Visualizzazione" hidden>
+                            <button type="button" data-vista="elenco" aria-pressed="true"><i class="fas fa-list" aria-hidden="true"></i> Elenco</button>
+                            <button type="button" data-vista="calendario" aria-pressed="false"><i class="fas fa-calendar-alt" aria-hidden="true"></i> Calendario</button>
+                        </div>
+                    )}
                 </header>
 
-                <p class="eventi-stato" id="eventiStato" aria-live="polite">Caricamento degli appuntamenti…</p>
-
                 <!-- Nessun appuntamento futuro (gli eventi passati restano consultabili sotto) -->
-                <div class="eventi-vuoto" id="eventiVuoto" hidden>
-                    <h3>Nessun appuntamento in programma</h3>
-                    <p>Stiamo preparando le prossime date: spettacoli, saggi e workshop vengono pubblicati qui appena confermati.</p>
-                    <a href="/contatti" class="link-cta">
-                        Chiedi informazioni
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
+                {prossimi.length === 0 && (
+                    <div class="eventi-vuoto">
+                        <h3>Nessun appuntamento in programma</h3>
+                        <p>Stiamo preparando le prossime date: spettacoli, saggi e workshop vengono pubblicati qui appena confermati.</p>
+                        <a href="/contatti" class="link-cta">
+                            Chiedi informazioni
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                )}
 
                 <!-- Vista elenco -->
-                <div class="vista-elenco" id="vistaElenco" hidden>
-                    <div id="agendaProssimi"></div>
-                    <details class="agenda-passati" id="agendaPassatiWrap" hidden>
-                        <summary>
-                            Eventi passati <span class="agenda-passati-n" id="passatiConteggio"></span>
-                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                        </summary>
-                        <div id="agendaPassati"></div>
-                    </details>
+                <div class="vista-elenco" id="vistaElenco">
+                    {[{ gruppi: gruppiProssimi, passati: false }, { gruppi: gruppiPassati, passati: true }].map(({ gruppi, passati: sonoPassati }) => {
+                        const elenco = gruppi.map((mese) => (
+                            <div class="agenda-gruppo">
+                                <h3 class="agenda-mese">{mese.titolo}</h3>
+                                <ul class="agenda">
+                                    {mese.eventi.map(voce).map((v) => (
+                                        <li class:list={{ passato: v.finito, annullato: v.e.stato === 'annullato' }}>
+                                            <a class="agenda-voce" href={urlEvento(v.e)}>
+                                                <span class="agenda-data">
+                                                    <span class="agenda-giorno">{v.giorno}</span>
+                                                    <span class="agenda-settimana">{v.settimana}</span>
+                                                </span>
+                                                <span class="agenda-testo">
+                                                    {(v.e.tipo || v.vicino || v.stato) && (
+                                                        <span class="agenda-sopra">
+                                                            {v.vicino && <span class="agenda-vicino">{v.vicino}</span>}
+                                                            {v.stato && <span class="agenda-stato">{v.stato}</span>}
+                                                            {v.e.tipo && <span class="agenda-tipo">{v.e.tipo}</span>}
+                                                        </span>
+                                                    )}
+                                                    <span class="agenda-titolo">{v.e.titolo}</span>
+                                                    {(v.fino || v.ora || v.e.luogo) && (
+                                                        <span class="agenda-meta">
+                                                            {v.fino && <span><i class="fas fa-calendar-alt" aria-hidden="true"></i>{v.fino}</span>}
+                                                            {v.ora && <span><i class="fas fa-clock" aria-hidden="true"></i>{v.ora}</span>}
+                                                            {v.e.luogo && <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i>{v.e.luogo}</span>}
+                                                        </span>
+                                                    )}
+                                                </span>
+                                                <span class="link-cta agenda-cta" aria-hidden="true">Vedi dettagli <i class="fas fa-arrow-right"></i></span>
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ));
+                        if (!sonoPassati) return elenco;
+                        return passati.length > 0 && (
+                            <details class="agenda-passati">
+                                <summary>
+                                    Eventi passati <span class="agenda-passati-n">({passati.length})</span>
+                                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                                </summary>
+                                {elenco}
+                            </details>
+                        );
+                    })}
                 </div>
 
-                <!-- Vista calendario: griglia del mese -->
-                <div class="vista-calendario" id="vistaCalendario" hidden>
-                    <div class="calendario-nav">
-                        <h3 class="calendario-mese" id="meseCorrente" aria-live="polite"></h3>
-                        <div class="calendario-frecce">
-                            <button type="button" id="btnMesePrev" aria-label="Mese precedente"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
-                            <button type="button" id="btnMeseNext" aria-label="Mese successivo"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+                <!-- Vista calendario: griglia del mese (disegnata da scripts/calendario.ts) -->
+                {eventi.length > 0 && (
+                    <div class="vista-calendario" id="vistaCalendario" hidden>
+                        <div class="calendario-nav">
+                            <h3 class="calendario-mese" id="meseCorrente" aria-live="polite"></h3>
+                            <div class="calendario-frecce">
+                                <button type="button" id="btnMesePrev" aria-label="Mese precedente"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+                                <button type="button" id="btnMeseNext" aria-label="Mese successivo"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+                            </div>
                         </div>
+                        <div class="calendario-grid" id="calendarioGrid"></div>
                     </div>
-                    <div class="calendario-grid" id="calendarioGrid"></div>
-                </div>
+                )}
             </div>
         </section>
 
@@ -109,47 +223,10 @@ const tipiEvento = [
             </div>
         </section>
 
-    <Fragment slot="after-main">
-    <!-- Dettaglio evento -->
-    <dialog class="evento-dialog" id="eventoDialog" aria-labelledby="dialogTitolo">
-        <div class="evento-dialog-barra">
-            <button type="button" class="evento-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
-        </div>
-        <div class="evento-dialog-corpo" id="dialogCorpo">
-            <button type="button" class="evento-locandina" id="dialogLocandinaBtn" aria-label="Ingrandisci la locandina" hidden>
-                <img id="dialogLocandina" src="data:," alt="">
-                <span class="evento-locandina-zoom" aria-hidden="true"><i class="fas fa-expand"></i></span>
-            </button>
-            <div class="evento-dialog-testo">
-                <p class="evento-etichette" id="dialogEtichette"></p>
-                <h2 class="evento-dialog-titolo" id="dialogTitolo"></h2>
-                <dl class="evento-dettagli" id="dialogDettagli"></dl>
-                <div class="evento-descrizione" id="dialogDescrizione"></div>
-                <div class="evento-azioni">
-                    <div class="evento-azioni-calendario" id="dialogCalendario">
-                        <span class="evento-azioni-label">Aggiungi al calendario</span>
-                        <div class="evento-azioni-btn">
-                            <button type="button" class="evento-azione" id="btnGoogle">Google Calendar</button>
-                            <button type="button" class="evento-azione" id="btnApple">Apple / Outlook</button>
-                        </div>
-                    </div>
-                    <button type="button" class="evento-condividi" id="btnCondividi">
-                        <i class="fas fa-share-alt" aria-hidden="true"></i>
-                        <span id="btnCondividiTesto">Condividi</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </dialog>
-
-    <!-- Locandina a tutto schermo -->
-    <dialog class="locandina-dialog" id="locandinaDialog" aria-label="Locandina">
-        <button type="button" class="locandina-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
-        <img id="locandinaGrande" src="data:," alt="">
-    </dialog>
-    </Fragment>
-
     <Fragment slot="scripts">
+    {eventi.length > 0 && (
+        <script type="application/json" id="datiCalendario" set:html={JSON.stringify(datiCalendario).replace(/</g, '\\u003c')} />
+    )}
     <script>
         import '../scripts/calendario';
     </script>
@@ -192,8 +269,7 @@ const tipiEvento = [
   }
 }
 
-.eventi-section [hidden],
-.evento-dialog [hidden] {
+.eventi-section [hidden] {
   display: none !important;
 }
 
@@ -253,11 +329,6 @@ const tipiEvento = [
   box-shadow: var(--shadow-sm);
 }
 
-.eventi-stato {
-  padding: 2rem 0;
-  color: var(--text-light);
-}
-
 /* ---------- Nessun evento futuro ---------- */
 .eventi-vuoto {
   max-width: 40rem;
@@ -280,23 +351,23 @@ const tipiEvento = [
 
 /* ---------- Elenco: mese, poi righe con data grande, testo e freccia ---------- */
 /* Un blocco per mese: azzurrino e bianco con bordo, alternati */
-.eventi-section :global(.agenda-gruppo) {
+.agenda-gruppo {
   padding: 1.75rem 2rem .25rem;
   border: 1px solid transparent;
   border-radius: var(--radius-card);
   background: var(--bg-soft);
 }
 
-.eventi-section :global(.agenda-gruppo:nth-child(even)) {
+.agenda-gruppo:nth-of-type(even) {
   background: var(--white);
   border-color: rgba(26, 26, 26, 0.12);
 }
 
-.eventi-section :global(.agenda-gruppo + .agenda-gruppo) {
+.agenda-gruppo + .agenda-gruppo {
   margin-top: 1.25rem;
 }
 
-.eventi-section :global(.agenda-mese) {
+.agenda-mese {
   margin: 0;
   padding-bottom: 1rem;
   font-size: var(--text-sm);
@@ -307,25 +378,21 @@ const tipiEvento = [
   border-bottom: 1px solid rgba(26, 26, 26, 0.12);
 }
 
-.eventi-section :global(.agenda-mese:first-child) {
-  margin-top: 0;
-}
-
-.eventi-section :global(.agenda) {
+.agenda {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.eventi-section :global(.agenda > li) {
+.agenda > li {
   border-bottom: 1px solid rgba(26, 26, 26, 0.12);
 }
 
-.eventi-section :global(.agenda > li:last-child) {
+.agenda > li:last-child {
   border-bottom: none;
 }
 
-.eventi-section :global(.agenda-voce) {
+.agenda-voce {
   display: grid;
   grid-template-columns: 5rem minmax(0, 1fr) auto;
   align-items: center;
@@ -335,14 +402,14 @@ const tipiEvento = [
   text-decoration: none;
 }
 
-.eventi-section :global(.agenda-data) {
+.agenda-data {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   line-height: 1;
 }
 
-.eventi-section :global(.agenda-giorno) {
+.agenda-giorno {
   font-size: var(--text-4xl);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -350,7 +417,7 @@ const tipiEvento = [
   font-variant-numeric: tabular-nums;
 }
 
-.eventi-section :global(.agenda-settimana) {
+.agenda-settimana {
   margin-top: .4rem;
   font-size: var(--text-xs);
   font-weight: 600;
@@ -359,21 +426,22 @@ const tipiEvento = [
   color: var(--text-light);
 }
 
-.eventi-section :global(.agenda-testo) {
+.agenda-testo {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: .4rem;
 }
 
-.eventi-section :global(.agenda-sopra) {
+.agenda-sopra {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: .4rem .75rem;
 }
 
-.eventi-section :global(.agenda-vicino) {
+.agenda-vicino,
+.agenda-stato {
   padding: .2rem .6rem;
   border-radius: var(--radius-pill);
   background: var(--primary-blue);
@@ -384,7 +452,12 @@ const tipiEvento = [
   color: var(--dark-navy);
 }
 
-.eventi-section :global(.agenda-tipo) {
+.agenda-stato {
+  background: var(--dark-navy);
+  color: var(--white);
+}
+
+.agenda-tipo {
   font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 2px;
@@ -392,7 +465,7 @@ const tipiEvento = [
   color: var(--primary-blue-dark);
 }
 
-.eventi-section :global(.agenda-titolo) {
+.agenda-titolo {
   font-size: var(--text-xl);
   font-weight: 700;
   line-height: var(--leading-snug);
@@ -400,7 +473,12 @@ const tipiEvento = [
   transition: color .3s ease;
 }
 
-.eventi-section :global(.agenda-meta) {
+.annullato .agenda-titolo {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.agenda-meta {
   display: flex;
   flex-wrap: wrap;
   gap: .25rem 1.25rem;
@@ -408,27 +486,27 @@ const tipiEvento = [
   color: var(--text-light);
 }
 
-.eventi-section :global(.agenda-meta i) {
+.agenda-meta i {
   margin-right: .4rem;
   font-size: var(--text-xs);
   color: var(--primary-blue-dark);
 }
 
-.eventi-section :global(.agenda-cta) {
+.agenda-cta {
   white-space: nowrap;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .eventi-section :global(.agenda-voce:hover .agenda-titolo),
-  .eventi-section :global(.agenda-voce:hover .agenda-cta) {
+  .agenda-voce:hover .agenda-titolo,
+  .agenda-voce:hover .agenda-cta {
     color: var(--primary-blue-dark);
   }
 
-  .eventi-section :global(.agenda-voce:hover .agenda-cta) {
+  .agenda-voce:hover .agenda-cta {
     border-color: var(--primary-blue-dark);
   }
 
-  .eventi-section :global(.agenda-voce:hover .agenda-cta i) {
+  .agenda-voce:hover .agenda-cta i {
     transform: translateX(6px);
   }
 }
@@ -476,8 +554,8 @@ const tipiEvento = [
   color: var(--primary-blue-dark);
 }
 
-.eventi-section :global(.passato .agenda-giorno),
-.eventi-section :global(.passato .agenda-titolo) {
+.passato .agenda-giorno,
+.passato .agenda-titolo {
   color: var(--text-light);
 }
 
@@ -555,6 +633,8 @@ const tipiEvento = [
   min-height: 7rem;
   padding: .6rem;
   background: var(--white);
+  color: inherit;
+  text-decoration: none;
 }
 
 .calendario-grid :global(.cal-giorno.vuoto) {
@@ -585,20 +665,17 @@ const tipiEvento = [
   display: block;
   width: 100%;
   padding: .3rem .5rem;
-  border: none;
   border-left: 3px solid var(--primary-blue);
   border-radius: var(--radius-xs);
   background: var(--bg-soft);
-  font: inherit;
   font-size: var(--text-xs);
   font-weight: 600;
   line-height: 1.35;
-  text-align: left;
   color: var(--dark-navy);
+  text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  cursor: pointer;
   transition: background-color .3s ease;
 }
 
@@ -606,6 +683,10 @@ const tipiEvento = [
   border-left-color: #ccc;
   background: #f3f3f3;
   color: var(--text-light);
+}
+
+.calendario-grid :global(.cal-evento.annullato) {
+  text-decoration: line-through;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -617,354 +698,6 @@ const tipiEvento = [
 /* Punto sotto il numero: usato al posto dei titoli sugli schermi stretti */
 .calendario-grid :global(.cal-punti) {
   display: none;
-}
-
-/* ---------- Dialog dettaglio evento ---------- */
-.evento-dialog {
-  width: min(52rem, calc(100% - 3rem));
-  max-height: min(48rem, calc(100dvh - 3rem));
-  margin: auto;
-  padding: 0;
-  border: none;
-  border-radius: var(--radius-card);
-  background: var(--white);
-  color: var(--text-dark);
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  /* Non la barra della pagina (blu su nero): sottile e discreta sul bianco */
-  scrollbar-width: thin;
-  scrollbar-color: rgba(26, 26, 26, 0.22) transparent;
-}
-
-.evento-dialog[open] {
-  animation: evento-entra .3s ease;
-}
-
-.evento-dialog::backdrop {
-  background: rgba(12, 12, 12, 0.6);
-}
-
-@keyframes evento-entra {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-}
-
-:global(html:has(dialog[open])) {
-  overflow: hidden;
-}
-
-/* Barra con la X: resta in alto mentre il contenuto scorre */
-.evento-dialog-barra {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  display: flex;
-  justify-content: flex-end;
-  height: 0;
-}
-
-.evento-chiudi {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  margin: 1rem 1rem 0 0;
-  border: none;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: var(--shadow-sm);
-  font-size: var(--text-base);
-  color: var(--dark-navy);
-  cursor: pointer;
-}
-
-.evento-dialog-corpo {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 2.5rem;
-  padding: 3rem;
-}
-
-/* PC: locandina a sinistra, ferma mentre il testo scorre */
-.evento-dialog-corpo.con-locandina {
-  grid-template-columns: 17rem minmax(0, 1fr);
-  align-items: start;
-}
-
-/* Locandina: stesso riquadro per tutti gli eventi. L'immagine è sempre intera
-   (contain); attorno, la stessa immagine sfocata. */
-.evento-locandina {
-  position: sticky;
-  top: 3rem;
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  padding: 0;
-  border: none;
-  border-radius: var(--radius-md);
-  background: var(--dark-navy);
-  overflow: hidden;
-  isolation: isolate;
-  cursor: zoom-in;
-}
-
-.evento-locandina::before {
-  content: '';
-  position: absolute;
-  inset: -2rem;
-  z-index: -1;
-  background: var(--locandina, none) center / cover no-repeat;
-  filter: blur(24px) brightness(.75);
-}
-
-.evento-locandina img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.evento-locandina-zoom {
-  position: absolute;
-  right: .6rem;
-  bottom: .6rem;
-  display: grid;
-  place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: var(--radius-full);
-  background: rgba(0, 0, 0, 0.55);
-  font-size: var(--text-xs);
-  color: var(--white);
-}
-
-.evento-etichette {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: .5rem 1rem;
-  margin: 0 3rem .75rem 0;
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--primary-blue-dark);
-}
-
-.evento-etichette:empty {
-  display: none;
-}
-
-.evento-etichette :global(.evento-concluso) {
-  padding: .2rem .6rem;
-  border-radius: var(--radius-pill);
-  background: #eee;
-  font-size: var(--text-3xs);
-  letter-spacing: 1px;
-  color: var(--text-light);
-}
-
-.evento-dialog-titolo {
-  margin: 0 3rem 1.75rem 0;
-  font-size: var(--text-3xl);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  color: var(--dark-navy);
-}
-
-.evento-dialog-corpo.con-locandina .evento-dialog-titolo,
-.evento-dialog-corpo.con-locandina .evento-etichette {
-  margin-right: 1.5rem;
-}
-
-/* Dettagli: etichetta e valore su righe separate da filetti */
-.evento-dettagli {
-  margin: 0 0 1.75rem;
-}
-
-.evento-dettagli :global(div) {
-  display: grid;
-  grid-template-columns: 6.5rem minmax(0, 1fr);
-  gap: 1rem;
-  padding: .8rem 0;
-  border-bottom: 1px solid rgba(26, 26, 26, 0.1);
-}
-
-.evento-dettagli :global(div:first-child) {
-  padding-top: 0;
-}
-
-.evento-dettagli :global(dt) {
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  line-height: 1.6;
-  color: var(--text-light);
-}
-
-.evento-dettagli :global(dd) {
-  margin: 0;
-  font-size: var(--text-md);
-  font-weight: 600;
-  line-height: 1.5;
-  color: var(--dark-navy);
-}
-
-.evento-descrizione {
-  font-size: var(--text-md);
-  line-height: 1.75;
-  color: var(--text-dark);
-}
-
-.evento-descrizione:empty {
-  display: none;
-}
-
-.evento-descrizione :global(ul) {
-  margin: .75rem 0;
-  padding-left: 1.25rem;
-}
-
-.evento-descrizione :global(li) {
-  margin: .3rem 0;
-}
-
-.evento-descrizione :global(b),
-.evento-descrizione :global(strong) {
-  font-weight: 600;
-}
-
-.evento-descrizione :global(i),
-.evento-descrizione :global(em) {
-  font-style: italic;
-}
-
-.evento-azioni {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 1.25rem 2rem;
-  margin-top: 2rem;
-}
-
-.evento-azioni-label {
-  display: block;
-  margin-bottom: .6rem;
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--text-light);
-}
-
-.evento-azioni-btn {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-}
-
-.evento-azione {
-  min-height: 44px;
-  padding: 0 1.25rem;
-  border: 1px solid rgba(70, 130, 180, 0.35);
-  border-radius: var(--radius-pill);
-  background: var(--white);
-  font: inherit;
-  font-size: var(--text-btn);
-  font-weight: 600;
-  color: var(--dark-navy);
-  cursor: pointer;
-  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
-}
-
-.evento-condividi {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  min-height: 44px;
-  padding: 0 .25rem;
-  border: none;
-  background: none;
-  font: inherit;
-  font-size: var(--text-btn);
-  font-weight: 600;
-  color: var(--primary-blue-dark);
-  cursor: pointer;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .evento-azione:hover {
-    background: var(--primary-blue);
-    border-color: var(--primary-blue);
-  }
-
-  .evento-condividi:hover {
-    color: var(--dark-navy);
-  }
-}
-
-/* ---------- Locandina a tutto schermo ---------- */
-.locandina-dialog {
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  max-height: none;
-  margin: 0;
-  padding: 4.5rem 1.5rem 2rem;
-  border: none;
-  background: rgba(12, 12, 12, 0.96);
-  cursor: zoom-out;
-}
-
-.locandina-dialog[open] {
-  display: grid;
-  place-items: center;
-  animation: locandina-entra .25s ease;
-}
-
-.locandina-dialog::backdrop {
-  background: transparent;
-}
-
-@keyframes locandina-entra {
-  from {
-    opacity: 0;
-  }
-}
-
-.locandina-dialog img {
-  max-width: 100%;
-  max-height: calc(100dvh - 7rem);
-  border-radius: var(--radius-sm);
-}
-
-.locandina-chiudi {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: none;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.15);
-  font-size: var(--text-base);
-  color: var(--white);
-  cursor: pointer;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .evento-dialog[open],
-  .locandina-dialog[open] {
-    animation: none;
-  }
 }
 
 /* ---------- Tablet ---------- */
@@ -1001,22 +734,6 @@ const tipiEvento = [
   .calendario-grid :global(.cal-giorno.ha-eventi) {
     cursor: pointer;
   }
-
-  .evento-dialog-corpo {
-    padding: 2.5rem 2rem 2rem;
-  }
-
-  /* Tablet: locandina sopra il testo */
-  .evento-dialog-corpo.con-locandina {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
-  }
-
-  .evento-locandina {
-    position: relative;
-    top: auto;
-    aspect-ratio: 16 / 9;
-  }
 }
 
 /* ---------- Mobile ---------- */
@@ -1036,37 +753,33 @@ const tipiEvento = [
     justify-content: center;
   }
 
-  .eventi-section :global(.agenda-gruppo) {
+  .agenda-gruppo {
     padding: 1.25rem 1.25rem 0;
   }
 
-  .eventi-section :global(.agenda-mese) {
+  .agenda-mese {
     padding-bottom: .75rem;
   }
 
-  .eventi-section :global(.agenda-voce) {
+  .agenda-voce {
     grid-template-columns: 3.25rem minmax(0, 1fr);
     align-items: start;
     gap: 1.25rem;
     padding: 1.5rem 0;
   }
 
-  .eventi-section :global(.agenda-cta) {
+  .agenda-cta {
     grid-column: 2;
     justify-self: start;
   }
 
-
-  .eventi-section :global(.agenda-settimana) {
+  .agenda-settimana {
     letter-spacing: 1px;
   }
-
-
 
   .agenda-passati {
     margin-top: 2.5rem;
   }
-
 
   .calendario-grid :global(.cal-intestazione) {
     padding: .6rem 0;
@@ -1076,74 +789,6 @@ const tipiEvento = [
   .calendario-grid :global(.cal-giorno) {
     min-height: 3.5rem;
     padding: .35rem 0;
-  }
-
-  /* Dialog: a schermo intero */
-  .evento-dialog {
-    width: 100%;
-    max-width: 100%;
-    height: 100dvh;
-    max-height: 100dvh;
-    margin: 0;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  .evento-chiudi {
-    margin: .75rem .75rem 0 0;
-  }
-
-  .evento-dialog-corpo,
-  .evento-dialog-corpo.con-locandina {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.75rem;
-    padding: 1.5rem 1.5rem 2rem;
-  }
-
-  /* Con locandina il testo inizia sotto: la X sta sopra l'immagine */
-  .evento-dialog-corpo:not(.con-locandina) {
-    padding-top: 2rem;
-  }
-
-  .evento-locandina {
-    aspect-ratio: 4 / 5;
-  }
-
-  .evento-dialog-corpo.con-locandina .evento-dialog-titolo,
-  .evento-dialog-corpo.con-locandina .evento-etichette {
-    margin-right: 0;
-  }
-
-  .evento-dialog-titolo {
-    margin-bottom: 1.5rem;
-  }
-
-  .evento-dettagli :global(div) {
-    grid-template-columns: 5.5rem minmax(0, 1fr);
-    gap: .75rem;
-  }
-
-
-  .evento-azioni {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .evento-azioni-btn {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .evento-azione {
-    padding: 0 .75rem;
-  }
-
-  .evento-condividi {
-    align-self: flex-start;
-  }
-
-  .locandina-dialog {
-    padding: 4.5rem 1rem 1.5rem;
   }
 }
 </style>

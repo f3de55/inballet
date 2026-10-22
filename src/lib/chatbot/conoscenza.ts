@@ -65,8 +65,8 @@ async function dettagliCorsi(): Promise<string> {
 const dataLunga = new Intl.DateTimeFormat('it-IT', { timeZone: 'Europe/Rome', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
 async function parteVariabile(): Promise<string> {
-  const [{ documenti }, eventi] = await Promise.all([leggiDocumenti(), prossimiEventi(10)]);
-  const veri = eventi.filter(({ evento }) => !evento.demo);
+  // Gli stessi eventi del calendario del sito (anche quelli demo, finché sono pubblicati)
+  const [{ documenti }, veri] = await Promise.all([leggiDocumenti(), prossimiEventi(30)]);
   const campo = (etichetta: string, valore?: string) => (valore ? `; ${etichetta}: ${decodeHtml(valore)}` : '');
   return [
     `## Oggi\n\n${dataLunga.format(new Date())}`,

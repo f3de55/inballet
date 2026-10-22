@@ -63,7 +63,7 @@ const gruppi = [
         <h1>Eventi</h1>
         <p class="pagina-sotto">
             {tutti.length
-                ? `${futuri.length} in programma · ${passati.length} passati`
+                ? `${futuri.length} in programma · ${passati.length} passati${bozze ? ` · ${bozze} ${bozze === 1 ? 'bozza' : 'bozze'}` : ''}`
                 : 'Ancora nessun evento'}
         </p>
     </div>

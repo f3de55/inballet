@@ -9,11 +9,11 @@ import { DATA_DIR } from 'astro:env/server';
 const dataDir = path.resolve(DATA_DIR);
 
 export const paths = {
+  data: dataDir,
   eventi: path.join(dataDir, 'eventi.json'),
   tipi: path.join(dataDir, 'tipi_evento.json'),
   analytics: path.join(dataDir, 'analytics.json'),
-  chatCache: path.join(dataDir, 'cache'),
-  rateLimit: path.join(dataDir, 'ratelimit'),
+  conversazioni: path.join(dataDir, 'conversazioni'),
   immaginiEventi: path.join(dataDir, 'uploads', 'eventi'),
   documenti: path.join(dataDir, 'documenti.json'),
   fileDocumenti: path.join(dataDir, 'uploads', 'documenti'),

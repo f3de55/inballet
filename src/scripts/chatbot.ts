@@ -209,13 +209,5 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !box.hidden) chiudi();
 });
 
-// Pulisci conversazione e contatore (utile da console)
-Object.assign(window, {
-  cbClearSession() {
-    try {
-      localStorage.removeItem(COUNT_KEY);
-    } catch {}
-    conteggio = 0;
-    nuovaConversazione();
-  },
-});
+// Pulisci la conversazione (utile da console)
+Object.assign(window, { cbClearSession: nuovaConversazione });

@@ -27,7 +27,7 @@ export async function totali(): Promise<Totali> {
     fileLocandine(),
     readJson<LogEntry[]>(paths.analytics, []),
   ]);
-  return { eventi: eventi.length, locandine: locandine.length, messaggi: messaggi.length };
+  return { eventi: eventi.length, locandine: locandine.filter((f) => !isMini(f)).length, messaggi: messaggi.length };
 }
 
 export async function eliminaTutto(scelta: { eventi: boolean; chatbot: boolean }): Promise<Totali> {

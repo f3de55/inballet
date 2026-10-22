@@ -83,6 +83,9 @@ export default defineConfig({
       OPENROUTER_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       OPENAI_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       CEREBRAS_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      // Fornitore "compatibile": qualsiasi altra API in stile OpenAI (es. http://localhost:11434/v1 per Ollama)
+      CHATBOT_COMPATIBILE_URL: envField.string({ context: 'server', access: 'secret', optional: true }),
+      CHATBOT_COMPATIBILE_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       DASHBOARD_PASSWORD: envField.string({ context: 'server', access: 'secret', optional: true }),
       DATA_DIR: envField.string({ context: 'server', access: 'secret', default: './data' }),
       PUBLIC_GOOGLE_MAPS_KEY: envField.string({ context: 'client', access: 'public', default: 'AIzaSyB1T64uyO5Ke-MttLo9Amscl5ViUvYYvtI' }),

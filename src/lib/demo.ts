@@ -77,7 +77,7 @@ const MODELLI: Modello[] = [
     descrizione: 'Un pomeriggio per conoscere la scuola e incontrare le insegnanti. <b>Prenotazione consigliata.</b>', destinatari: 'Bambini dai 3 anni, ragazzi e adulti', costo: 'Gratuito' },
   { tipo: 'Open Day', titolo: 'Open Day: porte aperte a Rho', locandina: 'Vieni\na trovarci', luogo: RHO, sede: 'Sede di Rho', ora: '15:00', weekend: true, foto: 'gallery-4',
     descrizione: 'Un pomeriggio per conoscere la scuola, vedere le sale e chiedere informazioni sulle iscrizioni.', destinatari: 'Aperto a tutti', costo: 'Gratuito' },
-  { tipo: 'Stage', titolo: 'Stage intensivo di danza classica', locandina: 'Stage\nclassico', luogo: RHO, sede: 'Sede di Rho', ora: '10:00', weekend: true, foto: 'hero-bg',
+  { tipo: 'Stage', titolo: 'Stage intensivo di danza classica', locandina: 'Stage\nclassico', luogo: RHO, sede: 'Sede di Rho', ora: '10:00', oraFine: '17:00', dueGiorni: true, foto: 'hero-bg',
     descrizione: 'Due lezioni di tecnica e una di <b>repertorio</b> con maître ospite.<ul><li>Livello avanzato</li><li>Iscrizione obbligatoria</li></ul>', destinatari: 'Allievi avanzati, dai 12 anni', costo: '45 €' },
   { tipo: 'Stage', titolo: 'Stage di danza moderna', locandina: 'Modern\nstage', luogo: RHO, sede: 'Sede di Rho', ora: '14:00', weekend: true, foto: 'hero-danza-contemporanea',
     descrizione: 'Contrazione e rilascio, linee e dinamiche dello stile <b>Modern</b> in un pomeriggio di studio.', destinatari: 'Dai 10 anni', costo: '30 €' },

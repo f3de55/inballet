@@ -98,12 +98,14 @@ const gruppi = [
                         <ul class="ev-lista">
                             {mese.eventi.map((ev) => {
                                 const g2 = giorno(ev.data);
-                                const titolo = decodeHtml(ev.titolo);
-                                const luogo = ev.luogo ? decodeHtml(ev.luogo) : '';
-                                const vicino = ev.data === oggi ? 'Oggi' : ev.data === domani ? 'Domani' : '';
+                                const titolo = ev.titolo;
+                                const luogo = ev.luogo;
+                                const vicino = g.passato ? '' : ev.data === oggi || ev.data < oggi ? (ev.dataFine ? 'In corso' : 'Oggi') : ev.data === domani ? 'Domani' : '';
+                                const fino = ev.dataFine ? `fino al ${giorno(ev.dataFine).numero}/${ev.dataFine.slice(5, 7)}` : '';
+                                const ore = ev.ora ? `${ev.ora}${ev.oraFine ? `–${ev.oraFine}` : ''}` : '';
                                 return (
-                                    <li class:list={['ev', { passato: g.passato }]} data-id={ev.id} data-modifica={JSON.stringify(eventoPerModifica(ev))}
-                                        data-cerca={[titolo, luogo, ev.tipo, mese.titolo].join(' ').toLowerCase()}>
+                                    <li class:list={['ev', { passato: g.passato }]} data-id={ev.id} data-modifica={JSON.stringify(ev)}
+                                        data-cerca={[titolo, luogo, ev.tipo, mese.titolo, ev.stato !== 'pubblicato' ? ETICHETTE_STATO[ev.stato] : ''].join(' ').toLowerCase()}>
                                         <button type="button" class="ev-apri" data-azione="modifica">
                                             <span class="ev-data">
                                                 <span class="ev-giorno">{g2.numero}</span>

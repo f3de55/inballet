@@ -8,7 +8,7 @@ import { existsSync } from 'node:fs';
 import { readdir, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { LogEntry } from './chatbot';
-import { leggiEventi, leggiTipi, type Evento } from './eventi';
+import { baseSlug, leggiEventi, leggiTipi, slugUnico, type Evento } from './eventi';
 import { ensureDir, paths, readJson, serialized, writeJson } from './storage';
 import { romeDate, romeHour, romeIso, romeTimestamp } from './time';
 import { filePath, PUBLIC_PREFIX } from './uploads';

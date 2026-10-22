@@ -101,10 +101,10 @@ const tra = (min: number, max: number) => min + Math.floor(Math.random() * (max 
 const hex = (n: number) => randomBytes(n).toString('hex');
 
 /** Data YYYY-MM-DD a `giorni` da oggi; se serve, spostata al primo giorno ammesso (weekend o lunedì). */
-function dataDa(giorni: number, m: Pick<Modello, 'weekend' | 'lunedi'>) {
+function dataDa(giorni: number, m: Pick<Modello, 'weekend' | 'lunedi' | 'dueGiorni'>) {
   const d = new Date(`${romeDate()}T12:00:00Z`);
   d.setUTCDate(d.getUTCDate() + giorni);
-  const ammessi = m.lunedi ? [1] : m.weekend ? [0, 6] : null;
+  const ammessi = m.lunedi ? [1] : m.dueGiorni ? [6] : m.weekend ? [0, 6] : null;
   if (ammessi) while (!ammessi.includes(d.getUTCDay())) d.setUTCDate(d.getUTCDate() + 1);
   return d.toISOString().slice(0, 10);
 }

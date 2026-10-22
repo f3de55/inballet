@@ -68,7 +68,7 @@ export default defineConfig({
       CHATBOT_MODELLI: envField.string({
         context: 'server',
         access: 'secret',
-        default: 'gemini:gemini-flash-latest,gemini:gemini-flash-lite-latest,mistral:mistral-small-latest,groq:openai/gpt-oss-120b',
+        default: 'gemini:gemini-flash-lite-latest,gemini:gemini-flash-latest,mistral:mistral-small-latest',
       }),
       // Fornitori usati col piano gratuito: la loro spesa conta zero (es. "gemini,groq")
       CHATBOT_GRATUITI: envField.string({ context: 'server', access: 'secret', default: '' }),
@@ -106,6 +106,12 @@ export default defineConfig({
       fallbacks: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
     },
   ],
+
+  vite: {
+    // Il client delle Actions è caricato solo all'apertura della chat: senza questa riga, in sviluppo
+    // Vite lo scopre in quel momento, lo ricompila e la chat aperta riceve un 504 "Outdated Optimize Dep"
+    optimizeDeps: { include: ['astro/actions/runtime/entrypoints/client.js'] },
+  },
 
   image: {
     // Immagini locali convertite in WebP e ridimensionate al build

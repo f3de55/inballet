@@ -35,6 +35,10 @@ interface Modello {
   luogo: string;
   sede: string;
   ora: string;
+  /** Ora di fine, se nota */
+  oraFine?: string;
+  /** Si svolge anche il giorno dopo (stage del weekend: inizia di sabato) */
+  dueGiorni?: boolean;
   descrizione: string;
   destinatari: string;
   costo: string;

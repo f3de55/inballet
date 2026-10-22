@@ -48,6 +48,7 @@ const ora = () => {
 };
 
 const inFondo = () => msgs.scrollTo({ top: msgs.scrollHeight });
+const telefono = () => `<a href="${box.dataset.telHref}" class="cb-link">${box.dataset.tel}</a>`;
 
 function appendMsg(type: Tipo, html: string, time = ora()) {
   const d = document.createElement('div');

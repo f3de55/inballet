@@ -4,8 +4,7 @@
  * la domanda riguarda eventi, altrimenti la domanda
  * frequente più simile, il link al corso citato e i contatti della segreteria.
  */
-import { prossimiEventi } from '../eventi';
-import { decodeHtml } from '../text';
+import { prossimiEventi, quando, urlEvento } from '../eventi';
 import { categorieCorsi, faq, scuola } from '../../data/scuola';
 
 const PAROLE_VUOTE = new Set(

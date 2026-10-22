@@ -44,6 +44,7 @@ export const server = {
           conversazione,
           ip: ipVisitatore(context.request.headers, context.clientAddress),
           userAgent: context.request.headers.get('user-agent') ?? '',
+          origine: context.url.origin,
         });
         return { response: html, conversazione: id };
       },

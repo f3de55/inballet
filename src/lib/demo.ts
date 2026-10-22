@@ -305,11 +305,21 @@ export async function generaChat(quanti: number, giorni: number): Promise<number
       let type: LogEntry['type'];
       if (r < 0.04) [message, risposta, type] = [casuale(FILTRATI), 'Messaggio non valido. Scrivi una domanda sulla scuola.', 'filtered'];
       else if (r < 0.06) [message, risposta, type] = [casuale(DOMANDE)[0], 'Troppi messaggi in poco tempo. Riprova tra qualche minuto.', 'blocked'];
-      else if (r < 0.07) [message, risposta, type] = [casuale(DOMANDE)[0], 'API Error: timeout', 'error'];
+      else if (r < 0.07) [message, risposta, type] = [casuale(DOMANDE)[0], 'In questo momento posso darti solo informazioni di base.', 'offline'];
       else {
         [message, risposta] = casuale(DOMANDE);
         type = Math.random() < 0.3 ? 'cached' : 'success';
       }
+      // Risposte del modello: fornitore principale, a volte quello di riserva
+      const riserva = Math.random() < 0.08;
+      const token_in = tra(9500, 11500);
+      const token_cache = Math.random() < 0.7 ? token_in - tra(150, 600) : 0;
+      const token_out = tra(60, 260);
+      const modello = type === 'success' ? (riserva ? { fornitore: 'mistral', modello: 'mistral-small-latest' } : { fornitore: 'anthropic', modello: 'claude-haiku-5-5' }) : {};
+      const consumo =
+        type === 'success'
+          ? { token_in, token_cache, token_out, costo: ((token_in - token_cache) * 0.1 + token_cache * 0.01 + token_out * 0.5) / 1e6, ms: tra(700, 2600), fallback: riserva ? 1 : 0 }
+          : {};
       nuovi.push({
         timestamp: romeIso(quando),
         date: romeDate(quando),

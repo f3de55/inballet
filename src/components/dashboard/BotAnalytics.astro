@@ -7,6 +7,7 @@
 import { CHATBOT_BUDGET_GIORNO } from 'astro:env/server';
 import type { LogEntry } from '../../lib/chatbot';
 import { GIORNI_CONSERVAZIONE, ultimeConversazioni } from '../../lib/chatbot/conversazioni';
+import { pagineLette } from '../../lib/chatbot/conoscenza';
 import { formatta } from '../../lib/chatbot/formato';
 import { statoCatena } from '../../lib/chatbot/fornitori';
 import { paths, readJson } from '../../lib/storage';

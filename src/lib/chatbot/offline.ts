@@ -3,6 +3,8 @@
  * spesa è raggiunto) Étoile risponde lo stesso, senza AI, con la domanda
  * frequente più simile, il link al corso citato e i contatti della segreteria.
  */
+import { prossimiEventi } from '../eventi';
+import { decodeHtml } from '../text';
 import { categorieCorsi, faq, scuola } from '../../data/scuola';
 
 const PAROLE_VUOTE = new Set(

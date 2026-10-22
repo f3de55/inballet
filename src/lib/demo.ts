@@ -234,7 +234,7 @@ export async function rimuoviEventiDemo(): Promise<number> {
     return eventi.filter((e) => e.demo);
   });
   // Solo i file creati dal generatore (demo-*), mai le locandine caricate
-  const inUso = new Set((await leggiEventi()).map((e) => path.basename(e.immagine ?? '')));
+  const inUso = new Set((await leggiEventi()).flatMap((e) => (e.immagine ? [path.basename(e.immagine), nomeMini(path.basename(e.immagine))] : [])));
   const files = await readdir(paths.immaginiEventi).catch(() => [] as string[]);
   await Promise.all(files.filter((f) => f.startsWith('demo-') && !inUso.has(f)).map((f) => unlink(filePath(f)).catch(() => {})));
   return rimossi.length;

@@ -53,7 +53,7 @@ const LAINATE = 'Sede di Lainate, Via Puccini 14';
 const RHO = 'Sede di Rho, Via Tevere 19';
 
 const MODELLI: Modello[] = [
-  { tipo: 'Spettacolo', titolo: 'Spettacolo di fine anno', locandina: 'Spettacolo\ndi fine anno', luogo: 'Teatro Comunale di Lainate', sede: 'Teatro di Lainate', ora: '20:30', weekend: true, foto: 'gallery-6',
+  { tipo: 'Spettacolo', titolo: 'Spettacolo di fine anno', locandina: 'Spettacolo\ndi fine anno', luogo: 'Teatro Comunale di Lainate', sede: 'Teatro di Lainate', ora: '20:30', oraFine: '22:30', weekend: true, foto: 'gallery-6',
     descrizione: 'Tutti i corsi della scuola sul palco per chiudere l\'anno accademico.<ul><li>Durata: circa due ore con intervallo</li><li>Biglietti in segreteria</li></ul>', destinatari: 'Famiglie e amici degli allievi', costo: '10 €' },
   { tipo: 'Spettacolo', titolo: 'Galà di Natale', locandina: 'Galà\ndi Natale', luogo: 'Teatro Civico di Rho', sede: 'Teatro di Rho', ora: '20:45', weekend: true, foto: 'gallery-10',
     descrizione: 'Coreografie di <b>classica, modern e urban</b> per festeggiare insieme le feste.', destinatari: 'Aperto a tutti', costo: '12 €' },

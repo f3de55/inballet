@@ -111,6 +111,9 @@ export const pubblico = (e: Evento) => e.stato !== 'bozza';
 
 export const urlEvento = (e: Pick<Evento, 'slug'>) => `/spettacoli-eventi/${e.slug}`;
 
+/** Indirizzo della locandina per <img>: i percorsi salvati sono relativi ("assets/images/eventi/…"). */
+export const srcImmagine = (immagine: string) => (/^https?:\/\//i.test(immagine) ? immagine : '/' + immagine.replace(/^\.?\/+/, ''));
+
 const perInizio = (a: Evento, b: Evento) => (a.data + ora2(a.ora)).localeCompare(b.data + ora2(b.ora));
 
 // === SLUG ===

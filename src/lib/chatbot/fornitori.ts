@@ -267,30 +267,10 @@ async function chiamaAnthropic(modello: string, chiaveApi: string, r: Richiesta)
   return { testo, token: { ingresso: u.input_tokens + cache + scritturaCache, cache, scritturaCache, uscita: u.output_tokens } };
 }
 
-/** Chiama un anello della catena, con timeout; se il prompt è troppo lungo riprova con la conoscenza essenziale. */
-async function chiama(a: Anello, r: Omit<Richiesta, 'signal' | 'essenziale'>): Promise<RispostaModello> {
+function chiama(a: Anello, r: Richiesta): Promise<RispostaModello> {
   const f = FORNITORI[a.fornitore];
   const chiaveApi = getSecret(f.chiave)!;
-  const stato = statoDi(a);
-  const prova = (essenziale: boolean) => {
-    const signal = AbortSignal.timeout(CONFIG.timeout);
-    const richiesta = { ...r, essenziale, signal };
-    return f.tipo === 'anthropic' ? chiamaAnthropic(a.modello, chiaveApi, richiesta) : chiamaOpenAI(f, a.modello, chiaveApi, richiesta);
-  };
-  try {
-    return await prova(!!stato.essenziale);
-  } catch (e) {
-    if (e instanceof ErroreFornitore && !stato.essenziale && troppoLungo(e)) {
-      stato.essenziale = true;
-      return prova(true);
-    }
-    // Sovraccarico momentaneo (502/503/529): un secondo tentativo dopo una breve pausa riesce quasi sempre
-    if (e instanceof ErroreFornitore && [502, 503, 529].includes(e.status)) {
-      await new Promise((r) => setTimeout(r, 1500));
-      return prova(!!stato.essenziale);
-    }
-    throw e;
-  }
+  return f.tipo === 'anthropic' ? chiamaAnthropic(a.modello, chiaveApi, r) : chiamaOpenAI(f, a.modello, chiaveApi, r);
 }
 
 export interface Tentativo extends Anello {
@@ -301,29 +281,70 @@ export type Esito =
   | ({ ok: true; testo: string; token: Token; ms: number; tentativi: Tentativo[] } & Anello)
   | { ok: false; tentativi: Tentativo[] };
 
+const SOVRACCARICO = [502, 503, 529];
+
 /**
- * Prova la catena in ordine, saltando i fornitori senza chiave o sospesi.
+ * Prova la catena senza mai restare in fila dietro a un fornitore lento:
+ * parte il primo; se sbaglia si passa subito al successivo, se dopo
+ * CONFIG.riserva non ha ancora risposto il successivo parte in parallelo.
+ * Vince la prima risposta valida, le altre richieste vengono annullate e il
+ * fornitore battuto conta un errore (così uno lento di continuo va in pausa).
+ * Un fornitore sovraccarico (503) viene riprovato una volta, in fondo alla coda.
  * Con `solo` prova un unico anello, anche se sospeso (verifica dalla dashboard).
  */
-export async function chiediAlModello(r: Omit<Richiesta, 'signal' | 'essenziale'>, solo?: Anello): Promise<Esito> {
+export function chiediAlModello(d: Domanda, solo?: Anello): Promise<Esito> {
   const inizio = Date.now();
+  const coda: (Anello & { riprova?: boolean })[] = solo
+    ? FORNITORI[solo.fornitore] && configurato(FORNITORI[solo.fornitore]) ? [solo] : []
+    : catena().filter((a) => a.attivo && statoDi(a).sospesoFino <= Date.now());
   const tentativi: Tentativo[] = [];
-  const anelli = solo ? [{ ...solo, attivo: !!FORNITORI[solo.fornitore] && configurato(FORNITORI[solo.fornitore]) }] : catena();
-  for (const a of anelli) {
-    if (!a.attivo) continue;
-    if (!solo && statoDi(a).sospesoFino > Date.now()) continue;
-    if (Date.now() - inizio > CONFIG.scadenza - 3000) break;
-    const t0 = Date.now();
-    try {
-      const { testo, token } = await chiama(a, r);
-      statoDi(a).errori = 0;
-      return { ok: true, testo, token, ms: Date.now() - t0, tentativi, fornitore: a.fornitore, modello: a.modello };
-    } catch (e) {
-      const errore = e instanceof ErroreFornitore ? e : new ErroreFornitore((e as Error).message);
-      registraErrore(a, errore);
-      tentativi.push({ fornitore: a.fornitore, modello: a.modello, errore: errore.message.slice(0, 200) });
-      console.warn(`Chatbot: ${a.fornitore}:${a.modello} non ha risposto (${errore.message.slice(0, 120)})`);
-    }
-  }
-  return { ok: false, tentativi };
+  const inCorso = new Map<AbortController, Anello>();
+
+  return new Promise((risolvi) => {
+    let chiuso = false;
+    const fine = (esito: Esito) => {
+      if (chiuso) return;
+      chiuso = true;
+      for (const [c, a] of inCorso) {
+        c.abort();
+        if (esito.ok) registraErrore(a, new ErroreFornitore('più lento di un fornitore di riserva'));
+      }
+      risolvi(esito);
+    };
+
+    const avvia = () => {
+      const a = coda.shift();
+      if (!a) return void (inCorso.size || fine({ ok: false, tentativi }));
+      const ac = new AbortController();
+      inCorso.set(ac, a);
+      let avanti = false;
+      const prossimo = () => {
+        if (avanti || chiuso) return;
+        avanti = true;
+        avvia();
+      };
+      const timer = setTimeout(prossimo, CONFIG.riserva);
+      const signal = AbortSignal.any([ac.signal, AbortSignal.timeout(CONFIG.timeout)]);
+      new Promise((r) => setTimeout(r, a.riprova ? 1000 : 0))
+        .then(() => chiama(a, { ...d, signal }))
+        .then(({ testo, token }) => {
+          inCorso.delete(ac);
+          statoDi(a).errori = 0;
+          fine({ ok: true, testo, token, ms: Date.now() - inizio, tentativi, fornitore: a.fornitore, modello: a.modello });
+        })
+        .catch((e) => {
+          inCorso.delete(ac);
+          if (chiuso) return; // annullato perché un altro ha già risposto: non è un errore
+          const errore = e instanceof ErroreFornitore ? e : new ErroreFornitore((e as Error).message);
+          registraErrore(a, errore);
+          tentativi.push({ fornitore: a.fornitore, modello: a.modello, errore: errore.message.slice(0, 200) });
+          console.warn(`Chatbot: ${a.fornitore}:${a.modello} non ha risposto (${errore.message.slice(0, 120)})`);
+          if (SOVRACCARICO.includes(errore.status) && !a.riprova) coda.push({ ...a, riprova: true });
+          prossimo();
+          if (!inCorso.size && !coda.length) fine({ ok: false, tentativi });
+        })
+        .finally(() => clearTimeout(timer));
+    };
+    avvia();
+  });
 }

@@ -70,6 +70,7 @@ const orario = (ms: number) => new Intl.DateTimeFormat('it-IT', { timeZone: 'Eur
 const quando = (iso: string) => `${dataIt(iso.slice(0, 10))} ${iso.slice(11, 16)}`;
 
 const catena = statoCatena();
+const sito = pagineLette();
 const conversazioni = await ultimeConversazioni(20);
 const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 'dalle FAQ, senza AI' };
 ---

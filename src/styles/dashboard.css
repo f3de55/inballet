@@ -265,7 +265,8 @@ body{min-height:100vh;font-size:16px;line-height:1.5}
 .conv-scambi{list-style:none;margin:0 0 1rem;padding:.75rem 1rem;border-radius:8px;background:var(--bg)}
 .conv-scambi li + li{margin-top:1rem}
 .conv-domanda{font-weight:600}
-.conv-risposta{margin-top:.25rem;white-space:pre-line}
+.conv-risposta{margin-top:.25rem}
+.conv-risposta a{color:var(--primary-dark)}
 
 /* ---------- Notifiche ---------- */
 #toast-container{position:fixed;left:50%;bottom:1.5rem;z-index:2000;display:flex;flex-direction:column;align-items:center;gap:.5rem;width:min(420px,calc(100vw - 2rem));transform:translateX(-50%);pointer-events:none}

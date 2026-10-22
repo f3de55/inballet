@@ -45,7 +45,7 @@ const giorno = (data: string) => {
 function usati(campo: 'luogo' | 'destinatari' | 'costo') {
   const conta = new Map<string, number>();
   for (const e of tutti) {
-    const v = decodeHtml(e[campo] ?? '').trim();
+    const v = e[campo].trim();
     if (v) conta.set(v, (conta.get(v) ?? 0) + 1);
   }
   return [...conta].sort((a, b) => b[1] - a[1]).map(([v]) => v);

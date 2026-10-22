@@ -9,7 +9,7 @@ import { isLoggedIn, login, logout, passwordValida } from '../lib/auth';
 import { prepara, rispondi } from '../lib/chatbot';
 import { ipVisitatore } from '../lib/chatbot/protezioni';
 import { verifica } from '../lib/chatbot/verifica';
-import { aggiungiTipo, eliminaEvento, ErroreEvento, eventiOrdinati, leggiTipi, rimuoviTipo, salvaEvento } from '../lib/eventi';
+import { aggiungiTipo, eliminaEvento, ErroreEvento, inputEvento, leggiTipi, rimuoviTipo, salvaEvento } from '../lib/eventi';
 import { caricaImmagini, elencaImmagini, eliminaImmagine } from '../lib/uploads';
 import { generaChat, generaEventi, MAX_EVENTI, MAX_MESSAGGI, rimuoviChatDemo, rimuoviEventiDemo } from '../lib/demo';
 import { eliminaTutto, PAROLA_CONFERMA } from '../lib/pulizia';

@@ -8,7 +8,7 @@ export interface Prezzo {
   ingresso: number;
   /** Token letti dalla cache del fornitore */
   cache: number;
-  /** Token scritti in cache (solo Anthropic; altrove vale come ingresso) */
+  /** Token scritti in cache (solo Anthropic, cache di 1 ora = 2× ingresso; altrove vale come ingresso) */
   scritturaCache?: number;
   uscita: number;
 }

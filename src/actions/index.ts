@@ -55,7 +55,7 @@ export const server = {
       input: z.object({ fornitore: z.string().max(40), modello: z.string().max(120), indice: z.number().int().min(0).max(100) }),
       handler: async ({ fornitore, modello, indice }, context) => {
         await soloAdmin(context);
-        return verifica({ fornitore, modello }, indice);
+        return verifica({ fornitore, modello }, indice, context.url.origin);
       },
     }),
   },

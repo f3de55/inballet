@@ -105,7 +105,7 @@ export function catena(): (Anello & { nome: string; attivo: boolean })[] {
       if (!ok) console.warn(`CHATBOT_MODELLI: voce non valida "${a.fornitore}:${a.modello}" (fornitori: ${Object.keys(FORNITORI).join(', ')})`);
       return ok;
     })
-    .map((a) => ({ ...a, nome: FORNITORI[a.fornitore].nome, attivo: !!getSecret(FORNITORI[a.fornitore].chiave) }));
+    .map((a) => ({ ...a, nome: FORNITORI[a.fornitore].nome, attivo: configurato(FORNITORI[a.fornitore]) }));
 }
 
 // === CIRCUIT BREAKER ===

@@ -231,6 +231,41 @@ body{min-height:100vh;font-size:16px;line-height:1.5}
 .domanda{flex:1;min-width:0;overflow-wrap:anywhere}
 .domanda::first-letter{text-transform:uppercase}
 .domanda-n{font-weight:600;font-variant-numeric:tabular-nums;color:var(--text-muted)}
+.bot-sezione{margin-top:1rem}
+.bot-intro{margin:-.5rem 0 1rem}
+.bot-intro code{font-size:.8rem}
+.catena{list-style:none}
+.anello{padding:.85rem 0;border-top:1px solid var(--line)}
+.anello:first-child{border-top:none;padding-top:0}
+.anello-riga{display:flex;align-items:center;gap:.5rem 1rem;flex-wrap:wrap}
+.anello-n{display:grid;place-items:center;width:1.75rem;height:1.75rem;border-radius:50%;background:var(--soft);font-size:.85rem;font-weight:600;color:var(--primary-dark)}
+.anello-nome{display:flex;flex-direction:column;flex:1;min-width:12rem}
+.anello-nome .nota{overflow-wrap:anywhere}
+.stato{padding:.2rem .7rem;border-radius:999px;font-size:.8rem;font-weight:600;white-space:nowrap}
+.stato--ok{background:#e7f4ec;color:var(--success)}
+.stato--sospeso{background:#fdf1e1;color:var(--warning)}
+.stato--spento{background:var(--bg);color:var(--text-muted)}
+.anello-verifica{min-height:38px;padding:.4rem 1rem;font-size:.875rem}
+.anello-errore{margin:.5rem 0 0 2.75rem;font-size:.8rem;color:var(--text-muted);overflow-wrap:anywhere}
+.verifica{margin:.85rem 0 0 2.75rem}
+.verifica-stato{font-size:.9rem;font-weight:600}
+.verifica-lista{list-style:none;margin-top:.5rem}
+.verifica-lista li{border-top:1px solid var(--line)}
+.verifica-lista summary{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;padding:.5rem 0;cursor:pointer;font-size:.9rem}
+.verifica-lista .ok i{color:var(--success)}
+.verifica-lista .ko i{color:var(--danger)}
+.verifica-problemi{flex-basis:100%;padding-left:1.6rem;font-size:.8rem;color:var(--danger)}
+.verifica-risposta{margin:0 0 .75rem 1.6rem;padding:.6rem .85rem;border-radius:8px;background:var(--bg);font-size:.875rem;white-space:pre-line}
+.conversazioni{list-style:none}
+.conversazioni > li{border-top:1px solid var(--line)}
+.conversazioni > li:first-child{border-top:none}
+.conv summary{display:grid;grid-template-columns:8.5rem minmax(0,1fr) auto;gap:1rem;align-items:baseline;padding:.7rem 0;cursor:pointer}
+.conv-quando,.conv-n{font-size:.85rem;color:var(--text-muted);font-variant-numeric:tabular-nums}
+.conv-prima{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.conv-scambi{list-style:none;margin:0 0 1rem;padding:.75rem 1rem;border-radius:8px;background:var(--bg)}
+.conv-scambi li + li{margin-top:1rem}
+.conv-domanda{font-weight:600}
+.conv-risposta{margin-top:.25rem;white-space:pre-line}
 
 /* ---------- Notifiche ---------- */
 #toast-container{position:fixed;left:50%;bottom:1.5rem;z-index:2000;display:flex;flex-direction:column;align-items:center;gap:.5rem;width:min(420px,calc(100vw - 2rem));transform:translateX(-50%);pointer-events:none}

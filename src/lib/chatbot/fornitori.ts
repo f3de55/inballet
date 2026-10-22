@@ -321,7 +321,8 @@ export function chiediAlModello(d: Domanda, solo?: Anello): Promise<Esito> {
         return;
       }
       const ac = new AbortController();
-      inCorso.set(ac, a);
+      const t0 = Date.now();
+      inCorso.set(ac, { ...a, t0 });
       let avanti = false;
       const prossimo = () => {
         if (avanti || chiuso) return;

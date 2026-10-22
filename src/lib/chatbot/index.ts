@@ -72,14 +72,18 @@ function avviaManutenzione() {
     pulisciLimiti();
     for (const [k, c] of cache) if (c.scade < Date.now()) cache.delete(k);
     await eliminaConversazioniVecchie().catch((e) => console.error('Pulizia conversazioni:', e));
-    // Cartelle della versione precedente del chatbot (cache e limiti su file)
-    await Promise.all(['cache', 'ratelimit'].map((d) => rm(path.join(paths.data, d), { recursive: true, force: true }).catch(() => {})));
   };
   void esegui();
   setInterval(esegui, 6 * 3600_000).unref();
 }
 
 // === RISPOSTA ===
+
+/** All'apertura della chat: legge il sito e prepara il prompt, così la prima domanda non aspetta. */
+export async function prepara(origine: string): Promise<void> {
+  avviaManutenzione();
+  await sistema(origine);
+}
 
 export async function rispondi({ testo, conversazione, ip, userAgent, origine }: Messaggio): Promise<Risposta> {
   avviaManutenzione();

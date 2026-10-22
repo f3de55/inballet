@@ -1,11 +1,12 @@
 /**
  * Eliminazione totale dalla dashboard: tutti gli eventi con le locandine e/o
- * tutti i dati del chatbot (registro e risposte in cache). Irreversibile.
+ * tutti i dati del chatbot (registro e conversazioni). Irreversibile.
  * I tipi di evento restano: sono impostazioni, non dati.
  */
-import { readdir, rm, unlink } from 'node:fs/promises';
+import { readdir, unlink } from 'node:fs/promises';
 import path from 'node:path';
 import type { LogEntry } from './chatbot';
+import { eliminaTutteConversazioni } from './chatbot/conversazioni';
 import { leggiEventi } from './eventi';
 import { paths, readJson, serialized, writeJson } from './storage';
 

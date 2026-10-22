@@ -41,9 +41,12 @@ export interface Risposta {
 
 // === CACHE DELLE PRIME DOMANDE ===
 
-/** Le domande suggerite e quelle più comuni arrivano identiche da molte persone. */
+/**
+ * Le domande suggerite e quelle più comuni arrivano identiche da molte persone.
+ * La chiave contiene la versione dei contenuti: se il sito cambia, la risposta vecchia non vale più.
+ */
 const cache = new Map<string, { testo: string; scade: number }>();
-const CACHE_DURATA = 6 * 3600_000;
+const CACHE_DURATA = 24 * 3600_000;
 const CACHE_MAX = 300;
 const chiaveCache = (versione: string, msg: string) => `${versione}|${msg.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()}`;
 

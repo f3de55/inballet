@@ -10,10 +10,10 @@ interface Messaggio {
 }
 
 const STORAGE_KEY = 'inballet_chatbot_session';
-const COUNT_KEY = 'inballet_chatbot_count';
+/** ID della conversazione sul server: la memoria della chat sta lì, qui solo i messaggi da mostrare */
+const CONV_KEY = 'inballet_chatbot_conv';
 const WELCOME = "Ciao! Sono <b>Étoile</b>, l'assistente di InBallet. Posso aiutarti con corsi, sedi, orari e iscrizioni: cosa vorresti sapere?";
-const MAX_MESSAGGI = 50;
-const PAUSA_MIN = 2000; // ms tra un messaggio e l'altro
+const PAUSA_MIN = 2000; // ms tra un messaggio e l'altro (i limiti veri li applica il server)
 
 const box = document.getElementById('cb-box')!;
 const toggle = document.getElementById('cb-toggle')!;

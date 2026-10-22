@@ -176,12 +176,18 @@ async function send(testo = input.value.trim()) {
   try {
     // Client delle Actions scaricato solo al primo messaggio
     const { actions } = await import('astro:actions');
-    const { data, error } = await actions.chatbot.invia({ message: testo });
+    const { data, error } = await actions.chatbot.invia({ message: testo, conversazione: leggi(CONV_KEY) ?? undefined });
     attesa.remove();
-    addBot(data?.response ?? (error ? 'Non riesco a rispondere in questo momento. Riprova tra poco!' : 'Non ho capito, puoi riformulare?'));
+    if (data) {
+      scrivi(CONV_KEY, data.conversazione);
+      addBot(data.response);
+    } else {
+      addBot(`Non riesco a rispondere in questo momento. Riprova tra poco o chiamaci al ${telefono()}.`);
+      if (error) console.error('Chatbot:', error.message);
+    }
   } catch {
     attesa.remove();
-    addBot('Problema di connessione. Controlla la rete e riprova.');
+    addBot(`Problema di connessione. Controlla la rete e riprova, oppure chiamaci al ${telefono()}.`);
   } finally {
     inAttesa = false;
     invia.disabled = false;

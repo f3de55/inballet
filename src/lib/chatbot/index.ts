@@ -106,7 +106,7 @@ export async function rispondi({ testo, conversazione, ip, userAgent, origine }:
   const salva = (risposta: string, tipo: 'success' | 'cached' | 'offline', modello?: { fornitore: string; modello: string }) =>
     aggiungiScambio(id, ipHash, { domanda: msg, risposta, tipo, ...modello }).catch((e) => console.error('Salvataggio conversazione:', e));
 
-  const s = await sistema();
+  const s = await sistema(origine);
   const kCache = storia.length ? null : chiaveCache(s.versione, msg);
   const inCache = kCache && leggiCache(kCache);
   if (inCache) {

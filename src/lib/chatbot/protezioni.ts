@@ -59,35 +59,42 @@ const LIMITI = {
   abuso: 60,
 };
 
+interface Visitatore {
+  /** Messaggi accettati nelle ultime 24 ore */
+  accettati: number[];
+  /** Tutti i tentativi dell'ultima ora, anche quelli respinti (per riconoscere gli abusi) */
+  tentativi: number[];
+  bloccatoFino: number;
+}
+
 /** In memoria: il sito gira su un solo processo, niente file né corse tra richieste. */
-const visitatori = new Map<string, { t: number[]; bloccatoFino: number }>();
+const visitatori = new Map<string, Visitatore>();
 
 /** Messaggio da mostrare se il visitatore ha superato un limite, altrimenti null (e conta la richiesta). */
 export function controllaLimiti(ipHash: string): string | null {
   const now = Date.now() / 1000;
-  const v = visitatori.get(ipHash) ?? { t: [], bloccatoFino: 0 };
+  const v = visitatori.get(ipHash) ?? { accettati: [], tentativi: [], bloccatoFino: 0 };
   visitatori.set(ipHash, v);
   if (v.bloccatoFino > now) return `Troppe richieste. Riprova tra ${Math.ceil((v.bloccatoFino - now) / 60)} minuti. ⏳`;
 
-  v.t = v.t.filter((t) => now - t < 86400);
-  const ultima = v.t.at(-1) ?? 0;
-  if (now - ultima < LIMITI.intervallo) return 'Aspetta qualche secondo tra un messaggio e l’altro. ⏳';
-  const inUltimi = (s: number) => v.t.filter((t) => now - t < s).length;
-  const ora = inUltimi(3600);
-  if (ora >= LIMITI.abuso) {
+  v.tentativi = [...v.tentativi.filter((t) => now - t < 3600), now];
+  if (v.tentativi.length >= LIMITI.abuso) {
     v.bloccatoFino = now + 3600;
     return 'Limite superato: riprova tra un’ora. 🚫';
   }
+  v.accettati = v.accettati.filter((t) => now - t < 86400);
+  const inUltimi = (s: number) => v.accettati.filter((t) => now - t < s).length;
+  if (now - (v.accettati.at(-1) ?? 0) < LIMITI.intervallo) return 'Aspetta qualche secondo tra un messaggio e l’altro. ⏳';
   if (inUltimi(60) >= LIMITI.minuto) return 'Stai scrivendo molto velocemente: riprova tra un minuto. ⏳';
-  if (ora >= LIMITI.ora) return `Hai raggiunto il limite di ${LIMITI.ora} messaggi all’ora. Riprova più tardi! ⏰`;
-  if (v.t.length >= LIMITI.giorno) return `Hai raggiunto il limite di messaggi per oggi. Per altre domande chiamaci al ${scuola.telefono}.`;
+  if (inUltimi(3600) >= LIMITI.ora) return `Hai raggiunto il limite di ${LIMITI.ora} messaggi all’ora. Riprova più tardi! ⏰`;
+  if (v.accettati.length >= LIMITI.giorno) return `Hai raggiunto il limite di messaggi per oggi. Per altre domande chiamaci al ${scuola.telefono}.`;
 
-  v.t.push(now);
+  v.accettati.push(now);
   return null;
 }
 
 /** Toglie dalla memoria i visitatori inattivi da un giorno (chiamata dalla manutenzione). */
 export function pulisciLimiti() {
   const now = Date.now() / 1000;
-  for (const [k, v] of visitatori) if (v.bloccatoFino < now && !v.t.some((t) => now - t < 86400)) visitatori.delete(k);
+  for (const [k, v] of visitatori) if (v.bloccatoFino < now && !v.accettati.some((t) => now - t < 86400)) visitatori.delete(k);
 }

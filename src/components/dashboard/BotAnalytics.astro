@@ -189,7 +189,7 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
                         ) : a.sospesoFino ? (
                             <span class="stato stato--sospeso" title={a.ultimoErrore}>Sospeso fino alle {orario(a.sospesoFino)}</span>
                         ) : (
-                            <span class="stato stato--ok">Attivo{a.essenziale && ' (conoscenza ridotta)'}</span>
+                            <span class="stato stato--ok">Attivo</span>
                         )}
                         {a.attivo && (
                             <button type="button" class="btn btn-secondary anello-verifica" data-fornitore={a.fornitore} data-modello={a.modello}>Verifica</button>

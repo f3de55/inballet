@@ -9,9 +9,6 @@
  * 6. se nessuno risponde: risposta dalle FAQ, senza AI (offline.ts)
  * 7. registro per la dashboard (registro.ts) e salvataggio dello scambio
  */
-import { rm } from 'node:fs/promises';
-import path from 'node:path';
-import { paths } from '../storage';
 import { sistema } from './conoscenza';
 import { aggiungiScambio, eliminaConversazioniVecchie, leggiConversazione, MAX_SCAMBI, MEMORIA, nuovoId } from './conversazioni';
 import { formatta } from './formato';

@@ -56,10 +56,6 @@ export function romeTimestamp(data: string, ora = '23:59'): number {
   return ts;
 }
 
-/** Timestamp di fine evento usato ovunque: data + ora (o 23:59 se assente). */
-export const eventoTimestamp = (e: { data?: string; ora?: string }) =>
-  romeTimestamp(e.data ?? '', e.ora ? e.ora : '23:59');
-
 /** `YYYY-MM-DD` di oggi (o di `ms`) nel fuso di Roma. */
 export function romeDate(ms = Date.now()): string {
   const p = romeParts(ms);

@@ -298,16 +298,18 @@ export function chiediAlModello(d: Domanda, solo?: Anello): Promise<Esito> {
     ? FORNITORI[solo.fornitore] && configurato(FORNITORI[solo.fornitore]) ? [solo] : []
     : catena().filter((a) => a.attivo && statoDi(a).sospesoFino <= Date.now());
   const tentativi: Tentativo[] = [];
-  const inCorso = new Map<AbortController, Anello>();
+  /** Richieste in corso con l'ora di partenza */
+  const inCorso = new Map<AbortController, Anello & { t0: number }>();
 
   return new Promise((risolvi) => {
     let chiuso = false;
-    const fine = (esito: Esito) => {
+    /** `partenza`: quando era partito il vincitore; chi era partito prima ed è stato battuto conta un errore */
+    const fine = (esito: Esito, partenza = 0) => {
       if (chiuso) return;
       chiuso = true;
       for (const [c, a] of inCorso) {
         c.abort();
-        if (esito.ok) registraErrore(a, new ErroreFornitore('più lento di un fornitore di riserva'));
+        if (esito.ok && a.t0 < partenza) registraErrore(a, new ErroreFornitore('più lento di un fornitore di riserva'));
       }
       risolvi(esito);
     };

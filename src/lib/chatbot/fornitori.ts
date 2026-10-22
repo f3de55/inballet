@@ -314,7 +314,10 @@ export function chiediAlModello(d: Domanda, solo?: Anello): Promise<Esito> {
 
     const avvia = () => {
       const a = coda.shift();
-      if (!a) return void (inCorso.size || fine({ ok: false, tentativi }));
+      if (!a) {
+        if (!inCorso.size) fine({ ok: false, tentativi });
+        return;
+      }
       const ac = new AbortController();
       inCorso.set(ac, a);
       let avanti = false;

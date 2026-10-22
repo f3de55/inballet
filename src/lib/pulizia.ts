@@ -40,7 +40,7 @@ export async function eliminaTutto(scelta: { eventi: boolean; chatbot: boolean }
     }
     if (scelta.chatbot) {
       await writeJson(paths.analytics, []);
-      await rm(paths.chatCache, { recursive: true, force: true });
+      await eliminaTutteConversazioni();
     }
   });
   return {

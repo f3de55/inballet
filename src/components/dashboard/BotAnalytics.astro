@@ -116,6 +116,24 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
             </div>
         </dl>
 
+        <dl class="numeri">
+            <div class="numero">
+                <dt>Spesa stimata</dt>
+                <dd>{dollari(spesa)}</dd>
+                <dd class="numero-nota">{dollari(costoMedio)} a risposta · oggi {dollari(spesaOggi)}{CHATBOT_BUDGET_GIORNO > 0 && ` su ${dollari(CHATBOT_BUDGET_GIORNO)}`}</dd>
+            </div>
+            <div class="numero">
+                <dt>Tempo di risposta</dt>
+                <dd>{tempoMedio.toFixed(1).replace('.', ',')} s</dd>
+                <dd class="numero-nota">media delle risposte del modello</dd>
+            </div>
+            <div class="numero">
+                <dt>Riserve usate</dt>
+                <dd>{fmt.format(daRiserva + senzaModello)}</dd>
+                <dd class="numero-nota">{fmt.format(daRiserva)} da un fornitore di riserva, {fmt.format(senzaModello)} dalle FAQ senza AI</dd>
+            </div>
+        </dl>
+
         <div class="pannelli" data-charts={JSON.stringify(charts)}>
             <section class="pannello">
                 <h2>Messaggi per giorno</h2>

@@ -160,6 +160,71 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
     </>
 )}
 
+<section class="pannello bot-sezione" aria-labelledby="catenaTitolo">
+    <h2 id="catenaTitolo">Fornitori AI</h2>
+    <p class="nota bot-intro">In ordine di priorità: se il primo non risponde si passa al successivo; se nessuno risponde, Étoile risponde con le FAQ. Si configurano in <code>CHATBOT_MODELLI</code> nel file <code>.env</code>.</p>
+    {catena.length === 0 ? (
+        <p class="nota">Nessun fornitore configurato: il chatbot risponde solo con le FAQ.</p>
+    ) : (
+        <ol class="catena" data-verifiche={JSON.stringify(VERIFICHE.map((v) => v.domanda))}>
+            {catena.map((a, i) => (
+                <li class="anello">
+                    <div class="anello-riga">
+                        <span class="anello-n">{i + 1}</span>
+                        <div class="anello-nome">
+                            <strong>{a.nome}</strong>
+                            <span class="nota">{a.modello}{perModello.get(`${a.fornitore}:${a.modello}`) && ` · ${fmt.format(perModello.get(`${a.fornitore}:${a.modello}`)!)} risposte nel periodo`}</span>
+                        </div>
+                        {!a.attivo ? (
+                            <span class="stato stato--spento">Manca la chiave API</span>
+                        ) : a.sospesoFino ? (
+                            <span class="stato stato--sospeso" title={a.ultimoErrore}>Sospeso fino alle {orario(a.sospesoFino)}</span>
+                        ) : (
+                            <span class="stato stato--ok">Attivo{a.essenziale && ' (conoscenza ridotta)'}</span>
+                        )}
+                        {a.attivo && (
+                            <button type="button" class="btn btn-secondary anello-verifica" data-fornitore={a.fornitore} data-modello={a.modello}>Verifica</button>
+                        )}
+                    </div>
+                    {a.ultimoErrore && a.quando && <p class="anello-errore">Ultimo errore alle {orario(a.quando)}: {a.ultimoErrore}</p>}
+                    <div class="verifica" hidden aria-live="polite"></div>
+                </li>
+            ))}
+        </ol>
+    )}
+</section>
+
+<section class="pannello bot-sezione" aria-labelledby="convTitolo">
+    <h2 id="convTitolo">Ultime conversazioni</h2>
+    <p class="nota bot-intro">Conservate {GIORNI_CONSERVAZIONE} giorni, poi cancellate automaticamente. Le persone sono anonime.</p>
+    {conversazioni.length === 0 ? (
+        <p class="nota">Nessuna conversazione salvata.</p>
+    ) : (
+        <ul class="conversazioni">
+            {conversazioni.map((c) => (
+                <li>
+                    <details class="conv">
+                        <summary>
+                            <span class="conv-quando">{quando(c.aggiornata)}</span>
+                            <span class="conv-prima">{c.scambi[0].domanda}</span>
+                            <span class="conv-n">{c.scambi.length} {c.scambi.length === 1 ? 'domanda' : 'domande'}</span>
+                        </summary>
+                        <ol class="conv-scambi">
+                            {c.scambi.map((s) => (
+                                <li>
+                                    <p class="conv-domanda">{s.domanda}</p>
+                                    <p class="conv-risposta">{s.risposta}</p>
+                                    <p class="nota">{s.ora.slice(11, 16)} · {s.modello ?? etichettaTipo[s.tipo] ?? s.tipo}</p>
+                                </li>
+                            ))}
+                        </ol>
+                    </details>
+                </li>
+            ))}
+        </ul>
+    )}
+</section>
+
 <DemoModal tipo="chatbot" presenti={tuttiLog.filter((l) => l.demo).length} liberi={10000 - tuttiLog.length} />
 
 <script>

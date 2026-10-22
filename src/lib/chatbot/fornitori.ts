@@ -65,7 +65,12 @@ export const FORNITORI: Record<string, Fornitore> = {
     url: 'https://api.cerebras.ai/v1',
     extra: (m) => (m.startsWith('gpt-oss') ? { reasoning_effort: 'low' } : {}),
   },
+  /** Qualsiasi altra API compatibile OpenAI (Ollama in locale, DeepSeek, Together…) */
+  compatibile: { nome: 'API compatibile', chiave: 'CHATBOT_COMPATIBILE_KEY', tipo: 'openai', url: { variabile: 'CHATBOT_COMPATIBILE_URL' } },
 };
+
+const baseUrl = (f: Fornitore) => (typeof f.url === 'string' ? f.url : f.url && getSecret(f.url.variabile)?.replace(/\/+$/, ''));
+const configurato = (f: Fornitore) => !!getSecret(f.chiave) && (f.tipo === 'anthropic' || !!baseUrl(f));
 
 const CONFIG = {
   /** Token in uscita: risposte brevi, ma i modelli "reasoning" contano anche il ragionamento */

@@ -115,8 +115,6 @@ interface Stato {
   sospesoFino: number;
   ultimoErrore?: string;
   quando?: number;
-  /** Il fornitore ha rifiutato il prompt completo: si usa la conoscenza essenziale */
-  essenziale?: boolean;
 }
 
 const stati = new Map<string, Stato>();

@@ -1,5 +1,5 @@
 /**
- * Astro Actions: tutto il backend del sito (chatbot, calendario eventi,
+ * Astro Actions: tutto il backend del sito (chatbot, gestione eventi,
  * login e gestione dalla dashboard). Chiamate dal browser con
  * `import { actions } from 'astro:actions'` o come action di un <form>.
  */

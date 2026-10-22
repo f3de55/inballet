@@ -78,7 +78,7 @@ function avviaManutenzione() {
 
 // === RISPOSTA ===
 
-export async function rispondi({ testo, conversazione, ip, userAgent }: Messaggio): Promise<Risposta> {
+export async function rispondi({ testo, conversazione, ip, userAgent, origine }: Messaggio): Promise<Risposta> {
   avviaManutenzione();
   const ipHash = hashIP(ip);
   const conv = await leggiConversazione(conversazione);

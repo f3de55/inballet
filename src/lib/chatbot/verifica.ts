@@ -21,10 +21,10 @@ export interface EsitoVerifica {
 /** Per confrontare ignorando maiuscole, accenti, spazi e punteggiatura dei numeri di telefono. */
 const piatto = (s: string) => s.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/[\s.\-()+]/g, '');
 
-export async function verifica(anello: Anello, indice: number): Promise<EsitoVerifica> {
+export async function verifica(anello: Anello, indice: number, origine: string): Promise<EsitoVerifica> {
   const v = VERIFICHE[indice];
   if (!v) throw new Error('Domanda di verifica inesistente');
-  const esito = await chiediAlModello({ sistema: await sistema(), storia: v.prima ? [v.prima] : [], domanda: v.domanda }, anello);
+  const esito = await chiediAlModello({ sistema: await sistema(origine), storia: v.prima ? [v.prima] : [], domanda: v.domanda }, anello);
   if (!esito.ok) return { ok: false, risposta: '', problemi: [esito.tentativi[0]?.errore ?? 'fornitore non configurato'] };
 
   const testo = piatto(esito.testo);

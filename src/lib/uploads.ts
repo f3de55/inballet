@@ -93,7 +93,12 @@ function preparaEsistenti(files: string[]): Promise<void> {
         const meta = await s(file).metadata();
         const grande = (await stat(file)).size > PESO_MAX || Math.max(meta.width ?? 0, meta.height ?? 0) > LATO;
         if (grande && meta.format !== 'gif') {
-          const ridotta = await s(file).rotate().resize(LATO, LATO, { fit: 'inside', withoutEnlargement: true }).toFormat(meta.format as 'jpeg', { quality: 82 }).toBuffer();
+          const formato = meta.format as 'jpeg' | 'png' | 'webp';
+          const ridotta = await s(file)
+            .rotate()
+            .resize(LATO, LATO, { fit: 'inside', withoutEnlargement: true })
+            .toFormat(formato, formato === 'png' ? { compressionLevel: 9 } : { quality: 82, ...(formato === 'jpeg' && { mozjpeg: true }) })
+            .toBuffer();
           await writeFile(file, ridotta);
         }
         if (!presenti.has(nomeMini(nome))) await creaMini(nome);

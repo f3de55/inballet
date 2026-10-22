@@ -150,9 +150,8 @@ function chiudi() {
 }
 
 function nuovaConversazione() {
-  try {
-    localStorage.removeItem(STORAGE_KEY);
-  } catch {}
+  scrivi(STORAGE_KEY, null);
+  scrivi(CONV_KEY, null);
   msgs.replaceChildren();
   addBot(WELCOME);
   aggiornaSuggerimenti();

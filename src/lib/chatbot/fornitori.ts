@@ -140,8 +140,6 @@ class ErroreFornitore extends Error {
   }
 }
 
-const troppoLungo = (e: ErroreFornitore) => e.status === 413 || /too large|context.?length|maximum context|too many tokens|reduce the length/i.test(e.message);
-
 function registraErrore(a: Anello, e: ErroreFornitore) {
   const s = statoDi(a);
   s.ultimoErrore = e.message.slice(0, 200);

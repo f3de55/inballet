@@ -4,9 +4,8 @@
  * più recente), filtri, ricerca e modali di modifica evento / gestione tipi.
  * Logica client in src/scripts/dashboard/eventi.ts.
  */
-import { eventoPerModifica, leggiEventi, leggiTipi, type Evento } from '../../lib/eventi';
-import { decodeHtml } from '../../lib/text';
-import { eventoTimestamp, romeDate } from '../../lib/time';
+import { ETICHETTE_STATO, leggiEventi, leggiTipi, passato, urlEvento, type Evento } from '../../lib/eventi';
+import { romeDate } from '../../lib/time';
 import { sedi } from '../../data/scuola';
 import EventoModal from './EventoModal.astro';
 import TipiModal from './TipiModal.astro';

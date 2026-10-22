@@ -11,7 +11,7 @@ import type { LogEntry } from './chatbot';
 import { baseSlug, leggiEventi, leggiTipi, slugUnico, type Evento } from './eventi';
 import { ensureDir, paths, readJson, serialized, writeJson } from './storage';
 import { romeDate, romeHour, romeIso, romeTimestamp } from './time';
-import { filePath, PUBLIC_PREFIX } from './uploads';
+import { creaMini, filePath, nomeMini, PUBLIC_PREFIX } from './uploads';
 
 export const MAX_EVENTI = 60;
 export const MAX_MESSAGGI = 2000;

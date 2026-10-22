@@ -340,4 +340,8 @@ body{min-height:100vh;font-size:16px;line-height:1.5}
     .numero dd.numero-nota{grid-column:1/-1;grid-row:2;margin-top:.15rem}
     .pannello{padding:1rem}
     .grafico{height:200px}
+    .anello-verifica{width:100%}
+    .anello-errore,.verifica{margin-left:0}
+    .conv summary{grid-template-columns:minmax(0,1fr) auto;gap:.15rem 1rem}
+    .conv-prima{grid-column:1/-1;grid-row:2}
 }

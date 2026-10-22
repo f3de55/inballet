@@ -25,9 +25,22 @@ const suggerimenti = document.getElementById('cb-suggerimenti')!;
 const mobile = matchMedia('(max-width: 600px)');
 
 let ultimoInvio = 0;
-let conteggio = 0;
 let inAttesa = false;
 let caricata = false;
+
+const leggi = (k: string) => {
+  try {
+    return localStorage.getItem(k);
+  } catch {
+    return null;
+  }
+};
+const scrivi = (k: string, v: string | null) => {
+  try {
+    if (v === null) localStorage.removeItem(k);
+    else localStorage.setItem(k, v);
+  } catch {}
+};
 
 const ora = () => {
   const d = new Date();

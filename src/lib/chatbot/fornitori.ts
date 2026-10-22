@@ -76,10 +76,10 @@ const CONFIG = {
   /** Token in uscita: risposte brevi, ma i modelli "reasoning" contano anche il ragionamento */
   maxToken: 1200,
   /** Attesa massima per un fornitore */
-  timeout: 15_000,
-  /** Attesa massima in totale, fallback compresi */
-  scadenza: 35_000,
-  /** Errori di fila prima della sospensione */
+  timeout: 12_000,
+  /** Se il fornitore in corso non ha ancora risposto, dopo questo tempo parte in parallelo il successivo */
+  riserva: 5_000,
+  /** Errori (o risposte troppo lente) di fila prima della sospensione */
   erroriMax: 3,
   sospensione: 5 * 60_000,
   /** Sospensione per chiave o modello non validi: va corretta la configurazione */

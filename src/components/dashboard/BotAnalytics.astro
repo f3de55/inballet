@@ -121,7 +121,7 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
             <div class="numero">
                 <dt>Spesa stimata</dt>
                 <dd>{dollari(spesa)}</dd>
-                <dd class="numero-nota">{dollari(costoMedio)} a risposta · oggi {dollari(spesaOggi)}{CHATBOT_BUDGET_GIORNO > 0 && ` su ${dollari(CHATBOT_BUDGET_GIORNO)}`}</dd>
+                <dd class="numero-nota">{dollari(costoMille)} ogni 1.000 risposte · oggi {dollari(spesaOggi)}{CHATBOT_BUDGET_GIORNO > 0 && ` su ${dollari(CHATBOT_BUDGET_GIORNO)}`}</dd>
             </div>
             <div class="numero">
                 <dt>Tempo di risposta</dt>

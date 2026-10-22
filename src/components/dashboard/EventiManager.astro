@@ -21,8 +21,10 @@ const oggi = romeDate(adesso);
 const domani = romeDate(adesso + 86400000);
 
 const ordina = (a: Evento, b: Evento) => (a.data + a.ora).localeCompare(b.data + b.ora);
-const futuri = tutti.filter((e) => eventoTimestamp(e) >= adesso).sort(ordina);
-const passati = tutti.filter((e) => eventoTimestamp(e) < adesso).sort((a, b) => ordina(b, a));
+// Stessa regola del sito: un evento è passato quando è finito
+const futuri = tutti.filter((e) => !passato(e, adesso)).sort(ordina);
+const passati = tutti.filter((e) => passato(e, adesso)).sort((a, b) => ordina(b, a));
+const bozze = tutti.filter((e) => e.stato === 'bozza').length;
 
 /** Eventi raggruppati per mese, nell'ordine ricevuto. */
 function perMese(lista: Evento[]) {

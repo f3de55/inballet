@@ -1,6 +1,6 @@
 /**
  * Storage su filesystem per i dati runtime (eventi, tipi evento, analytics,
- * cache chatbot, rate limit, immagini caricate) nella cartella DATA_DIR.
+ * conversazioni del chatbot, immagini caricate) nella cartella DATA_DIR.
  */
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import path from 'node:path';

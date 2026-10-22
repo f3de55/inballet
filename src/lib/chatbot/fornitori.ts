@@ -125,7 +125,7 @@ const statoDi = (a: Anello) => stati.get(chiave(a)) ?? stati.set(chiave(a), { er
 export function statoCatena() {
   return catena().map((a) => {
     const s = stati.get(chiave(a));
-    return { ...a, sospesoFino: s && s.sospesoFino > Date.now() ? s.sospesoFino : 0, ultimoErrore: s?.ultimoErrore, quando: s?.quando, essenziale: !!s?.essenziale };
+    return { ...a, sospesoFino: s && s.sospesoFino > Date.now() ? s.sospesoFino : 0, ultimoErrore: s?.ultimoErrore, quando: s?.quando };
   });
 }
 

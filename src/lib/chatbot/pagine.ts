@@ -40,6 +40,7 @@ function testoPrincipale(html: string): string {
       .replace(/<h([3-6])\b[^>]*>/gi, '\n### ')
       .replace(/<li\b[^>]*>/gi, '\n- ')
       .replace(/<(br|hr)\b[^>]*>/gi, '\n')
+      .replace(/<\/dt>/gi, ': ') // "Età: dai 6 anni" su una riga
       .replace(/<\/(p|div|section|article|header|footer|h[1-6]|li|ul|ol|dt|dd|blockquote|figcaption|tr|table|summary|details)>/gi, '\n')
       .replace(/<[^>]+>/g, ' '),
   )

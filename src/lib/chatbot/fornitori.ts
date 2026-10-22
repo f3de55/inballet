@@ -237,9 +237,10 @@ async function chiamaAnthropic(modello: string, chiaveApi: string, r: Richiesta)
       {
         model: modello,
         max_tokens: CONFIG.maxToken,
-        // Due punti di cache: la parte fissa resta valida anche quando cambia la variabile
+        // Due punti di cache: la parte fissa resta valida anche quando cambia la variabile.
+        // Cache di 1 ora sulla parte fissa: con poco traffico quella di 5 minuti scadrebbe tra una domanda e l'altra
         system: [
-          { type: 'text', text: r.essenziale ? r.sistema.essenziale : r.sistema.fisso, cache_control: { type: 'ephemeral' } },
+          { type: 'text', text: r.essenziale ? r.sistema.essenziale : r.sistema.fisso, cache_control: { type: 'ephemeral', ttl: '1h' } },
           { type: 'text', text: r.sistema.variabile, cache_control: { type: 'ephemeral' } },
         ],
         messages: [

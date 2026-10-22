@@ -167,6 +167,11 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
 <section class="pannello bot-sezione" aria-labelledby="catenaTitolo">
     <h2 id="catenaTitolo">Fornitori AI</h2>
     <p class="nota bot-intro">In ordine di priorità: se il primo non risponde si passa al successivo; se nessuno risponde, Étoile risponde con le FAQ. Si configurano in <code>CHATBOT_MODELLI</code> nel file <code>.env</code>.</p>
+    <p class="nota bot-intro">
+        {sito
+            ? `Conoscenza: testi di ${sito.numero} pagine del sito (${fmt.format(Math.round(sito.caratteri / 1000))} mila caratteri), letti alle ${orario(sito.letto)} e riletti in automatico, più documenti ed eventi della dashboard.`
+            : 'Conoscenza: le pagine del sito vengono lette alla prima domanda dopo l’avvio del server.'}
+    </p>
     {catena.length === 0 ? (
         <p class="nota">Nessun fornitore configurato: il chatbot risponde solo con le FAQ.</p>
     ) : (

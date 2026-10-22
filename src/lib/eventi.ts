@@ -454,7 +454,7 @@ export function fileIcs(e: Evento, site: URL): string {
   const { start, end, allDay } = intervallo(e);
   const campo = (s: string) => s.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
   // Righe lunghe spezzate a 74 caratteri (continuano con uno spazio)
-  const piega = (riga: string) => riga.match(/.{1,74}/gu)!.join('\r\n ');
+  const piega = (riga: string) => riga.match(/.{1,74}/gu)?.join('\r\n ') ?? riga;
   const tipo = allDay ? ';VALUE=DATE' : '';
   const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
   return [

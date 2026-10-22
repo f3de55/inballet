@@ -171,6 +171,7 @@ export async function generaEventi(quanti: number, passati: boolean): Promise<nu
   const n = Math.max(1, Math.min(MAX_EVENTI, Math.floor(quanti)));
   const tipi = await leggiTipi();
   await ensureDir(paths.immaginiEventi);
+  const slugUsati = new Set((await leggiEventi()).flatMap((e) => [e.slug, ...(e.alias ?? [])]));
 
   // Modelli mescolati e ripetuti finché servono
   const scelti: Modello[] = [];

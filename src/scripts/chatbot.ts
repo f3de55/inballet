@@ -133,6 +133,10 @@ function apri() {
     caricata = true;
     loadSession();
     if (!msgs.children.length) addBot(WELCOME);
+    // Mentre il visitatore scrive, il server prepara la conoscenza: la prima risposta non aspetta
+    void azioni()
+      .then(({ actions }) => actions.chatbot.prepara())
+      .catch(() => {});
   }
   aggiornaSuggerimenti();
   inFondo();

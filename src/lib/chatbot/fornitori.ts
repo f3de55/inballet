@@ -286,6 +286,11 @@ async function chiama(a: Anello, r: Omit<Richiesta, 'signal' | 'essenziale'>): P
       stato.essenziale = true;
       return prova(true);
     }
+    // Sovraccarico momentaneo (502/503/529): un secondo tentativo dopo una breve pausa riesce quasi sempre
+    if (e instanceof ErroreFornitore && [502, 503, 529].includes(e.status)) {
+      await new Promise((r) => setTimeout(r, 1500));
+      return prova(!!stato.essenziale);
+    }
     throw e;
   }
 }

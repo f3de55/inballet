@@ -214,7 +214,7 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
                             {c.scambi.map((s) => (
                                 <li>
                                     <p class="conv-domanda">{s.domanda}</p>
-                                    <p class="conv-risposta">{s.risposta}</p>
+                                    <p class="conv-risposta" set:html={formatta(s.risposta)} />
                                     <p class="nota">{s.ora.slice(11, 16)} · {s.modello ?? etichettaTipo[s.tipo] ?? s.tipo}</p>
                                 </li>
                             ))}

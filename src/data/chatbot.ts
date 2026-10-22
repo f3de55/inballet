@@ -51,6 +51,8 @@ export const VERIFICHE: Verifica[] = [
   { domanda: "Da che età si può fare hip hop?", contiene: ['6|sei'] },
   { domanda: 'Chi ha fondato la scuola?', contiene: ['Ilenia'] },
   { domanda: 'Cosa serve per iscriversi?', contiene: ['/documenti|modulo'] },
+  // Si trova solo nel testo della pagina /hip-hop: verifica che il bot legga le pagine del sito
+  { domanda: 'Quali stili si studiano nel corso di hip hop?', contiene: ['krump|popping|locking|waacking'] },
   {
     prima: { domanda: 'Mi interessa la breaking per mio figlio', risposta: 'Ottima scelta! Breaking è uno degli stili urbani della scuola: trovi tutto su /breaking.' },
     domanda: 'E da che età può iniziare?',

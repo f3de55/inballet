@@ -51,7 +51,7 @@ export function controllaContenuto(msg: string): string | null {
 // === LIMITI DI RICHIESTE ===
 
 const LIMITI = {
-  intervallo: 2, // secondi minimi tra due messaggi
+  intervallo: 1, // secondi minimi tra due messaggi (il browser aspetta già la risposta prima di inviare)
   minuto: 6,
   ora: 30,
   giorno: 100,

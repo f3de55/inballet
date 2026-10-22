@@ -90,13 +90,20 @@ let pagine: { elenco: Pagina[]; letto: number } | null = null;
 let lettura: Promise<Pagina[]> | null = null;
 
 /**
- * Indirizzo con cui il server raggiunge sé stesso: in produzione la porta
- * locale (veloce, senza passare da internet), altrimenti quello della richiesta.
+ * Il server visita sé stesso: prima dalla porta locale (veloce, senza passare
+ * da internet), poi dall'indirizzo della richiesta se la porta non risponde.
  */
-const indirizzoInterno = (origineRichiesta: string) => (process.env.PORT ? `http://127.0.0.1:${process.env.PORT}` : origineRichiesta);
+async function leggiDaServer(origineRichiesta: string): Promise<Pagina[]> {
+  const indirizzi = [...(process.env.PORT ? [`http://localhost:${process.env.PORT}`] : []), origineRichiesta];
+  for (const indirizzo of new Set(indirizzi)) {
+    const elenco = await leggiSito(indirizzo);
+    if (elenco.length) return elenco;
+  }
+  return [];
+}
 
 function rileggi(origine: string): Promise<Pagina[]> {
-  lettura ??= leggiSito(indirizzoInterno(origine))
+  lettura ??= leggiDaServer(origine)
     .then((elenco) => {
       if (elenco.length) pagine = { elenco, letto: Date.now() };
       else console.warn('Chatbot: nessuna pagina letta dal sito, uso i dati di riserva');

@@ -19,6 +19,10 @@ interface Props {
   ogDescription?: string;
   /** Immagine Open Graph / social (default: foto 1200x630 generata) */
   ogImage?: string;
+  /** Tipo Open Graph (default "website") */
+  ogType?: string;
+  /** Pagina da non indicizzare (bozze, eventi demo, pagine non trovate) */
+  noindex?: boolean;
   /** id dello skip link (la homepage usa "skip-link") */
   skipLinkId?: string;
   /** tabindex="-1" su <main> (tutte le pagine tranne il calendario eventi) */

@@ -20,7 +20,20 @@ const corsi = categorieCorsi.flatMap((c) => c.corsi).map((c) => ({ ...c, chiave:
 
 const contatti = `chiama la segreteria al ${scuola.telefono}, scrivi su WhatsApp o a ${scuola.email}`;
 
-export function rispostaOffline(domanda: string): string {
+const dataBreve = new Intl.DateTimeFormat('it-IT', { timeZone: 'Europe/Rome', weekday: 'long', day: 'numeric', month: 'long' });
+
+/** Prossimi 3 eventi del calendario, se la domanda riguarda eventi. */
+async function prossimi(testo: string): Promise<string | null> {
+  if (!/ (event|spettacol|saggi|stage|workshop|open day|lezion[ei] apert|calendario|gala|rassegn)/.test(testo)) return null;
+  const eventi = await prossimiEventi(3);
+  if (!eventi.length) return `Al momento non ci sono eventi in programma: trovi il calendario nella pagina /spettacoli-eventi.`;
+  const righe = eventi.map(({ evento: e, ts }) => `- ${decodeHtml(e.titolo)}: ${dataBreve.format(ts)}${e.ora ? ` alle ${e.ora}` : ''}${e.luogo ? `, ${decodeHtml(e.luogo)}` : ''}`);
+  return `I prossimi eventi in programma:\n${righe.join('\n')}\n\nTutto il calendario è nella pagina /spettacoli-eventi.`;
+}
+
+export async function rispostaOffline(domanda: string): Promise<string> {
+  const eventi = await prossimi(` ${normalizza(domanda)} `).catch(() => null);
+  if (eventi) return `${eventi}\n\nPer altre domande ${contatti}.`;
   const parole = radici(domanda);
   const conta = (insieme: Set<string>) => [...parole].filter((p) => insieme.has(p)).length;
   const migliore = indice

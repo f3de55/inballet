@@ -5,7 +5,7 @@
  * 2. memoria: ultimi scambi della conversazione (conversazioni.ts)
  * 3. cache: la prima domanda di una chat, se già fatta da altri, ha risposta immediata
  * 4. tetto di spesa giornaliero: superato, si risponde dalle FAQ
- * 5. catena di fornitori AI con fallback (fornitori.ts)
+ * 5. catena di fornitori AI: se uno è lento parte in parallelo il successivo (fornitori.ts)
  * 6. se nessuno risponde: risposta dalle FAQ, senza AI (offline.ts)
  * 7. registro per la dashboard (registro.ts) e salvataggio dello scambio
  */

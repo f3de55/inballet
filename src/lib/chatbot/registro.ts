@@ -71,7 +71,7 @@ export function calcolaCosto(fornitore: string, modello: string, t: Token): numb
   if (!p) return undefined;
   const normali = t.ingresso - t.cache - t.scritturaCache;
   const usd = normali * p.ingresso + t.cache * p.cache + t.scritturaCache * (p.scritturaCache ?? p.ingresso) + t.uscita * p.uscita;
-  return Math.round(usd) / 1e6 === 0 ? usd / 1e6 : usd / 1e6;
+  return usd / 1e6;
 }
 
 // === TETTO DI SPESA GIORNALIERO ===

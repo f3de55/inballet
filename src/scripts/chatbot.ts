@@ -180,7 +180,7 @@ async function send(testo = input.value.trim()) {
   const attesa = addAttesa();
   try {
     // Client delle Actions scaricato solo al primo messaggio
-    const { actions } = await import('astro:actions');
+    const { actions } = await azioni();
     const { data, error } = await actions.chatbot.invia({ message: testo, conversazione: leggi(CONV_KEY) ?? undefined });
     attesa.remove();
     if (data) {

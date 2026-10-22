@@ -7,6 +7,8 @@ import { ActionError, defineAction, type ActionAPIContext } from 'astro:actions'
 import { z } from 'astro/zod';
 import { isLoggedIn, login, logout, passwordValida } from '../lib/auth';
 import { rispondi } from '../lib/chatbot';
+import { ipVisitatore } from '../lib/chatbot/protezioni';
+import { verifica } from '../lib/chatbot/verifica';
 import { aggiungiTipo, eliminaEvento, ErroreEvento, eventiOrdinati, leggiTipi, rimuoviTipo, salvaEvento } from '../lib/eventi';
 import { caricaImmagini, elencaImmagini, eliminaImmagine } from '../lib/uploads';
 import { generaChat, generaEventi, MAX_EVENTI, MAX_MESSAGGI, rimuoviChatDemo, rimuoviEventiDemo } from '../lib/demo';

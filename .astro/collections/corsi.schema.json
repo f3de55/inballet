@@ -1,0 +1,340 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "ogTitle": {
+            "type": "string"
+          },
+          "ogDescription": {
+            "type": "string"
+          },
+          "badge": {
+            "type": "string"
+          },
+          "titolo": {
+            "type": "string"
+          },
+          "tagline": {
+            "type": "string"
+          },
+          "heroImage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "desktop": {
+                    "type": "string"
+                  },
+                  "tablet": {
+                    "type": "string"
+                  },
+                  "mobile": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "desktop"
+                ]
+              }
+            ]
+          },
+          "heroFuoco": {
+            "type": "object",
+            "properties": {
+              "desktop": {
+                "type": "string"
+              },
+              "tablet": {
+                "type": "string"
+              },
+              "mobile": {
+                "type": "string"
+              }
+            }
+          },
+          "introTitolo": {
+            "type": "string"
+          },
+          "introImage": {
+            "type": "string"
+          },
+          "introAlt": {
+            "type": "string"
+          },
+          "introFuoco": {
+            "type": "object",
+            "properties": {
+              "desktop": {
+                "type": "string"
+              },
+              "tablet": {
+                "type": "string"
+              },
+              "mobile": {
+                "type": "string"
+              }
+            }
+          },
+          "intro": {
+            "type": "string"
+          },
+          "eta": {
+            "type": "string"
+          },
+          "frequenza": {
+            "type": "string"
+          },
+          "metodoTitolo": {
+            "type": "string"
+          },
+          "metodo": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "titolo": {
+                  "type": "string"
+                },
+                "testo": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "titolo",
+                "testo"
+              ]
+            }
+          },
+          "imparaTitolo": {
+            "type": "string"
+          },
+          "impara": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ctaImage": {
+            "type": "string"
+          },
+          "ctaFuoco": {
+            "type": "object",
+            "properties": {
+              "desktop": {
+                "type": "string"
+              },
+              "tablet": {
+                "type": "string"
+              },
+              "mobile": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "ogTitle",
+          "ogDescription",
+          "badge",
+          "titolo",
+          "tagline",
+          "heroImage",
+          "introImage",
+          "introAlt",
+          "intro",
+          "eta",
+          "frequenza",
+          "metodoTitolo",
+          "metodo",
+          "imparaTitolo",
+          "impara"
+        ]
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "ogTitle": {
+            "type": "string"
+          },
+          "ogDescription": {
+            "type": "string"
+          },
+          "badge": {
+            "type": "string"
+          },
+          "titolo": {
+            "type": "string"
+          },
+          "tagline": {
+            "type": "string"
+          },
+          "heroImage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "desktop": {
+                    "type": "string"
+                  },
+                  "tablet": {
+                    "type": "string"
+                  },
+                  "mobile": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "desktop"
+                ]
+              }
+            ]
+          },
+          "heroFuoco": {
+            "type": "object",
+            "properties": {
+              "desktop": {
+                "type": "string"
+              },
+              "tablet": {
+                "type": "string"
+              },
+              "mobile": {
+                "type": "string"
+              }
+            }
+          },
+          "introTitolo": {
+            "type": "string"
+          },
+          "introImage": {
+            "type": "string"
+          },
+          "introAlt": {
+            "type": "string"
+          },
+          "introFuoco": {
+            "type": "object",
+            "properties": {
+              "desktop": {
+                "type": "string"
+              },
+              "tablet": {
+                "type": "string"
+              },
+              "mobile": {
+                "type": "string"
+              }
+            }
+          },
+          "intro": {
+            "type": "string"
+          },
+          "eta": {
+            "type": "string"
+          },
+          "frequenza": {
+            "type": "string"
+          },
+          "metodoTitolo": {
+            "type": "string"
+          },
+          "metodo": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "titolo": {
+                  "type": "string"
+                },
+                "testo": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "titolo",
+                "testo"
+              ]
+            }
+          },
+          "imparaTitolo": {
+            "type": "string"
+          },
+          "impara": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ctaImage": {
+            "type": "string"
+          },
+          "ctaFuoco": {
+            "type": "object",
+            "properties": {
+              "desktop": {
+                "type": "string"
+              },
+              "tablet": {
+                "type": "string"
+              },
+              "mobile": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "ogTitle",
+          "ogDescription",
+          "badge",
+          "titolo",
+          "tagline",
+          "heroImage",
+          "introImage",
+          "introAlt",
+          "intro",
+          "eta",
+          "frequenza",
+          "metodoTitolo",
+          "metodo",
+          "imparaTitolo",
+          "impara"
+        ]
+      }
+    }
+  ]
+}

@@ -45,15 +45,22 @@ File layout in `data/`:
 - `uploads/eventi/` — uploaded event posters
 - `documenti.json` — texts and PDF list of `/documenti` (defaults in `src/data/documenti.ts` until first save)
 - `uploads/documenti/` — PDFs uploaded from the dashboard, served on `/assets/documenti/<file>`
-- `cache/`, `ratelimit/` — chatbot caches and rate limit counters
+- `conversazioni/` — chatbot conversations, one `<uuid>.json` per chat (deleted after 30 days)
 
 In Docker, this directory is a named volume (`inballet-data`) so data survives rebuilds.
 
-### Chatbot (BELLA)
+### Chatbot (Étoile)
 
-`src/lib/chatbot.ts`. Flow per message: sanitize → injection/bad-words/spam filter → rate limit (30/hr, 100/day per IP hash) → cache check → Groq API call → cache store → log analytics.
+`src/lib/chatbot/`, one file per concern; `index.ts` (`rispondi()`) runs the flow: sanitize → insult/spam filter → in-memory rate limit per IP hash (1s, 6/min, 30/h, 100/day) → conversation memory (last 6 exchanges, max 20 per chat) → response cache (first message of a chat only, in memory, 6h) → daily spend cap → provider chain → FAQ fallback → log + save exchange.
 
-Uses `GROQ_API_KEY` and `GROQ_MODEL` from env. Default model: `openai/gpt-oss-120b`. Cache TTL is 2 hours; cache key includes a `SITE_VERSION` (set at process start) so deploys invalidate it.
+- `fornitori.ts`: provider chain from `CHATBOT_MODELLI` (`fornitore:modello,...`, in priority order). Two adapters: official `@anthropic-ai/sdk` for Claude, OpenAI-compatible chat completions for gemini/mistral/groq/openrouter/openai/cerebras/`compatibile` (any URL in `CHATBOT_COMPATIBILE_URL`). Providers without a key are skipped. Per-provider timeout 15s; circuit breaker (3 errors → 5 min pause, 429 → `retry-after`, 4xx config errors → 30 min); a "too large" error switches that provider to the short knowledge base.
+- `conoscenza.ts`: no RAG/vector DB on purpose — the whole knowledge base (~10k tokens: `src/lib/riepilogo.ts`, shared with `/llms.txt`, + course details from the collection) goes in the system prompt, cached by the providers. Fixed part first, variable part (date, documents, upcoming non-demo events) last, rebuilt every 5 min.
+- `offline.ts`: answer from `faq` in `src/data/scuola.ts` (keyword match) when no provider answers or the spend cap is hit. The bot always answers.
+- `registro.ts`: `analytics.json` entries with provider, tokens, cost (`PREZZI` in `src/data/chatbot.ts`), latency, fallbacks.
+- `formato.ts`: escape everything, then rebuild bold/lists/links; links only to site paths, tel/mailto and a few known hosts.
+- Dashboard (Chatbot tab): spend, provider chain status, quality check (`VERIFICHE` in `src/data/chatbot.ts`, run per provider via `actions.chatbot.verifica`), last conversations.
+
+All chatbot env vars are `access: 'secret'` on purpose: read at runtime, so they can change without a rebuild (public server vars are inlined at build time). See `.env.example`.
 
 ### Content collections
 

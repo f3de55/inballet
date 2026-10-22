@@ -67,15 +67,15 @@ export default defineConfig({
       // (se il primo non risponde si passa al successivo; senza chiave API viene saltato)
       CHATBOT_MODELLI: envField.string({
         context: 'server',
-        access: 'public',
+        access: 'secret',
         default: 'gemini:gemini-flash-latest,gemini:gemini-flash-lite-latest,mistral:mistral-small-latest,groq:openai/gpt-oss-120b',
       }),
       // Fornitori usati col piano gratuito: la loro spesa conta zero (es. "gemini,groq")
-      CHATBOT_GRATUITI: envField.string({ context: 'server', access: 'public', default: '' }),
+      CHATBOT_GRATUITI: envField.string({ context: 'server', access: 'secret', default: '' }),
       // Tetto di spesa giornaliero in dollari: superato, risposte solo dalle FAQ (0 = nessun tetto)
-      CHATBOT_BUDGET_GIORNO: envField.number({ context: 'server', access: 'public', default: 1 }),
+      CHATBOT_BUDGET_GIORNO: envField.number({ context: 'server', access: 'secret', default: 1 }),
       // Header con l'IP reale del visitatore dietro un proxy (es. "cf-connecting-ip" con Cloudflare)
-      CHATBOT_IP_HEADER: envField.string({ context: 'server', access: 'public', optional: true }),
+      CHATBOT_IP_HEADER: envField.string({ context: 'server', access: 'secret', optional: true }),
       ANTHROPIC_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       GEMINI_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       MISTRAL_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),

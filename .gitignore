@@ -1,6 +1,6 @@
 # build
 dist/
-.astro/
+
 
 # dipendenze
 node_modules/

@@ -9,6 +9,7 @@ import type { LogEntry } from './chatbot';
 import { eliminaTutteConversazioni } from './chatbot/conversazioni';
 import { leggiEventi } from './eventi';
 import { paths, readJson, serialized, writeJson } from './storage';
+import { isMini } from './uploads';
 
 /** Parola da scrivere per confermare (controllata anche dal server). */
 export const PAROLA_CONFERMA = 'ELIMINA';

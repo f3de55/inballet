@@ -210,10 +210,13 @@ export async function generaEventi(quanti: number, passati: boolean): Promise<nu
       immagine: PUBLIC_PREFIX + nome,
       destinatari: m.destinatari,
       costo: m.costo,
+      prenotazione: '',
       creato: adesso,
       modificato: adesso,
       demo: true,
-    });
+    };
+    slugUsati.add(evento.slug);
+    nuovi.push(evento);
   }
 
   await serialized(async () => {

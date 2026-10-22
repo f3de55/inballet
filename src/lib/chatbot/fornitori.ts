@@ -185,7 +185,7 @@ async function chiamaOpenAI(f: Fornitore, modello: string, chiaveApi: string, r:
   const sistema = `${r.essenziale ? r.sistema.essenziale : r.sistema.fisso}\n\n${r.sistema.variabile}`;
   let res: Response;
   try {
-    res = await fetch(`${f.url}/chat/completions`, {
+    res = await fetch(`${baseUrl(f)}/chat/completions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${chiaveApi}` },
       body: JSON.stringify({

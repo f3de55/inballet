@@ -190,13 +190,19 @@ export async function generaEventi(quanti: number, passati: boolean): Promise<nu
     const verticale = Math.random() < 0.7;
     const nome = `demo-${data}-${hex(3)}.jpg`;
     await writeFile(filePath(nome), await creaLocandina(m, data, verticale));
+    await creaMini(nome).catch(() => {});
+    const dataFine = m.dueGiorni ? new Date(Date.parse(`${data}T12:00:00Z`) + 86_400_000).toISOString().slice(0, 10) : '';
 
     const adesso = romeIso();
-    nuovi.push({
+    const evento: Evento = {
       id: 'evt_' + hex(6),
+      slug: slugUnico(baseSlug(m.titolo, data), slugUsati),
       titolo: m.titolo,
       data,
       ora: m.ora,
+      dataFine,
+      oraFine: m.oraFine ?? '',
+      stato: 'pubblicato',
       // Solo tipi esistenti: se è stato rimosso dalla dashboard, l'evento resta senza tipo
       tipo: tipi.find((t) => t.toLowerCase() === m.tipo.toLowerCase()) ?? '',
       luogo: m.luogo,

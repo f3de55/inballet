@@ -1,12 +1,17 @@
 ---
 /**
- * Statistiche del chatbot: messaggi, persone, risposte dalla cache, grafici
- * per giorno/ora e domande più frequenti nel periodo selezionato.
+ * Statistiche del chatbot: messaggi, persone, spesa, grafici per giorno/ora e
+ * domande più frequenti nel periodo selezionato; stato della catena di
+ * fornitori con la verifica di qualità e le ultime conversazioni.
  */
+import { CHATBOT_BUDGET_GIORNO } from 'astro:env/server';
 import type { LogEntry } from '../../lib/chatbot';
+import { GIORNI_CONSERVAZIONE, ultimeConversazioni } from '../../lib/chatbot/conversazioni';
+import { statoCatena } from '../../lib/chatbot/fornitori';
 import { paths, readJson } from '../../lib/storage';
 import { mbSlice } from '../../lib/text';
 import { romeDate } from '../../lib/time';
+import { VERIFICHE } from '../../data/chatbot';
 import DemoModal from './DemoModal.astro';
 
 const params = Astro.url.searchParams;

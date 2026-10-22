@@ -66,20 +66,20 @@ function aggiornaSuggerimenti() {
 // Conversazione salvata nel browser (ultimi 100 messaggi)
 function loadSession() {
   try {
-    conteggio = parseInt(localStorage.getItem(COUNT_KEY) ?? '', 10) || 0;
-    const saved: Messaggio[] = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
+    const saved: Messaggio[] = JSON.parse(leggi(STORAGE_KEY) ?? '[]');
     saved.forEach((m) => appendMsg(m.type, m.content, m.time));
   } catch (e) {
     console.error('Errore caricamento sessione chatbot:', e);
   }
+  // Contatore della versione precedente (bloccava la chat dopo 50 messaggi)
+  scrivi('inballet_chatbot_count', null);
 }
 
 function saveMessage(type: Tipo, content: string) {
   try {
-    const messages: Messaggio[] = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
+    const messages: Messaggio[] = JSON.parse(leggi(STORAGE_KEY) ?? '[]');
     messages.push({ type, content, time: ora() });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-100)));
-    localStorage.setItem(COUNT_KEY, String(conteggio));
+    scrivi(STORAGE_KEY, JSON.stringify(messages.slice(-100)));
   } catch (e) {
     console.error('Errore salvataggio messaggio:', e);
   }

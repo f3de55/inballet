@@ -16,7 +16,6 @@
  * così una modifica alla parte variabile non invalida la cache della parte fissa.
  */
 import { createHash } from 'node:crypto';
-import { getCollection } from 'astro:content';
 import { leggiDocumenti } from '../documenti';
 import { prossimiEventi } from '../eventi';
 import { riepilogoScuola } from '../riepilogo';
@@ -45,34 +44,17 @@ REGOLE
 5. Tieni conto della conversazione: se una domanda è ambigua (es. "e quanto costa?") riferiscila all'argomento di cui si stava parlando, oppure chiedi di quale corso si tratta.
 6. Per iscrizioni, prove e informazioni personalizzate rimanda alla segreteria.`;
 
-/** Dettagli dei corsi dalla collection: di riserva, se la lettura delle pagine non riesce. */
-async function dettagliCorsi(): Promise<string> {
-  const corsi = await getCollection('corsi');
-  const testo = (html: string) => decodeHtml(stripTags(html)).replace(/\s+/g, ' ').trim();
-  return corsi
-    .map(({ id, data: c }) =>
-      [
-        `### ${c.titolo} (/${id})`,
-        `${c.eta}; ${c.frequenza.toLowerCase()}. ${c.tagline}.`,
-        testo(c.intro),
-        `${c.metodoTitolo}: ${c.metodo.map((m) => `${m.titolo}: ${testo(m.testo)}`).join(' · ')}`,
-        `${c.imparaTitolo}: ${c.impara.map(testo).join('; ')}`,
-      ].join('\n'),
-    )
-    .join('\n\n');
-}
-
 const dataLunga = new Intl.DateTimeFormat('it-IT', { timeZone: 'Europe/Rome', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
 async function parteVariabile(): Promise<string> {
   // Gli stessi eventi del calendario del sito (anche quelli demo, finché sono pubblicati)
-  const [{ documenti }, veri] = await Promise.all([leggiDocumenti(), prossimiEventi(30)]);
+  const [{ documenti }, eventi] = await Promise.all([leggiDocumenti(), prossimiEventi(30)]);
   const campo = (etichetta: string, valore?: string) => (valore ? `; ${etichetta}: ${decodeHtml(valore)}` : '');
   return [
     `## Oggi\n\n${dataLunga.format(new Date())}`,
     `## Documenti per l'iscrizione (pagina /documenti)\n\n${documenti.map((d) => `- ${d.titolo}${d.nota ? `: ${d.nota}` : ''}`).join('\n') || '- Nessun documento pubblicato'}`,
     `## Prossimi eventi (pagina /spettacoli-eventi)\n\n${
-      veri
+      eventi
         .map(({ evento: e }) => {
           const descrizione = mbSlice(decodeHtml(stripTags(e.descrizione ?? '')).replace(/\s+/g, ' ').trim(), 300);
           return `- ${decodeHtml(e.titolo)}: ${e.data}${e.ora ? ` ore ${e.ora}` : ''}${campo('tipo', e.tipo)}${campo('luogo', e.luogo)}${campo('per', e.destinatari)}${campo('costo', e.costo)}${descrizione ? `. ${descrizione}` : ''}`;
@@ -106,7 +88,7 @@ function rileggi(origine: string): Promise<Pagina[]> {
   lettura ??= leggiDaServer(origine)
     .then((elenco) => {
       if (elenco.length) pagine = { elenco, letto: Date.now() };
-      else console.warn('Chatbot: nessuna pagina letta dal sito, uso i dati di riserva');
+      else console.warn('Chatbot: nessuna pagina letta dal sito, restano i dati ufficiali');
       return pagine?.elenco ?? [];
     })
     .finally(() => (lettura = null));
@@ -128,8 +110,6 @@ export const pagineLette = () => (pagine ? { numero: pagine.elenco.length, letto
 export interface Sistema {
   /** Istruzioni + dati ufficiali + testi di tutte le pagine */
   fisso: string;
-  /** Solo istruzioni e dati ufficiali, per i fornitori con limiti stretti (es. piani gratuiti) */
-  essenziale: string;
   variabile: string;
   /** Impronta dei contenuti: cambia quando cambia la conoscenza (invalida la cache risposte) */
   versione: string;
@@ -145,16 +125,10 @@ let memo: { sistema: Sistema; creato: number; pagine: Pagina[] } | null = null;
 export async function sistema(origine: string): Promise<Sistema> {
   const elenco = await testiDelSito(origine);
   if (memo && memo.pagine === elenco && Date.now() - memo.creato < DURATA) return memo.sistema;
-  const [riepilogo, variabile, riserva] = await Promise.all([
-    riepilogoScuola({ url: (p) => p }),
-    parteVariabile(),
-    elenco.length ? '' : dettagliCorsi(),
-  ]);
-  const essenziale = `${ISTRUZIONI}\n\nBASE DI CONOSCENZA\n\n# DATI UFFICIALI\n\n${riepilogo}`;
-  const testi = elenco.length ? testoPagine(elenco) : `## Dettagli dei corsi\n\n${riserva}`;
-  const fisso = `${essenziale}\n\n# TESTI DEL SITO\n\n${testi}`;
+  const [riepilogo, variabile] = await Promise.all([riepilogoScuola({ url: (p) => p }), parteVariabile()]);
+  const fisso = `${ISTRUZIONI}\n\nBASE DI CONOSCENZA\n\n# DATI UFFICIALI\n\n${riepilogo}\n\n# TESTI DEL SITO\n\n${testoPagine(elenco)}`;
   // La data entra nella versione: la cache risposte si rinnova ogni giorno
   const versione = createHash('sha256').update(fisso + variabile).digest('hex').slice(0, 12);
-  memo = { sistema: { fisso, essenziale, variabile, versione }, creato: Date.now(), pagine: elenco };
+  memo = { sistema: { fisso, variabile, versione }, creato: Date.now(), pagine: elenco };
   return memo.sistema;
 }

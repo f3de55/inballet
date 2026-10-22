@@ -63,9 +63,26 @@ export default defineConfig({
 
   env: {
     schema: {
+      // Chatbot Étoile: catena di modelli "fornitore:modello" in ordine di priorità
+      // (se il primo non risponde si passa al successivo; senza chiave API viene saltato)
+      CHATBOT_MODELLI: envField.string({
+        context: 'server',
+        access: 'public',
+        default: 'gemini:gemini-flash-latest,gemini:gemini-flash-lite-latest,mistral:mistral-small-latest,groq:openai/gpt-oss-120b',
+      }),
+      // Fornitori usati col piano gratuito: la loro spesa conta zero (es. "gemini,groq")
+      CHATBOT_GRATUITI: envField.string({ context: 'server', access: 'public', default: '' }),
+      // Tetto di spesa giornaliero in dollari: superato, risposte solo dalle FAQ (0 = nessun tetto)
+      CHATBOT_BUDGET_GIORNO: envField.number({ context: 'server', access: 'public', default: 1 }),
+      // Header con l'IP reale del visitatore dietro un proxy (es. "cf-connecting-ip" con Cloudflare)
+      CHATBOT_IP_HEADER: envField.string({ context: 'server', access: 'public', optional: true }),
+      ANTHROPIC_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      GEMINI_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      MISTRAL_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       GROQ_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
-      // llama-3.3-70b-versatile (usato dal vecchio chatbot.php) non è più disponibile su Groq
-      GROQ_MODEL: envField.string({ context: 'server', access: 'public', default: 'openai/gpt-oss-120b' }),
+      OPENROUTER_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      OPENAI_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      CEREBRAS_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       DASHBOARD_PASSWORD: envField.string({ context: 'server', access: 'secret', optional: true }),
       DATA_DIR: envField.string({ context: 'server', access: 'secret', default: './data' }),
       PUBLIC_GOOGLE_MAPS_KEY: envField.string({ context: 'client', access: 'public', default: 'AIzaSyB1T64uyO5Ke-MttLo9Amscl5ViUvYYvtI' }),

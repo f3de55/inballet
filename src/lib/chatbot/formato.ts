@@ -13,7 +13,7 @@ const LINK_RE = new RegExp(
     String.raw`\[([^\]\n]+)\]\(([^)\s]+)\)`, // 1-2: link Markdown [testo](indirizzo)
     String.raw`(https?:\/\/[^\s<]*[^\s<.,;:!?)])`, // 3: indirizzo web
     String.raw`([\w.%+-]+@[\w-]+(?:\.[\w-]+)+)`, // 4: e-mail
-    String.raw`(\+?\d{2,3}[\s-]?\d{2,3}[\s-]?\d{3}[\s-]?\d{4})`, // 5: telefono
+    String.raw`((?:\+\d{2}[\s-]?)?\d{3}[\s-]?\d{3}[\s-]?\d{3,4})(?!\d)`, // 5: telefono
     String.raw`(?<=^|[\s(])(\/[a-z][a-z0-9-]*(?:\/[a-z0-9.-]+)*)(?=[\s.,;:!?)]|$)`, // 6: pagina del sito
   ].join('|'),
   'gim',

@@ -19,8 +19,8 @@ export interface Prezzo {
  * Un modello assente ha spesa sconosciuta (i token restano registrati).
  */
 export const PREZZI: Record<string, Prezzo> = {
-  'claude-haiku-5-5': { ingresso: 0.1, cache: 0.01, scritturaCache: 0.125, uscita: 0.5 },
-  'claude-sonnet-5-5': { ingresso: 2, cache: 0.2, scritturaCache: 2.5, uscita: 10 },
+  'claude-haiku-5-5': { ingresso: 0.1, cache: 0.01, scritturaCache: 0.2, uscita: 0.5 },
+  'claude-sonnet-5-5': { ingresso: 2, cache: 0.2, scritturaCache: 4, uscita: 10 },
   'gemini-flash-lite-latest': { ingresso: 0.3, cache: 0.03, uscita: 2.5 },
   'gemini-3.5-flash-lite': { ingresso: 0.3, cache: 0.03, uscita: 2.5 },
   'gemini-flash-latest': { ingresso: 1.5, cache: 0.15, uscita: 9 },

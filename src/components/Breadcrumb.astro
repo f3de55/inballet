@@ -17,24 +17,17 @@ interface Passo {
 }
 
 const corrente = Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1');
-const { nome, genitore } = Astro.props;
+const passi: Passo[] = [{ nome: 'Home', href: '/' }];
 
-/** Passi da Home fino a `percorso` (dal menu, da altrePagine o col nome indicato). */
-function passiFino(percorso: string, nomePagina?: string): Passo[] {
-  const passi: Passo[] = [{ nome: 'Home', href: '/' }];
-  const sezione = menu.find((m) => m.href === percorso || m.sezioni.some((s) => s.voci.some((v) => v.href === percorso)));
-  if (sezione?.href === percorso) {
-    passi.push({ nome: sezione.label, href: percorso });
-  } else if (sezione) {
-    const voce = sezione.sezioni.flatMap((s) => s.voci).find((v) => v.href === percorso)!;
-    passi.push({ nome: sezione.label, href: sezione.href }, { nome: voce.nome, href: percorso });
-  } else {
-    passi.push({ nome: altrePagine[percorso] ?? nomePagina ?? '', href: percorso });
-  }
-  return passi;
+const sezione = menu.find((m) => m.href === corrente || m.sezioni.some((s) => s.voci.some((v) => v.href === corrente)));
+if (sezione?.href === corrente) {
+  passi.push({ nome: sezione.label, href: corrente });
+} else if (sezione) {
+  const voce = sezione.sezioni.flatMap((s) => s.voci).find((v) => v.href === corrente)!;
+  passi.push({ nome: sezione.label, href: sezione.href }, { nome: voce.nome, href: corrente });
+} else {
+  passi.push({ nome: altrePagine[corrente] ?? Astro.props.nome ?? '', href: corrente });
 }
-
-const passi = genitore ? [...passiFino(genitore), { nome: nome ?? '', href: corrente }] : passiFino(corrente, nome);
 
 const ultimo = passi.length - 1;
 const schema = {

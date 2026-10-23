@@ -997,7 +997,12 @@ const og = aperto
   color: var(--text-light);
 }
 
+/* Valore e link (es. "Indicazioni") affiancati; se non c'è spazio il link va a capo */
 .evento-dettagli :global(dd) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .15rem .75rem;
   margin: 0;
   font-size: var(--text-md);
   font-weight: 600;

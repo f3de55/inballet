@@ -71,6 +71,7 @@ const { tipi, sedi, luoghi, destinatari, costi } = Astro.props;
                         <button type="button" class="btn-link" data-apri-tipi>Modifica i tipi</button>
                     </div>
                     <select id="tipo" hidden={tipi.length === 0}>
+                        <option value="">Nessun tipo</option>
                         {tipi.map((t) => <option value={t}>{t}</option>)}
                     </select>
                     <p class="nota" id="noTipoMsg" hidden={tipi.length > 0}>Nessun tipo ancora: aggiungine uno con «Modifica i tipi».</p>

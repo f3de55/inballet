@@ -41,7 +41,10 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
     ogImage={ogImage}
 >
     <Fragment slot="head">
-        {hero.preload.filter((p) => !p.media.includes('max-width: 600px')).map((p) => <link rel="preload" as="image" href={p.href} media={p.media} fetchpriority="high">)}
+        {/* Fino a 768px le hero interne usano lo sfondo illustrato comune (global.css): si precarica quello */}
+        <link rel="preload" as="image" href={hero.preload[0].href} media={hero.preload[0].media} fetchpriority="high">
+        <link rel="preload" as="image" href={hero.preload[1].href} media="(min-width: 769px) and (max-width: 900px)" fetchpriority="high">
+        <link rel="preload" as="image" href="/assets/images/hero-mobile.webp" media="(max-width: 768px)" fetchpriority="high">
         <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     </Fragment>
 

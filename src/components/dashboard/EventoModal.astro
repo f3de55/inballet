@@ -124,6 +124,21 @@ const { tipi, sedi, luoghi, destinatari, costi } = Astro.props;
                         <datalist id="costiUsati">{costi.map((v) => <option value={v} />)}</datalist>
                     </div>
                 </div>
+
+                <div class="campo">
+                    <label for="prenotazione">Link per prenotare o comprare i biglietti</label>
+                    <input type="url" id="prenotazione" placeholder="Es. https://www.ticketone.it/…" maxlength="500" autocomplete="off" inputmode="url">
+                </div>
+
+                <div class="campo">
+                    <label for="stato">Stato</label>
+                    <select id="stato">
+                        <option value="pubblicato">Pubblicato: visibile sul sito</option>
+                        <option value="bozza">Bozza: non visibile sul sito</option>
+                        <option value="esaurito">Posti esauriti</option>
+                        <option value="annullato">Annullato</option>
+                    </select>
+                </div>
             </div>
 
             <div class="modal-footer">

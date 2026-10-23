@@ -546,9 +546,12 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   padding-top: .75rem;
 }
 
+/* Intestazione del gruppo, non cliccabile: il filetto sotto la separa dalle voci (che sono link) */
 .mobile-gruppo-titolo {
   display: block;
-  margin-bottom: .35rem;
+  margin-bottom: .5rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid rgba(135, 206, 235, .35);
   font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 2px;

@@ -44,12 +44,18 @@ const campi = {
   titolo: $<HTMLInputElement>('titolo'),
   data: $<HTMLInputElement>('data'),
   ora: $<HTMLInputElement>('ora'),
+  dataFine: $<HTMLInputElement>('dataFine'),
+  oraFine: $<HTMLInputElement>('oraFine'),
   tipo: $<HTMLSelectElement>('tipo'),
   luogo: $<HTMLInputElement>('luogo'),
   immagine: $<HTMLInputElement>('immagine'),
   destinatari: $<HTMLInputElement>('destinatari'),
   costo: $<HTMLInputElement>('costo'),
+  prenotazione: $<HTMLInputElement>('prenotazione'),
+  stato: $<HTMLSelectElement>('stato'),
 };
+/** Campi del modulo per nome (per mettere il cursore sul campo con l'errore). */
+const campoDi = (nome: string): HTMLElement | null => (nome === 'descrizione' ? $('descrizione') : (campi as Record<string, HTMLElement>)[nome] ?? null);
 
 let tipiEvento: string[] = JSON.parse($('tipiEventoData').textContent || '[]');
 let immagini: Immagine[] = [];

@@ -3,26 +3,34 @@
  * locandine (upload anche trascinando, selezione, eliminazione) e gestione
  * tipi evento. Il backend è chiamato tramite Astro Actions.
  */
-import { actions } from 'astro:actions';
+import { actions, isInputError } from 'astro:actions';
 import { createEditor } from './editor';
 import { conferma } from './conferma';
 import { toast } from './toast';
 
+/** Come salvato sul server (testi puri, senza escape). */
 interface Evento {
   id: string;
+  slug: string;
   titolo: string;
   data: string;
   ora: string;
+  dataFine: string;
+  oraFine: string;
+  stato: 'pubblicato' | 'bozza' | 'annullato' | 'esaurito';
   tipo: string;
   luogo: string;
   descrizione: string;
   immagine: string;
   destinatari: string;
   costo: string;
+  prenotazione: string;
 }
 interface Immagine {
   nome: string;
   path: string;
+  /** Miniatura per la libreria */
+  mini: string;
 }
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;

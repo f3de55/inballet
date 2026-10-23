@@ -205,7 +205,7 @@ export async function prossimiEventi(limite = 10, now = Date.now()): Promise<Eve
   return (await eventiPubblici()).filter((e) => !passato(e, now)).slice(0, limite);
 }
 
-/** Evento dallo slug, da uno slug precedente o dall'id (vecchi link ?evento=ID). */
+/** Evento dallo slug, da uno slug precedente o dall'id (link condivisi prima degli slug). */
 export async function trovaEvento(chiave: string): Promise<{ evento: Evento; vecchio: boolean } | null> {
   const eventi = await leggiEventi();
   const evento = eventi.find((e) => e.slug === chiave);

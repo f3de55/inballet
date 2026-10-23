@@ -1,6 +1,6 @@
 /**
  * GET /spettacoli-eventi/<slug>/calendario.ics — file iCalendar di un evento
- * ("Apple / Outlook" nella pagina dell'evento). Servito dal server con il tipo
+ * ("Apple / Outlook" nel dettaglio dell'evento). Servito dal server con il tipo
  * giusto: su iPhone si apre direttamente "Aggiungi al calendario".
  */
 import type { APIRoute } from 'astro';

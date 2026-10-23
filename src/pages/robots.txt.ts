@@ -11,8 +11,6 @@ export const GET: APIRoute = ({ site }) =>
       'Disallow: /_actions/',
       '',
       `Sitemap: ${new URL('/sitemap-index.xml', site)}`,
-      // Pagine dei singoli eventi: generata dal server (cambia dalla dashboard)
-      `Sitemap: ${new URL('/sitemap-eventi.xml', site)}`,
       '',
     ].join('\n'),
     { headers: { 'Content-Type': 'text/plain; charset=utf-8' } },

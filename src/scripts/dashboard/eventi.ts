@@ -132,37 +132,38 @@ async function chiudiModal(forza = false) {
   document.documentElement.classList.remove('modal-aperta');
 }
 
+// Le regole di validazione stanno solo sul server (schema `inputEvento` in src/lib/eventi.ts):
+// qui si mostra il primo errore e si porta il cursore sul campo
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const titolo = campi.titolo.value.trim();
-  if (titolo.length < 3) {
-    campi.titolo.focus();
-    return toast('Il titolo deve avere almeno 3 caratteri', 'error');
-  }
-  if (!campi.data.value) {
-    campi.data.focus();
-    return toast('Manca la data', 'error');
-  }
-  if (editor.text.length > 1000) return toast('La descrizione supera i 1000 caratteri', 'error');
-
   const salva = $<HTMLButtonElement>('btnSalva');
   salva.disabled = true;
   salva.textContent = 'Salvataggio…';
   const { data, error } = await actions.eventi.salva({
     id: campi.id.value || undefined,
-    titolo,
+    titolo: campi.titolo.value,
     data: campi.data.value,
     ora: campi.ora.value,
+    dataFine: campi.dataFine.value,
+    oraFine: campi.oraFine.value,
+    stato: campi.stato.value as Evento['stato'],
     tipo: campi.tipo.value,
-    luogo: campi.luogo.value.trim(),
+    luogo: campi.luogo.value,
     descrizione: editor.html,
-    immagine: campi.immagine.value.trim(),
-    destinatari: campi.destinatari.value.trim(),
-    costo: campi.costo.value.trim(),
+    immagine: campi.immagine.value,
+    destinatari: campi.destinatari.value,
+    costo: campi.costo.value,
+    prenotazione: campi.prenotazione.value,
   });
   if (error) {
     salva.disabled = false;
     salva.textContent = 'Salva evento';
+    if (isInputError(error)) {
+      const [nome, messaggi] = Object.entries(error.fields).find(([, m]) => m?.length) ?? [];
+      if (nome === 'dataFine' || nome === 'oraFine') $<HTMLDetailsElement>('fineEvento').open = true;
+      if (nome) campoDi(nome)?.focus();
+      return toast(messaggi?.[0] || 'Controlla i campi del modulo', 'error');
+    }
     return toast(error.message || 'Errore nel salvataggio', 'error');
   }
 

@@ -16,7 +16,7 @@ npm run icons      # regenerate Font Awesome icon subset (run after using a new 
 
 ## Architecture
 
-**Astro 7** with hybrid rendering. Default output is `static` (prerendered HTML), but pages with `export const prerender = false` are SSR. Currently SSR: `/login`, `/dashboard`, and the image asset route.
+**Astro 7** with hybrid rendering. Default output is `static` (prerendered HTML), but pages with `export const prerender = false` are SSR. Currently SSR: `/login`, `/dashboard`, `/documenti`, `/spettacoli-eventi` (+ `/spettacoli-eventi/<slug>/calendario.ics`), and the image asset route.
 
 ### Request flow
 
@@ -42,12 +42,22 @@ File layout in `data/`:
 - `eventi.json`, `tipi_evento.json` — event data
 - `analytics.json` — chatbot logs (capped at 10000 entries)
 - `sessions/` — fsLite session driver
-- `uploads/eventi/` — uploaded event posters
+- `uploads/eventi/` — event posters: uploads are resized (1600px) and converted to WebP, plus a `<name>.mini.webp` thumbnail for the dashboard library
 - `documenti.json` — texts and PDF list of `/documenti` (defaults in `src/data/documenti.ts` until first save)
 - `uploads/documenti/` — PDFs uploaded from the dashboard, served on `/assets/documenti/<file>`
 - `conversazioni/` — chatbot conversations, one `<uuid>.json` per chat (deleted after 30 days)
 
 In Docker, this directory is a named volume (`inballet-data`) so data survives rebuilds.
+
+### Events
+
+`src/lib/eventi.ts` is the single source: the zod schema `inputEvento` (used as the `eventi.salva` Action input; the dashboard shows its per-field errors), read/write, time rules and presentation helpers.
+
+- Model: `data`/`ora` start, optional `dataFine`/`oraFine`, `stato` (`pubblicato`, `bozza` = hidden from the site, `annullato`, `esaurito`), `prenotazione` link, `slug` (+ `alias` of old slugs).
+- No per-event pages on purpose: details open in a modal on `/spettacoli-eventi` (SSR list + `scripts/calendario.ts`). `?evento=<slug>` (or an old slug / the id) opens the modal and sets og:title/og:image to that event, so shared links preview the poster. The page also carries schema.org/Event JSON-LD for upcoming non-demo events (`datiStrutturati()`).
+- Text fields are stored as plain text and escaped when rendered. Legacy PHP entries (no `stato`, HTML-escaped text) are converted on read and persisted at the next write.
+- One rule for "past" everywhere (site, banner, dashboard, chatbot): `passato()` = the end (`dataFine`/`oraFine`, default 23:59 Rome time) is over.
+- Removing a type keeps it on the events that use it; deleting a poster clears it from the events that use it.
 
 ### Chatbot (Étoile)
 

@@ -79,14 +79,14 @@ const enti = [
             </div>
         </section>
 
-        <!-- Aree di studio: intestazione a sinistra (fissa su desktop), elenco numerato a destra -->
+        <!-- Aree di studio: intestazione editoriale, sotto l'elenco numerato -->
         <section class="form-aree-section" aria-labelledby="aree-titolo">
-            <div class="container form-aree-layout">
-                <div class="form-aree-header">
-                    <span class="eyebrow">Il programma</span>
-                    <h2 class="titolo-sezione" id="aree-titolo">Aree <em>di studio</em></h2>
-                    <p class="intro-sezione">Moduli multidisciplinari tra danza, pedagogia e sviluppo, per insegnare a ogni età e a ogni corpo.</p>
-                </div>
+            <div class="intro-editoriale">
+                <span class="eyebrow">Il programma</span>
+                <h2 class="titolo-sezione" id="aree-titolo">Aree <em>di studio</em></h2>
+                <p class="intro-sezione">Moduli multidisciplinari tra danza, pedagogia e sviluppo, per insegnare a ogni età e a ogni corpo.</p>
+            </div>
+            <div class="container">
                 <ol class="aree-lista">
                     {aree.map((a, i) => (
                         <li class="area">
@@ -98,14 +98,14 @@ const enti = [
             </div>
         </section>
 
-        <!-- Diploma: intestazione a sinistra, enti che lo riconoscono a destra -->
+        <!-- Diploma: intestazione editoriale, sotto gli enti che lo riconoscono -->
         <section class="form-cert-section" aria-labelledby="cert-titolo">
-            <div class="container form-cert-layout">
-                <div class="form-cert-header">
-                    <span class="eyebrow">Riconoscimenti</span>
-                    <h2 class="titolo-sezione" id="cert-titolo">Diploma a <em>valenza nazionale</em></h2>
-                    <p class="intro-sezione">Il titolo di Insegnante di Danza è riconosciuto dallo CSEN e dal CONI e vale su tutto il territorio nazionale: un punto di riferimento per la formazione dei maestri di danza.</p>
-                </div>
+            <div class="intro-editoriale">
+                <span class="eyebrow">Riconoscimenti</span>
+                <h2 class="titolo-sezione" id="cert-titolo">Diploma a <em>valenza nazionale</em></h2>
+                <p class="intro-sezione">Il titolo di Insegnante di Danza è riconosciuto dallo CSEN e dal CONI e vale su tutto il territorio nazionale: un punto di riferimento per la formazione dei maestri di danza.</p>
+            </div>
+            <div class="container">
                 <ul class="enti-lista">
                     {enti.map((e) => (
                         <li class="ente">
@@ -237,28 +237,12 @@ const enti = [
   background: var(--bg-soft);
 }
 
-.form-aree-layout,
-.form-cert-layout {
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-  gap: 5rem;
-  align-items: start;
-}
-
-.form-aree-header {
-  position: sticky;
-  top: calc(var(--header-h) + var(--banner-height, 0px) + 2rem);
-}
-
-.form-aree-header .titolo-sezione,
-.form-cert-header .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
+/* Elenchi in una colonna centrata sotto l'intestazione */
 .aree-lista,
 .enti-lista {
   list-style: none;
-  margin: 0;
+  max-width: 48rem;
+  margin: 3.5rem auto 0;
   padding: 0;
 }
 
@@ -430,15 +414,11 @@ const enti = [
     margin-top: 3.5rem;
   }
 
-  /* Aree e diploma: intestazione sopra l'elenco */
-  .form-aree-layout,
-  .form-cert-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
-  }
-
-  .form-aree-header {
-    position: static;
+  /* Aree e diploma: elenchi a tutta larghezza, allineati all'intestazione */
+  .aree-lista,
+  .enti-lista {
+    max-width: none;
+    margin-top: 2.5rem;
   }
 }
 

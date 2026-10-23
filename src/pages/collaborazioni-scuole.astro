@@ -84,14 +84,14 @@ const progetti = [
             </div>
         </section>
 
-        <!-- Progetti: intestazione a sinistra (fissa su desktop), elenco numerato a destra -->
+        <!-- Progetti: intestazione editoriale, sotto l'elenco numerato -->
         <section class="collab-progetti-section" aria-labelledby="progetti-titolo">
-            <div class="container collab-progetti-layout">
-                <div class="collab-progetti-header">
-                    <span class="eyebrow">I nostri progetti</span>
-                    <h2 class="titolo-sezione" id="progetti-titolo">Cosa possiamo offrire <em>alla tua scuola</em></h2>
-                    <p class="intro-sezione">Programmi flessibili, costruiti sulle richieste educative e didattiche di ogni scuola.</p>
-                </div>
+            <div class="intro-editoriale">
+                <span class="eyebrow">I nostri progetti</span>
+                <h2 class="titolo-sezione" id="progetti-titolo">Cosa possiamo offrire <em>alla tua scuola</em></h2>
+                <p class="intro-sezione">Programmi flessibili, costruiti sulle richieste educative e didattiche di ogni scuola.</p>
+            </div>
+            <div class="container">
                 <ol class="progetti-lista">
                     {progetti.map((p, i) => (
                         <li class="progetto">
@@ -232,25 +232,11 @@ const progetti = [
   background: var(--white);
 }
 
-.collab-progetti-layout {
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-  gap: 5rem;
-  align-items: start;
-}
-
-.collab-progetti-header {
-  position: sticky;
-  top: calc(var(--header-h) + var(--banner-height, 0px) + 2rem);
-}
-
-.collab-progetti-header .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
+/* Elenco in una colonna centrata sotto l'intestazione */
 .progetti-lista {
   list-style: none;
-  margin: 0;
+  max-width: 48rem;
+  margin: 3.5rem auto 0;
   padding: 0;
 }
 
@@ -390,14 +376,10 @@ const progetti = [
     margin-top: 2.5rem;
   }
 
-  /* Progetti: intestazione sopra l'elenco */
-  .collab-progetti-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
-  }
-
-  .collab-progetti-header {
-    position: static;
+  /* Progetti: elenco a tutta larghezza, allineato all'intestazione */
+  .progetti-lista {
+    max-width: none;
+    margin-top: 2.5rem;
   }
 }
 

@@ -89,6 +89,7 @@ Shared classes and tokens live at the top of `src/styles/global.css`. Every cont
 - Page hero: the shared `chisiamo-hero` markup (see any inner page): photo, bottom gradient, `<Breadcrumb />` then title, text left-aligned and vertically centered (same space above and below). No glass panels.
 - Navigation data lives in `src/data/navigazione.ts`: the navbar (desktop + mobile, active page highlight) and the breadcrumbs (+ BreadcrumbList JSON-LD) are generated from it. Add new pages there; pages outside the menu go in `altrePagine`.
 - Intro section of an inner page: add `intro-editoriale` to the wrapper (eyebrow, title and text stacked, never text to the right of the title; centered on desktop, left-aligned at ≤900px; a `*-highlight` quote becomes a blue rule)
+- No text-left/text-right layouts (header on the left, list or text on the right): the header goes above as `intro-editoriale` (direct child of the `<section>`), the content below in a `.container`, single lists in a centered `max-width: 48rem` column (full width at ≤900px). Side by side only text + photo. Kept side by side on purpose (owner's choice): homepage Formazione, Dicono di noi, FAQ.
 - Lists of points (pillars, values, timeline…): `voce` / `voce-icona` / `voce-anno` / `voce-titolo` / `voce-testo` (columns with a blue top rule). No cards with icons in colored circles.
 - Style: editorial, not template-like. No decorative bold inside sentences, no gradient icon tiles, no floating badges over photos, no invented metrics.
 

@@ -405,7 +405,6 @@ section [class*="-intro-highlight"] p {
 
 @media (max-width: 900px) {
   section > .intro-editoriale {
-    padding: 0 1.5rem;
     text-align: left;
   }
 
@@ -420,6 +419,13 @@ section [class*="-intro-highlight"] p {
     padding: .25rem 0 .25rem 1.5rem;
     margin: 1rem 0 0;
     text-align: left;
+  }
+}
+
+/* Stesso margine laterale del .container */
+@media (max-width: 768px) {
+  section > .intro-editoriale {
+    padding: 0 1.5rem;
   }
 }
 

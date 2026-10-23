@@ -84,14 +84,14 @@ const classi = [
             </div>
         </section>
 
-        <!-- Classi: intestazione a sinistra, elenco delle discipline (con link al corso) a destra -->
+        <!-- Classi: intestazione editoriale, sotto l'elenco delle discipline (con link al corso) -->
         <section class="integrate-classi-section" aria-labelledby="classi-titolo">
-            <div class="container integrate-classi-layout">
-                <div class="integrate-classi-header">
-                    <span class="eyebrow">Le nostre discipline</span>
-                    <h2 class="titolo-sezione" id="classi-titolo">Classi disponibili <em>per l'inserimento</em></h2>
-                    <p class="intro-sezione">Alcuni dei corsi predisposti per l'inserimento: apri un corso per conoscerne età e livelli. Per i ragazzi con disabilità c'è anche il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, il lunedì sera.</p>
-                </div>
+            <div class="intro-editoriale">
+                <span class="eyebrow">Le nostre discipline</span>
+                <h2 class="titolo-sezione" id="classi-titolo">Classi disponibili <em>per l'inserimento</em></h2>
+                <p class="intro-sezione">Alcuni dei corsi predisposti per l'inserimento: apri un corso per conoscerne età e livelli. Per i ragazzi con disabilità c'è anche il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, il lunedì sera.</p>
+            </div>
+            <div class="container">
                 <ul class="classi-lista">
                     {classi.map((c) => (
                         <li>
@@ -196,29 +196,17 @@ const classi = [
   background: var(--white);
 }
 
-.integrate-classi-layout {
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-  gap: 5rem;
-  align-items: start;
-}
-
-.integrate-classi-header .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
+/* Elenco in una colonna centrata sotto l'intestazione, con filetti tra le righe */
 .classi-lista {
   list-style: none;
-  margin: 0;
+  max-width: 48rem;
+  margin: 3rem auto 0;
   padding: 0;
+  border-top: 1px solid rgba(26, 26, 26, 0.12);
 }
 
 .classi-lista li {
   border-bottom: 1px solid rgba(26, 26, 26, 0.12);
-}
-
-.classi-lista li:last-child {
-  border-bottom: none;
 }
 
 .classe {
@@ -229,10 +217,6 @@ const classi = [
   padding: 1.35rem 0;
   color: var(--dark-navy);
   text-decoration: none;
-}
-
-.classi-lista li:first-child .classe {
-  padding-top: .5rem;
 }
 
 .classe-nome {
@@ -349,10 +333,10 @@ const classi = [
     margin-top: 2.5rem;
   }
 
-  /* Classi: intestazione sopra l'elenco */
-  .integrate-classi-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
+  /* Classi: elenco a tutta larghezza, allineato all'intestazione */
+  .classi-lista {
+    max-width: none;
+    margin-top: 2.5rem;
   }
 }
 

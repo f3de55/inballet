@@ -277,7 +277,7 @@ function renderImmagini() {
       item.setAttribute('aria-pressed', String(img.path === immagineSelezionata));
       item.setAttribute('aria-label', `Usa ${img.nome}`);
       const el = document.createElement('img');
-      el.src = `/${img.path}`;
+      el.src = `/${img.mini || img.path}`;
       el.alt = '';
       el.loading = 'lazy';
       const del = document.createElement('button');

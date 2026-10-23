@@ -409,12 +409,17 @@ function renderTipi() {
   );
 }
 
-function aggiornaSelectTipo() {
-  campi.tipo.hidden = !tipiEvento.length;
-  $('noTipoMsg').hidden = tipiEvento.length > 0;
+/**
+ * Opzioni del tipo: "Nessun tipo" più i tipi esistenti. `extra`: il tipo di un
+ * evento già salvato ma rimosso dalla lista, che resta selezionato così com'è.
+ */
+function aggiornaSelectTipo(extra = '') {
+  const tipi = extra && !tipiEvento.includes(extra) ? [...tipiEvento, extra] : tipiEvento;
+  campi.tipo.hidden = !tipi.length;
+  $('noTipoMsg').hidden = tipi.length > 0;
   const corrente = campi.tipo.value;
-  campi.tipo.replaceChildren(...tipiEvento.map((t) => new Option(t, t)));
-  if (tipiEvento.includes(corrente)) campi.tipo.value = corrente;
+  campi.tipo.replaceChildren(new Option('Nessun tipo', ''), ...tipi.map((t) => new Option(t, t)));
+  campi.tipo.value = tipi.includes(corrente) ? corrente : '';
 }
 
 $<HTMLFormElement>('formTipo').addEventListener('submit', async (e) => {

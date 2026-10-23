@@ -13,11 +13,8 @@ export interface Pagina {
   testo: string;
 }
 
-/**
- * Pagine da non leggere: area riservata, file e pagine dei singoli eventi
- * (gli eventi arrivano già aggiornati dalla parte variabile del prompt).
- */
-const ESCLUSE = /^\/(?:dashboard|login|_actions|_image|_server-islands|assets)(?:\/|$)|^\/spettacoli-eventi\/|\.[a-z0-9]{2,4}$/i;
+/** Pagine da non leggere: area riservata e file. */
+const ESCLUSE = /^\/(?:dashboard|login|_actions|_image|_server-islands|assets)(?:\/|$)|\.[a-z0-9]{2,4}$/i;
 const MAX_PAGINE = 150;
 const PARALLELE = 6;
 

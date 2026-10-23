@@ -19,9 +19,9 @@ export type Stato = (typeof STATI)[number];
 
 export interface Evento {
   id: string;
-  /** Parte finale dell'URL: /spettacoli-eventi/<slug> */
+  /** Identificativo leggibile nei link: /spettacoli-eventi?evento=<slug> */
   slug: string;
-  /** Slug precedenti (titolo o data cambiati): i vecchi link reindirizzano */
+  /** Slug precedenti (titolo o data cambiati): i vecchi link aprono ancora l'evento */
   alias?: string[];
   titolo: string;
   /** Inizio: YYYY-MM-DD e HH:MM (ora facoltativa) */

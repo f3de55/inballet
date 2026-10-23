@@ -42,6 +42,20 @@ const { tipi, sedi, luoghi, destinatari, costi } = Astro.props;
                     </div>
                 </div>
 
+                <details class="libreria" id="fineEvento">
+                    <summary>Fine dell’evento <span class="nota">facoltativa: ora di fine o più giorni</span></summary>
+                    <div class="campi-2">
+                        <div class="campo">
+                            <label for="dataFine">Ultimo giorno</label>
+                            <input type="date" id="dataFine">
+                        </div>
+                        <div class="campo">
+                            <label for="oraFine">Ora di fine</label>
+                            <input type="time" id="oraFine">
+                        </div>
+                    </div>
+                </details>
+
                 <div class="campo">
                     <label for="luogo">Luogo</label>
                     <input type="text" id="luogo" list="luoghiUsati" placeholder="Es. Sede di Lainate, Via Puccini 14" maxlength="150" autocomplete="off">

@@ -122,7 +122,7 @@ const gruppi = [
                                             </span>
                                         </button>
                                         <div class="ev-azioni">
-                                            <a href={urlEvento(ev)} target="_blank" rel="noopener" aria-label={`Apri la pagina di ${titolo}`} title={ev.stato === 'bozza' ? 'Anteprima (visibile solo a te)' : 'Apri la pagina'}><i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+                                            {ev.stato !== 'bozza' && <a href={urlEvento(ev)} target="_blank" rel="noopener" aria-label={`Vedi ${titolo} sul sito`} title="Vedi sul sito"><i class="fas fa-external-link-alt" aria-hidden="true"></i></a>}
                                             <button type="button" data-azione="modifica" aria-label={`Modifica ${titolo}`} title="Modifica"><i class="fas fa-pen" aria-hidden="true"></i></button>
                                             <button type="button" class="elimina" data-azione="elimina" aria-label={`Elimina ${titolo}`} title="Elimina"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
                                         </div>

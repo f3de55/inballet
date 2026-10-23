@@ -11,9 +11,9 @@ const bg = {
 };
 
 const passi = [
-  { nome: 'Consulto con la Direzione', testo: 'Un primo contatto con la Direzione per raccontare il bambino o il ragazzo e le sue esigenze.' },
-  { nome: 'Colloquio conoscitivo', testo: 'Un incontro per conoscere la famiglia e capire insieme il percorso più adatto.' },
-  { nome: 'Accoglienza nel gruppo', testo: "L'inserimento nel gruppo classe più adeguato, tra i corsi predisposti ad accogliere casi speciali." },
+  { nome: 'Consulto con la Direzione', icona: 'fa-phone', testo: 'Un primo contatto con la Direzione per raccontare il bambino o il ragazzo e le sue esigenze.' },
+  { nome: 'Colloquio conoscitivo', icona: 'fa-comments', testo: 'Un incontro per conoscere la famiglia e capire insieme il percorso più adatto.' },
+  { nome: 'Accoglienza nel gruppo', icona: 'fa-users', testo: "L'inserimento nel gruppo classe più adeguato, tra i corsi predisposti ad accogliere casi speciali." },
 ];
 
 const classi = [
@@ -73,9 +73,9 @@ const classi = [
             </div>
             <div class="container">
                 <ol class="valori-lista">
-                    {passi.map((v, i) => (
+                    {passi.map((v) => (
                         <li class="voce">
-                            <span class="voce-anno" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                            <i class={`fas ${v.icona} voce-icona`} aria-hidden="true"></i>
                             <h3 class="voce-titolo">{v.nome}</h3>
                             <p class="voce-testo">{v.testo}</p>
                         </li>
@@ -84,14 +84,14 @@ const classi = [
             </div>
         </section>
 
-        <!-- Classi: intestazione editoriale, sotto l'elenco delle discipline (con link al corso) -->
-        <section class="integrate-classi-section" aria-labelledby="classi-titolo">
-            <div class="intro-editoriale">
-                <span class="eyebrow">Le nostre discipline</span>
-                <h2 class="titolo-sezione" id="classi-titolo">Classi disponibili <em>per l'inserimento</em></h2>
-                <p class="intro-sezione">Alcuni dei corsi predisposti per l'inserimento: apri un corso per conoscerne età e livelli. Per i ragazzi con disabilità c'è anche il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, il lunedì sera.</p>
-            </div>
-            <div class="container">
+        <!-- Classi: intestazione a sinistra, elenco delle discipline (con link al corso) a destra -->
+        <section class="integrate-classi-section decoro-onde decoro-onde--sinistra" aria-labelledby="classi-titolo">
+            <div class="container integrate-classi-layout">
+                <div class="integrate-classi-header">
+                    <span class="eyebrow">Le nostre discipline</span>
+                    <h2 class="titolo-sezione" id="classi-titolo">Classi disponibili <em>per l'inserimento</em></h2>
+                    <p class="intro-sezione">Alcuni dei corsi predisposti per l'inserimento: apri un corso per conoscerne età e livelli. Per i ragazzi con disabilità c'è anche il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, il lunedì sera.</p>
+                </div>
                 <ul class="classi-lista">
                     {classi.map((c) => (
                         <li>
@@ -196,17 +196,29 @@ const classi = [
   background: var(--white);
 }
 
-/* Elenco in una colonna centrata sotto l'intestazione, con filetti tra le righe */
+.integrate-classi-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 5rem;
+  align-items: start;
+}
+
+.integrate-classi-header .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
 .classi-lista {
   list-style: none;
-  max-width: 48rem;
-  margin: 3rem auto 0;
+  margin: 0;
   padding: 0;
-  border-top: 1px solid rgba(26, 26, 26, 0.12);
 }
 
 .classi-lista li {
   border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.classi-lista li:last-child {
+  border-bottom: none;
 }
 
 .classe {
@@ -217,6 +229,10 @@ const classi = [
   padding: 1.35rem 0;
   color: var(--dark-navy);
   text-decoration: none;
+}
+
+.classi-lista li:first-child .classe {
+  padding-top: .5rem;
 }
 
 .classe-nome {
@@ -333,10 +349,10 @@ const classi = [
     margin-top: 2.5rem;
   }
 
-  /* Classi: elenco a tutta larghezza, allineato all'intestazione */
-  .classi-lista {
-    max-width: none;
-    margin-top: 2.5rem;
+  /* Classi: intestazione sopra l'elenco */
+  .integrate-classi-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
   }
 }
 

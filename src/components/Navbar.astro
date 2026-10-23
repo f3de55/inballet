@@ -144,7 +144,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   color: var(--white);
   font-weight: 600;
   padding: 1rem 2rem;
-  transition: color var(--transition-base),background var(--transition-base),font-size .3s ease;
+  transition: color var(--transition-base),font-size .3s ease;
   cursor: pointer;
   text-transform: uppercase;
   font-size: var(--text-nav);
@@ -159,8 +159,46 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
 .nav-link:hover,
 .nav-item:hover .nav-link {
   color: var(--white);
-  background: rgba(255,255,255,.15);
 }
+
+/* Voce sotto il mouse (o con il sottomenu aperto): pillola compatta azzurro scuro dietro
+   il testo, più piccola dell'area cliccabile (bianco su #3B72A0: contrasto 5.1:1) */
+.nav-link {
+  position: relative;
+  isolation: isolate;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  inset: .55rem 1.1rem;
+  z-index: -1;
+  border-radius: var(--radius-pill);
+  background: var(--primary-blue-dark);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.nav-item:hover .nav-link::before,
+.nav-link:focus-visible::before,
+.nav-item:has(.mega-menu.active) .nav-link::before {
+  opacity: 1;
+}
+
+/* Sulla pillola anche la voce della sezione attiva torna bianca, per restare leggibile */
+.nav-item:hover .nav-link.attiva,
+.nav-item[data-menu]:hover .nav-link.attiva::after,
+.nav-item:has(.mega-menu.active) .nav-link.attiva,
+.nav-item[data-menu]:has(.mega-menu.active) .nav-link.attiva::after {
+  color: var(--white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-link::before {
+    transition: none;
+  }
+}
+
 
 .nav-item[data-menu] .nav-link::after {
   content: "▼";
@@ -170,8 +208,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   color: #fff;
 }
 
-.nav-link.attiva,
-.nav-item:hover .nav-link.attiva {
+.nav-link.attiva {
   color: var(--primary-blue);
 }
 

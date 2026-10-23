@@ -3,7 +3,7 @@
  * scuola: una DanceSchool principale (sede di Lainate) con la sede di Rho come
  * reparto, catalogo corsi e FAQ.
  */
-import { categorieCorsi, faq, FONDAZIONE, orari, scuola, sedi, type Sede } from '../data/scuola';
+import { categorieCorsi, faqHome, FONDAZIONE, orari, scuola, sedi, type Sede } from '../data/scuola';
 
 const site = scuola.sito;
 const ID = `${site}/#scuola`;
@@ -107,7 +107,7 @@ export function schemaHome(immagine: string) {
       {
         '@type': 'FAQPage',
         '@id': `${site}/#faq`,
-        mainEntity: faq.map((f) => ({
+        mainEntity: faqHome.map((f) => ({
           '@type': 'Question',
           name: f.domanda,
           acceptedAnswer: { '@type': 'Answer', text: f.risposta },

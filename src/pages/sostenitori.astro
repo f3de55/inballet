@@ -88,14 +88,14 @@ const destinazioni: { nome: string; href?: string }[] = [
             </div>
         </section>
 
-        <!-- Destinazioni: intestazione editoriale, sotto l'elenco (con link ai progetti che hanno una pagina) -->
-        <section class="sost-utilizzo-section" aria-labelledby="utilizzo-titolo">
-            <div class="intro-editoriale">
-                <span class="eyebrow">I progetti che sostieni</span>
-                <h2 class="titolo-sezione" id="utilizzo-titolo">Dove va <em>la tua donazione</em></h2>
-                <p class="intro-sezione">Le donazioni sostengono i progetti sociali di InBallet.</p>
-            </div>
-            <div class="container">
+        <!-- Destinazioni: intestazione a sinistra, elenco a destra (con link ai progetti che hanno una pagina) -->
+        <section class="sost-utilizzo-section decoro-onde decoro-onde--sinistra" aria-labelledby="utilizzo-titolo">
+            <div class="container sost-utilizzo-layout">
+                <div class="sost-utilizzo-header">
+                    <span class="eyebrow">I progetti che sostieni</span>
+                    <h2 class="titolo-sezione" id="utilizzo-titolo">Dove va <em>la tua donazione</em></h2>
+                    <p class="intro-sezione">Le donazioni sostengono i progetti sociali di InBallet.</p>
+                </div>
                 <ul class="utilizzo-lista">
                     {destinazioni.map((d) => (
                         <li>
@@ -234,17 +234,29 @@ const destinazioni: { nome: string; href?: string }[] = [
   background: var(--bg-soft);
 }
 
-/* Elenco in una colonna centrata sotto l'intestazione, con filetti tra le righe */
+.sost-utilizzo-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 5rem;
+  align-items: start;
+}
+
+.sost-utilizzo-header .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
 .utilizzo-lista {
   list-style: none;
-  max-width: 48rem;
-  margin: 3rem auto 0;
+  margin: 0;
   padding: 0;
-  border-top: 1px solid rgba(26, 26, 26, 0.12);
 }
 
 .utilizzo-lista li {
   border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.utilizzo-lista li:last-child {
+  border-bottom: none;
 }
 
 .utilizzo {
@@ -255,6 +267,10 @@ const destinazioni: { nome: string; href?: string }[] = [
   padding: 1.5rem 0;
   color: var(--dark-navy);
   text-decoration: none;
+}
+
+.utilizzo-lista li:first-child .utilizzo {
+  padding-top: .5rem;
 }
 
 .utilizzo > .fa-check {
@@ -365,14 +381,14 @@ const destinazioni: { nome: string; href?: string }[] = [
     order: 4;
   }
 
-  /* Dona e destinazioni: allineati all'intestazione */
+  /* Dona: allineato all'intestazione; destinazioni: intestazione sopra l'elenco */
   .sost-dona-azione {
     align-items: flex-start;
   }
 
-  .utilizzo-lista {
-    max-width: none;
-    margin-top: 2.5rem;
+  .sost-utilizzo-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
   }
 }
 

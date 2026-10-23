@@ -43,12 +43,12 @@ const bg = {
 
 /** Eventi curati dalla Direzione oltre al calendario della scuola. */
 const tipiEvento = [
-  { nome: 'Spettacolo annuale in teatro', testo: 'Ogni anno uno spettacolo in teatro con gli allievi e i progetti artistici e pedagogici della scuola.' },
-  { nome: 'Eventi celebrativi', testo: 'La danza come fulcro o arricchimento di eventi one-shot e occasioni speciali.' },
-  { nome: 'Nelle scuole', testo: "Momenti su misura nelle scuole dell'infanzia, primarie e secondarie, nell'ambito delle <a href=\"/collaborazioni-scuole\">collaborazioni con le scuole</a>." },
-  { nome: 'Team building aziendali', testo: 'Progetti esperienziali su misura per aziende e gruppi di lavoro.' },
-  { nome: 'Eventi formativi', testo: 'Incontri che attivano linguaggi diversi tra loro, come le <a href="/formazioni-personalizzate">formazioni personalizzate</a>.' },
-  { nome: 'Sul territorio', testo: 'Spesso ospiti di iniziative a Milano e in provincia.' },
+  { nome: 'Spettacolo annuale in teatro', icona: 'fa-masks-theater', testo: 'Ogni anno uno spettacolo in teatro con gli allievi e i progetti artistici e pedagogici della scuola.' },
+  { nome: 'Eventi celebrativi', icona: 'fa-champagne-glasses', testo: 'La danza come fulcro o arricchimento di eventi one-shot e occasioni speciali.' },
+  { nome: 'Nelle scuole', icona: 'fa-school', testo: "Momenti su misura nelle scuole dell'infanzia, primarie e secondarie, nell'ambito delle <a href=\"/collaborazioni-scuole\">collaborazioni con le scuole</a>." },
+  { nome: 'Team building aziendali', icona: 'fa-handshake', testo: 'Progetti esperienziali su misura per aziende e gruppi di lavoro.' },
+  { nome: 'Eventi formativi', icona: 'fa-chalkboard-user', testo: 'Incontri che attivano linguaggi diversi tra loro, come le <a href="/formazioni-personalizzate">formazioni personalizzate</a>.' },
+  { nome: 'Sul territorio', icona: 'fa-map-location-dot', testo: 'Spesso ospiti di iniziative a Milano e in provincia.' },
 ];
 
 const MESI = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
@@ -260,7 +260,7 @@ const og = aperto
         </section>
 
         <!-- Eventi curati dalla Direzione: intestazione editoriale e sei voci -->
-        <section class="eventi-cura-section" aria-labelledby="cura-titolo">
+        <section class="eventi-cura-section decoro-onde" aria-labelledby="cura-titolo">
             <div class="intro-editoriale">
                 <span class="eyebrow">Eventi su misura</span>
                 <h2 class="titolo-sezione" id="cura-titolo">Spettacoli ed eventi <em>a cura di InBallet</em></h2>
@@ -270,6 +270,7 @@ const og = aperto
                 <ul class="cura-lista">
                     {tipiEvento.map((t) => (
                         <li class="voce">
+                            <i class={`fas ${t.icona} voce-icona`} aria-hidden="true"></i>
                             <h3 class="voce-titolo">{t.nome}</h3>
                             <p class="voce-testo" set:html={t.testo} />
                         </li>

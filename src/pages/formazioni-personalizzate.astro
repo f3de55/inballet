@@ -29,7 +29,7 @@ const bg = {
         </section>
 
         <!-- Intro Section -->
-        <section id="intro" class="perso-intro-section">
+        <section id="intro" class="perso-intro-section decoro-onde">
             <div class="perso-intro-wrapper intro-editoriale">
                 <span class="perso-intro-label eyebrow">Formazione su misura</span>
                 <h2 class="perso-intro-title titolo-sezione">Progettiamo insieme <em>il tuo percorso</em></h2>
@@ -51,28 +51,28 @@ const bg = {
                 </div>
                 <div class="perso-tipo-grid">
                     <div class="perso-tipo-item">
-                        <div class="perso-tipo-num">1</div>
+                        <i class="fas fa-school perso-tipo-num" aria-hidden="true"></i>
                         <div class="perso-tipo-content">
                             <h3>Ambito educativo</h3>
                             <p>Educatori, insegnanti e personale di nidi e scuole: il corpo e il movimento come strumenti educativi.</p>
                         </div>
                     </div>
                     <div class="perso-tipo-item">
-                        <div class="perso-tipo-num">2</div>
+                        <i class="fas fa-hand-holding-heart perso-tipo-num" aria-hidden="true"></i>
                         <div class="perso-tipo-content">
                             <h3>Ambito terapeutico</h3>
                             <p>Professionisti della cura: corporeità, motricità e approccio psicomotorio a sostegno del loro lavoro.</p>
                         </div>
                     </div>
                     <div class="perso-tipo-item">
-                        <div class="perso-tipo-num">3</div>
+                        <i class="fas fa-book-open-reader perso-tipo-num" aria-hidden="true"></i>
                         <div class="perso-tipo-content">
                             <h3>Pedagogisti</h3>
                             <p>Linguaggi espressivi ed esplorazione del sé, per progettare esperienze educative attraverso il movimento.</p>
                         </div>
                     </div>
                     <div class="perso-tipo-item">
-                        <div class="perso-tipo-num">4</div>
+                        <i class="fas fa-users perso-tipo-num" aria-hidden="true"></i>
                         <div class="perso-tipo-content">
                             <h3>Scuole, enti ed équipe</h3>
                             <p>Percorsi per gruppi di lavoro, costruiti con l'esperienza della scuola in pedagogia, psicomotricità e inclusione.</p>
@@ -188,7 +188,7 @@ const bg = {
 
 .perso-tipo-item {
   display: grid;
-  grid-template-columns: 45px 1fr;
+  grid-template-columns: 2.25rem 1fr;
   gap: 1rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid rgba(135,206,235,.3);
@@ -199,17 +199,11 @@ const bg = {
   padding-bottom: 0;
 }
 
+/* Icona del destinatario accanto al titolo (niente cerchio colorato) */
 .perso-tipo-num {
-  width: 45px;
-  height: 45px;
-  background: linear-gradient(135deg,var(--primary-blue) 0%,var(--primary-blue-light) 100%);
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--dark-navy);
-  font-weight: 400;
-  font-size: var(--text-base);
+  padding-top: .2rem;
+  font-size: var(--text-xl);
+  color: var(--primary-blue-dark);
 }
 
 .perso-tipo-content :global(h3) {

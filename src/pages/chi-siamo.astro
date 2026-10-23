@@ -3,7 +3,7 @@ import { ANNI_ATTIVITA, categorieCorsi, FONDAZIONE, sedi } from '../data/scuola'
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { sfondo } from '../lib/images';
+import { sfondo, type Fuoco } from '../lib/images';
 
 const bg = {
   hero: await sfondo('gallery-7.jpg', { desktop: '50% 40%', tablet: '50% 55%' }),
@@ -17,11 +17,19 @@ const team: { nome: string; ruolo: string; bio: string; foto: string }[] = [];
 const [lainate, rho] = sedi;
 
 // Sedi: foto e frase per ciascuna (indirizzo e link alla mappa da src/data/scuola.ts)
-const sediFoto = [
-  { sede: lainate, foto: 'gallery-4.jpg', alt: 'Lezione in una sala della sede di Lainate', testo: 'La sede principale: corsi per tutte le età, dai primi passi ai livelli avanzati.' },
-  { sede: rho, foto: 'gallery-9.jpg', alt: 'Allieve in sala nella sede di Rho', testo: 'Lo stesso metodo della sede centrale, vicino alle famiglie di Rho e dintorni.' },
+const sediFoto: { sede: typeof lainate; foto: string; alt: string; fuoco?: Fuoco; testo: string }[] = [
+  { sede: lainate, foto: 'foto/sede-lainate.jpg', alt: "L'edificio della sede di Lainate al tramonto, con l'insegna IN.Ballet sulla facciata", fuoco: { desktop: '35% 50%', mobile: '38% 50%' }, testo: 'La sede principale: corsi per tutte le età, dai primi passi ai livelli avanzati.' },
+  { sede: rho, foto: 'foto/sede-rho.jpg', alt: "L'ingresso della sede di Rho al tramonto", testo: 'Lo stesso metodo della sede centrale, vicino alle famiglie di Rho e dintorni.' },
 ];
 const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
+
+// InBallet in numeri: valore (animato dal conteggio), etichetta e nota
+const numeri = [
+  { valore: ANNI_ATTIVITA, etichetta: 'Anni di danza', nota: `Dal ${FONDAZIONE}` },
+  { valore: totaleCorsi, etichetta: 'Corsi', nota: `In ${categorieCorsi.length} percorsi` },
+  { valore: 3, etichetta: 'Età per iniziare', nota: 'Anni compiuti' },
+  { valore: 2, etichetta: 'Sedi', nota: `${lainate.citta} e ${rho.citta}` },
+];
 ---
 
 <Base
@@ -43,7 +51,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
         </section>
 
         <!-- Fondatrice Section -->
-        <section id="fondatrice" class="fondatrice-section">
+        <section id="fondatrice" class="fondatrice-section decoro-onde">
             <div class="container">
                 <div class="fondatrice-layout">
                     <div class="fondatrice-visual">
@@ -72,9 +80,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
             <div class="intro-editoriale">
                 <span class="eyebrow">La scuola</span>
                 <h2 class="titolo-sezione" id="scuola-titolo">Un luogo <em>di vita</em></h2>
-                <p>Dalla tecnica classica alle danze urbane: ogni giorno bambini dai 3 anni, ragazzi e adulti frequentano le sale, in classi divise per livello fino ai corsi avanzati.</p>
-                <p>Ai professionisti la scuola propone <a href="/formazioni-personalizzate">corsi di formazione</a> per educatori, terapeuti e pedagogisti ed è un punto di riferimento per la <a href="/formazione-insegnanti">formazione nazionale dei maestri di danza</a>.</p>
-                <p>Dal 2013 il <a href="/progetto-noiconvoi">progetto NoiConVoi</a> accoglie in sala ragazzi con disabilità, con supporto psicomotorio e un team di volontari.</p>
+                <p>Dalla tecnica classica alle danze urbane, bambini dai 3 anni, ragazzi e adulti in classi divise per livello. In più <a href="/formazione-insegnanti">formazione per insegnanti</a> e, dal 2013, il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>.</p>
                 <div class="scuola-highlight">
                     <p>Una comunità educante, in dialogo con le famiglie, che vede nella danza uno strumento di espressione, comunicazione e conoscenza.</p>
                 </div>
@@ -82,7 +88,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
         </section>
 
         <!-- Timeline della storia -->
-        <section class="storia-section">
+        <section class="storia-section decoro-onde decoro-onde--sinistra">
             <div class="container">
                 <div class="storia-header">
                     <span class="storia-label eyebrow">Il nostro percorso</span>
@@ -118,7 +124,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
             </div>
         </section>
 
-        <!-- InBallet in Numeri: intestazione editoriale, sotto i quattro numeri in fila -->
+        <!-- InBallet in Numeri: intestazione e quattro numeri in fila separati da filetti verticali -->
         <section class="numeri-section sezione-scura" aria-labelledby="numeri-titolo">
             <div class="intro-editoriale">
                 <span class="eyebrow">In sintesi</span>
@@ -126,32 +132,21 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
                 <p class="intro-sezione">Dai primi passi a 3 anni fino all'età adulta.</p>
             </div>
             <div class="container">
-                <dl class="numeri-grid">
-                    <div class="numero-item">
-                        <dt class="numero-label">Anni di danza</dt>
-                        <dd class="numero-value-wrapper"><span class="numero-value" data-target={ANNI_ATTIVITA}>{ANNI_ATTIVITA}</span></dd>
-                        <dd class="numero-nota">Dal {FONDAZIONE}</dd>
-                    </div>
-                    <div class="numero-item">
-                        <dt class="numero-label">Corsi</dt>
-                        <dd class="numero-value-wrapper"><span class="numero-value" data-target={totaleCorsi}>{totaleCorsi}</span></dd>
-                        <dd class="numero-nota">In {categorieCorsi.length} percorsi</dd>
-                    </div>
-                    <div class="numero-item">
-                        <dt class="numero-label">Età per iniziare</dt>
-                        <dd class="numero-value-wrapper"><span class="numero-value" data-target="3">3</span></dd>
-                        <dd class="numero-nota">Anni compiuti</dd>
-                    </div>
-                    <div class="numero-item">
-                        <dt class="numero-label">Sedi</dt>
-                        <dd class="numero-value-wrapper"><span class="numero-value" data-target="2">2</span></dd>
-                        <dd class="numero-nota">{lainate.citta} e {rho.citta}</dd>
-                    </div>
+                <dl class="numeri-lista">
+                    {numeri.map((n) => (
+                        <div class="numero">
+                            <dt class="numero-etichetta">{n.etichetta}</dt>
+                            <dd class="numero-valore"><span class="numero-value" data-target={n.valore}>{n.valore}</span></dd>
+                            <dd class="numero-nota">{n.nota}</dd>
+                        </div>
+                    ))}
                 </dl>
-                <a href="/corsi" class="link-cta numeri-cta">
-                    Scopri i corsi
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
+                <div class="numeri-cta">
+                    <a href="/corsi" class="btn-secondary">
+                        <span>Scopri i corsi</span>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -195,36 +190,31 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
         )}
 
         <!-- Carosello Sede Fullwidth -->
-        <!-- Sedi: intestazione editoriale e le due sedi affiancate (foto, città, indirizzo, indicazioni) -->
-        <section class="sede-section" aria-labelledby="sedi-titolo">
+        <!-- Sedi: intestazione editoriale e le due sedi affiancate (foto grande; sotto tipo,
+             città, descrizione e indicazioni) -->
+        <section class="sede-section decoro-onde" aria-labelledby="sedi-titolo">
             <div class="intro-editoriale">
                 <span class="eyebrow">I nostri spazi</span>
                 <h2 class="titolo-sezione" id="sedi-titolo">Le nostre <em>sale</em></h2>
                 <p class="intro-sezione">Due sedi a nord-ovest di Milano, a Lainate e a Rho.</p>
             </div>
             <div class="container">
-                <div class="sedi">
-                    {sediFoto.map(({ sede, foto, alt, testo }) => (
-                        <article class="sede">
-                            <figure class="sede-foto">
-                                <Img src={foto} alt={alt} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 768px) 100vw, 560px" />
-                            </figure>
+                <ul class="sedi">
+                    {sediFoto.map(({ sede, foto, alt, fuoco, testo }) => (
+                        <li class="sede">
+                            <Img class="sede-foto" src={foto} alt={alt} fuoco={fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 640px) 100vw, 560px" />
                             <div class="sede-testo">
                                 <p class="sede-tipo">{sede.titolo}</p>
                                 <h3 class="sede-nome">{sede.citta}</h3>
                                 <p class="sede-descrizione">{testo}</p>
-                                <address class="sede-indirizzo">
-                                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                                    {sede.via} · {sede.cap} {sede.citta} ({sede.provincia})
-                                </address>
-                                <a href={sede.maps} target="_blank" rel="noopener" class="link-cta sede-cta">
+                                <a href={sede.maps} target="_blank" rel="noopener" class="link-cta sede-cta" aria-label={`Indicazioni per la sede di ${sede.citta}, ${sede.via}`}>
                                     Indicazioni
                                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                 </a>
                             </div>
-                        </article>
+                        </li>
                     ))}
-                </div>
+                </ul>
             </div>
         </section>
 
@@ -382,107 +372,83 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 }
 
 /* ---------- InBallet in numeri ---------- */
+/* Fondo scuro; numeri bianchi in fila, divisi da filetti verticali */
 .numeri-section {
   padding: var(--section-y) 0;
   background: var(--dark-navy);
 }
 
-/* Centrato sotto i numeri come l'intestazione; a sinistra sotto i 900px */
-.numeri-cta {
-  display: flex;
-  width: fit-content;
-  margin: 2.5rem auto 0;
-  color: var(--white);
-}
-
-.numeri-cta:hover {
-  color: var(--primary-blue);
-  border-color: var(--primary-blue);
-}
-
-/* Quattro numeri in fila (2x2 sotto i 900px): il gap da 1px sul fondo chiaro
-   disegna i filetti solo tra le celle */
-.numeri-grid {
+.numeri-lista {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
   margin: 3.5rem 0 0;
-  background: rgba(255, 255, 255, 0.14);
+  text-align: center;
 }
 
-.numero-item {
+.numero {
   display: flex;
   flex-direction: column;
-  padding: 2.25rem 2.5rem;
-  background: var(--dark-navy);
+  align-items: center;
+  padding: .5rem 1.5rem;
 }
 
-.numero-label {
-  order: 2;
-  margin-top: .9rem;
-  font-size: var(--text-base);
-  font-weight: 400;
-  color: var(--white);
+.numero + .numero {
+  border-left: 1px solid rgba(255, 255, 255, .2);
 }
 
-.numero-value-wrapper {
+.numero-valore {
   order: 1;
   margin: 0;
-  line-height: 1;
-}
-
-.numero-value {
   font-size: var(--text-5xl);
-  font-weight: 300;
+  font-weight: 700;
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--white);
   font-variant-numeric: tabular-nums;
 }
 
-.numero-suffix {
-  margin-left: .1em;
-  font-size: var(--text-3xl);
-  font-weight: 300;
-  line-height: 1;
+.numero-etichetta {
+  order: 2;
+  margin-top: 1rem;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   color: var(--primary-blue);
 }
 
 .numero-nota {
   order: 3;
-  margin: .3rem 0 0;
+  margin: .35rem 0 0;
   font-size: var(--text-sm);
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, .7);
 }
 
+.numeri-cta {
+  margin-top: 3.5rem;
+  text-align: center;
+}
+
+/* 2x2 allineati a sinistra come l'intestazione; un filetto a sinistra di ogni numero */
 @media (max-width: 900px) {
-  .numeri-grid {
+  .numeri-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 2.5rem;
     margin-top: 2.5rem;
+    text-align: left;
+  }
+
+  .numero,
+  .numero + .numero {
+    align-items: flex-start;
+    padding: .25rem 0 .25rem 1.25rem;
+    border-left: 1px solid rgba(255, 255, 255, .2);
   }
 
   .numeri-cta {
-    margin-left: 0;
+    margin-top: 2.5rem;
+    text-align: left;
   }
-
-  /* Colonna sinistra dei numeri allineata al testo sopra */
-  .numero-item:nth-child(odd) {
-    padding-left: 0;
-  }
-}
-
-@media (max-width: 600px) {
-  .numero-item {
-    padding: 1.5rem 1.25rem;
-  }
-
-
-
-  .numero-label {
-    margin-top: .6rem;
-  }
-
 }
 
 .team-section {
@@ -724,38 +690,30 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
   position: relative;
 }
 
-/* Due sedi affiancate; la seconda scende un po' per un ritmo meno rigido */
+/* Le due sedi affiancate sulla stessa riga: foto grande sopra, testo compatto sotto */
 .sedi {
+  list-style: none;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4rem;
-  margin-top: 3.5rem;
+  gap: 3rem 2.5rem;
+  margin: 3.5rem 0 0;
+  padding: 0;
 }
 
-.sede:nth-child(2) {
-  margin-top: 5rem;
-}
-
-.sede-foto {
-  margin: 0 0 2rem;
-}
-
-.sede-foto :global(img) {
+.sede :global(.sede-foto) {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
   border-radius: var(--radius-img);
-  box-shadow: var(--shadow-card);
 }
 
 .sede-testo {
-  padding-top: 1.75rem;
-  border-top: 2px solid var(--primary-blue);
+  margin-top: 1.5rem;
 }
 
 .sede-tipo {
-  margin-bottom: .5rem;
+  margin-bottom: .4rem;
   font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 2px;
@@ -764,11 +722,11 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 }
 
 .sede-nome {
-  margin-bottom: 1rem;
-  font-size: var(--text-4xl);
+  margin-bottom: .6rem;
+  font-size: var(--text-2xl);
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   color: var(--dark-navy);
 }
 
@@ -779,34 +737,14 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
   color: var(--text-light);
 }
 
-.sede-indirizzo {
-  display: flex;
-  align-items: baseline;
-  gap: .6rem;
-  margin-top: 1.25rem;
-  font-size: var(--text-base);
-  font-style: normal;
-  font-weight: 600;
-  color: var(--dark-navy);
-}
-
-.sede-indirizzo i {
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-}
-
 .sede-cta {
-  margin-top: 1.75rem;
+  margin-top: 1.5rem;
 }
 
 @media (max-width: 900px) {
   .sedi {
-    gap: 2.5rem;
+    gap: 2.5rem 1.5rem;
     margin-top: 2.5rem;
-  }
-
-  .sede:nth-child(2) {
-    margin-top: 3rem;
   }
 }
 
@@ -814,19 +752,10 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 @media (max-width: 640px) {
   .sedi {
     grid-template-columns: minmax(0, 1fr);
-    gap: 3.5rem;
   }
 
-  .sede:nth-child(2) {
-    margin-top: 0;
-  }
-
-  .sede-foto {
-    margin-bottom: 1.5rem;
-  }
-
-  .sede-nome {
-    font-size: var(--text-3xl);
+  .sede-testo {
+    margin-top: 1.25rem;
   }
 }
 

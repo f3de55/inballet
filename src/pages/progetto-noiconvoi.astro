@@ -11,8 +11,8 @@ const bg = {
 };
 
 const fasi = [
-  { nome: 'Pratica psicomotoria', testo: 'Ogni lezione si apre con elementi di Pratica Psicomotoria Aucouturier (PPA): il supporto psicomotorio è la base del progetto.' },
-  { nome: 'Didattica artistica', testo: 'Segue la parte artistica, con una didattica costruita sui bisogni dei ragazzi e sul progetto annuale della scuola.' },
+  { nome: 'Pratica psicomotoria', icona: 'fa-child', testo: 'Ogni lezione si apre con elementi di Pratica Psicomotoria Aucouturier (PPA): il supporto psicomotorio è la base del progetto.' },
+  { nome: 'Didattica artistica', icona: 'fa-music', testo: 'Segue la parte artistica, con una didattica costruita sui bisogni dei ragazzi e sul progetto annuale della scuola.' },
 ];
 
 const destinatari = [
@@ -23,10 +23,10 @@ const destinatari = [
 ];
 
 const info = [
-  { nome: 'Quando', testo: 'Il lunedì sera, nella sede di Lainate.' },
-  { nome: 'Spettacolo di fine anno', testo: 'Ogni anno i ragazzi salgono sul palco insieme a tutti gli altri allievi della scuola.' },
-  { nome: 'Volontariato', testo: 'Volontari, anche non danzatori, in un team guidato dalla coordinatrice del progetto.' },
-  { nome: 'Dal 2013', testo: 'Un progetto che evolve ogni anno e fa della scuola una comunità educante.' },
+  { nome: 'Quando', icona: 'fa-calendar-days', testo: 'Il lunedì sera, nella sede di Lainate.' },
+  { nome: 'Spettacolo di fine anno', icona: 'fa-masks-theater', testo: 'Ogni anno i ragazzi salgono sul palco insieme a tutti gli altri allievi della scuola.' },
+  { nome: 'Volontariato', icona: 'fa-hand-holding-heart', testo: 'Volontari, anche non danzatori, in un team guidato dalla coordinatrice del progetto.' },
+  { nome: 'Dal 2013', icona: 'fa-seedling', testo: 'Un progetto che evolve ogni anno e fa della scuola una comunità educante.' },
 ];
 ---
 
@@ -77,9 +77,9 @@ const info = [
             </div>
             <div class="container">
                 <ol class="fasi-lista">
-                    {fasi.map((f, i) => (
+                    {fasi.map((f) => (
                         <li class="voce">
-                            <span class="voce-anno" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                            <i class={`fas ${f.icona} voce-icona`} aria-hidden="true"></i>
                             <h3 class="voce-titolo">{f.nome}</h3>
                             <p class="voce-testo">{f.testo}</p>
                         </li>
@@ -88,14 +88,14 @@ const info = [
             </div>
         </section>
 
-        <!-- Destinatari: intestazione editoriale, sotto l'elenco -->
-        <section class="noi-target-section" aria-labelledby="target-titolo">
-            <div class="intro-editoriale">
-                <span class="eyebrow">A chi è rivolto</span>
-                <h2 class="titolo-sezione" id="target-titolo">Un progetto <em>aperto a tutti</em></h2>
-                <p class="intro-sezione">NoiConVoi mette insieme ragazzi, famiglie e volontari. Dal 2024 accoglie anche volontari da aziende e realtà del territorio, grazie ai <a href="/sostenitori">sostenitori dei progetti sociali</a>.</p>
-            </div>
-            <div class="container">
+        <!-- Destinatari: intestazione a sinistra, elenco a destra -->
+        <section class="noi-target-section decoro-onde" aria-labelledby="target-titolo">
+            <div class="container noi-target-layout">
+                <div class="noi-target-header">
+                    <span class="eyebrow">A chi è rivolto</span>
+                    <h2 class="titolo-sezione" id="target-titolo">Un progetto <em>aperto a tutti</em></h2>
+                    <p class="intro-sezione">NoiConVoi mette insieme ragazzi, famiglie e volontari. Dal 2024 accoglie anche volontari da aziende e realtà del territorio, grazie ai <a href="/sostenitori">sostenitori dei progetti sociali</a>.</p>
+                </div>
                 <ul class="target-lista">
                     {destinatari.map((d) => (
                         <li class="target">
@@ -118,6 +118,7 @@ const info = [
                 <ul class="info-lista">
                     {info.map((v) => (
                         <li class="voce">
+                            <i class={`fas ${v.icona} voce-icona`} aria-hidden="true"></i>
                             <h3 class="voce-titolo">{v.nome}</h3>
                             <p class="voce-testo">{v.testo}</p>
                         </li>
@@ -227,11 +228,20 @@ const info = [
   background: var(--white);
 }
 
-/* Elenco in una colonna centrata sotto l'intestazione */
+.noi-target-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 5rem;
+  align-items: start;
+}
+
+.noi-target-header .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
 .target-lista {
   list-style: none;
-  max-width: 48rem;
-  margin: 3rem auto 0;
+  margin: 0;
   padding: 0;
 }
 
@@ -360,10 +370,10 @@ const info = [
     margin-top: 2.5rem;
   }
 
-  /* Destinatari: elenco a tutta larghezza, allineato all'intestazione */
-  .target-lista {
-    max-width: none;
-    margin-top: 2.5rem;
+  /* Destinatari: intestazione sopra l'elenco */
+  .noi-target-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
   }
 }
 

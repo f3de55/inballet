@@ -11,9 +11,9 @@ const bg = {
 };
 
 const pilastri = [
-  { nome: 'Confusione', testo: 'Quando emozioni e pensieri sono difficili da gestire da soli, un colloquio con uno specialista aiuta a fare chiarezza.' },
-  { nome: 'Ascolto', testo: 'Uno spazio dedicato in cui dare voce alle difficoltà che, in famiglia, spesso restano inespresse.' },
-  { nome: 'Relazioni', testo: 'Incontri per singoli e coppie, ma soprattutto per la tutela del rapporto genitore-figlio.' },
+  { nome: 'Confusione', icona: 'fa-lightbulb', testo: 'Quando emozioni e pensieri sono difficili da gestire da soli, un colloquio con uno specialista aiuta a fare chiarezza.' },
+  { nome: 'Ascolto', icona: 'fa-ear-listen', testo: 'Uno spazio dedicato in cui dare voce alle difficoltà che, in famiglia, spesso restano inespresse.' },
+  { nome: 'Relazioni', icona: 'fa-house-user', testo: 'Incontri per singoli e coppie, ma soprattutto per la tutela del rapporto genitore-figlio.' },
 ];
 
 const servizi = [
@@ -73,6 +73,7 @@ const servizi = [
                 <ul class="pilastri-lista">
                     {pilastri.map((p) => (
                         <li class="voce">
+                            <i class={`fas ${p.icona} voce-icona`} aria-hidden="true"></i>
                             <h3 class="voce-titolo">{p.nome}</h3>
                             <p class="voce-testo">{p.testo}</p>
                         </li>
@@ -81,14 +82,14 @@ const servizi = [
             </div>
         </section>
 
-        <!-- Accesso: intestazione editoriale, sotto l'elenco dei servizi -->
-        <section class="sport-accesso-section" aria-labelledby="accesso-titolo">
-            <div class="intro-editoriale">
-                <span class="eyebrow">Come accedere</span>
-                <h2 class="titolo-sezione" id="accesso-titolo">Incontri con la dottoressa <em>psicoterapeuta</em></h2>
-                <p class="intro-sezione">Lo sportello è attivo su richiesta: contatta la Direzione per fissare un primo colloquio.</p>
-            </div>
-            <div class="container">
+        <!-- Accesso: intestazione a sinistra, elenco dei servizi a destra -->
+        <section class="sport-accesso-section decoro-onde" aria-labelledby="accesso-titolo">
+            <div class="container sport-accesso-layout">
+                <div class="sport-accesso-header">
+                    <span class="eyebrow">Come accedere</span>
+                    <h2 class="titolo-sezione" id="accesso-titolo">Incontri con la dottoressa <em>psicoterapeuta</em></h2>
+                    <p class="intro-sezione">Lo sportello è attivo su richiesta: contatta la Direzione per fissare un primo colloquio.</p>
+                </div>
                 <ul class="servizi-lista">
                     {servizi.map((s) => (
                         <li class="servizio">
@@ -191,11 +192,20 @@ const servizi = [
   background: var(--white);
 }
 
-/* Elenco in una colonna centrata sotto l'intestazione */
+.sport-accesso-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 5rem;
+  align-items: start;
+}
+
+.sport-accesso-header .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
 .servizi-lista {
   list-style: none;
-  max-width: 48rem;
-  margin: 3rem auto 0;
+  margin: 0;
   padding: 0;
 }
 
@@ -319,10 +329,10 @@ const servizi = [
     margin-top: 2.5rem;
   }
 
-  /* Accesso: elenco a tutta larghezza, allineato all'intestazione */
-  .servizi-lista {
-    max-width: none;
-    margin-top: 2.5rem;
+  /* Accesso: intestazione sopra l'elenco */
+  .sport-accesso-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
   }
 }
 

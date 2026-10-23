@@ -19,12 +19,10 @@ const inBreve = [
 ];
 
 const aree = [
-  'Tecnica e didattica della danza Modern',
-  'Moduli multidisciplinari nella danza',
-  'Pedagogia applicata alla danza',
-  "Sviluppo dalla prima infanzia all'età adulta",
-  'Danza e disabilità, anche nei casi più complessi',
-  'Sei master di approfondimento dopo il biennio',
+  { nome: 'Tecnica e didattica della danza Modern', icona: 'fa-shoe-prints' },
+  { nome: 'Pedagogia applicata alla danza', icona: 'fa-book-open' },
+  { nome: "Sviluppo dall'infanzia all'età adulta", icona: 'fa-seedling' },
+  { nome: 'Danza e disabilità', icona: 'fa-universal-access' },
 ];
 
 const enti = [
@@ -53,7 +51,7 @@ const enti = [
         </section>
 
         <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo); sotto, il corso in breve -->
-        <section id="intro" class="form-intro-section">
+        <section id="intro" class="form-intro-section decoro-onde">
             <div class="container form-intro-layout">
                 <div class="form-intro-content">
                     <span class="form-intro-label eyebrow">Il percorso</span>
@@ -70,28 +68,28 @@ const enti = [
             <div class="container">
                 <ul class="breve-lista" aria-label="Il corso in breve">
                     {inBreve.map((b) => (
-                        <li class="breve">
-                            <span class="breve-valore">{b.valore}{b.unita && <span class="breve-unita"> {b.unita}</span>}</span>
-                            <span class="breve-testo">{b.testo}</span>
+                        <li class="voce">
+                            <span class="voce-anno">{b.valore}{b.unita && ` ${b.unita}`}</span>
+                            <p class="voce-titolo">{b.testo}</p>
                         </li>
                     ))}
                 </ul>
             </div>
         </section>
 
-        <!-- Aree di studio: intestazione editoriale, sotto l'elenco numerato -->
+        <!-- Aree di studio: intestazione a sinistra (fissa su desktop), elenco numerato a destra -->
         <section class="form-aree-section" aria-labelledby="aree-titolo">
-            <div class="intro-editoriale">
-                <span class="eyebrow">Il programma</span>
-                <h2 class="titolo-sezione" id="aree-titolo">Aree <em>di studio</em></h2>
-                <p class="intro-sezione">Moduli multidisciplinari tra danza, pedagogia e sviluppo, per insegnare a ogni età e a ogni corpo.</p>
-            </div>
-            <div class="container">
+            <div class="container form-aree-layout">
+                <div class="form-aree-header">
+                    <span class="eyebrow">Il programma</span>
+                    <h2 class="titolo-sezione" id="aree-titolo">Aree <em>di studio</em></h2>
+                    <p class="intro-sezione">Per insegnare a ogni età e a ogni corpo.</p>
+                </div>
                 <ol class="aree-lista">
-                    {aree.map((a, i) => (
+                    {aree.map((a) => (
                         <li class="area">
-                            <span class="area-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                            <span class="area-nome">{a}</span>
+                            <i class={`fas ${a.icona} area-num`} aria-hidden="true"></i>
+                            <span class="area-nome">{a.nome}</span>
                         </li>
                     ))}
                 </ol>
@@ -185,50 +183,18 @@ const enti = [
   object-fit: cover;
 }
 
-/* In breve: tre dati separati da filetti (il gap da 1px sul fondo li disegna) */
+/* In breve: tre voci (linea azzurra, valore, etichetta), come "InBallet in numeri" */
 .breve-lista {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
+  gap: 3rem;
   margin: 5rem 0 0;
   padding: 0;
-  border-top: 1px solid rgba(26, 26, 26, 0.12);
-  background: rgba(26, 26, 26, 0.12);
 }
 
-.breve {
-  display: flex;
-  flex-direction: column;
-  gap: .6rem;
-  padding: 2rem 2rem 0;
-  background: var(--white);
-}
-
-.breve:first-child {
-  padding-left: 0;
-}
-
-.breve-valore {
-  font-size: var(--text-5xl);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--primary-blue-dark);
-  white-space: nowrap;
-}
-
-.breve-unita {
-  font-size: var(--text-base);
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--primary-blue-dark);
-}
-
-.breve-testo {
-  font-size: var(--text-base);
-  font-weight: 400;
-  color: var(--text-dark);
+.breve-lista .voce-titolo {
+  margin: 0;
 }
 
 /* ---------- Aree di studio ---------- */
@@ -237,8 +203,30 @@ const enti = [
   background: var(--bg-soft);
 }
 
-/* Elenchi in una colonna centrata sotto l'intestazione */
-.aree-lista,
+/* Aree: intestazione a sinistra (fissa su desktop), elenco numerato a destra */
+.form-aree-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 5rem;
+  align-items: start;
+}
+
+.form-aree-header {
+  position: sticky;
+  top: calc(var(--header-h) + var(--banner-height, 0px) + 2rem);
+}
+
+.form-aree-header .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
+.aree-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Diploma: enti in una colonna centrata sotto l'intestazione */
 .enti-lista {
   list-style: none;
   max-width: 48rem;
@@ -264,11 +252,10 @@ const enti = [
   border-bottom: none;
 }
 
+/* Icona dell'area accanto al nome */
 .area-num {
   font-size: var(--text-xl);
-  font-weight: 300;
   color: var(--primary-blue-dark);
-  font-variant-numeric: tabular-nums;
 }
 
 .area-nome {
@@ -369,12 +356,6 @@ const enti = [
 }
 
 /* ---------- Tablet ---------- */
-@media (max-width: 1024px) {
-  .breve {
-    padding: 1.75rem 1.25rem 0;
-  }
-}
-
 @media (max-width: 900px) {
   /* Intro: etichetta e titolo, foto, testo */
   .form-intro-layout {
@@ -414,8 +395,17 @@ const enti = [
     margin-top: 3.5rem;
   }
 
-  /* Aree e diploma: elenchi a tutta larghezza, allineati all'intestazione */
-  .aree-lista,
+  /* Aree: intestazione sopra l'elenco */
+  .form-aree-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  .form-aree-header {
+    position: static;
+  }
+
+  /* Diploma: enti a tutta larghezza, allineati all'intestazione */
   .enti-lista {
     max-width: none;
     margin-top: 2.5rem;
@@ -433,25 +423,11 @@ const enti = [
   }
 
 
-  /* In breve: una riga per dato, valore a sinistra e testo a destra */
+  /* In breve: una voce sotto l'altra */
   .breve-lista {
     grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
     margin-top: 3rem;
-  }
-
-  .breve,
-  .breve:first-child {
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1.25rem 0;
-  }
-
-
-
-  .breve-testo {
-    text-align: right;
   }
 
   .area {

@@ -4,7 +4,7 @@ import Img from '../components/Img.astro';
 import SostenitoriSection from '../components/SostenitoriSection.astro';
 import Galleria from '../components/Galleria.astro';
 import { getImage } from 'astro:assets';
-import { ANNI_ATTIVITA, categorieCorsi, faq, FONDAZIONE, scuola } from '../data/scuola';
+import { ANNI_ATTIVITA, categorieCorsi, faqHome, FONDAZIONE, scuola } from '../data/scuola';
 import { getAsset, sfondo } from '../lib/images';
 import { schemaHome } from '../lib/schema';
 import { PUBLIC_GOOGLE_PLACE_ID } from 'astro:env/client';
@@ -16,10 +16,9 @@ import heroMp4Lg from '../assets/video/hero-1080.mp4?url';
 import heroAv1 from '../assets/video/hero-720.webm?url';
 import heroMp4 from '../assets/video/hero-720.mp4?url';
 
-// Corsi: i quattro stili come indice (il dettaglio dei corsi è su /corsi); i percorsi
-// per età sono un criterio diverso e stanno in una fascia a parte
+// Corsi: i quattro stili come indice (il dettaglio dei corsi, anche per età, è su /corsi)
 const stili = categorieCorsi.filter((c) => c.id !== 'eta');
-const perEta = categorieCorsi.find((c) => c.id === 'eta')!;
+const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
 // Progetti sul territorio: due gruppi di link alle pagine dei progetti
 const progetti = [
@@ -97,53 +96,32 @@ const schema = schemaHome(socialImage);
     </section>
 
     <!-- Sezione Corsi -->
-    <section id="corsi" class="corsi-section">
+    <section id="corsi" class="corsi-section decoro-onde decoro-onde--sinistra">
         <div class="corsi-wrapper">
             <!-- Header -->
             <div class="corsi-header">
                 <span class="corsi-label eyebrow">Corsi di danza a Lainate e Rho</span>
                 <h2 class="corsi-title titolo-sezione">I nostri <em>corsi</em></h2>
-                <p class="corsi-intro intro-sezione">Dai 3 anni all'età adulta, dalla danza classica all'hip-hop fino a yoga e pilates: scegli il corso per stile o per età.</p>
+                <p class="corsi-intro intro-sezione">Dai 3 anni all'età adulta, dalla danza classica all'hip-hop fino a yoga e pilates: scegli lo stile che fa per te.</p>
             </div>
 
             <ol class="corsi-indice">
-                {stili.map((cat, i) => (
+                {stili.map((cat) => (
                     <li>
                         <a href={`/corsi#${cat.id}`}>
-                            <span class="corsi-indice-numero" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                            <i class={`fas ${cat.icona} corsi-indice-icona`} aria-hidden="true"></i>
                             <span class="corsi-indice-nome">{cat.nome}</span>
                             <span class="corsi-indice-testo">{cat.sintesi}</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            <span class="corsi-indice-cta" aria-hidden="true">Vedi i corsi <i class="fas fa-arrow-right"></i></span>
                         </a>
                     </li>
                 ))}
             </ol>
 
-            <!-- Stessi corsi visti per fascia d'età -->
-            <div class="corsi-eta">
-                <div>
-                    <h3 class="voce-titolo">Oppure scegli per età</h3>
-                    <p class="voce-testo">{perEta.sintesi}</p>
-                </div>
-                <ul class="corso-link">
-                    {perEta.corsi.map((c) => (
-                        <li><a href={c.url}><span>{c.nome.replace(/ \((.+)\)$/, '')}{c.nome.endsWith(')') && <> <span class="corso-eta">{c.nome.slice(c.nome.lastIndexOf('('))}</span></>}</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a></li>
-                    ))}
-                </ul>
-            </div>
-
-            <!-- Elenco completo: subito sotto i percorsi -->
-            <div class="corsi-tutti">
-                <a href="/corsi" class="link-cta">
-                    Tutti i corsi
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-            </div>
-
+            <!-- Chiusura: l'elenco completo dei corsi -->
             <div class="corsi-cta">
-                <p class="corsi-cta-text">Non sai quale corso scegliere? <span>Ti aiutiamo a trovare quello giusto.</span></p>
-                <a href="/contatti" class="btn-primary">
-                    <span>Parliamone insieme</span>
+                <a href="/corsi" class="btn-primary">
+                    <span>Vedi tutti i {totaleCorsi} corsi</span>
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>
@@ -222,7 +200,7 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-     <section class="dicono-di-noi-section" aria-labelledby="recensioni-titolo">
+     <section class="dicono-di-noi-section decoro-onde" aria-labelledby="recensioni-titolo">
         <div class="container recensioni-layout">
             <div class="recensioni-intro">
                 <p class="eyebrow">Le voci della nostra community</p>
@@ -312,7 +290,7 @@ const schema = schemaHome(socialImage);
                 </ul>
             </div>
             <div class="faq-list">
-                {faq.map((f, i) => (
+                {faqHome.map((f, i) => (
                     <details class="faq-item" name="faq" open={i === 0}>
                         <summary>{f.domanda}</summary>
                         <p>{f.risposta}</p>
@@ -594,41 +572,35 @@ const schema = schemaHome(socialImage);
   margin: 0 auto;
 }
 
-/* Stili come indice editoriale: una riga per stile, tutta cliccabile, separata da filetti.
-   Due per riga (una sotto i 768px): numero, nome con la frase sotto, freccia */
+/* Stili come schede bianche sul fondo azzurrino, due per riga (una sotto i 768px):
+   tutta la scheda è il link; icona sopra il nome, frase, "Vedi i corsi" in fondo */
 .corsi-indice {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 4rem;
+  gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0;
 }
 
-/* Filetti per colonna: sopra la prima riga e sotto ogni voce */
-.corsi-indice li {
-  border-bottom: 1px solid rgba(26, 26, 26, .12);
-}
-
-.corsi-indice li:nth-child(-n + 2) {
-  border-top: 1px solid rgba(26, 26, 26, .12);
-}
-
 .corsi-indice a {
-  display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr) auto;
-  align-items: center;
-  gap: .5rem 2.5rem;
-  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 2rem 2.25rem;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
   color: var(--dark-navy);
   text-decoration: none;
+  transition: box-shadow .25s ease, border-color .25s ease;
 }
 
-.corsi-indice-numero {
-  font-size: var(--text-2xl);
-  font-weight: 300;
-  line-height: 1;
+.corsi-indice-icona {
+  margin-bottom: .9rem;
+  font-size: var(--text-xl);
   color: var(--primary-blue-dark);
 }
 
@@ -641,27 +613,45 @@ const schema = schemaHome(socialImage);
 }
 
 .corsi-indice-testo {
-  grid-column: 2;
-  grid-row: 2;
+  margin-top: .6rem;
   font-size: var(--text-base);
   line-height: 1.6;
   color: var(--text-light);
 }
 
-.corsi-indice a i {
-  grid-column: 3;
-  grid-row: 1 / 3;
-  font-size: var(--text-sm);
+/* Spinto in fondo: le schede della stessa riga allineano il link */
+.corsi-indice-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  font-size: var(--text-nav);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--dark-navy);
+}
+
+.corsi-indice-cta i {
+  font-size: var(--text-xs);
   color: var(--primary-blue-dark);
   transition: transform .25s ease;
 }
 
-.corsi-indice a:hover .corsi-indice-nome {
-  color: var(--primary-blue-dark);
-}
+@media (hover: hover) and (pointer: fine) {
+  .corsi-indice a:hover {
+    border-color: var(--primary-blue);
+    box-shadow: var(--shadow-card-hover);
+  }
 
-.corsi-indice a:hover i {
-  transform: translateX(5px);
+  .corsi-indice a:hover .corsi-indice-nome {
+    color: var(--primary-blue-dark);
+  }
+
+  .corsi-indice a:hover .corsi-indice-cta i {
+    transform: translateX(5px);
+  }
 }
 
 .corsi-indice a:focus-visible {
@@ -669,125 +659,17 @@ const schema = schemaHome(socialImage);
   outline-offset: 4px;
 }
 
-/* Per età: fascia a parte, con le fasce come pillole (un criterio diverso dagli stili) */
-/* Titolo e frase sopra, fasce sotto */
-.corsi-eta {
-  display: grid;
-  gap: 1.5rem;
-  max-width: 1200px;
-  margin: 4.5rem auto 0;
-}
-
-.corsi-eta .voce-testo {
-  font-size: var(--text-sm);
-}
-
-.corsi-tutti {
-  max-width: 1200px;
-  margin: 2.5rem auto 4.5rem;
-}
-
-/* Fasce d'età come pillole: si riconoscono come cliccabili e vanno a capo da sole */
-.corso-link {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-  margin: 0;
-  padding: 0;
-}
-
-.corso-link a {
-  display: inline-flex;
-  align-items: center;
-  gap: .45rem;
-  min-height: 40px;
-  padding: .5rem 1rem;
-  border: 1px solid rgba(70, 130, 180, 0.35);
-  border-radius: var(--radius-pill);
-  background: var(--white);
-  color: var(--dark-navy);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  line-height: 1.25;
-  text-decoration: none;
-  transition: background-color .25s ease, border-color .25s ease, color .25s ease;
-}
-
-.corso-link a i {
-  flex-shrink: 0;
-  font-size: var(--text-3xs);
-  color: var(--primary-blue-dark);
-  transition: transform .25s ease, color .25s ease;
-}
-
-.corso-link a:hover {
-  background: var(--primary-blue);
-  border-color: var(--primary-blue);
-}
-
-.corso-link a:hover i {
-  color: var(--dark-navy);
-  transform: translateX(3px);
-}
-
-.corso-eta {
-  white-space: nowrap;
-}
-
+/* Solo il pulsante, centrato sotto le schede come il titolo della sezione */
 .corsi-cta {
-  display: flex;
-  align-items: center;
-  /* Domanda e pulsante vicini, al centro: si leggono come un'unica proposta */
-  justify-content: center;
-  gap: 2.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-top: 2.5rem;
-  border-top: 1px solid rgba(26, 26, 26, 0.1);
-}
-
-.corsi-cta-text {
-  font-size: var(--text-base);
-  color: var(--dark-navy);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: var(--leading-snug);
-  margin: 0;
-}
-
-.corsi-cta-text span {
-  display: block;
-  margin-top: .35rem;
-  font-size: var(--text-base);
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--text-light);
-}
-
-.corsi-cta .btn-primary {
-  flex-shrink: 0;
+  margin-top: 3.5rem;
+  text-align: center;
 }
 
 @media (max-width: 1024px) {
-  .corsi-indice {
-    column-gap: 2.5rem;
-  }
-
   .corsi-indice a {
-    grid-template-columns: 3.5rem minmax(0, 1fr) auto;
-    gap: .35rem 1rem;
+    padding: 1.75rem;
   }
 
-  .corsi-eta {
-    margin-top: 4rem;
-  }
-
-  .corsi-cta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.25rem;
-  }
 }
 
 @media (max-width: 768px) {
@@ -795,48 +677,29 @@ const schema = schemaHome(socialImage);
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .corsi-indice li:nth-child(2) {
-    border-top: none;
-  }
 }
 
 @media (max-width: 600px) {
-  .corsi-indice a {
-    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
-    padding: 1.5rem 0;
+  .corsi-indice {
+    gap: 1rem;
   }
 
-  .corsi-indice-numero {
-    font-size: var(--text-lg);
+  .corsi-indice a {
+    padding: 1.5rem;
   }
 
   .corsi-indice-nome {
-    font-size: var(--text-lg);
-  }
-
-  .corsi-eta {
-    margin-top: 3.5rem;
-  }
-
-  .corsi-tutti {
-    margin: 2rem 0 3rem;
+    font-size: var(--text-xl);
   }
 
   .corsi-cta {
-    padding-top: 0;
-    border-top: none;
+    margin-top: 2.5rem;
   }
 
   .corsi-wrapper {
     padding: 0 1.5rem;
   }
 
-}
-
-@media (max-width: 600px) {
-  .corso-link a {
-    padding: .45rem .9rem;
-  }
 }
 
 /* Formazione: fondo azzurrino, intro a sinistra e percorsi come elenco a destra */

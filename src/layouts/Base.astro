@@ -6,7 +6,7 @@
 import '../styles/icons.css';
 import '../styles/global.css';
 import { Font, getImage } from 'astro:assets';
-import { getAsset } from '../lib/images';
+import { getAsset, webp } from '../lib/images';
 import Banner from '../components/Banner.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
@@ -40,10 +40,14 @@ const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(^|\/)index$/, '
 const canonical = new URL(path, Astro.site).href;
 // Immagine social predefinita 1200x630 (le pagine possono passarne una propria)
 const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
+// Elemento grafico (onde azzurre, già sbiadite nel file) delle sezioni con la classe
+// decoro-onde: WebP con trasparenza, più la copia specchiata per decoro-onde--sinistra
+const onde = await webp('decorazioni/onde-destra.png', 1600);
+const ondeSinistra = await webp('decorazioni/onde-sinistra.png', 1600);
 ---
 
 <!doctype html>
-<html lang="it">
+<html lang="it" style={`--decoro-onde: url(${onde}); --decoro-onde-sinistra: url(${ondeSinistra})`}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

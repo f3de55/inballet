@@ -32,16 +32,16 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
         </div>
     </section>
 
-    <section id="corsi" class="corsi">
+    <section id="corsi" class="corsi decoro-onde">
         <div class="container">
             <header class="corsi-intro intro-sezione">
                 <p class="eyebrow">{totale} corsi in {categorieCorsi.length} percorsi</p>
                 <h2 class="titolo titolo-sezione">Trova il tuo <em>percorso</em></h2>
                 <p class="corsi-lead">A Lainate e Rho si comincia a 3 anni con Avviamento alla Danza e non c'è un'età per smettere: per gli adulti ci sono corsi anche per chi parte da zero.</p>
                 <nav class="salti" aria-label="Vai al percorso">
-                    {categorieCorsi.map((cat, i) => (
+                    {categorieCorsi.map((cat) => (
                         <a href={`#${cat.id}`}>
-                            <span class="salto-numero" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                            <i class={`fas ${cat.icona} salto-numero`} aria-hidden="true"></i>
                             <span class="salto-nome">{cat.nome}</span>
                             <i class="fas fa-arrow-down" aria-hidden="true"></i>
                         </a>
@@ -55,7 +55,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
                         <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 40vw" />
                     </figure>
                     <div class="categoria-testo">
-                        <span class="categoria-numero">{String(i + 1).padStart(2, '0')}</span>
+                        <i class={`fas ${cat.icona} categoria-numero`} aria-hidden="true"></i>
                         <h2 class="categoria-titolo" id={`${cat.id}-titolo`}>{cat.nome}</h2>
                         <p class="categoria-descrizione" set:html={cat.descrizione} />
                         <ul class="corsi-lista">
@@ -110,65 +110,56 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     color: var(--text-light);
   }
 
-  /* Indice dei percorsi: cinque voci con numero, nome e la
-     freccia in giù (portano più sotto nella pagina). Riga blu sopra come le "voce" del sito */
+  /* Indice dei percorsi su PC: pillole centrate (nome e freccia in giù, portano più
+     sotto nella pagina); il numero compare solo nella versione a righe sotto i 900px */
   .salti {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 1.25rem;
-    max-width: 1100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .6rem;
     margin: 2.5rem auto 0;
-    text-align: left;
   }
 
   .salti a {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas:
-      "numero freccia"
-      "nome   nome";
-    align-content: start;
-    row-gap: .35rem;
-    padding: 1rem 0 .25rem;
-    border-top: 2px solid var(--primary-blue);
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    min-height: 44px;
+    padding: .6rem 1.15rem;
+    border: 1px solid rgba(70, 130, 180, .35);
+    border-radius: var(--radius-pill);
+    background: var(--white);
     color: var(--dark-navy);
     text-decoration: none;
-    transition: border-color .25s ease;
+    transition: background-color .25s ease, border-color .25s ease;
   }
 
   .salto-numero {
-    grid-area: numero;
+    display: none;
     font-size: var(--text-sm);
-    font-weight: 300;
     color: var(--primary-blue-dark);
   }
 
   .salto-nome {
-    grid-area: nome;
-    font-size: var(--text-base);
-    font-weight: 700;
+    font-size: var(--text-nav);
+    font-weight: 600;
     line-height: 1.3;
-    transition: color .25s ease;
   }
 
   .salti a i {
-    grid-area: freccia;
-    align-self: center;
     font-size: var(--text-xs);
     color: var(--primary-blue-dark);
-    transition: transform .25s ease;
+    transition: transform .25s ease, color .25s ease;
   }
 
-  @media (hover: hover) and (pointer: fine) {
+  @media (hover: hover) and (pointer: fine) and (min-width: 901px) {
     .salti a:hover {
-      border-top-color: var(--primary-blue-dark);
-    }
-
-    .salti a:hover .salto-nome {
-      color: var(--primary-blue-dark);
+      background: var(--primary-blue);
+      border-color: var(--primary-blue);
     }
 
     .salti a:hover i {
+      color: var(--dark-navy);
       transform: translateY(3px);
     }
   }
@@ -230,13 +221,13 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14);
   }
 
+  /* Icona del percorso sopra il titolo */
   .categoria-numero {
     display: block;
     font-size: var(--text-2xl);
-    font-weight: 300;
     line-height: 1;
     color: var(--primary-blue-dark);
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
   }
 
   .categoria-titolo {
@@ -356,20 +347,34 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
   @media (max-width: 900px) {
     /* Percorsi a righe (5 colonne non ci stanno): numero, nome, freccia a destra */
     .salti {
+      display: grid;
       grid-template-columns: minmax(0, 1fr);
       gap: 0;
       max-width: 640px;
       margin-top: 1.5rem;
       border-bottom: 1px solid rgba(26, 26, 26, .12);
+      text-align: left;
     }
 
     .salti a {
+      display: grid;
       grid-template-columns: 2.25rem minmax(0, 1fr) auto;
-      grid-template-areas: "numero nome freccia";
       align-items: center;
+      min-height: 0;
       padding: 1rem 0;
-      border-top-width: 1px;
-      border-top-color: rgba(26, 26, 26, .12);
+      border: none;
+      border-top: 1px solid rgba(26, 26, 26, .12);
+      border-radius: 0;
+      background: none;
+    }
+
+    .salto-numero {
+      display: block;
+    }
+
+    .salto-nome {
+      font-size: var(--text-base);
+      font-weight: 700;
     }
 
     .corsi-intro {

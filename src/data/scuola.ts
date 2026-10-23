@@ -73,6 +73,8 @@ export const orari: { giorni: string[]; etichetta: string; apre: string; chiude:
 export const categorieCorsi = [
   {
     id: 'classica-moderna',
+    /** Icona Font Awesome della categoria (classe completa, così `npm run icons` la include) */
+    icona: 'fa-feather',
     nome: 'Danza Classica e Moderna',
     sintesi: 'La base tecnica di ogni stile: si comincia a 3 anni e si arriva ai livelli avanzati.',
     immagine: { src: 'foto/tutu-classica.jpg', alt: 'Tutù rosa di danza classica', fuoco: { desktop: '60% 50%', mobile: '50% 45%' } },
@@ -86,6 +88,7 @@ export const categorieCorsi = [
   },
   {
     id: 'contemporanea',
+    icona: 'fa-wind',
     nome: 'Danza Contemporanea',
     sintesi: "L'arte più libera del movimento, dai 10 anni all'età adulta.",
     immagine: { src: 'foto/contact-improvisation-img2.jpg', alt: 'Due danzatori a terra durante una sequenza di contact improvisation', fuoco: { desktop: '50% 50%' } },
@@ -99,6 +102,7 @@ export const categorieCorsi = [
   },
   {
     id: 'urban',
+    icona: 'fa-headphones',
     nome: 'Urban Dance',
     sintesi: 'Gli stili urbani tra energia, tecnica e cultura Hip-Hop, dai 6 anni.',
     immagine: { src: 'foto/breaking-img2.jpg', alt: 'Allievi di breaking in freeze sul parquet della sala', fuoco: { desktop: '50% 50%', mobile: '50% 60%' } },
@@ -113,6 +117,7 @@ export const categorieCorsi = [
   },
   {
     id: 'benessere',
+    icona: 'fa-spa',
     nome: 'Benessere e Movimento',
     sintesi: 'Per il benessere di corpo e mente, da soli o accanto a un corso di danza.',
     immagine: { src: 'foto/yoga-img2.jpg', alt: 'Lezione di yoga in sala, con le mani giunte sopra la testa', fuoco: { desktop: '55% 50%', mobile: '50% 35%' } },
@@ -126,6 +131,7 @@ export const categorieCorsi = [
   },
   {
     id: 'eta',
+    icona: 'fa-child',
     nome: 'Percorsi per Età',
     sintesi: "Quali corsi scegliere in ogni fase della crescita, anche per chi inizia da grande.",
     immagine: { src: 'foto/bambini-gioco.jpg', alt: 'Bambine piccole giocano a danzare in sala', fuoco: { desktop: '50% 50%', mobile: '50% 35%' } },
@@ -151,13 +157,15 @@ export const iscrizioni = {
   ],
 };
 
-/** Domande frequenti: mostrate in homepage e pubblicate come FAQPage. */
+/** Domande frequenti (tutte per chatbot e /llms.txt; quelle con `home` in homepage e nel FAQPage). */
 export const faq = [
   {
+    home: true,
     domanda: 'Da che età si può iniziare a danzare a InBallet?',
     risposta: "Dai 3 anni compiuti con Avviamento alla Danza; a 4-5 anni c'è Educazione alla Danza e dai 6 anni danza classica, modern, hip-hop e breaking. Ragazzi e adulti trovano corsi anche per principianti assoluti: non c'è un limite di età.",
   },
   {
+    home: true,
     domanda: 'Dove si trovano le sedi?',
     risposta: `Due sedi a nord-ovest di Milano: la sede centrale in ${sedi[0].via} a ${sedi[0].citta} e la sede di ${sedi[1].via} a ${sedi[1].citta}.`,
   },
@@ -170,10 +178,12 @@ export const faq = [
     risposta: "Avviamento alla Danza dai 3 anni ed Educazione alla Danza a 4-5 anni; dai 6 anni danza classica, modern, hip-hop e breaking, dai 10 contemporanea e dai 16, con esperienza, il Contaminato. Poi heels, danza acrobatica e contact improvisation; per gli adulti contemporanea adulti (dai 40 anni), movimento creativo (dai 18), hatha yoga, pilates e lezioni individuali.",
   },
   {
+    home: true,
     domanda: 'Ci sono corsi di danza per adulti principianti?',
     risposta: "Sì, a qualsiasi età. Danza Contemporanea Adulti è per chi ha dai 40 anni in su, anche partendo da zero o dopo anni di stop; Movimento Creativo è aperto dai 18 anni, a danzatori e non. Ci sono anche danza classica per livelli, hatha yoga e pilates.",
   },
   {
+    home: true,
     domanda: 'InBallet accoglie bambini e ragazzi con disabilità?',
     risposta: "Sì. Quasi tutte le classi accolgono allievi con bisogni speciali, dopo un colloquio con la famiglia per scegliere il gruppo più adatto. Dal 2013, inoltre, il progetto NoiConVoi accoglie il lunedì sera ragazzi con disabilità, con supporto psicomotorio e un team di volontari.",
   },
@@ -182,6 +192,7 @@ export const faq = [
     risposta: "Sì. Dal 2023 InBallet è ente formativo riconosciuto CSEN e CONI: corso biennale per insegnanti di danza Modern con titolo a valenza nazionale e sei master, più formazioni su misura per educatori, terapeuti, scuole ed enti.",
   },
   {
+    home: true,
     domanda: 'Come ci si iscrive e quanto costano i corsi?',
     risposta: `Si consegna in segreteria il modulo di iscrizione (pagina Documenti) con il certificato medico non agonistico, obbligatorio dai 6 anni; sotto i 6 anni basta l'autocertificazione dei genitori. La quota associativa è di ${iscrizioni.quota} € l'anno; il costo dei corsi dipende da disciplina e frequenza: per un preventivo chiama il ${scuola.telefono} o scrivi a ${scuola.email}.`,
   },
@@ -190,3 +201,6 @@ export const faq = [
     risposta: "Sì. Ogni anno la scuola porta in teatro uno spettacolo con gli allievi, nato dal lavoro dell'anno, e partecipa a eventi celebrativi e nelle scuole del territorio.",
   },
 ];
+
+/** Le domande mostrate in homepage (e pubblicate come FAQPage). */
+export const faqHome = faq.filter((f) => f.home);

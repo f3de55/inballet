@@ -470,6 +470,10 @@ section [class*="-intro-highlight"] p {
   margin: 0;
 }
 
+.sezione-scura .voce-anno {
+  color: var(--primary-blue);
+}
+
 .sezione-scura .voce-titolo {
   color: var(--white);
 }
@@ -509,6 +513,23 @@ section [class*="-intro-highlight"] p {
   .foto-cornice::before,
   .foto-cornice--sinistra::before {
     inset: 1.5rem 1.5rem -.75rem -.75rem;
+  }
+}
+
+/* Elemento grafico: onde azzurre su tutta la sezione, come immagine di sfondo sopra il
+   colore della sezione (già sbiadite al 22% nel file; --sinistra: copia specchiata).
+   Solo su PC. "section." vince sul "background" delle pagine senza toccarne il colore. */
+@media (min-width: 1025px) {
+  section.decoro-onde {
+    background-image: var(--decoro-onde);
+    background-position: right bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  section.decoro-onde--sinistra {
+    background-image: var(--decoro-onde-sinistra);
+    background-position: left bottom;
   }
 }
 

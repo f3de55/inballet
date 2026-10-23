@@ -23,7 +23,6 @@ const MAX_LOG = 10000;
 const cartella = (...candidati: string[]) => candidati.map((c) => path.resolve(c)).find((c) => existsSync(c)) ?? path.resolve(candidati[0]);
 const DIR_FOTO = cartella('demo/foto', 'src/assets/images');
 const DIR_FONT = cartella('demo/fonts');
-const FOTO = ['gallery-1', 'gallery-2', 'gallery-3', 'gallery-4', 'gallery-5', 'gallery-6', 'gallery-7', 'gallery-8', 'gallery-9', 'gallery-10', 'hero-bg', 'hero-danza-contemporanea', 'ballerina', 'bg-progetti-territorio'];
 
 // === MODELLI DI EVENTO ===
 
@@ -162,10 +161,6 @@ async function creaLocandina(m: Modello, data: string, verticale: boolean): Prom
 
 // === EVENTI ===
 
-export async function contaEventiDemo(): Promise<number> {
-  return (await leggiEventi()).filter((e) => e.demo).length;
-}
-
 /** Genera `quanti` eventi completi (con locandina). Con `passati` alcuni cadono negli ultimi 3 mesi. */
 export async function generaEventi(quanti: number, passati: boolean): Promise<number> {
   const n = Math.max(1, Math.min(MAX_EVENTI, Math.floor(quanti)));
@@ -277,16 +272,6 @@ const BROWSER = [
 ];
 /** Peso per ora del giorno: poco di notte, picco nel tardo pomeriggio e sera. */
 const PESI_ORA = [1, 0, 0, 0, 0, 0, 1, 2, 4, 6, 6, 6, 5, 6, 6, 7, 9, 11, 12, 12, 11, 9, 6, 3];
-
-export interface StatoDemoChat {
-  demo: number;
-  totali: number;
-}
-
-export async function statoChatDemo(): Promise<StatoDemoChat> {
-  const logs = await readJson<LogEntry[]>(paths.analytics, []);
-  return { demo: logs.filter((l) => l.demo).length, totali: logs.length };
-}
 
 /**
  * Genera `quanti` messaggi negli ultimi `giorni` giorni. Il registro tiene al massimo

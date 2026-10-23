@@ -11,9 +11,9 @@ const bg = {
 };
 
 const pilastri = [
-  { nome: 'Confusione', testo: 'Nei momenti più complessi, quando emozioni e pensieri sono difficili da gestire da soli, un colloquio con uno specialista aiuta a fare chiarezza.' },
-  { nome: 'Ascolto', testo: 'Gli incontri con la dottoressa psicoterapeuta sono uno spazio dedicato per esprimere difficoltà che spesso, in famiglia, restano inespresse.' },
-  { nome: 'Relazioni', testo: 'Lo sportello di ascolto è rivolto a singole persone e a coppie, ma soprattutto alla tutela del rapporto genitore-figlio.' },
+  { nome: 'Confusione', testo: 'Quando emozioni e pensieri sono difficili da gestire da soli, un colloquio con uno specialista aiuta a fare chiarezza.' },
+  { nome: 'Ascolto', testo: 'Uno spazio dedicato in cui dare voce alle difficoltà che, in famiglia, spesso restano inespresse.' },
+  { nome: 'Relazioni', testo: 'Incontri per singoli e coppie, ma soprattutto per la tutela del rapporto genitore-figlio.' },
 ];
 
 const servizi = [
@@ -49,8 +49,8 @@ const servizi = [
                     <span class="sport-intro-label eyebrow">Il nostro servizio</span>
                     <h2 class="sport-intro-title titolo-sezione">Sostegno alle famiglie <em>attraverso l'ascolto</em></h2>
                     <div class="sport-intro-testo">
-                        <p>Lo Sportello Psicologico di InBallet è un servizio di sostegno alle famiglie: su richiesta alla Direzione, è possibile fissare incontri con una dottoressa psicoterapeuta.</p>
-                        <p>Gli incontri sono pensati per singoli, per coppie e, soprattutto, per la tutela del rapporto genitore-figlio: uno spazio per riconoscere fatiche e bisogni che bambini e genitori spesso non riescono a esprimere apertamente.</p>
+                        <p>Lo Sportello Psicologico di InBallet sostiene le famiglie della scuola: su richiesta alla Direzione, si fissano incontri con una dottoressa psicoterapeuta.</p>
+                        <p>Uno spazio per riconoscere fatiche e bisogni che bambini e genitori spesso non riescono a esprimere apertamente.</p>
                     </div>
                     <div class="sport-intro-highlight">
                         <p>Un sostegno concreto nei momenti di difficoltà, nella massima riservatezza.</p>
@@ -87,7 +87,7 @@ const servizi = [
                 <div class="sport-accesso-header">
                     <span class="eyebrow">Come accedere</span>
                     <h2 class="titolo-sezione" id="accesso-titolo">Incontri con la dottoressa <em>psicoterapeuta</em></h2>
-                    <p class="intro-sezione">Lo sportello è attivo su richiesta: contatta la Direzione per fissare un primo colloquio con la dottoressa psicoterapeuta.</p>
+                    <p class="intro-sezione">Lo sportello è attivo su richiesta: contatta la Direzione per fissare un primo colloquio.</p>
                 </div>
                 <ul class="servizi-lista">
                     {servizi.map((s) => (
@@ -106,7 +106,7 @@ const servizi = [
             <div class="sport-cta-overlay"></div>
             <div class="sport-cta-wrapper">
                 <h2 class="titolo-sezione">Prenota un colloquio <em>conoscitivo</em></h2>
-                <p class="intro-sezione">Il primo passo è sempre il più importante. Scrivici o chiamaci: fissiamo insieme il primo incontro, nella massima riservatezza.</p>
+                <p class="intro-sezione">Scrivici o chiamaci: fissiamo insieme il primo incontro, nella massima riservatezza.</p>
                 <div class="sport-cta-buttons">
                     <a href={`mailto:${scuola.email}?subject=Richiesta%20Sportello%20Psicologico`} class="btn-primary">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici

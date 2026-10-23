@@ -1,7 +1,7 @@
 /* ========================================
    INBALLET - HOMEPAGE
-   1. Recensioni Google (Maps JS caricato solo quando la sezione è vicina)
-   2. Galleria infinita con lightbox
+   Recensioni Google (Maps JS caricato solo quando la sezione è vicina);
+   la galleria è in galleria.ts
    ======================================== */
 import { PUBLIC_GOOGLE_PLACE_ID } from 'astro:env/client';
 import { loadGoogleMaps, whenNear } from './google-maps';
@@ -30,7 +30,7 @@ const initials = (name: string) =>
     .substring(0, 2)
     .toUpperCase();
 
-// === 1. RECENSIONI GOOGLE ===
+// === RECENSIONI GOOGLE ===
 
 /** Valutazione e recensioni del luogo dalla Places API (timeout 10s). */
 async function fetchReviews(placeId: string): Promise<{ rating: number; total: number; reviews: Review[] }> {
@@ -78,7 +78,8 @@ function createSlide(review: Review, index: number) {
   slide.className = `testimonials-slide ${index === 0 ? 'active' : ''}`;
   const full = review.text;
   const isLong = full.length > 200;
-  const short = isLong ? full.substring(0, 200) : full;
+  // Taglio a fine parola, non a metà
+  const short = isLong ? full.substring(0, 200).replace(/\s+\S*$/, '') : full;
   slide.innerHTML = `
             <div class="recensione-stelle" role="img" aria-label="${review.rating} stelle su 5">${stars(review.rating)}</div>
             <blockquote class="recensione-testo">

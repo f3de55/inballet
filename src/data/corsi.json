@@ -20,7 +20,7 @@
       "desktop": "75% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>Per danzare non c'è un'età giusta: a InBallet gli adulti possono iniziare da zero, ricominciare dopo anni di stop o continuare uno stile che già conoscono, in corsi veri e propri.</p>\n<p><a href=\"/contemporanea-adulti\">Danza Contemporanea Adulti</a> è pensata per chi ha dai 40 anni in su; <a href=\"/movimento-creativo\">Movimento Creativo</a> accoglie adulti dai 18 anni, anche non danzatori; con la <a href=\"/contact-improvisation\">Contact Improvisation</a> si esplora l'improvvisazione in coppia. Per il benessere ci sono <a href=\"/yoga\">Hatha Yoga</a> e <a href=\"/pilates\">Pilates</a>.</p>",
+    "intro": "<p>Per danzare non c'è un'età giusta: a InBallet gli adulti possono iniziare da zero, ricominciare dopo anni di stop o continuare uno stile che già conoscono.</p>\n<p><a href=\"/contemporanea-adulti\">Danza Contemporanea Adulti</a> è pensata per chi ha dai 40 anni in su; <a href=\"/movimento-creativo\">Movimento Creativo</a> accoglie adulti dai 18 anni, anche non danzatori; con la <a href=\"/contact-improvisation\">Contact Improvisation</a> si esplora l'improvvisazione in coppia. Per il benessere ci sono <a href=\"/yoga\">Hatha Yoga</a> e <a href=\"/pilates\">Pilates</a>.</p>",
     "eta": "Adulti di tutte le età",
     "frequenza": "1-3 lezioni a settimana",
     "metodoTitolo": "I corsi per adulti",
@@ -77,7 +77,7 @@
     "metodo": [
       {
         "titolo": "Coinvolgimento",
-        "testo": "Sintonia ed equilibrio di gruppo sono alla base della classe: ogni bambino partecipa a un'esperienza condivisa e impara a relazionarsi con gli altri attraverso il movimento."
+        "testo": "Sintonia ed equilibrio di gruppo sono alla base della classe: ogni bambino impara a relazionarsi con gli altri attraverso il movimento."
       },
       {
         "titolo": "Educazione",
@@ -173,11 +173,11 @@
     "metodo": [
       {
         "titolo": "Condivisione",
-        "testo": "Classi equilibrate e divise per livello fanno sentire ogni allievo coinvolto, anche negli esercizi a terra. Nato come danza individuale, per tradizione il Breaking si condivide nel cerchio: il b-boy o la b-girl al centro prova le sue sequenze, mentre tutti intorno tengono vivo il beat."
+        "testo": "Classi equilibrate e divise per livello coinvolgono ogni allievo, anche negli esercizi a terra, e preparano a danzare nel cerchio, a turno al centro."
       },
       {
         "titolo": "Staticità",
-        "testo": "Gli esercizi si sviluppano nello spazio che circonda il breaker: avere una zona ben definita aiuta a gestire la staticità nei passaggi che preparano al lavoro a terra."
+        "testo": "Gli esercizi si sviluppano nello spazio intorno al breaker: una zona ben definita aiuta a gestire la staticità nei passaggi verso il lavoro a terra."
       },
       {
         "titolo": "Equilibrio",
@@ -274,7 +274,7 @@
       },
       {
         "titolo": "Unione",
-        "testo": "La sensazione affascinante di percepire un partner, un corpo accanto al proprio: leve e sforzi in collaborazione con il compagno, dove ogni movimento diventa morbido e leggero."
+        "testo": "Percepire un partner, un corpo accanto al proprio: leve e sforzi condivisi con il compagno rendono ogni movimento morbido e leggero."
       },
       {
         "titolo": "Fusione",
@@ -327,7 +327,7 @@
       },
       {
         "titolo": "Fusione",
-        "testo": "Prima della costruzione coreografica si lavora su ciò che ogni danzatore sente più suo e sui limiti da superare per migliorarsi; nei lavori coreografici i danzatori si librano in veri effetti speciali."
+        "testo": "Prima della coreografia si lavora su ciò che ogni danzatore sente più suo e sui limiti da superare; poi, in scena, nascono veri effetti speciali."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -362,7 +362,7 @@
       "desktop": "30% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>Danza Contemporanea Adulti è il corso di InBallet per chi ha dai 40 anni in su, senza limiti di età: per ricominciare dopo anni di stop o per iniziare da zero.</p>\n<p>La lezione unisce warm-up, training a terra (floor barre), sbarra classica, diagonali e coreografia contemporanea. Il corso offre più lezioni a settimana e si può affiancare una classe più tecnica o funzionale, per lavorare meglio sul proprio corpo.</p>",
+    "intro": "<p>Danza Contemporanea Adulti è il corso di InBallet per chi ha dai 40 anni in su, senza limiti di età: per ricominciare dopo anni di stop o per iniziare da zero.</p>\n<p>La lezione unisce warm-up, training a terra (floor barre), sbarra classica, diagonali e coreografia contemporanea. Si frequenta più volte a settimana, anche accanto a una classe più tecnica o funzionale.</p>",
     "eta": "Dai 40 anni, senza limiti di età",
     "frequenza": "Più giorni a settimana",
     "metodoTitolo": "Tecnica, allungamento e dinamismo",
@@ -412,7 +412,7 @@
       "desktop": "35% 50%",
       "tablet": "50% 50%"
     },
-    "intro": "<p>La Danza Acrobatica unisce movimento dinamico e linee precise a elementi aerei, emozionanti e scenografici: un arricchimento stilistico per i danzatori di qualsiasi stile che vogliono stupire e stupirsi.</p>\n<p>Ogni lezione si apre con un allenamento aerobico, che prepara i muscoli all'impegno richiesto dagli elementi acrobatici.</p>",
+    "intro": "<p>La Danza Acrobatica unisce movimento dinamico e linee precise a elementi aerei, emozionanti e scenografici: un arricchimento per i danzatori di qualsiasi stile che vogliono stupire e stupirsi.</p>\n<p>Si rivolge a chi danza già e vuole portare il proprio movimento anche in aria, con sicurezza e controllo.</p>",
     "eta": "Danzatori di ogni stile",
     "frequenza": "1-2 lezioni a settimana",
     "metodoTitolo": "Allenamento, dinamiche aeree e precisione",
@@ -519,15 +519,15 @@
     "metodo": [
       {
         "titolo": "Multiforme",
-        "testo": "Nella Danza Contemporanea il vero artista è il danzatore: risultati corporei sorprendenti nascono dalla sperimentazione nell'icosaedro e nella sfera di spazio che lo circonda."
+        "testo": "Il vero artista è il danzatore: risultati corporei sorprendenti nascono dalla sperimentazione nella sfera di spazio che lo circonda."
       },
       {
         "titolo": "Contorto",
-        "testo": "All'occhio dello spettatore il risultato può sembrare strano, quasi mai visto: passare da una forma all'altra in modo inconsueto genera un effetto molto attraente."
+        "testo": "Passare da una forma all'altra in modo inconsueto crea, agli occhi di chi guarda, un effetto quasi mai visto e molto attraente."
       },
       {
         "titolo": "Eterogeneo",
-        "testo": "Un corpo non uniforme, sbilanciato e sospeso diventa la fonte di energia più originale, da cui nascono coreografie belle e significative. Lo percepisce chi danza e chi osserva anche una semplice lezione."
+        "testo": "Un corpo sbilanciato e sospeso diventa la fonte di energia più originale, da cui nascono coreografie belle e significative."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -543,7 +543,7 @@
   },
   "educazione-danza": {
     "title": "Educazione alla Danza 4-5 anni a Lainate e Rho | InBallet",
-    "description": "Educazione alla Danza per bambini di 4 e 5 anni a Lainate e Rho (MI): stimoli motori, ritmo e prime sequenze per crescere in autonomia. Una lezione a settimana.",
+    "description": "Educazione alla Danza per bambini di 4 e 5 anni a Lainate e Rho (MI): stimoli motori, ritmo e prime sequenze, una lezione a settimana.",
     "ogTitle": "Educazione alla Danza per bambini di 4-5 anni | InBallet",
     "ogDescription": "Gli stimoli motori diventano competenze psicomotorie: ritmo, posizioni e prime sequenze.",
     "badge": "4-5 anni",
@@ -668,15 +668,15 @@
     "metodo": [
       {
         "titolo": "Determinazione",
-        "testo": "È una disciplina che nasce al centro della sala: le tante ripetizioni degli esercizi tecnici allo specchio rafforzano la determinazione nel migliorare la qualità del movimento."
+        "testo": "Nasce al centro della sala: le tante ripetizioni degli esercizi tecnici allo specchio rafforzano la determinazione nel migliorare la qualità del movimento."
       },
       {
         "titolo": "Energia",
-        "testo": "Uno degli stili più grintosi della danza: permette di liberare energia in modo intenso e l'interpretazione musicale regala una carica unica. Spesso è il modo migliore per far uscire le emozioni più nascoste, soprattutto in età scolare."
+        "testo": "Uno degli stili più grintosi: libera energia in modo intenso e, soprattutto in età scolare, aiuta a far uscire le emozioni più nascoste."
       },
       {
         "titolo": "Carattere",
-        "testo": "La danza aiuta a porsi degli obiettivi, in sala e nella vita di tutti i giorni. La cultura Hip-Hop lascia segni ancora più tangibili, rafforzando il lato più tenace di ogni allievo."
+        "testo": "La danza aiuta a porsi degli obiettivi, in sala e nella vita; la cultura Hip-Hop rafforza il lato più tenace di ogni allievo."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -762,22 +762,22 @@
       "desktop": "65% 50%",
       "tablet": "50% 40%"
     },
-    "intro": "<p>La Modern Dance nasce come rottura degli schemi della Danza Classica e unisce tecnica, emozione e immaginazione. A InBallet si studia dai 6 anni, in gradi crescenti di lezione; è consigliata una base di danza classica.</p>\n<p>Si lavora sui principi di contrazione e rilascio e sui metodi dei grandi maestri, come Martha Graham, Rudolf Laban, Merce Cunningham e Isadora Duncan. È anche lo stile del <a href=\"/formazione-insegnanti\">corso per insegnanti</a> riconosciuto CSEN e CONI.</p>",
+    "intro": "<p>La Modern Dance nasce come rottura degli schemi della Danza Classica e unisce tecnica, emozione e immaginazione. A InBallet si studia dai 6 anni, per livelli; è consigliata una base di danza classica.</p>\n<p>Si lavora sui principi di contrazione e rilascio e sui metodi dei grandi maestri, come Martha Graham, Rudolf Laban, Merce Cunningham e Isadora Duncan. È anche lo stile del <a href=\"/formazione-insegnanti\">corso per insegnanti</a> riconosciuto CSEN e CONI.</p>",
     "eta": "Dai 6 anni, per livelli",
     "frequenza": "2-3 lezioni a settimana",
     "metodoTitolo": "Definizione, leggerezza e contrasti",
     "metodo": [
       {
         "titolo": "Definizione",
-        "testo": "Con lo studio tecnico dello stile il corpo assume una morfologia specifica che permette esecuzioni consapevoli: ogni movimento nasce da un impulso e si sviluppa in forme eleganti e ben definite."
+        "testo": "Lo studio tecnico dello stile rende le esecuzioni consapevoli: ogni movimento nasce da un impulso e si sviluppa in forme eleganti e ben definite."
       },
       {
         "titolo": "Leggerezza",
-        "testo": "Il senso di libertà che deriva dai principi di contrazione e rilascio, alla base dello stile, è la sensazione più piacevole: la percepisce chi danza e la percepisce chi guarda."
+        "testo": "Contrazione e rilascio, alla base dello stile, danno un senso di libertà che percepisce chi danza e chi guarda."
       },
       {
         "titolo": "Contrasti",
-        "testo": "Movimenti grandi e piccoli, lenti e veloci, lunghi e corti insegnano a comprendere l'energia del proprio corpo. Crescendo di età e di livello, la consapevolezza diventa sempre più forte."
+        "testo": "Movimenti grandi e piccoli, lenti e veloci insegnano a comprendere l'energia del proprio corpo, con una consapevolezza che cresce con età e livello."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -825,7 +825,7 @@
       },
       {
         "titolo": "Stimolazione",
-        "testo": "I contesti allestiti non sono mai casuali: guida vocale, musica e a volte materiali offrono infinite possibilità interpretative, con al centro l'ambiente connesso alle persone."
+        "testo": "Contesti mai casuali: guida vocale, musica e a volte materiali offrono infinite possibilità interpretative, con l'ambiente connesso alle persone."
       }
     ],
     "imparaTitolo": "Cosa vivrai",
@@ -841,7 +841,7 @@
   },
   "pilates": {
     "title": "Corso di Pilates a Lainate e Rho | InBallet",
-    "description": "Corso di Pilates a Lainate e Rho (MI) con il metodo di Joseph Pilates: Power House, muscoli posturali e respirazione. Classi per livelli, 1-2 volte a settimana.",
+    "description": "Corso di Pilates a Lainate e Rho (MI) con il metodo di Joseph Pilates: Power House, muscoli posturali e respirazione, in classi per livelli.",
     "ogTitle": "Pilates | InBallet",
     "ogDescription": "Il metodo di Joseph Pilates per livelli: Power House, postura e respirazione.",
     "badge": "Adulti - tutti i livelli",
@@ -1035,7 +1035,7 @@
   },
   "yoga": {
     "title": "Corso di Hatha Yoga a Lainate e Rho | InBallet",
-    "description": "Corso di Hatha Yoga a Lainate e Rho (MI): lezioni di un'ora e mezza tra asana, pranayama e meditazione, per forza, flessibilità ed equilibrio di corpo e mente.",
+    "description": "Corso di Hatha Yoga a Lainate e Rho (MI): lezioni di un'ora e mezza tra asana, pranayama e meditazione, per forza, flessibilità ed equilibrio.",
     "ogTitle": "Hatha Yoga | InBallet",
     "ogDescription": "Un'ora e mezza dedicata a te: asana, pranayama e meditazione.",
     "badge": "Adulti - tutti i livelli",
@@ -1066,7 +1066,7 @@
       },
       {
         "titolo": "Rigenerazione",
-        "testo": "La pratica migliora l'ossigenazione dell'organismo e dei tessuti, sostiene le funzioni cognitive e dona alla schiena più forza e flessibilità, perché l'allenamento rafforza e allunga specifiche fasce muscolari."
+        "testo": "La pratica migliora l'ossigenazione dei tessuti, sostiene le funzioni cognitive e rende la schiena più forte e flessibile."
       }
     ],
     "imparaTitolo": "Cosa imparerai",

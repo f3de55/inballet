@@ -98,8 +98,6 @@ export type InputEvento = z.output<typeof inputEvento>;
 
 // === TEMPO (stesse regole per sito, banner, dashboard e chatbot) ===
 
-export const inizioEvento = (e: Pick<Evento, 'data' | 'ora'>) => romeTimestamp(e.data, e.ora || '00:00');
-
 /** Fine: giorno e ora di fine se ci sono, altrimenti fine giornata (fuso di Roma). */
 export const fineEvento = (e: Pick<Evento, 'data' | 'dataFine' | 'oraFine'>) => romeTimestamp(e.dataFine || e.data, e.oraFine || '23:59');
 
@@ -167,7 +165,8 @@ function normalizza(raw: Record<string, unknown>): Evento {
     stato,
     tipo: t(raw.tipo),
     luogo: t(raw.luogo),
-    descrizione: str(raw.descrizione),
+    // Ripulita anche in lettura: il file può contenere eventi del vecchio sito o modificati a mano
+    descrizione: pulisciDescrizione(str(raw.descrizione)),
     immagine: t(raw.immagine),
     destinatari: t(raw.destinatari),
     costo: t(raw.costo),

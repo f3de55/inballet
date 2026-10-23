@@ -20,7 +20,7 @@ const eventi = (await prossimiEventi(12))
     const [y, m, d] = evento.data.split('-').map(Number);
     let quando = `${giorni[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]} ${d} ${mesi[m - 1]}`;
     if (evento.ora) quando += ` • ${evento.ora}`;
-    const titolo = mbLen(evento.titolo) > 20 ? mbSlice(evento.titolo, 20) + '...' : evento.titolo;
+    const titolo = mbLen(evento.titolo) > 20 ? mbSlice(evento.titolo, 20) + '…' : evento.titolo;
     return { id: evento.id, ts: fineEvento(evento), titolo, quando, href: urlEvento(evento) };
   });
 const primo = eventi[0];

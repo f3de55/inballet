@@ -53,7 +53,7 @@ async function parteVariabile(): Promise<string> {
   return [
     `## Oggi\n\n${dataLunga.format(new Date())}`,
     `## Documenti per l'iscrizione (pagina /documenti)\n\n${documenti.map((d) => `- ${d.titolo}${d.nota ? `: ${d.nota}` : ''}`).join('\n') || '- Nessun documento pubblicato'}`,
-    `## Prossimi eventi (pagina /spettacoli-eventi; ogni evento ha la sua pagina)\n\n${
+    `## Prossimi eventi (pagina /spettacoli-eventi; ogni evento ha il suo link)\n\n${
       eventi
         .map((e) => {
           const descrizione = mbSlice(testoDescrizione(e.descrizione).replace(/\s+/g, ' '), 300);

@@ -2,7 +2,7 @@
  * Memoria delle conversazioni: un file per chat in data/conversazioni/<id>.json.
  * La cronologia sta sul server (il browser conserva solo l'ID), così nessuno
  * può inventarsi risposte del bot per manipolarlo. Le conversazioni più
- * vecchie di GIORNI_CONSERVAZIONE vengono cancellate (vedi manutenzione.ts).
+ * vecchie di GIORNI_CONSERVAZIONE vengono cancellate (manutenzione in index.ts).
  */
 import { randomUUID } from 'node:crypto';
 import { readdir, rm, stat, unlink } from 'node:fs/promises';

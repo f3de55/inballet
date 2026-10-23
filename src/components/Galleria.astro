@@ -58,8 +58,9 @@ const gallery = await Promise.all(
                     <div class="gallery-item" aria-hidden={set === 1 ? 'true' : undefined}>
                         <button type="button" class="gallery-apri" data-index={i} data-full={img.full} data-alt={img.alt} aria-label={`Ingrandisci: ${img.alt}`} tabindex={set === 1 ? -1 : undefined}>
                             {/* Anteprime già ritagliate in verticale (5:7). sizes = larghezza della foto a schermo:
-                                sui riquadri più stretti la decide l'altezza (altezza × 5/7) */}
-                            <Img src={img.file} alt="" width="300" height="420" loading="lazy" decoding="async" rapporto={1.4} widths={[300, 450, 600]} sizes="(max-width: 480px) 215px, (max-width: 768px) 245px, (max-width: 1024px) 275px, 300px" />
+                                sui riquadri più stretti la decide l'altezza (altezza × 5/7).
+                                alt solo sulla prima serie (ricerca immagini); il nome del pulsante resta l'aria-label */}
+                            <Img src={img.file} alt={set === 0 ? img.alt : ''} width="300" height="420" loading="lazy" decoding="async" rapporto={1.4} widths={[300, 450, 600]} sizes="(max-width: 480px) 215px, (max-width: 768px) 245px, (max-width: 1024px) 275px, 300px" />
                             <span class="gallery-zoom-icon" aria-hidden="true"><i class="fas fa-expand"></i></span>
                         </button>
                     </div>

@@ -14,13 +14,17 @@ const bg = {
   hero: await sfondo('gallery-1.jpg', { desktop: '50% 30%', tablet: '50% 50%' }),
 };
 const { hero, sezione, documenti } = await leggiDocumenti();
+// Testo dell'hero (scritto dalla dashboard) completato con scuola e luogo, se c'è spazio
+const base = hero.testo || sezione.intro;
+const luogo = ' InBallet, scuola di danza a Lainate e Rho (MI).';
+const description = base.length + luogo.length <= 160 ? base + luogo : base;
 ---
 
 <Base
     title={`${hero.titolo} | InBallet`}
-    description={hero.testo || sezione.intro}
+    description={description}
     ogTitle={`${hero.titolo} | InBallet`}
-    ogDescription={hero.testo || sezione.intro}
+    ogDescription={base}
 >
     <!-- Hero -->
     <section class="chisiamo-hero">

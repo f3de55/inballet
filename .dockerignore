@@ -14,3 +14,7 @@ data/analytics.json
 !.env.example
 *.md
 !README.md
+
+# sorgenti non usati dal build (foto originali, video master da cui sono ricavati quelli dell'hero)
+IMMAGINI RICOLORATE
+src/assets/video/hero-video-inballet.mp4

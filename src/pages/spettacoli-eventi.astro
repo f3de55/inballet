@@ -43,8 +43,8 @@ const bg = {
 
 /** Eventi curati dalla Direzione oltre al calendario della scuola. */
 const tipiEvento = [
-  { nome: 'Spettacolo annuale in teatro', testo: 'Ogni anno uno Spettacolo in teatro, con gli allievi e i progetti artistici e pedagogici della scuola.' },
-  { nome: 'Eventi celebrativi', testo: 'La danza come fulcro o come arricchimento di eventi celebrativi one-shot e occasioni speciali.' },
+  { nome: 'Spettacolo annuale in teatro', testo: 'Ogni anno uno spettacolo in teatro con gli allievi e i progetti artistici e pedagogici della scuola.' },
+  { nome: 'Eventi celebrativi', testo: 'La danza come fulcro o arricchimento di eventi one-shot e occasioni speciali.' },
   { nome: 'Nelle scuole', testo: "Momenti su misura nelle scuole dell'infanzia, primarie e secondarie, nell'ambito delle <a href=\"/collaborazioni-scuole\">collaborazioni con le scuole</a>." },
   { nome: 'Team building aziendali', testo: 'Progetti esperienziali su misura per aziende e gruppi di lavoro.' },
   { nome: 'Eventi formativi', testo: 'Incontri che attivano linguaggi diversi tra loro, come le <a href="/formazioni-personalizzate">formazioni personalizzate</a>.' },
@@ -145,7 +145,7 @@ const og = aperto
 
 <Base
     title="Spettacoli ed eventi di danza a Lainate e Rho | InBallet"
-    description="Spettacoli, saggi e workshop di InBallet a Lainate e Rho, più eventi su misura: spettacolo annuale in teatro, eventi nelle scuole e team building aziendali."
+    description="Spettacoli, saggi e workshop di InBallet a Lainate e Rho ed eventi su misura: spettacolo annuale in teatro, eventi nelle scuole e team building aziendali."
     ogTitle={og?.title ?? 'Spettacoli ed Eventi | InBallet'}
     ogDescription={og?.description ?? 'Il calendario degli appuntamenti e gli eventi curati dalla Direzione: teatro, scuole, aziende e territorio.'}
     ogImage={og?.image}
@@ -158,7 +158,7 @@ const og = aperto
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Spettacoli ed eventi</h1>
-                <p class="chisiamo-hero-tagline">Scopri tutti gli appuntamenti in programma: spettacoli, workshop, saggi e corsi aperti.</p>
+                <p class="chisiamo-hero-tagline">Il calendario degli appuntamenti di InBallet a Lainate e Rho.</p>
             </div>
         </section>
 
@@ -170,7 +170,7 @@ const og = aperto
                     <div class="eventi-intro">
                         <span class="eyebrow">Calendario</span>
                         <h2 class="titolo-sezione" id="eventi-titolo">Prossimi <em>appuntamenti</em></h2>
-                        <p class="intro-sezione">Spettacoli, saggi, workshop e lezioni aperte a Lainate e Rho. Apri un evento per leggere i dettagli e aggiungerlo al tuo calendario.</p>
+                        <p class="intro-sezione">Spettacoli, saggi, workshop e lezioni aperte: apri un evento per i dettagli e per aggiungerlo al tuo calendario.</p>
                     </div>
                     {eventi.length > 0 && (
                         <div class="vista-switch" id="vistaSwitch" role="group" aria-label="Visualizzazione" hidden>
@@ -184,7 +184,7 @@ const og = aperto
                 {prossimi.length === 0 && (
                     <div class="eventi-vuoto">
                         <h3>Nessun appuntamento in programma</h3>
-                        <p>Stiamo preparando le prossime date: spettacoli, saggi e workshop vengono pubblicati qui appena confermati.</p>
+                        <p>Stiamo preparando le prossime date: le pubblichiamo qui appena confermate.</p>
                         <a href="/contatti" class="link-cta">
                             Chiedi informazioni
                             <i class="fas fa-arrow-right" aria-hidden="true"></i>
@@ -264,8 +264,7 @@ const og = aperto
             <div class="intro-editoriale">
                 <span class="eyebrow">Eventi su misura</span>
                 <h2 class="titolo-sezione" id="cura-titolo">Spettacoli ed eventi <em>a cura di InBallet</em></h2>
-                <p>La Direzione di I.N. Ballet cura la parte artistica e organizzativa di eventi di diversa natura: eventi con la danza come fulcro, oppure eventi celebrativi one-shot in cui la danza arricchisce l'occasione. Con cadenza annuale porta in scena uno Spettacolo in teatro con allievi e progetti della scuola, ed è spesso ospite di iniziative sul territorio di Milano e provincia.</p>
-                <p>Allievi, progetti artistici e progetti pedagogici della scuola incontrano così ospiti, pubblico e nuove collaborazioni, che fanno della danza uno strumento concreto di arricchimento di vita.</p>
+                <p>La Direzione di I.N. Ballet cura la parte artistica e organizzativa di eventi di diversa natura: allievi e progetti della scuola incontrano così pubblico e nuove collaborazioni.</p>
             </div>
             <div class="container">
                 <ul class="cura-lista">

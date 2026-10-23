@@ -51,9 +51,9 @@ export const sedi: Sede[] = [
   },
   {
     id: 'rho',
-    titolo: 'Altre sedi',
+    titolo: 'Sede di Rho',
     citta: 'Rho',
-    indirizzo: 'Via Tevere 19, Rho (MI)',
+    indirizzo: 'Via Tevere, 19 - Rho (MI)',
     via: 'Via Tevere, 19',
     cap: '20017',
     provincia: 'MI',
@@ -155,38 +155,38 @@ export const iscrizioni = {
 export const faq = [
   {
     domanda: 'Da che età si può iniziare a danzare a InBallet?',
-    risposta: "Si comincia a 3 anni compiuti con Avviamento alla Danza; a 4-5 anni c'è Educazione alla Danza e dai 6 anni si passa a danza classica, modern, hip-hop e breaking. Ci sono corsi per bambini, ragazzi e adulti, anche principianti assoluti: per iniziare non c'è un limite di età.",
+    risposta: "Dai 3 anni compiuti con Avviamento alla Danza; a 4-5 anni c'è Educazione alla Danza e dai 6 anni danza classica, modern, hip-hop e breaking. Ragazzi e adulti trovano corsi anche per principianti assoluti: non c'è un limite di età.",
   },
   {
     domanda: 'Dove si trovano le sedi?',
-    risposta: `InBallet ha due sedi in provincia di Milano, nell'area nord-ovest della città: la sede centrale in ${sedi[0].via} a ${sedi[0].citta} e la sede di ${sedi[1].via} a ${sedi[1].citta}.`,
+    risposta: `Due sedi a nord-ovest di Milano: la sede centrale in ${sedi[0].via} a ${sedi[0].citta} e la sede di ${sedi[1].via} a ${sedi[1].citta}.`,
   },
   {
     domanda: 'Come posso scegliere il corso giusto?',
-    risposta: `Chiamaci al ${scuola.telefono}, scrivici su WhatsApp o a ${scuola.email}: ti aiutiamo a scegliere il corso adatto all'età e al livello e ti diamo tutte le informazioni su orari, sedi e iscrizione.`,
+    risposta: `Chiamaci al ${scuola.telefono}, scrivici su WhatsApp o a ${scuola.email}: ti aiutiamo a scegliere il corso adatto a età e livello, con orari, sedi e iscrizione.`,
   },
   {
     domanda: 'Quali corsi di danza proponete?',
-    risposta: "Per i più piccoli Avviamento alla Danza (dai 3 anni) ed Educazione alla Danza (4-5 anni). Dai 6 anni danza classica, modern, hip-hop e breaking, dai 10 anni danza contemporanea e dai 16 anni, con esperienza, il Contaminato. Poi heels, danza acrobatica e contact improvisation; per gli adulti contemporanea adulti (dai 40 anni), movimento creativo (dai 18 anni), hatha yoga e pilates, oltre alle lezioni individuali.",
+    risposta: "Avviamento alla Danza dai 3 anni ed Educazione alla Danza a 4-5 anni; dai 6 anni danza classica, modern, hip-hop e breaking, dai 10 contemporanea e dai 16, con esperienza, il Contaminato. Poi heels, danza acrobatica e contact improvisation; per gli adulti contemporanea adulti (dai 40 anni), movimento creativo (dai 18), hatha yoga, pilates e lezioni individuali.",
   },
   {
     domanda: 'Ci sono corsi di danza per adulti principianti?',
-    risposta: "Sì, si può iniziare a qualsiasi età. Danza Contemporanea Adulti è pensata per chi ha dai 40 anni in su, anche per chi riparte dopo anni di stop o da zero; Movimento Creativo è aperto dai 18 anni, a danzatori e non. Ci sono anche danza classica per livelli, hatha yoga e pilates.",
+    risposta: "Sì, a qualsiasi età. Danza Contemporanea Adulti è per chi ha dai 40 anni in su, anche partendo da zero o dopo anni di stop; Movimento Creativo è aperto dai 18 anni, a danzatori e non. Ci sono anche danza classica per livelli, hatha yoga e pilates.",
   },
   {
     domanda: 'InBallet accoglie bambini e ragazzi con disabilità?',
-    risposta: "Sì. Quasi tutte le classi accolgono allievi con bisogni speciali: dopo un consulto con la Direzione si fissa un colloquio con la famiglia per scegliere il gruppo più adatto. Dal 2013, inoltre, il progetto NoiConVoi accoglie il lunedì sera ragazzi con disabilità in esperienze di danza con supporto psicomotorio, insieme a un team di volontari.",
+    risposta: "Sì. Quasi tutte le classi accolgono allievi con bisogni speciali, dopo un colloquio con la famiglia per scegliere il gruppo più adatto. Dal 2013, inoltre, il progetto NoiConVoi accoglie il lunedì sera ragazzi con disabilità, con supporto psicomotorio e un team di volontari.",
   },
   {
     domanda: 'InBallet forma anche insegnanti di danza?',
-    risposta: "Sì. Dal 2023 InBallet è ente formativo riconosciuto CSEN e CONI: propone un corso biennale per insegnanti di danza Modern, con titolo a valenza nazionale e sei master di approfondimento, e formazioni personalizzate per educatori, terapeuti, insegnanti, scuole ed enti.",
+    risposta: "Sì. Dal 2023 InBallet è ente formativo riconosciuto CSEN e CONI: corso biennale per insegnanti di danza Modern con titolo a valenza nazionale e sei master, più formazioni su misura per educatori, terapeuti, scuole ed enti.",
   },
   {
     domanda: 'Come ci si iscrive e quanto costano i corsi?',
-    risposta: `Si compila il modulo di iscrizione (scaricabile dalla pagina Documenti) e lo si consegna in segreteria con il certificato medico per l'attività sportiva non agonistica, obbligatorio dai 6 anni; per i più piccoli basta l'autocertificazione dei genitori. La quota associativa annuale è di ${iscrizioni.quota} €, mentre il costo dei corsi dipende dalla disciplina e dalla frequenza: chiama il ${scuola.telefono} o scrivi a ${scuola.email} per il preventivo.`,
+    risposta: `Si consegna in segreteria il modulo di iscrizione (pagina Documenti) con il certificato medico non agonistico, obbligatorio dai 6 anni; sotto i 6 anni basta l'autocertificazione dei genitori. La quota associativa è di ${iscrizioni.quota} € l'anno; il costo dei corsi dipende da disciplina e frequenza: per un preventivo chiama il ${scuola.telefono} o scrivi a ${scuola.email}.`,
   },
   {
     domanda: 'Gli allievi si esibiscono in spettacoli?',
-    risposta: "Sì. Ogni anno la scuola porta in teatro uno spettacolo con gli allievi, nato dai progetti artistici e pedagogici dell'anno; durante l'anno partecipa anche a eventi celebrativi e a eventi nelle scuole del territorio.",
+    risposta: "Sì. Ogni anno la scuola porta in teatro uno spettacolo con gli allievi, nato dal lavoro dell'anno, e partecipa a eventi celebrativi e nelle scuole del territorio.",
   },
 ];

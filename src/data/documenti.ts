@@ -37,7 +37,7 @@ export const documentiPredefiniti: PaginaDocumenti = {
     titolo: 'Moduli da',
     accento: 'scaricare',
     intro:
-      "Scarica il modulo, compilalo e consegnalo firmato in segreteria. Dai 6 anni serve anche il certificato medico per l'attività sportiva non agonistica; per i bambini più piccoli basta l'autocertificazione firmata dai genitori.",
+      "Compila il modulo e consegnalo firmato in segreteria. Dai 6 anni serve anche il certificato medico non agonistico; sotto i 6 anni basta l'autocertificazione dei genitori.",
   },
   documenti: [
     {

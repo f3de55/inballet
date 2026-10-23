@@ -7,6 +7,7 @@ import { getImage } from 'astro:assets';
 import { ANNI_ATTIVITA, categorieCorsi, faq, FONDAZIONE, scuola } from '../data/scuola';
 import { getAsset, sfondo } from '../lib/images';
 import { schemaHome } from '../lib/schema';
+import { PUBLIC_GOOGLE_PLACE_ID } from 'astro:env/client';
 
 // Video dell'hero (ricodificati da src/assets/video/hero-video-inballet.mp4, senza audio):
 // AV1 per i browser che lo supportano, H.264 per gli altri; 1080p solo sugli schermi larghi
@@ -160,9 +161,9 @@ const schema = schemaHome(socialImage);
                     </div>
 
                     <div class="story-text">
-                        <p class="story-lead">I.N. Ballet, per tutti InBallet, è la scuola di danza multidisciplinare di Lainate e Rho fondata nel {FONDAZIONE} da {scuola.fondatrice}: un luogo di vita dedicato alla conoscenza e all'esplorazione dei diversi stili di danza, nelle loro sfumature tecniche e artistiche.</p>
+                        <p class="story-lead">I.N. Ballet, per tutti InBallet, è la scuola di danza multidisciplinare di Lainate e Rho fondata nel {FONDAZIONE} da {scuola.fondatrice}: un luogo di vita in cui esplorare stili diversi, nelle loro sfumature tecniche e artistiche.</p>
 
-                        <p>Qui danzano bambini dai 3 anni, ragazzi e adulti, dai primi passi fino ai corsi avanzati. È una scuola che cambia insieme a chi la vive, in dialogo continuo con le famiglie.</p>
+                        <p>Qui danzano bambini dai 3 anni, ragazzi e adulti, dai primi passi ai corsi avanzati, in dialogo continuo con le famiglie.</p>
 
                         <p>L'inclusione riguarda tutte le età: quasi tutte le <a href="/classi-integrate">classi accolgono allievi con bisogni speciali</a> e dal 2013 il <a href="/progetto-noiconvoi">progetto NoiConVoi</a> porta la danza ai ragazzi con disabilità, con un team di volontari e il supporto psicomotorio.</p>
                     </div>
@@ -194,7 +195,7 @@ const schema = schemaHome(socialImage);
             <div class="formazione-intro">
                 <span class="eyebrow">Ente formativo CSEN e CONI</span>
                 <h2 class="titolo-sezione">Formazione <em>professionale</em></h2>
-                <p class="intro-sezione">Oltre ai corsi, formiamo chi insegna danza e chi lavora in ambito educativo e terapeutico: un titolo riconosciuto a livello nazionale e formazioni costruite su misura.</p>
+                <p class="intro-sezione">Formiamo chi insegna danza e chi lavora in ambito educativo e terapeutico: un titolo riconosciuto a livello nazionale e formazioni su misura.</p>
             </div>
 
             <!-- Percorsi: righe intere cliccabili, separate da filetti -->
@@ -228,13 +229,13 @@ const schema = schemaHome(socialImage);
             <div class="recensioni-intro">
                 <p class="eyebrow">Le voci della nostra community</p>
                 <h2 class="titolo-sezione" id="recensioni-titolo">Dicono <em>di noi</em></h2>
-                <p class="intro-sezione">L'esperienza di allievi e famiglie che hanno scelto InBallet, nelle loro parole: le recensioni pubblicate su Google.</p>
+                <p class="intro-sezione">Allievi e famiglie raccontano InBallet nelle recensioni pubblicate su Google.</p>
             </div>
 
             <!-- Valutazione media (compilata da home.ts) e link a tutte le recensioni -->
             <div class="recensioni-sintesi">
                 <div class="sintesi-google" id="googleStatsCard" hidden></div>
-                <a href="https://www.google.com/search?sa=X&sca_esv=ccb8066356fd07b7&tbm=lcl&sxsrf=AE3TifONsbUe8wj4bCgnW_SAO2k4jfCpMg:1750798486383&q=I.N.+Ballet+Recensioni&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxI2NDG1NDU3sDAHMowtDSwMLcw3MDK-YhTz1PPTU3BKzMlJLVEISk1OzSvOzM_LXMSKQwIA6ENBIkwAAAA&rldimm=1459570871453908187&hl=it-IT&ved=2ahUKEwiGturO-IqOAxUihP0HHdBWAj4Q9fQKegQIUhAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
+                <a href={`https://search.google.com/local/reviews?placeid=${PUBLIC_GOOGLE_PLACE_ID}`}
                    target="_blank"
                    rel="noopener"
                    class="link-cta">
@@ -443,20 +444,9 @@ const schema = schemaHome(socialImage);
 }
 
 .chi-siamo-section {
-  background: #fff;
   position: relative;
-}
-
-.chi-siamo-section {
   padding: var(--section-y) 0;
-}
-
-.section-header {
-  margin-bottom: 2.5rem;
-}
-
-.chi-siamo-section {
-  position: relative;
+  background: #fff;
 }
 
 .chi-siamo-header {

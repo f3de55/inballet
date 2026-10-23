@@ -19,9 +19,15 @@ const ORDINE = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
 const grid = document.getElementById('orari-grid');
 const statusEl = document.getElementById('open-status');
 
-const ora = new Date();
-const oggi = ORDINE[ora.getDay() === 0 ? 6 : ora.getDay() - 1];
-const adesso = ora.getHours() * 100 + ora.getMinutes();
+// Giorno e ora di Roma, non del dispositivo: gli orari sono quelli della segreteria
+const parti = Object.fromEntries(
+  new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Rome', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+    .formatToParts(new Date())
+    .map((p) => [p.type, p.value]),
+);
+const giornoSettimana = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(parti.weekday);
+const oggi = ORDINE[giornoSettimana === 0 ? 6 : giornoSettimana - 1];
+const adesso = Number(parti.hour) * 100 + Number(parti.minute);
 const hhmm = (s: string) => Number(s.replace(':', ''));
 
 function mostraStato(aperto: boolean) {
@@ -54,10 +60,9 @@ async function initGoogle() {
     if (!hours?.weekdayDescriptions) return;
 
     // Aperto ora?
-    const day = ora.getDay();
     mostraStato(
       hours.periods.some((p) => {
-        if (p.open.day !== day) return false;
+        if (p.open.day !== giornoSettimana) return false;
         const open = p.open.hour * 100 + (p.open.minute || 0);
         const close = p.close ? p.close.hour * 100 + (p.close.minute || 0) : 2359;
         return adesso >= open && adesso <= close;

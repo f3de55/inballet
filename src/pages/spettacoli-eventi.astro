@@ -201,7 +201,7 @@ const og = aperto
                                 <ul class="agenda">
                                     {mese.eventi.map(voce).map((v) => (
                                         <li class:list={{ passato: v.finito, annullato: v.e.stato === 'annullato' }}>
-                                            <a class="agenda-voce" href={urlEvento(v.e)}>
+                                            <a class="agenda-voce" href={urlEvento(v.e)} data-evento={v.e.slug}>
                                                 <span class="agenda-data">
                                                     <span class="agenda-giorno">{v.giorno}</span>
                                                     <span class="agenda-settimana">{v.settimana}</span>

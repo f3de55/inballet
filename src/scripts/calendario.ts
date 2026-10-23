@@ -59,7 +59,7 @@ function apriEvento(slug: string) {
     (stato ? `<span class="evento-stato${e.stato === 'annullato' ? ' evento-stato--forte' : ''}">${escapeHtml(stato)}</span>` : '');
   $('dialogTitolo').textContent = e.titolo;
 
-  const mappa = e.mappa ? ` <a class="evento-mappa" href="${escapeHtml(e.mappa)}" target="_blank" rel="noopener">Indicazioni</a>` : '';
+  const mappa = e.mappa ? ` <a class="evento-mappa" href="${escapeHtml(e.mappa)}" target="_blank" rel="noopener"><i class="fas fa-location-arrow" aria-hidden="true"></i>Indicazioni</a>` : '';
   $('dialogDettagli').innerHTML =
     riga('Quando', escapeHtml(e.quando)) +
     (e.luogo ? riga('Dove', escapeHtml(e.luogo) + mappa) : '') +

@@ -109,7 +109,11 @@ export const passato = (e: Evento, now = Date.now()) => fineEvento(e) < now;
 /** Visibile sul sito: tutto tranne le bozze. */
 export const pubblico = (e: Evento) => e.stato !== 'bozza';
 
-export const urlEvento = (e: Pick<Evento, 'slug'>) => `/spettacoli-eventi/${e.slug}`;
+/** Link che apre il dettaglio dell'evento (modale) nel calendario. */
+export const urlEvento = (e: Pick<Evento, 'slug'>) => `/spettacoli-eventi?evento=${encodeURIComponent(e.slug)}`;
+
+/** File .ics dell'evento ("Apple / Outlook"). */
+export const urlIcs = (e: Pick<Evento, 'slug'>) => `/spettacoli-eventi/${e.slug}/calendario.ics`;
 
 /** Indirizzo della locandina per <img>: i percorsi salvati sono relativi ("assets/images/eventi/…"). */
 export const srcImmagine = (immagine: string) => (/^https?:\/\//i.test(immagine) ? immagine : '/' + immagine.replace(/^\.?\/+/, ''));

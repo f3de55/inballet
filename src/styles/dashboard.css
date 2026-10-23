@@ -75,10 +75,13 @@ body{min-height:100vh;font-size:16px;line-height:1.5}
 .ev-meta{display:block;margin-top:.15rem;font-size:.875rem;color:var(--text-muted);overflow-wrap:anywhere}
 .ev-avviso{color:var(--warning)}
 .ev-demo{display:inline-block;margin-right:.5rem;padding:.1rem .5rem;border:1px dashed var(--line-strong);border-radius:999px;font-size:.7rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);vertical-align:2px}
+.ev-stato{display:inline-block;margin-right:.5rem;padding:.1rem .5rem;border-radius:999px;background:var(--soft);font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--primary-dark);vertical-align:2px}
+.ev-stato--bozza{background:#fff4e0;color:#8a5a00}
+.ev-stato--annullato{background:#fbeceb;color:var(--danger)}
 .ev.passato .ev-giorno,.ev.passato .ev-titolo{color:var(--text-muted)}
 .ev-azioni{display:flex;gap:.25rem;padding:0 .75rem}
-.ev-azioni button{display:grid;place-items:center;width:40px;height:40px;border:none;border-radius:8px;background:none;color:var(--text-muted);cursor:pointer;transition:background-color .15s,color .15s}
-.ev-azioni button:hover{background:var(--soft);color:var(--primary-dark)}
+.ev-azioni button,.ev-azioni a{display:grid;place-items:center;width:40px;height:40px;border:none;border-radius:8px;background:none;color:var(--text-muted);cursor:pointer;transition:background-color .15s,color .15s}
+.ev-azioni button:hover,.ev-azioni a:hover{background:var(--soft);color:var(--primary-dark)}
 .ev-azioni .elimina:hover{background:#fbeceb;color:var(--danger)}
 .ev-azioni button:disabled{opacity:.3;cursor:default}
 .ev-azioni button:disabled:hover{background:none;color:var(--text-muted)}

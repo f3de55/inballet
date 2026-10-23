@@ -279,10 +279,53 @@ const og = aperto
             </div>
         </section>
 
+        {schemaEventi.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(schemaEventi).replace(/</g, '\\u003c')} />}
+
+    <Fragment slot="after-main">
+    <!-- Dettaglio evento (riempito da scripts/calendario.ts) -->
+    <dialog class="evento-dialog" id="eventoDialog" aria-labelledby="dialogTitolo">
+        <div class="evento-dialog-barra">
+            <button type="button" class="evento-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+        </div>
+        <div class="evento-dialog-corpo" id="dialogCorpo">
+            <button type="button" class="evento-locandina" id="dialogLocandinaBtn" aria-label="Ingrandisci la locandina" hidden>
+                <img id="dialogLocandina" src="data:," alt="">
+                <span class="evento-locandina-zoom" aria-hidden="true"><i class="fas fa-expand"></i></span>
+            </button>
+            <div class="evento-dialog-testo">
+                <p class="evento-etichette" id="dialogEtichette"></p>
+                <h2 class="evento-dialog-titolo" id="dialogTitolo"></h2>
+                <dl class="evento-dettagli" id="dialogDettagli"></dl>
+                <div class="evento-descrizione" id="dialogDescrizione"></div>
+                <div class="evento-azioni">
+                    <a class="btn-primary" id="dialogPrenota" href="#" target="_blank" rel="noopener" hidden>
+                        Prenota <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                    <div class="evento-azioni-calendario" id="dialogCalendario">
+                        <span class="evento-azioni-label">Aggiungi al calendario</span>
+                        <div class="evento-azioni-btn">
+                            <a class="evento-azione" id="btnGoogle" href="#" target="_blank" rel="noopener noreferrer">Google Calendar</a>
+                            <a class="evento-azione" id="btnApple" href="#" download>Apple / Outlook</a>
+                        </div>
+                    </div>
+                    <button type="button" class="evento-condividi" id="btnCondividi">
+                        <i class="fas fa-share-alt" aria-hidden="true"></i>
+                        <span id="btnCondividiTesto">Condividi</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Locandina a tutto schermo -->
+    <dialog class="locandina-dialog" id="locandinaDialog" aria-label="Locandina">
+        <button type="button" class="locandina-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+        <img id="locandinaGrande" src="data:," alt="">
+    </dialog>
+    </Fragment>
+
     <Fragment slot="scripts">
-    {eventi.length > 0 && (
-        <script type="application/json" id="datiCalendario" set:html={JSON.stringify(datiCalendario).replace(/</g, '\\u003c')} />
-    )}
+    <script type="application/json" id="datiEventi" set:html={JSON.stringify(datiEventi).replace(/</g, '\\u003c')} />
     <script>
         import '../scripts/calendario';
     </script>

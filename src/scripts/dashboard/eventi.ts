@@ -95,16 +95,22 @@ function apriModal(ev?: Evento) {
   $('modalTitle').textContent = ev ? 'Modifica evento' : 'Nuovo evento';
   campi.id.value = ev?.id ?? '';
   editor.html = ev?.descrizione ?? '';
+  aggiornaSelectTipo(ev?.tipo);
+  campi.tipo.value = ev?.tipo ?? '';
+  campi.stato.value = ev?.stato ?? 'pubblicato';
   if (ev) {
     campi.titolo.value = ev.titolo;
     campi.data.value = ev.data;
     // <input type="time"> vuole "09:30": alcune ore sono salvate come "9:30"
     campi.ora.value = ev.ora ? ev.ora.padStart(5, '0') : '';
-    if (tipiEvento.length) campi.tipo.value = ev.tipo && tipiEvento.includes(ev.tipo) ? ev.tipo : tipiEvento[0];
+    campi.dataFine.value = ev.dataFine || '';
+    campi.oraFine.value = ev.oraFine ? ev.oraFine.padStart(5, '0') : '';
     campi.luogo.value = ev.luogo || '';
     campi.destinatari.value = ev.destinatari || '';
     campi.costo.value = ev.costo || '';
+    campi.prenotazione.value = ev.prenotazione || '';
   }
+  $<HTMLDetailsElement>('fineEvento').open = !!(ev?.dataFine || ev?.oraFine);
   impostaLocandina(ev?.immagine ?? '');
   $<HTMLDetailsElement>('libreria').open = false;
   updateCounter(campi.titolo);

@@ -2,24 +2,40 @@
 /**
  * Spettacoli ed eventi: calendario degli appuntamenti salvati dalla dashboard,
  * renderizzato dal server a ogni richiesta (l'elenco è nell'HTML, leggibile dai
- * motori di ricerca). Ogni evento ha la sua pagina: /spettacoli-eventi/<slug>.
- * La vista "Calendario" (griglia del mese) è disegnata dal browser con gli
- * stessi dati.
+ * motori di ricerca, con i dati strutturati schema.org/Event).
+ * Il dettaglio di un evento si apre in un modale; il link ?evento=<slug> lo apre
+ * direttamente e, condiviso, mostra titolo e locandina nell'anteprima social.
+ * La vista "Calendario" (griglia del mese) è disegnata dal browser.
  */
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { sfondo } from '../lib/images';
-import { ETICHETTE_STATO, eventiPubblici, passato, trovaEvento, urlEvento, type Evento } from '../lib/eventi';
+import {
+  datiStrutturati,
+  ETICHETTE_STATO,
+  eventiPubblici,
+  linkGoogleCalendar,
+  maiuscola,
+  passato,
+  quando,
+  sedeDi,
+  srcImmagine,
+  testoDescrizione,
+  trovaEvento,
+  urlEvento,
+  urlIcs,
+  type Evento,
+} from '../lib/eventi';
 import { romeDate } from '../lib/time';
 
 export const prerender = false;
 
-// Vecchi link ?evento=ID (banner, condivisioni): alla pagina dell'evento
-const vecchio = Astro.url.searchParams.get('evento');
-if (vecchio) {
-  const trovato = await trovaEvento(vecchio);
-  return Astro.redirect(trovato ? urlEvento(trovato.evento) : '/spettacoli-eventi', 301);
-}
+const site = Astro.site ?? new URL(Astro.url.origin);
+
+// ?evento=<slug> (anche uno slug precedente o il vecchio id): il modale si apre da solo
+const richiesto = Astro.url.searchParams.get('evento');
+const trovato = richiesto ? await trovaEvento(richiesto) : null;
+const aperto = trovato && trovato.evento.stato !== 'bozza' ? trovato.evento : null;
 
 const bg = {
   hero: await sfondo('ballerina.jpg'),

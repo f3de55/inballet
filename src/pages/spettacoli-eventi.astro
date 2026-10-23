@@ -98,18 +98,58 @@ function voce(e: Evento) {
 const gruppiProssimi = perMese(prossimi);
 const gruppiPassati = perMese(passati);
 
-// Dati per la vista calendario (griglia del mese disegnata dal browser)
-const datiCalendario = {
+// Dati per il browser: griglia del mese e contenuto del modale, già pronti da mostrare
+const datiEventi = {
   oggi,
-  eventi: eventi.map((e) => ({ titolo: e.titolo, url: urlEvento(e), data: e.data, dataFine: e.dataFine, passato: passato(e, adesso), annullato: e.stato === 'annullato' })),
+  aperto: aperto?.slug ?? null,
+  eventi: eventi.map((e) => {
+    const finito = passato(e, adesso);
+    return {
+      id: e.id,
+      slug: e.slug,
+      titolo: e.titolo,
+      data: e.data,
+      dataFine: e.dataFine,
+      passato: finito,
+      stato: e.stato,
+      etichettaStato: ETICHETTE_STATO[e.stato],
+      tipo: e.tipo,
+      quando: maiuscola(quando(e)),
+      luogo: e.luogo,
+      mappa: sedeDi(e.luogo)?.maps ?? '',
+      destinatari: e.destinatari,
+      costo: e.costo,
+      descrizione: e.descrizione,
+      immagine: e.immagine ? srcImmagine(e.immagine) : '',
+      prenotazione: !finito && e.stato === 'pubblicato' ? e.prenotazione : '',
+      google: !finito && e.stato !== 'annullato' ? linkGoogleCalendar(e, site) : '',
+      ics: !finito && e.stato !== 'annullato' ? urlIcs(e) : '',
+      condividi: `${e.titolo}, ${quando(e)}${e.luogo ? ` - ${e.luogo}` : ''}`,
+    };
+  }),
 };
+
+// Dati strutturati per Google: gli appuntamenti in programma (non i demo)
+const schemaEventi = prossimi.filter((e) => !e.demo).map((e) => datiStrutturati(e, site));
+
+// Link condiviso a un evento: anteprima social con titolo, data e locandina
+const descrizioneAperto = aperto ? testoDescrizione(aperto.descrizione).replace(/\s+/g, ' ') : '';
+const og = aperto
+  ? {
+      title: `${aperto.titolo} · ${maiuscola(quando(aperto))}`,
+      description: (descrizioneAperto.length > 155 ? descrizioneAperto.slice(0, 154).replace(/\s+\S*$/, '') + '…' : descrizioneAperto) || aperto.luogo || 'Spettacoli ed eventi InBallet',
+      image: aperto.immagine ? new URL(srcImmagine(aperto.immagine), site).href : undefined,
+    }
+  : null;
 ---
 
 <Base
     title="Spettacoli ed eventi di danza a Lainate e Rho | InBallet"
     description="Spettacoli, saggi e workshop di InBallet a Lainate e Rho, più eventi su misura: spettacolo annuale in teatro, eventi nelle scuole e team building aziendali."
-    ogTitle="Spettacoli ed Eventi | InBallet"
-    ogDescription="Il calendario degli appuntamenti e gli eventi curati dalla Direzione: teatro, scuole, aziende e territorio."
+    ogTitle={og?.title ?? 'Spettacoli ed Eventi | InBallet'}
+    ogDescription={og?.description ?? 'Il calendario degli appuntamenti e gli eventi curati dalla Direzione: teatro, scuole, aziende e territorio.'}
+    ogImage={og?.image}
+    mainFocusable={false}
 >
         <!-- Hero -->
         <section class="chisiamo-hero">

@@ -14,8 +14,7 @@ export default defineConfig({
 
   // sitemap-index.xml con tutte le pagine pubbliche (area riservata esclusa)
   // /documenti e /spettacoli-eventi sono renderizzate dal server (contenuti dalla
-  // dashboard): vanno aggiunte a mano. Le pagine dei singoli eventi stanno in
-  // /sitemap-eventi.xml (src/pages/sitemap-eventi.xml.ts), indicata in robots.txt.
+  // dashboard): vanno aggiunte a mano.
   integrations: [
     sitemap({
       filter: (page) => !/\/(login|dashboard)/.test(page),

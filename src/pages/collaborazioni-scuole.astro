@@ -74,6 +74,7 @@ const progetti = [
                 <ul class="fasce-lista">
                     {fasce.map((f) => (
                         <li class="fascia">
+                            <i class={`fas ${f.icona} fascia-icona`} aria-hidden="true"></i>
                             <span class="fascia-eta">{f.eta} anni</span>
                             <span class="fascia-nome">{f.nome}</span>
                         </li>

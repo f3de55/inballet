@@ -630,7 +630,8 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   border-color: var(--primary-blue);
 }
 
-.mobile-tutti :global(i) {
+.mobile-tutti :global(i),
+.mobile-tutti:hover :global(i) {
   color: var(--primary-blue);
 }
 

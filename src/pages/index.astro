@@ -112,7 +112,7 @@ const schema = schemaHome(socialImage);
                             <i class={`fas ${cat.icona} corsi-indice-icona`} aria-hidden="true"></i>
                             <span class="corsi-indice-nome">{cat.nome}</span>
                             <span class="corsi-indice-testo">{cat.sintesi}</span>
-                            <span class="corsi-indice-cta" aria-hidden="true">Vedi i corsi <i class="fas fa-arrow-right"></i></span>
+                            <span class="link-cta corsi-indice-cta" aria-hidden="true">Vedi i corsi <i class="fas fa-arrow-right"></i></span>
                         </a>
                     </li>
                 ))}
@@ -635,8 +635,8 @@ const schema = schemaHome(socialImage);
 
 .corsi-indice-cta i {
   font-size: var(--text-xs);
-  color: var(--primary-blue-dark);
-  transition: transform .25s ease;
+  color: var(--black);
+  transition: transform .25s ease, color .25s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -650,6 +650,7 @@ const schema = schemaHome(socialImage);
   }
 
   .corsi-indice a:hover .corsi-indice-cta i {
+    color: var(--primary-blue);
     transform: translateX(5px);
   }
 }
@@ -850,7 +851,12 @@ const schema = schemaHome(socialImage);
 
   .percorso-cta i {
     font-size: var(--text-xs);
-    color: var(--primary-blue-dark);
+    color: var(--black);
+    transition: color .25s ease;
+  }
+
+  .percorso:hover .percorso-cta i {
+    color: var(--primary-blue);
   }
 }
 

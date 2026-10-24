@@ -550,8 +550,8 @@ section [class*="-intro-highlight"] p {
 }
 
 .link-cta i {
-  color: var(--primary-blue-dark);
-  transition: transform .3s ease;
+  color: var(--black);
+  transition: transform .3s ease, color .3s ease;
 }
 
 .link-cta:hover {
@@ -560,6 +560,7 @@ section [class*="-intro-highlight"] p {
 }
 
 .link-cta:hover i {
+  color: var(--primary-blue-dark);
   transform: translateX(6px);
 }
 

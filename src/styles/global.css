@@ -122,7 +122,7 @@ html::-webkit-scrollbar-thumb:hover {
      3xs solo micro-dati in spazi stretti (calendario).
      Eccezione: il pannello della chat (larghezza fissa) ha una sua scala compatta in Chatbot.astro. */
   --text-6xl: clamp(2.625rem, 2.1667rem + 2.037vw, 4rem);         /* 42 → 64px */
-  --text-5xl: clamp(2.25rem, 1.8333rem + 1.8519vw, 3.5rem);       /* 36 → 56px */
+  --text-5xl: clamp(2.375rem, 2rem + 1.6667vw, 3.5rem);           /* 38 → 56px */
   --text-4xl: clamp(2rem, 1.7083rem + 1.2963vw, 2.875rem);        /* 32 → 46px */
   --text-3xl: clamp(1.6875rem, 1.4583rem + 1.0185vw, 2.375rem);   /* 27 → 38px */
   --text-2xl: clamp(1.4375rem, 1.2917rem + 0.6481vw, 1.875rem);   /* 23 → 30px */
@@ -986,10 +986,6 @@ section [class*="-intro-highlight"] p {
 
   .chisiamo-hero-glass {
     padding: 0 1.5rem;
-  }
-
-  .chisiamo-hero-title {
-    font-size: var(--text-4xl);
   }
 
 }

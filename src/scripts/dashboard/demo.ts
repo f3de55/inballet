@@ -73,7 +73,7 @@ if (modal) {
     genera.textContent = eventi ? `Creo ${n} eventi e locandine…` : 'Generazione in corso…';
     const giorni = Number((document.getElementById('demoGiorni') as HTMLSelectElement | null)?.value ?? 30);
     const { data, error } = eventi
-      ? await actions.demo.eventi({ quanti: n, passati: (document.getElementById('demoPassati') as HTMLInputElement).checked })
+      ? await actions.demo.eventi({ quanti: n })
       : await actions.demo.chatbot({ quanti: n, giorni });
     if (error) {
       genera.disabled = false;

@@ -294,7 +294,7 @@ body{min-height:100vh;font-size:16px;line-height:1.5}
     .topbar-logo{flex:1;padding:.6rem 0}
     .topbar-logo img{width:80px}
     .topbar-azioni{gap:0}
-    .topbar-azioni a{justify-content:center;width:44px;height:44px;font-size:1rem}
+    .topbar-azioni a,.topbar-azioni button{justify-content:center;width:44px;height:44px;font-size:1rem}
     .topbar-azioni span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
     .topbar-nav{order:3;flex:0 0 100%;margin:0 -.5rem 0 -1rem;border-top:1px solid rgba(255,255,255,.08)}
     .topbar-nav a{flex:1;justify-content:center;min-height:46px}

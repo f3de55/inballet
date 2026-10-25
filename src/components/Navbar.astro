@@ -534,7 +534,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   transition: color .3s ease;
 }
 
-.mobile-nav-toggle:hover,
+/* Azzurro solo sulla voce padre della pagina corrente: né hover né voce aperta */
 .mobile-nav-toggle.attiva {
   color: var(--primary-blue);
 }

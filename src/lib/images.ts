@@ -63,6 +63,15 @@ export async function sfondo(sorgenti: Sorgenti, fuoco: Fuoco = {}) {
   };
 }
 
+/** Foto mobile comune a tutte le sezioni CTA prima del footer (verticale, ballerina a destra in basso). */
+const CTA_MOBILE = { src: 'Danzatrice in controluce sul palco.png', fuoco: '85% 65%' };
+
+/** Come sfondo(), per le sezioni CTA prima del footer: su mobile usa CTA_MOBILE salvo foto mobile esplicita. */
+export function sfondoCta(sorgenti: Sorgenti, fuoco: Fuoco = {}) {
+  const s = typeof sorgenti === 'string' ? { desktop: sorgenti } : sorgenti;
+  return sfondo({ ...s, mobile: s.mobile ?? CTA_MOBILE.src }, { ...fuoco, mobile: fuoco.mobile ?? CTA_MOBILE.fuoco });
+}
+
 /**
  * srcset WebP per le larghezze richieste (limitate all'originale). `rapporto` (altezza /
  * larghezza) ritaglia al centro in quel formato: una foto orizzontale in un riquadro

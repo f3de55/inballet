@@ -51,12 +51,7 @@ const unita = eventi ? 'eventi' : 'messaggi';
                         <small class="nota">Massimo {max.toLocaleString('it-IT')} per volta.</small>
                     </div>
 
-                    {eventi ? (
-                        <label class="spunta">
-                            <input type="checkbox" id="demoPassati" checked>
-                            <span>Includi anche qualche evento passato</span>
-                        </label>
-                    ) : (
+                    {!eventi && (
                         <div class="campo">
                             <label for="demoGiorni">Distribuiti negli ultimi</label>
                             <select id="demoGiorni">

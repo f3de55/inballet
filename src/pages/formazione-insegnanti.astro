@@ -2,14 +2,14 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { sfondo } from '../lib/images';
+import { sfondo, sfondoCta } from '../lib/images';
 import { scuola } from '../data/scuola';
 import logoCsen from '../assets/images/csen-logo.svg';
 import logoConi from '../assets/images/logo_coni.svg';
 
 const bg = {
   hero: await sfondo('gallery-4.jpg', { desktop: '50% 10%', tablet: '50% 30%' }),
-  cta: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
+  cta: await sfondoCta('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
 };
 
 const inBreve = [

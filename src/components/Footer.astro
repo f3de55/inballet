@@ -237,14 +237,59 @@ const colonne = [
   }
 
   /* ---------- Responsive ---------- */
-  @media (max-width: 1240px) {
+  /* Tablet e PC stretto: marchio in fascia orizzontale in alto, sotto una sola griglia con
+     le quattro colonne della mappa del sito e Contatti come quinta colonna */
+  @media (min-width: 701px) and (max-width: 1240px) {
     .footer-main {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2.5rem;
     }
 
+    /* Le colonne della mappa diventano figlie dirette della griglia, accanto a Contatti */
     .footer-nav {
+      display: contents;
+    }
+
+    /* Logo a sinistra, accanto descrizione ed ente formativo in colonna, social staccati
+       all'estremità destra della fascia */
+    .footer-brand {
       grid-column: 1 / -1;
-      grid-row: 2;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-rows: repeat(2, auto);
+      align-items: start;
+      column-gap: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    /* Logo centrato in verticale rispetto al blocco di testo, solo in questa fascia */
+    .footer-logo {
+      grid-row: 1 / 3;
+      align-self: center;
+    }
+
+    .footer-brand :global(img) {
+      margin: 0;
+    }
+
+    .footer-brand .footer-ente {
+      grid-column: 2;
+    }
+
+    .footer-social {
+      grid-column: 3;
+      grid-row: 1 / 3;
+      align-self: center;
+      margin: 0;
+    }
+  }
+
+  /* Da 1001px a 1240px cinque colonne larghe quanto le loro voci */
+  @media (min-width: 1001px) and (max-width: 1240px) {
+    .footer-main {
+      grid-template-columns: repeat(5, auto);
+      justify-content: space-between;
     }
   }
 
@@ -260,6 +305,11 @@ const colonne = [
       grid-template-columns: 1fr;
       gap: 2.5rem;
       padding: 0 1.5rem 2rem;
+    }
+
+    .footer-brand,
+    .footer-contatti {
+      grid-column: auto;
     }
 
     .footer-contatti {

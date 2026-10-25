@@ -2,12 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { sfondo } from '../lib/images';
+import { sfondo, sfondoCta } from '../lib/images';
 import { scuola } from '../data/scuola';
 
 const bg = {
   hero: await sfondo('gallery-9.jpg', { desktop: '50% 15%', tablet: '50% 40%' }),
-  cta: await sfondo('foto/bambini-mani.jpg'),
+  cta: await sfondoCta('foto/bambini-mani.jpg'),
 };
 
 const passi = [

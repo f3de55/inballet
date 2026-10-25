@@ -3,11 +3,11 @@ import { ANNI_ATTIVITA, categorieCorsi, FONDAZIONE, sedi } from '../data/scuola'
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { sfondo, type Fuoco } from '../lib/images';
+import { sfondo, sfondoCta, type Fuoco } from '../lib/images';
 
 const bg = {
   hero: await sfondo('gallery-7.jpg', { desktop: '50% 40%', tablet: '50% 55%' }),
-  cta: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
+  cta: await sfondoCta('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
 };
 
 

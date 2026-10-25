@@ -3,12 +3,12 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import SostenitoriSection from '../components/SostenitoriSection.astro';
-import { sfondo } from '../lib/images';
+import { sfondo, sfondoCta } from '../lib/images';
 import { scuola } from '../data/scuola';
 
 const bg = {
   hero: await sfondo('gallery-2.jpg'),
-  cta: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
+  cta: await sfondoCta('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
 };
 
 const paypal = 'https://www.paypal.com/cgi-bin/webscr?business=inballetasd%40gmail.com&cmd=_donations&item_name=Donazione%20progetti%20sociali%20InBallet&item_number=donazione&currency_code=EUR';

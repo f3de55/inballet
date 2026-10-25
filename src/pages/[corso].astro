@@ -9,7 +9,7 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { getImage } from 'astro:assets';
-import { getAsset, sfondo } from '../lib/images';
+import { getAsset, sfondo, sfondoCta } from '../lib/images';
 import { schemaCorso } from '../lib/schema';
 
 export const getStaticPaths = (async () => {
@@ -23,7 +23,7 @@ interface Props {
 
 const { data } = Astro.props;
 const hero = await sfondo(data.heroImage, data.heroFuoco);
-const contatto = await sfondo(data.ctaImage ?? 'bg-progetti-territorio.jpg', data.ctaFuoco);
+const contatto = await sfondoCta(data.ctaImage ?? 'bg-progetti-territorio.jpg', data.ctaFuoco);
 // Anteprima social 1200x630 dalla foto del corso
 const ogImage = new URL((await getImage({ src: getAsset(typeof data.heroImage === 'string' ? data.heroImage : data.heroImage.desktop), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
 // Stesso URL del canonical (senza .html)

@@ -2,12 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { sfondo } from '../lib/images';
+import { sfondo, sfondoCta } from '../lib/images';
 import { scuola } from '../data/scuola';
 
 const bg = {
   hero: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%', tablet: '50% 50%' }),
-  cta: await sfondo('gallery-4.jpg', { desktop: '50% 20%' }),
+  cta: await sfondoCta('gallery-4.jpg', { desktop: '50% 20%' }),
 };
 
 const fasce = [

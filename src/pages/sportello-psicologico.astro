@@ -2,12 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { sfondo } from '../lib/images';
+import { sfondo, sfondoCta } from '../lib/images';
 import { scuola } from '../data/scuola';
 
 const bg = {
   hero: await sfondo({ desktop: 'foto/sportello-banner.jpg', tablet: 'foto/sportellopsicologico-adulti.jpg' }, { desktop: '50% 50%', tablet: '50% 50%', mobile: '58% 50%' }),
-  cta: await sfondo('foto/sportello-psicologico-img2.jpg'),
+  cta: await sfondoCta('foto/sportello-psicologico-img2.jpg'),
 };
 
 const pilastri = [

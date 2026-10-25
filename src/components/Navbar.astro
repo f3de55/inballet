@@ -550,13 +550,8 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   color: var(--primary-blue);
 }
 
-/* Voce aperta (stato attivo): testo e freccia azzurri */
-.mobile-nav-toggle.active {
-  color: var(--primary-blue);
-}
-
+/* Voce aperta: la freccia si gira, i colori non cambiano */
 .mobile-nav-toggle.active .mobile-nav-freccia {
-  color: var(--primary-blue);
   transform: rotate(180deg);
 }
 

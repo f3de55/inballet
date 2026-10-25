@@ -178,12 +178,17 @@ export async function generaEventi(quanti: number): Promise<number> {
   const scelti: Modello[] = [];
   while (scelti.length < n) scelti.push(...[...MODELLI].sort(() => Math.random() - 0.5));
 
+  // Con pochi eventi niente "oggi" esagerato: al massimo metà
+  const oggi = Math.min(tra(2, 3), Math.floor(n / 2));
+  const resto = n - oggi;
+  const passati = resto >= 2 ? Math.max(1, Math.round(resto * 0.35)) : 0;
+
   const nuovi: Evento[] = [];
   const usati = new Set<string>();
-  for (const m of scelti.slice(0, n)) {
+  for (const [i, m] of scelti.slice(0, n).entries()) {
     let data = '';
     for (let t = 0; t < 20; t++) {
-      data = dataDa(passati && Math.random() < 0.3 ? tra(-90, -1) : tra(1, 300), m);
+      data = i < oggi ? romeDate() : dataDa(i < oggi + passati ? tra(-90, -1) : tra(1, 300), m);
       if (!usati.has(m.titolo + data)) break;
     }
     usati.add(m.titolo + data);

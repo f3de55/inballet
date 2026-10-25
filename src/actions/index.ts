@@ -195,10 +195,10 @@ export const server = {
   /** Dati demo della dashboard (sempre marcati `demo`, rimovibili senza toccare i dati veri). */
   demo: {
     eventi: defineAction({
-      input: z.object({ quanti: z.number().int().min(1).max(MAX_EVENTI), passati: z.boolean() }),
-      handler: async ({ quanti, passati }, context) => {
+      input: z.object({ quanti: z.number().int().min(1).max(MAX_EVENTI) }),
+      handler: async ({ quanti }, context) => {
         await soloAdmin(context);
-        return { creati: await generaEventi(quanti, passati) };
+        return { creati: await generaEventi(quanti) };
       },
     }),
 

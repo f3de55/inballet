@@ -99,12 +99,15 @@ const casuale = <T>(lista: readonly T[]) => lista[Math.floor(Math.random() * lis
 const tra = (min: number, max: number) => min + Math.floor(Math.random() * (max - min + 1));
 const hex = (n: number) => randomBytes(n).toString('hex');
 
-/** Data YYYY-MM-DD a `giorni` da oggi; se serve, spostata al primo giorno ammesso (weekend o lunedì). */
+/**
+ * Data YYYY-MM-DD a `giorni` da oggi; se serve, spostata al primo giorno ammesso (weekend o lunedì),
+ * in avanti per le date future e all'indietro per quelle passate, così non cambia mai lato rispetto a oggi.
+ */
 function dataDa(giorni: number, m: Pick<Modello, 'weekend' | 'lunedi' | 'dueGiorni'>) {
   const d = new Date(`${romeDate()}T12:00:00Z`);
   d.setUTCDate(d.getUTCDate() + giorni);
   const ammessi = m.lunedi ? [1] : m.dueGiorni ? [6] : m.weekend ? [0, 6] : null;
-  if (ammessi) while (!ammessi.includes(d.getUTCDay())) d.setUTCDate(d.getUTCDate() + 1);
+  if (ammessi) while (!ammessi.includes(d.getUTCDay())) d.setUTCDate(d.getUTCDate() + (giorni < 0 ? -1 : 1));
   return d.toISOString().slice(0, 10);
 }
 

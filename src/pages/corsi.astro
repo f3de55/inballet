@@ -152,6 +152,30 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     transition: transform .25s ease, color .25s ease;
   }
 
+  /* PC: pillole ben visibili, quasi un bottone da titolo di sezione */
+  @media (min-width: 901px) {
+    .salti {
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .salti a {
+      gap: .9rem;
+      min-height: 68px;
+      padding: 1rem 2rem;
+      border-width: 1.5px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .salto-nome {
+      font-size: var(--text-lg, 1.15rem);
+    }
+
+    .salti a i {
+      font-size: var(--text-sm);
+    }
+  }
+
   @media (hover: hover) and (pointer: fine) and (min-width: 901px) {
     .salti a:hover {
       background: var(--primary-blue);

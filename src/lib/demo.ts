@@ -164,8 +164,11 @@ async function creaLocandina(m: Modello, data: string, verticale: boolean): Prom
 
 // === EVENTI ===
 
-/** Genera `quanti` eventi completi (con locandina). Con `passati` alcuni cadono negli ultimi 3 mesi. */
-export async function generaEventi(quanti: number, passati: boolean): Promise<number> {
+/**
+ * Genera `quanti` eventi completi (con locandina): due o tre oggi, circa un terzo del resto
+ * già passato (ultimi 3 mesi) e gli altri nei mesi a venire.
+ */
+export async function generaEventi(quanti: number): Promise<number> {
   const n = Math.max(1, Math.min(MAX_EVENTI, Math.floor(quanti)));
   const tipi = await leggiTipi();
   await ensureDir(paths.immaginiEventi);

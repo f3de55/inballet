@@ -344,21 +344,11 @@ const numeri = [
   }
 }
 
-@media (max-width: 520px) {
+/* Mobile: una voce per riga, con la scala tipografica normale */
+@media (max-width: 640px) {
   .timeline {
-    gap: 2rem 1.25rem;
-  }
-
-  .timeline :global(.voce-anno) {
-    font-size: var(--text-2xl);
-  }
-
-  .timeline :global(.voce-titolo) {
-    font-size: var(--text-base);
-  }
-
-  .timeline :global(.voce-testo) {
-    font-size: var(--text-sm);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.25rem;
   }
 }
 
@@ -448,6 +438,14 @@ const numeri = [
   .numeri-cta {
     margin-top: 2.5rem;
     text-align: left;
+  }
+}
+
+/* Mobile: un numero per riga */
+@media (max-width: 640px) {
+  .numeri-lista {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2rem;
   }
 }
 

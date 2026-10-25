@@ -494,24 +494,15 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
       aspect-ratio: 16 / 9;
     }
 
-    /* Restano due a due: tessere più compatte, nomi lunghi a capo senza uscire */
+    /* Una tessera per riga: testo leggibile e bersaglio del tocco ampio */
     .corsi-lista {
-      gap: .65rem;
+      grid-template-columns: minmax(0, 1fr);
+      gap: .75rem;
     }
 
     .corsi-lista a {
-      padding: .95rem;
-    }
-
-    .corso-nome {
-      font-size: var(--text-sm);
-      overflow-wrap: break-word;
-    }
-
-
-
-    .corso-eta {
-      font-size: var(--text-xs);
+      min-height: 5.5rem;
+      padding: 1.1rem 1.25rem;
     }
   }
 </style>

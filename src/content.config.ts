@@ -43,8 +43,8 @@ const corsi = defineCollection({
     metodo: z.array(z.object({ titolo: z.string(), testo: z.string() })),
     imparaTitolo: z.string(),
     impara: z.array(z.string()),
-    /** Sfondo della sezione contatti in fondo alla pagina (default: foto generica della scuola). */
-    ctaImage: z.string().optional(),
+    /** Sfondo della sezione contatti in fondo alla pagina (default: foto generica della scuola): stringa, oppure { desktop, tablet, mobile }. */
+    ctaImage: sorgenti.optional(),
     ctaFuoco: fuoco,
   }),
 });

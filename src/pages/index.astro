@@ -20,17 +20,17 @@ import heroMp4 from '../assets/video/hero-720.mp4?url';
 const stili = categorieCorsi.filter((c) => c.id !== 'eta');
 const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
-// Progetti sul territorio: due gruppi di link alle pagine dei progetti
+// Progetti sul territorio: due gruppi di pagine, ognuna con icona e una riga di descrizione
 const progetti = [
   { titolo: 'Eventi, scuole e famiglie', voci: [
-    { nome: 'Spettacoli ed Eventi', href: '/spettacoli-eventi' },
-    { nome: 'Collaborazioni con le Scuole', href: '/collaborazioni-scuole' },
-    { nome: 'Sportello Psicologico', href: '/sportello-psicologico' },
+    { nome: 'Spettacoli ed Eventi', testo: 'Spettacoli, saggi, workshop e corsi aperti', icona: 'fa-masks-theater', href: '/spettacoli-eventi' },
+    { nome: 'Collaborazioni con le Scuole', testo: 'Danza a scuola, dal nido alle superiori', icona: 'fa-school', href: '/collaborazioni-scuole' },
+    { nome: 'Sportello Psicologico', testo: 'Ascolto per famiglie, genitori e bambini', icona: 'fa-comments', href: '/sportello-psicologico' },
   ] },
   { titolo: 'Danza integrativa', voci: [
-    { nome: 'Progetto NoiConVoi', href: '/progetto-noiconvoi' },
-    { nome: 'Classi Integrate', href: '/classi-integrate' },
-    { nome: 'Sostenitori', href: '/sostenitori' },
+    { nome: 'Progetto NoiConVoi', testo: 'Danza per ragazzi con disabilità, dal 2013', icona: 'fa-heart', href: '/progetto-noiconvoi' },
+    { nome: 'Classi Integrate', testo: 'Corsi aperti ai bisogni speciali', icona: 'fa-universal-access', href: '/classi-integrate' },
+    { nome: 'Sostenitori', testo: 'Chi sostiene la danza inclusiva', icona: 'fa-handshake', href: '/sostenitori' },
   ] },
 ];
 
@@ -38,7 +38,6 @@ const progetti = [
 // Nell'hero è il primo fotogramma del video: si vede finché il video non parte
 // (e resta da sola con "riduci movimento" o risparmio dati)
 const hero = await sfondo('hero-video-poster.jpg');
-const progettiSfondo = await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%' });
 
 // Dati strutturati (immagine social 1200x630)
 const socialImage = new URL((await getImage({ src: getAsset('gallery-3.jpg'), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
@@ -80,7 +79,7 @@ const schema = schemaHome(socialImage);
             <h1>Scuola di Danza a Lainate e Rho</h1>
 
             <p class="hero-subtitle">
-                Danza classica, modern, contemporanea, hip-hop, yoga e pilates: corsi per bambini dai 3 anni, ragazzi e adulti, anche principianti.
+                Corsi di danza dai 3 anni agli adulti, anche per principianti.
             </p>
 
             <div class="hero-cta">
@@ -166,38 +165,32 @@ const schema = schemaHome(socialImage);
     </section>
 
     <!-- Sezione Formazione Professionale -->
-    <section class="formazione-professionale-section">
-        <div class="formazione-wrapper">
-            <div class="formazione-intro">
-                <span class="eyebrow">Ente formativo CSEN e CONI</span>
-                <h2 class="titolo-sezione">Formazione <em>professionale</em></h2>
-                <p class="intro-sezione">Per chi insegna danza e per chi lavora in ambito educativo e terapeutico.</p>
-            </div>
-
-            <!-- Percorsi: righe intere cliccabili, separate da filetti -->
-            <ul class="percorsi-lista">
-                <li>
-                    <a href="/formazione-insegnanti" class="percorso">
-                        <span class="percorso-tipo">Percorso biennale</span>
-                        <h3 class="percorso-titolo">Formazione Insegnanti di Danza</h3>
-                        <p class="percorso-testo">Due anni nello stile Modern tra danza, pedagogia e disabilità.</p>
-                        <p class="percorso-dettagli">Titolo nazionale CSEN e CONI</p>
-                        <span class="percorso-cta" aria-hidden="true">Scopri il corso <i class="fas fa-arrow-right"></i></span>
-                        <i class="fas fa-arrow-right percorso-freccia" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="/formazioni-personalizzate" class="percorso">
-                        <span class="percorso-tipo">Su misura</span>
-                        <h3 class="percorso-titolo">Formazioni Personalizzate</h3>
-                        <p class="percorso-testo">Corsi per educatori, terapeuti e insegnanti.</p>
-                        <p class="percorso-dettagli">Workshop ed eventi formativi</p>
-                        <span class="percorso-cta" aria-hidden="true">Scopri di più <i class="fas fa-arrow-right"></i></span>
-                        <i class="fas fa-arrow-right percorso-freccia" aria-hidden="true"></i>
-                    </a>
-                </li>
-            </ul>
+    <section class="formazione-professionale-section" aria-labelledby="formazione-titolo">
+        <div class="intro-editoriale">
+            <span class="eyebrow">Ente formativo CSEN e CONI</span>
+            <h2 class="titolo-sezione" id="formazione-titolo">Formazione <em>professionale</em></h2>
+            <p>Per chi insegna danza e per chi lavora in ambito educativo e terapeutico.</p>
         </div>
+
+        <!-- Due percorsi: scheda intera cliccabile, icona, titolo, una riga e link -->
+        <ul class="formazione-lista">
+            <li class="voce">
+                <a href="/formazione-insegnanti" class="percorso">
+                    <i class="fas fa-graduation-cap voce-icona" aria-hidden="true"></i>
+                    <h3 class="voce-titolo">Formazione Insegnanti di Danza</h3>
+                    <p class="voce-testo">Percorso biennale nello stile Modern, con titolo nazionale CSEN e CONI.</p>
+                    <span class="link-cta">Scopri il percorso <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
+            </li>
+            <li class="voce">
+                <a href="/formazioni-personalizzate" class="percorso">
+                    <i class="fas fa-chalkboard-user voce-icona" aria-hidden="true"></i>
+                    <h3 class="voce-titolo">Formazioni Personalizzate</h3>
+                    <p class="voce-testo">Workshop e corsi su misura per educatori, terapeuti e insegnanti.</p>
+                    <span class="link-cta">Scopri di più <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
+            </li>
+        </ul>
     </section>
 
      <section class="dicono-di-noi-section decoro-onde" aria-labelledby="recensioni-titolo">
@@ -214,8 +207,9 @@ const schema = schemaHome(socialImage);
                 <a href={`https://search.google.com/local/reviews?placeid=${PUBLIC_GOOGLE_PLACE_ID}`}
                    target="_blank"
                    rel="noopener"
-                   class="link-cta">
-                    Tutte le recensioni su Google
+                   class="link-cta"
+                   aria-label="Leggi tutte le recensioni su Google (si apre in una nuova scheda)">
+                    Vedi tutte
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>
@@ -241,15 +235,12 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-     <!-- Sezione Progetti Sul Territorio -->
-    <section class="altri-servizi-section sezione-scura">
-        <div class="altri-servizi-bg" style={progettiSfondo.style}></div>
-        <div class="altri-servizi-overlay"></div>
-
-        <div class="intro-editoriale progetti-intro">
+    <!-- Sezione Progetti Sul Territorio -->
+    <section class="progetti-section" aria-labelledby="progetti-titolo">
+        <div class="intro-editoriale">
             <span class="eyebrow">La danza fuori dalla sala</span>
-            <h2 class="titolo-sezione">Progetti <em>sul territorio</em></h2>
-            <p class="intro-sezione">Spettacoli in teatro, progetti con le scuole del territorio, ascolto per le famiglie e, dal 2013, danza per l'inclusione.</p>
+            <h2 class="titolo-sezione" id="progetti-titolo">Progetti <em>sul territorio</em></h2>
+            <p>Spettacoli, scuole, ascolto per le famiglie e, dal 2013, danza per l'inclusione.</p>
         </div>
 
         <div class="progetti-gruppi">
@@ -259,9 +250,12 @@ const schema = schemaHome(socialImage);
                     <ul class="progetti-lista">
                         {g.voci.map((v) => (
                             <li>
-                                <a href={v.href}>
-                                    <span class="progetto-nome">{v.nome}</span>
-                                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                <a href={v.href} class="progetto">
+                                    <i class={`fas ${v.icona} progetto-icona`} aria-hidden="true"></i>
+                                    <span class="progetto-testo">
+                                        <span class="progetto-nome">{v.nome}</span>
+                                        <span class="progetto-desc">{v.testo}</span>
+                                    </span>
                                 </a>
                             </li>
                         ))}
@@ -698,165 +692,76 @@ const schema = schemaHome(socialImage);
 
 }
 
-/* Formazione: fondo azzurrino, intro a sinistra e percorsi come elenco a destra */
+/* Formazione: fondo azzurrino, intro centrata e due percorsi affiancati (una colonna su mobile) */
 .formazione-professionale-section {
   position: relative;
   padding: var(--section-y) 0;
   background: var(--bg-soft);
 }
 
-.formazione-wrapper {
+.formazione-lista {
+  list-style: none;
   display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-  gap: 5rem;
-  align-items: start;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3rem 5rem;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 3.5rem auto 0;
   padding: 0 2rem;
 }
 
-.formazione-intro .titolo-sezione {
-  margin-bottom: 1.5rem;
-}
-
-.percorsi-lista {
-  list-style: none;
-  border-top: 1px solid rgba(26, 26, 26, 0.12);
-}
-
-.percorsi-lista li {
-  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
-}
-
-/* Tutta la riga è il link; la freccia sta a destra, centrata */
+/* Tutta la scheda è il link */
 .percorso {
-  position: relative;
   display: block;
-  padding: 2rem 4rem 2rem 0;
+  height: 100%;
   color: inherit;
   text-decoration: none;
 }
 
-.percorso-tipo {
-  display: block;
-  margin-bottom: .5rem;
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--primary-blue-dark);
-}
-
-.percorso-titolo {
-  margin: 0 0 .6rem;
-  font-size: var(--text-2xl);
-  font-weight: 700;
-  line-height: var(--leading-snug);
-  letter-spacing: -0.01em;
-  color: var(--dark-navy);
-  transition: color .3s ease;
-}
-
-.percorso-testo {
-  margin: 0;
-  font-size: var(--text-base);
-  line-height: 1.7;
-  color: var(--text-light);
-}
-
-.percorso-dettagli {
-  margin: .75rem 0 0;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--dark-navy);
-}
-
-.percorso-freccia {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  display: grid;
-  place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  margin-top: -1.375rem;
-  border: 1px solid rgba(26, 26, 26, 0.2);
-  border-radius: var(--radius-full);
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  transition: background-color .3s ease, border-color .3s ease, color .3s ease, transform .3s ease;
+.percorso .link-cta {
+  margin-top: 1.5rem;
 }
 
 /* Hover solo con mouse: sul touch resterebbe attivo dopo il tocco */
 @media (hover: hover) and (pointer: fine) {
-  .percorso:hover .percorso-titolo {
+  .percorso:hover .voce-titolo {
     color: var(--primary-blue-dark);
   }
 
-  .percorso:hover .percorso-freccia {
-    background: var(--primary-blue);
-    border-color: var(--primary-blue);
-    color: var(--dark-navy);
-    transform: translateX(4px);
-  }
-}
-
-@media (max-width: 1024px) {
-  .formazione-wrapper {
-    gap: 3.5rem;
-  }
-}
-
-@media (max-width: 900px) {
-  .formazione-wrapper {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
-    padding: 0 1.5rem;
-  }
-}
-
-/* Etichetta testuale al posto della freccia tonda: solo su mobile */
-.percorso-cta {
-  display: none;
-}
-
-/* Mobile: niente freccia laterale, il testo usa tutta la larghezza e sotto c'è "Scopri" */
-@media (max-width: 600px) {
-  .percorso {
-    padding: 1.75rem 0;
-  }
-
-  .percorso-freccia {
-    display: none;
-  }
-
-  .percorso-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: .5rem;
-    margin-top: 1rem;
-    padding-bottom: .3rem;
-    border-bottom: 2px solid var(--primary-blue);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--dark-navy);
-  }
-
-  .percorso-cta i {
-    font-size: var(--text-xs);
-    color: var(--black);
-    transition: color .25s ease;
-  }
-
-  .percorso:hover .percorso-cta {
+  .percorso:hover .link-cta {
     color: var(--primary-blue-dark);
     border-color: var(--primary-blue-dark);
   }
 
-  .percorso:hover .percorso-cta i {
+  .percorso:hover .link-cta i {
     color: var(--primary-blue-dark);
+    transform: translateX(6px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .formazione-lista {
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .formazione-lista {
+    margin-top: 2.5rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .formazione-lista {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+/* Stesso margine laterale dell'intro (1.5rem sotto i 768px) */
+@media (max-width: 768px) {
+  .formazione-lista,
+  .progetti-gruppi {
+    padding: 0 1.5rem;
   }
 }
 
@@ -1140,38 +1045,10 @@ const schema = schemaHome(socialImage);
 
 }
 
-.altri-servizi-section {
+/* Progetti: fondo azzurrino, intro centrata e due gruppi di righe con icona e una riga di testo */
+.progetti-section {
   padding: var(--section-y) 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.altri-servizi-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: center/cover no-repeat;
-  filter: grayscale(.5);
-  z-index: 1;
-}
-
-/* La foto resta atmosfera: velo scuro uniforme, più denso in basso dove ci sono le liste */
-.altri-servizi-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(18, 18, 18, 0.68) 0%, rgba(18, 18, 18, 0.76) 100%);
-  z-index: 2;
-}
-
-.progetti-intro,
-.progetti-gruppi {
-  position: relative;
-  z-index: 3;
+  background: var(--bg-soft);
 }
 
 .progetti-gruppi {
@@ -1184,53 +1061,61 @@ const schema = schemaHome(socialImage);
 }
 
 .progetti-gruppo-titolo {
-  margin: 0 0 1rem;
+  margin: 0 0 .5rem;
   font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--primary-blue);
+  color: var(--primary-blue-dark);
 }
 
 .progetti-lista {
   list-style: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid rgba(26, 26, 26, 0.12);
 }
 
 .progetti-lista li {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
 }
 
-.progetti-lista a {
+.progetto {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: 1.5rem;
-  align-items: center;
-  padding: 1rem 0;
-  color: var(--white);
+  grid-template-columns: 2rem minmax(0, 1fr);
+  column-gap: 1rem;
+  align-items: start;
+  padding: 1.25rem 0;
+  color: inherit;
   text-decoration: none;
 }
 
+.progetto-icona {
+  padding-top: .2rem;
+  font-size: var(--text-xl);
+  line-height: 1;
+  text-align: center;
+  color: var(--primary-blue-dark);
+}
+
 .progetto-nome {
+  display: block;
   font-size: var(--text-base);
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.35;
+  color: var(--dark-navy);
   transition: color .3s ease;
 }
 
-.progetti-lista a i {
+.progetto-desc {
+  display: block;
+  margin-top: .2rem;
   font-size: var(--text-sm);
-  color: var(--primary-blue);
-  transition: transform .3s ease;
+  line-height: 1.5;
+  color: var(--text-light);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .progetti-lista a:hover .progetto-nome {
-    color: var(--primary-blue);
-  }
-
-  .progetti-lista a:hover i {
-    transform: translateX(4px);
+  .progetto:hover .progetto-nome {
+    color: var(--primary-blue-dark);
   }
 }
 
@@ -1238,22 +1123,13 @@ const schema = schemaHome(socialImage);
   .progetti-gruppi {
     column-gap: 2.5rem;
     margin-top: 2.5rem;
-    padding: 0 1.5rem;
   }
 }
 
 /* Gruppi uno sotto l'altro solo quando le colonne diventerebbero troppo strette */
-@media (max-width: 640px) {
+@media (max-width: 700px) {
   .progetti-gruppi {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .progetti-intro .intro-sezione {
-    font-size: var(--text-base);
-  }
-
-  .progetti-lista a {
-    column-gap: 1rem;
   }
 }
 

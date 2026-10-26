@@ -5,6 +5,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { sfondo } from '../lib/images';
 import { categorieCorsi } from '../data/scuola';
+import { enfatizza } from '../lib/text';
 
 // Fascia d'età di ogni corso, dalla sua pagina (es. "/hip-hop" → "Ragazzi e adulti")
 const eta = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.data.badge.replace(' - ', ' · ')]));
@@ -28,7 +29,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
             <h1 class="chisiamo-hero-title">I nostri corsi di danza</h1>
-            <p class="chisiamo-hero-tagline">Dai 3 anni agli adulti, dalla classica agli stili urbani, per ogni livello.</p>
+            <p class="chisiamo-hero-tagline"><strong>Dai 3 anni agli adulti</strong>, dalla classica agli stili urbani, per <strong>ogni livello</strong>.</p>
         </div>
     </section>
 
@@ -37,7 +38,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
             <header class="corsi-intro intro-sezione">
                 <p class="eyebrow">{totale} corsi in {categorieCorsi.length} percorsi</p>
                 <h2 class="titolo titolo-sezione">Trova il tuo <em>percorso</em></h2>
-                <p class="corsi-lead">A Lainate e Rho si comincia a 3 anni con Avviamento alla Danza e non c'è un'età per smettere: per gli adulti ci sono corsi anche per chi parte da zero.</p>
+                <p class="corsi-lead">A Lainate e Rho si comincia <strong>a 3 anni</strong> con Avviamento alla Danza e <strong>non c'è un'età per smettere</strong>: per gli adulti ci sono corsi anche per chi <strong>parte da zero</strong>.</p>
                 <nav class="salti" aria-label="Vai al percorso">
                     {categorieCorsi.map((cat) => (
                         <a href={`#${cat.id}`}>
@@ -57,7 +58,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
                     <div class="categoria-testo">
                         <span class="eyebrow categoria-percorso">Percorso {i + 1} di {categorieCorsi.length}</span>
                         <h2 class="categoria-titolo" id={`${cat.id}-titolo`}>{cat.nome}</h2>
-                        <p class="categoria-descrizione" set:html={cat.descrizione} />
+                        <p class="categoria-descrizione" set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
                         <ul class="corsi-lista">
                             {cat.corsi.map((c) => (
                                 <li>
@@ -77,7 +78,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
             <aside class="corsi-fine" aria-labelledby="corsi-fine-titolo">
                 <div class="corsi-fine-testo">
                     <h2 class="corsi-fine-titolo" id="corsi-fine-titolo">Non sai quale corso scegliere?</h2>
-                    <p>Raccontaci età, esperienza e cosa ti piacerebbe provare: ti aiutiamo a trovare il percorso giusto.</p>
+                    <p>Raccontaci <strong>età, esperienza</strong> e cosa ti piacerebbe provare: ti aiutiamo a trovare il percorso giusto.</p>
                 </div>
                 <a href="/contatti" class="btn-primary">
                     <span>Parliamone insieme</span>
@@ -272,11 +273,6 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     line-height: 1.7;
     color: var(--text-light);
     margin-bottom: 1.5rem;
-  }
-
-  .categoria-descrizione :global(strong) {
-    font-weight: 500;
-    color: var(--text-light);
   }
 
   /* ---------- Elenco corsi ---------- */

@@ -43,12 +43,12 @@ const bg = {
 
 /** Eventi curati dalla Direzione oltre al calendario della scuola. */
 const tipiEvento = [
-  { nome: 'Spettacolo annuale in teatro', icona: 'fa-masks-theater', testo: 'Ogni anno uno spettacolo in teatro con gli allievi e i progetti artistici e pedagogici della scuola.' },
-  { nome: 'Eventi celebrativi', icona: 'fa-champagne-glasses', testo: 'La danza come fulcro o arricchimento di eventi one-shot e occasioni speciali.' },
-  { nome: 'Nelle scuole', icona: 'fa-school', testo: "Momenti su misura nelle scuole dell'infanzia, primarie e secondarie, nell'ambito delle <a href=\"/collaborazioni-scuole\">collaborazioni con le scuole</a>." },
-  { nome: 'Team building aziendali', icona: 'fa-handshake', testo: 'Progetti esperienziali su misura per aziende e gruppi di lavoro.' },
-  { nome: 'Eventi formativi', icona: 'fa-chalkboard-user', testo: 'Incontri che attivano linguaggi diversi tra loro, come le <a href="/formazioni-personalizzate">formazioni personalizzate</a>.' },
-  { nome: 'Sul territorio', icona: 'fa-map-location-dot', testo: 'Spesso ospiti di iniziative a Milano e in provincia.' },
+  { nome: 'Spettacolo annuale in teatro', icona: 'fa-masks-theater', testo: 'Ogni anno uno <strong>spettacolo in teatro</strong> con gli allievi e i progetti artistici e pedagogici della scuola.' },
+  { nome: 'Eventi celebrativi', icona: 'fa-champagne-glasses', testo: 'La danza come fulcro o arricchimento di <strong>eventi one-shot</strong> e occasioni speciali.' },
+  { nome: 'Nelle scuole', icona: 'fa-school', testo: "Momenti su misura nelle <strong>scuole dell'infanzia, primarie e secondarie</strong>, nell'ambito delle <a href=\"/collaborazioni-scuole\">collaborazioni con le scuole</a>." },
+  { nome: 'Team building aziendali', icona: 'fa-handshake', testo: 'Progetti esperienziali su misura per <strong>aziende e gruppi di lavoro</strong>.' },
+  { nome: 'Eventi formativi', icona: 'fa-chalkboard-user', testo: 'Incontri che attivano <strong>linguaggi diversi</strong> tra loro, come le <a href="/formazioni-personalizzate">formazioni personalizzate</a>.' },
+  { nome: 'Sul territorio', icona: 'fa-map-location-dot', testo: 'Spesso ospiti di iniziative a <strong>Milano e in provincia</strong>.' },
 ];
 
 const MESI = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
@@ -158,7 +158,7 @@ const og = aperto
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Spettacoli ed eventi</h1>
-                <p class="chisiamo-hero-tagline">Il calendario degli appuntamenti di InBallet a Lainate e Rho.</p>
+                <p class="chisiamo-hero-tagline">Il <strong>calendario degli appuntamenti</strong> di InBallet a Lainate e Rho.</p>
             </div>
         </section>
 
@@ -170,7 +170,7 @@ const og = aperto
                     <div class="eventi-intro">
                         <span class="eyebrow">Calendario</span>
                         <h2 class="titolo-sezione" id="eventi-titolo">Prossimi <em>appuntamenti</em></h2>
-                        <p class="intro-sezione">Spettacoli, saggi, workshop e lezioni aperte: apri un evento per i dettagli e per aggiungerlo al tuo calendario.</p>
+                        <p class="intro-sezione"><strong>Spettacoli, saggi, workshop e lezioni aperte</strong>: apri un evento per i dettagli e per aggiungerlo al tuo calendario.</p>
                     </div>
                     {eventi.length > 0 && (
                         <div class="vista-switch" id="vistaSwitch" role="group" aria-label="Visualizzazione" hidden>
@@ -184,7 +184,7 @@ const og = aperto
                 {prossimi.length === 0 && (
                     <div class="eventi-vuoto">
                         <h3>Nessun appuntamento in programma</h3>
-                        <p>Stiamo preparando le prossime date: le pubblichiamo qui appena confermate.</p>
+                        <p>Stiamo preparando le <strong>prossime date</strong>: le pubblichiamo qui appena confermate.</p>
                         <a href="/contatti" class="link-cta">
                             Chiedi informazioni
                             <i class="fas fa-arrow-right" aria-hidden="true"></i>
@@ -264,7 +264,7 @@ const og = aperto
             <div class="intro-editoriale">
                 <span class="eyebrow">Eventi su misura</span>
                 <h2 class="titolo-sezione" id="cura-titolo">Spettacoli ed eventi <em>a cura di InBallet</em></h2>
-                <p>La Direzione di I.N. Ballet cura la parte artistica e organizzativa di eventi di diversa natura: allievi e progetti della scuola incontrano così pubblico e nuove collaborazioni.</p>
+                <p>La Direzione di I.N. Ballet cura la <strong>parte artistica e organizzativa</strong> di <strong>eventi di diversa natura</strong>: allievi e progetti della scuola incontrano così pubblico e nuove collaborazioni.</p>
             </div>
             <div class="container">
                 <ul class="cura-lista">

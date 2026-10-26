@@ -18,10 +18,10 @@ const fasce = [
 ];
 
 const progetti = [
-  { nome: 'Progetti su misura', icona: 'fa-puzzle-piece', testo: 'Costruiti con i docenti, sulle richieste della scuola.' },
-  { nome: 'Supporto psicomotorio', icona: 'fa-hands-holding', testo: "Sempre presente, per l'integrazione dei bambini." },
-  { nome: 'Eventi a scuola', icona: 'fa-masks-theater', testo: 'Curati nella parte artistica e organizzativa.' },
-  { nome: 'Formazione per i docenti', icona: 'fa-chalkboard-user', testo: 'Linguaggi espressivi, corporeità e motricità.' },
+  { nome: 'Progetti su misura', icona: 'fa-puzzle-piece', testo: '<strong>Costruiti con i docenti</strong>, sulle richieste della scuola.' },
+  { nome: 'Supporto psicomotorio', icona: 'fa-hands-holding', testo: "<strong>Sempre presente</strong>, per l'integrazione dei bambini." },
+  { nome: 'Eventi a scuola', icona: 'fa-masks-theater', testo: 'Curati nella <strong>parte artistica e organizzativa</strong>.' },
+  { nome: 'Formazione per i docenti', icona: 'fa-chalkboard-user', testo: '<strong>Linguaggi espressivi</strong>, corporeità e motricità.' },
 ];
 ---
 
@@ -39,7 +39,7 @@ const progetti = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Collaborazioni con le scuole</h1>
-                <p class="chisiamo-hero-tagline">Progetti educativi di danza e movimento, dal nido alle secondarie di secondo grado.</p>
+                <p class="chisiamo-hero-tagline">Progetti educativi di danza e movimento, <strong>dal nido alle secondarie di secondo grado</strong>.</p>
             </div>
         </section>
 
@@ -50,11 +50,11 @@ const progetti = [
                     <span class="collab-intro-label eyebrow">Danza a scuola</span>
                     <h2 class="collab-intro-title titolo-sezione">Da molti anni accanto <em>alle scuole del territorio</em></h2>
                     <div class="collab-intro-testo">
-                        <p>I.N. Ballet collabora con nidi, scuole dell'infanzia, primarie e secondarie di primo e secondo grado, a Lainate, Rho e in provincia di Milano.</p>
-                        <p>Ogni progetto nasce dalle richieste educative e didattiche della scuola ed è costruito con il team degli insegnanti o con l'équipe di lavoro.</p>
+                        <p>I.N. Ballet collabora con nidi, scuole dell'infanzia, primarie e secondarie di primo e secondo grado, a <strong>Lainate, Rho e in provincia di Milano</strong>.</p>
+                        <p>Ogni progetto nasce dalle <strong>richieste educative e didattiche della scuola</strong> ed è costruito con il team degli insegnanti o con l'équipe di lavoro.</p>
                     </div>
                     <div class="collab-intro-highlight">
-                        <p>In ogni progetto c'è il supporto psicomotorio ai bambini, a sostegno dell'integrazione sociale.</p>
+                        <p>In ogni progetto c'è il <strong>supporto psicomotorio</strong> ai bambini, a sostegno dell'integrazione sociale.</p>
                     </div>
                 </div>
                 <div class="collab-intro-visual foto-cornice">
@@ -68,7 +68,7 @@ const progetti = [
             <div class="intro-editoriale">
                 <span class="eyebrow">A chi ci rivolgiamo</span>
                 <h2 class="titolo-sezione" id="fasce-titolo">Progetti per ogni <em>fascia d'età</em></h2>
-                <p>Adattiamo i programmi a ogni tipo di istituto e alle sue esigenze.</p>
+                <p>Adattiamo i programmi a <strong>ogni tipo di istituto</strong> e alle sue esigenze.</p>
             </div>
             <div class="container">
                 <ul class="fasce-lista">
@@ -89,7 +89,7 @@ const progetti = [
                 <div class="collab-progetti-header">
                     <span class="eyebrow">I nostri progetti</span>
                     <h2 class="titolo-sezione" id="progetti-titolo">Cosa possiamo offrire <em>alla tua scuola</em></h2>
-                    <p class="intro-sezione">Programmi flessibili, costruiti sulle richieste educative e didattiche di ogni scuola.</p>
+                    <p class="intro-sezione"><strong>Programmi flessibili</strong>, costruiti sulle richieste educative e didattiche di ogni scuola.</p>
                 </div>
                 <ol class="progetti-lista">
                     {progetti.map((p) => (
@@ -97,7 +97,7 @@ const progetti = [
                             <i class={`fas ${p.icona} progetto-num`} aria-hidden="true"></i>
                             <div>
                                 <h3 class="progetto-nome">{p.nome}</h3>
-                                <p class="progetto-testo">{p.testo}</p>
+                                <p class="progetto-testo" set:html={p.testo} />
                             </div>
                         </li>
                     ))}
@@ -111,7 +111,7 @@ const progetti = [
             <div class="collab-cta-overlay"></div>
             <div class="collab-cta-wrapper">
                 <h2 class="titolo-sezione">Portiamo la danza <em>nella tua scuola</em></h2>
-                <p class="intro-sezione">Contattaci per un incontro conoscitivo senza impegno: costruiamo insieme un progetto su misura per la tua scuola.</p>
+                <p class="intro-sezione">Contattaci per un <strong>incontro conoscitivo senza impegno</strong>: costruiamo insieme un progetto su misura per la tua scuola.</p>
                 <div class="collab-cta-buttons">
                     <a href={`mailto:${scuola.email}?subject=Collaborazione%20Scuola`} class="btn-primary">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Richiedi informazioni

@@ -194,6 +194,22 @@ html::-webkit-scrollbar-thumb:hover {
   --nav-h: var(--header-h-scrolled);
 }
 
+/* Grassetto nei testi: parole chiave (età, qualifiche, nomi dei corsi), mai frasi intere.
+   Vale solo dentro <main>, così non tocca navbar, footer e chat. */
+main strong,
+main b {
+  font-weight: 600;
+  color: var(--dark-navy);
+}
+
+/* Su fondo scuro o foto il grassetto è bianco */
+main .sezione-scura strong,
+main .sezione-scura b,
+main .chisiamo-hero strong,
+main .hero strong {
+  color: var(--white);
+}
+
 body {
   font-family: var(--font-rubik);
   font-size: var(--text-base);

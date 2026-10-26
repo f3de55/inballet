@@ -30,14 +30,14 @@ export interface PaginaDocumenti {
 export const documentiPredefiniti: PaginaDocumenti = {
   hero: {
     titolo: 'Iscrizioni e documenti',
-    testo: "Modulo di iscrizione, autocertificazione e scadenze per l'anno 2026/2027.",
+    testo: "Modulo di iscrizione, autocertificazione e scadenze per l'anno **2026/2027**.",
   },
   sezione: {
     eyebrow: 'Iscrizioni 2026/2027',
     titolo: 'Moduli da',
     accento: 'scaricare',
     intro:
-      "Compila il modulo e consegnalo firmato in segreteria. Dai 6 anni serve anche il certificato medico non agonistico; sotto i 6 anni basta l'autocertificazione dei genitori.",
+      "Compila il modulo e consegnalo firmato in segreteria. **Dai 6 anni** serve anche il **certificato medico non agonistico**; sotto i 6 anni basta l'**autocertificazione** dei genitori.",
   },
   documenti: [
     {

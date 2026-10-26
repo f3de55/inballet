@@ -11,9 +11,9 @@ const bg = {
 };
 
 const passi = [
-  { nome: 'Consulto con la Direzione', icona: 'fa-phone', testo: 'Un primo contatto con la Direzione per raccontare il bambino o il ragazzo e le sue esigenze.' },
-  { nome: 'Colloquio conoscitivo', icona: 'fa-comments', testo: 'Un incontro per conoscere la famiglia e capire insieme il percorso più adatto.' },
-  { nome: 'Accoglienza nel gruppo', icona: 'fa-users', testo: "L'inserimento nel gruppo classe più adeguato, tra i corsi predisposti ad accogliere casi speciali." },
+  { nome: 'Consulto con la Direzione', icona: 'fa-phone', testo: 'Un primo contatto con la Direzione per <strong>raccontare il bambino o il ragazzo</strong> e le sue esigenze.' },
+  { nome: 'Colloquio conoscitivo', icona: 'fa-comments', testo: 'Un incontro per conoscere la famiglia e <strong>capire insieme il percorso più adatto</strong>.' },
+  { nome: 'Accoglienza nel gruppo', icona: 'fa-users', testo: "L'inserimento nel <strong>gruppo classe più adeguato</strong>, tra i corsi predisposti ad accogliere casi speciali." },
 ];
 
 const classi = [
@@ -40,7 +40,7 @@ const classi = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Classi Multidisciplinari Integrate</h1>
-                <p class="chisiamo-hero-tagline">Quasi tutti i nostri corsi possono accogliere bambini e ragazzi con bisogni speciali.</p>
+                <p class="chisiamo-hero-tagline">Quasi tutti i nostri corsi possono accogliere bambini e ragazzi con <strong>bisogni speciali</strong>.</p>
             </div>
         </section>
 
@@ -51,11 +51,11 @@ const classi = [
                     <span class="integrate-intro-label eyebrow">Il nostro approccio</span>
                     <h2 class="integrate-intro-title titolo-sezione">Un ambiente dove tutti <em>sono benvenuti</em></h2>
                     <div class="integrate-intro-testo">
-                        <p>Quasi tutte le classi di InBallet hanno la predisposizione tecnica e professionale per accogliere bambini e ragazzi con bisogni speciali, entro il nostro livello di preparazione.</p>
-                        <p>Si parte sempre da un consulto con la Direzione e da un colloquio con la famiglia, per scegliere insieme il gruppo classe più adeguato.</p>
+                        <p>Quasi tutte le classi di InBallet hanno la <strong>predisposizione tecnica e professionale</strong> per accogliere bambini e ragazzi con bisogni speciali, entro il nostro livello di preparazione.</p>
+                        <p>Si parte sempre da un <strong>consulto con la Direzione</strong> e da un <strong>colloquio con la famiglia</strong>, per scegliere insieme il gruppo classe più adeguato.</p>
                     </div>
                     <div class="integrate-intro-highlight">
-                        <p>La danza è capace di creare racconti in tutti i corpi e in tutte le menti: per questo l'inclusione è centrale in ogni fascia d'età.</p>
+                        <p>La danza è capace di creare racconti in tutti i corpi e in tutte le menti: per questo l'<strong>inclusione</strong> è centrale in ogni fascia d'età.</p>
                     </div>
                 </div>
                 <div class="integrate-intro-visual foto-cornice">
@@ -69,7 +69,7 @@ const classi = [
             <div class="intro-editoriale">
                 <span class="eyebrow">Come funziona</span>
                 <h2 class="titolo-sezione" id="valori-titolo">Dal primo contatto <em>alla classe</em></h2>
-                <p>Tre passaggi per costruire un'accoglienza su misura, insieme alla famiglia.</p>
+                <p>Tre passaggi per costruire un'<strong>accoglienza su misura</strong>, insieme alla famiglia.</p>
             </div>
             <div class="container">
                 <ol class="valori-lista">
@@ -77,7 +77,7 @@ const classi = [
                         <li class="voce">
                             <i class={`fas ${v.icona} voce-icona`} aria-hidden="true"></i>
                             <h3 class="voce-titolo">{v.nome}</h3>
-                            <p class="voce-testo">{v.testo}</p>
+                            <p class="voce-testo" set:html={v.testo} />
                         </li>
                     ))}
                 </ol>
@@ -90,7 +90,7 @@ const classi = [
                 <div class="integrate-classi-header">
                     <span class="eyebrow">Le nostre discipline</span>
                     <h2 class="titolo-sezione" id="classi-titolo">Classi disponibili <em>per l'inserimento</em></h2>
-                    <p class="intro-sezione">Alcuni dei corsi predisposti per l'inserimento: apri un corso per conoscerne età e livelli. Per i ragazzi con disabilità c'è anche il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, il lunedì sera.</p>
+                    <p class="intro-sezione">Alcuni dei corsi predisposti per l'inserimento: apri un corso per conoscerne <strong>età e livelli</strong>. Per i ragazzi con disabilità c'è anche il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, il <strong>lunedì sera</strong>.</p>
                 </div>
                 <ul class="classi-lista">
                     {classi.map((c) => (
@@ -111,7 +111,7 @@ const classi = [
             <div class="integrate-cta-overlay"></div>
             <div class="integrate-cta-wrapper">
                 <h2 class="titolo-sezione">Parliamo <em>del tuo bambino</em></h2>
-                <p class="intro-sezione">Contatta la Direzione per fissare un colloquio conoscitivo: insieme troveremo il gruppo classe più adatto.</p>
+                <p class="intro-sezione">Contatta la Direzione per fissare un <strong>colloquio conoscitivo</strong>: insieme troveremo il gruppo classe più adatto.</p>
                 <div class="integrate-cta-buttons">
                     <a href={`mailto:${scuola.email}?subject=Classi%20Integrate%20-%20Richiesta%20Informazioni`} class="btn-primary">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Richiedi informazioni

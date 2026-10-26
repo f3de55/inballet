@@ -7,6 +7,7 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { sfondo } from '../lib/images';
 import { leggiDocumenti } from '../lib/documenti';
+import { grassettoDaTesto, senzaGrassetto } from '../lib/text';
 
 export const prerender = false;
 
@@ -15,7 +16,7 @@ const bg = {
 };
 const { hero, sezione, documenti } = await leggiDocumenti();
 // Testo dell'hero (scritto dalla dashboard) completato con scuola e luogo, se c'è spazio
-const base = hero.testo || sezione.intro;
+const base = senzaGrassetto(hero.testo || sezione.intro);
 const luogo = ' InBallet, scuola di danza a Lainate e Rho (MI).';
 const description = base.length + luogo.length <= 160 ? base + luogo : base;
 ---
@@ -33,7 +34,7 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
             <h1 class="chisiamo-hero-title">{hero.titolo}</h1>
-            {hero.testo && <p class="chisiamo-hero-tagline">{hero.testo}</p>}
+            {hero.testo && <p class="chisiamo-hero-tagline" set:html={grassettoDaTesto(hero.testo)} />}
         </div>
     </section>
 
@@ -42,7 +43,7 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
         <div class="intro-editoriale">
             {sezione.eyebrow && <span class="eyebrow">{sezione.eyebrow}</span>}
             <h2 class="titolo-sezione" id="documenti-titolo">{sezione.titolo}{sezione.accento && <>{' '}<em>{sezione.accento}</em></>}</h2>
-            {sezione.intro && <p>{sezione.intro}</p>}
+            {sezione.intro && <p set:html={grassettoDaTesto(sezione.intro)} />}
         </div>
         <div class="container">
             {documenti.length > 0 && (

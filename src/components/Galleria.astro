@@ -16,7 +16,7 @@ interface Props {
 const {
   eyebrow = 'I nostri momenti',
   titolo = 'Emozioni <em>in movimento</em>',
-  testo = 'Lezioni in sala, spettacoli in teatro e dietro le quinte.',
+  testo = 'Lezioni in sala, <strong>spettacoli in teatro</strong> e dietro le quinte.',
 } = Astro.props;
 
 // Galleria: miniature responsive + versione grande per il lightbox
@@ -45,7 +45,7 @@ const gallery = await Promise.all(
         <div class="gallery-header">
             <p class="gallery-tagline eyebrow">{eyebrow}</p>
             <h2 class="gallery-title titolo-sezione" set:html={titolo} />
-            <p class="gallery-description intro-sezione">{testo}</p>
+            <p class="gallery-description intro-sezione" set:html={testo} />
         </div>
     </div>
 

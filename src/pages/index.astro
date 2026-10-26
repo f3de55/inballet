@@ -7,6 +7,7 @@ import { getImage } from 'astro:assets';
 import { ANNI_ATTIVITA, categorieCorsi, faqHome, FONDAZIONE, scuola } from '../data/scuola';
 import { getAsset, sfondo } from '../lib/images';
 import { schemaHome } from '../lib/schema';
+import { enfatizza } from '../lib/text';
 import { PUBLIC_GOOGLE_PLACE_ID } from 'astro:env/client';
 
 // Video dell'hero (ricodificati da src/assets/video/hero-video-inballet.mp4, senza audio):
@@ -82,7 +83,7 @@ const schema = schemaHome(socialImage);
             <h1>Scuola di Danza a Lainate e Rho</h1>
 
             <p class="hero-subtitle">
-                Corsi di danza dai 3 anni agli adulti, anche per principianti.
+                Corsi di danza <strong>dai 3 anni agli adulti</strong>, anche per <strong>principianti</strong>.
             </p>
 
             <div class="hero-cta">
@@ -104,7 +105,7 @@ const schema = schemaHome(socialImage);
             <div class="corsi-header">
                 <span class="corsi-label eyebrow">Corsi di danza a Lainate e Rho</span>
                 <h2 class="corsi-title titolo-sezione">I nostri <em>corsi</em></h2>
-                <p class="corsi-intro intro-sezione">Dai 3 anni all'età adulta, dalla danza classica all'hip-hop fino a yoga e pilates: scegli lo stile che fa per te.</p>
+                <p class="corsi-intro intro-sezione"><strong>Dai 3 anni all'età adulta</strong>, dalla danza classica all'hip-hop fino a yoga e pilates: scegli <strong>lo stile che fa per te</strong>.</p>
             </div>
 
             <ol class="corsi-indice">
@@ -141,9 +142,9 @@ const schema = schemaHome(socialImage);
                     </div>
 
                     <div class="story-text">
-                        <p class="story-lead">I.N. Ballet, per tutti InBallet, è la scuola di danza multidisciplinare di Lainate e Rho fondata nel {FONDAZIONE} da {scuola.fondatrice}, per bambini dai 3 anni, ragazzi e adulti.</p>
+                        <p class="story-lead">I.N. Ballet, per tutti InBallet, è la <strong>scuola di danza multidisciplinare</strong> di Lainate e Rho fondata nel {FONDAZIONE} da {scuola.fondatrice}, per bambini <strong>dai 3 anni</strong>, ragazzi e adulti.</p>
 
-                        <p>Quasi tutte le <a href="/classi-integrate">classi accolgono allievi con bisogni speciali</a> e dal 2013 il <a href="/progetto-noiconvoi">progetto NoiConVoi</a> porta la danza ai ragazzi con disabilità.</p>
+                        <p>Quasi tutte le <a href="/classi-integrate">classi accolgono allievi con bisogni speciali</a> e dal 2013 il <a href="/progetto-noiconvoi">progetto NoiConVoi</a> porta la danza ai <strong>ragazzi con disabilità</strong>.</p>
                     </div>
 
                     <blockquote class="story-quote">
@@ -173,7 +174,7 @@ const schema = schemaHome(socialImage);
         <div class="intro-editoriale">
             <span class="eyebrow">Ente formativo CSEN e CONI</span>
             <h2 class="titolo-sezione" id="oltre-titolo">La danza <em>oltre i corsi</em></h2>
-            <p>Formazione per chi insegna e progetti con scuole, famiglie e territorio.</p>
+            <p><strong>Formazione</strong> per chi insegna e <strong>progetti</strong> con scuole, famiglie e territorio.</p>
         </div>
 
         <div class="oltre-gruppi">
@@ -205,7 +206,7 @@ const schema = schemaHome(socialImage);
             <div class="recensioni-intro">
                 <p class="eyebrow">Le voci della nostra community</p>
                 <h2 class="titolo-sezione" id="recensioni-titolo">Dicono <em>di noi</em></h2>
-                <p class="intro-sezione">Allievi e famiglie raccontano InBallet nelle recensioni pubblicate su Google.</p>
+                <p class="intro-sezione">Allievi e famiglie raccontano InBallet nelle <strong>recensioni pubblicate su Google</strong>.</p>
             </div>
 
             <!-- Valutazione media (compilata da home.ts) e link a tutte le recensioni -->
@@ -254,7 +255,7 @@ const schema = schemaHome(socialImage);
             <div class="faq-intro">
                 <p class="faq-label eyebrow">Domande frequenti</p>
                 <h2 class="faq-title titolo-sezione" id="faq-titolo">Tutto quello che <em>vuoi sapere</em></h2>
-                <p class="faq-text intro-sezione">Età, sedi, corsi e iscrizioni. Non trovi la risposta? Scrivici o chiamaci.</p>
+                <p class="faq-text intro-sezione">Età, sedi, corsi e iscrizioni. Non trovi la risposta? <strong>Scrivici o chiamaci</strong>.</p>
                 <ul class="faq-contatti">
                     <li><a href={`mailto:${scuola.email}`}><i class="fas fa-envelope" aria-hidden="true"></i>{scuola.email}</a></li>
                     <li><a href={scuola.telefonoHref}><i class="fas fa-phone" aria-hidden="true"></i>{scuola.telefono}</a></li>
@@ -264,7 +265,7 @@ const schema = schemaHome(socialImage);
                 {faqHome.map((f, i) => (
                     <details class="faq-item" name="faq" open={i === 0}>
                         <summary>{f.domanda}</summary>
-                        <p>{f.risposta}</p>
+                        <p set:html={enfatizza(f.risposta, f.evidenzia)} />
                     </details>
                 ))}
             </div>

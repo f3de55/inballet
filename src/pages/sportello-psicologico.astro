@@ -11,9 +11,9 @@ const bg = {
 };
 
 const pilastri = [
-  { nome: 'Confusione', icona: 'fa-lightbulb', testo: 'Quando emozioni e pensieri sono difficili da gestire da soli, un colloquio con uno specialista aiuta a fare chiarezza.' },
-  { nome: 'Ascolto', icona: 'fa-ear-listen', testo: 'Uno spazio dedicato in cui dare voce alle difficoltà che, in famiglia, spesso restano inespresse.' },
-  { nome: 'Relazioni', icona: 'fa-house-user', testo: 'Incontri per singoli e coppie, ma soprattutto per la tutela del rapporto genitore-figlio.' },
+  { nome: 'Confusione', icona: 'fa-lightbulb', testo: 'Quando emozioni e pensieri sono difficili da gestire da soli, un <strong>colloquio con uno specialista</strong> aiuta a fare chiarezza.' },
+  { nome: 'Ascolto', icona: 'fa-ear-listen', testo: 'Uno spazio dedicato in cui <strong>dare voce alle difficoltà</strong> che, in famiglia, spesso restano inespresse.' },
+  { nome: 'Relazioni', icona: 'fa-house-user', testo: 'Incontri per singoli e coppie, ma soprattutto per la <strong>tutela del rapporto genitore-figlio</strong>.' },
 ];
 
 const servizi = [
@@ -38,7 +38,7 @@ const servizi = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Sportello Psicologico</h1>
-                <p class="chisiamo-hero-tagline">Ascolto e sostegno per famiglie, genitori e bambini, con una psicoterapeuta.</p>
+                <p class="chisiamo-hero-tagline">Ascolto e sostegno per famiglie, genitori e bambini, con una <strong>psicoterapeuta</strong>.</p>
             </div>
         </section>
 
@@ -49,11 +49,11 @@ const servizi = [
                     <span class="sport-intro-label eyebrow">Il nostro servizio</span>
                     <h2 class="sport-intro-title titolo-sezione">Sostegno alle famiglie <em>attraverso l'ascolto</em></h2>
                     <div class="sport-intro-testo">
-                        <p>Lo Sportello Psicologico di InBallet sostiene le famiglie della scuola: su richiesta alla Direzione, si fissano incontri con una dottoressa psicoterapeuta.</p>
-                        <p>Uno spazio per riconoscere fatiche e bisogni che bambini e genitori spesso non riescono a esprimere apertamente.</p>
+                        <p>Lo Sportello Psicologico di InBallet sostiene le famiglie della scuola: <strong>su richiesta alla Direzione</strong>, si fissano incontri con una <strong>dottoressa psicoterapeuta</strong>.</p>
+                        <p>Uno spazio per <strong>riconoscere fatiche e bisogni</strong> che bambini e genitori spesso non riescono a esprimere apertamente.</p>
                     </div>
                     <div class="sport-intro-highlight">
-                        <p>Un sostegno concreto nei momenti di difficoltà, nella massima riservatezza.</p>
+                        <p>Un <strong>sostegno concreto</strong> nei momenti di difficoltà, nella <strong>massima riservatezza</strong>.</p>
                     </div>
                 </div>
                 <div class="sport-intro-visual foto-cornice">
@@ -67,7 +67,7 @@ const servizi = [
             <div class="intro-editoriale">
                 <span class="eyebrow">I tre pilastri</span>
                 <h2 class="titolo-sezione" id="pilastri-titolo">Come possiamo <em>aiutarti</em></h2>
-                <p>Perché rivolgersi a uno specialista, come lavora la parola e a chi si rivolge lo sportello.</p>
+                <p>Perché <strong>rivolgersi a uno specialista</strong>, come lavora la parola e a chi si rivolge lo sportello.</p>
             </div>
             <div class="container">
                 <ul class="pilastri-lista">
@@ -75,7 +75,7 @@ const servizi = [
                         <li class="voce">
                             <i class={`fas ${p.icona} voce-icona`} aria-hidden="true"></i>
                             <h3 class="voce-titolo">{p.nome}</h3>
-                            <p class="voce-testo">{p.testo}</p>
+                            <p class="voce-testo" set:html={p.testo} />
                         </li>
                     ))}
                 </ul>
@@ -88,7 +88,7 @@ const servizi = [
                 <div class="sport-accesso-header">
                     <span class="eyebrow">Come accedere</span>
                     <h2 class="titolo-sezione" id="accesso-titolo">Incontri con la dottoressa <em>psicoterapeuta</em></h2>
-                    <p class="intro-sezione">Lo sportello è attivo su richiesta: contatta la Direzione per fissare un primo colloquio.</p>
+                    <p class="intro-sezione">Lo sportello è <strong>attivo su richiesta</strong>: contatta la Direzione per fissare un <strong>primo colloquio</strong>.</p>
                 </div>
                 <ul class="servizi-lista">
                     {servizi.map((s) => (
@@ -107,7 +107,7 @@ const servizi = [
             <div class="sport-cta-overlay"></div>
             <div class="sport-cta-wrapper">
                 <h2 class="titolo-sezione">Prenota un colloquio <em>conoscitivo</em></h2>
-                <p class="intro-sezione">Scrivici o chiamaci: fissiamo insieme il primo incontro, nella massima riservatezza.</p>
+                <p class="intro-sezione"><strong>Scrivici o chiamaci</strong>: fissiamo insieme il primo incontro, nella <strong>massima riservatezza</strong>.</p>
                 <div class="sport-cta-buttons">
                     <a href={`mailto:${scuola.email}?subject=Richiesta%20Sportello%20Psicologico`} class="btn-primary">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici

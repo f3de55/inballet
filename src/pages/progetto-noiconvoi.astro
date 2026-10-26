@@ -11,8 +11,8 @@ const bg = {
 };
 
 const fasi = [
-  { nome: 'Pratica psicomotoria', icona: 'fa-child', testo: 'Ogni lezione si apre con elementi di Pratica Psicomotoria Aucouturier (PPA): il supporto psicomotorio è la base del progetto.' },
-  { nome: 'Didattica artistica', icona: 'fa-music', testo: 'Segue la parte artistica, con una didattica costruita sui bisogni dei ragazzi e sul progetto annuale della scuola.' },
+  { nome: 'Pratica psicomotoria', icona: 'fa-child', testo: 'Ogni lezione si apre con elementi di <strong>Pratica Psicomotoria Aucouturier (PPA)</strong>: il supporto psicomotorio è la base del progetto.' },
+  { nome: 'Didattica artistica', icona: 'fa-music', testo: 'Segue la <strong>parte artistica</strong>, con una didattica costruita sui bisogni dei ragazzi e sul progetto annuale della scuola.' },
 ];
 
 const destinatari = [
@@ -23,10 +23,10 @@ const destinatari = [
 ];
 
 const info = [
-  { nome: 'Quando', icona: 'fa-calendar-days', testo: 'Il lunedì sera, nella sede di Lainate.' },
-  { nome: 'Spettacolo di fine anno', icona: 'fa-masks-theater', testo: 'Ogni anno i ragazzi salgono sul palco insieme a tutti gli altri allievi della scuola.' },
-  { nome: 'Volontariato', icona: 'fa-hand-holding-heart', testo: 'Volontari, anche non danzatori, in un team guidato dalla coordinatrice del progetto.' },
-  { nome: 'Dal 2013', icona: 'fa-seedling', testo: 'Un progetto che evolve ogni anno e fa della scuola una comunità educante.' },
+  { nome: 'Quando', icona: 'fa-calendar-days', testo: 'Il <strong>lunedì sera</strong>, nella sede di Lainate.' },
+  { nome: 'Spettacolo di fine anno', icona: 'fa-masks-theater', testo: 'Ogni anno i ragazzi <strong>salgono sul palco</strong> insieme a tutti gli altri allievi della scuola.' },
+  { nome: 'Volontariato', icona: 'fa-hand-holding-heart', testo: '<strong>Volontari, anche non danzatori</strong>, in un team guidato dalla coordinatrice del progetto.' },
+  { nome: 'Dal 2013', icona: 'fa-seedling', testo: 'Un progetto che evolve ogni anno e fa della scuola una <strong>comunità educante</strong>.' },
 ];
 ---
 
@@ -44,7 +44,7 @@ const info = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Progetto NoiConVoi</h1>
-                <p class="chisiamo-hero-tagline">Dal 2013 la danza è per tutti: ragazzi con disabilità, volontari e famiglie insieme in sala.</p>
+                <p class="chisiamo-hero-tagline"><strong>Dal 2013</strong> la danza è per tutti: ragazzi con disabilità, volontari e famiglie insieme in sala.</p>
             </div>
         </section>
 
@@ -55,8 +55,8 @@ const info = [
                     <span class="noi-intro-label eyebrow">La nostra missione</span>
                     <h2 class="noi-intro-title titolo-sezione">La danza come <em>strumento di inclusione</em></h2>
                     <div class="noi-intro-testo">
-                        <p>NoiConVoi è il progetto di volontariato nato nel 2013 da un'idea della Direttrice Artistica {scuola.fondatrice}: la danza è per tutti, e ognuno può portare il proprio contributo artistico.</p>
-                        <p>Accoglie ragazzi con disabilità in esperienze di danza con supporto psicomotorio, insieme a un team di volontari. Quasi tutti i corsi della scuola sono anche <a href="/classi-integrate">classi integrate</a>.</p>
+                        <p>NoiConVoi è il <strong>progetto di volontariato</strong> nato nel 2013 da un'idea della Direttrice Artistica {scuola.fondatrice}: la danza è per tutti, e ognuno può portare il proprio <strong>contributo artistico</strong>.</p>
+                        <p>Accoglie <strong>ragazzi con disabilità</strong> in esperienze di danza con <strong>supporto psicomotorio</strong>, insieme a un <strong>team di volontari</strong>. Quasi tutti i corsi della scuola sono anche <a href="/classi-integrate">classi integrate</a>.</p>
                     </div>
                     <div class="noi-intro-highlight">
                         <p>«La danza è capace di creare racconti in tutti i corpi e in tutte le menti.» ({scuola.fondatrice})</p>
@@ -73,7 +73,7 @@ const info = [
             <div class="intro-editoriale">
                 <span class="eyebrow">La metodologia</span>
                 <h2 class="titolo-sezione" id="metodo-titolo">Un approccio pedagogico <em>strutturato</em></h2>
-                <p>Ogni lezione del lunedì sera si articola in due momenti: prima la pratica psicomotoria, poi la danza.</p>
+                <p>Ogni lezione del <strong>lunedì sera</strong> si articola in due momenti: prima la <strong>pratica psicomotoria</strong>, poi la <strong>danza</strong>.</p>
             </div>
             <div class="container">
                 <ol class="fasi-lista">
@@ -81,7 +81,7 @@ const info = [
                         <li class="voce">
                             <i class={`fas ${f.icona} voce-icona`} aria-hidden="true"></i>
                             <h3 class="voce-titolo">{f.nome}</h3>
-                            <p class="voce-testo">{f.testo}</p>
+                            <p class="voce-testo" set:html={f.testo} />
                         </li>
                     ))}
                 </ol>
@@ -94,7 +94,7 @@ const info = [
                 <div class="noi-target-header">
                     <span class="eyebrow">A chi è rivolto</span>
                     <h2 class="titolo-sezione" id="target-titolo">Un progetto <em>aperto a tutti</em></h2>
-                    <p class="intro-sezione">NoiConVoi mette insieme ragazzi, famiglie e volontari. Dal 2024 accoglie anche volontari da aziende e realtà del territorio, grazie ai <a href="/sostenitori">sostenitori dei progetti sociali</a>.</p>
+                    <p class="intro-sezione">NoiConVoi mette insieme ragazzi, famiglie e volontari. Dal 2024 accoglie anche <strong>volontari da aziende</strong> e realtà del territorio, grazie ai <a href="/sostenitori">sostenitori dei progetti sociali</a>.</p>
                 </div>
                 <ul class="target-lista">
                     {destinatari.map((d) => (
@@ -120,7 +120,7 @@ const info = [
                         <li class="voce">
                             <i class={`fas ${v.icona} voce-icona`} aria-hidden="true"></i>
                             <h3 class="voce-titolo">{v.nome}</h3>
-                            <p class="voce-testo">{v.testo}</p>
+                            <p class="voce-testo" set:html={v.testo} />
                         </li>
                     ))}
                 </ul>
@@ -133,7 +133,7 @@ const info = [
             <div class="noi-cta-overlay"></div>
             <div class="noi-cta-wrapper">
                 <h2 class="titolo-sezione">Unisciti a <em>NoiConVoi</em></h2>
-                <p class="intro-sezione">Vuoi partecipare o diventare volontario? Contattaci per scoprire come far parte del progetto.</p>
+                <p class="intro-sezione">Vuoi <strong>partecipare</strong> o <strong>diventare volontario</strong>? Contattaci per scoprire come far parte del progetto.</p>
                 <div class="noi-cta-buttons">
                     <a href={`mailto:${scuola.email}?subject=Progetto%20NoiConVoi%20-%20Richiesta%20Informazioni`} class="btn-primary">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici

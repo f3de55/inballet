@@ -619,6 +619,17 @@ const schema = schemaHome(socialImage);
   margin-top: auto;
 }
 
+/* Nessun effetto hover su «Vedi di più» */
+.corsi-stile-link:hover {
+  color: var(--dark-navy);
+  border-color: var(--primary-blue);
+}
+
+.corsi-stile-link:hover i {
+  color: var(--black);
+  transform: none;
+}
+
 .corsi-stile-desc {
   margin-bottom: 1.25rem;
 }
@@ -640,15 +651,6 @@ const schema = schemaHome(socialImage);
     color: var(--primary-blue-dark);
   }
 
-  .corsi-stile:hover .corsi-stile-link {
-    color: var(--primary-blue-dark);
-    border-color: var(--primary-blue-dark);
-  }
-
-  .corsi-stile:hover .corsi-stile-link i {
-    color: var(--primary-blue-dark);
-    transform: translateX(6px);
-  }
 }
 
 .corsi-stile:focus-visible {
@@ -753,6 +755,15 @@ const schema = schemaHome(socialImage);
   }
 
   .corsi-stile-link i {
+    color: var(--white);
+  }
+
+  .corsi-stile-link:hover {
+    color: var(--white);
+    border-color: var(--white);
+  }
+
+  .corsi-stile-link:hover i {
     color: var(--white);
   }
 

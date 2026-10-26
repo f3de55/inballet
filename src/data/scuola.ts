@@ -80,8 +80,8 @@ export const categorieCorsi = [
     immagine: { src: 'foto/tutu-classica.jpg', alt: 'Tutù rosa di danza classica', fuoco: { desktop: '60% 50%', mobile: '50% 45%' } },
     /** Foto alternativa solo per il box mobile della home */
     immagineMobile: 'foto/classica-moderna-mobile.jpg',
-    /** Opacità del velo nero sul box mobile (la foto è chiara) */
-    veloMobile: 0.55,
+    /** Opacità del velo nero sul box mobile (le foto mobile sono già scurite) */
+    veloMobile: 0.1,
     descrizione: 'Si comincia a 3 anni con Avviamento alla Danza, a 4-5 anni con Educazione alla Danza; dai 6 anni Danza Classica e Modern, fino ai livelli avanzati.',
     evidenzia: ['3 anni', '4-5 anni', 'dai 6 anni'],
     corsi: [

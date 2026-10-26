@@ -647,7 +647,8 @@ const schema = schemaHome(socialImage);
 
 }
 
-/* Mobile: una scheda bianca per stile, con foto quadrata a sinistra e testo a destra */
+/* Mobile: un box per stile con la foto come sfondo, un velo scuro per la leggibilità e il testo
+   bianco in basso */
 @media (max-width: 600px) {
   .corsi-indice {
     grid-template-columns: minmax(0, 1fr);
@@ -655,40 +656,60 @@ const schema = schemaHome(socialImage);
   }
 
   .corsi-stile {
-    display: grid;
-    grid-template-columns: 6.5rem minmax(0, 1fr);
-    gap: 1.25rem;
-    align-items: start;
-    padding: 1.25rem;
-    border: 1px solid var(--border-card);
+    position: relative;
+    isolation: isolate;
+    justify-content: flex-end;
+    min-height: 16rem;
+    padding: 1.5rem;
+    overflow: hidden;
     border-radius: var(--radius-card);
-    background: var(--white);
+    background: var(--dark-navy);
     box-shadow: var(--shadow-card);
+    color: var(--white);
   }
 
   .corsi-stile-foto {
-    border-radius: var(--radius-md);
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 0;
     box-shadow: none;
   }
 
   .corsi-stile-foto :global(img) {
-    aspect-ratio: 1;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  /* Velo: più denso in basso, dove c'è il testo */
+  .corsi-stile-foto::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15, 15, 15, .88) 0%, rgba(15, 15, 15, .58) 50%, rgba(15, 15, 15, .22) 100%);
   }
 
   .corsi-stile-testo {
+    flex: 0 0 auto;
     margin-top: 0;
   }
 
   .corsi-stile-nome {
-    font-size: var(--text-xl);
+    font-size: var(--text-2xl);
   }
 
   .corsi-stile-desc {
-    margin-top: .35rem;
+    margin: .5rem 0 1.25rem;
+    color: rgba(255, 255, 255, .9);
   }
 
-  .corsi-stile-desc {
-    margin-bottom: 1rem;
+  .corsi-stile-link {
+    color: var(--white);
+    border-color: var(--white);
+  }
+
+  .corsi-stile-link i {
+    color: var(--white);
   }
 
   .corsi-cta {

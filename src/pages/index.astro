@@ -119,7 +119,7 @@ const schema = schemaHome(socialImage);
                             <span class="corsi-stile-testo">
                                 <span class="corsi-stile-nome">{cat.nome}</span>
                                 <span class="corsi-stile-desc">{cat.sintesi}</span>
-                                <span class="corsi-stile-link">Vedi di più <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                <span class="link-cta corsi-stile-link">Vedi di più <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
                             </span>
                         </a>
                     </li>
@@ -581,22 +581,15 @@ const schema = schemaHome(socialImage);
   transition: color .25s ease;
 }
 
-/* «Vedi di più» subito sotto il testo, in fondo alla scheda: stessa altezza in tutte le schede della riga */
+/* «Vedi di più» con lo stile dei link d'azione del sito (.link-cta), subito sotto il testo e in fondo
+   alla scheda: stessa altezza in tutte le schede della riga */
 .corsi-stile-link {
-  display: inline-flex;
-  align-items: center;
   align-self: flex-start;
-  gap: .5rem;
   margin-top: auto;
-  padding-top: 1.25rem;
-  font-size: var(--text-base);
-  font-weight: 600;
-  color: var(--primary-blue-dark);
 }
 
-.corsi-stile-link i {
-  font-size: .8em;
-  transition: transform .25s ease;
+.corsi-stile-desc {
+  margin-bottom: 1.25rem;
 }
 
 .corsi-stile-desc {
@@ -616,8 +609,14 @@ const schema = schemaHome(socialImage);
     color: var(--primary-blue-dark);
   }
 
+  .corsi-stile:hover .corsi-stile-link {
+    color: var(--primary-blue-dark);
+    border-color: var(--primary-blue-dark);
+  }
+
   .corsi-stile:hover .corsi-stile-link i {
-    transform: translateX(4px);
+    color: var(--primary-blue-dark);
+    transform: translateX(6px);
   }
 }
 
@@ -648,23 +647,28 @@ const schema = schemaHome(socialImage);
 
 }
 
-/* Mobile: una riga per stile, foto quadrata a sinistra e testo a destra */
+/* Mobile: una scheda bianca per stile, con foto quadrata a sinistra e testo a destra */
 @media (max-width: 600px) {
   .corsi-indice {
     grid-template-columns: minmax(0, 1fr);
-    gap: 1.75rem;
+    gap: 1rem;
   }
 
   .corsi-stile {
     display: grid;
     grid-template-columns: 6.5rem minmax(0, 1fr);
     gap: 1.25rem;
-    align-items: center;
+    align-items: start;
+    padding: 1.25rem;
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-card);
+    background: var(--white);
+    box-shadow: var(--shadow-card);
   }
 
   .corsi-stile-foto {
     border-radius: var(--radius-md);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .1);
+    box-shadow: none;
   }
 
   .corsi-stile-foto :global(img) {
@@ -683,8 +687,8 @@ const schema = schemaHome(socialImage);
     margin-top: .35rem;
   }
 
-  .corsi-stile-link {
-    padding-top: .75rem;
+  .corsi-stile-desc {
+    margin-bottom: 1rem;
   }
 
   .corsi-cta {

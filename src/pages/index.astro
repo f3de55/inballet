@@ -557,14 +557,14 @@ const schema = schemaHome(socialImage);
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   transition: transform .6s ease;
 }
 
 .corsi-stile-testo {
   display: block;
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
 }
 
 .corsi-stile-nome {
@@ -577,6 +577,7 @@ const schema = schemaHome(socialImage);
 }
 
 .corsi-stile-nome i {
+  margin-left: .1rem;
   font-size: .7em;
   color: var(--primary-blue-dark);
   transition: transform .25s ease;
@@ -622,16 +623,13 @@ const schema = schemaHome(socialImage);
   }
 }
 
-/* Tablet: due colonne, foto più basse */
+/* Tablet: due colonne */
 @media (max-width: 900px) {
   .corsi-indice {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 3rem 2rem;
   }
 
-  .corsi-stile-foto :global(img) {
-    aspect-ratio: 4 / 3;
-  }
 }
 
 /* Mobile: una riga per stile, foto quadrata a sinistra e testo a destra */

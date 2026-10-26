@@ -26,15 +26,15 @@ const formazione = {
   eyebrow: 'Ente formativo CSEN e CONI',
   titolo: 'Formazione professionale',
   testo: 'Per chi insegna danza e per chi lavora in ambito educativo e terapeutico.',
-  foto: 'gallery-4.jpg',
-  fuoco: { desktop: '50% 25%' },
   voci: [
     { nome: 'Formazione Insegnanti di Danza', testo: 'Biennale, titolo nazionale CSEN e CONI', icona: 'fa-graduation-cap', href: '/formazione-insegnanti' },
     { nome: 'Formazioni Personalizzate', testo: 'Workshop per educatori e terapeuti', icona: 'fa-chalkboard-user', href: '/formazioni-personalizzate' },
   ],
 };
 const progetti = {
+  eyebrow: 'La danza fuori dalla sala',
   titolo: 'Progetti sul territorio',
+  testo: "Spettacoli, scuole, ascolto per le famiglie e danza per l'inclusione.",
   voci: [
     { nome: 'Spettacoli ed Eventi', testo: 'Spettacoli, saggi e workshop', icona: 'fa-masks-theater', href: '/spettacoli-eventi' },
     { nome: 'Collaborazioni con le Scuole', testo: 'Danza a scuola, dal nido alle superiori', icona: 'fa-school', href: '/collaborazioni-scuole' },
@@ -179,8 +179,8 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Formazione e progetti (come nel menu): a sinistra il blocco con foto della formazione, a destra l'elenco
-         dei progetti. Tablet: uno sotto l'altro; mobile: due elenchi semplici -->
+    <!-- Formazione e progetti (come nel menu): due colonne con lo stesso schema (etichetta, titolo, frase, voci).
+         Tablet: una sotto l'altra con le voci su due colonne; mobile: due elenchi semplici -->
     <section class="oltre-section" aria-labelledby="oltre-titolo">
         <div class="intro-editoriale">
             <span class="eyebrow">Formazione e progetti</span>
@@ -190,9 +190,6 @@ const schema = schemaHome(socialImage);
 
         <div class="oltre-layout">
             <article class="oltre-blocco oltre-formazione">
-                <div class="oltre-sfondo" aria-hidden="true">
-                    <Img src={formazione.foto} alt="" fuoco={formazione.fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 560px" />
-                </div>
                 <p class="oltre-blocco-eyebrow">{formazione.eyebrow}</p>
                 <h3 class="oltre-blocco-titolo">{formazione.titolo}</h3>
                 <p class="oltre-blocco-testo">{formazione.testo}</p>
@@ -213,7 +210,9 @@ const schema = schemaHome(socialImage);
             </article>
 
             <div class="oltre-blocco oltre-progetti">
+                <p class="oltre-blocco-eyebrow">{progetti.eyebrow}</p>
                 <h3 class="oltre-blocco-titolo">{progetti.titolo}</h3>
+                <p class="oltre-blocco-testo">{progetti.testo}</p>
                 <ul class="oltre-lista">
                     {progetti.voci.map((v) => (
                         <li>
@@ -1030,10 +1029,9 @@ const schema = schemaHome(socialImage);
 
 }
 
-/* Formazione e progetti, come nel menu del sito.
-   Desktop: a sinistra il blocco della formazione (foto, velo scuro, testo bianco), a destra l'elenco dei
-   progetti su fondo azzurrino; i due blocchi hanno la stessa altezza.
-   Tablet: uno sotto l'altro, le voci su due colonne. Mobile: due elenchi semplici, senza foto. */
+/* Formazione e progetti, come nel menu del sito: due colonne con lo stesso schema (etichetta, titolo,
+   frase, voci a righe con filetti), senza sfondi né box.
+   Tablet: una sotto l'altra, voci su due colonne. Mobile: due elenchi con titolo e icona su ogni riga. */
 .oltre-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
@@ -1047,46 +1045,11 @@ const schema = schemaHome(socialImage);
 
 .oltre-layout {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: 4rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5rem;
   max-width: 1200px;
   margin: 4rem auto 0;
   padding: 0 2rem;
-}
-
-/* Blocco della formazione */
-.oltre-formazione {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  padding: 2.5rem;
-  overflow: hidden;
-  border-radius: var(--radius-card);
-  background: var(--dark-navy);
-  box-shadow: var(--shadow-card);
-  color: var(--white);
-}
-
-.oltre-sfondo {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-}
-
-.oltre-sfondo :global(img) {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Velo: più denso in basso, dove ci sono le voci */
-.oltre-sfondo::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(15, 15, 15, .92) 0%, rgba(15, 15, 15, .75) 55%, rgba(15, 15, 15, .5) 100%);
 }
 
 .oltre-blocco-eyebrow {
@@ -1095,7 +1058,7 @@ const schema = schemaHome(socialImage);
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--primary-blue);
+  color: var(--primary-blue-dark);
 }
 
 .oltre-blocco-titolo {
@@ -1107,19 +1070,15 @@ const schema = schemaHome(socialImage);
   color: var(--dark-navy);
 }
 
-.oltre-formazione .oltre-blocco-titolo {
-  color: var(--white);
-}
-
 .oltre-blocco-testo {
-  max-width: 26rem;
-  margin: 0;
+  /* Due righe in entrambe le colonne: le liste partono alla stessa altezza */
+  min-height: 3.3em;
+  margin: 0 0 2rem;
   font-size: var(--text-base);
   line-height: 1.6;
-  color: rgba(255, 255, 255, .85);
+  color: var(--text-light);
 }
 
-/* Voci: in fondo al blocco della formazione, a righe con filetti */
 .oltre-lista {
   list-style: none;
   border-top: 1px solid rgba(26, 26, 26, .14);
@@ -1127,19 +1086,6 @@ const schema = schemaHome(socialImage);
 
 .oltre-lista li {
   border-bottom: 1px solid rgba(26, 26, 26, .14);
-}
-
-.oltre-formazione .oltre-lista {
-  margin-top: auto;
-  border-top-color: rgba(255, 255, 255, .25);
-}
-
-.oltre-formazione .oltre-lista li {
-  border-bottom-color: rgba(255, 255, 255, .25);
-}
-
-.oltre-formazione .oltre-blocco-testo {
-  margin-bottom: 2.5rem;
 }
 
 .oltre-voce {
@@ -1158,10 +1104,6 @@ const schema = schemaHome(socialImage);
   color: var(--primary-blue-dark);
 }
 
-.oltre-formazione .oltre-icona {
-  color: var(--primary-blue);
-}
-
 .oltre-nome {
   display: block;
   font-size: var(--text-base);
@@ -1169,10 +1111,6 @@ const schema = schemaHome(socialImage);
   line-height: 1.3;
   color: var(--dark-navy);
   transition: color .3s ease;
-}
-
-.oltre-formazione .oltre-nome {
-  color: var(--white);
 }
 
 .oltre-desc {
@@ -1183,18 +1121,10 @@ const schema = schemaHome(socialImage);
   color: var(--text-light);
 }
 
-.oltre-formazione .oltre-desc {
-  color: rgba(255, 255, 255, .82);
-}
-
 .oltre-freccia {
   font-size: var(--text-sm);
   color: var(--primary-blue-dark);
   transition: transform .3s ease;
-}
-
-.oltre-formazione .oltre-freccia {
-  color: var(--white);
 }
 
 .oltre-voce:focus-visible {
@@ -1205,10 +1135,6 @@ const schema = schemaHome(socialImage);
 @media (hover: hover) and (pointer: fine) {
   .oltre-voce:hover .oltre-nome {
     color: var(--primary-blue-dark);
-  }
-
-  .oltre-formazione .oltre-voce:hover .oltre-nome {
-    color: var(--primary-blue);
   }
 
   .oltre-voce:hover .oltre-freccia {
@@ -1222,20 +1148,20 @@ const schema = schemaHome(socialImage);
   }
 }
 
-/* Tablet: uno sotto l'altro; formazione con le due voci affiancate, progetti su due colonne */
+/* Tablet: una colonna; le voci su due colonne */
 @media (max-width: 900px) {
   .oltre-layout {
     grid-template-columns: minmax(0, 1fr);
-    gap: 3rem;
+    gap: 3.5rem;
     margin-top: 3rem;
   }
 
-  .oltre-formazione {
-    padding: 2rem;
+  .oltre-blocco-testo {
+    min-height: 0;
+    max-width: 38rem;
   }
 
-  .oltre-formazione .oltre-lista,
-  .oltre-progetti .oltre-lista {
+  .oltre-lista {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 2.5rem;
@@ -1244,10 +1170,6 @@ const schema = schemaHome(socialImage);
 
   .oltre-lista li {
     border-top: 1px solid rgba(26, 26, 26, .14);
-  }
-
-  .oltre-formazione .oltre-lista li {
-    border-top-color: rgba(255, 255, 255, .25);
   }
 }
 
@@ -1258,46 +1180,30 @@ const schema = schemaHome(socialImage);
   }
 }
 
-/* Mobile: due elenchi semplici (niente foto), titolo del blocco sopra le righe */
+/* Mobile: etichetta e frase nascoste, il titolo del blocco sopra l'elenco */
 @media (max-width: 600px) {
   .oltre-layout {
     gap: 2.75rem;
     margin-top: 2.5rem;
   }
 
-  .oltre-formazione {
-    display: block;
-    padding: 0;
-    overflow: visible;
-    border-radius: 0;
-    background: none;
-    box-shadow: none;
-    color: var(--dark-navy);
-  }
-
-  .oltre-sfondo,
   .oltre-blocco-eyebrow,
   .oltre-blocco-testo {
     display: none;
   }
 
-  .oltre-blocco-titolo,
-  .oltre-formazione .oltre-blocco-titolo {
+  .oltre-blocco-titolo {
     margin-bottom: .75rem;
     font-size: var(--text-2xl);
-    color: var(--dark-navy);
   }
 
-  .oltre-formazione .oltre-lista,
-  .oltre-progetti .oltre-lista {
+  .oltre-lista {
     display: block;
     border-top: 1px solid rgba(26, 26, 26, .14);
   }
 
-  .oltre-lista li,
-  .oltre-formazione .oltre-lista li {
+  .oltre-lista li {
     border-top: none;
-    border-bottom: 1px solid rgba(26, 26, 26, .14);
   }
 
   .oltre-voce {
@@ -1305,22 +1211,8 @@ const schema = schemaHome(socialImage);
     padding: .95rem 0;
   }
 
-  .oltre-formazione .oltre-icona {
-    color: var(--primary-blue-dark);
-  }
-
-  .oltre-formazione .oltre-nome {
-    color: var(--dark-navy);
-  }
-
-  .oltre-desc,
-  .oltre-formazione .oltre-desc {
+  .oltre-desc {
     margin-top: .15rem;
-    color: var(--text-light);
-  }
-
-  .oltre-formazione .oltre-freccia {
-    color: var(--primary-blue-dark);
   }
 }
 

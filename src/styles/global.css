@@ -947,7 +947,7 @@ section [class*="-intro-highlight"] p {
 }
 
 .chisiamo-hero-title {
-  font-size: var(--text-5xl);
+  font-size: clamp(1.875rem, 1.5rem + 1.667vw, 3rem);   /* 30 → 48px: un gradino sotto --text-5xl */
   font-weight: 700;
   color: var(--white);
   margin: 0;

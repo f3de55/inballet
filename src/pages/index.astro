@@ -1056,7 +1056,7 @@ const schema = schemaHome(socialImage);
 
 .oltre-layout {
   max-width: 1200px;
-  margin: 3.5rem auto 0;
+  margin: 4.5rem auto 0;
   padding: 0 2rem;
 }
 
@@ -1065,13 +1065,13 @@ const schema = schemaHome(socialImage);
 }
 
 .oltre-gruppo + .oltre-gruppo {
-  margin-top: 3.5rem;
-  padding-top: 3.5rem;
+  margin-top: 4.5rem;
+  padding-top: 4.5rem;
   border-top: 1px solid rgba(26, 26, 26, .15);
 }
 
 .oltre-gruppo-titolo {
-  margin: 0 0 .6rem;
+  margin: 0 0 .9rem;
   font-size: var(--text-3xl);
   font-weight: 700;
   line-height: var(--leading-tight);
@@ -1081,7 +1081,7 @@ const schema = schemaHome(socialImage);
 
 .oltre-gruppo-testo {
   max-width: 50rem;
-  margin: 0 auto 2.5rem;
+  margin: 0 auto 3.25rem;
   font-size: var(--text-base);
   line-height: 1.6;
   color: var(--text-light);
@@ -1089,12 +1089,12 @@ const schema = schemaHome(socialImage);
 
 .oltre-lista {
   --colonne: 2;
-  --gap-x: 3rem;
+  --gap-x: 4.5rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.75rem var(--gap-x);
-  max-width: 920px;
+  gap: 2.75rem var(--gap-x);
+  max-width: 960px;
   margin: 0 auto;
   list-style: none;
   text-align: left;
@@ -1109,7 +1109,7 @@ const schema = schemaHome(socialImage);
   flex: 1;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  column-gap: 1rem;
+  column-gap: 1.25rem;
   align-items: center;
   color: inherit;
   text-decoration: none;
@@ -1118,8 +1118,8 @@ const schema = schemaHome(socialImage);
 .oltre-icona {
   display: grid;
   place-items: center;
-  width: 3.25rem;
-  height: 3.25rem;
+  width: 3.5rem;
+  height: 3.5rem;
   border-radius: 50%;
   background: var(--white);
   box-shadow: 0 4px 14px rgba(26, 26, 26, .06);
@@ -1142,7 +1142,7 @@ const schema = schemaHome(socialImage);
 
 .oltre-desc {
   display: block;
-  margin-top: .2rem;
+  margin-top: .35rem;
   font-size: .9375rem;
   line-height: 1.45;
   color: var(--text-light);
@@ -1173,7 +1173,7 @@ const schema = schemaHome(socialImage);
 /* Tablet stretto: testi a sinistra come le intro delle altre sezioni */
 @media (max-width: 900px) {
   .oltre-layout {
-    margin-top: 3rem;
+    margin-top: 3.5rem;
   }
 
   .oltre-gruppo {
@@ -1181,22 +1181,23 @@ const schema = schemaHome(socialImage);
   }
 
   .oltre-gruppo + .oltre-gruppo {
-    margin-top: 3rem;
-    padding-top: 3rem;
+    margin-top: 3.5rem;
+    padding-top: 3.5rem;
   }
 
   .oltre-gruppo-testo {
-    margin: 0 0 2rem;
+    margin: 0 0 2.5rem;
   }
 
   .oltre-lista {
     --gap-x: 2rem;
+    row-gap: 2.25rem;
     justify-content: flex-start;
     max-width: none;
   }
 
   .oltre-voce {
-    column-gap: .875rem;
+    column-gap: 1rem;
   }
 
   .oltre-icona {
@@ -1218,12 +1219,12 @@ const schema = schemaHome(socialImage);
   }
 
   .oltre-gruppo + .oltre-gruppo {
-    margin-top: 2.5rem;
-    padding-top: 2.5rem;
+    margin-top: 2.75rem;
+    padding-top: 2.75rem;
   }
 
   .oltre-gruppo-titolo {
-    margin-bottom: .75rem;
+    margin-bottom: 1rem;
     font-size: var(--text-2xl);
   }
 
@@ -1241,7 +1242,7 @@ const schema = schemaHome(socialImage);
 
   .oltre-voce {
     grid-template-columns: 2rem minmax(0, 1fr) auto;
-    padding: .85rem 0;
+    padding: 1rem 0;
   }
 
   .oltre-icona {
@@ -1258,6 +1259,7 @@ const schema = schemaHome(socialImage);
 
   .oltre-desc {
     margin-top: .15rem;
+    font-size: var(--text-sm);
   }
 }
 

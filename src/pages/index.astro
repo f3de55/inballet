@@ -183,8 +183,8 @@ const schema = schemaHome(socialImage);
     </section>
 
     <!-- Formazione e progetti (come nel menu): due gruppi con la stessa struttura, separati da una linea.
-         Desktop: titolo e frase centrati, voci a schede centrate (tre per riga, tutte della stessa larghezza).
-         Tablet: due per riga. Mobile: elenco compatto con icona e freccia -->
+         Ogni voce è una riga compatta (icona, nome e frase, freccia): due per riga su desktop e tablet,
+         una su mobile -->
     <section class="oltre-section" aria-labelledby="oltre-titolo">
         <div class="intro-editoriale">
             <span class="eyebrow">Formazione e progetti</span>
@@ -206,7 +206,6 @@ const schema = schemaHome(socialImage);
                                         <span class="oltre-nome">{v.nome}</span>
                                         <span class="oltre-desc">{v.testo}</span>
                                     </span>
-                                    <span class="link-cta oltre-cta" aria-hidden="true">Vedi di più <i class="fas fa-arrow-right"></i></span>
                                     <i class="fas fa-arrow-right oltre-freccia" aria-hidden="true"></i>
                                 </a>
                             </li>
@@ -1041,9 +1040,9 @@ const schema = schemaHome(socialImage);
 
 }
 
-/* Formazione e progetti: due gruppi con la stessa struttura (titolo, frase, schede), separati da una linea.
-   Schede tutte della stessa larghezza e centrate: tre per riga su desktop, due su tablet,
-   elenco compatto su mobile. Nessun riquadro: icona in un cerchio bianco, nome, frase e link. */
+/* Formazione e progetti: due gruppi con la stessa struttura (titolo, frase, voci), separati da una linea.
+   Ogni voce è una riga compatta (icona nel cerchio, nome e frase, freccia), uguale su tutti i dispositivi:
+   due per riga su desktop e tablet, una su mobile. Riga incompleta centrata su desktop. */
 .oltre-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
@@ -1057,7 +1056,7 @@ const schema = schemaHome(socialImage);
 
 .oltre-layout {
   max-width: 1200px;
-  margin: 4.5rem auto 0;
+  margin: 3.5rem auto 0;
   padding: 0 2rem;
 }
 
@@ -1066,13 +1065,13 @@ const schema = schemaHome(socialImage);
 }
 
 .oltre-gruppo + .oltre-gruppo {
-  margin-top: 5rem;
-  padding-top: 5rem;
+  margin-top: 3.5rem;
+  padding-top: 3.5rem;
   border-top: 1px solid rgba(26, 26, 26, .15);
 }
 
 .oltre-gruppo-titolo {
-  margin: 0 0 .75rem;
+  margin: 0 0 .6rem;
   font-size: var(--text-3xl);
   font-weight: 700;
   line-height: var(--leading-tight);
@@ -1082,23 +1081,23 @@ const schema = schemaHome(socialImage);
 
 .oltre-gruppo-testo {
   max-width: 50rem;
-  margin: 0 auto 3.5rem;
+  margin: 0 auto 2.5rem;
   font-size: var(--text-base);
   line-height: 1.6;
   color: var(--text-light);
 }
 
-/* Righe centrate: con 2 o 5 voci le righe incomplete restano al centro */
 .oltre-lista {
-  --colonne: 3;
+  --colonne: 2;
   --gap-x: 3rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 3.5rem var(--gap-x);
-  max-width: 1080px;
+  gap: 1.75rem var(--gap-x);
+  max-width: 920px;
   margin: 0 auto;
   list-style: none;
+  text-align: left;
 }
 
 .oltre-lista li {
@@ -1108,8 +1107,9 @@ const schema = schemaHome(socialImage);
 
 .oltre-voce {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: 1rem;
   align-items: center;
   color: inherit;
   text-decoration: none;
@@ -1118,23 +1118,22 @@ const schema = schemaHome(socialImage);
 .oltre-icona {
   display: grid;
   place-items: center;
-  width: 4.25rem;
-  height: 4.25rem;
+  width: 3.25rem;
+  height: 3.25rem;
   border-radius: 50%;
   background: var(--white);
-  box-shadow: 0 6px 18px rgba(26, 26, 26, .06);
-  font-size: var(--text-xl);
+  box-shadow: 0 4px 14px rgba(26, 26, 26, .06);
+  font-size: var(--text-md);
   color: var(--primary-blue-dark);
 }
 
 .oltre-testo-voce {
   display: block;
-  margin: 1.25rem 0 1.5rem;
 }
 
 .oltre-nome {
   display: block;
-  font-size: var(--text-md);
+  font-size: clamp(1rem, .95rem + .2vw, 1.125rem);
   font-weight: 700;
   line-height: 1.3;
   color: var(--dark-navy);
@@ -1143,34 +1142,21 @@ const schema = schemaHome(socialImage);
 
 .oltre-desc {
   display: block;
-  margin-top: .4rem;
-  font-size: var(--text-sm);
-  line-height: 1.5;
+  margin-top: .2rem;
+  font-size: .9375rem;
+  line-height: 1.45;
   color: var(--text-light);
 }
 
-/* «Vedi di più» in fondo: allineato tra le schede della stessa riga, senza effetti hover */
-.oltre-cta {
-  margin-top: auto;
-}
-
-.oltre-cta:hover {
-  color: var(--dark-navy);
-  border-color: var(--primary-blue);
-}
-
-.oltre-cta:hover i {
-  color: var(--black);
-  transform: none;
-}
-
 .oltre-freccia {
-  display: none;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  transition: transform .3s ease;
 }
 
 .oltre-voce:focus-visible {
   outline: 2px solid var(--primary-blue-dark);
-  outline-offset: 6px;
+  outline-offset: 4px;
   border-radius: var(--radius-img);
 }
 
@@ -1178,18 +1164,13 @@ const schema = schemaHome(socialImage);
   .oltre-voce:hover .oltre-nome {
     color: var(--primary-blue-dark);
   }
-}
 
-/* Tablet: due schede per riga */
-@media (max-width: 1024px) {
-  .oltre-lista {
-    --colonne: 2;
-    --gap-x: 2.5rem;
-    max-width: 720px;
+  .oltre-voce:hover .oltre-freccia {
+    transform: translateX(4px);
   }
 }
 
-/* Tablet stretto: testi a sinistra come le intro delle altre sezioni; schede in griglia da due */
+/* Tablet stretto: testi a sinistra come le intro delle altre sezioni */
 @media (max-width: 900px) {
   .oltre-layout {
     margin-top: 3rem;
@@ -1200,31 +1181,27 @@ const schema = schemaHome(socialImage);
   }
 
   .oltre-gruppo + .oltre-gruppo {
-    margin-top: 3.5rem;
-    padding-top: 3.5rem;
+    margin-top: 3rem;
+    padding-top: 3rem;
   }
 
   .oltre-gruppo-testo {
-    margin: 0 0 2.5rem;
+    margin: 0 0 2rem;
   }
 
   .oltre-lista {
+    --gap-x: 2rem;
     justify-content: flex-start;
-    gap: 2.5rem var(--gap-x);
     max-width: none;
   }
 
   .oltre-voce {
-    align-items: flex-start;
+    column-gap: .875rem;
   }
 
   .oltre-icona {
-    width: 3.5rem;
-    height: 3.5rem;
-  }
-
-  .oltre-testo-voce {
-    margin: 1rem 0 1.25rem;
+    width: 2.75rem;
+    height: 2.75rem;
   }
 }
 
@@ -1234,7 +1211,7 @@ const schema = schemaHome(socialImage);
   }
 }
 
-/* Mobile: elenco compatto (icona, nome e frase, freccia); frase del gruppo e «Vedi di più» nascosti */
+/* Mobile: una voce per riga, icona senza cerchio; frase del gruppo nascosta */
 @media (max-width: 600px) {
   .oltre-layout {
     margin-top: 2.5rem;
@@ -1250,8 +1227,7 @@ const schema = schemaHome(socialImage);
     font-size: var(--text-2xl);
   }
 
-  .oltre-gruppo-testo,
-  .oltre-cta {
+  .oltre-gruppo-testo {
     display: none;
   }
 
@@ -1264,14 +1240,10 @@ const schema = schemaHome(socialImage);
   }
 
   .oltre-voce {
-    display: grid;
     grid-template-columns: 2rem minmax(0, 1fr) auto;
-    column-gap: 1rem;
-    align-items: center;
     padding: .85rem 0;
   }
 
-  /* Su mobile solo l'icona, senza cerchio: il nome resta su una riga */
   .oltre-icona {
     width: auto;
     height: auto;
@@ -1280,22 +1252,12 @@ const schema = schemaHome(socialImage);
     font-size: var(--text-xl);
   }
 
-  .oltre-testo-voce {
-    margin: 0;
-  }
-
   .oltre-nome {
     font-size: var(--text-base);
   }
 
   .oltre-desc {
     margin-top: .15rem;
-  }
-
-  .oltre-freccia {
-    display: block;
-    font-size: var(--text-sm);
-    color: var(--primary-blue-dark);
   }
 }
 

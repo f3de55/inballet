@@ -23,16 +23,16 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
 // Formazione e progetti: tre gruppi di pagine (icona del gruppo, icona e riga di descrizione per ogni voce)
 const oltre = [
-  { titolo: 'Formazione', icona: 'fa-graduation-cap', voci: [
+  { titolo: 'Formazione', icona: 'fa-graduation-cap', foto: 'gallery-4.jpg', alt: 'Insegnante di danza con le allieve in sala', fuoco: { desktop: '50% 25%' }, voci: [
     { nome: 'Formazione Insegnanti di Danza', testo: 'Biennale, titolo nazionale CSEN e CONI', icona: 'fa-graduation-cap', href: '/formazione-insegnanti' },
     { nome: 'Formazioni Personalizzate', testo: 'Workshop per educatori e terapeuti', icona: 'fa-chalkboard-user', href: '/formazioni-personalizzate' },
   ] },
-  { titolo: 'Territorio', icona: 'fa-masks-theater', voci: [
+  { titolo: 'Territorio', icona: 'fa-masks-theater', foto: 'bg-progetti-territorio.jpg', alt: 'Danzatori in sala durante un progetto sul territorio', fuoco: { desktop: '50% 35%' }, voci: [
     { nome: 'Spettacoli ed Eventi', testo: 'Spettacoli, saggi e workshop', icona: 'fa-masks-theater', href: '/spettacoli-eventi' },
     { nome: 'Collaborazioni con le Scuole', testo: 'Danza a scuola, dal nido alle superiori', icona: 'fa-school', href: '/collaborazioni-scuole' },
     { nome: 'Sportello Psicologico', testo: 'Ascolto per famiglie e bambini', icona: 'fa-comments', href: '/sportello-psicologico' },
   ] },
-  { titolo: 'Inclusione', icona: 'fa-heart', voci: [
+  { titolo: 'Inclusione', icona: 'fa-heart', foto: 'gallery-8.jpg', alt: "Un'allieva abbracciata alla sua insegnante in sala", fuoco: { desktop: '50% 40%' }, voci: [
     { nome: 'Progetto NoiConVoi', testo: 'Danza per ragazzi con disabilità', icona: 'fa-heart', href: '/progetto-noiconvoi' },
     { nome: 'Classi Integrate', testo: 'Corsi aperti ai bisogni speciali', icona: 'fa-universal-access', href: '/classi-integrate' },
   ] },
@@ -184,9 +184,12 @@ const schema = schemaHome(socialImage);
 
         <div class="oltre-gruppi">
             {oltre.map((g) => (
-                <div class="oltre-gruppo voce">
-                    <i class={`fas ${g.icona} voce-icona oltre-gruppo-icona`} aria-hidden="true"></i>
-                    <h3 class="voce-titolo">{g.titolo}</h3>
+                <div class="oltre-gruppo">
+                    <div class="oltre-sfondo" aria-hidden="true">
+                        <Img src={g.foto} alt="" fuoco={g.fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 400px" />
+                    </div>
+                    <i class={`fas ${g.icona} oltre-gruppo-icona`} aria-hidden="true"></i>
+                    <h3 class="oltre-gruppo-titolo">{g.titolo}</h3>
                     <ul class="oltre-lista">
                         {g.voci.map((v) => (
                             <li>
@@ -1002,10 +1005,9 @@ const schema = schemaHome(socialImage);
 }
 
 /* Formazione e progetti.
-   Tre gruppi con titolo grande (Formazione, Territorio, Inclusione) e il filetto azzurro in alto,
-   come le altre «voci» del sito; tra le voci solo spazio, niente righe.
-   Desktop: tre colonne. Tablet: due colonne, la formazione a tutta larghezza con le sue voci
-   affiancate. Mobile: un gruppo sotto l'altro, con l'icona su ogni riga. */
+   Tre box con la foto come sfondo e un velo scuro: icona, titolo grande e le voci in bianco.
+   Desktop: tre colonne. Tablet: la formazione a tutta larghezza con le sue voci affiancate, sotto
+   gli altri due. Mobile: niente foto, elenco a righe con icona su ogni voce. */
 .oltre-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
@@ -1020,43 +1022,84 @@ const schema = schemaHome(socialImage);
 .oltre-gruppi {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 4rem 5rem;
+  gap: 1.5rem;
   max-width: 1200px;
-  margin: 4.5rem auto 0;
+  margin: 4rem auto 0;
   padding: 0 2rem;
 }
 
-.oltre-gruppo.voce {
-  padding-top: 2.25rem;
+.oltre-gruppo {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-height: 30rem;
+  padding: 2.25rem;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--dark-navy);
+  box-shadow: var(--shadow-card);
+  color: var(--white);
+}
+
+.oltre-sfondo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.oltre-sfondo :global(img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Velo: più denso in basso, dove c'è il testo */
+.oltre-sfondo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 15, 15, .92) 0%, rgba(15, 15, 15, .75) 50%, rgba(15, 15, 15, .5) 100%);
 }
 
 .oltre-gruppo-icona {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
+  font-size: var(--text-xl);
+  color: var(--primary-blue);
 }
 
-.oltre-gruppo .voce-titolo {
-  margin-bottom: 1.75rem;
+.oltre-gruppo-titolo {
+  margin: 0 0 1.25rem;
   font-size: var(--text-3xl);
+  font-weight: 700;
   line-height: var(--leading-tight);
+  letter-spacing: -.01em;
+  color: var(--white);
 }
 
 .oltre-lista {
+  /* In fondo al box: icona e titolo restano in alto, alla stessa altezza nei tre box */
+  margin-top: auto;
+  padding-top: 2rem;
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1.75rem;
+}
+
+.oltre-lista li {
+  border-top: 1px solid rgba(255, 255, 255, .22);
 }
 
 .oltre-voce {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: 1.25rem;
+  column-gap: 1rem;
   align-items: center;
+  padding: 1rem 0;
   color: inherit;
   text-decoration: none;
 }
 
-/* L'icona della singola voce serve solo su mobile (sopra i 600px c'è quella del gruppo) */
+/* L'icona della singola voce serve solo su mobile (nei box c'è quella del gruppo) */
 .oltre-icona {
   display: none;
   font-size: var(--text-xl);
@@ -1070,32 +1113,32 @@ const schema = schemaHome(socialImage);
   font-size: var(--text-base);
   font-weight: 700;
   line-height: 1.3;
-  color: var(--dark-navy);
+  color: var(--white);
   transition: color .3s ease;
 }
 
 .oltre-desc {
   display: block;
-  margin-top: .4rem;
+  margin-top: .25rem;
   font-size: var(--text-sm);
-  line-height: 1.55;
-  color: var(--text-light);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .82);
 }
 
 .oltre-freccia {
   font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
+  color: var(--white);
   transition: transform .3s ease;
 }
 
 .oltre-voce:focus-visible {
-  outline: 2px solid var(--primary-blue-dark);
+  outline: 2px solid var(--primary-blue);
   outline-offset: 2px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .oltre-voce:hover .oltre-nome {
-    color: var(--primary-blue-dark);
+    color: var(--primary-blue);
   }
 
   .oltre-voce:hover .oltre-freccia {
@@ -1103,27 +1146,31 @@ const schema = schemaHome(socialImage);
   }
 }
 
-@media (max-width: 1100px) {
-  .oltre-gruppi {
-    gap: 3.5rem 3rem;
-  }
-}
-
-/* Tablet: due colonne, formazione a tutta larghezza con le sue due voci affiancate */
+/* Tablet: la formazione a tutta larghezza con le sue due voci affiancate */
 @media (max-width: 900px) {
   .oltre-gruppi {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: 3.5rem;
+    margin-top: 3rem;
+  }
+
+  .oltre-gruppo {
+    min-height: 26rem;
+    padding: 2rem;
   }
 
   .oltre-gruppo:first-child {
     grid-column: 1 / -1;
+    min-height: 22rem;
   }
 
   .oltre-gruppo:first-child .oltre-lista {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.75rem 3rem;
+    column-gap: 2.5rem;
+  }
+
+  .oltre-gruppo:first-child .oltre-lista li:nth-child(n + 3) {
+    display: none;
   }
 }
 
@@ -1134,7 +1181,7 @@ const schema = schemaHome(socialImage);
   }
 }
 
-/* Mobile: un gruppo sotto l'altro, righe con filetti e icona su ogni voce */
+/* Mobile: niente box né foto, un gruppo sotto l'altro con righe e icona su ogni voce */
 @media (max-width: 600px) {
   .oltre-gruppi {
     grid-template-columns: minmax(0, 1fr);
@@ -1142,31 +1189,42 @@ const schema = schemaHome(socialImage);
     margin-top: 2.5rem;
   }
 
-  .oltre-gruppo.voce {
-    padding-top: 0;
-    border-top: none;
+  .oltre-gruppo,
+  .oltre-gruppo:first-child {
+    display: block;
+    min-height: 0;
+    padding: 0;
+    overflow: visible;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    color: var(--dark-navy);
   }
 
+  .oltre-sfondo,
   .oltre-gruppo-icona {
     display: none;
   }
 
-  .oltre-gruppo .voce-titolo {
+  .oltre-gruppo-titolo {
     margin-bottom: .75rem;
     font-size: var(--text-2xl);
+    color: var(--dark-navy);
   }
 
-  .oltre-lista {
+  .oltre-lista,
+  .oltre-gruppo:first-child .oltre-lista {
     display: block;
+    margin-top: 0;
+    padding-top: 0;
     border-top: 1px solid rgba(26, 26, 26, 0.12);
   }
 
-  .oltre-lista li {
-    border-bottom: 1px solid rgba(26, 26, 26, 0.12);
-  }
-
-  .oltre-gruppo:first-child .oltre-lista {
+  .oltre-lista li,
+  .oltre-gruppo:first-child .oltre-lista li:nth-child(n + 3) {
     display: block;
+    border-top: none;
+    border-bottom: 1px solid rgba(26, 26, 26, 0.12);
   }
 
   .oltre-voce {
@@ -1174,12 +1232,21 @@ const schema = schemaHome(socialImage);
     padding: .95rem 0;
   }
 
-  .oltre-desc {
-    margin-top: .15rem;
-  }
-
   .oltre-icona {
     display: block;
+  }
+
+  .oltre-nome {
+    color: var(--dark-navy);
+  }
+
+  .oltre-desc {
+    margin-top: .15rem;
+    color: var(--text-light);
+  }
+
+  .oltre-freccia {
+    color: var(--primary-blue-dark);
   }
 }
 

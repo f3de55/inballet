@@ -1071,32 +1071,20 @@ const schema = schemaHome(socialImage);
 }
 
 .oltre-layout {
-  display: grid;
-  gap: 5rem;
   max-width: 1200px;
   margin: 4rem auto 0;
   padding: 0 2rem;
 }
 
-/* Desktop: ogni blocco è una fascia con la stessa struttura (titolo e frase a sinistra, voci a destra),
-   così Formazione (2 voci) e Progetti (5 voci) restano allineati e bilanciati */
+/* Due blocchi centrati come le altre sezioni, separati da una linea */
 .oltre-blocco {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 17fr);
-  grid-template-rows: auto auto 1fr;
-  column-gap: 4rem;
-  align-items: start;
+  text-align: center;
 }
 
-.oltre-blocco > :not(.oltre-lista) {
-  grid-column: 1;
-}
-
-.oltre-blocco > .oltre-lista {
-  grid-column: 2;
-  grid-row: 1 / span 3;
-  /* Si allunga fino al fondo del testo: la riga della Formazione chiude alla stessa altezza */
-  align-self: stretch;
+.oltre-progetti {
+  margin-top: 5rem;
+  padding-top: 5rem;
+  border-top: 1px solid rgba(26, 26, 26, .22);
 }
 
 .oltre-blocco-eyebrow {
@@ -1118,28 +1106,33 @@ const schema = schemaHome(socialImage);
 }
 
 .oltre-blocco-testo {
-  margin: 0;
+  max-width: 38rem;
+  margin: 0 auto 2.5rem;
   font-size: var(--text-base);
   line-height: 1.6;
   color: var(--text-light);
 }
 
 .oltre-lista {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   column-gap: 2.5rem;
+  max-width: 56rem;
+  margin: 0 auto;
   list-style: none;
+  text-align: left;
+}
+
+/* Due voci per riga; con un numero dispari l'ultima resta centrata */
+.oltre-lista li {
+  display: flex;
+  flex: 0 0 calc(50% - 1.25rem);
   border-bottom: 1px solid rgba(26, 26, 26, .14);
 }
 
-.oltre-lista li {
-  display: flex;
+.oltre-lista li:nth-child(-n+2) {
   border-top: 1px solid rgba(26, 26, 26, .14);
-}
-
-/* Numero dispari di voci: l'ultima occupa tutta la riga, senza cella vuota */
-.oltre-lista li:last-child:nth-child(odd) {
-  grid-column: 1 / -1;
 }
 
 .oltre-voce {
@@ -1197,38 +1190,28 @@ const schema = schemaHome(socialImage);
   }
 }
 
-@media (max-width: 1100px) {
-  .oltre-layout {
-    gap: 4rem;
-  }
-
-  .oltre-blocco {
-    column-gap: 2.5rem;
-  }
-
-  .oltre-lista {
-    column-gap: 2rem;
-  }
-}
-
-/* Tablet: titolo e frase sopra, le voci su due colonne sotto */
+/* Tablet: come le altre sezioni, testi a sinistra; le voci restano su due colonne */
 @media (max-width: 900px) {
   .oltre-layout {
-    gap: 3.5rem;
     margin-top: 3rem;
   }
 
   .oltre-blocco {
-    display: block;
+    text-align: left;
   }
 
   .oltre-blocco-testo {
-    max-width: 38rem;
-    margin-bottom: 2rem;
+    margin: 0 0 2rem;
   }
 
   .oltre-lista {
-    column-gap: 2.5rem;
+    justify-content: flex-start;
+    max-width: none;
+  }
+
+  .oltre-progetti {
+    margin-top: 3.5rem;
+    padding-top: 3.5rem;
   }
 }
 
@@ -1242,8 +1225,12 @@ const schema = schemaHome(socialImage);
 /* Mobile: etichetta e frase nascoste, il titolo del blocco sopra l'elenco */
 @media (max-width: 600px) {
   .oltre-layout {
-    gap: 2.75rem;
     margin-top: 2.5rem;
+  }
+
+  .oltre-progetti {
+    margin-top: 2.75rem;
+    padding-top: 2.75rem;
   }
 
   .oltre-blocco-eyebrow,
@@ -1259,12 +1246,12 @@ const schema = schemaHome(socialImage);
   .oltre-lista {
     display: block;
     border-top: 1px solid rgba(26, 26, 26, .14);
-    border-bottom: none;
   }
 
-  .oltre-lista li {
+  .oltre-lista li,
+  .oltre-lista li:nth-child(-n+2) {
+    display: block;
     border-top: none;
-    border-bottom: 1px solid rgba(26, 26, 26, .14);
   }
 
   .oltre-voce {

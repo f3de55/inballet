@@ -164,7 +164,7 @@ html::-webkit-scrollbar-thumb:hover {
   --shadow-lg: 0 8px 24px rgba(0,0,0,.12);
   --shadow-blue: 0 4px 15px rgba(135,206,235,.3);
   /* Sistema UI condiviso */
-  --section-y: clamp(4.5rem, 3rem + 4vw, 6rem);
+  --section-y: clamp(3.75rem, 3rem + 3.3333vw, 6rem);
   --bg-soft: #eef7fa;
   --radius-card: 20px;
   --radius-img: 24px;

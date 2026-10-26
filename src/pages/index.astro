@@ -961,8 +961,14 @@ const schema = schemaHome(socialImage);
    Desktop: tre colonne. Tablet: due colonne, la formazione a tutta larghezza con le sue voci
    affiancate. Mobile: un gruppo sotto l'altro, con l'icona su ogni riga. */
 .oltre-section {
-  padding: calc(var(--section-y) * 1.2) 0;
+  padding: var(--section-y) 0;
   background: var(--bg-soft);
+}
+
+@media (min-width: 769px) {
+  .oltre-section {
+    padding: calc(var(--section-y) * 1.2) 0;
+  }
 }
 
 .oltre-gruppi {

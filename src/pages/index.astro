@@ -20,18 +20,14 @@ import heroMp4 from '../assets/video/hero-720.mp4?url';
 const stili = categorieCorsi.filter((c) => c.id !== 'eta');
 const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
-// Progetti sul territorio: due gruppi di pagine, ognuna con icona e una riga di descrizione
+// Progetti sul territorio: una scheda per pagina, con icona, una riga di descrizione e il suo link
 const progetti = [
-  { titolo: 'Eventi, scuole e famiglie', voci: [
-    { nome: 'Spettacoli ed Eventi', testo: 'Spettacoli, saggi, workshop e corsi aperti', icona: 'fa-masks-theater', href: '/spettacoli-eventi' },
-    { nome: 'Collaborazioni con le Scuole', testo: 'Danza a scuola, dal nido alle superiori', icona: 'fa-school', href: '/collaborazioni-scuole' },
-    { nome: 'Sportello Psicologico', testo: 'Ascolto per famiglie, genitori e bambini', icona: 'fa-comments', href: '/sportello-psicologico' },
-  ] },
-  { titolo: 'Danza integrativa', voci: [
-    { nome: 'Progetto NoiConVoi', testo: 'Danza per ragazzi con disabilità, dal 2013', icona: 'fa-heart', href: '/progetto-noiconvoi' },
-    { nome: 'Classi Integrate', testo: 'Corsi aperti ai bisogni speciali', icona: 'fa-universal-access', href: '/classi-integrate' },
-    { nome: 'Sostenitori', testo: 'Chi sostiene la danza inclusiva', icona: 'fa-handshake', href: '/sostenitori' },
-  ] },
+  { nome: 'Spettacoli ed Eventi', testo: 'Spettacoli, saggi, workshop e corsi aperti.', icona: 'fa-masks-theater', cta: 'Vedi gli eventi', href: '/spettacoli-eventi' },
+  { nome: 'Collaborazioni con le Scuole', testo: 'Danza a scuola, dal nido alle superiori.', icona: 'fa-school', cta: 'Scopri i progetti', href: '/collaborazioni-scuole' },
+  { nome: 'Sportello Psicologico', testo: 'Ascolto per famiglie, genitori e bambini.', icona: 'fa-comments', cta: 'Scopri lo sportello', href: '/sportello-psicologico' },
+  { nome: 'Progetto NoiConVoi', testo: 'Danza per ragazzi con disabilità, dal 2013.', icona: 'fa-heart', cta: 'Scopri il progetto', href: '/progetto-noiconvoi' },
+  { nome: 'Classi Integrate', testo: 'Corsi aperti ai bisogni speciali.', icona: 'fa-universal-access', cta: 'Scopri le classi', href: '/classi-integrate' },
+  { nome: 'Sostenitori', testo: 'Chi sostiene la danza inclusiva.', icona: 'fa-handshake', cta: 'Scopri di più', href: '/sostenitori' },
 ];
 
 // Sfondi responsive: foto e punto focale per desktop, tablet e mobile.
@@ -243,26 +239,19 @@ const schema = schemaHome(socialImage);
             <p>Spettacoli, scuole, ascolto per le famiglie e, dal 2013, danza per l'inclusione.</p>
         </div>
 
-        <div class="progetti-gruppi">
-            {progetti.map((g) => (
-                <div class="progetti-gruppo">
-                    <h3 class="progetti-gruppo-titolo">{g.titolo}</h3>
-                    <ul class="progetti-lista">
-                        {g.voci.map((v) => (
-                            <li>
-                                <a href={v.href} class="progetto">
-                                    <i class={`fas ${v.icona} progetto-icona`} aria-hidden="true"></i>
-                                    <span class="progetto-testo">
-                                        <span class="progetto-nome">{v.nome}</span>
-                                        <span class="progetto-desc">{v.testo}</span>
-                                    </span>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+        <!-- Come Formazione: scheda intera cliccabile con icona, titolo, una riga e link -->
+        <ul class="progetti-lista">
+            {progetti.map((v) => (
+                <li class="voce">
+                    <a href={v.href} class="percorso">
+                        <i class={`fas ${v.icona} voce-icona`} aria-hidden="true"></i>
+                        <h3 class="voce-titolo">{v.nome}</h3>
+                        <p class="voce-testo">{v.testo}</p>
+                        <span class="link-cta">{v.cta} <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                    </a>
+                </li>
             ))}
-        </div>
+        </ul>
     </section>
 
     <!-- Galleria fotografica a scorrimento, con lightbox -->
@@ -711,14 +700,21 @@ const schema = schemaHome(socialImage);
 
 /* Tutta la scheda è il link */
 .percorso {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   height: 100%;
   color: inherit;
   text-decoration: none;
 }
 
+/* Il link sta sempre in fondo alla scheda, anche se i titoli vanno a capo */
+.percorso .voce-testo {
+  margin-bottom: 1.5rem;
+}
+
 .percorso .link-cta {
-  margin-top: 1.5rem;
+  margin-top: auto;
 }
 
 /* Hover solo con mouse: sul touch resterebbe attivo dopo il tocco */
@@ -759,8 +755,7 @@ const schema = schemaHome(socialImage);
 
 /* Stesso margine laterale dell'intro (1.5rem sotto i 768px) */
 @media (max-width: 768px) {
-  .formazione-lista,
-  .progetti-gruppi {
+  .formazione-lista {
     padding: 0 1.5rem;
   }
 }
@@ -1045,91 +1040,40 @@ const schema = schemaHome(socialImage);
 
 }
 
-/* Progetti: fondo azzurrino, intro centrata e due gruppi di righe con icona e una riga di testo */
+/* Progetti: fondo azzurrino, intro centrata e sei schede come in Formazione (3 colonne → 2 → 1) */
 .progetti-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
 }
 
-.progetti-gruppi {
+.progetti-lista {
+  list-style: none;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.5rem 5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3rem 3rem;
   max-width: 1200px;
   margin: 3.5rem auto 0;
   padding: 0 2rem;
 }
 
-.progetti-gruppo-titolo {
-  margin: 0 0 .5rem;
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--primary-blue-dark);
-}
-
-.progetti-lista {
-  list-style: none;
-  border-top: 1px solid rgba(26, 26, 26, 0.12);
-}
-
-.progetti-lista li {
-  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
-}
-
-.progetto {
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
-  column-gap: 1rem;
-  align-items: start;
-  padding: 1.25rem 0;
-  color: inherit;
-  text-decoration: none;
-}
-
-.progetto-icona {
-  padding-top: .2rem;
-  font-size: var(--text-xl);
-  line-height: 1;
-  text-align: center;
-  color: var(--primary-blue-dark);
-}
-
-.progetto-nome {
-  display: block;
-  font-size: var(--text-base);
-  font-weight: 700;
-  line-height: 1.35;
-  color: var(--dark-navy);
-  transition: color .3s ease;
-}
-
-.progetto-desc {
-  display: block;
-  margin-top: .2rem;
-  font-size: var(--text-sm);
-  line-height: 1.5;
-  color: var(--text-light);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .progetto:hover .progetto-nome {
-    color: var(--primary-blue-dark);
-  }
-}
-
 @media (max-width: 900px) {
-  .progetti-gruppi {
-    column-gap: 2.5rem;
+  .progetti-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-top: 2.5rem;
   }
 }
 
-/* Gruppi uno sotto l'altro solo quando le colonne diventerebbero troppo strette */
-@media (max-width: 700px) {
-  .progetti-gruppi {
+/* Stesso margine laterale dell'intro (1.5rem sotto i 768px) */
+@media (max-width: 768px) {
+  .progetti-lista {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .progetti-lista {
     grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
   }
 }
 

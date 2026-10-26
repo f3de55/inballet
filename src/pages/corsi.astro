@@ -55,6 +55,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
                         <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 640px) 100vw, 30vw" />
                     </figure>
                     <div class="categoria-testo">
+                        <span class="eyebrow categoria-percorso">Percorso {i + 1} di {categorieCorsi.length}</span>
                         <i class={`fas ${cat.icona} categoria-numero`} aria-hidden="true"></i>
                         <h2 class="categoria-titolo" id={`${cat.id}-titolo`}>{cat.nome}</h2>
                         <p class="categoria-descrizione" set:html={cat.descrizione} />
@@ -90,15 +91,20 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
 
 <style>
   .corsi {
-    padding: var(--section-y) 0;
+    padding: 0 0 var(--section-y);
     background: var(--white);
     scroll-margin-top: calc(var(--header-h) + var(--banner-height, 0px));
   }
 
   /* ---------- Introduzione ---------- */
+  /* Intro su fascia azzurrina a tutta larghezza (stesso schema dei percorsi pari): si stacca
+     dalla fascia bianca del primo percorso, invece di fondersi con lui */
   .corsi-intro {
-    max-width: 1100px;
-    margin: 0 auto 4rem;
+    margin: 0;
+    padding: var(--section-y) 0 4.5rem;
+    background: var(--bg-soft);
+    box-shadow: 0 0 0 100vmax var(--bg-soft);
+    clip-path: inset(0 -100vmax);
     text-align: center;
   }
 
@@ -201,7 +207,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
     gap: 4rem;
     align-items: center;
-    padding: 4.5rem 0;
+    padding: 5.5rem 0;
     scroll-margin-top: calc(var(--header-h) + 10px + var(--banner-height, 0px));
   }
 
@@ -248,6 +254,12 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     object-fit: cover;
     border-radius: var(--radius-img);
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14);
+  }
+
+  /* Etichetta «Percorso 1 di 5» sopra l'icona */
+  .categoria-percorso {
+    display: block;
+    margin-bottom: 1.25rem;
   }
 
   /* Icona del percorso sopra il titolo */
@@ -362,7 +374,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem 3rem;
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
     padding: 2.5rem 3rem;
     background: var(--bg-soft);
     border-radius: var(--radius-card);
@@ -424,13 +436,13 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     }
 
     .corsi-intro {
-      margin-bottom: 2.5rem;
+      padding-bottom: 3.5rem;
     }
 
     .categoria {
       grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
       gap: 2.5rem;
-      padding: 3.5rem 0;
+      padding: 4rem 0;
     }
 
     .categoria:nth-of-type(even) {
@@ -457,6 +469,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
   /* Mobile: foto sopra in formato basso, testo e corsi sotto; intro a sinistra */
   @media (max-width: 640px) {
     .corsi-intro {
+      padding-bottom: 3rem;
       text-align: left;
     }
 
@@ -468,7 +481,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     .categoria:nth-of-type(even) {
       grid-template-columns: minmax(0, 1fr);
       gap: 1.75rem;
-      padding: 3rem 0;
+      padding: 3.5rem 0;
     }
 
     .categoria:nth-of-type(even) .categoria-foto {

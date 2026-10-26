@@ -1072,11 +1072,31 @@ const schema = schemaHome(socialImage);
 
 .oltre-layout {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 5rem;
   max-width: 1200px;
   margin: 4rem auto 0;
   padding: 0 2rem;
+}
+
+/* Desktop: ogni blocco è una fascia con la stessa struttura (titolo e frase a sinistra, voci a destra),
+   così Formazione (2 voci) e Progetti (5 voci) restano allineati e bilanciati */
+.oltre-blocco {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 17fr);
+  grid-template-rows: auto auto 1fr;
+  column-gap: 4rem;
+  align-items: start;
+}
+
+.oltre-blocco > :not(.oltre-lista) {
+  grid-column: 1;
+}
+
+.oltre-blocco > .oltre-lista {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  /* Si allunga fino al fondo del testo: la riga della Formazione chiude alla stessa altezza */
+  align-self: stretch;
 }
 
 .oltre-blocco-eyebrow {
@@ -1098,24 +1118,32 @@ const schema = schemaHome(socialImage);
 }
 
 .oltre-blocco-testo {
-  /* Due righe in entrambe le colonne: le liste partono alla stessa altezza */
-  min-height: 3.3em;
-  margin: 0 0 2rem;
+  margin: 0;
   font-size: var(--text-base);
   line-height: 1.6;
   color: var(--text-light);
 }
 
 .oltre-lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 2.5rem;
   list-style: none;
-  border-top: 1px solid rgba(26, 26, 26, .14);
-}
-
-.oltre-lista li {
   border-bottom: 1px solid rgba(26, 26, 26, .14);
 }
 
+.oltre-lista li {
+  display: flex;
+  border-top: 1px solid rgba(26, 26, 26, .14);
+}
+
+/* Numero dispari di voci: l'ultima occupa tutta la riga, senza cella vuota */
+.oltre-lista li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 .oltre-voce {
+  flex: 1;
   display: grid;
   grid-template-columns: 2.25rem minmax(0, 1fr) auto;
   column-gap: 1rem;
@@ -1171,32 +1199,36 @@ const schema = schemaHome(socialImage);
 
 @media (max-width: 1100px) {
   .oltre-layout {
-    gap: 3rem;
+    gap: 4rem;
+  }
+
+  .oltre-blocco {
+    column-gap: 2.5rem;
+  }
+
+  .oltre-lista {
+    column-gap: 2rem;
   }
 }
 
-/* Tablet: una colonna; le voci su due colonne */
+/* Tablet: titolo e frase sopra, le voci su due colonne sotto */
 @media (max-width: 900px) {
   .oltre-layout {
-    grid-template-columns: minmax(0, 1fr);
     gap: 3.5rem;
     margin-top: 3rem;
   }
 
+  .oltre-blocco {
+    display: block;
+  }
+
   .oltre-blocco-testo {
-    min-height: 0;
     max-width: 38rem;
+    margin-bottom: 2rem;
   }
 
   .oltre-lista {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 2.5rem;
-    border-top: none;
-  }
-
-  .oltre-lista li {
-    border-top: 1px solid rgba(26, 26, 26, .14);
   }
 }
 
@@ -1227,10 +1259,12 @@ const schema = schemaHome(socialImage);
   .oltre-lista {
     display: block;
     border-top: 1px solid rgba(26, 26, 26, .14);
+    border-bottom: none;
   }
 
   .oltre-lista li {
     border-top: none;
+    border-bottom: 1px solid rgba(26, 26, 26, .14);
   }
 
   .oltre-voce {

@@ -78,9 +78,9 @@ export const categorieCorsi = [
     nome: 'Danza Classica e Moderna',
     sintesi: 'La base tecnica di ogni stile: si comincia a 3 anni e si arriva ai livelli avanzati.',
     immagine: { src: 'foto/tutu-classica.jpg', alt: 'Tutù rosa di danza classica', fuoco: { desktop: '60% 50%', mobile: '50% 45%' } },
-    /** Foto alternativa solo per il box mobile della home */
+    /** Foto con le onde per il box della home (al posto di `immagine`) */
     immagineMobile: 'foto/classica-moderna-mobile.jpg',
-    /** Opacità del velo nero sul box mobile (le foto mobile sono già scurite) */
+    /** Opacità del velo nero sul box della home (le foto con le onde sono già scurite) */
     veloMobile: 0.22,
     descrizione: 'Si comincia a 3 anni con Avviamento alla Danza, a 4-5 anni con Educazione alla Danza; dai 6 anni Danza Classica e Modern, fino ai livelli avanzati.',
     evidenzia: ['3 anni', '4-5 anni', 'dai 6 anni'],

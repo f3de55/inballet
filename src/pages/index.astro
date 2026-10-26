@@ -117,7 +117,7 @@ const schema = schemaHome(socialImage);
                                 <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[240, 400, 640]} sizes="(max-width: 600px) 96px, (max-width: 1024px) 45vw, 280px" />
                             </span>
                             <span class="corsi-stile-testo">
-                                <span class="corsi-stile-nome">{cat.nome}&nbsp;<i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                <span class="corsi-stile-nome"><span>{cat.nome}</span><i class="fas fa-arrow-right" aria-hidden="true"></i></span>
                                 <span class="corsi-stile-desc">{cat.sintesi}</span>
                             </span>
                         </a>
@@ -568,7 +568,10 @@ const schema = schemaHome(socialImage);
 }
 
 .corsi-stile-nome {
-  display: block;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
   font-size: var(--text-xl);
   font-weight: 700;
   line-height: 1.2;
@@ -576,9 +579,11 @@ const schema = schemaHome(socialImage);
   transition: color .25s ease;
 }
 
+/* La freccia sta sempre a destra, sulla prima riga del nome: stessa posizione in tutte le schede */
 .corsi-stile-nome i {
-  margin-left: .1rem;
+  flex-shrink: 0;
   font-size: .7em;
+  line-height: 1.714;
   color: var(--primary-blue-dark);
   transition: transform .25s ease;
 }

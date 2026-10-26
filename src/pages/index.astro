@@ -674,7 +674,7 @@ const schema = schemaHome(socialImage);
 }
 
 /* Mobile: un box per stile con la foto come sfondo, un velo scuro per la leggibilità e il testo
-   bianco in basso */
+   bianco centrato */
 @media (max-width: 600px) {
   .corsi-indice {
     grid-template-columns: minmax(0, 1fr);
@@ -684,9 +684,11 @@ const schema = schemaHome(socialImage);
   .corsi-stile {
     position: relative;
     isolation: isolate;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
     min-height: 16rem;
-    padding: 1.5rem;
+    padding: 1.75rem 1.5rem;
+    text-align: center;
     overflow: hidden;
     border-radius: var(--radius-card);
     background: var(--dark-navy);
@@ -707,12 +709,12 @@ const schema = schemaHome(socialImage);
     aspect-ratio: auto;
   }
 
-  /* Velo: più denso in basso, dove c'è il testo */
+  /* Velo uniforme: il testo è centrato su tutta la foto */
   .corsi-stile-foto::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(15, 15, 15, .88) 0%, rgba(15, 15, 15, .58) 50%, rgba(15, 15, 15, .22) 100%);
+    background: rgba(15, 15, 15, .55);
   }
 
   .corsi-stile-testo {
@@ -730,6 +732,7 @@ const schema = schemaHome(socialImage);
   }
 
   .corsi-stile-link {
+    align-self: center;
     color: var(--white);
     border-color: var(--white);
   }

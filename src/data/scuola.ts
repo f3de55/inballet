@@ -97,6 +97,8 @@ export const categorieCorsi = [
     nome: 'Danza Contemporanea',
     sintesi: "L'arte più libera del movimento, dai 10 anni all'età adulta.",
     immagine: { src: 'foto/contact-improvisation-img2.jpg', alt: 'Due danzatori a terra durante una sequenza di contact improvisation', fuoco: { desktop: '50% 50%' } },
+    immagineMobile: 'foto/contemporanea-mobile.jpg',
+    veloMobile: 0.1, // foto già scurita
     descrizione: "L'arte più libera del movimento: Danza Contemporanea dai 10 anni, Contemporanea Adulti dai 40 anni, Contact Improvisation e Movimento Creativo, aperto dai 18 anni anche a chi non ha mai danzato.",
     evidenzia: ['dai 10 anni', 'dai 40 anni', 'dai 18 anni'],
     corsi: [

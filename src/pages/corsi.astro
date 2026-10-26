@@ -56,7 +56,6 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
                     </figure>
                     <div class="categoria-testo">
                         <span class="eyebrow categoria-percorso">Percorso {i + 1} di {categorieCorsi.length}</span>
-                        <i class={`fas ${cat.icona} categoria-numero`} aria-hidden="true"></i>
                         <h2 class="categoria-titolo" id={`${cat.id}-titolo`}>{cat.nome}</h2>
                         <p class="categoria-descrizione" set:html={cat.descrizione} />
                         <ul class="corsi-lista">
@@ -256,18 +255,9 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14);
   }
 
-  /* Etichetta «Percorso 1 di 5» sopra l'icona */
+  /* Etichetta «Percorso 1 di 5» sopra il titolo */
   .categoria-percorso {
     display: block;
-    margin-bottom: 1.25rem;
-  }
-
-  /* Icona del percorso sopra il titolo */
-  .categoria-numero {
-    display: block;
-    font-size: var(--text-2xl);
-    line-height: 1;
-    color: var(--primary-blue-dark);
     margin-bottom: 1rem;
   }
 
@@ -477,7 +467,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
       margin-left: 0;
     }
 
-    /* Ordine: etichetta, icona e titolo, poi la foto, poi descrizione e corsi
+    /* Ordine: etichetta e titolo, poi la foto, poi descrizione e corsi
        (il blocco di testo "si scioglie" così i suoi elementi si ordinano insieme alla foto) */
     .categoria,
     .categoria:nth-of-type(even) {
@@ -494,10 +484,6 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
 
     .categoria-percorso {
       order: 1;
-    }
-
-    .categoria-numero {
-      order: 2;
     }
 
     .categoria-titolo {

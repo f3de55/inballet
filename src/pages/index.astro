@@ -107,7 +107,7 @@ const schema = schemaHome(socialImage);
                             <i class={`fas ${cat.icona} corsi-indice-icona`} aria-hidden="true"></i>
                             <span class="corsi-indice-nome">{cat.nome}</span>
                             <span class="corsi-indice-testo">{cat.sintesi}</span>
-                            <span class="link-cta corsi-indice-cta" aria-hidden="true">Vedi i corsi <i class="fas fa-arrow-right"></i></span>
+                            <i class="fas fa-arrow-right corsi-indice-freccia" aria-hidden="true"></i>
                         </a>
                     </li>
                 ))}
@@ -556,7 +556,8 @@ const schema = schemaHome(socialImage);
 }
 
 /* Stili come schede bianche sul fondo azzurrino, due per riga (una sotto i 768px):
-   tutta la scheda è il link; icona sopra il nome, frase, "Vedi i corsi" in fondo */
+   tutta la scheda è il link; icona sopra il nome e frase, con una freccia in alto a destra
+   (niente testo "Vedi i corsi": si confonderebbe con il pulsante sotto le schede) */
 .corsi-indice {
   list-style: none;
   display: grid;
@@ -568,6 +569,7 @@ const schema = schemaHome(socialImage);
 }
 
 .corsi-indice a {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -602,14 +604,13 @@ const schema = schemaHome(socialImage);
   color: var(--text-light);
 }
 
-/* Spinto in fondo: le schede della stessa riga allineano il link (stile .link-cta) */
-.corsi-indice-testo + .corsi-indice-cta {
-  align-self: flex-start;
-  margin-top: auto;
-}
-
-.corsi-indice-testo {
-  margin-bottom: 1.5rem;
+.corsi-indice-freccia {
+  position: absolute;
+  top: 2rem;
+  right: 2.25rem;
+  font-size: var(--text-md);
+  color: var(--primary-blue-dark);
+  transition: transform .25s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -622,14 +623,8 @@ const schema = schemaHome(socialImage);
     color: var(--primary-blue-dark);
   }
 
-  .corsi-indice a:hover .corsi-indice-cta {
-    color: var(--primary-blue-dark);
-    border-color: var(--primary-blue-dark);
-  }
-
-  .corsi-indice a:hover .corsi-indice-cta i {
-    color: var(--primary-blue-dark);
-    transform: translateX(6px);
+  .corsi-indice a:hover .corsi-indice-freccia {
+    transform: translateX(4px);
   }
 }
 
@@ -649,6 +644,11 @@ const schema = schemaHome(socialImage);
     padding: 1.75rem;
   }
 
+  .corsi-indice-freccia {
+    top: 1.75rem;
+    right: 1.75rem;
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -665,6 +665,11 @@ const schema = schemaHome(socialImage);
 
   .corsi-indice a {
     padding: 1.5rem;
+  }
+
+  .corsi-indice-freccia {
+    top: 1.5rem;
+    right: 1.5rem;
   }
 
   .corsi-indice-nome {

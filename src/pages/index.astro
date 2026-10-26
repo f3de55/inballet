@@ -108,14 +108,18 @@ const schema = schemaHome(socialImage);
                 <p class="corsi-intro intro-sezione"><strong>Dai 3 anni all'età adulta</strong>, dalla danza classica all'hip-hop fino a yoga e pilates: scegli <strong>lo stile che fa per te</strong>.</p>
             </div>
 
+            <!-- Quattro stili: foto, nome e una frase, senza riquadri. Tutto il blocco è il link -->
             <ol class="corsi-indice">
                 {stili.map((cat) => (
                     <li>
-                        <a href={`/corsi#${cat.id}`}>
-                            <i class={`fas ${cat.icona} corsi-indice-icona`} aria-hidden="true"></i>
-                            <span class="corsi-indice-nome">{cat.nome}</span>
-                            <span class="corsi-indice-testo">{cat.sintesi}</span>
-                            <i class="fas fa-arrow-right corsi-indice-freccia" aria-hidden="true"></i>
+                        <a href={`/corsi#${cat.id}`} class="corsi-stile">
+                            <span class="corsi-stile-foto">
+                                <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[240, 400, 640]} sizes="(max-width: 600px) 96px, (max-width: 1024px) 45vw, 280px" />
+                            </span>
+                            <span class="corsi-stile-testo">
+                                <span class="corsi-stile-nome">{cat.nome}&nbsp;<i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                <span class="corsi-stile-desc">{cat.sintesi}</span>
+                            </span>
                         </a>
                     </li>
                 ))}
@@ -524,125 +528,145 @@ const schema = schemaHome(socialImage);
   margin: 0 auto;
 }
 
-/* Stili come schede bianche sul fondo azzurrino, due per riga (una sotto i 768px):
-   tutta la scheda è il link; icona sopra il nome e frase, con una freccia in alto a destra
-   (niente testo "Vedi i corsi": si confonderebbe con il pulsante sotto le schede) */
+/* Quattro stili: foto, nome con freccia e una frase, senza riquadri.
+   Desktop 4 colonne, tablet 2, mobile righe con la foto quadrata a sinistra. */
 .corsi-indice {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2.5rem;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0;
 }
 
-.corsi-indice a {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 2rem 2.25rem;
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-card);
-  background: var(--white);
-  box-shadow: var(--shadow-card);
+.corsi-stile {
+  display: block;
   color: var(--dark-navy);
   text-decoration: none;
-  transition: box-shadow .25s ease, border-color .25s ease;
 }
 
-.corsi-indice-icona {
-  margin-bottom: .9rem;
+.corsi-stile-foto {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-img);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .12);
+}
+
+.corsi-stile-foto :global(img) {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+
+.corsi-stile-testo {
+  display: block;
+  margin-top: 1.5rem;
+}
+
+.corsi-stile-nome {
+  display: block;
   font-size: var(--text-xl);
-  color: var(--primary-blue-dark);
-}
-
-.corsi-indice-nome {
-  font-size: var(--text-2xl);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -.01em;
   transition: color .25s ease;
 }
 
-.corsi-indice-testo {
-  margin-top: .6rem;
-  font-size: var(--text-base);
-  line-height: 1.6;
-  color: var(--text-light);
-}
-
-.corsi-indice-freccia {
-  position: absolute;
-  top: 2rem;
-  right: 2.25rem;
-  font-size: var(--text-md);
+.corsi-stile-nome i {
+  font-size: .7em;
   color: var(--primary-blue-dark);
   transition: transform .25s ease;
 }
 
+.corsi-stile-desc {
+  display: block;
+  margin-top: .6rem;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--text-light);
+}
+
 @media (hover: hover) and (pointer: fine) {
-  .corsi-indice a:hover {
-    border-color: var(--primary-blue);
-    box-shadow: var(--shadow-card-hover);
+  .corsi-stile:hover .corsi-stile-foto :global(img) {
+    transform: scale(1.05);
   }
 
-  .corsi-indice a:hover .corsi-indice-nome {
+  .corsi-stile:hover .corsi-stile-nome {
     color: var(--primary-blue-dark);
   }
 
-  .corsi-indice a:hover .corsi-indice-freccia {
+  .corsi-stile:hover .corsi-stile-nome i {
     transform: translateX(4px);
   }
 }
 
-.corsi-indice a:focus-visible {
+.corsi-stile:focus-visible {
   outline: 2px solid var(--primary-blue-dark);
-  outline-offset: 4px;
+  outline-offset: 6px;
+  border-radius: var(--radius-img);
 }
 
-/* Solo il pulsante, centrato sotto le schede come il titolo della sezione */
+/* Solo il pulsante, centrato sotto gli stili come il titolo della sezione */
 .corsi-cta {
   margin-top: 3.5rem;
   text-align: center;
 }
 
-@media (max-width: 1024px) {
-  .corsi-indice a {
-    padding: 1.75rem;
-  }
-
-  .corsi-indice-freccia {
-    top: 1.75rem;
-    right: 1.75rem;
-  }
-
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
   .corsi-indice {
-    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
   }
-
 }
 
+/* Tablet: due colonne, foto più basse */
+@media (max-width: 900px) {
+  .corsi-indice {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem 2rem;
+  }
+
+  .corsi-stile-foto :global(img) {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* Mobile: una riga per stile, foto quadrata a sinistra e testo a destra */
 @media (max-width: 600px) {
   .corsi-indice {
-    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
   }
 
-  .corsi-indice a {
-    padding: 1.5rem;
+  .corsi-stile {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: center;
   }
 
-  .corsi-indice-freccia {
-    top: 1.5rem;
-    right: 1.5rem;
+  .corsi-stile-foto {
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .1);
   }
 
-  .corsi-indice-nome {
-    font-size: var(--text-xl);
+  .corsi-stile-foto :global(img) {
+    aspect-ratio: 1;
+  }
+
+  .corsi-stile-testo {
+    margin-top: 0;
+  }
+
+  .corsi-stile-nome {
+    font-size: var(--text-md);
+  }
+
+  .corsi-stile-desc {
+    margin-top: .35rem;
   }
 
   .corsi-cta {
@@ -652,7 +676,6 @@ const schema = schemaHome(socialImage);
   .corsi-wrapper {
     padding: 0 1.5rem;
   }
-
 }
 
 /* ---------- Dicono di noi: intro e sintesi a sinistra, una recensione alla volta a destra ---------- */

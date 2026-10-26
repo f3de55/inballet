@@ -22,7 +22,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
 // Formazione e progetti: tre gruppi di pagine (icona del gruppo, icona e riga di descrizione per ogni voce)
 const oltre = [
-  { titolo: 'Formazione professionale', icona: 'fa-graduation-cap', voci: [
+  { titolo: 'Formazione', icona: 'fa-graduation-cap', voci: [
     { nome: 'Formazione Insegnanti di Danza', testo: 'Biennale, titolo nazionale CSEN e CONI', icona: 'fa-graduation-cap', href: '/formazione-insegnanti' },
     { nome: 'Formazioni Personalizzate', testo: 'Workshop per educatori e terapeuti', icona: 'fa-chalkboard-user', href: '/formazioni-personalizzate' },
   ] },
@@ -961,7 +961,7 @@ const schema = schemaHome(socialImage);
    azzurro in alto come le altre «voci» del sito). Tablet: due colonne, la formazione a tutta
    larghezza con le sue voci affiancate. Mobile: un gruppo sotto l'altro, con l'icona su ogni riga. */
 .oltre-section {
-  padding: var(--section-y) 0;
+  padding: calc(var(--section-y) * 1.2) 0;
   background: var(--bg-soft);
 }
 
@@ -971,7 +971,7 @@ const schema = schemaHome(socialImage);
   grid-template-areas:
     "intro  testo"
     "gruppi gruppi";
-  column-gap: 5rem;
+  column-gap: 6rem;
   align-items: end;
   max-width: 1200px;
   margin: 0 auto;
@@ -996,33 +996,36 @@ const schema = schemaHome(socialImage);
   grid-area: gruppi;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2.5rem 3.5rem;
-  margin-top: 3rem;
+  gap: 4rem 5rem;
+  margin-top: 5rem;
+}
+
+/* Il filetto azzurro in alto separa i gruppi; tra le voci c'è solo spazio, niente righe */
+.oltre-gruppo.voce {
+  padding-top: 2.25rem;
 }
 
 .oltre-gruppo-icona {
-  margin-bottom: .9rem;
+  margin-bottom: 1.25rem;
 }
 
 .oltre-gruppo .voce-titolo {
-  margin-bottom: .75rem;
+  margin-bottom: 1.75rem;
 }
 
 .oltre-lista {
   list-style: none;
-  border-top: 1px solid rgba(26, 26, 26, 0.12);
-}
-
-.oltre-lista li {
-  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
 }
 
 .oltre-voce {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: 1rem;
+  column-gap: 1.25rem;
   align-items: center;
-  padding: .95rem 0;
+  padding: 0;
   color: inherit;
   text-decoration: none;
 }
@@ -1047,9 +1050,9 @@ const schema = schemaHome(socialImage);
 
 .oltre-desc {
   display: block;
-  margin-top: .15rem;
+  margin-top: .4rem;
   font-size: var(--text-sm);
-  line-height: 1.45;
+  line-height: 1.55;
   color: var(--text-light);
 }
 
@@ -1080,7 +1083,7 @@ const schema = schemaHome(socialImage);
   }
 
   .oltre-gruppi {
-    gap: 2.5rem 2.5rem;
+    gap: 3.5rem 3rem;
   }
 }
 
@@ -1106,7 +1109,8 @@ const schema = schemaHome(socialImage);
 
   .oltre-gruppi {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: 2.5rem;
+    gap: 3.5rem 3rem;
+    margin-top: 3.5rem;
   }
 
   .oltre-gruppo:first-child {
@@ -1116,7 +1120,7 @@ const schema = schemaHome(socialImage);
   .oltre-gruppo:first-child .oltre-lista {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 2.5rem;
+    gap: 1.75rem 3rem;
   }
 }
 
@@ -1139,6 +1143,19 @@ const schema = schemaHome(socialImage);
     border-top: none;
   }
 
+  .oltre-lista {
+    display: block;
+    border-top: 1px solid rgba(26, 26, 26, 0.12);
+  }
+
+  .oltre-lista li {
+    border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+  }
+
+  .oltre-gruppo:first-child .oltre-lista {
+    display: block;
+  }
+
   .oltre-gruppo-icona {
     display: none;
   }
@@ -1152,12 +1169,13 @@ const schema = schemaHome(socialImage);
     color: var(--primary-blue-dark);
   }
 
-  .oltre-gruppo:first-child .oltre-lista {
-    display: block;
-  }
-
   .oltre-voce {
     grid-template-columns: 2rem minmax(0, 1fr) auto;
+    padding: .95rem 0;
+  }
+
+  .oltre-desc {
+    margin-top: .15rem;
   }
 
   .oltre-icona {

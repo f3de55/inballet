@@ -96,18 +96,9 @@ const gallery = await Promise.all(
 
 <style>
 .gallery-section {
-  background: #fff;
+  /* Sfondo azzurrino: separa la galleria dalle sezioni bianche sopra e sotto, senza linee */
+  background: var(--bg-soft);
   position: relative;
-}
-
-.gallery-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--primary-blue);
 }
 
 .gallery-section {

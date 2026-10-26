@@ -80,6 +80,8 @@ export const categorieCorsi = [
     immagine: { src: 'foto/tutu-classica.jpg', alt: 'Tutù rosa di danza classica', fuoco: { desktop: '60% 50%', mobile: '50% 45%' } },
     /** Foto alternativa solo per il box mobile della home */
     immagineMobile: 'foto/classica-moderna-mobile.jpg',
+    /** Opacità del velo nero sul box mobile (la foto è chiara) */
+    veloMobile: 0.55,
     descrizione: 'Si comincia a 3 anni con Avviamento alla Danza, a 4-5 anni con Educazione alla Danza; dai 6 anni Danza Classica e Modern, fino ai livelli avanzati.',
     evidenzia: ['3 anni', '4-5 anni', 'dai 6 anni'],
     corsi: [
@@ -110,6 +112,8 @@ export const categorieCorsi = [
     nome: 'Urban Dance',
     sintesi: 'Gli stili urbani tra energia, tecnica e cultura Hip-Hop, dai 6 anni.',
     immagine: { src: 'foto/breaking-img2.jpg', alt: 'Allievi di breaking in freeze sul parquet della sala', fuoco: { desktop: '50% 50%', mobile: '50% 60%' } },
+    immagineMobile: 'foto/urban-dance-mobile.jpg',
+    veloMobile: 0.1, // foto già scurita
     descrizione: 'Hip-Hop e Breaking dai 6 anni, Heels, Danza Acrobatica e, dai 16 anni, il Contaminato: gli stili urbani tra energia, tecnica e cultura Hip-Hop.',
     evidenzia: ['dai 6 anni', 'dai 16 anni'],
     corsi: [
@@ -126,6 +130,8 @@ export const categorieCorsi = [
     nome: 'Benessere e Movimento',
     sintesi: 'Per il benessere di corpo e mente, da soli o accanto a un corso di danza.',
     immagine: { src: 'foto/yoga-img2.jpg', alt: 'Lezione di yoga in sala, con le mani giunte sopra la testa', fuoco: { desktop: '55% 50%', mobile: '50% 35%' } },
+    immagineMobile: 'foto/benessere-movimento-mobile.jpg',
+    veloMobile: 0.1, // foto già scurita
     descrizione: "Hatha Yoga, Pilates per livelli e lezioni individuali: per il benessere di corpo e mente, da soli o accanto a un corso di danza.",
     evidenzia: ['Hatha Yoga', 'Pilates', 'lezioni individuali'],
     corsi: [

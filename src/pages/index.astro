@@ -119,7 +119,7 @@ const schema = schemaHome(socialImage);
                 {stili.map((cat) => (
                     <li>
                         <a href={`/corsi#${cat.id}`} class="corsi-stile">
-                            <span class="corsi-stile-foto">
+                            <span class="corsi-stile-foto" style={cat.veloMobile !== undefined ? `--velo:${cat.veloMobile}` : undefined}>
                                 <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[240, 400, 640]} sizes="(max-width: 600px) 96px, (max-width: 1024px) 45vw, 280px" />
                                 {cat.immagineMobile && <Img class="corsi-stile-foto-mobile" src={cat.immagineMobile} alt="" aria-hidden="true" loading="lazy" decoding="async" widths={[480, 800]} sizes="100vw" />}
                             </span>
@@ -727,13 +727,9 @@ const schema = schemaHome(socialImage);
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(15, 15, 15, .32);
+    background: rgba(15, 15, 15, var(--velo, .32));
   }
 
-  /* La foto mobile della prima card è chiara: serve un velo più scuro */
-  .corsi-stile-foto:has(.corsi-stile-foto-mobile)::after {
-    background: rgba(10, 10, 10, .55);
-  }
 
   .corsi-stile-testo {
     text-shadow: 0 1px 12px rgba(0, 0, 0, .45);

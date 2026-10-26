@@ -1128,11 +1128,6 @@ const schema = schemaHome(socialImage);
 .oltre-lista li {
   display: flex;
   flex: 0 0 calc(50% - 1.25rem);
-  border-bottom: 1px solid rgba(26, 26, 26, .14);
-}
-
-.oltre-lista li:nth-child(-n+2) {
-  border-top: 1px solid rgba(26, 26, 26, .14);
 }
 
 .oltre-voce {
@@ -1141,7 +1136,7 @@ const schema = schemaHome(socialImage);
   grid-template-columns: 2.25rem minmax(0, 1fr) auto;
   column-gap: 1rem;
   align-items: center;
-  padding: 1.15rem 0;
+  padding: 1rem 0;
   color: inherit;
   text-decoration: none;
 }
@@ -1245,13 +1240,10 @@ const schema = schemaHome(socialImage);
 
   .oltre-lista {
     display: block;
-    border-top: 1px solid rgba(26, 26, 26, .14);
   }
 
-  .oltre-lista li,
-  .oltre-lista li:nth-child(-n+2) {
+  .oltre-lista li {
     display: block;
-    border-top: none;
   }
 
   .oltre-voce {

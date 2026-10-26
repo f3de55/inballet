@@ -121,6 +121,7 @@ const schema = schemaHome(socialImage);
                         <a href={`/corsi#${cat.id}`} class="corsi-stile">
                             <span class="corsi-stile-foto">
                                 <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[240, 400, 640]} sizes="(max-width: 600px) 96px, (max-width: 1024px) 45vw, 280px" />
+                                {cat.immagineMobile && <Img class="corsi-stile-foto-mobile" src={cat.immagineMobile} alt="" aria-hidden="true" loading="lazy" decoding="async" widths={[480, 800]} sizes="100vw" />}
                             </span>
                             <span class="corsi-stile-testo">
                                 <span class="corsi-stile-nome">{cat.nome}</span>
@@ -581,6 +582,11 @@ const schema = schemaHome(socialImage);
   box-shadow: 0 16px 40px rgba(0, 0, 0, .12);
 }
 
+/* Foto alternativa solo mobile (se presente): su desktop/tablet resta quella standard */
+.corsi-stile-foto :global(img.corsi-stile-foto-mobile) {
+  display: none;
+}
+
 .corsi-stile-foto :global(img) {
   display: block;
   width: 100%;
@@ -706,6 +712,14 @@ const schema = schemaHome(socialImage);
   .corsi-stile-foto :global(img) {
     height: 100%;
     aspect-ratio: auto;
+  }
+
+  .corsi-stile-foto:has(.corsi-stile-foto-mobile) :global(img:not(.corsi-stile-foto-mobile)) {
+    display: none;
+  }
+
+  .corsi-stile-foto :global(img.corsi-stile-foto-mobile) {
+    display: block;
   }
 
   /* Velo uniforme: il testo è centrato su tutta la foto */

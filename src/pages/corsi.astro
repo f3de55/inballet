@@ -477,15 +477,45 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
       margin-left: 0;
     }
 
+    /* Ordine: etichetta, icona e titolo, poi la foto, poi descrizione e corsi
+       (il blocco di testo "si scioglie" così i suoi elementi si ordinano insieme alla foto) */
     .categoria,
     .categoria:nth-of-type(even) {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
       padding: 3.5rem 0;
     }
 
+    .categoria-testo {
+      display: contents;
+    }
+
+    .categoria-percorso {
+      order: 1;
+    }
+
+    .categoria-numero {
+      order: 2;
+    }
+
+    .categoria-titolo {
+      order: 3;
+    }
+
+    .categoria .categoria-foto,
     .categoria:nth-of-type(even) .categoria-foto {
-      order: 0;
+      order: 4;
+      margin: .75rem .75rem 2rem 0;
+    }
+
+    .categoria-descrizione {
+      order: 5;
+    }
+
+    .corsi-lista {
+      order: 6;
     }
 
     .corsi-fine {

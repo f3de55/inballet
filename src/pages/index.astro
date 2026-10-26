@@ -21,22 +21,28 @@ import heroMp4 from '../assets/video/hero-720.mp4?url';
 const stili = categorieCorsi.filter((c) => c.id !== 'eta');
 const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
-// Formazione e progetti: tre gruppi di pagine (icona del gruppo, icona e riga di descrizione per ogni voce)
-const oltre = [
-  { titolo: 'Formazione', icona: 'fa-graduation-cap', foto: 'gallery-4.jpg', alt: 'Insegnante di danza con le allieve in sala', fuoco: { desktop: '50% 25%' }, voci: [
+// Formazione e progetti, come nel menu del sito: un blocco per la formazione (con foto) e l'elenco dei progetti
+const formazione = {
+  eyebrow: 'Ente formativo CSEN e CONI',
+  titolo: 'Formazione professionale',
+  testo: 'Per chi insegna danza e per chi lavora in ambito educativo e terapeutico.',
+  foto: 'gallery-4.jpg',
+  fuoco: { desktop: '50% 25%' },
+  voci: [
     { nome: 'Formazione Insegnanti di Danza', testo: 'Biennale, titolo nazionale CSEN e CONI', icona: 'fa-graduation-cap', href: '/formazione-insegnanti' },
     { nome: 'Formazioni Personalizzate', testo: 'Workshop per educatori e terapeuti', icona: 'fa-chalkboard-user', href: '/formazioni-personalizzate' },
-  ] },
-  { titolo: 'Territorio', icona: 'fa-masks-theater', foto: 'bg-progetti-territorio.jpg', alt: 'Danzatori in sala durante un progetto sul territorio', fuoco: { desktop: '50% 35%' }, voci: [
+  ],
+};
+const progetti = {
+  titolo: 'Progetti sul territorio',
+  voci: [
     { nome: 'Spettacoli ed Eventi', testo: 'Spettacoli, saggi e workshop', icona: 'fa-masks-theater', href: '/spettacoli-eventi' },
     { nome: 'Collaborazioni con le Scuole', testo: 'Danza a scuola, dal nido alle superiori', icona: 'fa-school', href: '/collaborazioni-scuole' },
     { nome: 'Sportello Psicologico', testo: 'Ascolto per famiglie e bambini', icona: 'fa-comments', href: '/sportello-psicologico' },
-  ] },
-  { titolo: 'Inclusione', icona: 'fa-heart', foto: 'gallery-8.jpg', alt: "Un'allieva abbracciata alla sua insegnante in sala", fuoco: { desktop: '50% 40%' }, voci: [
     { nome: 'Progetto NoiConVoi', testo: 'Danza per ragazzi con disabilità', icona: 'fa-heart', href: '/progetto-noiconvoi' },
     { nome: 'Classi Integrate', testo: 'Corsi aperti ai bisogni speciali', icona: 'fa-universal-access', href: '/classi-integrate' },
-  ] },
-];
+  ],
+};
 
 // Sfondi responsive: foto e punto focale per desktop, tablet e mobile.
 // Nell'hero è il primo fotogramma del video: si vede finché il video non parte
@@ -173,39 +179,56 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Formazione e progetti: una sola sezione. Intro centrata (a sinistra su tablet e mobile) e tre gruppi
-         con titolo grande: tre colonne su desktop, due su tablet (la formazione a tutta larghezza), una su mobile -->
+    <!-- Formazione e progetti (come nel menu): a sinistra il blocco con foto della formazione, a destra l'elenco
+         dei progetti. Tablet: uno sotto l'altro; mobile: due elenchi semplici -->
     <section class="oltre-section" aria-labelledby="oltre-titolo">
         <div class="intro-editoriale">
-            <span class="eyebrow">Ente formativo CSEN e CONI</span>
+            <span class="eyebrow">Formazione e progetti</span>
             <h2 class="titolo-sezione" id="oltre-titolo">La danza <em>oltre i corsi</em></h2>
             <p><strong>Formazione</strong> per chi insegna e <strong>progetti</strong> con scuole, famiglie e territorio.</p>
         </div>
 
-        <div class="oltre-gruppi">
-            {oltre.map((g) => (
-                <div class="oltre-gruppo">
-                    <div class="oltre-sfondo" aria-hidden="true">
-                        <Img src={g.foto} alt="" fuoco={g.fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 400px" />
-                    </div>
-                    <i class={`fas ${g.icona} oltre-gruppo-icona`} aria-hidden="true"></i>
-                    <h3 class="oltre-gruppo-titolo">{g.titolo}</h3>
-                    <ul class="oltre-lista">
-                        {g.voci.map((v) => (
-                            <li>
-                                <a href={v.href} class="oltre-voce">
-                                    <i class={`fas ${v.icona} oltre-icona`} aria-hidden="true"></i>
-                                    <span class="oltre-testo-voce">
-                                        <span class="oltre-nome">{v.nome}</span>
-                                        <span class="oltre-desc">{v.testo}</span>
-                                    </span>
-                                    <i class="fas fa-arrow-right oltre-freccia" aria-hidden="true"></i>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
+        <div class="oltre-layout">
+            <article class="oltre-blocco oltre-formazione">
+                <div class="oltre-sfondo" aria-hidden="true">
+                    <Img src={formazione.foto} alt="" fuoco={formazione.fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 560px" />
                 </div>
-            ))}
+                <p class="oltre-blocco-eyebrow">{formazione.eyebrow}</p>
+                <h3 class="oltre-blocco-titolo">{formazione.titolo}</h3>
+                <p class="oltre-blocco-testo">{formazione.testo}</p>
+                <ul class="oltre-lista">
+                    {formazione.voci.map((v) => (
+                        <li>
+                            <a href={v.href} class="oltre-voce">
+                                <i class={`fas ${v.icona} oltre-icona`} aria-hidden="true"></i>
+                                <span class="oltre-testo-voce">
+                                    <span class="oltre-nome">{v.nome}</span>
+                                    <span class="oltre-desc">{v.testo}</span>
+                                </span>
+                                <i class="fas fa-arrow-right oltre-freccia" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </article>
+
+            <div class="oltre-blocco oltre-progetti">
+                <h3 class="oltre-blocco-titolo">{progetti.titolo}</h3>
+                <ul class="oltre-lista">
+                    {progetti.voci.map((v) => (
+                        <li>
+                            <a href={v.href} class="oltre-voce">
+                                <i class={`fas ${v.icona} oltre-icona`} aria-hidden="true"></i>
+                                <span class="oltre-testo-voce">
+                                    <span class="oltre-nome">{v.nome}</span>
+                                    <span class="oltre-desc">{v.testo}</span>
+                                </span>
+                                <i class="fas fa-arrow-right oltre-freccia" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     </section>
 
@@ -1004,10 +1027,10 @@ const schema = schemaHome(socialImage);
 
 }
 
-/* Formazione e progetti.
-   Tre box con la foto come sfondo e un velo scuro: icona, titolo grande e le voci in bianco.
-   Desktop: tre colonne. Tablet: la formazione a tutta larghezza con le sue voci affiancate, sotto
-   gli altri due. Mobile: niente foto, elenco a righe con icona su ogni voce. */
+/* Formazione e progetti, come nel menu del sito.
+   Desktop: a sinistra il blocco della formazione (foto, velo scuro, testo bianco), a destra l'elenco dei
+   progetti su fondo azzurrino; i due blocchi hanno la stessa altezza.
+   Tablet: uno sotto l'altro, le voci su due colonne. Mobile: due elenchi semplici, senza foto. */
 .oltre-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
@@ -1019,22 +1042,22 @@ const schema = schemaHome(socialImage);
   }
 }
 
-.oltre-gruppi {
+.oltre-layout {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 4rem;
   max-width: 1200px;
   margin: 4rem auto 0;
   padding: 0 2rem;
 }
 
-.oltre-gruppo {
+/* Blocco della formazione */
+.oltre-formazione {
   position: relative;
   isolation: isolate;
   display: flex;
   flex-direction: column;
-  min-height: 30rem;
-  padding: 2.25rem;
+  padding: 2.5rem;
   overflow: hidden;
   border-radius: var(--radius-card);
   background: var(--dark-navy);
@@ -1055,57 +1078,85 @@ const schema = schemaHome(socialImage);
   object-fit: cover;
 }
 
-/* Velo: più denso in basso, dove c'è il testo */
+/* Velo: più denso in basso, dove ci sono le voci */
 .oltre-sfondo::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(15, 15, 15, .92) 0%, rgba(15, 15, 15, .75) 50%, rgba(15, 15, 15, .5) 100%);
+  background: linear-gradient(to top, rgba(15, 15, 15, .92) 0%, rgba(15, 15, 15, .75) 55%, rgba(15, 15, 15, .5) 100%);
 }
 
-.oltre-gruppo-icona {
-  margin-bottom: 1rem;
-  font-size: var(--text-xl);
+.oltre-blocco-eyebrow {
+  margin: 0 0 1rem;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   color: var(--primary-blue);
 }
 
-.oltre-gruppo-titolo {
-  margin: 0 0 1.25rem;
+.oltre-blocco-titolo {
+  margin: 0 0 1rem;
   font-size: var(--text-3xl);
   font-weight: 700;
   line-height: var(--leading-tight);
   letter-spacing: -.01em;
+  color: var(--dark-navy);
+}
+
+.oltre-formazione .oltre-blocco-titolo {
   color: var(--white);
 }
 
+.oltre-blocco-testo {
+  max-width: 26rem;
+  margin: 0;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .85);
+}
+
+/* Voci: in fondo al blocco della formazione, a righe con filetti */
 .oltre-lista {
-  /* In fondo al box: icona e titolo restano in alto, alla stessa altezza nei tre box */
-  margin-top: auto;
-  padding-top: 2rem;
   list-style: none;
+  border-top: 1px solid rgba(26, 26, 26, .14);
 }
 
 .oltre-lista li {
-  border-top: 1px solid rgba(255, 255, 255, .22);
+  border-bottom: 1px solid rgba(26, 26, 26, .14);
+}
+
+.oltre-formazione .oltre-lista {
+  margin-top: auto;
+  border-top-color: rgba(255, 255, 255, .25);
+}
+
+.oltre-formazione .oltre-lista li {
+  border-bottom-color: rgba(255, 255, 255, .25);
+}
+
+.oltre-formazione .oltre-blocco-testo {
+  margin-bottom: 2.5rem;
 }
 
 .oltre-voce {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
   column-gap: 1rem;
   align-items: center;
-  padding: 1rem 0;
+  padding: 1.15rem 0;
   color: inherit;
   text-decoration: none;
 }
 
-/* L'icona della singola voce serve solo su mobile (nei box c'è quella del gruppo) */
 .oltre-icona {
-  display: none;
   font-size: var(--text-xl);
   line-height: 1;
-  text-align: center;
   color: var(--primary-blue-dark);
+}
+
+.oltre-formazione .oltre-icona {
+  color: var(--primary-blue);
 }
 
 .oltre-nome {
@@ -1113,8 +1164,12 @@ const schema = schemaHome(socialImage);
   font-size: var(--text-base);
   font-weight: 700;
   line-height: 1.3;
-  color: var(--white);
+  color: var(--dark-navy);
   transition: color .3s ease;
+}
+
+.oltre-formazione .oltre-nome {
+  color: var(--white);
 }
 
 .oltre-desc {
@@ -1122,22 +1177,34 @@ const schema = schemaHome(socialImage);
   margin-top: .25rem;
   font-size: var(--text-sm);
   line-height: 1.5;
+  color: var(--text-light);
+}
+
+.oltre-formazione .oltre-desc {
   color: rgba(255, 255, 255, .82);
 }
 
 .oltre-freccia {
   font-size: var(--text-sm);
-  color: var(--white);
+  color: var(--primary-blue-dark);
   transition: transform .3s ease;
 }
 
+.oltre-formazione .oltre-freccia {
+  color: var(--white);
+}
+
 .oltre-voce:focus-visible {
-  outline: 2px solid var(--primary-blue);
+  outline: 2px solid var(--primary-blue-dark);
   outline-offset: 2px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .oltre-voce:hover .oltre-nome {
+    color: var(--primary-blue-dark);
+  }
+
+  .oltre-formazione .oltre-voce:hover .oltre-nome {
     color: var(--primary-blue);
   }
 
@@ -1146,53 +1213,57 @@ const schema = schemaHome(socialImage);
   }
 }
 
-/* Tablet: la formazione a tutta larghezza con le sue due voci affiancate */
+@media (max-width: 1100px) {
+  .oltre-layout {
+    gap: 3rem;
+  }
+}
+
+/* Tablet: uno sotto l'altro; formazione con le due voci affiancate, progetti su due colonne */
 @media (max-width: 900px) {
-  .oltre-gruppi {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .oltre-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3rem;
     margin-top: 3rem;
   }
 
-  .oltre-gruppo {
-    min-height: 26rem;
+  .oltre-formazione {
     padding: 2rem;
   }
 
-  .oltre-gruppo:first-child {
-    grid-column: 1 / -1;
-    min-height: 22rem;
-  }
-
-  .oltre-gruppo:first-child .oltre-lista {
+  .oltre-formazione .oltre-lista,
+  .oltre-progetti .oltre-lista {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 2.5rem;
+    border-top: none;
   }
 
-  .oltre-gruppo:first-child .oltre-lista li:nth-child(n + 3) {
-    display: none;
+  .oltre-lista li {
+    border-top: 1px solid rgba(26, 26, 26, .14);
+  }
+
+  .oltre-formazione .oltre-lista li {
+    border-top-color: rgba(255, 255, 255, .25);
   }
 }
 
 /* Stesso margine laterale dell'intro (1.5rem sotto i 768px) */
 @media (max-width: 768px) {
-  .oltre-gruppi {
+  .oltre-layout {
     padding: 0 1.5rem;
   }
 }
 
-/* Mobile: niente box né foto, un gruppo sotto l'altro con righe e icona su ogni voce */
+/* Mobile: due elenchi semplici (niente foto), titolo del blocco sopra le righe */
 @media (max-width: 600px) {
-  .oltre-gruppi {
-    grid-template-columns: minmax(0, 1fr);
+  .oltre-layout {
     gap: 2.75rem;
     margin-top: 2.5rem;
   }
 
-  .oltre-gruppo,
-  .oltre-gruppo:first-child {
+  .oltre-formazione {
     display: block;
-    min-height: 0;
     padding: 0;
     overflow: visible;
     border-radius: 0;
@@ -1202,29 +1273,28 @@ const schema = schemaHome(socialImage);
   }
 
   .oltre-sfondo,
-  .oltre-gruppo-icona {
+  .oltre-blocco-eyebrow,
+  .oltre-blocco-testo {
     display: none;
   }
 
-  .oltre-gruppo-titolo {
+  .oltre-blocco-titolo,
+  .oltre-formazione .oltre-blocco-titolo {
     margin-bottom: .75rem;
     font-size: var(--text-2xl);
     color: var(--dark-navy);
   }
 
-  .oltre-lista,
-  .oltre-gruppo:first-child .oltre-lista {
+  .oltre-formazione .oltre-lista,
+  .oltre-progetti .oltre-lista {
     display: block;
-    margin-top: 0;
-    padding-top: 0;
-    border-top: 1px solid rgba(26, 26, 26, 0.12);
+    border-top: 1px solid rgba(26, 26, 26, .14);
   }
 
   .oltre-lista li,
-  .oltre-gruppo:first-child .oltre-lista li:nth-child(n + 3) {
-    display: block;
+  .oltre-formazione .oltre-lista li {
     border-top: none;
-    border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+    border-bottom: 1px solid rgba(26, 26, 26, .14);
   }
 
   .oltre-voce {
@@ -1232,20 +1302,21 @@ const schema = schemaHome(socialImage);
     padding: .95rem 0;
   }
 
-  .oltre-icona {
-    display: block;
+  .oltre-formazione .oltre-icona {
+    color: var(--primary-blue-dark);
   }
 
-  .oltre-nome {
+  .oltre-formazione .oltre-nome {
     color: var(--dark-navy);
   }
 
-  .oltre-desc {
+  .oltre-desc,
+  .oltre-formazione .oltre-desc {
     margin-top: .15rem;
     color: var(--text-light);
   }
 
-  .oltre-freccia {
+  .oltre-formazione .oltre-freccia {
     color: var(--primary-blue-dark);
   }
 }

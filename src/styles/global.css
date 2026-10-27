@@ -165,6 +165,9 @@ html::-webkit-scrollbar-thumb:hover {
   --shadow-blue: 0 4px 15px rgba(135,206,235,.3);
   /* Sistema UI condiviso */
   --section-y: clamp(3.75rem, 3rem + 3.3333vw, 6rem);
+  /* Onda decorativa tra le sezioni: altezza e passo (più piccole su mobile) */
+  --onda-h: 10px;
+  --onda-w: 100px;
   --bg-soft: #eef7fa;
   --radius-card: 20px;
   --radius-img: 24px;
@@ -545,6 +548,41 @@ section [class*="-intro-highlight"] p {
   section.decoro-onde--sinistra {
     background-image: var(--decoro-onde-sinistra);
     background-position: left bottom;
+  }
+}
+
+/* ---------- Bordo ondulato tra le sezioni ----------
+   Ogni sezione dopo la prima (e il footer) ha il bordo superiore a onda piccola e regolare. La fascia
+   dell'onda è un bordo trasparente alto --onda-h, tirato su dal margine negativo: il layout non cambia,
+   il fondo della sezione la riempie e la maschera ritaglia il profilo, lasciando vedere sotto la sezione
+   precedente. Il bordo inferiore della precedente resta dritto: lo copre l'onda della successiva. */
+main > section:not(:first-child),
+.footer {
+  --onda-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'%3E%3Cpath d='M0 7Q30-3 60 7T120 7V14H0Z'/%3E%3C/svg%3E");
+  position: relative;
+  z-index: 1;
+  margin-top: calc(var(--onda-h) * -1);
+  border-top: var(--onda-h) solid transparent;
+  background-origin: border-box;
+  -webkit-mask: var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x, linear-gradient(#000 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
+  mask: var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x, linear-gradient(#000 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
+}
+
+/* Sezioni con foto e velo a parte (…-bg, …-overlay): salgono anch'esse nella fascia dell'onda */
+main > section:not(:first-child) > :is([class*="-bg "], [class$="-bg"], [class*="-overlay "], [class$="-overlay"]) {
+  top: calc(var(--onda-h) * -1);
+  height: calc(100% + var(--onda-h));
+}
+
+/* …e il loro overflow nascosto non deve tagliare la fascia dell'onda */
+main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [class*="-overlay "], [class$="-overlay"])) {
+  overflow: visible;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --onda-h: 7px;
+    --onda-w: 70px;
   }
 }
 

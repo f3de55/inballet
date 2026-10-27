@@ -116,9 +116,9 @@ const schema = schemaHome(socialImage);
                 {stili.map((cat) => (
                     <li>
                         <a href={`/corsi#${cat.id}`} class="corsi-stile">
-                            <span class="corsi-stile-foto" style={cat.veloMobile !== undefined ? `--velo:${cat.veloMobile}` : undefined}>
-                                {cat.immagineMobile
-                                    ? <Img src={cat.immagineMobile} alt={cat.immagine.alt} loading="lazy" decoding="async" widths={[400, 640, 800]} sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 300px" />
+                            <span class="corsi-stile-foto" style={cat.veloHome !== undefined ? `--velo:${cat.veloHome}` : undefined}>
+                                {cat.immagineHome
+                                    ? <Img src={cat.immagineHome.src} alt="" aria-hidden="true" fuoco={cat.immagineHome.fuoco} loading="lazy" decoding="async" widths={[400, 640, 800]} sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 300px" />
                                     : <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[400, 640, 800]} sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 300px" />}
                             </span>
                             <span class="corsi-stile-testo">

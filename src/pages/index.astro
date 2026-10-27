@@ -23,16 +23,12 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
 // Formazione e progetti, come nel menu del sito: due gruppi con titolo, frase e voci
 const formazione = {
-  titolo: 'Formazione professionale',
-  testo: 'Per chi insegna danza e per chi lavora in ambito educativo e terapeutico.',
   voci: [
     { nome: 'Formazione Insegnanti di Danza', testo: 'Biennale, titolo nazionale CSEN e CONI', icona: 'fa-graduation-cap', href: '/formazione-insegnanti' },
     { nome: 'Formazioni Personalizzate', testo: 'Workshop per educatori e terapeuti', icona: 'fa-chalkboard-user', href: '/formazioni-personalizzate' },
   ],
 };
 const progetti = {
-  titolo: 'Progetti sul territorio',
-  testo: "Spettacoli, scuole, ascolto per le famiglie e danza per l'inclusione.",
   voci: [
     { nome: 'Spettacoli ed Eventi', testo: 'Spettacoli, saggi e workshop', icona: 'fa-masks-theater', href: '/spettacoli-eventi' },
     { nome: 'Collaborazioni con le Scuole', testo: 'Danza a scuola, dal nido alle superiori', icona: 'fa-school', href: '/collaborazioni-scuole' },
@@ -41,10 +37,8 @@ const progetti = {
     { nome: 'Classi Integrate', testo: 'Corsi aperti ai bisogni speciali', icona: 'fa-universal-access', href: '/classi-integrate' },
   ],
 };
-const gruppiOltre = [
-  { id: 'formazione', ...formazione },
-  { id: 'progetti', ...progetti },
-];
+// Le voci di entrambi i gruppi in un'unica griglia: 2 (formazione) + 3 + 2 (progetti)
+const vociOltre = [...formazione.voci, ...progetti.voci];
 
 // Sfondi responsive: foto e punto focale per desktop, tablet e mobile.
 // Nell'hero è il primo fotogramma del video: si vede finché il video non parte
@@ -183,9 +177,8 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Formazione e progetti (come nel menu): due gruppi uno sotto l'altro, ognuno con titolo e frase
-         centrati e le voci in una griglia a celle uguali con filetti tra una cella e l'altra (come i loghi
-         dei sostenitori). Formazione: 2 celle. Progetti: 3 + 2 celle, sempre a rettangolo pieno.
+    <!-- Formazione e progetti (come nel menu): una sola griglia a celle uguali con filetti tra le celle
+         (come i loghi dei sostenitori): 2 + 3 + 2 voci, sempre a rettangolo pieno.
          Mobile: elenco compatto con icona e freccia -->
     <section class="oltre-section" aria-labelledby="oltre-titolo">
         <div class="intro-editoriale">
@@ -195,28 +188,20 @@ const schema = schemaHome(socialImage);
         </div>
 
         <div class="oltre-layout">
-            {gruppiOltre.map((g) => (
-                <div class={`oltre-gruppo oltre-${g.id}`}>
-                    <div class="oltre-gruppo-testa">
-                        <h3 class="oltre-gruppo-titolo">{g.titolo}</h3>
-                        <p class="oltre-gruppo-testo">{g.testo}</p>
-                    </div>
-                    <ul class="oltre-lista">
-                        {g.voci.map((v) => (
-                            <li>
-                                <a href={v.href} class="oltre-voce">
-                                    <span class="oltre-icona" aria-hidden="true"><i class={`fas ${v.icona}`}></i></span>
-                                    <span class="oltre-testo-voce">
-                                        <span class="oltre-nome">{v.nome}</span>
-                                        <span class="oltre-desc">{v.testo}</span>
-                                    </span>
-                                    <i class="fas fa-arrow-right oltre-freccia" aria-hidden="true"></i>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
+            <ul class="oltre-lista">
+                {vociOltre.map((v) => (
+                    <li>
+                        <a href={v.href} class="oltre-voce">
+                            <span class="oltre-icona" aria-hidden="true"><i class={`fas ${v.icona}`}></i></span>
+                            <span class="oltre-testo-voce">
+                                <span class="oltre-nome">{v.nome}</span>
+                                <span class="oltre-desc">{v.testo}</span>
+                            </span>
+                            <i class="fas fa-arrow-right oltre-freccia" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                ))}
+            </ul>
         </div>
     </section>
 
@@ -974,10 +959,9 @@ const schema = schemaHome(socialImage);
 
 }
 
-/* Formazione e progetti: due gruppi uno sotto l'altro, centrati come l'intro. Le voci sono celle uguali
-   in una griglia a 6 colonne con filetti solo tra una cella e l'altra (il gap da 1px sul fondo chiaro
-   disegna le linee, come nei loghi dei sostenitori): Formazione 2 celle, Progetti 3 + 2, sempre a
-   rettangolo pieno. Tablet: Progetti 2 + 2 + 1. Mobile: elenco compatto con icona e freccia. */
+/* Formazione e progetti: una sola griglia a 6 colonne di celle uguali, con filetti solo tra una cella e
+   l'altra (il gap da 1px sul fondo chiaro disegna le linee, come nei loghi dei sostenitori):
+   2 + 3 + 2 celle su desktop, 2 + 2 + 2 + 1 su tablet, una per riga su mobile. */
 .oltre-section {
   padding: calc(var(--section-y) * .85) 0;
   background: var(--bg-soft);
@@ -993,31 +977,6 @@ const schema = schemaHome(socialImage);
   max-width: 1200px;
   margin: 3rem auto 0;
   padding: 0 2rem;
-}
-
-.oltre-gruppo {
-  text-align: center;
-}
-
-.oltre-gruppo + .oltre-gruppo {
-  margin-top: 3.5rem;
-}
-
-.oltre-gruppo-titolo {
-  margin: 0 0 .5rem;
-  font-size: var(--text-3xl);
-  font-weight: 700;
-  line-height: var(--leading-tight);
-  letter-spacing: -.01em;
-  color: var(--dark-navy);
-}
-
-.oltre-gruppo-testo {
-  max-width: 40rem;
-  margin: 0 auto 2rem;
-  font-size: var(--text-base);
-  line-height: 1.6;
-  color: var(--text-light);
 }
 
 .oltre-lista {
@@ -1037,7 +996,8 @@ const schema = schemaHome(socialImage);
   background: var(--bg-soft);
 }
 
-.oltre-progetti .oltre-lista li:nth-child(-n+3) {
+/* Riga centrale: tre celle */
+.oltre-lista li:nth-child(n+3):nth-child(-n+5) {
   grid-column: span 2;
 }
 
@@ -1048,6 +1008,7 @@ const schema = schemaHome(socialImage);
   align-items: center;
   justify-content: center;
   padding: 1.75rem 1.5rem;
+  text-align: center;
   color: inherit;
   text-decoration: none;
   transition: background-color .3s ease;
@@ -1095,22 +1056,19 @@ const schema = schemaHome(socialImage);
   }
 }
 
-/* Tablet: Progetti su due colonne, l'ultima cella a tutta larghezza */
+/* Tablet: due colonne, l'ultima cella a tutta larghezza */
 @media (max-width: 900px) {
   .oltre-layout {
     margin-top: 2.5rem;
   }
 
-  .oltre-progetti .oltre-lista li:nth-child(-n+3) {
+  .oltre-lista li,
+  .oltre-lista li:nth-child(n+3):nth-child(-n+5) {
     grid-column: span 3;
   }
 
-  .oltre-progetti .oltre-lista li:last-child:nth-child(odd) {
+  .oltre-lista li:last-child:nth-child(odd) {
     grid-column: 1 / -1;
-  }
-
-  .oltre-gruppo + .oltre-gruppo {
-    margin-top: 3rem;
   }
 
   .oltre-voce {
@@ -1124,42 +1082,19 @@ const schema = schemaHome(socialImage);
   }
 }
 
-/* Mobile: stessa griglia a filetti, una cella per riga e compatta (icona, nome e frase, freccia);
-   frase del gruppo nascosta */
+/* Mobile: una voce per riga, compatta (icona, nome e frase, freccia) */
 @media (max-width: 600px) {
   .oltre-layout {
     margin-top: 2rem;
   }
 
-  .oltre-gruppo {
-    text-align: left;
-  }
-
-  .oltre-gruppo + .oltre-gruppo {
-    margin-top: 2.25rem;
-  }
-
-  .oltre-gruppo-testa {
-    margin-bottom: .75rem;
-  }
-
-  .oltre-gruppo-titolo {
-    margin: 0;
-    font-size: var(--text-2xl);
-  }
-
-  .oltre-gruppo-testo {
-    display: none;
-  }
-
-  .oltre-lista,
-  .oltre-progetti .oltre-lista {
+  .oltre-lista {
     grid-template-columns: minmax(0, 1fr);
   }
 
   .oltre-lista li,
-  .oltre-progetti .oltre-lista li:nth-child(-n+3),
-  .oltre-progetti .oltre-lista li:last-child:nth-child(odd) {
+  .oltre-lista li:nth-child(n+3):nth-child(-n+5),
+  .oltre-lista li:last-child:nth-child(odd) {
     grid-column: auto;
   }
 

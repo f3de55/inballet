@@ -143,16 +143,19 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     margin-bottom: 1.5rem;
   }
 
-  /* ---------- Tre box con bordo e fondo trasparente, angoli squadrati; i dati principali (telefono, e-mail, sedi) hanno lo stesso titoletto grande ---------- */
+  /* ---------- Tre celle a filetti (come La danza oltre i corsi): linee sopra, sotto e tra le celle; i dati principali (telefono, e-mail, sedi) hanno lo stesso titoletto grande ---------- */
   .info {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.5rem;
+    border-block: 1px solid rgba(26, 26, 26, .18);
   }
 
   .info-blocco {
-    padding: 2.25rem 2rem;
-    border: 1px solid rgba(26, 26, 26, .18);
+    padding: 2.5rem 2rem;
+  }
+
+  .info-blocco + .info-blocco {
+    border-left: 1px solid rgba(26, 26, 26, .18);
   }
 
   /* Etichetta del box con icona */
@@ -162,8 +165,6 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     align-items: baseline;
     gap: .25rem .6rem;
     margin: 0 0 1.75rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid rgba(26, 26, 26, .15);
     font-size: var(--text-xs);
     font-weight: 600;
     letter-spacing: 2px;
@@ -234,8 +235,6 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     flex-wrap: wrap;
     gap: .5rem 1.75rem;
     margin-top: 1.75rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(26, 26, 26, .15);
   }
 
   .info-social a {
@@ -337,6 +336,15 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
       grid-column: 1 / -1;
     }
 
+    .info-blocco:nth-child(2) {
+      border-left: none;
+      border-top: 1px solid rgba(26, 26, 26, .18);
+    }
+
+    .info-blocco:nth-child(3) {
+      border-top: 1px solid rgba(26, 26, 26, .18);
+    }
+
     .info-blocco:first-child .info-righe {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       column-gap: 2rem;
@@ -350,14 +358,21 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     }
   }
 
-  /* Mobile: i tre box uno sotto l'altro */
+  /* Mobile: le tre celle una sotto l'altra, separate da un filetto */
   @media (max-width: 700px) {
     .info {
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .info-blocco {
-      padding: 1.75rem 1.5rem;
+    .info-blocco,
+    .info-blocco:nth-child(2),
+    .info-blocco:nth-child(3) {
+      padding: 2rem 0;
+      border-left: none;
+    }
+
+    .info-blocco + .info-blocco {
+      border-top: 1px solid rgba(26, 26, 26, .18);
     }
 
     .info-blocco:first-child .info-righe {

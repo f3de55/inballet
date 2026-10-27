@@ -51,7 +51,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
             <div class="info">
                 <!-- Contatto diretto: la card scura è l'azione principale -->
                 <div class="info-blocco info-contatto">
-                    <h3 class="info-titolo">Chiamaci o scrivici</h3>
+                    <h3 class="info-titolo"><span class="info-titolo-icona" aria-hidden="true"><i class="fas fa-paper-plane"></i></span>Chiamaci o scrivici</h3>
                     <ul class="contatto-azioni">
                         <li>
                             <a href={TEL_HREF} class="contatto-azione">
@@ -89,7 +89,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                 </div>
 
                 <div class="info-blocco info-sedi">
-                    <h3 class="info-titolo">Le nostre sedi</h3>
+                    <h3 class="info-titolo"><span class="info-titolo-icona" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>Le nostre sedi</h3>
                     <ul class="sedi-lista">
                         {sedi.map((sede, i) => (
                             <li class="sede">
@@ -105,7 +105,8 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
 
                 <div class="info-blocco info-orari">
                     <h3 class="info-titolo">
-                        Orari della segreteria
+                        <span class="info-titolo-icona" aria-hidden="true"><i class="fas fa-clock"></i></span>
+                        <span class="info-titolo-testo">Orari della segreteria</span>
                         <span id="open-status" class="orari-status" aria-live="polite"></span>
                     </h3>
                     <ul class="orari-grid" id="orari-grid">
@@ -199,7 +200,6 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
     gap: .5rem 1rem;
     margin: 0 0 1.5rem;
     font-size: var(--text-2xl);
@@ -210,6 +210,36 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
 
   .info-contatto .info-titolo {
     color: var(--white);
+  }
+
+  /* Icona nel cerchio davanti al titolo di ogni card */
+  .info-titolo-icona {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: var(--white);
+    font-size: var(--text-md);
+    color: var(--primary-blue-dark);
+  }
+
+  .info-contatto .info-titolo-icona {
+    background: var(--primary-blue);
+    color: var(--dark-navy);
+  }
+
+  .info-orari .info-titolo-icona {
+    background: var(--bg-soft);
+  }
+
+  .info-titolo-testo {
+    flex: 1;
+  }
+
+  :global(.orari-status) {
+    margin-left: auto;
   }
 
   /* ---------- Contatto diretto ---------- */

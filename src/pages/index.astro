@@ -35,9 +35,10 @@ const progetti = {
     { nome: 'Sportello Psicologico', testo: 'Ascolto per famiglie e bambini', icona: 'fa-comments', href: '/sportello-psicologico' },
     { nome: 'Progetto NoiConVoi', testo: 'Danza per ragazzi con disabilità', icona: 'fa-heart', href: '/progetto-noiconvoi' },
     { nome: 'Classi Integrate', testo: 'Corsi aperti ai bisogni speciali', icona: 'fa-universal-access', href: '/classi-integrate' },
+    { nome: 'Sostenitori', testo: "Donazioni e volontariato d'impresa", icona: 'fa-hand-holding-heart', href: '/sostenitori' },
   ],
 };
-// Le voci di entrambi i gruppi in un'unica griglia: 2 (formazione) + 3 + 2 (progetti)
+// Le voci di entrambi i gruppi (come nel menu) in un'unica griglia regolare: 8 celle, 4 per riga
 const vociOltre = [...formazione.voci, ...progetti.voci];
 
 // Sfondi responsive: foto e punto focale per desktop, tablet e mobile.
@@ -177,9 +178,8 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Formazione e progetti (come nel menu): una sola griglia a celle uguali con filetti tra le celle
-         (come i loghi dei sostenitori): 2 + 3 + 2 voci, sempre a rettangolo pieno.
-         Mobile: elenco compatto con icona e freccia -->
+    <!-- Formazione e progetti (come nel menu): una sola griglia regolare di 8 celle uguali con filetti tra le
+         celle (come i loghi dei sostenitori). Desktop 4 per riga, tablet 2, mobile elenco compatto -->
     <section class="oltre-section" aria-labelledby="oltre-titolo">
         <div class="intro-editoriale">
             <span class="eyebrow">Formazione e progetti</span>
@@ -959,9 +959,9 @@ const schema = schemaHome(socialImage);
 
 }
 
-/* Formazione e progetti: una sola griglia a 6 colonne di celle uguali, con filetti solo tra una cella e
+/* Formazione e progetti: una sola griglia regolare di 8 celle uguali, con filetti solo tra una cella e
    l'altra (il gap da 1px sul fondo chiaro disegna le linee, come nei loghi dei sostenitori):
-   2 + 3 + 2 celle su desktop, 2 + 2 + 2 + 1 su tablet, una per riga su mobile. */
+   4 per riga su desktop, 2 su tablet, una per riga su mobile. */
 .oltre-section {
   padding: calc(var(--section-y) * .85) 0;
   background: var(--bg-soft);
@@ -982,7 +982,7 @@ const schema = schemaHome(socialImage);
 .oltre-lista {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
   margin: 0;
   padding: 0;
@@ -991,14 +991,8 @@ const schema = schemaHome(socialImage);
 }
 
 .oltre-lista li {
-  grid-column: span 3;
   display: flex;
   background: var(--bg-soft);
-}
-
-/* Riga centrale: tre celle */
-.oltre-lista li:nth-child(n+3):nth-child(-n+5) {
-  grid-column: span 2;
 }
 
 .oltre-voce {
@@ -1006,8 +1000,8 @@ const schema = schemaHome(socialImage);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 1.75rem 1.5rem;
+  justify-content: flex-start;
+  padding: 2rem 1.25rem;
   text-align: center;
   color: inherit;
   text-decoration: none;
@@ -1062,13 +1056,8 @@ const schema = schemaHome(socialImage);
     margin-top: 2.5rem;
   }
 
-  .oltre-lista li,
-  .oltre-lista li:nth-child(n+3):nth-child(-n+5) {
-    grid-column: span 3;
-  }
-
-  .oltre-lista li:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
+  .oltre-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .oltre-voce {
@@ -1090,12 +1079,6 @@ const schema = schemaHome(socialImage);
 
   .oltre-lista {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .oltre-lista li,
-  .oltre-lista li:nth-child(n+3):nth-child(-n+5),
-  .oltre-lista li:last-child:nth-child(odd) {
-    grid-column: auto;
   }
 
   .oltre-voce {

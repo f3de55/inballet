@@ -168,6 +168,8 @@ html::-webkit-scrollbar-thumb:hover {
   /* Onda decorativa tra le sezioni: altezza e passo (più piccole su mobile) */
   --onda-h: 34px;
   --onda-w: 480px;
+  --onda-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28' preserveAspectRatio='none'%3E%3Cpath fill-opacity='.55' d='M0 9Q30 1 60 9T120 9V28H0Z'/%3E%3Cpath d='M0 19Q30 11 60 19T120 19V28H0Z'/%3E%3C/svg%3E");
+  --onda-svg-giu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28' preserveAspectRatio='none'%3E%3Cg transform='matrix(1 0 0 -1 0 28)'%3E%3Cpath fill-opacity='.55' d='M0 9Q30 1 60 9T120 9V28H0Z'/%3E%3Cpath d='M0 19Q30 11 60 19T120 19V28H0Z'/%3E%3C/g%3E%3C/svg%3E");
   --bg-soft: #eef7fa;
   --radius-card: 20px;
   --radius-img: 24px;
@@ -558,7 +560,6 @@ section [class*="-intro-highlight"] p {
    precedente. Il bordo inferiore della precedente resta dritto: lo copre l'onda della successiva. */
 main > section:not(:first-child),
 .footer {
-  --onda-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28' preserveAspectRatio='none'%3E%3Cpath fill-opacity='.55' d='M0 9Q30 1 60 9T120 9V28H0Z'/%3E%3Cpath d='M0 19Q30 11 60 19T120 19V28H0Z'/%3E%3C/svg%3E");
   position: relative;
   z-index: 1;
   margin-top: calc(var(--onda-h) * -1);
@@ -584,6 +585,34 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
     --onda-h: 22px;
     --onda-w: 260px;
   }
+}
+
+/* Fascia a tutta larghezza dietro un blocco (es. i percorsi di /corsi): colore --fascia, con la stessa doppia
+   onda sopra e sotto (quella sotto è speculare). Esce di --onda-h sopra e sotto il blocco, che deve avere
+   almeno quel padding verticale; la sezione che la contiene deve avere overflow-x: clip. */
+.fascia-onda {
+  position: relative;
+  isolation: isolate;
+}
+
+.fascia-onda::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: calc(var(--onda-h) * -1);
+  bottom: calc(var(--onda-h) * -1);
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: var(--fascia, var(--white));
+  -webkit-mask:
+    var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
+    var(--onda-svg-giu) 0 100% / var(--onda-w) var(--onda-h) repeat-x,
+    linear-gradient(#000 0 0) 0 calc(var(--onda-h) - 1px) / 100% calc(100% - 2 * var(--onda-h) + 2px) no-repeat;
+  mask:
+    var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
+    var(--onda-svg-giu) 0 100% / var(--onda-w) var(--onda-h) repeat-x,
+    linear-gradient(#000 0 0) 0 calc(var(--onda-h) - 1px) / 100% calc(100% - 2 * var(--onda-h) + 2px) no-repeat;
 }
 
 /* Link d'azione testuale, sottolineato */

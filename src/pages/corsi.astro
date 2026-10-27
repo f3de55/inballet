@@ -51,7 +51,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
             </header>
 
             {categorieCorsi.map((cat, i) => (
-                <article class="categoria" id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
+                <article class={`categoria${i % 2 === 0 ? ' fascia-onda' : ''}`} id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
                     <figure class="categoria-foto">
                         <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 640px) 100vw, 30vw" />
                     </figure>
@@ -90,20 +90,17 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
 </Base>
 
 <style>
+  /* Fondo azzurrino (intro e percorsi pari); i percorsi dispari sono fasce bianche con doppia onda */
   .corsi {
     padding: 0 0 var(--section-y);
-    background: var(--white);
+    background: var(--bg-soft);
+    overflow-x: clip;
   }
 
   /* ---------- Introduzione ---------- */
-  /* Intro su fascia azzurrina a tutta larghezza (stesso schema dei percorsi pari): si stacca
-     dalla fascia bianca del primo percorso, invece di fondersi con lui */
   .corsi-intro {
     margin: 0;
     padding: var(--section-y) 0 4.5rem;
-    background: var(--bg-soft);
-    box-shadow: 0 0 0 100vmax var(--bg-soft);
-    clip-path: inset(0 -100vmax);
     text-align: center;
   }
 
@@ -207,14 +204,6 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     gap: 4rem;
     align-items: center;
     padding: 5.5rem 0;
-  }
-
-  /* Percorsi pari su fascia azzurrina a tutta larghezza: il colore si estende oltre
-     il container con un'ombra piena, ritagliata solo in verticale */
-  .categoria:nth-of-type(even) {
-    background: var(--bg-soft);
-    box-shadow: 0 0 0 100vmax var(--bg-soft);
-    clip-path: inset(0 -100vmax);
   }
 
   .categoria:nth-of-type(even) {
@@ -345,7 +334,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     gap: 1.5rem 3rem;
     margin-top: 1.5rem;
     padding: 2.5rem 3rem;
-    background: var(--bg-soft);
+    background: var(--white);
     border-radius: var(--radius-card);
   }
 

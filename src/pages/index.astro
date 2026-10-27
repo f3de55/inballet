@@ -8,8 +8,6 @@ import { ANNI_ATTIVITA, categorieCorsi, faqHome, FONDAZIONE, scuola } from '../d
 import { getAsset, sfondo } from '../lib/images';
 import { schemaHome } from '../lib/schema';
 import { enfatizza } from '../lib/text';
-import logoCsen from '../assets/images/csen-logo.svg';
-import logoConi from '../assets/images/logo_coni.svg';
 import { PUBLIC_GOOGLE_PLACE_ID } from 'astro:env/client';
 
 // Video dell'hero (ricodificati da src/assets/video/hero-video-inballet.mp4, senza audio):
@@ -26,7 +24,7 @@ const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 // Formazione e progetti, come nel menu del sito: due gruppi con titolo, frase e voci
 const formazione = {
   titolo: 'Formazione professionale',
-  testo: 'Per insegnanti di danza, educatori e terapeuti.',
+  testo: 'Per chi insegna danza e per chi lavora in ambito educativo e terapeutico.',
   voci: [
     { nome: 'Formazione Insegnanti di Danza', testo: 'Biennale, titolo nazionale CSEN e CONI', icona: 'fa-graduation-cap', href: '/formazione-insegnanti' },
     { nome: 'Formazioni Personalizzate', testo: 'Workshop per educatori e terapeuti', icona: 'fa-chalkboard-user', href: '/formazioni-personalizzate' },
@@ -43,9 +41,10 @@ const progetti = {
     { nome: 'Classi Integrate', testo: 'Corsi aperti ai bisogni speciali', icona: 'fa-universal-access', href: '/classi-integrate' },
   ],
 };
-// Ultima voce di ciascun gruppo: i riconoscimenti della formazione e l'invito a sostenere i progetti
-// (così i due gruppi hanno lo stesso numero di righe: 3 voci in una colonna, 6 in due)
-const sostieni = { nome: 'Sostieni i progetti', testo: "Donazioni e volontariato d'impresa", icona: 'fa-hand-holding-heart', href: '/sostenitori' };
+const gruppiOltre = [
+  { id: 'formazione', ...formazione },
+  { id: 'progetti', ...progetti },
+];
 
 // Sfondi responsive: foto e punto focale per desktop, tablet e mobile.
 // Nell'hero è il primo fotogramma del video: si vede finché il video non parte
@@ -184,10 +183,10 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Formazione e progetti (come nel menu): due gruppi affiancati, separati da una linea verticale.
-         Formazione occupa una colonna (2 voci + i riconoscimenti CSEN e CONI), Progetti due colonne
-         (5 voci + Sostieni i progetti): una griglia 3x3 di voci tutte uguali, centrate.
-         Tablet: gruppi uno sotto l'altro, tre voci per riga. Mobile: elenco compatto con icona e freccia -->
+    <!-- Formazione e progetti (come nel menu): due gruppi uno sotto l'altro, ognuno con titolo e frase
+         centrati e le voci in una griglia a celle uguali con filetti tra una cella e l'altra (come i loghi
+         dei sostenitori). Formazione: 2 celle. Progetti: 3 + 2 celle, sempre a rettangolo pieno.
+         Mobile: elenco compatto con icona e freccia -->
     <section class="oltre-section" aria-labelledby="oltre-titolo">
         <div class="intro-editoriale">
             <span class="eyebrow">Formazione e progetti</span>
@@ -196,68 +195,28 @@ const schema = schemaHome(socialImage);
         </div>
 
         <div class="oltre-layout">
-            <div class="oltre-gruppo oltre-formazione">
-                <div class="oltre-gruppo-testa">
-                    <h3 class="oltre-gruppo-titolo">{formazione.titolo}</h3>
-                    <p class="oltre-gruppo-testo">{formazione.testo}</p>
+            {gruppiOltre.map((g) => (
+                <div class={`oltre-gruppo oltre-${g.id}`}>
+                    <div class="oltre-gruppo-testa">
+                        <h3 class="oltre-gruppo-titolo">{g.titolo}</h3>
+                        <p class="oltre-gruppo-testo">{g.testo}</p>
+                    </div>
+                    <ul class="oltre-lista">
+                        {g.voci.map((v) => (
+                            <li>
+                                <a href={v.href} class="oltre-voce">
+                                    <span class="oltre-icona" aria-hidden="true"><i class={`fas ${v.icona}`}></i></span>
+                                    <span class="oltre-testo-voce">
+                                        <span class="oltre-nome">{v.nome}</span>
+                                        <span class="oltre-desc">{v.testo}</span>
+                                    </span>
+                                    <i class="fas fa-arrow-right oltre-freccia" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-                <ul class="oltre-lista">
-                    {formazione.voci.map((v) => (
-                        <li>
-                            <a href={v.href} class="oltre-voce">
-                                <span class="oltre-icona" aria-hidden="true"><i class={`fas ${v.icona}`}></i></span>
-                                <span class="oltre-testo-voce">
-                                    <span class="oltre-nome">{v.nome.split(' ').slice(0, -1).join(' ')} <span class="oltre-nome-fine">{v.nome.split(' ').at(-1)}</span></span>
-                                    <span class="oltre-desc">{v.testo}</span>
-                                </span>
-                                <i class="fas fa-arrow-right oltre-freccia" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    ))}
-                    <li class="oltre-extra">
-                        <div class="oltre-enti">
-                            <span class="oltre-enti-loghi">
-                                <img src={logoCsen.src} width={logoCsen.width} height={logoCsen.height} alt="Logo CSEN" loading="lazy" decoding="async" />
-                                <img src={logoConi.src} width={logoConi.width} height={logoConi.height} alt="Logo CONI" loading="lazy" decoding="async" />
-                            </span>
-                            <span class="oltre-desc">Ente formativo <strong>CSEN e CONI</strong></span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="oltre-gruppo oltre-progetti">
-                <div class="oltre-gruppo-testa">
-                    <h3 class="oltre-gruppo-titolo">{progetti.titolo}</h3>
-                    <p class="oltre-gruppo-testo">{progetti.testo}</p>
-                </div>
-                <ul class="oltre-lista">
-                    {progetti.voci.map((v) => (
-                        <li>
-                            <a href={v.href} class="oltre-voce">
-                                <span class="oltre-icona" aria-hidden="true"><i class={`fas ${v.icona}`}></i></span>
-                                <span class="oltre-testo-voce">
-                                    <span class="oltre-nome">{v.nome.split(' ').slice(0, -1).join(' ')} <span class="oltre-nome-fine">{v.nome.split(' ').at(-1)}</span></span>
-                                    <span class="oltre-desc">{v.testo}</span>
-                                </span>
-                                <i class="fas fa-arrow-right oltre-freccia" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    ))}
-                    {[sostieni].map((v) => (
-                        <li class="oltre-extra">
-                            <a href={v.href} class="oltre-voce">
-                                <span class="oltre-icona" aria-hidden="true"><i class={`fas ${v.icona}`}></i></span>
-                                <span class="oltre-testo-voce">
-                                    <span class="oltre-nome">{v.nome.split(' ').slice(0, -1).join(' ')} <span class="oltre-nome-fine">{v.nome.split(' ').at(-1)}</span></span>
-                                    <span class="oltre-desc">{v.testo}</span>
-                                </span>
-                                <i class="fas fa-arrow-right oltre-freccia" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            ))}
         </div>
     </section>
 
@@ -1015,10 +974,10 @@ const schema = schemaHome(socialImage);
 
 }
 
-/* Formazione e progetti: due gruppi affiancati (1/3 e 2/3), separati da una linea verticale.
-   Con subgrid titoli e righe delle voci sono allineati tra i due gruppi: una griglia 3x3 di voci
-   tutte uguali (icona nel cerchio, nome con freccia, frase), centrate come l'intro della sezione.
-   Tablet: gruppi uno sotto l'altro, tre voci per riga. Mobile: elenco compatto con icona e freccia. */
+/* Formazione e progetti: due gruppi uno sotto l'altro, centrati come l'intro. Le voci sono celle uguali
+   in una griglia a 6 colonne con filetti solo tra una cella e l'altra (il gap da 1px sul fondo chiaro
+   disegna le linee, come nei loghi dei sostenitori): Formazione 2 celle, Progetti 3 + 2, sempre a
+   rettangolo pieno. Tablet: Progetti 2 + 2 + 1. Mobile: elenco compatto con icona e freccia. */
 .oltre-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
@@ -1031,40 +990,21 @@ const schema = schemaHome(socialImage);
 }
 
 .oltre-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  grid-template-rows: auto repeat(3, auto);
-  row-gap: 3rem;
   max-width: 1200px;
-  margin: 4.5rem auto 0;
+  margin: 4rem auto 0;
   padding: 0 2rem;
 }
 
 .oltre-gruppo {
-  display: grid;
-  grid-row: 1 / span 4;
-  grid-template-rows: subgrid;
   text-align: center;
 }
 
-.oltre-formazione {
-  padding-right: 3rem;
-  border-right: 1px solid rgba(26, 26, 26, .15);
-}
-
-.oltre-progetti {
-  padding-left: 3rem;
-}
-
-.oltre-gruppo-testa {
-  grid-row: 1;
-  padding-bottom: .5rem;
+.oltre-gruppo + .oltre-gruppo {
+  margin-top: 5rem;
 }
 
 .oltre-gruppo-titolo {
-  /* Su due righe in entrambi i gruppi: titoli e frasi restano allineati */
-  max-width: 12ch;
-  margin: 0 auto .75rem;
+  margin: 0 0 .75rem;
   font-size: var(--text-3xl);
   font-weight: 700;
   line-height: var(--leading-tight);
@@ -1073,89 +1013,70 @@ const schema = schemaHome(socialImage);
 }
 
 .oltre-gruppo-testo {
-  max-width: 24rem;
-  margin: 0 auto;
+  max-width: 40rem;
+  margin: 0 auto 2.5rem;
   font-size: var(--text-base);
   line-height: 1.6;
   color: var(--text-light);
 }
 
 .oltre-lista {
+  list-style: none;
   display: grid;
-  grid-row: 2 / span 3;
-  grid-template-rows: subgrid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1px;
   margin: 0;
   padding: 0;
-  list-style: none;
-}
-
-.oltre-progetti .oltre-lista {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 3rem;
+  background: rgba(26, 26, 26, .15);
+  border-block: 1px solid rgba(26, 26, 26, .15);
 }
 
 .oltre-lista li {
+  grid-column: span 3;
   display: flex;
-  justify-content: center;
+  background: var(--bg-soft);
 }
 
-.oltre-voce,
-.oltre-enti {
+.oltre-progetti .oltre-lista li:nth-child(-n+3) {
+  grid-column: span 2;
+}
+
+.oltre-voce {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 20rem;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
   color: inherit;
   text-decoration: none;
+  transition: background-color .3s ease;
 }
 
 .oltre-icona {
-  display: grid;
-  place-items: center;
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 50%;
-  background: var(--white);
-  box-shadow: 0 4px 14px rgba(26, 26, 26, .06);
-  font-size: var(--text-md);
+  font-size: var(--text-2xl);
+  line-height: 1;
   color: var(--primary-blue-dark);
 }
 
 .oltre-testo-voce {
   display: block;
-  margin-top: 1rem;
+  margin-top: 1.25rem;
 }
 
 .oltre-nome {
   display: block;
-  font-size: clamp(1rem, .95rem + .2vw, 1.125rem);
+  font-size: var(--text-md);
   font-weight: 700;
   line-height: 1.3;
   color: var(--dark-navy);
-  transition: color .3s ease;
-}
-
-/* Freccia subito dopo il nome, legata all'ultima parola (su mobile va in fondo alla riga) */
-.oltre-nome-fine {
-  white-space: nowrap;
-}
-
-.oltre-nome-fine::after {
-  content: '\f061';
-  display: inline-block;
-  margin-left: .5rem;
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 900;
-  font-size: .8em;
-  color: var(--primary-blue-dark);
-  transition: transform .3s ease;
 }
 
 .oltre-desc {
   display: block;
-  margin-top: .35rem;
-  font-size: .9375rem;
-  line-height: 1.45;
+  margin-top: .4rem;
+  font-size: var(--text-sm);
+  line-height: 1.5;
   color: var(--text-light);
 }
 
@@ -1163,101 +1084,37 @@ const schema = schemaHome(socialImage);
   display: none;
 }
 
-/* Riconoscimenti: i due loghi al posto dell'icona */
-.oltre-enti-loghi {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.25rem;
-  height: 3.5rem;
-}
-
-.oltre-enti-loghi img {
-  width: auto;
-  height: 100%;
-}
-
-.oltre-enti-loghi img + img {
-  height: 84%;
-}
-
-.oltre-enti .oltre-desc {
-  margin-top: 1rem;
-}
-
 .oltre-voce:focus-visible {
   outline: 2px solid var(--primary-blue-dark);
-  outline-offset: 6px;
-  border-radius: var(--radius-img);
+  outline-offset: -4px;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .oltre-voce:hover .oltre-nome {
-    color: var(--primary-blue-dark);
-  }
-
-  .oltre-voce:hover .oltre-nome-fine::after {
-    transform: translateX(3px);
+  .oltre-voce:hover {
+    background: var(--white);
   }
 }
 
-/* Tablet: gruppi uno sotto l'altro, separati da una linea; tre voci per riga, testi a sinistra
-   come le intro delle altre sezioni a questa larghezza */
+/* Tablet: Progetti su due colonne, l'ultima cella a tutta larghezza */
 @media (max-width: 900px) {
   .oltre-layout {
-    display: block;
     margin-top: 3.5rem;
   }
 
-  .oltre-gruppo {
-    display: block;
-    text-align: left;
+  .oltre-progetti .oltre-lista li:nth-child(-n+3) {
+    grid-column: span 3;
   }
 
-  .oltre-formazione {
-    padding: 0 0 3.5rem;
-    border-right: none;
+  .oltre-progetti .oltre-lista li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
-  .oltre-progetti {
-    padding: 3.5rem 0 0;
-    border-top: 1px solid rgba(26, 26, 26, .15);
+  .oltre-gruppo + .oltre-gruppo {
+    margin-top: 4rem;
   }
 
-  .oltre-gruppo-testa {
-    padding-bottom: 0;
-    margin-bottom: 2.5rem;
-  }
-
-  .oltre-gruppo-titolo {
-    max-width: none;
-    margin-left: 0;
-  }
-
-  .oltre-gruppo-testo {
-    max-width: 38rem;
-    margin: 0;
-  }
-
-  .oltre-lista,
-  .oltre-progetti .oltre-lista {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: none;
-    gap: 2.5rem 2rem;
-  }
-
-  .oltre-lista li {
-    justify-content: flex-start;
-  }
-
-  .oltre-voce,
-  .oltre-enti {
-    align-items: flex-start;
-    max-width: none;
-  }
-
-  .oltre-enti-loghi {
-    justify-content: flex-start;
+  .oltre-voce {
+    padding: 2rem 1.25rem;
   }
 }
 
@@ -1267,19 +1124,20 @@ const schema = schemaHome(socialImage);
   }
 }
 
-/* Mobile: una voce per riga (icona, nome e frase, freccia in fondo); frase del gruppo,
-   riconoscimenti e «Sostieni» nascosti */
+/* Mobile: elenco compatto, una voce per riga (icona, nome e frase, freccia); frase del gruppo nascosta */
 @media (max-width: 600px) {
   .oltre-layout {
     margin-top: 2.5rem;
   }
 
-  .oltre-formazione {
-    padding-bottom: 2.75rem;
+  .oltre-gruppo {
+    text-align: left;
   }
 
-  .oltre-progetti {
+  .oltre-gruppo + .oltre-gruppo {
+    margin-top: 2.75rem;
     padding-top: 2.75rem;
+    border-top: 1px solid rgba(26, 26, 26, .15);
   }
 
   .oltre-gruppo-testa {
@@ -1291,18 +1149,20 @@ const schema = schemaHome(socialImage);
     font-size: var(--text-2xl);
   }
 
-  .oltre-gruppo-testo,
-  .oltre-lista .oltre-extra {
+  .oltre-gruppo-testo {
     display: none;
   }
 
-  .oltre-lista,
-  .oltre-progetti .oltre-lista {
+  .oltre-lista {
     display: block;
+    background: none;
+    border-block: none;
   }
 
-  .oltre-lista li {
+  .oltre-lista li,
+  .oltre-progetti .oltre-lista li:nth-child(-n+3) {
     display: block;
+    background: none;
   }
 
   .oltre-voce {
@@ -1314,10 +1174,6 @@ const schema = schemaHome(socialImage);
   }
 
   .oltre-icona {
-    width: auto;
-    height: auto;
-    background: none;
-    box-shadow: none;
     font-size: var(--text-xl);
   }
 
@@ -1329,13 +1185,8 @@ const schema = schemaHome(socialImage);
     font-size: var(--text-base);
   }
 
-  .oltre-nome-fine::after {
-    content: none;
-  }
-
   .oltre-desc {
     margin-top: .15rem;
-    font-size: var(--text-sm);
   }
 
   .oltre-freccia {

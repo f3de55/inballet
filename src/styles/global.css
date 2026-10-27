@@ -166,8 +166,8 @@ html::-webkit-scrollbar-thumb:hover {
   /* Sistema UI condiviso */
   --section-y: clamp(3.75rem, 3rem + 3.3333vw, 6rem);
   /* Onda decorativa tra le sezioni: altezza e passo (più piccole su mobile) */
-  --onda-h: 10px;
-  --onda-w: 100px;
+  --onda-h: 18px;
+  --onda-w: 480px;
   --bg-soft: #eef7fa;
   --radius-card: 20px;
   --radius-img: 24px;
@@ -581,8 +581,8 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
 
 @media (max-width: 768px) {
   :root {
-    --onda-h: 7px;
-    --onda-w: 70px;
+    --onda-h: 12px;
+    --onda-w: 260px;
   }
 }
 

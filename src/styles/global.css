@@ -907,7 +907,9 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
   display: flex;
   /* Testo centrato in verticale: stesso spazio sopra (sotto la navbar) e sotto */
   align-items: center;
-  padding: 3.5rem 0;
+  /* Il bordo ondulato della sezione successiva copre gli ultimi --onda-h: lo si aggiunge sotto,
+     così il testo resta centrato nella parte visibile */
+  padding: 3.5rem 0 calc(3.5rem + var(--onda-h));
 }
 
 .chisiamo-hero-image {
@@ -1035,7 +1037,7 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
 @media (max-width: 768px) {
   .chisiamo-hero {
     min-height: calc(clamp(360px, 52vh, 560px) - var(--header-h));
-    padding-block: 2.5rem;
+    padding-block: 2.5rem calc(2.5rem + var(--onda-h));
   }
 
   .chisiamo-hero-glass {
@@ -1063,7 +1065,7 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
 @media (max-width: 480px) {
   .chisiamo-hero {
     min-height: calc(320px - var(--header-h));
-    padding-block: 2rem;
+    padding-block: 2rem calc(2rem + var(--onda-h));
   }
 
   .chisiamo-hero-glass {

@@ -49,51 +49,25 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
             </header>
 
             <div class="info">
-                <!-- Contatto diretto: la card scura è l'azione principale -->
-                <div class="info-blocco info-contatto">
-                    <h3 class="info-titolo"><span class="info-titolo-icona" aria-hidden="true"><i class="fas fa-paper-plane"></i></span>Chiamaci o scrivici</h3>
-                    <ul class="contatto-azioni">
-                        <li>
-                            <a href={TEL_HREF} class="contatto-azione">
-                                <span class="contatto-icona" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="contatto-testo">
-                                    <span class="contatto-etichetta">Telefono</span>
-                                    <span class="contatto-valore">{TEL}</span>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href={`mailto:${EMAIL}`} class="contatto-azione">
-                                <span class="contatto-icona" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="contatto-testo">
-                                    <span class="contatto-etichetta">E-mail</span>
-                                    <span class="contatto-valore">{EMAIL}</span>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href={scuola.whatsapp} target="_blank" rel="noopener" class="contatto-azione">
-                                <span class="contatto-icona" aria-hidden="true"><i class="fab fa-whatsapp"></i></span>
-                                <span class="contatto-testo">
-                                    <span class="contatto-etichetta">WhatsApp</span>
-                                    <span class="contatto-valore">Scrivici ora</span>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="contatto-social">
-                        <span class="contatto-social-titolo">Seguici</span>
-                        <a href={scuola.social.instagram} target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-                        <a href={scuola.social.facebook} target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                <div class="info-blocco">
+                    <h3 class="info-titolo">Chiamaci o scrivici</h3>
+                    <div class="info-telefono"><a href={TEL_HREF}>{TEL}</a></div>
+                    <div class="info-email"><a href={`mailto:${EMAIL}`}>{EMAIL}</a></div>
+                    <a href={scuola.whatsapp} target="_blank" rel="noopener" class="link-cta">
+                        Scrivici su WhatsApp <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                    <div class="info-social">
+                        <a href={scuola.social.instagram} target="_blank" rel="noopener">Instagram</a>
+                        <a href={scuola.social.facebook} target="_blank" rel="noopener">Facebook</a>
                     </div>
                 </div>
 
-                <div class="info-blocco info-sedi">
-                    <h3 class="info-titolo"><span class="info-titolo-icona" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>Le nostre sedi</h3>
+                <div class="info-blocco">
+                    <h3 class="info-titolo">Le nostre sedi</h3>
                     <ul class="sedi-lista">
                         {sedi.map((sede, i) => (
                             <li class="sede">
-                                <span class="sede-citta">{sede.citta}{i === 0 && <span class="sede-tag">Sede centrale</span>}</span>
+                                <p class="sede-citta">{sede.citta}{i === 0 && <span class="sede-tag">sede centrale</span>}</p>
                                 <address class="sede-indirizzo">{sede.via}<br>{sede.cap} {sede.citta} ({sede.provincia})</address>
                                 <a href={sede.maps} target="_blank" rel="noopener" class="link-cta">
                                     Indicazioni <i class="fas fa-arrow-right" aria-hidden="true"></i>
@@ -103,10 +77,9 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                     </ul>
                 </div>
 
-                <div class="info-blocco info-orari">
+                <div class="info-blocco">
                     <h3 class="info-titolo">
-                        <span class="info-titolo-icona" aria-hidden="true"><i class="fas fa-clock"></i></span>
-                        <span class="info-titolo-testo">Orari della segreteria</span>
+                        Orari della segreteria
                         <span id="open-status" class="orari-status" aria-live="polite"></span>
                     </h3>
                     <ul class="orari-grid" id="orari-grid">
@@ -160,247 +133,135 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     margin-bottom: 1.5rem;
   }
 
-  /* ---------- Tre card con ruoli e colori diversi ----------
-     Contatto diretto (scura, a tutta altezza a sinistra), sedi (azzurro chiaro), orari (bianca con filetto) */
+  /* ---------- Tre colonne editoriali, senza riquadri: gerarchia data dalla tipografia, filetti tra le colonne ---------- */
   .info {
     display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    grid-template-areas:
-      "contatto sedi"
-      "contatto orari";
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid rgba(26, 26, 26, .15);
   }
-
-  .info-contatto { grid-area: contatto; }
-  .info-sedi { grid-area: sedi; }
-  .info-orari { grid-area: orari; }
 
   .info-blocco {
-    display: flex;
-    flex-direction: column;
-    padding: 2.25rem 2.25rem;
-    border-radius: var(--radius-card);
+    padding: 2.5rem 2.5rem 0;
   }
 
-  .info-contatto {
-    background: var(--dark-navy);
-    color: var(--white);
+  .info-blocco:first-child {
+    padding-left: 0;
   }
 
-  .info-sedi {
-    background: var(--bg-soft);
+  .info-blocco:last-child {
+    padding-right: 0;
   }
 
-  .info-orari {
-    background: var(--white);
-    border: 1px solid rgba(26, 26, 26, .12);
+  .info-blocco + .info-blocco {
+    border-left: 1px solid rgba(26, 26, 26, .15);
   }
 
   .info-titolo {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: .5rem 1rem;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .25rem 1rem;
     margin: 0 0 1.5rem;
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    line-height: var(--leading-snug);
-    color: var(--dark-navy);
-  }
-
-  .info-contatto .info-titolo {
-    color: var(--white);
-  }
-
-  /* Icona nel cerchio davanti al titolo di ogni card */
-  .info-titolo-icona {
-    display: grid;
-    flex: none;
-    place-items: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 50%;
-    background: var(--white);
-    font-size: var(--text-md);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     color: var(--primary-blue-dark);
   }
 
-  .info-contatto .info-titolo-icona {
-    background: var(--primary-blue);
-    color: var(--dark-navy);
-  }
-
-  .info-orari .info-titolo-icona {
-    background: var(--bg-soft);
-  }
-
-  .info-titolo-testo {
-    flex: 1;
-  }
-
-  :global(.orari-status) {
-    margin-left: auto;
-  }
-
-  /* ---------- Contatto diretto ---------- */
-  .contatto-azioni {
-    list-style: none;
-    display: grid;
-    flex: 1;
-    align-content: space-evenly;
-    gap: 1rem;
+  /* Contatti: il telefono è il dato principale */
+  .info-telefono,
+  .info-email {
     margin: 0;
-    padding: 0;
   }
 
-  .contatto-azione {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1.5rem 1.5rem;
-    border-radius: var(--radius-img);
-    background: rgba(255, 255, 255, .07);
-    color: var(--white);
-    text-decoration: none;
-    transition: background-color .3s ease;
+  .info-telefono a {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -.01em;
   }
 
-  .contatto-azione:hover {
-    background: rgba(255, 255, 255, .14);
+  .info-email {
+    margin: .5rem 0 1.75rem;
   }
 
-  .contatto-azione:focus-visible,
-  .contatto-social a:focus-visible {
-    outline: 2px solid var(--primary-blue);
-    outline-offset: 3px;
+  .info-email a {
+    font-size: var(--text-xl);
+    font-weight: 500;
   }
 
-  .contatto-icona {
-    display: grid;
-    flex: none;
-    place-items: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background: var(--primary-blue);
-    font-size: var(--text-md);
+  .info-telefono a,
+  .info-email a,
+  .info-social a {
     color: var(--dark-navy);
-  }
-
-  .contatto-testo {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-
-  .contatto-etichetta {
-    font-size: var(--text-xs);
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--primary-blue);
-  }
-
-  .contatto-valore {
-    font-size: var(--text-md);
-    font-weight: 600;
-    line-height: 1.35;
+    text-decoration: none;
     overflow-wrap: anywhere;
+    background: linear-gradient(var(--primary-blue), var(--primary-blue)) 0 100% / 0 2px no-repeat;
+    transition: background-size .3s ease, color .3s ease;
   }
 
-  .contatto-social {
+  .info-telefono a:hover,
+  .info-email a:hover,
+  .info-social a:hover {
+    color: var(--primary-blue-dark);
+    background-size: 100% 2px;
+  }
+
+  .info-social {
     display: flex;
-    align-items: center;
-    gap: .75rem;
-    margin-top: auto;
-    padding-top: 1.75rem;
+    gap: 1.5rem;
+    margin: 1.75rem 0 0;
   }
 
-  .contatto-social-titolo {
-    margin-right: .25rem;
-    font-size: var(--text-xs);
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, .7);
+  .info-social a {
+    font-size: var(--text-base);
+    font-weight: 500;
   }
 
-  .contatto-social a {
-    display: grid;
-    place-items: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border: 1px solid rgba(255, 255, 255, .35);
-    border-radius: 50%;
-    font-size: var(--text-md);
-    color: var(--white);
-    text-decoration: none;
-    transition: background-color .3s ease, color .3s ease;
-  }
-
-  .contatto-social a:hover {
-    background: var(--white);
-    color: var(--dark-navy);
-  }
-
-  /* ---------- Sedi ---------- */
+  /* Sedi */
   .sedi-lista {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem;
+    gap: 2rem;
     margin: 0;
     padding: 0;
-  }
-
-  .sede {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
   }
 
   .sede-citta {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: .5rem;
-    margin-bottom: .35rem;
-    font-size: var(--text-xl);
+    align-items: baseline;
+    gap: .25rem .75rem;
+    margin: 0 0 .5rem;
+    font-size: var(--text-2xl);
     font-weight: 700;
+    line-height: 1.2;
     color: var(--dark-navy);
   }
 
   .sede-tag {
-    padding: .15rem .6rem;
-    border-radius: 999px;
-    background: var(--white);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    letter-spacing: .5px;
-    color: var(--primary-blue-dark);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-light);
   }
 
   .sede-indirizzo {
     margin: 0 0 1rem;
     font-size: var(--text-base);
     font-style: normal;
-    line-height: 1.55;
+    line-height: 1.6;
     color: var(--text-dark);
   }
 
-  .sede .link-cta {
-    margin-top: auto;
-  }
-
-  /* ---------- Orari: stato e giorno corrente da src/scripts/contatti.ts ---------- */
+  /* Orari: stato e giorno corrente da src/scripts/contatti.ts */
   :global(.orari-status) {
     display: flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: .45rem;
     font-size: var(--text-xs);
-    font-weight: 600;
     letter-spacing: 1px;
-    text-transform: uppercase;
     color: var(--dark-navy);
   }
 
@@ -409,7 +270,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
   }
 
   :global(.orari-status i) {
-    font-size: 0.5rem;
+    font-size: .5rem;
   }
 
   :global(.orari-status.aperto i) {
@@ -422,20 +283,15 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
 
   .orari-grid {
     list-style: none;
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(4, auto);
-    column-gap: 2.5rem;
     margin: 0;
     padding: 0;
   }
 
   :global(.orario-item) {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
     gap: 1rem;
-    padding: .55rem .75rem;
-    border-radius: .5rem;
+    padding: .4rem 0;
     font-size: var(--text-base);
     color: var(--text-dark);
   }
@@ -453,11 +309,6 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     font-style: italic;
   }
 
-  /* Oggi: riga evidenziata */
-  :global(.orario-item.oggi) {
-    background: var(--bg-soft);
-  }
-
   :global(.orario-item.oggi .orario-day),
   :global(.orario-item.oggi .orario-time) {
     color: var(--primary-blue-dark);
@@ -465,34 +316,33 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
   }
 
   /* ---------- Responsive ---------- */
-  /* Tablet: contatto a tutta larghezza (tre azioni in fila), sedi e orari affiancati sotto */
-  @media (max-width: 1100px) {
+  /* Tablet: contatti a tutta larghezza sopra (telefono e email affiancati), poi sedi e orari */
+  @media (max-width: 1000px) {
     .info {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-areas:
-        "contatto contatto"
-        "sedi orari";
     }
 
-    .contatto-azioni {
-      flex: none;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .info-blocco,
+    .info-blocco:first-child,
+    .info-blocco:nth-child(2),
+    .info-blocco:last-child {
+      padding: 2.25rem 0 0;
+      border-left: none;
     }
 
-    .contatto-azione {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: .75rem;
+    .info-blocco:first-child {
+      grid-column: 1 / -1;
+      padding-bottom: 2.25rem;
+      border-bottom: 1px solid rgba(26, 26, 26, .15);
     }
 
-    .orari-grid {
-      grid-auto-flow: row;
-      grid-template-rows: none;
-      grid-template-columns: minmax(0, 1fr);
+    .info-blocco:nth-child(3) {
+      padding-left: 2.5rem;
+      border-left: 1px solid rgba(26, 26, 26, .15);
     }
 
-    .sedi-lista {
-      grid-template-columns: minmax(0, 1fr);
+    .info-blocco:nth-child(2) {
+      padding-right: 2.5rem;
     }
   }
 
@@ -503,33 +353,29 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     }
   }
 
-  /* Mobile: tutte le card una sotto l'altra */
+  /* Mobile: tre sezioni una sotto l'altra, separate da un filetto */
   @media (max-width: 700px) {
     .info {
       grid-template-columns: minmax(0, 1fr);
-      grid-template-areas:
-        "contatto"
-        "sedi"
-        "orari";
     }
 
-    .info-blocco {
-      padding: 1.75rem 1.5rem;
+    .info-blocco,
+    .info-blocco:first-child,
+    .info-blocco:nth-child(2),
+    .info-blocco:nth-child(3),
+    .info-blocco:last-child {
+      padding: 2rem 0;
+      border-left: none;
+      border-bottom: 1px solid rgba(26, 26, 26, .15);
     }
 
-    .info-titolo {
-      font-size: var(--text-xl);
+    .info-blocco:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
     }
 
-    .contatto-azioni {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .contatto-azione {
-      flex-direction: row;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem 1.25rem;
+    .info-telefono a {
+      font-size: var(--text-2xl);
     }
   }
 </style>

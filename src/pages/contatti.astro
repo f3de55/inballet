@@ -143,7 +143,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     margin-bottom: 1.5rem;
   }
 
-  /* ---------- Tre box azzurrini; i dati principali (telefono, e-mail, sedi) hanno lo stesso titoletto grande ---------- */
+  /* ---------- Tre box con bordo e fondo trasparente; i dati principali (telefono, e-mail, sedi) hanno lo stesso titoletto grande ---------- */
   .info {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -152,7 +152,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
 
   .info-blocco {
     padding: 2.25rem 2rem;
-    background: var(--bg-soft);
+    border: 1px solid rgba(26, 26, 26, .18);
     border-radius: var(--radius-card);
   }
 

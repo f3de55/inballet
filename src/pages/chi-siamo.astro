@@ -441,11 +441,16 @@ const numeri = [
   }
 }
 
-/* Mobile: un numero per riga */
+/* Mobile: sempre 2x2, con spazi più stretti */
 @media (max-width: 640px) {
   .numeri-lista {
-    grid-template-columns: minmax(0, 1fr);
+    column-gap: 1rem;
     row-gap: 2rem;
+  }
+
+  .numero,
+  .numero + .numero {
+    padding-left: 1rem;
   }
 }
 

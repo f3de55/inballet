@@ -158,6 +158,12 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     border-left: 1px solid rgba(26, 26, 26, .18);
   }
 
+  /* Contatti e orari su fondo azzurrino, le sedi al centro restano bianche */
+  .info-blocco:first-child,
+  .info-blocco:last-child {
+    background: var(--bg-soft);
+  }
+
   /* Etichetta del box con icona */
   .info-titolo {
     display: flex;
@@ -367,7 +373,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     .info-blocco,
     .info-blocco:nth-child(2),
     .info-blocco:nth-child(3) {
-      padding: 2rem 0;
+      padding: 2rem 1.5rem;
       border-left: none;
     }
 

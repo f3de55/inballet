@@ -223,8 +223,11 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     overflow-wrap: anywhere;
   }
 
+  /* La linea in hover segue la sola parola: il link non si allarga alla colonna della griglia */
   a.info-valore,
   .info-social a {
+    justify-self: start;
+    width: fit-content;
     text-decoration: none;
     background: linear-gradient(var(--primary-blue), var(--primary-blue)) 0 100% / 0 2px no-repeat;
     transition: background-size .3s ease, color .3s ease;

@@ -332,7 +332,8 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem 3rem;
-    margin-top: 1.5rem;
+    /* Stesso spazio azzurrino sopra (dopo l'onda dell'ultima fascia) e sotto (prima del footer) */
+    margin-top: calc(var(--onda-h) + var(--section-y));
     padding: 2.5rem 3rem;
     background: var(--white);
     border-radius: var(--radius-card);

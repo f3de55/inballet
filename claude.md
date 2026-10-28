@@ -144,3 +144,6 @@ docker build -t inballet-site . && docker rm -f inballet-web && docker run -d --
 
 - **Login 403**: host not in `allowedDomains`
 - **Password rejected**: check `.env` — no quotes around `DASHBOARD_PASSWORD`
+
+## Deploy check
+Railway builds on every push to `main`. To see which commit is live, compare `curl -sI https://inballet-production.up.railway.app/ | grep -i last-modified` (UTC) with `git log -1 --format=%cd --date=format:%H:%M`: if the page is older than the last commit, that build failed or is still running (check the Railway deploy log).

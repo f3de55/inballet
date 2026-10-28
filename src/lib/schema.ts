@@ -4,6 +4,7 @@
  * reparto, catalogo corsi e FAQ.
  */
 import { categorieCorsi, faqHome, FONDAZIONE, orari, scuola, sedi, type Sede } from '../data/scuola';
+import { stripTags } from './text';
 
 const site = scuola.sito;
 const ID = `${site}/#scuola`;
@@ -36,7 +37,7 @@ export function schemaCorso(corso: { titolo: string; description: string; eta: s
     inLanguage: 'it-IT',
     provider: { '@type': 'DanceSchool', '@id': ID, name: scuola.nome, url: `${site}/` },
     audience: { '@type': 'PeopleAudience', audienceType: corso.eta },
-    teaches: corso.impara,
+    teaches: corso.impara.map((t) => stripTags(t)),
     hasCourseInstance: {
       '@type': 'CourseInstance',
       courseMode: 'Onsite',

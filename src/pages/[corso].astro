@@ -342,26 +342,30 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
 }
 
 .corso-impara-list li {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 2.25rem 2.5rem;
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  column-gap: 1rem;
+  align-items: center;
+  padding: 2.25rem 2rem;
   background: var(--bg-soft);
 }
 
+/* Numero e testo sulla stessa riga, centrati sulla stessa linea: i numeri stanno tutti nella stessa colonna */
 .impara-num {
-  font-size: var(--text-5xl);
+  font-size: var(--text-4xl);
   font-weight: 300;
   line-height: 1;
+  text-align: center;
   color: var(--primary-blue-dark);
   font-variant-numeric: tabular-nums;
 }
 
+/* Testo normale, grassetto solo sulle parole chiave (<strong> in corsi.json) */
 .impara-testo {
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: 400;
   line-height: var(--leading-snug);
-  color: var(--dark-navy);
+  color: var(--text-dark);
 }
 
 /* Tablet e mobile: una colonna con titolo, foto, testo e dati del corso;
@@ -421,6 +425,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
   }
 
   .corso-impara-list li {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
     padding: 1.75rem 1.5rem;
   }
 }
@@ -464,15 +469,11 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
   }
 
   .corso-impara-list li {
-    flex-direction: row;
-    align-items: baseline;
-    gap: 1rem;
+    grid-template-columns: 3rem minmax(0, 1fr);
     padding: 1.25rem 0;
   }
 
   .impara-num {
-    flex-shrink: 0;
-    width: 3rem;
     font-size: var(--text-3xl);
   }
 }

@@ -116,25 +116,27 @@ html::-webkit-scrollbar-thumb:hover {
      segue lo zoom e la dimensione del testo scelti dall'utente.
      Un ruolo = un gradino, su tutte le pagine: nessun font-size nelle media query
      (tranne i titoli hero su mobile) e nessun valore fisso nei componenti.
-     Ruoli: 6xl titolo homepage · 5xl titolo delle pagine interne, numeri grandi ·
+     Ruoli: 6xl titolo homepage · title titolo hero delle pagine interne · 5xl numeri grandi ·
      4xl titoli di sezione · 3xl numeri e titoli in evidenza · 2xl sottotitoli ·
-     xl titoli di card e voci · base TUTTO il testo (intro, paragrafi, card, liste) ·
-     md testo delle finestre modali · btn pulsanti · nav voci e pulsante della navbar ·
-     sm pill, note · xs etichette maiuscole ed eyebrow ·
+     xl titoli di card e voci · base TUTTO il testo corrente (intro, paragrafi, liste): 18px su mobile ·
+     md descrizioni brevi nelle card e dettagli di voci (finestre modali comprese) · btn pulsanti ·
+     nav voci e pulsante della navbar · sm note, pill e metadati ·
+     xs etichette maiuscole ed eyebrow ·
      3xs solo micro-dati in spazi stretti (calendario).
      Eccezione: il pannello della chat (larghezza fissa) ha una sua scala compatta in Chatbot.astro. */
   --text-6xl: clamp(2.375rem, 1.8333rem + 2.4074vw, 4rem);         /* 38 → 64px */
   --text-5xl: clamp(2.125rem, 1.6667rem + 2.037vw, 3.5rem);           /* 34 → 56px */
+  --text-title: clamp(1.875rem, 1.5rem + 1.667vw, 3rem);              /* 30 → 48px */
   --text-4xl: clamp(1.7812rem, 1.4167rem + 1.6204vw, 2.875rem);        /* 28.5 → 46px */
   --text-3xl: clamp(1.5312rem, 1.25rem + 1.25vw, 2.375rem);   /* 24.5 → 38px */
   --text-2xl: clamp(1.3125rem, 1.125rem + 0.8333vw, 1.875rem);   /* 21 → 30px */
-  --text-xl: clamp(1.1562rem, 1rem + 0.6944vw, 1.625rem);      /* 18.5 → 26px */
-  --text-md: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);         /* 16 → 20px */
-  --text-base: clamp(1.0312rem, 0.9167rem + 0.5093vw, 1.375rem);    /* 16.5 → 22px */
-  --text-btn: clamp(0.9062rem, 0.8333rem + 0.3241vw, 1.125rem);    /* 14.5 → 18px */
+  --text-xl: clamp(1.25rem, 1.125rem + 0.5556vw, 1.625rem);      /* 20 → 26px */
+  --text-md: clamp(1.0625rem, 1rem + 0.2778vw, 1.25rem);         /* 17 → 20px */
+  --text-base: clamp(1.125rem, 1.0417rem + 0.3704vw, 1.375rem);    /* 18 → 22px */
+  --text-btn: clamp(0.9375rem, 0.875rem + 0.2778vw, 1.125rem);    /* 15 → 18px */
   --text-nav: clamp(0.875rem, 0.8542rem + 0.0926vw, 0.9375rem);   /* 14 → 15px */
-  --text-sm: clamp(0.9062rem, 0.8333rem + 0.3241vw, 1.125rem);    /* 14.5 → 18px */
-  --text-xs: clamp(0.7812rem, 0.7083rem + 0.3241vw, 1rem);         /* 12.5 → 16px */
+  --text-sm: clamp(0.9375rem, 0.875rem + 0.2778vw, 1.125rem);    /* 15 → 18px */
+  --text-xs: clamp(0.8125rem, 0.75rem + 0.2778vw, 1rem);         /* 13 → 16px */
   --text-3xs: 0.8125rem;                                          /* 13px */
   --leading-none: 1;
   --leading-tight: 1.1;
@@ -1023,7 +1025,7 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
 }
 
 .chisiamo-hero-title {
-  font-size: clamp(1.875rem, 1.5rem + 1.667vw, 3rem);   /* 30 → 48px: un gradino sotto --text-5xl */
+  font-size: var(--text-title);
   font-weight: 700;
   color: var(--white);
   margin: 0;
@@ -1058,7 +1060,7 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
   /* Sottotitolo più piccolo e più pieno (su sfondo chiaro il peso 300 si legge male),
      a tutta larghezza, con gli a capo naturali del testo */
   .chisiamo-hero-tagline {
-    font-size: 1rem;
+    font-size: var(--text-base);
     font-weight: 400;
     line-height: 1.5;
     margin-top: .75rem;

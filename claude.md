@@ -147,3 +147,6 @@ docker build -t inballet-site . && docker rm -f inballet-web && docker run -d --
 
 ## Deploy check
 Railway builds on every push to `main`. To see which commit is live, compare `curl -sI https://inballet-production.up.railway.app/ | grep -i last-modified` (UTC) with `git log -1 --format=%cd --date=format:%H:%M`: if the page is older than the last commit, that build failed or is still running (check the Railway deploy log).
+
+## Type scale
+One scale only, the `--text-*` tokens in `src/styles/global.css` (roles listed in the comment above them). Body text is `--text-base` (18px on mobile → 22px on desktop). Titles of cards/rows `--text-xl`, short descriptions in cards `--text-md`, notes/pills `--text-sm`, eyebrows `--text-xs`, page hero title `--text-title`. Never write a literal `font-size` (rem/px/clamp) in public pages or components, and no `--text-lg` (it doesn't exist). The dashboard/login (`dashboard.css`) and the chat panel keep their own scales.

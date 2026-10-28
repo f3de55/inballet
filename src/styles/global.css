@@ -393,36 +393,79 @@ section > .intro-editoriale {
   margin-bottom: 1.25rem;
 }
 
-/* Citazione: solo filetto azzurro, niente riquadro (sopra il testo quando è centrata) */
+/* Citazione in evidenza (box di approfondimento delle pagine, citazione della fondatrice in home e
+   in Chi siamo): virgolette azzurre grandi sopra il testo, corsivo leggero, firma in maiuscoletto.
+   Nelle intro centrate la citazione è centrata; da tablet in giù è a sinistra. */
 .intro-editoriale > [class*="-highlight"],
-section [class*="-intro-highlight"] {
-  background: none;
+section [class*="-intro-highlight"],
+.story-quote,
+.fondatrice-citazione {
+  position: relative;
+  max-width: 38rem;
+  margin: 2.5rem 0 0;
+  padding: 3.25rem 0 0;
   border: none;
-  border-left: 3px solid var(--primary-blue);
-  border-radius: 0;
+  background: none;
   box-shadow: none;
-  padding: .25rem 0 .25rem 1.5rem;
-  margin: 1rem 0 0;
   text-align: left;
 }
 
-.intro-editoriale > [class*="-highlight"] {
-  border-left: none;
-  border-top: 2px solid var(--primary-blue);
-  max-width: 40rem;
-  padding: 1.25rem 0 0;
-  margin: 1.75rem auto 0;
-  text-align: center;
+.intro-editoriale > [class*="-highlight"]::before,
+section [class*="-intro-highlight"]::before,
+.story-quote::before,
+.fondatrice-citazione::before {
+  content: '\201C';
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 5.5rem;
+  font-style: normal;
+  line-height: 1;
+  height: 2.6rem;
+  overflow: visible;
+  color: var(--primary-blue);
 }
 
 .intro-editoriale > [class*="-highlight"] p,
-section [class*="-intro-highlight"] p {
-  font-size: var(--text-base);
-  font-weight: 400;
-  font-style: italic;
-  line-height: 1.65;
-  color: var(--dark-navy);
+section [class*="-intro-highlight"] p,
+.story-quote p,
+.fondatrice-citazione p {
   margin: 0;
+  font-size: var(--text-xl);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--dark-navy);
+}
+
+.intro-editoriale > [class*="-highlight"] cite,
+section [class*="-intro-highlight"] cite,
+.story-quote cite,
+.fondatrice-citazione cite {
+  display: block;
+  margin-top: 1rem;
+  font-size: var(--text-xs);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--primary-blue-dark);
+}
+
+.story-quote cite::before,
+.fondatrice-citazione cite::before {
+  content: none;
+}
+
+.intro-editoriale > [class*="-highlight"] {
+  margin: 2.5rem auto 0;
+  text-align: center;
+}
+
+.intro-editoriale > [class*="-highlight"]::before {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 @media (max-width: 900px) {
@@ -436,11 +479,13 @@ section [class*="-intro-highlight"] p {
   }
 
   .intro-editoriale > [class*="-highlight"] {
-    border-top: none;
-    border-left: 3px solid var(--primary-blue);
-    padding: .25rem 0 .25rem 1.5rem;
-    margin: 1rem 0 0;
+    margin: 2rem 0 0;
     text-align: left;
+  }
+
+  .intro-editoriale > [class*="-highlight"]::before {
+    left: 0;
+    transform: none;
   }
 }
 

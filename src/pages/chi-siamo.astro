@@ -264,11 +264,11 @@ const numeri = [
   margin-bottom: 4rem;
 }
 
-/* Timeline a serpentina: una sola linea unisce tutte le tappe, dalla più vecchia alla più nuova.
-   Desktop: tre tappe per riga; la linea corre verso destra, gira attorno al bordo destro e torna indietro
-   sulla riga sotto (2024 e Oggi sono quindi invertite di posizione). Tablet: due per riga, stessa idea.
-   Telefono: una linea verticale a sinistra. L'ordine nel codice resta cronologico; l'ultima tappa
-   (Oggi) ha il nodo pieno. */
+/* Timeline a serpentina: si legge da sinistra a destra, riga dopo riga, e una sola linea unisce tutte le
+   tappe dalla più vecchia alla più nuova. A fine riga la linea esce a destra, scende nello spazio tra le
+   righe, torna indietro fino al margine sinistro e rientra nel nodo della prima tappa della riga sotto.
+   Desktop: 3 tappe per riga; tablet: 2; telefono: una linea verticale a sinistra.
+   L'ultima tappa (Oggi) ha il nodo pieno. */
 .timeline {
   --nodo: 20px;
   --distanza: 3rem;
@@ -324,93 +324,82 @@ const numeri = [
   display: none;
 }
 
-/* Desktop: 1 2 3 sulla prima riga, poi 4 sotto la 3 e 5 sotto la 2 (la linea torna indietro) */
+/* Serpentina. Tappe a fine riga: curva a destra che scende tra le righe e linea di ritorno fino al margine
+   sinistro. Prima tappa di ogni riga (tranne la prima): curva a sinistra che porta la linea nel suo nodo. */
+/* Desktop: tre tappe per riga */
 @media (min-width: 861px) {
-  .timeline .voce:nth-child(3) {
-    grid-column: 3;
-  }
-
-  .timeline .voce:nth-child(4) {
-    grid-column: 3;
-    grid-row: 2;
-  }
-
-  .timeline .voce:nth-child(5) {
-    grid-column: 2;
-    grid-row: 2;
-  }
-
-  /* Curva: la linea esce a destra dalla 3, scende e rientra nel nodo della 4 */
-  .timeline .voce:nth-child(3)::after {
+  .timeline .voce:nth-child(3n):not(:last-child)::after {
     right: calc(var(--sporgenza) * -1);
     box-sizing: border-box;
-    height: calc(100% + var(--riga) + 2px);
+    height: calc(100% - var(--nodo) / 2 + var(--riga) / 2 + 2px);
     border: 2px solid var(--primary-blue);
     border-left: none;
     border-radius: 0 1.5rem 1.5rem 0;
     background: none;
   }
 
-  .timeline .voce:nth-child(4)::after {
-    display: none;
+  .timeline .voce:nth-child(3n):not(:last-child) .voce-anno::before {
+    content: '';
+    position: absolute;
+    top: calc(100% + var(--riga) / 2 - 1px);
+    right: calc(100% - var(--nodo));
+    left: calc(2 * (100% + var(--distanza)) * -1);
+    display: block;
+    height: 2px;
+    background: var(--primary-blue);
   }
 
-  .timeline .voce:nth-child(5)::after {
+  .timeline .voce:nth-child(3n + 1):not(:first-child) .voce-anno::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--riga) / -2 - 1px);
+    left: calc(var(--sporgenza) * -1);
     display: block;
+    box-sizing: border-box;
+    width: var(--sporgenza);
+    height: calc(var(--riga) / 2 + var(--nodo) / 2 + 2px);
+    border: 2px solid var(--primary-blue);
+    border-right: none;
+    border-radius: 1.5rem 0 0 1.5rem;
   }
 }
 
-/* Tablet: due tappe per riga. 1 2 / 4 3 / 5: la curva a destra porta da 2 a 3, la linea torna da 3 a 4
-   e un'altra curva a sinistra porta da 4 a 5 */
+/* Tablet: due tappe per riga */
 @media (min-width: 601px) and (max-width: 860px) {
   .timeline {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .timeline .voce:nth-child(3) {
-    grid-column: 2;
-    grid-row: 2;
-  }
-
-  .timeline .voce:nth-child(4) {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .timeline .voce:nth-child(5) {
-    grid-column: 1;
-    grid-row: 3;
-  }
-
-  /* Curva a destra: dalla 2 alla 3 */
-  .timeline .voce:nth-child(2)::after {
+  .timeline .voce:nth-child(2n):not(:last-child)::after {
     right: calc(var(--sporgenza) * -1);
     box-sizing: border-box;
-    height: calc(100% + var(--riga) + 2px);
+    height: calc(100% - var(--nodo) / 2 + var(--riga) / 2 + 2px);
     border: 2px solid var(--primary-blue);
     border-left: none;
     border-radius: 0 1.5rem 1.5rem 0;
     background: none;
   }
 
-  .timeline .voce:nth-child(3)::after {
-    display: none;
-  }
-
-  .timeline .voce:nth-child(4)::after {
-    display: block;
-  }
-
-  /* Curva a sinistra: dalla 4 alla 5 */
-  .timeline .voce:nth-child(4) .voce-anno::before {
+  .timeline .voce:nth-child(2n):not(:last-child) .voce-anno::before {
     content: '';
     position: absolute;
-    top: calc(var(--nodo) / 2 - 1px);
+    top: calc(100% + var(--riga) / 2 - 1px);
+    right: calc(100% - var(--nodo));
+    left: calc(1 * (100% + var(--distanza)) * -1);
+    display: block;
+    height: 2px;
+    background: var(--primary-blue);
+  }
+
+  .timeline .voce:nth-child(2n + 1):not(:first-child) .voce-anno::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--riga) / -2 - 1px);
     left: calc(var(--sporgenza) * -1);
     display: block;
     box-sizing: border-box;
     width: var(--sporgenza);
-    height: calc(100% + var(--riga) + 2px);
+    height: calc(var(--riga) / 2 + var(--nodo) / 2 + 2px);
     border: 2px solid var(--primary-blue);
     border-right: none;
     border-radius: 1.5rem 0 0 1.5rem;
@@ -436,16 +425,13 @@ const numeri = [
     top: .35rem;
   }
 
-  .timeline .voce::after,
-  .timeline .voce:nth-child(3)::after {
+  .timeline .voce::after {
     top: calc(.35rem + var(--nodo));
     bottom: -.35rem;
     right: auto;
     left: calc(var(--nodo) / 2 - 1px);
     width: 2px;
     height: auto;
-    border: none;
-    border-radius: 0;
     background: var(--primary-blue);
   }
 }

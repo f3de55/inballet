@@ -229,6 +229,15 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   position: relative;
 }
 
+/* Dopo lo scroll la navbar si restringe e il pulsante Contattaci si fa molto più piccolo */
+.nav-container > .btn-primary {
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease, padding .3s ease;
+}
+
+:global(.main-header.is-scrolled) .nav-container > .btn-primary {
+  padding: .25rem 1.1rem;
+}
+
 /* Corsi: pannello largo centrato, stessa posizione verticale delle tendine compatte */
 .nav-item:not(.nav-item--compatto) {
   position: static;

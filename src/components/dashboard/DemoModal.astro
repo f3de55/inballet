@@ -1,24 +1,35 @@
 ---
 /**
- * Generatore di dati demo (eventi o messaggi del chatbot) con rimozione.
+ * Generatore di dati demo (eventi, messaggi del chatbot o insegnanti) con rimozione.
  * Logica in src/scripts/dashboard/demo.ts, backend in src/lib/demo.ts.
  */
-import { MAX_EVENTI, MAX_MESSAGGI } from '../../lib/demo';
+import { MAX_EVENTI, MAX_INSEGNANTI_DEMO, MAX_MESSAGGI } from '../../lib/demo';
 
 interface Props {
-  tipo: 'eventi' | 'chatbot';
+  tipo: 'eventi' | 'chatbot' | 'insegnanti';
   /** Elementi demo già presenti */
   presenti: number;
-  /** Solo chatbot: posti liberi nel registro (max 10.000 righe) */
+  /** Chatbot: posti liberi nel registro (max 10.000 righe); insegnanti: posti liberi nell'elenco */
   liberi?: number;
 }
 
 const { tipo, presenti, liberi } = Astro.props;
 const eventi = tipo === 'eventi';
-const max = eventi ? MAX_EVENTI : Math.max(0, Math.min(MAX_MESSAGGI, liberi ?? MAX_MESSAGGI));
-const iniziale = Math.min(eventi ? 10 : 300, max);
-const rapidi = (eventi ? [5, 10, 20, 40] : [100, 300, 1000, 2000]).filter((n) => n <= max);
-const unita = eventi ? 'eventi' : 'messaggi';
+const chatbot = tipo === 'chatbot';
+const impostazioni = {
+  eventi: { max: MAX_EVENTI, iniziale: 10, rapidi: [5, 10, 20, 40], unita: 'eventi', singolare: 'evento', plurale: 'Eventi' },
+  chatbot: { max: MAX_MESSAGGI, iniziale: 300, rapidi: [100, 300, 1000, 2000], unita: 'messaggi', singolare: 'messaggio', plurale: 'Messaggi' },
+  insegnanti: { max: MAX_INSEGNANTI_DEMO, iniziale: 6, rapidi: [3, 6, 10, 20], unita: 'insegnanti', singolare: 'insegnante', plurale: 'Insegnanti' },
+}[tipo];
+const max = eventi ? impostazioni.max : Math.max(0, Math.min(impostazioni.max, liberi ?? impostazioni.max));
+const iniziale = Math.min(impostazioni.iniziale, max);
+const rapidi = impostazioni.rapidi.filter((n) => n <= max);
+const { unita } = impostazioni;
+const intro = {
+  eventi: 'Crea eventi di prova completi (titolo, data, ora, tipo, luogo, descrizione, destinatari, costo e locandina): qualcuno oggi, altri in arrivo e altri già passati, per vedere come appaiono qui e nel calendario del sito.',
+  chatbot: 'Crea messaggi di prova nel registro del chatbot (domande, risposte, orari e persone diverse) per riempire numeri e grafici. Il chatbot vero non viene usato.',
+  insegnanti: 'Crea insegnanti di prova completi (nome, disciplina, presentazione, competenze e foto, qualcuno senza foto) per vedere come appaiono qui e nella pagina Chi siamo.',
+}[tipo];
 ---
 
 <div class="modal modal--piccola" id="modalDemo" role="dialog" aria-modal="true" aria-labelledby="demoTitolo"
@@ -30,9 +41,7 @@ const unita = eventi ? 'eventi' : 'messaggi';
         </div>
         <div class="modal-body">
             <p class="demo-intro">
-                {eventi
-                    ? 'Crea eventi di prova completi (titolo, data, ora, tipo, luogo, descrizione, destinatari, costo e locandina): qualcuno oggi, altri in arrivo e altri già passati, per vedere come appaiono qui e nel calendario del sito.'
-                    : 'Crea messaggi di prova nel registro del chatbot (domande, risposte, orari e persone diverse) per riempire numeri e grafici. Il chatbot vero non viene usato.'}
+                {intro}
                 {' '}Restano segnati come demo e si tolgono con un clic.
             </p>
 
@@ -51,7 +60,7 @@ const unita = eventi ? 'eventi' : 'messaggi';
                         <small class="nota">Massimo {max.toLocaleString('it-IT')} per volta.</small>
                     </div>
 
-                    {!eventi && (
+                    {chatbot && (
                         <div class="campo">
                             <label for="demoGiorni">Distribuiti negli ultimi</label>
                             <select id="demoGiorni">
@@ -65,17 +74,19 @@ const unita = eventi ? 'eventi' : 'messaggi';
                     <button type="submit" class="btn btn-primary btn-pieno" id="demoGenera">Genera {iniziale} {unita}</button>
                 </form>
             ) : (
-                <p class="nota">Il registro del chatbot è pieno (10.000 righe): rimuovi i messaggi demo per crearne altri.</p>
+                <p class="nota">{chatbot
+                    ? 'Il registro del chatbot è pieno (10.000 righe): rimuovi i messaggi demo per crearne altri.'
+                    : "L'elenco degli insegnanti è pieno: rimuovi gli insegnanti demo per crearne altri."}</p>
             )}
 
             <div class="demo-presenti">
                 {presenti > 0 ? (
                     <>
-                        <p>{eventi ? 'Eventi' : 'Messaggi'} demo presenti: <strong>{presenti.toLocaleString('it-IT')}</strong></p>
+                        <p>{impostazioni.plurale} demo presenti: <strong>{presenti.toLocaleString('it-IT')}</strong></p>
                         <button type="button" class="btn-link btn-link--rosso" id="demoRimuovi">Rimuovi tutti i {unita} demo</button>
                     </>
                 ) : (
-                    <p class="nota">Nessun {eventi ? 'evento' : 'messaggio'} demo presente.</p>
+                    <p class="nota">Nessun {impostazioni.singolare} demo presente.</p>
                 )}
             </div>
         </div>

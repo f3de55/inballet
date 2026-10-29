@@ -12,6 +12,8 @@ import { baseSlug, leggiEventi, leggiTipi, slugUnico, type Evento } from './even
 import { ensureDir, paths, readJson, serialized, writeJson } from './storage';
 import { romeDate, romeHour, romeIso, romeTimestamp } from './time';
 import { creaMini, filePath, nomeMini, PUBLIC_PREFIX } from './uploads';
+import { aggiungiInsegnanti, leggiInsegnanti, MAX_INSEGNANTI, nuovoIdInsegnante, percorsoFoto, PUBLIC_PREFIX as PREFISSO_FOTO } from './insegnanti';
+import type { Insegnante } from '../data/insegnanti';
 
 export const MAX_EVENTI = 60;
 export const MAX_MESSAGGI = 2000;
@@ -359,3 +361,58 @@ export async function rimuoviChatDemo(): Promise<number> {
     return logs.length - veri.length;
   });
 }
+
+// === INSEGNANTI DEMO ===
+
+export const MAX_INSEGNANTI_DEMO = 20;
+
+const NOMI = ['Giulia', 'Martina', 'Chiara', 'Sara', 'Francesca', 'Elena', 'Alessia', 'Valentina', 'Federica', 'Silvia', 'Marco', 'Luca', 'Andrea', 'Davide', 'Simone'];
+const COGNOMI = ['Rossi', 'Bianchi', 'Colombo', 'Ferrari', 'Russo', 'Galli', 'Conti', 'Fontana', 'Mariani', 'Rinaldi', 'Moretti', 'Barbieri', 'Lombardi', 'Testa', 'Villa'];
+
+/** Profili di prova sulle discipline della scuola: ruolo, presentazione (senza genere: i nomi sono casuali) e competenze. */
+const PROFILI: Pick<Insegnante, 'ruolo' | 'bio' | 'competenze'>[] = [
+  { ruolo: 'Danza Classica e Modern', bio: 'Diploma in danza classica; segue i corsi **dai 6 anni** con attenzione alla tecnica e alla musicalità.', competenze: ['Danza classica', 'Modern', 'Floor barre', 'Insegnante CSEN'] },
+  { ruolo: 'Avviamento alla Danza', bio: 'Accompagna i più piccoli **dai 3 anni** nel primo incontro con musica e movimento, attraverso il gioco.', competenze: ['Avviamento alla danza', 'Educazione alla danza', 'Propedeutica musicale'] },
+  { ruolo: 'Danza Contemporanea', bio: 'Guida i corsi di contemporanea tra **tecnica e improvvisazione**, con un lavoro di ricerca coreografica.', competenze: ['Danza contemporanea', 'Improvvisazione', 'Composizione coreografica'] },
+  { ruolo: 'Hip-Hop e Breaking', bio: 'Dal mondo urban, insegna **Hip-Hop e Breaking** a bambini e ragazzi, dai passi in piedi ai freeze.', competenze: ['Hip-Hop', 'Breaking', 'Popping', 'Old School'] },
+  { ruolo: 'Heels', bio: 'Porta in sala **portamento, linee e presenza scenica** sui tacchi, per ragazze e adulte.', competenze: ['Heels', 'Jazz Funk', 'Coreografia'] },
+  { ruolo: 'Danza Acrobatica', bio: 'Insegna gli **elementi acrobatici** a terra e in aria, con progressioni sicure per ogni livello.', competenze: ['Danza acrobatica', 'Ginnastica artistica', 'Preparazione atletica'] },
+  { ruolo: 'Yoga e Pilates', bio: 'Insegna **Hatha Yoga** e Pilates agli adulti, con attenzione al respiro e alla postura.', competenze: ['Hatha Yoga', 'Pilates', 'Ginnastica posturale'] },
+  { ruolo: 'Contact Improvisation', bio: 'Conduce il lavoro sul **contatto e lo scambio di peso**, in ascolto del partner e dello spazio.', competenze: ['Contact Improvisation', 'Danza contemporanea', 'Release technique'] },
+  { ruolo: 'Movimento Creativo', bio: 'Guida adulti, anche non danzatori, in un percorso di **ascolto ed espressione** attraverso il movimento.', competenze: ['Movimento creativo', 'Danzamovimentoterapia', 'Improvvisazione'] },
+];
+
+/** Foto della scuola usate come ritratti di prova (mai quelle di persone reali riconoscibili per nome). */
+const FOTO_INSEGNANTI = ['gallery-1', 'gallery-2', 'gallery-3', 'gallery-4', 'gallery-5', 'gallery-7', 'gallery-8', 'gallery-9', 'ballerina', 'hero-danza-contemporanea'];
+
+/** Crea `quanti` insegnanti demo (nome, ruolo, presentazione, competenze e foto), entro il limite totale. */
+export async function generaInsegnanti(quanti: number): Promise<number> {
+  const presenti = (await leggiInsegnanti()).insegnanti.length;
+  const n = Math.max(0, Math.min(MAX_INSEGNANTI_DEMO, Math.floor(quanti), MAX_INSEGNANTI - presenti));
+  if (!n) return 0;
+  const { default: sharp } = await import('sharp');
+  await ensureDir(paths.fotoInsegnanti);
+
+  const nomiUsati = new Set<string>();
+  const profili = [...PROFILI].sort(() => Math.random() - 0.5);
+  const foto = [...FOTO_INSEGNANTI].sort(() => Math.random() - 0.5);
+  const nuovi: Insegnante[] = [];
+  for (let i = 0; i < n; i++) {
+    let nome = '';
+    do nome = `${casuale(NOMI)} ${casuale(COGNOMI)}`;
+    while (nomiUsati.has(nome) && nomiUsati.size < NOMI.length * COGNOMI.length);
+    nomiUsati.add(nome);
+
+    const file = `demo-${hex(4)}.webp`;
+    const sorgente = path.join(DIR_FOTO, `${foto[i % foto.length]}.jpg`);
+    const conFoto = existsSync(sorgente) && i % 6 !== 5; // ogni tanto uno senza foto, per vedere le iniziali
+    if (conFoto) {
+      const buf = await sharp(sorgente).rotate().resize(800, 1000, { fit: 'cover', position: 'attention' }).webp({ quality: 80 }).toBuffer();
+      await writeFile(percorsoFoto(file), buf);
+    }
+    nuovi.push({ id: nuovoIdInsegnante(), nome, ...profili[i % profili.length], foto: conFoto ? PREFISSO_FOTO + file : '', demo: true });
+  }
+  await aggiungiInsegnanti(nuovi);
+  return nuovi.length;
+}
+

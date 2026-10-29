@@ -163,7 +163,7 @@ export async function salvaInsegnante(input: InsegnanteInput): Promise<Insegnant
     let percorso = esistente?.foto ?? '';
     if (foto) percorso = await salvaFoto(foto, nome);
     else if (input.togliFoto) percorso = '';
-    const insegnante: Insegnante = { id: esistente?.id ?? nuovoId(), nome, ruolo, bio, competenze, foto: percorso };
+    const insegnante: Insegnante = { id: esistente?.id ?? nuovoId(), nome, ruolo, bio, competenze, foto: percorso, ...(esistente?.demo && { demo: true }) };
 
     if (esistente) {
       dati.insegnanti = dati.insegnanti.map((d) => (d.id === insegnante.id ? insegnante : d));
@@ -186,6 +186,32 @@ export async function eliminaInsegnante(id: string): Promise<void> {
     await writeJson(paths.insegnanti, dati);
     await rimuoviFoto(insegnante.foto);
   });
+}
+
+// === DATI DEMO (src/lib/demo.ts) ===
+
+export const nuovoIdInsegnante = nuovoId;
+
+/** Aggiunge in coda insegnanti demo già pronti (foto comprese). */
+export async function aggiungiInsegnanti(nuovi: Insegnante[]): Promise<void> {
+  await serialized(async () => {
+    const dati = await leggiInsegnanti();
+    dati.insegnanti.push(...nuovi);
+    await writeJson(paths.insegnanti, dati);
+  });
+}
+
+/** Rimuove gli insegnanti demo e le loro foto; restituisce quanti erano. */
+export async function rimuoviInsegnantiDemo(): Promise<number> {
+  const demo = await serialized(async () => {
+    const dati = await leggiInsegnanti();
+    const demo = dati.insegnanti.filter((i) => i.demo);
+    dati.insegnanti = dati.insegnanti.filter((i) => !i.demo);
+    await writeJson(paths.insegnanti, dati);
+    return demo;
+  });
+  await Promise.all(demo.map((i) => rimuoviFoto(i.foto)));
+  return demo.length;
 }
 
 /** Riordina: `ids` è il nuovo ordine (devono essere tutti e soli quelli esistenti). */

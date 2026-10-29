@@ -4,8 +4,9 @@
  * (nome, disciplina, presentazione, foto), con aggiunta, modifica, ordine ed
  * eliminazione. Logica client in src/scripts/dashboard/insegnanti.ts.
  */
-import { leggiInsegnanti } from '../../lib/insegnanti';
+import { leggiInsegnanti, MAX_INSEGNANTI } from '../../lib/insegnanti';
 import InsegnanteModal from './InsegnanteModal.astro';
+import DemoModal from './DemoModal.astro';
 
 const { sezione, insegnanti } = await leggiInsegnanti();
 const n = insegnanti.length;
@@ -17,7 +18,8 @@ const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2
         <h1>Insegnanti</h1>
         <p class="pagina-sotto">{n === 0 ? 'Nessun insegnante: la sezione non compare in Chi siamo' : n === 1 ? '1 insegnante in Chi siamo' : `${n} insegnanti in Chi siamo`}</p>
     </div>
-    <div class="pagina-azioni pagina-azioni--due">
+    <div class="pagina-azioni">
+        <button type="button" class="btn btn-secondary" data-apri-demo><i class="fas fa-flask" aria-hidden="true"></i> Dati demo</button>
         <a href="/chi-siamo#insegnanti" target="_blank" rel="noopener" class="btn btn-secondary">Vedi la pagina</a>
         <button type="button" class="btn btn-primary" data-nuovo-insegnante><i class="fas fa-plus" aria-hidden="true"></i> Nuovo insegnante</button>
     </div>
@@ -67,7 +69,7 @@ const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2
                         {d.foto ? <img src={d.foto} alt="" width="48" height="60" loading="lazy" /> : iniziali(d.nome)}
                     </span>
                     <span class="ev-testo">
-                        <span class="ev-titolo">{d.nome}</span>
+                        <span class="ev-titolo">{d.demo && <span class="ev-demo">Demo</span>}{d.nome}</span>
                         <span class="ev-meta">{d.ruolo || 'Disciplina non indicata'}</span>
                     </span>
                 </button>
@@ -88,6 +90,7 @@ const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2
 )}
 
 <InsegnanteModal />
+<DemoModal tipo="insegnanti" presenti={insegnanti.filter((d) => d.demo).length} liberi={MAX_INSEGNANTI - n} />
 
 <script>
     import '../../scripts/dashboard/insegnanti';

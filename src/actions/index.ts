@@ -11,7 +11,7 @@ import { ipVisitatore } from '../lib/chatbot/protezioni';
 import { verifica } from '../lib/chatbot/verifica';
 import { aggiungiTipo, eliminaEvento, ErroreEvento, inputEvento, leggiTipi, rimuoviTipo, salvaEvento } from '../lib/eventi';
 import { caricaImmagini, elencaImmagini, eliminaImmagine } from '../lib/uploads';
-import { generaChat, generaEventi, MAX_EVENTI, MAX_MESSAGGI, rimuoviChatDemo, rimuoviEventiDemo } from '../lib/demo';
+import { generaChat, generaEventi, generaInsegnanti, MAX_EVENTI, MAX_INSEGNANTI_DEMO, MAX_MESSAGGI, rimuoviChatDemo, rimuoviEventiDemo } from '../lib/demo';
 import { eliminaTutto, PAROLA_CONFERMA } from '../lib/pulizia';
 import { eliminaDocumento, ErroreDocumenti, ordinaDocumenti, salvaDocumento, salvaTesti } from '../lib/documenti';
 import * as insegnanti from '../lib/insegnanti';
@@ -267,6 +267,21 @@ export const server = {
       handler: async (_, context) => {
         await soloAdmin(context);
         return { rimossi: await rimuoviChatDemo() };
+      },
+    }),
+
+    insegnanti: defineAction({
+      input: z.object({ quanti: z.number().int().min(1).max(MAX_INSEGNANTI_DEMO) }),
+      handler: async ({ quanti }, context) => {
+        await soloAdmin(context);
+        return { creati: await generaInsegnanti(quanti) };
+      },
+    }),
+
+    rimuoviInsegnanti: defineAction({
+      handler: async (_, context) => {
+        await soloAdmin(context);
+        return { rimossi: await insegnanti.rimuoviInsegnantiDemo() };
       },
     }),
 

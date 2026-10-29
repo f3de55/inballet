@@ -16,6 +16,8 @@ export interface Insegnante {
   competenze: string[];
   /** Percorso pubblico della foto, '' se non caricata */
   foto: string;
+  /** Creato dal generatore di dati demo della dashboard (rimovibile in blocco) */
+  demo?: boolean;
 }
 
 export interface SezioneInsegnanti {

@@ -9,8 +9,9 @@ import { toast } from './toast';
 const modal = document.getElementById('modalDemo');
 
 if (modal) {
-  const tipo = modal.dataset.demo as 'eventi' | 'chatbot';
+  const tipo = modal.dataset.demo as 'eventi' | 'chatbot' | 'insegnanti';
   const eventi = tipo === 'eventi';
+  const insegnanti = tipo === 'insegnanti';
   const presenti = Number(modal.dataset.presenti);
   const form = document.getElementById('formDemo') as HTMLFormElement | null;
   const quanti = document.getElementById('demoQuanti') as HTMLInputElement | null;
@@ -48,7 +49,7 @@ if (modal) {
     const rapido = t.closest<HTMLElement>('[data-valore]')?.dataset.valore;
     if (!quanti || (!passo && !rapido)) return;
     // Il passo cresce con il numero: 1 per gli eventi, 50 per i messaggi
-    quanti.value = String(rapido ? Number(rapido) : Math.max(1, Math.min(max, valore() + Number(passo) * (eventi ? 1 : 50))));
+    quanti.value = String(rapido ? Number(rapido) : Math.max(1, Math.min(max, valore() + Number(passo) * (tipo === 'chatbot' ? 50 : 1))));
     aggiornaPulsante();
   });
   quanti?.addEventListener('input', aggiornaPulsante);
@@ -64,17 +65,21 @@ if (modal) {
       titolo: `Generare ${n.toLocaleString('it-IT')} ${unita} demo?`,
       testo: eventi
         ? 'Compariranno qui e anche nel calendario pubblico del sito, finché non li rimuovi.'
-        : 'Verranno aggiunti al registro del chatbot e contati nelle statistiche, finché non li rimuovi.',
+        : insegnanti
+          ? 'Compariranno qui e anche nella pagina Chi siamo del sito, finché non li rimuovi.'
+          : 'Verranno aggiunti al registro del chatbot e contati nelle statistiche, finché non li rimuovi.',
       ok: 'Genera',
     });
     if (!ok || !genera) return;
 
     genera.disabled = true;
-    genera.textContent = eventi ? `Creo ${n} eventi e locandine…` : 'Generazione in corso…';
+    genera.textContent = eventi ? `Creo ${n} eventi e locandine…` : insegnanti ? `Creo ${n} insegnanti e foto…` : 'Generazione in corso…';
     const giorni = Number((document.getElementById('demoGiorni') as HTMLSelectElement | null)?.value ?? 30);
     const { data, error } = eventi
       ? await actions.demo.eventi({ quanti: n })
-      : await actions.demo.chatbot({ quanti: n, giorni });
+      : insegnanti
+        ? await actions.demo.insegnanti({ quanti: n })
+        : await actions.demo.chatbot({ quanti: n, giorni });
     if (error) {
       genera.disabled = false;
       aggiornaPulsante();
@@ -84,7 +89,7 @@ if (modal) {
     setTimeout(() => {
       // Chatbot: mostra il periodo appena riempito (stesso link del filtro "N giorni", date di Roma)
       const periodo = [...document.querySelectorAll<HTMLAnchorElement>('.periodo .filtro')].find((a) => parseInt(a.textContent!, 10) === giorni);
-      if (eventi || !periodo) location.reload();
+      if (tipo !== 'chatbot' || !periodo) location.reload();
       else location.href = periodo.href;
     }, 700);
   });
@@ -96,14 +101,20 @@ if (modal) {
       titolo: `Rimuovere ${presenti.toLocaleString('it-IT')} ${unita} demo?`,
       testo: eventi
         ? 'Gli eventi demo e le loro locandine verranno eliminati. Gli eventi inseriti da te non vengono toccati.'
-        : 'I messaggi demo spariranno dalle statistiche. Le conversazioni vere non vengono toccate.',
+        : insegnanti
+          ? 'Gli insegnanti demo e le loro foto verranno eliminati. Gli insegnanti inseriti da te non vengono toccati.'
+          : 'I messaggi demo spariranno dalle statistiche. Le conversazioni vere non vengono toccate.',
       ok: 'Rimuovi',
       pericolo: true,
     });
     if (!ok) return;
     btn.disabled = true;
     btn.textContent = 'Rimozione…';
-    const { data, error } = eventi ? await actions.demo.rimuoviEventi() : await actions.demo.rimuoviChatbot();
+    const { data, error } = eventi
+      ? await actions.demo.rimuoviEventi()
+      : insegnanti
+        ? await actions.demo.rimuoviInsegnanti()
+        : await actions.demo.rimuoviChatbot();
     if (error) {
       btn.disabled = false;
       return toast(error.message || 'Errore nella rimozione', 'error');

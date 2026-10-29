@@ -583,7 +583,8 @@ section > .intro-editoriale {
 }
 
 /* Citazione in evidenza (box di approfondimento delle pagine, citazione della fondatrice in home e
-   in Chi siamo): virgolette azzurre grandi sopra il testo, corsivo leggero, firma in maiuscoletto.
+   in Chi siamo): virgolette azzurre grandi sopra il testo, corsivo, firma in maiuscoletto; il testo ha
+   lo stile dei paragrafi (stessa dimensione, peso e interlinea).
    Nelle intro centrate la citazione è centrata; da tablet in giù è a sinistra. */
 .intro-editoriale > [class*="-highlight"],
 section [class*="-intro-highlight"],
@@ -591,7 +592,7 @@ section [class*="-intro-highlight"],
 .fondatrice-citazione {
   position: relative;
   max-width: 38rem;
-  margin: 2.5rem 0 0;
+  margin: 0;
   padding: 3.25rem 0 0;
   border: none;
   background: none;
@@ -621,11 +622,7 @@ section [class*="-intro-highlight"] p,
 .story-quote p,
 .fondatrice-citazione p {
   margin: 0;
-  font-size: var(--text-xl);
   font-style: italic;
-  font-weight: 300;
-  line-height: 1.5;
-  color: var(--dark-navy);
 }
 
 .intro-editoriale > [class*="-highlight"] cite,
@@ -648,7 +645,7 @@ section [class*="-intro-highlight"] cite,
 }
 
 .intro-editoriale > [class*="-highlight"] {
-  margin: 2.5rem auto 0;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -668,7 +665,7 @@ section [class*="-intro-highlight"] cite,
   }
 
   .intro-editoriale > [class*="-highlight"] {
-    margin: 2rem 0 0;
+    margin: 0;
     text-align: left;
   }
 

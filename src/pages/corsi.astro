@@ -285,9 +285,9 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -1px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--primary-blue) 45%, var(--primary-blue-dark) 55%, transparent) -50% 0 / 40% 100% no-repeat;
+    bottom: -2px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-blue) 40%, var(--primary-blue-dark) 60%, transparent) -50% 0 / 45% 100% no-repeat;
     pointer-events: none;
     animation: corso-sbarra 5s ease-in-out infinite;
     animation-delay: calc(var(--i, 0) * .6s);
@@ -374,10 +374,28 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     }
   }
 
+  /* "Riduci movimento": il tratto non scorre più, ma resta un respiro lento di luce sotto ogni
+     corso (solo opacità, nessuno spostamento) e un'animazione c'è comunque su ogni dispositivo */
   @media (prefers-reduced-motion: reduce) {
-    .corsi-lista li::after,
+    .corsi-lista li::after {
+      background: linear-gradient(90deg, transparent, var(--primary-blue) 25%, var(--primary-blue) 75%, transparent);
+      animation: corso-respiro 4s ease-in-out infinite;
+      animation-delay: calc(var(--i, 0) * .5s);
+    }
+
     .corso-freccia {
       animation: none;
+    }
+  }
+
+  @keyframes corso-respiro {
+    0%,
+    100% {
+      opacity: .15;
+    }
+
+    50% {
+      opacity: 1;
     }
   }
 

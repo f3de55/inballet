@@ -60,8 +60,8 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
                         <h2 class="categoria-titolo" id={`${cat.id}-titolo`}>{cat.nome}</h2>
                         <p class="categoria-descrizione" set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
                         <ul class="corsi-lista">
-                            {cat.corsi.map((c) => (
-                                <li>
+                            {cat.corsi.map((c, j) => (
+                                <li style={`--i:${j}`}>
                                     <a href={c.url}>
                                         <span class="corso-nome">{nomeBreve(c.nome)}</span>
                                         <span class="corso-eta">{eta.get(c.url)}</span>
@@ -273,7 +273,47 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
   }
 
   .corsi-lista li {
+    position: relative;
     border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+  }
+
+  /* Sulla riga di ogni corso scorre di continuo un tratto azzurro, come un ballerino lungo la sbarra:
+     una riga dopo l'altra (--i) disegna un'onda dall'alto al basso e invita a scegliere. La freccia
+     accompagna il passaggio con un piccolo scatto in avanti. Fermo con "riduci movimento" */
+  .corsi-lista li::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-blue) 45%, var(--primary-blue-dark) 55%, transparent) -50% 0 / 40% 100% no-repeat;
+    pointer-events: none;
+    animation: corso-sbarra 5s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * .6s);
+  }
+
+  @keyframes corso-sbarra {
+    0% {
+      background-position: -50% 0;
+    }
+
+    50%,
+    100% {
+      background-position: 150% 0;
+    }
+  }
+
+  @keyframes corso-passo {
+    0%,
+    50%,
+    100% {
+      transform: none;
+    }
+
+    22% {
+      transform: translateX(5px);
+    }
   }
 
   .corsi-lista a {
@@ -308,6 +348,8 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     font-size: var(--text-sm);
     color: var(--primary-blue-dark);
     transition: transform 0.3s ease;
+    animation: corso-passo 5s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * .6s);
   }
 
   .corsi-lista a:focus-visible {
@@ -321,7 +363,21 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     }
 
     .corsi-lista a:hover .corso-freccia {
+      animation: none;
       transform: translateX(4px);
+    }
+
+    /* Sul corso sotto il mouse il tratto si ferma e sottolinea tutta la riga */
+    .corsi-lista li:has(a:hover)::after {
+      animation: none;
+      background: var(--primary-blue);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .corsi-lista li::after,
+    .corso-freccia {
+      animation: none;
     }
   }
 

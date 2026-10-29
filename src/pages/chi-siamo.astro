@@ -159,7 +159,7 @@ const numeri = [
                 <ul class="sedi">
                     {sediFoto.map(({ sede, foto, alt, fuoco, testo }) => (
                         <li class="sede">
-                            <Img class="sede-foto" src={foto} alt={alt} fuoco={fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 640px) 100vw, 560px" />
+                            <Img class="sede-foto" src={foto} alt={alt} fuoco={fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 640px) 100vw, 520px" />
                             <div class="sede-testo">
                                 <p class="sede-tipo">{sede.titolo}</p>
                                 <h3 class="sede-nome">{sede.citta}</h3>
@@ -404,14 +404,21 @@ const numeri = [
   position: relative;
 }
 
-/* Le due sedi affiancate sulla stessa riga: foto grande sopra, testo compatto sotto */
+/* Le due sedi affiancate, divise da un filetto verticale (niente card): foto, poi testo compatto */
 .sedi {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 3rem 2.5rem;
   margin: 3.5rem 0 0;
   padding: 0;
+}
+
+.sede {
+  padding: 0 3.5rem;
+}
+
+.sede + .sede {
+  border-left: 1px solid rgba(26, 26, 26, .18);
 }
 
 .sede :global(.sede-foto) {
@@ -457,15 +464,29 @@ const numeri = [
 
 @media (max-width: 900px) {
   .sedi {
-    gap: 2.5rem 1.5rem;
     margin-top: 2.5rem;
+  }
+
+  .sede {
+    padding: 0 1.75rem;
   }
 }
 
-/* Una sede sotto l'altra */
+/* Una sede sotto l'altra, con il filetto orizzontale */
 @media (max-width: 640px) {
   .sedi {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sede {
+    padding: 0;
+  }
+
+  .sede + .sede {
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-left: none;
+    border-top: 1px solid rgba(26, 26, 26, .18);
   }
 
   .sede-testo {

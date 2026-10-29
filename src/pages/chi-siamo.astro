@@ -567,11 +567,13 @@ const numeri = [
 }
 
 .sede {
+  display: flex;
+  flex-direction: column;
   padding-right: 3rem;
 }
 
 .sede + .sede {
-  padding: 0 0 0 3rem;
+  padding: 0 0 0 calc(3rem - 1px);
   border-left: 1px solid var(--linea-forte);
 }
 
@@ -584,6 +586,10 @@ const numeri = [
 }
 
 .sede-testo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
   margin-top: 1.5rem;
 }
 
@@ -604,8 +610,10 @@ const numeri = [
   color: var(--text-light);
 }
 
+/* «Indicazioni» sempre sulla stessa riga nelle due sedi, qualunque sia la lunghezza del testo */
 .sede-cta {
-  margin-top: 1.25rem;
+  margin-top: auto;
+  padding-top: 1.25rem;
 }
 
 @media (max-width: 900px) {
@@ -618,7 +626,7 @@ const numeri = [
   }
 
   .sede + .sede {
-    padding-left: 1.75rem;
+    padding-left: calc(1.75rem - 1px);
   }
 }
 

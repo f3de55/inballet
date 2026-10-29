@@ -132,10 +132,10 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                     <li>
                         <a href={f.href} class="fondamento">
                             <span class="fondamento-icona" aria-hidden="true"><i class={`fas ${f.icona}`}></i></span>
-                            <span class="fondamento-testi">
+                            <div class="fondamento-testi">
                                 <h3 class="fondamento-titolo">{f.titolo}</h3>
                                 <span class="fondamento-testo">{f.testo}</span>
-                            </span>
+                            </div>
                         </a>
                     </li>
                 ))}

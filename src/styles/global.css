@@ -913,12 +913,14 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
   transition: transform .3s ease, color .3s ease;
 }
 
-.link-cta:hover {
+.link-cta:hover,
+a:hover .link-cta {
   color: var(--primary-blue-dark);
   border-color: var(--primary-blue-dark);
 }
 
-.link-cta:hover i {
+.link-cta:hover i,
+a:hover .link-cta i {
   color: var(--primary-blue-dark);
   transform: translateX(6px);
 }

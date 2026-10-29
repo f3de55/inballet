@@ -1,5 +1,5 @@
 ---
-/** Modale crea/modifica insegnante: nome, disciplina, presentazione e foto. */
+/** Modale crea/modifica insegnante: nome, disciplina, presentazione, competenze e foto. */
 ---
 
 <div class="modal" id="modalInsegnante" role="dialog" aria-modal="true" aria-labelledby="modalInsegnanteTitle">
@@ -30,6 +30,12 @@
                     <textarea id="insBio" rows="4" maxlength="400" data-counter="400" placeholder="Formazione, esperienza, corsi che segue"></textarea>
                     <small class="contatore" id="insBio-counter"></small>
                     <small class="nota doc-aiuto">Per il grassetto scrivi la parola tra doppi asterischi: **così**.</small>
+                </div>
+
+                <div class="campo">
+                    <label for="insCompetenze">Competenze <span class="nota">una per riga</span></label>
+                    <textarea id="insCompetenze" rows="4" placeholder={'Es.\nDanza classica\nFloor barre\nInsegnante CSEN'}></textarea>
+                    <small class="nota doc-aiuto">Nella scheda compaiono sotto «Competenze», separate da una barra: Danza classica | Floor barre. Massimo 12.</small>
                 </div>
 
                 <div class="campo">

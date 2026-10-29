@@ -12,6 +12,8 @@ export interface Insegnante {
   ruolo: string;
   /** Breve presentazione; «**parola**» diventa grassetto */
   bio: string;
+  /** Competenze (discipline, titoli, metodi), mostrate nella scheda separate da «|» */
+  competenze: string[];
   /** Percorso pubblico della foto, '' se non caricata */
   foto: string;
 }

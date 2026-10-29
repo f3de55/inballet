@@ -12,6 +12,7 @@ interface Insegnante {
   nome: string;
   ruolo: string;
   bio: string;
+  competenze: string[];
   foto: string;
 }
 
@@ -73,6 +74,7 @@ const campi = {
   nome: $<HTMLInputElement>('insNome'),
   ruolo: $<HTMLInputElement>('insRuolo'),
   bio: $<HTMLTextAreaElement>('insBio'),
+  competenze: $<HTMLTextAreaElement>('insCompetenze'),
   file: $<HTMLInputElement>('insFile'),
 };
 const zona = modal.querySelector<HTMLElement>('[data-upload-foto]')!;
@@ -107,6 +109,7 @@ function apriModal(ins?: Insegnante) {
   campi.nome.value = ins?.nome ?? '';
   campi.ruolo.value = ins?.ruolo ?? '';
   campi.bio.value = ins?.bio ?? '';
+  campi.competenze.value = (ins?.competenze ?? []).join('\n');
   [campi.nome, campi.ruolo, campi.bio].forEach(aggiornaContatore);
   mostraFoto();
   modificato = false;
@@ -180,6 +183,7 @@ form.addEventListener('submit', async (e) => {
   dati.append('nome', nome);
   dati.append('ruolo', campi.ruolo.value.trim());
   dati.append('bio', campi.bio.value.trim());
+  dati.append('competenze', campi.competenze.value);
   if (nuovaFoto) dati.append('foto', nuovaFoto);
   if (togliFoto) dati.append('togliFoto', 'true');
 

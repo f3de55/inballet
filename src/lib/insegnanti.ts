@@ -29,6 +29,8 @@ const LIMITI = {
   nome: 60,
   ruolo: 80,
   bio: 400,
+  competenza: 50,
+  competenze: 12,
 } as const;
 
 /** Contenuti correnti: quelli salvati, con i predefiniti per ciò che manca. */
@@ -37,7 +39,10 @@ export async function leggiInsegnanti(): Promise<SezioneInsegnanti> {
   const base = insegnantiPredefiniti;
   return {
     sezione: { ...base.sezione, ...salvato?.sezione },
-    insegnanti: Array.isArray(salvato?.insegnanti) ? salvato.insegnanti : base.insegnanti,
+    insegnanti: (Array.isArray(salvato?.insegnanti) ? salvato.insegnanti : base.insegnanti).map((i) => ({
+      ...i,
+      competenze: Array.isArray(i.competenze) ? i.competenze : [],
+    })),
   };
 }
 
@@ -122,6 +127,8 @@ export interface InsegnanteInput {
   nome?: string;
   ruolo?: string;
   bio?: string;
+  /** Competenze, una per riga (o separate da virgola o «|») */
+  competenze?: string;
   /** Nuova foto (facoltativa) */
   foto?: File;
   /** Togli la foto attuale */
@@ -135,12 +142,16 @@ export async function salvaInsegnante(input: InsegnanteInput): Promise<Insegnant
   const ruolo = str(input.ruolo);
   const bio = str(input.bio);
   const foto = input.foto && input.foto.size > 0 ? input.foto : undefined;
+  const competenze = [...new Set((input.competenze ?? '').split(/[\n,|]/).map(str).filter(Boolean))];
 
   const errors: string[] = [];
   if (id && !ID.test(id)) errors.push('ID non valido');
   controllaLunghezza(errors, 'Nome', nome, LIMITI.nome, true);
   controllaLunghezza(errors, 'Disciplina', ruolo, LIMITI.ruolo);
   controllaLunghezza(errors, 'Presentazione', bio, LIMITI.bio);
+  if (competenze.length > LIMITI.competenze) errors.push(`Competenze: massimo ${LIMITI.competenze}`);
+  const lunga = competenze.find((c) => mbLen(c) > LIMITI.competenza);
+  if (lunga) errors.push(`Competenza «${lunga.slice(0, 20)}…»: massimo ${LIMITI.competenza} caratteri`);
   if (errors.length) throw new ErroreInsegnanti(errors.join('. '));
 
   return serialized(async () => {
@@ -152,7 +163,7 @@ export async function salvaInsegnante(input: InsegnanteInput): Promise<Insegnant
     let percorso = esistente?.foto ?? '';
     if (foto) percorso = await salvaFoto(foto, nome);
     else if (input.togliFoto) percorso = '';
-    const insegnante: Insegnante = { id: esistente?.id ?? nuovoId(), nome, ruolo, bio, foto: percorso };
+    const insegnante: Insegnante = { id: esistente?.id ?? nuovoId(), nome, ruolo, bio, competenze, foto: percorso };
 
     if (esistente) {
       dati.insegnanti = dati.insegnanti.map((d) => (d.id === insegnante.id ? insegnante : d));

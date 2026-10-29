@@ -211,6 +211,7 @@ export const server = {
         nome: campo,
         ruolo: campo,
         bio: campo,
+        competenze: campo,
         foto: z.instanceof(File).optional(),
         togliFoto: z.string().max(5).optional(),
       }),

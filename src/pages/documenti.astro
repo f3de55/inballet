@@ -34,7 +34,7 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
             <h1 class="chisiamo-hero-title">{hero.titolo}</h1>
-            {hero.testo && <p class="chisiamo-hero-tagline" set:html={grassettoDaTesto(hero.testo)} />}
+            {hero.testo && <p class="hero-lead" set:html={grassettoDaTesto(hero.testo)} />}
         </div>
     </section>
 
@@ -53,7 +53,7 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
                         <a class="documento" href={d.file} target="_blank" rel="noopener">
                             <i class="fas fa-file-pdf documento-icona" aria-hidden="true"></i>
                             <span class="documento-testo">
-                                <span class="documento-nome">{d.titolo}</span>
+                                <span class="documento-nome titolo-card">{d.titolo}</span>
                                 {d.nota && <span class="documento-nota">{d.nota}</span>}
                             </span>
                             <span class="documento-azione">
@@ -111,9 +111,6 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
 }
 
 .documento-nome {
-  font-size: var(--text-xl);
-  font-weight: 500;
-  line-height: var(--leading-snug);
   color: var(--dark-navy);
   transition: color .3s ease;
 }

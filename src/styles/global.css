@@ -115,28 +115,23 @@ html::-webkit-scrollbar-thumb:hover {
      (massimo, desktop) di viewport, senza salti ai breakpoint; in rem, così
      segue lo zoom e la dimensione del testo scelti dall'utente.
      Un ruolo = un gradino, su tutte le pagine: nessun font-size nelle media query
-     (tranne i titoli hero su mobile) e nessun valore fisso nei componenti.
-     Ruoli: 6xl titolo homepage · title titolo hero delle pagine interne · 5xl numeri grandi ·
-     4xl titoli di sezione · 3xl numeri e titoli in evidenza · 2xl sottotitoli ·
-     xl titoli di card · 2xl titoli delle voci in colonna (Competenze, Autonomia…) · base TUTTO il testo corrente (intro, paragrafi, liste): 18px su mobile ·
-     md descrizioni brevi nelle card e dettagli di voci (finestre modali comprese) · btn pulsanti ·
-     nav voci e pulsante della navbar · sm note, pill e metadati ·
-     xs etichette maiuscole ed eyebrow ·
-     3xs solo micro-dati in spazi stretti (calendario).
+     e nessun valore fisso nei componenti (le icone seguono il testo, vedi --icona-*).
+     Ruoli: 5xl H1 di ogni pagina e numeri grandi · 4xl H2 titoli di sezione ·
+     3xl titolo delle finestre modali e numeri/anni in evidenza · 2xl sottotitoli e righe in evidenza ·
+     xl H3 titoli di card e di voce, testo di apertura (lead) · base TUTTO il testo corrente
+     (intro, paragrafi, liste): 18px su mobile · md descrizioni brevi nelle card e dettagli di
+     voci · sm pulsanti, note, pill e metadati · xs voci di menu, etichette maiuscole ed eyebrow ·
+     3xs solo micro-dati in spazi stretti (calendario, footer).
      Eccezione: il pannello della chat (larghezza fissa) ha una sua scala compatta in Chatbot.astro. */
-  --text-6xl: clamp(2.375rem, 1.8333rem + 2.4074vw, 4rem);         /* 38 → 64px */
-  --text-5xl: clamp(2.125rem, 1.6667rem + 2.037vw, 3.5rem);           /* 34 → 56px */
-  --text-title: clamp(1.875rem, 1.5rem + 1.667vw, 3rem);              /* 30 → 48px */
+  --text-5xl: clamp(2.125rem, 1.6667rem + 2.037vw, 3.5rem);      /* 34 → 56px */
   --text-4xl: clamp(1.7812rem, 1.4167rem + 1.6204vw, 2.875rem);        /* 28.5 → 46px */
   --text-3xl: clamp(1.5312rem, 1.25rem + 1.25vw, 2.375rem);   /* 24.5 → 38px */
   --text-2xl: clamp(1.3125rem, 1.125rem + 0.8333vw, 1.875rem);   /* 21 → 30px */
   --text-xl: clamp(1.25rem, 1.125rem + 0.5556vw, 1.625rem);      /* 20 → 26px */
   --text-md: clamp(1.0625rem, 1rem + 0.2778vw, 1.25rem);         /* 17 → 20px */
   --text-base: clamp(1.125rem, 1.0417rem + 0.3704vw, 1.375rem);    /* 18 → 22px */
-  --text-btn: clamp(0.9375rem, 0.875rem + 0.2778vw, 1.125rem);    /* 15 → 18px */
-  --text-nav: clamp(0.875rem, 0.8542rem + 0.0926vw, 0.9375rem);   /* 14 → 15px */
   --text-sm: clamp(0.9375rem, 0.875rem + 0.2778vw, 1.125rem);    /* 15 → 18px */
-  --text-xs: clamp(0.8125rem, 0.75rem + 0.2778vw, 1rem);         /* 13 → 16px */
+  --text-xs: clamp(0.8125rem, 0.7708rem + 0.1852vw, 0.9375rem);  /* 13 → 15px */
   --text-3xs: 0.8125rem;                                          /* 13px */
   --leading-none: 1;
   --leading-tight: 1.1;
@@ -225,6 +220,90 @@ body {
   overflow-x: hidden;
 }
 
+/* ==========================================================================
+   TIPOGRAFIA: un solo stile per ogni livello di titolo, valido in tutte le pagine.
+   I componenti non ridefiniscono dimensione, peso o interlinea dei titoli: scelgono
+   il tag giusto (h1 titolo della pagina, h2 sezione, h3 card/voce, h4 dettaglio).
+   ========================================================================== */
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  color: var(--dark-navy);
+  text-transform: none;
+}
+
+h1 {
+  font-size: var(--text-5xl);
+  line-height: 1.08;
+  letter-spacing: -.02em;
+}
+
+h2 {
+  font-size: var(--text-4xl);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+
+h3,
+.titolo-card {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+}
+
+h4 {
+  font-size: var(--text-md);
+  line-height: 1.3;
+}
+
+/* Titolo delle finestre modali (evento, insegnante) */
+dialog h2 {
+  font-size: var(--text-3xl);
+  line-height: 1.2;
+  letter-spacing: -.01em;
+}
+
+/* Su foto e sfondi scuri i titoli sono bianchi */
+:where(.hero, .chisiamo-hero, .sezione-scura) :is(h1, h2, h3, h4) {
+  color: var(--white);
+}
+
+/* Titoletto: etichetta maiuscola sopra o al posto di un titolo (anche su h2/h3 nel footer, nei box) */
+.titoletto {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--primary-blue-dark);
+}
+
+/* Testo di apertura sotto il titolo delle hero (home e pagine interne) */
+.hero-lead {
+  font-size: var(--text-xl);
+  font-weight: 300;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, .88);
+  max-width: 38rem;
+  margin: 1rem 0 0;
+}
+
+/* Numeri e anni in evidenza */
+.numero-grande {
+  font-size: var(--text-5xl);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.numero-medio {
+  font-size: var(--text-3xl);
+  font-weight: 300;
+  line-height: 1;
+}
+
 /* Link dentro il testo corrente (collegamenti tra corsi e pagine): link senza
    classe propria, al massimo con quella di scoping di Astro (astro-xxxx) */
 main p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
@@ -274,8 +353,7 @@ main .sezione-scura p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
   font-size: var(--text-4xl);
   font-weight: 700;
   line-height: 1.15;
-  letter-spacing: -0.02em;
-  text-transform: none;
+  letter-spacing: -.02em;
   color: var(--dark-navy);
 }
 
@@ -315,7 +393,7 @@ main .sezione-scura p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
   gap: .6rem;
   padding: .8rem 1.75rem;
   border-radius: var(--radius-pill);
-  font-size: var(--text-btn);
+  font-size: var(--text-sm);
   line-height: 1.2;
   font-weight: 600;
   letter-spacing: 1px;
@@ -513,19 +591,11 @@ section [class*="-intro-highlight"] cite,
 
 .voce-anno {
   display: block;
-  font-size: var(--text-3xl);
-  font-weight: 300;
-  line-height: 1;
   color: var(--primary-blue-dark);
   margin-bottom: .9rem;
 }
 
 .voce-titolo {
-  font-size: var(--text-2xl);
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: 0;
-  text-transform: none;
   color: var(--dark-navy);
   margin: 0 0 .6rem;
 }
@@ -716,7 +786,7 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
   padding-bottom: .4rem;
   border-bottom: 2px solid var(--primary-blue);
   color: var(--dark-navy);
-  font-size: var(--text-nav);
+  font-size: var(--text-xs);
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -1109,22 +1179,9 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
 }
 
 .chisiamo-hero-title {
-  font-size: var(--text-title);
-  font-weight: 700;
   color: var(--white);
   margin: 0;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
   max-width: 16ch;
-}
-
-.chisiamo-hero-tagline {
-  font-size: var(--text-xl);
-  color: rgba(255,255,255,0.85);
-  margin: 1rem 0 0;
-  line-height: 1.6;
-  font-weight: 300;
-  max-width: 36rem;
 }
 
 @media (max-width: 768px) {
@@ -1143,16 +1200,13 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
 
   /* Sottotitolo più piccolo e più pieno (su sfondo chiaro il peso 300 si legge male),
      a tutta larghezza, con gli a capo naturali del testo */
-  .chisiamo-hero-tagline {
-    font-size: var(--text-base);
+  /* Su sfondo chiaro il peso 300 si legge male: sul telefono il lead è più pieno */
+  .hero-lead {
     font-weight: 400;
-    line-height: 1.5;
-    margin-top: .75rem;
     color: rgba(255,255,255,.95);
     max-width: none;
     text-wrap: wrap;
   }
-
 }
 
 @media (max-width: 480px) {

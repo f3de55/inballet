@@ -28,7 +28,7 @@ const { insegnanti } = Astro.props.dati;
         {p.bio && <p class="ins-dialog-bio" set:html={grassettoDaTesto(p.bio)} />}
         {p.competenze.length > 0 && (
           <div class="ins-competenze">
-            <h3 class="ins-competenze-titolo">Competenze</h3>
+            <h3 class="ins-competenze-titolo titoletto">Competenze</h3>
             <ul class="ins-competenze-lista">
               {p.competenze.map((c) => <li><i class="fas fa-check" aria-hidden="true"></i><span>{c}</span></li>)}
             </ul>
@@ -153,10 +153,6 @@ const { insegnanti } = Astro.props.dati;
 
   .ins-dialog-nome {
     margin: 0 3rem .6rem 0;
-    font-size: var(--text-3xl);
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -.01em;
     color: var(--dark-navy);
   }
 
@@ -178,10 +174,6 @@ const { insegnanti } = Astro.props.dati;
 
   .ins-competenze-titolo {
     margin: 0 0 .75rem;
-    font-size: var(--text-xs);
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
     color: var(--primary-blue-dark);
   }
 

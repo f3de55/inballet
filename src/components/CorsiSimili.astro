@@ -42,7 +42,7 @@ const altri = (categoria?.corsi ?? [])
             <a href={c.href} class="simili-voce">
               <i class={`fas ${categoria.icona} simili-icona`} aria-hidden="true"></i>
               <span class="simili-testo">
-                <span class="simili-nome">{c.nome}</span>
+                <h3 class="simili-nome">{c.nome}</h3>
                 <span class="simili-eta">{c.eta}</span>
                 <span class="simili-desc">{c.frequenza}</span>
               </span>
@@ -115,9 +115,6 @@ const altri = (categoria?.corsi ?? [])
 
   .simili-nome {
     display: block;
-    font-size: var(--text-xl);
-    font-weight: 700;
-    line-height: 1.25;
     color: var(--dark-navy);
   }
 

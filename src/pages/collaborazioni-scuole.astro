@@ -39,7 +39,7 @@ const progetti = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Collaborazioni con le scuole</h1>
-                <p class="chisiamo-hero-tagline">Progetti educativi di danza e movimento, <strong>dal nido alle secondarie di secondo grado</strong>.</p>
+                <p class="hero-lead">Progetti educativi di danza e movimento, <strong>dal nido alle secondarie di secondo grado</strong>.</p>
             </div>
         </section>
 
@@ -75,7 +75,7 @@ const progetti = [
                     {fasce.map((f) => (
                         <li class="fascia">
                             <i class={`fas ${f.icona} fascia-icona`} aria-hidden="true"></i>
-                            <span class="fascia-eta">{f.eta} anni</span>
+                            <span class="fascia-eta titolo-card">{f.eta} anni</span>
                             <span class="fascia-nome">{f.nome}</span>
                         </li>
                     ))}
@@ -208,9 +208,6 @@ const progetti = [
 }
 
 .fascia-eta {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  line-height: 1.3;
   color: var(--primary-blue-dark);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -276,9 +273,6 @@ const progetti = [
 
 .progetto-nome {
   margin-bottom: .5rem;
-  font-size: var(--text-xl);
-  font-weight: 500;
-  line-height: var(--leading-snug);
   color: var(--dark-navy);
 }
 

@@ -85,7 +85,7 @@ const schema = schemaHome(socialImage);
 
             <h1>Scuola di Danza a Lainate e Rho</h1>
 
-            <p class="hero-subtitle">
+            <p class="hero-lead">
                 Corsi di danza <strong>dai 3 anni agli adulti</strong>, anche per <strong>principianti</strong>.
             </p>
 
@@ -122,7 +122,7 @@ const schema = schemaHome(socialImage);
                                     : <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[640, 960, 1200]} sizes="(max-width: 600px) 100vw, 600px" />}
                             </span>
                             <span class="corsi-stile-testo">
-                                <span class="corsi-stile-nome">{cat.nome}</span>
+                                <h3 class="corsi-stile-nome">{cat.nome}</h3>
                                 <span class="corsi-stile-desc">{cat.sintesi}</span>
                                 <span class="link-cta corsi-stile-link">Vedi di più <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
                             </span>
@@ -194,7 +194,7 @@ const schema = schemaHome(socialImage);
                         <a href={v.href} class="oltre-voce">
                             <span class="oltre-icona" aria-hidden="true"><i class={`fas ${v.icona}`}></i></span>
                             <span class="oltre-testo-voce">
-                                <span class="oltre-nome">{v.nome}</span>
+                                <h3 class="oltre-nome">{v.nome}</h3>
                                 <span class="oltre-desc">{v.testo}</span>
                             </span>
                             <i class="fas fa-arrow-right oltre-freccia" aria-hidden="true"></i>
@@ -371,22 +371,12 @@ const schema = schemaHome(socialImage);
 }
 
 .hero :global(h1) {
-  font-size: var(--text-6xl);
-  font-weight: 700;
-  line-height: 1.05;
   margin-bottom: 1.25rem;
-  color: var(--white);
-  letter-spacing: -.02em;
   max-width: 14ch;
 }
 
-.hero-subtitle {
-  font-size: var(--text-xl);
-  margin-bottom: 2.25rem;
-  color: rgba(255,255,255,.88);
-  font-weight: 300;
-  line-height: 1.55;
-  max-width: 38rem;
+.hero-lead {
+  margin: 0 0 2.25rem;
 }
 
 .hero-cta {
@@ -568,11 +558,8 @@ const schema = schemaHome(socialImage);
 }
 
 .corsi-stile-nome {
+  color: inherit;
   display: block;
-  font-size: var(--text-xl);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -.01em;
 }
 
 .corsi-stile-desc {
@@ -1002,9 +989,6 @@ const schema = schemaHome(socialImage);
 
 .oltre-nome {
   display: block;
-  font-size: var(--text-xl);
-  font-weight: 700;
-  line-height: 1.25;
   color: var(--dark-navy);
 }
 
@@ -1165,15 +1149,11 @@ const schema = schemaHome(socialImage);
 
 .hero :global(h1) {
     max-width: none;
-    font-size: var(--text-5xl);
-    line-height: 1.1;
     margin-bottom: 1rem;
   }
 
-.hero-subtitle {
-    line-height: 1.5;
+.hero-lead {
     margin-bottom: 1.8rem;
-    max-width: 100%;
   }
 
 .hero-cta {
@@ -1195,7 +1175,7 @@ const schema = schemaHome(socialImage);
     margin-bottom: .8rem;
   }
 
-.hero-subtitle {
+.hero-lead {
     margin-bottom: 1.5rem;
   }
 

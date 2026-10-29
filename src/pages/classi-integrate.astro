@@ -40,7 +40,7 @@ const classi = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Classi Multidisciplinari Integrate</h1>
-                <p class="chisiamo-hero-tagline">Quasi tutti i nostri corsi possono accogliere bambini e ragazzi con <strong>bisogni speciali</strong>.</p>
+                <p class="hero-lead">Quasi tutti i nostri corsi possono accogliere bambini e ragazzi con <strong>bisogni speciali</strong>.</p>
             </div>
         </section>
 
@@ -96,7 +96,7 @@ const classi = [
                     {classi.map((c) => (
                         <li>
                             <a class="classe" href={c.href}>
-                                <span class="classe-nome">{c.nome}</span>
+                                <h3 class="classe-nome">{c.nome}</h3>
                                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
                             </a>
                         </li>
@@ -236,9 +236,6 @@ const classi = [
 }
 
 .classe-nome {
-  font-size: var(--text-xl);
-  font-weight: 500;
-  line-height: var(--leading-snug);
   transition: color .3s ease;
 }
 

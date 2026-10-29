@@ -56,7 +56,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
             <h1 class="chisiamo-hero-title">{data.titolo}</h1>
-            <p class="chisiamo-hero-tagline">{data.tagline}</p>
+            <p class="hero-lead">{data.tagline}</p>
         </div>
     </section>
 
@@ -131,8 +131,8 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
             <ol class="corso-impara-list" id="corsoImparaGrid">
                 {data.impara.map((item, i) => (
                     <li>
-                        <span class="impara-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                        <span class="impara-testo" set:html={item} />
+                        <span class="impara-num numero-medio" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                        <span class="impara-testo titolo-card" set:html={item} />
                     </li>
                 ))}
             </ol>
@@ -356,9 +356,6 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
 
 /* Numero e testo sulla stessa riga, centrati sulla stessa linea: i numeri stanno tutti nella stessa colonna */
 .impara-num {
-  font-size: var(--text-4xl);
-  font-weight: 300;
-  line-height: 1;
   text-align: center;
   color: var(--primary-blue-dark);
   font-variant-numeric: tabular-nums;
@@ -366,9 +363,6 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
 
 /* Testo normale, grassetto solo sulle parole chiave (<strong> in corsi.json) */
 .impara-testo {
-  font-size: var(--text-xl);
-  font-weight: 400;
-  line-height: var(--leading-snug);
   color: var(--text-dark);
 }
 
@@ -475,10 +469,6 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
   .corso-impara-list li {
     grid-template-columns: 3rem minmax(0, 1fr);
     padding: 1.25rem 0;
-  }
-
-  .impara-num {
-    font-size: var(--text-3xl);
   }
 }
 </style>

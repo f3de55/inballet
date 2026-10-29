@@ -46,7 +46,7 @@ const enti = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">Corso per Insegnanti di Danza</h1>
-                <p class="chisiamo-hero-tagline">Percorso <strong>biennale</strong> con specializzazione <strong>Modern</strong>, riconosciuto <strong>CSEN e CONI</strong>.</p>
+                <p class="hero-lead">Percorso <strong>biennale</strong> con specializzazione <strong>Modern</strong>, riconosciuto <strong>CSEN e CONI</strong>.</p>
             </div>
         </section>
 
@@ -69,8 +69,8 @@ const enti = [
                 <ul class="breve-lista" aria-label="Il corso in breve">
                     {inBreve.map((b) => (
                         <li class="voce">
-                            <span class="voce-anno">{b.valore}{b.unita && ` ${b.unita}`}</span>
-                            <p class="voce-titolo">{b.testo}</p>
+                            <span class="voce-anno numero-medio">{b.valore}{b.unita && ` ${b.unita}`}</span>
+                            <h3 class="voce-titolo">{b.testo}</h3>
                         </li>
                     ))}
                 </ul>
@@ -89,7 +89,7 @@ const enti = [
                     {aree.map((a) => (
                         <li class="area">
                             <i class={`fas ${a.icona} area-num`} aria-hidden="true"></i>
-                            <span class="area-nome">{a.nome}</span>
+                            <h3 class="area-nome">{a.nome}</h3>
                         </li>
                     ))}
                 </ol>
@@ -259,9 +259,6 @@ const enti = [
 }
 
 .area-nome {
-  font-size: var(--text-xl);
-  font-weight: 500;
-  line-height: var(--leading-snug);
   color: var(--dark-navy);
 }
 

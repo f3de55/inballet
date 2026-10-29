@@ -38,7 +38,7 @@ const colonne = [
     {/* Colonne sempre aperte; su mobile footer.ts le chiude e diventano a fisarmonica */}
     {colonne.map((c) => (
       <details class="footer-col" open>
-        <summary><h2 class="footer-titolo">{c.titolo}</h2></summary>
+        <summary><h2 class="footer-titolo titoletto">{c.titolo}</h2></summary>
         <ul>
           {c.voci.map((v) => <li><a href={v.href}>{v.breve ?? v.nome}</a></li>)}
         </ul>
@@ -47,7 +47,7 @@ const colonne = [
   </nav>
 
   <div class="footer-contatti">
-    <h2 class="footer-titolo">Contatti</h2>
+    <h2 class="footer-titolo titoletto">Contatti</h2>
     <ul>
       <li><a href={scuola.telefonoHref}>{scuola.telefono}</a></li>
       <li><a href={`mailto:${scuola.email}`}>{scuola.email}</a></li>
@@ -90,7 +90,7 @@ const colonne = [
   }
 
   .footer-brand p {
-    font-size: var(--text-nav);
+    font-size: var(--text-xs);
     line-height: 1.6;
     color: var(--footer-testo);
     max-width: 16rem;
@@ -149,10 +149,6 @@ const colonne = [
   }
 
   .footer-titolo {
-    font-size: var(--text-3xs);
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
     color: var(--primary-blue);
     margin-bottom: 1.1rem;
   }
@@ -166,7 +162,7 @@ const colonne = [
 
   .footer-main ul a,
   .footer-link {
-    font-size: var(--text-nav);
+    font-size: var(--text-xs);
     line-height: 1.4;
     color: var(--footer-testo);
     text-decoration: none;

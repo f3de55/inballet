@@ -51,7 +51,7 @@ const numeri = [
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
                 <h1 class="chisiamo-hero-title">La nostra storia</h1>
-                <p class="chisiamo-hero-tagline">Dal {FONDAZIONE} a Lainate e Rho: una scuola di danza multidisciplinare, <strong>inclusiva e aperta a tutte le età</strong>.</p>
+                <p class="hero-lead">Dal {FONDAZIONE} a Lainate e Rho: una scuola di danza multidisciplinare, <strong>inclusiva e aperta a tutte le età</strong>.</p>
             </div>
         </section>
 
@@ -89,27 +89,27 @@ const numeri = [
                 </div>
                 <ol class="timeline">
                     <li class="voce">
-                        <span class="voce-anno">{FONDAZIONE}</span>
+                        <span class="voce-anno numero-medio">{FONDAZIONE}</span>
                         <h3 class="voce-titolo">La fondazione</h3>
                         <p class="voce-testo">Ilenia Nobile fonda a Lainate <strong>I.N. Ballet</strong>, scuola di danza multidisciplinare.</p>
                     </li>
                     <li class="voce">
-                        <span class="voce-anno">2013</span>
+                        <span class="voce-anno numero-medio">2013</span>
                         <h3 class="voce-titolo">Nasce NoiConVoi</h3>
                         <p class="voce-testo">Il progetto di volontariato che accoglie in sala <strong>ragazzi con disabilità</strong>, con supporto psicomotorio.</p>
                     </li>
                     <li class="voce">
-                        <span class="voce-anno">2023</span>
+                        <span class="voce-anno numero-medio">2023</span>
                         <h3 class="voce-titolo">Ente formativo</h3>
                         <p class="voce-testo">Riconoscimento per il titolo di <strong>Insegnante di Danza</strong>, valido CSEN e CONI a livello nazionale.</p>
                     </li>
                     <li class="voce">
-                        <span class="voce-anno">2024</span>
+                        <span class="voce-anno numero-medio">2024</span>
                         <h3 class="voce-titolo">Volontariato d'impresa</h3>
                         <p class="voce-testo">Aziende ed enti entrano nei progetti sociali con i loro <strong>volontari</strong>.</p>
                     </li>
                     <li class="voce">
-                        <span class="voce-anno">Oggi</span>
+                        <span class="voce-anno numero-medio">Oggi</span>
                         <h3 class="voce-titolo">Due sedi, ogni età</h3>
                         <p class="voce-testo">Lainate e Rho, <strong>{totaleCorsi} corsi</strong> dai 3 anni all'età adulta e uno spettacolo in teatro ogni anno.</p>
                     </li>
@@ -129,7 +129,7 @@ const numeri = [
                     {numeri.map((n) => (
                         <div class="numero">
                             <dt class="numero-etichetta">{n.etichetta}</dt>
-                            <dd class="numero-valore"><span class="numero-value" data-target={n.valore}>{n.valore}</span></dd>
+                            <dd class="numero-valore numero-grande"><span class="numero-value" data-target={n.valore}>{n.valore}</span></dd>
                             <dd class="numero-nota">{n.nota}</dd>
                         </div>
                     ))}
@@ -323,10 +323,6 @@ const numeri = [
 .numero-valore {
   order: 1;
   margin: 0;
-  font-size: var(--text-5xl);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
   color: var(--white);
   font-variant-numeric: tabular-nums;
 }
@@ -381,10 +377,6 @@ const numeri = [
   .numero,
   .numero + .numero {
     padding: 1.5rem .75rem;
-  }
-
-  .numero-valore {
-    font-size: var(--text-4xl);
   }
 
   .numero-etichetta {
@@ -447,10 +439,6 @@ const numeri = [
 
 .sede-nome {
   margin-bottom: .6rem;
-  font-size: var(--text-xl);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
   color: var(--dark-navy);
 }
 

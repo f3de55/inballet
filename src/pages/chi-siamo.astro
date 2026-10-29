@@ -159,7 +159,7 @@ const numeri = [
                 <ul class="sedi">
                     {sediFoto.map(({ sede, foto, alt, fuoco, testo }) => (
                         <li class="sede">
-                            <Img class="sede-foto" src={foto} alt={alt} fuoco={fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 640px) 60vw, 272px" />
+                            <Img class="sede-foto" src={foto} alt={alt} fuoco={fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 640px) 256px, 288px" />
                             <div class="sede-testo">
                                 <p class="sede-tipo">{sede.titolo}</p>
                                 <h3 class="sede-nome">{sede.citta}</h3>
@@ -404,38 +404,39 @@ const numeri = [
   position: relative;
 }
 
-/* Le due sedi una per riga, senza card: foto piccola, filetto verticale, poi il testo.
-   Le righe sono divise da un filetto orizzontale */
+/* Le due sedi affiancate sulla stessa riga, divise da un filetto verticale (niente card):
+   foto piccola, sotto tipo, città, descrizione e indicazioni, tutto centrato */
 .sedi {
   list-style: none;
-  max-width: 56rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 60rem;
   margin: 3rem auto 0;
   padding: 0;
 }
 
 .sede {
-  display: grid;
-  grid-template-columns: 17rem minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 2.5rem;
-  padding: 2rem 0;
+  padding: 0 2.5rem;
+  text-align: center;
 }
 
 .sede + .sede {
-  border-top: 1px solid rgba(26, 26, 26, .18);
+  border-left: 1px solid rgba(26, 26, 26, .18);
 }
 
 .sede :global(.sede-foto) {
   display: block;
-  width: 100%;
+  width: min(100%, 18rem);
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: var(--radius-img);
 }
 
 .sede-testo {
-  padding: .5rem 0 .5rem 2.5rem;
-  border-left: 1px solid rgba(26, 26, 26, .18);
+  margin-top: 1.5rem;
 }
 
 .sede-tipo {
@@ -457,7 +458,8 @@ const numeri = [
 }
 
 .sede-descrizione {
-  max-width: 30rem;
+  max-width: 24rem;
+  margin-inline: auto;
   font-size: var(--text-base);
   line-height: 1.7;
   color: var(--text-light);
@@ -469,37 +471,34 @@ const numeri = [
 
 @media (max-width: 900px) {
   .sede {
-    grid-template-columns: 13rem minmax(0, 1fr);
-    gap: 1.75rem;
+    padding: 0 1.5rem;
   }
 
-  .sede-testo {
-    padding-left: 1.75rem;
+  .sede :global(.sede-foto) {
+    width: min(100%, 14rem);
   }
 }
 
-/* Telefono: foto piccola sopra il testo, senza filetto verticale */
+/* Telefono: una sede sotto l'altra, con il filetto orizzontale */
 @media (max-width: 640px) {
   .sedi {
+    grid-template-columns: minmax(0, 1fr);
     margin-top: 2rem;
   }
 
   .sede {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-    gap: 1.25rem;
-    padding: 1.75rem 0;
+    padding: 0;
+  }
+
+  .sede + .sede {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-left: none;
+    border-top: 1px solid rgba(26, 26, 26, .18);
   }
 
   .sede :global(.sede-foto) {
-    width: 60%;
-    max-width: 14rem;
-    aspect-ratio: 4 / 3;
-  }
-
-  .sede-testo {
-    padding: 0;
-    border-left: none;
+    width: min(100%, 16rem);
   }
 }
 

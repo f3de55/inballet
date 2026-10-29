@@ -273,7 +273,7 @@ const numeri = [
   --nodo: 20px;
   --distanza: 3rem;
   --riga: 4.25rem;
-  --sporgenza: 1.5rem;
+  --sporgenza: 1.75rem;
   --raggio: 1.75rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -325,25 +325,34 @@ const numeri = [
   display: none;
 }
 
-/* Serpentina. Tappe a fine riga: curva a destra che scende tra le righe e linea di ritorno verso sinistra.
-   Prima tappa di ogni riga (tranne la prima): la linea di ritorno curva e scende nel suo nodo dall'alto. */
+/* Serpentina. Tappe a fine riga: la linea prosegue fino al bordo, gira con un arco morbido a destra, scende
+   tra le righe e torna indietro. Prima tappa di ogni riga (tranne la prima): la linea di ritorno curva e
+   scende nel suo nodo dall'alto. */
 /* Desktop: tre tappe per riga */
 @media (min-width: 861px) {
   .timeline .voce:nth-child(3n):not(:last-child)::after {
-    right: calc(var(--sporgenza) * -1);
+    right: 0;
+  }
+
+  /* Giro a destra: un arco morbido (mezza ellisse) dal fondo della riga alla linea di ritorno */
+  .timeline .voce:nth-child(3n):not(:last-child) .voce-anno::after {
+    content: '';
+    position: absolute;
+    top: calc(var(--nodo) / 2 - 1px);
+    left: calc(100% - 1px);
     box-sizing: border-box;
+    width: var(--sporgenza);
     height: calc(100% - var(--nodo) / 2 + var(--riga) / 2 + 2px);
     border: 2px solid var(--primary-blue);
     border-left: none;
-    border-radius: 0 var(--raggio) var(--raggio) 0;
-    background: none;
+    border-radius: 0 100% 100% 0 / 0 50% 50% 0;
   }
 
   .timeline .voce:nth-child(3n):not(:last-child) .voce-anno::before {
     content: '';
     position: absolute;
     top: calc(100% + var(--riga) / 2 - 1px);
-    right: calc(100% - var(--nodo));
+    right: -1px;
     left: calc(2 * (100% + var(--distanza)) * -1 + var(--nodo) / 2 + var(--raggio));
     display: block;
     height: 2px;
@@ -366,13 +375,6 @@ const numeri = [
   }
 }
 
-/* Con il margine laterale più stretto la curva a destra sporge meno */
-@media (max-width: 768px) {
-  .timeline {
-    --sporgenza: 1rem;
-  }
-}
-
 /* Tablet: due tappe per riga */
 @media (min-width: 601px) and (max-width: 860px) {
   .timeline {
@@ -380,20 +382,28 @@ const numeri = [
   }
 
   .timeline .voce:nth-child(2n):not(:last-child)::after {
-    right: calc(var(--sporgenza) * -1);
+    right: 0;
+  }
+
+  /* Giro a destra: un arco morbido (mezza ellisse) dal fondo della riga alla linea di ritorno */
+  .timeline .voce:nth-child(2n):not(:last-child) .voce-anno::after {
+    content: '';
+    position: absolute;
+    top: calc(var(--nodo) / 2 - 1px);
+    left: calc(100% - 1px);
     box-sizing: border-box;
+    width: var(--sporgenza);
     height: calc(100% - var(--nodo) / 2 + var(--riga) / 2 + 2px);
     border: 2px solid var(--primary-blue);
     border-left: none;
-    border-radius: 0 var(--raggio) var(--raggio) 0;
-    background: none;
+    border-radius: 0 100% 100% 0 / 0 50% 50% 0;
   }
 
   .timeline .voce:nth-child(2n):not(:last-child) .voce-anno::before {
     content: '';
     position: absolute;
     top: calc(100% + var(--riga) / 2 - 1px);
-    right: calc(100% - var(--nodo));
+    right: -1px;
     left: calc(1 * (100% + var(--distanza)) * -1 + var(--nodo) / 2 + var(--raggio));
     display: block;
     height: 2px;

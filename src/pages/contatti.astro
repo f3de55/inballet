@@ -119,8 +119,8 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
         </div>
     </section>
 
-    <!-- I fondamenti di InBallet: titolo, poi sei punti (icona nel cerchio, titolo, una riga).
-         Desktop tre colonne, tablet due, mobile una -->
+    <!-- I fondamenti di InBallet: titolo centrato, poi sei punti (icona nel cerchio, titolo, una riga).
+         Desktop tre colonne con l'icona sopra il testo, tablet due e mobile una con l'icona a sinistra -->
     <section class="fondamenti sezione-scura" aria-labelledby="fondamenti-titolo">
         <div class="container fondamenti-layout">
             <div class="fondamenti-intro">
@@ -507,6 +507,24 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
       background: var(--primary-blue);
       border-color: var(--primary-blue);
       color: var(--dark-navy);
+    }
+  }
+
+  /* Desktop: intestazione centrata, icona sopra il testo e tutto centrato */
+  @media (min-width: 901px) {
+    .fondamenti-intro {
+      text-align: center;
+    }
+
+    .fondamento {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      row-gap: 1rem;
+      text-align: center;
+    }
+
+    .fondamento-testi {
+      padding-top: 0;
     }
   }
 

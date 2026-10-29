@@ -271,12 +271,13 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   left: 50%;
   transform: translateX(-50%);
   width: min(1240px, calc(100vw - 3rem));
-  border: 1px solid rgba(255,255,255,.08);
+  /* Bordo e alone azzurri: il pannello scuro non si confonde con le sezioni scure sotto */
+  border: 1px solid rgba(135,206,235,.35);
   border-radius: var(--radius-md);
   height: auto;
   max-height: calc(100vh - var(--nav-h));
   background: var(--header-dark);
-  box-shadow: 0 10px 20px rgba(0,0,0,.3);
+  box-shadow: 0 0 0 1px rgba(135,206,235,.08), 0 14px 36px rgba(135,206,235,.22);
   padding: 0;
   /* Chiusa: invisibile e leggermente più in basso; aperta: dissolvenza verso l'alto */
   visibility: hidden;

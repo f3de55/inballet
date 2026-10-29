@@ -127,9 +127,9 @@ html::-webkit-scrollbar-thumb:hover {
   --header-rgb: 42 42 42;
   --blu-rgb: 135 206 235;
   --blu-scuro-rgb: 59 114 160;
-  /* Filetti e bordi sottili */
+  /* Filetti e bordi sottili: un solo colore per tutte le linee di separazione (accordion, elenchi, celle,
+     tabelle…), identico a quello dell'accordion della home */
   --linea: rgb(var(--navy-rgb) / .12);
-  --linea-forte: rgb(var(--navy-rgb) / .2);
   --linea-su-scuro: rgb(var(--bianco-rgb) / .2);
   --velo-chiaro: rgb(var(--bianco-rgb) / .12);
   /* Testo su fondo scuro o foto */

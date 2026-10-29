@@ -159,7 +159,7 @@ One system, all in `src/styles/global.css`; pages and components only lay things
 - **Hero lead** under the h1: `.hero-lead` (home and inner pages).
 - **Buttons**: `.btn-primary`, `.btn-secondary`, `.link-cta`; round icon buttons `.btn-icon` + `--scuro` (on photos/dark), `--contorno` (carousel arrows), `--nudo` (menu). 44px, same icon size. The navbar "Contattaci" is a `btn-primary` (`aria-current="page"` turns it white).
 - **Icons** follow the text next to them or a scale step: `--icona-in-testo`, `--icona-mini`, `--icona-punto`, never px/rem in components.
-- **Colours** only from the palette tokens: `--white`, `--dark-navy`, `--primary-blue*`, `--text-*`, greys `--grigio-*`, states `--stato-*`, lines `--linea` / `--linea-forte` / `--linea-su-scuro`, text on dark `--testo-su-scuro*`, and for transparencies `rgb(var(--navy-rgb) / .4)` (also `--bianco-rgb`, `--nero-rgb`, `--scuro-rgb`, `--blu-rgb`, `--blu-scuro-rgb`, `--header-rgb`).
+- **Colours** only from the palette tokens: `--white`, `--dark-navy`, `--primary-blue*`, `--text-*`, greys `--grigio-*`, states `--stato-*`, lines: ONE hairline colour `--linea` for every separator on light backgrounds (same as the home accordion; never invent another), `--linea-su-scuro` on dark, text on dark `--testo-su-scuro*`, and for transparencies `rgb(var(--navy-rgb) / .4)` (also `--bianco-rgb`, `--nero-rgb`, `--scuro-rgb`, `--blu-rgb`, `--blu-scuro-rgb`, `--header-rgb`).
 - **Inline `style=`** only carries data as CSS variables (`--sfondo-*` / `--fuoco-*` from `sfondo()` and `<Img fuoco>`, `--i`, `--n`, `--scala`, `--velo`, `--decoro-onde*`); the rules that use them are in global.css.
 
 ## Corsi simili

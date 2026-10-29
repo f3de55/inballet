@@ -363,27 +363,28 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   color: var(--grigio-300);
   text-decoration: none;
   transition: color var(--transition-base);
-  padding: .5rem 0;
-  display: flex;
-  align-items: center;
+  padding: .5rem 0 .5rem 1.2rem;
+  display: block;
   font-weight: 500;
   font-size: var(--text-xs);
-  position: relative;
-  padding-left: 1.2rem;
+  /* Altezza di riga a pixel interi: le voci cadono tutte sulla stessa frazione di pixel, così testo e
+     pallino hanno lo stesso allineamento in ogni voce */
   line-height: 1.3;
+  line-height: round(up, 1.3em, 1px);
 }
 
+/* Pallino di 5px, dello stesso colore della voce (segue hover e voce attiva). È sulla stessa riga del
+   testo (inline), quindi segue la linea di base delle lettere: sta sempre a metà dell'altezza delle
+   minuscole, identico in ogni voce, e sulla prima riga se la voce va a capo */
 .mega-menu-section :global(a::before) {
   content: '';
-  position: absolute;
-  left: 0;
-  /* Pallino vero (non il carattere «•»): centrato sulla prima riga della voce, anche se va a capo */
-  top: calc(.5rem + .65em + var(--punto-scarto, .02em));
-  width: .42em;
-  height: .42em;
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin: 0 calc(1.2rem - 5px) 0 -1.2rem;
   border-radius: var(--radius-full);
-  background: var(--white);
-  transform: translateY(-50%);
+  background: currentColor;
+  vertical-align: calc(.25em - 2.15px);
 }
 
 .mega-menu-section :global(a:hover) {
@@ -670,8 +671,5 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
     padding: .4rem 0;
   }
 
-  .mega-menu-section :global(a::before) {
-    top: calc(.4rem + .65em + var(--punto-scarto, .02em));
-  }
 }
 </style>

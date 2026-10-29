@@ -201,6 +201,67 @@ const numeri = [
     </Fragment>
 </Base>
 
+<script>
+  // Timeline a serpentina: un unico tracciato che unisce i nodi, riga dopo riga (sempre letti da sinistra a
+  // destra). Alla fine di ogni riga la linea gira con un arco morbido a destra, scende tra le righe, torna
+  // indietro e curva dentro il nodo della prima tappa della riga sotto. Sul telefono resta la linea verticale.
+  const timeline = document.querySelector<HTMLElement>('.timeline');
+  if (timeline) {
+    const NS = 'http://www.w3.org/2000/svg';
+    const SPORGENZA = 28; // quanto l'arco esce a destra
+    const RAGGIO = 28; // curva che rientra nel nodo
+    const telefono = window.matchMedia('(max-width: 600px)');
+
+    const disegna = () => {
+      timeline.querySelector('.timeline-linea')?.remove();
+      timeline.classList.remove('con-linea');
+      if (telefono.matches) return;
+
+      const nodo = parseFloat(getComputedStyle(timeline).getPropertyValue('--nodo')) || 20;
+      const voci = [...timeline.children] as HTMLElement[];
+      const righe: HTMLElement[][] = [];
+      voci.forEach((v) => {
+        const r = righe[righe.length - 1];
+        if (r && Math.abs(r[0].offsetTop - v.offsetTop) < 2) r.push(v);
+        else righe.push([v]);
+      });
+      const centro = (v: HTMLElement) => ({ x: v.offsetLeft + nodo / 2, y: v.offsetTop + nodo / 2 });
+
+      let d = '';
+      righe.forEach((riga, i) => {
+        const primo = centro(riga[0]);
+        const ultimo = centro(riga[riga.length - 1]);
+        d += i === 0 ? `M ${primo.x} ${primo.y}` : '';
+        d += ` L ${ultimo.x} ${ultimo.y}`;
+        const prossima = righe[i + 1];
+        if (!prossima) return;
+        const fondo = Math.max(...riga.map((v) => v.offsetTop + v.offsetHeight));
+        const yg = (fondo + prossima[0].offsetTop) / 2;
+        const xr = riga[riga.length - 1].offsetLeft + riga[riga.length - 1].offsetWidth;
+        const k = (SPORGENZA * 4) / 3;
+        const nodoSotto = centro(prossima[0]);
+        const r = Math.min(RAGGIO, nodoSotto.y - yg);
+        d += ` L ${xr} ${ultimo.y} C ${xr + k} ${ultimo.y} ${xr + k} ${yg} ${xr} ${yg}`;
+        d += ` L ${nodoSotto.x + r} ${yg} Q ${nodoSotto.x} ${yg} ${nodoSotto.x} ${yg + r} L ${nodoSotto.x} ${nodoSotto.y}`;
+      });
+
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('class', 'timeline-linea');
+      svg.setAttribute('aria-hidden', 'true');
+      const path = document.createElementNS(NS, 'path');
+      path.setAttribute('d', d);
+      svg.append(path);
+      timeline.prepend(svg);
+      timeline.classList.add('con-linea');
+    };
+
+    disegna();
+    new ResizeObserver(disegna).observe(timeline);
+    document.fonts?.ready.then(disegna);
+    telefono.addEventListener('change', disegna);
+  }
+</script>
+
 <style>
 .fondatrice-section {
   padding: var(--section-y) 0;
@@ -325,104 +386,36 @@ const numeri = [
   display: none;
 }
 
-/* Serpentina. Tappe a fine riga: la linea prosegue fino al bordo, gira con un arco morbido a destra, scende
-   tra le righe e torna indietro. Prima tappa di ogni riga (tranne la prima): la linea di ritorno curva e
-   scende nel suo nodo dall'alto. */
-/* Desktop: tre tappe per riga */
-@media (min-width: 861px) {
-  .timeline .voce:nth-child(3n):not(:last-child)::after {
-    right: 0;
-  }
+/* Con JavaScript la linea è un unico tracciato SVG (curve vere e spessore uniforme, vedi lo script in fondo):
+   le linee CSS tra le tappe non servono più. Senza JavaScript restano le linee dritte per riga. */
+.timeline {
+  position: relative;
+}
 
-  /* Giro a destra: un arco morbido (mezza ellisse) dal fondo della riga alla linea di ritorno */
-  .timeline .voce:nth-child(3n):not(:last-child) .voce-anno::after {
-    content: '';
-    position: absolute;
-    top: calc(var(--nodo) / 2 - 1px);
-    left: calc(100% - 1px);
-    box-sizing: border-box;
-    width: var(--sporgenza);
-    height: calc(100% - var(--nodo) / 2 + var(--riga) / 2 + 2px);
-    border: 2px solid var(--primary-blue);
-    border-left: none;
-    border-radius: 0 100% 100% 0 / 0 50% 50% 0;
-  }
+.timeline :global(.timeline-linea) {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
 
-  .timeline .voce:nth-child(3n):not(:last-child) .voce-anno::before {
-    content: '';
-    position: absolute;
-    top: calc(100% + var(--riga) / 2 - 1px);
-    right: -1px;
-    left: calc(2 * (100% + var(--distanza)) * -1 + var(--nodo) / 2 + var(--raggio));
-    display: block;
-    height: 2px;
-    background: var(--primary-blue);
-  }
+.timeline :global(.timeline-linea path) {
+  fill: none;
+  stroke: var(--primary-blue);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
-  .timeline .voce:nth-child(3n + 1):not(:first-child) .voce-anno::before {
-    content: '';
-    position: absolute;
-    top: calc(var(--riga) / -2 - 1px);
-    left: calc(var(--nodo) / 2 - 1px);
-    display: block;
-    box-sizing: border-box;
-    width: var(--raggio);
-    height: calc(var(--riga) / 2 + 1px);
-    border: 2px solid var(--primary-blue);
-    border-right: none;
-    border-bottom: none;
-    border-radius: var(--raggio) 0 0 0;
-  }
+.timeline.con-linea .voce::after {
+  display: none;
 }
 
 /* Tablet: due tappe per riga */
 @media (min-width: 601px) and (max-width: 860px) {
   .timeline {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .timeline .voce:nth-child(2n):not(:last-child)::after {
-    right: 0;
-  }
-
-  /* Giro a destra: un arco morbido (mezza ellisse) dal fondo della riga alla linea di ritorno */
-  .timeline .voce:nth-child(2n):not(:last-child) .voce-anno::after {
-    content: '';
-    position: absolute;
-    top: calc(var(--nodo) / 2 - 1px);
-    left: calc(100% - 1px);
-    box-sizing: border-box;
-    width: var(--sporgenza);
-    height: calc(100% - var(--nodo) / 2 + var(--riga) / 2 + 2px);
-    border: 2px solid var(--primary-blue);
-    border-left: none;
-    border-radius: 0 100% 100% 0 / 0 50% 50% 0;
-  }
-
-  .timeline .voce:nth-child(2n):not(:last-child) .voce-anno::before {
-    content: '';
-    position: absolute;
-    top: calc(100% + var(--riga) / 2 - 1px);
-    right: -1px;
-    left: calc(1 * (100% + var(--distanza)) * -1 + var(--nodo) / 2 + var(--raggio));
-    display: block;
-    height: 2px;
-    background: var(--primary-blue);
-  }
-
-  .timeline .voce:nth-child(2n + 1):not(:first-child) .voce-anno::before {
-    content: '';
-    position: absolute;
-    top: calc(var(--riga) / -2 - 1px);
-    left: calc(var(--nodo) / 2 - 1px);
-    display: block;
-    box-sizing: border-box;
-    width: var(--raggio);
-    height: calc(var(--riga) / 2 + 1px);
-    border: 2px solid var(--primary-blue);
-    border-right: none;
-    border-bottom: none;
-    border-radius: var(--raggio) 0 0 0;
   }
 }
 

@@ -272,8 +272,9 @@ const numeri = [
 .timeline {
   --nodo: 20px;
   --distanza: 3rem;
-  --riga: 3.5rem;
-  --sporgenza: 1.25rem;
+  --riga: 4.25rem;
+  --sporgenza: 1.5rem;
+  --raggio: 1.75rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--riga) var(--distanza);
@@ -324,8 +325,8 @@ const numeri = [
   display: none;
 }
 
-/* Serpentina. Tappe a fine riga: curva a destra che scende tra le righe e linea di ritorno fino al margine
-   sinistro. Prima tappa di ogni riga (tranne la prima): curva a sinistra che porta la linea nel suo nodo. */
+/* Serpentina. Tappe a fine riga: curva a destra che scende tra le righe e linea di ritorno verso sinistra.
+   Prima tappa di ogni riga (tranne la prima): la linea di ritorno curva e scende nel suo nodo dall'alto. */
 /* Desktop: tre tappe per riga */
 @media (min-width: 861px) {
   .timeline .voce:nth-child(3n):not(:last-child)::after {
@@ -334,7 +335,7 @@ const numeri = [
     height: calc(100% - var(--nodo) / 2 + var(--riga) / 2 + 2px);
     border: 2px solid var(--primary-blue);
     border-left: none;
-    border-radius: 0 1.5rem 1.5rem 0;
+    border-radius: 0 var(--raggio) var(--raggio) 0;
     background: none;
   }
 
@@ -343,7 +344,7 @@ const numeri = [
     position: absolute;
     top: calc(100% + var(--riga) / 2 - 1px);
     right: calc(100% - var(--nodo));
-    left: calc(2 * (100% + var(--distanza)) * -1);
+    left: calc(2 * (100% + var(--distanza)) * -1 + var(--nodo) / 2 + var(--raggio));
     display: block;
     height: 2px;
     background: var(--primary-blue);
@@ -353,14 +354,22 @@ const numeri = [
     content: '';
     position: absolute;
     top: calc(var(--riga) / -2 - 1px);
-    left: calc(var(--sporgenza) * -1);
+    left: calc(var(--nodo) / 2 - 1px);
     display: block;
     box-sizing: border-box;
-    width: var(--sporgenza);
-    height: calc(var(--riga) / 2 + var(--nodo) / 2 + 2px);
+    width: var(--raggio);
+    height: calc(var(--riga) / 2 + 1px);
     border: 2px solid var(--primary-blue);
     border-right: none;
-    border-radius: 1.5rem 0 0 1.5rem;
+    border-bottom: none;
+    border-radius: var(--raggio) 0 0 0;
+  }
+}
+
+/* Con il margine laterale più stretto la curva a destra sporge meno */
+@media (max-width: 768px) {
+  .timeline {
+    --sporgenza: 1rem;
   }
 }
 
@@ -376,7 +385,7 @@ const numeri = [
     height: calc(100% - var(--nodo) / 2 + var(--riga) / 2 + 2px);
     border: 2px solid var(--primary-blue);
     border-left: none;
-    border-radius: 0 1.5rem 1.5rem 0;
+    border-radius: 0 var(--raggio) var(--raggio) 0;
     background: none;
   }
 
@@ -385,7 +394,7 @@ const numeri = [
     position: absolute;
     top: calc(100% + var(--riga) / 2 - 1px);
     right: calc(100% - var(--nodo));
-    left: calc(1 * (100% + var(--distanza)) * -1);
+    left: calc(1 * (100% + var(--distanza)) * -1 + var(--nodo) / 2 + var(--raggio));
     display: block;
     height: 2px;
     background: var(--primary-blue);
@@ -395,14 +404,15 @@ const numeri = [
     content: '';
     position: absolute;
     top: calc(var(--riga) / -2 - 1px);
-    left: calc(var(--sporgenza) * -1);
+    left: calc(var(--nodo) / 2 - 1px);
     display: block;
     box-sizing: border-box;
-    width: var(--sporgenza);
-    height: calc(var(--riga) / 2 + var(--nodo) / 2 + 2px);
+    width: var(--raggio);
+    height: calc(var(--riga) / 2 + 1px);
     border: 2px solid var(--primary-blue);
     border-right: none;
-    border-radius: 1.5rem 0 0 1.5rem;
+    border-bottom: none;
+    border-radius: var(--raggio) 0 0 0;
   }
 }
 

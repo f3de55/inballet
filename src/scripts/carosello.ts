@@ -4,7 +4,7 @@
    identiche). Scorre da solo ovunque (PC, tablet, telefono) e si può spostare a mano:
    trascinando col mouse o col dito, con la rotella orizzontale o il trackpad. Si ferma
    con il mouse sopra, al tocco e mentre una finestra è aperta; riparte 2 secondi dopo.
-   È scorrimento vero (scrollLeft), non un'animazione CSS: così le foto restano sempre
+   È scorrimento vero (scrollLeft), con la parte decimale in una traslazione; non è un'animazione CSS: così le foto restano sempre
    disegnate anche dopo molto tempo e il giro è infinito in entrambi i versi.
    ======================================== */
 
@@ -35,18 +35,17 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
 
   if (ridotto.matches) return; // movimento ridotto: solo scorrimento a mano, gestito dal CSS
 
-  // Due rappresentazioni della stessa posizione `pos` (px dall'inizio della prima metà):
-  // - automatico: scrollLeft = 0 e il track traslato di -pos (la trasformazione ha precisione al
-  //   decimo di pixel: scorre fluido anche a 30-40 px/s, mentre scrollLeft è a pixel interi e a
-  //   quella velocità scatta a gradini, con l'effetto di tremolio)
-  // - manuale: scrollLeft = pos, track fermo (scorrimento nativo di mouse, rotella e dito)
-  let modo: 'auto' | 'manuale' = 'auto';
+  // La posizione `pos` (px dall'inizio della prima metà) vive sempre in scrollLeft, così mouse, rotella
+  // e dito scorrono in modo nativo senza cambi di modalità (che al tocco si "perdevano" e facevano
+  // saltare le card). scrollLeft però avanza a pixel interi, e a 30-40 px/s questo dava il tremolio:
+  // la parte decimale di `pos` è quindi applicata con una traslazione del track (sub-pixel).
   let pos = 0;
   let ultimo = 0;
   let fermo = false;
   let sopra = false;
   let visibile = false;
   let ripresa = 0;
+  let ultimoScroll = 0;
   let trascinando = false;
   let spostato = false;
 
@@ -55,50 +54,40 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
     return g ? ((x % g) + g) % g : 0;
   };
   const mostra = () => {
-    track.style.transform = `translate3d(${-pos}px, 0, 0)`;
-  };
-
-  const inManuale = () => {
-    if (modo === 'manuale') return;
-    modo = 'manuale';
-    track.style.transform = '';
-    // Con spazio da entrambi i lati: le due metà sono identiche, si può stare nella seconda
-    fila.scrollLeft = pos < fila.clientWidth ? pos + giro() : pos;
-  };
-  const inAutomatico = () => {
-    if (modo === 'auto') return;
-    pos = mod(fila.scrollLeft);
-    modo = 'auto';
-    fila.scrollLeft = 0;
-    mostra();
+    fila.scrollLeft = pos;
+    track.style.transform = `translate3d(${fila.scrollLeft - pos}px, 0, 0)`;
   };
 
   const ferma = () => {
-    inManuale();
     fermo = true;
     clearTimeout(ripresa);
+    track.style.transform = '';
   };
   const riparti = () => {
     clearTimeout(ripresa);
-    ripresa = window.setTimeout(() => {
+    ripresa = window.setTimeout(function ripresaTimer() {
       if (trascinando) return;
+      // Spinta del dito ancora in corso: si aspetta che finisca, senza interromperla
+      if (performance.now() - ultimoScroll < 250) {
+        ripresa = window.setTimeout(ripresaTimer, 300);
+        return;
+      }
+      pos = mod(fila.scrollLeft);
       fermo = false;
-      if (!sopra) inAutomatico();
     }, 2000);
   };
 
   // Posizione iniziale: a metà del giro; si aggiorna al caricamento (le foto fissano le larghezze)
   const inizia = () => {
-    if (modo !== 'auto') return;
+    if (fermo) return;
     pos = mod(giro() / 2);
-    fila.scrollLeft = 0;
     mostra();
   };
   inizia();
   window.addEventListener('load', inizia, { once: true });
 
   const passo = (t: number) => {
-    if (ultimo && modo === 'auto' && !fermo && !sopra && visibile && !document.querySelector('dialog[open]') && !document.hidden) {
+    if (ultimo && !fermo && !sopra && visibile && !document.querySelector('dialog[open]') && !document.hidden) {
       pos = mod(pos + (giro() / secondi) * ((t - ultimo) / 1000));
       mostra();
     }
@@ -113,7 +102,8 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
   fila.addEventListener(
     'scroll',
     () => {
-      if (modo !== 'manuale') return;
+      if (!fermo) return;
+      ultimoScroll = performance.now();
       const g = giro();
       if (!g) return;
       if (fila.scrollLeft >= g) fila.scrollLeft -= g;
@@ -126,12 +116,10 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
   fila.addEventListener('pointerenter', (e) => {
     if (e.pointerType !== 'mouse') return;
     sopra = true;
-    inManuale(); // già in scorrimento nativo prima che arrivino rotella o clic: nessuna gara tra le due modalità
   });
   fila.addEventListener('pointerleave', (e) => {
     if (e.pointerType !== 'mouse') return;
     sopra = false;
-    if (!trascinando && !fermo) inAutomatico();
   });
   let xPrec = 0;
   let totale = 0;

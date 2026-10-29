@@ -641,6 +641,13 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
   }
 }
 
+/* PC e tablet: spaziature di sezione più contenute (mobile invariato) */
+@media (min-width: 769px) {
+  :root {
+    --section-y: clamp(3.5rem, 2.25rem + 3.2vw, 5rem);
+  }
+}
+
 /* Fascia a tutta larghezza dietro un blocco (es. i percorsi di /corsi): colore --fascia, con la stessa doppia
    onda sopra e sotto (quella sotto è speculare). Esce di --onda-h sopra e sotto il blocco, che deve avere
    almeno quel padding verticale; la sezione che la contiene deve avere overflow-x: clip. */

@@ -272,7 +272,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
       font-size: var(--text-sm);
     }
 
-    /* Sulle pillole la luce gira lungo tutto il contorno, un percorso dopo l'altro (--i) */
+    /* Sulle pillole il contorno è una linea continua che cambia colore girando (azzurro, blu scuro, azzurro); ogni percorso parte da un punto diverso (--i) */
     .salti a::after {
       inset: -1.5px;
       width: auto;
@@ -282,7 +282,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
       will-change: auto;
       padding: 3px;
       border-radius: var(--radius-pill);
-      background: conic-gradient(from var(--angolo), transparent 0 55%, var(--primary-blue) 80%, var(--primary-blue-dark) 100%);
+      background: conic-gradient(from var(--angolo), var(--primary-blue), var(--primary-blue-dark) 50%, var(--primary-blue));
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);

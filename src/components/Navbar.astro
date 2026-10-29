@@ -216,8 +216,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   color: var(--primary-blue);
 }
 
-.mega-menu-section a.attiva,
-.mega-menu-section a.attiva::before {
+.mega-menu-section a.attiva {
   color: var(--white);
 }
 
@@ -375,16 +374,16 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
 }
 
 .mega-menu-section :global(a::before) {
-  content: "•";
+  content: '';
   position: absolute;
   left: 0;
-  /* Centrato sulla prima riga, anche se la voce va a capo */
-  top: calc(.5rem + .65em);
+  /* Pallino vero (non il carattere «•»): centrato sulla prima riga della voce, anche se va a capo */
+  top: calc(.5rem + .65em + var(--punto-scarto, .02em));
+  width: .42em;
+  height: .42em;
+  border-radius: var(--radius-full);
+  background: var(--white);
   transform: translateY(-50%);
-  color: var(--white);
-  font-weight: 700;
-  font-size: var(--text-xs);
-  line-height: 1;
 }
 
 .mega-menu-section :global(a:hover) {
@@ -672,7 +671,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
   }
 
   .mega-menu-section :global(a::before) {
-    top: calc(.4rem + .65em);
+    top: calc(.4rem + .65em + var(--punto-scarto, .02em));
   }
 }
 </style>

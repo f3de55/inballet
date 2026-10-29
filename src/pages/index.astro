@@ -568,7 +568,7 @@ const schema = schemaHome(socialImage);
   color: var(--testo-su-scuro);
 }
 
-/* «Vedi di più» bianco, senza effetti hover */
+/* «Vedi di più» bianco; in hover la freccia scorre in avanti e il testo si fa più spazioso, senza cambiare colore */
 .corsi-stile-link,
 .corsi-stile-link:hover,
 .corsi-stile:hover .corsi-stile-link {
@@ -580,12 +580,19 @@ const schema = schemaHome(socialImage);
 .corsi-stile-link:hover i,
 .corsi-stile:hover .corsi-stile-link i {
   color: var(--white);
-  transform: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .corsi-stile:hover .corsi-stile-foto :global(img) {
     transform: scale(1.05);
+  }
+
+  .corsi-stile:hover .corsi-stile-link i {
+    transform: translateX(8px);
+  }
+
+  .corsi-stile:hover .corsi-stile-link {
+    gap: 1rem;
   }
 }
 

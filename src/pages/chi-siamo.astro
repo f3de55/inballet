@@ -264,25 +264,120 @@ const numeri = [
   margin-bottom: 4rem;
 }
 
+/* Timeline: una linea centrale unisce le tappe, che si alternano a sinistra e a destra; su tablet e
+   telefono la linea passa a sinistra e le tappe stanno tutte sullo stesso lato.
+   Ogni tappa ha un nodo sulla linea e un breve raccordo verso il testo; l'ultima (Oggi) ha il nodo pieno. */
 .timeline {
+  --nodo: 20px;
+  --centro-anno: calc(var(--text-3xl) / 2);
+  position: relative;
+  max-width: 60rem;
+  margin: 0 auto;
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3rem 3.5rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, transparent, var(--primary-blue) 4rem, var(--primary-blue) calc(100% - 4rem), transparent);
+}
+
+.timeline .voce {
+  position: relative;
+  width: 50%;
+  padding: 0 4rem 3.5rem 0;
+  border-top: none;
+  text-align: right;
+}
+
+.timeline .voce:last-child {
+  padding-bottom: 0;
+}
+
+.timeline .voce:nth-child(even) {
+  margin-left: 50%;
+  padding: 0 0 3.5rem 4rem;
+  text-align: left;
+}
+
+.timeline .voce:nth-child(even):last-child {
+  padding-bottom: 0;
+}
+
+/* Nodo sulla linea, all'altezza dell'anno */
+.timeline .voce::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--centro-anno) - var(--nodo) / 2);
+  right: calc(var(--nodo) / -2);
+  box-sizing: border-box;
+  width: var(--nodo);
+  height: var(--nodo);
+  border: 3px solid var(--primary-blue-dark);
+  border-radius: var(--radius-full);
+  background: var(--bg-soft);
+  box-shadow: 0 0 0 6px var(--bg-soft);
+}
+
+.timeline .voce:nth-child(even)::before {
+  right: auto;
+  left: calc(var(--nodo) / -2);
+}
+
+/* Raccordo tra il nodo e il testo */
+.timeline .voce::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--centro-anno) - 1px);
+  right: calc(var(--nodo) / 2);
+  width: 2.5rem;
+  height: 2px;
+  background: var(--primary-blue);
+}
+
+.timeline .voce:nth-child(even)::after {
+  right: auto;
+  left: calc(var(--nodo) / 2);
+}
+
+.timeline .voce:last-child::before {
+  background: var(--primary-blue-dark);
 }
 
 @media (max-width: 900px) {
-  .timeline {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2.5rem 2rem;
+  .timeline::before {
+    left: calc(var(--nodo) / 2);
   }
-}
 
-/* Mobile: una voce per riga, con la scala tipografica normale */
-@media (max-width: 640px) {
-  .timeline {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.25rem;
+  .timeline .voce,
+  .timeline .voce:nth-child(even) {
+    width: auto;
+    margin-left: 0;
+    padding: 0 0 2.75rem 3.5rem;
+    text-align: left;
+  }
+
+  .timeline .voce:last-child,
+  .timeline .voce:nth-child(even):last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline .voce::before,
+  .timeline .voce:nth-child(even)::before {
+    right: auto;
+    left: 0;
+  }
+
+  .timeline .voce::after,
+  .timeline .voce:nth-child(even)::after {
+    right: auto;
+    left: var(--nodo);
+    width: 1.75rem;
   }
 }
 

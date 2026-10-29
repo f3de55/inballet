@@ -1,0 +1,147 @@
+/*
+ * Variabili CSS del sito pubblico: l'unica fonte di colori, scala tipografica, arrotondamenti,
+ * ombre, movimento e misure di struttura. Nessun altro file definisce valori di questo tipo:
+ * i componenti li usano con var(--…). Il dashboard e il login hanno i loro token in admin/.
+ */
+
+:root {
+  /* ---------- Palette ---------- */
+  --primary-blue: #87CEEB;
+  /* Azzurro per testi e link: 5.1:1 sul bianco, 4.7:1 su --bg-soft (WCAG AA) */
+  --primary-blue-dark: #3B72A0;
+  --dark-navy: #1a1a1a;
+  --header-dark: #2a2a2a;
+  --footer-bg: #0e0e0e;
+  --bg-soft: #eef7fa;
+  --text-dark: #2c2c2c;
+  --text-light: #555;
+  --white: #fff;
+  --black: #000;
+  /* Neutri e stati: unici grigi e colori di stato del sito */
+  --grigio-50: #f7f7f8;
+  --grigio-100: #eee;
+  --grigio-300: #ccc;
+  --grigio-400: #9aa0a6;
+  --stato-ok: #22c55e;
+  --stato-errore: #ef4444;
+  --stelle: #f5b301;
+
+  /* Componenti RGB della palette, per le trasparenze: rgb(var(--navy-rgb) / .5) */
+  --bianco-rgb: 255 255 255;
+  --nero-rgb: 0 0 0;
+  --navy-rgb: 26 26 26;
+  --scuro-rgb: 12 12 12;
+  --header-rgb: 42 42 42;
+  --blu-rgb: 135 206 235;
+  --blu-scuro-rgb: 59 114 160;
+
+  /* Filetti e bordi sottili: un solo colore per tutte le linee di separazione (accordion, elenchi, celle,
+     tabelle…), identico a quello dell'accordion della home */
+  --linea: rgb(var(--navy-rgb) / .12);
+  --linea-su-scuro: rgb(var(--bianco-rgb) / .2);
+  --velo-chiaro: rgb(var(--bianco-rgb) / .12);
+  /* Testo su fondo scuro o foto */
+  --testo-su-scuro: rgb(var(--bianco-rgb) / .9);
+  --testo-su-scuro-debole: rgb(var(--bianco-rgb) / .72);
+
+  /* ---------- Scala tipografica ----------
+     Unica fonte delle dimensioni del testo del sito pubblico.
+     Ogni gradino cresce in modo lineare tra 360px (minimo, mobile) e 1440px
+     (massimo, desktop) di viewport, senza salti ai breakpoint; in rem, così
+     segue lo zoom e la dimensione del testo scelti dall'utente.
+     Un ruolo = un gradino, su tutte le pagine: nessun font-size nelle media query
+     e nessun valore fisso nei componenti (le icone seguono il testo, vedi --icona-*).
+     Ruoli: 5xl H1 di ogni pagina e numeri grandi · 4xl H2 titoli di sezione ·
+     3xl titolo delle finestre modali e numeri/anni in evidenza · 2xl sottotitoli e righe in evidenza ·
+     xl H3 titoli di card e di voce, testo di apertura (lead) · base TUTTO il testo corrente
+     (intro, paragrafi, liste): 18px su mobile · md descrizioni brevi nelle card e dettagli di
+     voci · sm pulsanti, note, pill e metadati · xs voci di menu, etichette maiuscole ed eyebrow ·
+     3xs solo micro-dati in spazi stretti (calendario, footer).
+     Eccezione: il pannello della chat (larghezza fissa) ha una sua scala compatta in components/chatbot.css. */
+  --text-5xl: clamp(2.125rem, 1.6667rem + 2.037vw, 3.5rem);      /* 34 → 56px */
+  --text-4xl: clamp(1.7812rem, 1.4167rem + 1.6204vw, 2.875rem);  /* 28.5 → 46px */
+  --text-3xl: clamp(1.5312rem, 1.25rem + 1.25vw, 2.375rem);      /* 24.5 → 38px */
+  --text-2xl: clamp(1.3125rem, 1.125rem + 0.8333vw, 1.875rem);   /* 21 → 30px */
+  --text-xl: clamp(1.25rem, 1.125rem + 0.5556vw, 1.625rem);      /* 20 → 26px */
+  --text-md: clamp(1.0625rem, 1rem + 0.2778vw, 1.25rem);         /* 17 → 20px */
+  --text-base: clamp(1.125rem, 1.0417rem + 0.3704vw, 1.375rem);  /* 18 → 22px */
+  --text-sm: clamp(0.9375rem, 0.875rem + 0.2778vw, 1.125rem);    /* 15 → 18px */
+  --text-xs: clamp(0.8125rem, 0.7708rem + 0.1852vw, 0.9375rem);  /* 13 → 15px */
+  --text-3xs: 0.8125rem;                                         /* 13px */
+
+  --leading-snug: 1.3;
+
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-black: 900;
+
+  /* Icone: seguono il testo accanto (em) o un gradino della scala; mai pixel fissi nei componenti.
+     in-testo icona accanto a una parola (pulsanti, link) · mini simbolo piccolo (spunte, frecce dei menu) ·
+     punto indicatore di stato */
+  --icona-in-testo: .85em;
+  --icona-mini: .7em;
+  --icona-punto: .5em;
+  /* Virgolette decorative delle citazioni */
+  --glifo-citazione: 5.5rem;
+
+  /* ---------- Movimento ---------- */
+  --transition-base: .3s ease;
+
+  /* ---------- Forme e ombre ----------
+     Scala degli arrotondamenti: unica fonte per tutto il sito pubblico.
+     xs etichette, celle e dettagli piccoli · sm campi e voci di menu · md popup
+     (mega menu, chat, lightbox) e miniature · card blocchi e griglie · img foto grandi ·
+     pill pulsanti e pill · full cerchi */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-card: 20px;
+  --radius-img: 24px;
+  --radius-pill: 999px;
+  --radius-full: 50%;
+  --shadow-sm: 0 2px 8px rgb(var(--nero-rgb) / .05);
+  --shadow-blue: 0 4px 15px rgb(var(--blu-rgb) / .3);
+  --shadow-card: 0 4px 20px rgb(var(--nero-rgb) / .05);
+
+  /* ---------- Struttura ---------- */
+  --section-y: clamp(3.75rem, 3rem + 3.3333vw, 6rem);
+  /* Altezza della navbar fissa: più bassa quando compare il menu hamburger */
+  --header-h: 80px;
+  /* Altezza della navbar dopo lo scroll (classe is-scrolled) */
+  --header-h-scrolled: 64px;
+  /* Onda decorativa tra le sezioni: altezza e passo (più piccole su mobile) */
+  --onda-h: 34px;
+  --onda-w: 480px;
+  --onda-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28' preserveAspectRatio='none'%3E%3Cpath fill-opacity='.55' d='M0 9Q30 1 60 9T120 9V28H0Z'/%3E%3Cpath d='M0 19Q30 11 60 19T120 19V28H0Z'/%3E%3C/svg%3E");
+  --onda-svg-giu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28' preserveAspectRatio='none'%3E%3Cg transform='matrix(1 0 0 -1 0 28)'%3E%3Cpath fill-opacity='.55' d='M0 9Q30 1 60 9T120 9V28H0Z'/%3E%3Cpath d='M0 19Q30 11 60 19T120 19V28H0Z'/%3E%3C/g%3E%3C/svg%3E");
+  /* Immagini decorative (percorsi risolti da Vite): onde azzurre già sbiadite nel file, la copia
+     specchiata, e i veli per le sezioni scure senza foto */
+  --decoro-onde: url('../../assets/images/decorazioni/onde-destra.png');
+  --decoro-onde-sinistra: url('../../assets/images/decorazioni/onde-sinistra.png');
+  --decoro-veli-scuro: url('../../assets/images/decorazioni/veli-azzurri-scuro.png');
+}
+
+/* Tablet e mobile: navbar più bassa (menu hamburger) */
+@media (max-width: 1200px) {
+  :root {
+    --header-h: 64px;
+    --header-h-scrolled: 56px;
+  }
+}
+
+/* PC e tablet: spaziature di sezione più contenute (mobile invariato) */
+@media (min-width: 769px) {
+  :root {
+    --section-y: clamp(3.5rem, 2.25rem + 3.2vw, 5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --onda-h: 22px;
+    --onda-w: 260px;
+  }
+}

@@ -1,0 +1,231 @@
+---
+/**
+ * Scheda completa di ogni insegnante (foto, disciplina, nome, presentazione), in una
+ * finestra con lo stesso stile del dettaglio evento di Spettacoli ed Eventi. Va messa
+ * nello slot `after-main` della pagina, fuori dalle sezioni. Si apre dai pulsanti
+ * `[data-apri-insegnante]` di InsegnantiSection.
+ */
+import type { SezioneInsegnanti } from '../lib/insegnanti';
+import { grassettoDaTesto } from '../lib/text';
+
+interface Props {
+  dati: SezioneInsegnanti;
+}
+
+const { insegnanti } = Astro.props.dati;
+---
+
+{insegnanti.map((p) => (
+  <dialog class="ins-dialog" id={`insegnante-${p.id}`} aria-labelledby={`insegnante-${p.id}-nome`}>
+    <div class="ins-dialog-barra">
+      <button type="button" class="ins-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+    </div>
+    <div class:list={['ins-dialog-corpo', { 'con-foto': p.foto }]}>
+      {p.foto && <img class="ins-dialog-foto" src={p.foto} alt={p.nome} width="800" height="1000" loading="lazy" decoding="async" />}
+      <div class="ins-dialog-testo">
+        {p.ruolo && <p class="ins-dialog-ruolo">{p.ruolo}</p>}
+        <h2 class="ins-dialog-nome" id={`insegnante-${p.id}-nome`}>{p.nome}</h2>
+        {p.bio && <p class="ins-dialog-bio" set:html={grassettoDaTesto(p.bio)} />}
+        <a href="/contatti" class="btn-primary ins-dialog-cta">
+          Contattaci
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </dialog>
+))}
+
+<script>
+  // Apertura dalla card o dal pulsante; chiusura con la X, Esc o clic sullo sfondo
+  document.addEventListener('click', (e) => {
+    const t = e.target as Element;
+    const apri = t.closest<HTMLElement>('[data-apri-insegnante]');
+    if (apri) {
+      const dlg = document.getElementById(`insegnante-${apri.dataset.apriInsegnante}`) as HTMLDialogElement | null;
+      if (dlg && !dlg.open) {
+        dlg.showModal();
+        dlg.scrollTop = 0;
+      }
+      return;
+    }
+    const dlg = t.closest<HTMLDialogElement>('dialog.ins-dialog');
+    if (dlg && (t === dlg || t.closest('[data-chiudi]'))) dlg.close();
+  });
+</script>
+
+<style>
+  .ins-dialog {
+    width: min(52rem, calc(100% - 3rem));
+    max-height: min(48rem, calc(100dvh - 3rem));
+    margin: auto;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-card);
+    background: var(--white);
+    color: var(--text-dark);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, .25);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(26, 26, 26, .22) transparent;
+  }
+
+  .ins-dialog[open] {
+    animation: ins-entra .3s ease;
+  }
+
+  .ins-dialog::backdrop {
+    background: rgba(12, 12, 12, .6);
+  }
+
+  @keyframes ins-entra {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+
+  :global(html:has(dialog.ins-dialog[open])) {
+    overflow: hidden;
+  }
+
+  /* Barra con la X: resta in alto mentre il contenuto scorre */
+  .ins-dialog-barra {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    height: 0;
+  }
+
+  .ins-chiudi {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin: 1rem 1rem 0 0;
+    border: none;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, .92);
+    box-shadow: var(--shadow-sm);
+    font-size: var(--text-base);
+    color: var(--dark-navy);
+    cursor: pointer;
+  }
+
+  .ins-dialog-corpo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+    padding: 3rem;
+  }
+
+  /* PC: foto a sinistra, ferma mentre il testo scorre */
+  .ins-dialog-corpo.con-foto {
+    grid-template-columns: 17rem minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .ins-dialog-foto {
+    position: sticky;
+    top: 3rem;
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  .ins-dialog-ruolo {
+    margin: 0 3rem .75rem 0;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary-blue-dark);
+  }
+
+  .ins-dialog-nome {
+    margin: 0 3rem 1.5rem 0;
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -.01em;
+    color: var(--dark-navy);
+  }
+
+  .con-foto .ins-dialog-ruolo,
+  .con-foto .ins-dialog-nome {
+    margin-right: 1.5rem;
+  }
+
+  .ins-dialog-bio {
+    margin: 0 0 2rem;
+    font-size: var(--text-md);
+    line-height: 1.75;
+    color: var(--text-dark);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ins-dialog[open] {
+      animation: none;
+    }
+  }
+
+  /* Tablet: foto sopra il testo */
+  @media (max-width: 900px) {
+    .ins-dialog-corpo {
+      padding: 2.5rem 2rem 2rem;
+    }
+
+    .ins-dialog-corpo.con-foto {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    .ins-dialog-foto {
+      position: relative;
+      top: auto;
+      aspect-ratio: 16 / 10;
+      object-position: 50% 25%;
+    }
+  }
+
+  /* Telefono: a schermo intero */
+  @media (max-width: 600px) {
+    .ins-dialog {
+      width: 100%;
+      max-width: 100%;
+      height: 100dvh;
+      max-height: 100dvh;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .ins-chiudi {
+      margin: .75rem .75rem 0 0;
+    }
+
+    .ins-dialog-corpo,
+    .ins-dialog-corpo.con-foto {
+      gap: 1.75rem;
+      padding: 1.5rem 1.5rem 2rem;
+    }
+
+    .ins-dialog-corpo:not(.con-foto) {
+      padding-top: 2rem;
+    }
+
+    .ins-dialog-foto {
+      aspect-ratio: 4 / 5;
+    }
+
+    .con-foto .ins-dialog-ruolo,
+    .con-foto .ins-dialog-nome {
+      margin-right: 0;
+    }
+  }
+</style>

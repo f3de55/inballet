@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import InsegnantiSection from '../components/InsegnantiSection.astro';
+import InsegnantiDialoghi from '../components/InsegnantiDialoghi.astro';
 import { sfondo, sfondoCta, type Fuoco } from '../lib/images';
 import { leggiInsegnanti } from '../lib/insegnanti';
 
@@ -188,6 +189,10 @@ const numeri = [
                 </div>
             </div>
         </section>
+
+    <Fragment slot="after-main">
+        <InsegnantiDialoghi dati={insegnanti} />
+    </Fragment>
 
     <Fragment slot="scripts">
     <script>

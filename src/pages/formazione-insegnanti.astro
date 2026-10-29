@@ -68,9 +68,9 @@ const enti = [
             <div class="container">
                 <ul class="breve-lista" aria-label="Il corso in breve">
                     {inBreve.map((b) => (
-                        <li class="voce">
-                            <span class="voce-anno numero-medio">{b.valore}{b.unita && ` ${b.unita}`}</span>
-                            <h3 class="voce-titolo">{b.testo}</h3>
+                        <li class="dato">
+                            <span class="dato-valore numero-grande">{b.valore}{b.unita && <span class="dato-unita"> {b.unita}</span>}</span>
+                            <span class="dato-testo">{b.testo}</span>
                         </li>
                     ))}
                 </ul>
@@ -183,18 +183,42 @@ const enti = [
   object-fit: cover;
 }
 
-/* In breve: tre voci (linea azzurra, valore, etichetta), come "InBallet in numeri" */
+/* Il corso in breve: tre dati affiancati, centrati, divisi da filetti verticali e chiusi da due filetti
+   (come "InBallet in numeri"): valore grande, sotto la sua etichetta */
 .breve-lista {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 3rem;
-  margin: 5rem 0 0;
+  margin: 4.5rem 0 0;
   padding: 0;
+  border-block: 1px solid var(--linea-forte);
 }
 
-.breve-lista .voce-titolo {
-  margin: 0;
+.dato {
+  padding: 2.25rem 1.5rem;
+  text-align: center;
+}
+
+.dato + .dato {
+  border-left: 1px solid var(--linea-forte);
+}
+
+.dato-valore {
+  display: block;
+  color: var(--primary-blue-dark);
+}
+
+.dato-unita {
+  font-size: var(--text-2xl);
+  font-weight: 400;
+}
+
+.dato-testo {
+  display: block;
+  margin-top: .75rem;
+  font-size: var(--text-base);
+  line-height: 1.4;
+  color: var(--text-light);
 }
 
 /* ---------- Aree di studio ---------- */
@@ -392,6 +416,10 @@ const enti = [
     margin-top: 3.5rem;
   }
 
+  .dato {
+    padding: 1.75rem 1rem;
+  }
+
   /* Aree: intestazione sopra l'elenco */
   .form-aree-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -420,11 +448,19 @@ const enti = [
   }
 
 
-  /* In breve: una voce sotto l'altra */
+  /* In breve: un dato sotto l'altro, divisi da filetti orizzontali */
   .breve-lista {
     grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
     margin-top: 3rem;
+  }
+
+  .dato {
+    padding: 1.5rem 0;
+  }
+
+  .dato + .dato {
+    border-top: 1px solid var(--linea-forte);
+    border-left: none;
   }
 
   .area {

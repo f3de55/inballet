@@ -403,8 +403,8 @@ export async function generaInsegnanti(quanti: number): Promise<number> {
   const foto = (await elencaRitratti()).sort(() => Math.random() - 0.5);
   const nuovi: Insegnante[] = [];
   for (let i = 0; i < n; i++) {
-    // Ogni sei, uno senza foto (si vedono le iniziali); gli altri usano i ritratti a rotazione
-    const sorgente = foto.length && i % 6 !== 5 ? foto[i % foto.length] : '';
+    // Tutti con foto: i ritratti si usano a rotazione (senza ritratti in cartella restano le iniziali)
+    const sorgente = foto.length ? foto[i % foto.length] : '';
     const conFoto = !!sorgente;
     const donna = sorgente ? !/uomo/i.test(path.basename(sorgente)) : Math.random() < 0.5;
     let nome = '';

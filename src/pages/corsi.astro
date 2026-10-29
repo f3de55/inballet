@@ -144,23 +144,34 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     content: '';
     position: absolute;
     left: 0;
-    right: 0;
     bottom: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--primary-blue) 40%, var(--primary-blue-dark) 60%, transparent) -50% 0 / 45% 100% no-repeat;
+    width: 45%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-blue) 35%, var(--primary-blue-dark) 65%, transparent);
+    opacity: 0;
     pointer-events: none;
-    animation: salto-sbarra 5s ease-in-out infinite;
-    animation-delay: calc(var(--i, 0) * .6s);
+    will-change: transform, opacity;
+    animation: salto-sbarra 5.5s cubic-bezier(.4, 0, .2, 1) infinite;
+    animation-delay: calc(var(--i, 0) * .7s);
   }
 
+  /* Il tratto entra da sinistra sfumando, attraversa la riga e svanisce a destra (solo transform e
+     opacità: fluido anche su telefono); poi una pausa prima del giro successivo */
   @keyframes salto-sbarra {
     0% {
-      background-position: -50% 0;
+      transform: translateX(-100%);
+      opacity: 0;
     }
 
-    50%,
+    15%,
+    45% {
+      opacity: 1;
+    }
+
+    60%,
     100% {
-      background-position: 150% 0;
+      transform: translateX(222%);
+      opacity: 0;
     }
   }
 
@@ -178,12 +189,12 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
 
   @keyframes salto-passo {
     0%,
-    50%,
+    55%,
     100% {
       transform: none;
     }
 
-    22% {
+    27% {
       transform: translateY(4px);
     }
   }
@@ -207,14 +218,16 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
   }
 
   .salti a .fa-arrow-down {
-    animation: salto-passo 5s ease-in-out infinite;
-    animation-delay: calc(var(--i, 0) * .6s);
+    will-change: transform;
+    animation: salto-passo 5.5s cubic-bezier(.4, 0, .2, 1) infinite;
+    animation-delay: calc(var(--i, 0) * .7s);
   }
 
   /* "Riduci movimento": il tratto non scorre, ma resta un respiro lento di luce sotto ogni percorso
      (solo opacità): un'animazione c'è comunque su ogni dispositivo */
   @media (prefers-reduced-motion: reduce) {
     .salti a::after {
+      width: 100%;
       background: linear-gradient(90deg, transparent, var(--primary-blue) 25%, var(--primary-blue) 75%, transparent);
       animation: salto-respiro 4s ease-in-out infinite;
       animation-delay: calc(var(--i, 0) * .5s);
@@ -262,7 +275,11 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     /* Sulle pillole la luce gira lungo tutto il contorno, un percorso dopo l'altro (--i) */
     .salti a::after {
       inset: -1.5px;
+      width: auto;
       height: auto;
+      opacity: 1;
+      transform: none;
+      will-change: auto;
       padding: 3px;
       border-radius: var(--radius-pill);
       background: conic-gradient(from var(--angolo), transparent 0 55%, var(--primary-blue) 80%, var(--primary-blue-dark) 100%);
@@ -275,6 +292,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
 
     @media (prefers-reduced-motion: reduce) {
       .salti a::after {
+        opacity: .15;
         background: var(--primary-blue);
         animation: salto-respiro 4s ease-in-out infinite;
         animation-delay: calc(var(--i, 0) * .5s);
@@ -296,6 +314,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
 
     .salti a:hover::after {
       animation: none;
+      opacity: 1;
       background: var(--primary-blue-dark);
     }
   }
@@ -495,9 +514,9 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
       background: none;
     }
 
-    /* A righe il tratto corre sul filetto sotto il percorso */
-    .salti a::after {
-      bottom: -1px;
+    /* A righe il tratto attraversa la riga lungo il filetto in basso, senza uscire dallo schermo */
+    .salti a {
+      overflow: hidden;
     }
 
     .salto-numero {

@@ -264,120 +264,124 @@ const numeri = [
   margin-bottom: 4rem;
 }
 
-/* Timeline: una linea centrale unisce le tappe, che si alternano a sinistra e a destra; su tablet e
-   telefono la linea passa a sinistra e le tappe stanno tutte sullo stesso lato.
-   Ogni tappa ha un nodo sulla linea e un breve raccordo verso il testo; l'ultima (Oggi) ha il nodo pieno. */
+/* Timeline in orizzontale: tre tappe per riga (due su tablet), unite da una linea che passa per i nodi.
+   La linea esce sfumata a fine riga ed entra sfumata all'inizio della successiva, come un percorso che
+   continua. Sul telefono le tappe si dispongono in verticale lungo una linea a sinistra.
+   L'ultima tappa (Oggi) ha il nodo pieno. */
 .timeline {
   --nodo: 20px;
-  --centro-anno: calc(var(--text-3xl) / 2);
-  position: relative;
-  max-width: 60rem;
-  margin: 0 auto;
+  --distanza: 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3.5rem var(--distanza);
   list-style: none;
-}
-
-.timeline::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 2px;
-  transform: translateX(-50%);
-  background: linear-gradient(to bottom, transparent, var(--primary-blue) 4rem, var(--primary-blue) calc(100% - 4rem), transparent);
 }
 
 .timeline .voce {
   position: relative;
-  width: 50%;
-  padding: 0 4rem 3.5rem 0;
+  padding-top: 3rem;
   border-top: none;
-  text-align: right;
 }
 
-.timeline .voce:last-child {
-  padding-bottom: 0;
-}
-
-.timeline .voce:nth-child(even) {
-  margin-left: 50%;
-  padding: 0 0 3.5rem 4rem;
-  text-align: left;
-}
-
-.timeline .voce:nth-child(even):last-child {
-  padding-bottom: 0;
-}
-
-/* Nodo sulla linea, all'altezza dell'anno */
+/* Nodo */
 .timeline .voce::before {
   content: '';
   position: absolute;
-  top: calc(var(--centro-anno) - var(--nodo) / 2);
-  right: calc(var(--nodo) / -2);
+  top: 0;
+  left: 0;
   box-sizing: border-box;
   width: var(--nodo);
   height: var(--nodo);
   border: 3px solid var(--primary-blue-dark);
   border-radius: var(--radius-full);
   background: var(--bg-soft);
-  box-shadow: 0 0 0 6px var(--bg-soft);
-}
-
-.timeline .voce:nth-child(even)::before {
-  right: auto;
-  left: calc(var(--nodo) / -2);
-}
-
-/* Raccordo tra il nodo e il testo */
-.timeline .voce::after {
-  content: '';
-  position: absolute;
-  top: calc(var(--centro-anno) - 1px);
-  right: calc(var(--nodo) / 2);
-  width: 2.5rem;
-  height: 2px;
-  background: var(--primary-blue);
-}
-
-.timeline .voce:nth-child(even)::after {
-  right: auto;
-  left: calc(var(--nodo) / 2);
 }
 
 .timeline .voce:last-child::before {
   background: var(--primary-blue-dark);
 }
 
-@media (max-width: 900px) {
-  .timeline::before {
-    left: calc(var(--nodo) / 2);
+/* Linea verso la tappa successiva (arriva fino al suo nodo) */
+.timeline .voce::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--nodo) / 2 - 1px);
+  left: var(--nodo);
+  right: calc(var(--distanza) * -1);
+  height: 2px;
+  background: var(--primary-blue);
+}
+
+.timeline .voce:last-child::after {
+  display: none;
+}
+
+/* Linea in ingresso a inizio riga (dalla tappa precedente, che è sulla riga sopra) */
+.timeline .voce-anno::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--nodo) / 2 - 1px);
+  left: calc(var(--distanza) * -1);
+  width: var(--distanza);
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--primary-blue));
+  display: none;
+}
+
+@media (min-width: 861px) {
+  .timeline .voce:nth-child(3n)::after {
+    right: 0;
+    background: linear-gradient(to right, var(--primary-blue), transparent);
   }
 
-  .timeline .voce,
-  .timeline .voce:nth-child(even) {
-    width: auto;
-    margin-left: 0;
-    padding: 0 0 2.75rem 3.5rem;
-    text-align: left;
+  .timeline .voce:nth-child(3n + 1):not(:first-child) .voce-anno::before {
+    display: block;
+  }
+}
+
+/* Tablet: due tappe per riga */
+@media (min-width: 601px) and (max-width: 860px) {
+  .timeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .timeline .voce:last-child,
-  .timeline .voce:nth-child(even):last-child {
+  .timeline .voce:nth-child(2n)::after {
+    right: 0;
+    background: linear-gradient(to right, var(--primary-blue), transparent);
+  }
+
+  .timeline .voce:nth-child(2n + 1):not(:first-child) .voce-anno::before {
+    display: block;
+  }
+}
+
+/* Telefono: una tappa per riga, in verticale lungo una linea a sinistra */
+@media (max-width: 600px) {
+  .timeline {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .timeline .voce {
+    padding: 0 0 2.75rem 3.25rem;
+  }
+
+  .timeline .voce:last-child {
     padding-bottom: 0;
   }
 
-  .timeline .voce::before,
-  .timeline .voce:nth-child(even)::before {
-    right: auto;
-    left: 0;
+  .timeline .voce::before {
+    top: .35rem;
   }
 
-  .timeline .voce::after,
-  .timeline .voce:nth-child(even)::after {
+  .timeline .voce::after {
+    top: calc(.35rem + var(--nodo));
+    bottom: -.35rem;
     right: auto;
-    left: var(--nodo);
-    width: 1.75rem;
+    left: calc(var(--nodo) / 2 - 1px);
+    width: 2px;
+    height: auto;
+    background: var(--primary-blue);
   }
 }
 

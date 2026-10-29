@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Galleria from '../components/Galleria.astro';
-import Img from '../components/Img.astro';
 import { sfondo } from '../lib/images';
 import { categorieCorsi, scuola, sedi, orari } from '../data/scuola';
 
@@ -120,16 +119,13 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
         </div>
     </section>
 
-    <!-- I fondamenti di InBallet. Desktop: titolo e foto a sinistra, sei punti in due colonne a destra
-         (icona nel cerchio, titolo, una riga). Tablet: punti in due colonne sotto il titolo; mobile: una colonna -->
+    <!-- I fondamenti di InBallet: titolo, poi sei punti (icona nel cerchio, titolo, una riga).
+         Desktop tre colonne, tablet due, mobile una -->
     <section class="fondamenti sezione-scura" aria-labelledby="fondamenti-titolo">
         <div class="container fondamenti-layout">
             <div class="fondamenti-intro">
                 <span class="eyebrow">I fondamenti di InBallet</span>
                 <h2 class="titolo-sezione" id="fondamenti-titolo">Perché scegliere <em>InBallet</em></h2>
-                <div class="fondamenti-foto foto-cornice">
-                    <Img src="foto/sbarra-tutu.jpg" alt="Allieve in tutù alla sbarra durante la lezione" loading="lazy" decoding="async" widths={[480, 800]} sizes="(max-width: 900px) 0px, 440px" />
-                </div>
             </div>
             <ul class="fondamenti-lista">
                 {fondamenti.map((f) => (
@@ -437,9 +433,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
 
   .fondamenti-layout {
     display: grid;
-    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-    gap: 4rem;
-    align-items: center;
+    gap: 3rem;
   }
 
   .fondamenti-intro .eyebrow {
@@ -451,20 +445,10 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     margin: 0;
   }
 
-  .fondamenti-foto {
-    margin: 2.5rem 1.5rem 1.5rem 0;
-  }
-
-  .fondamenti-foto :global(img) {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-  }
-
   .fondamenti-lista {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2.75rem 2rem;
     margin: 0;
     padding: 0;
@@ -526,15 +510,14 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     }
   }
 
-  /* Tablet: titolo sopra, niente foto, punti in due colonne */
+  /* Tablet: due colonne */
   @media (max-width: 900px) {
     .fondamenti-layout {
-      grid-template-columns: minmax(0, 1fr);
       gap: 2.5rem;
     }
 
-    .fondamenti-foto {
-      display: none;
+    .fondamenti-lista {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 

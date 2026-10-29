@@ -118,7 +118,7 @@ html::-webkit-scrollbar-thumb:hover {
      (tranne i titoli hero su mobile) e nessun valore fisso nei componenti.
      Ruoli: 6xl titolo homepage · title titolo hero delle pagine interne · 5xl numeri grandi ·
      4xl titoli di sezione · 3xl numeri e titoli in evidenza · 2xl sottotitoli ·
-     xl titoli di card e voci · base TUTTO il testo corrente (intro, paragrafi, liste): 18px su mobile ·
+     xl titoli di card · 2xl titoli delle voci in colonna (Competenze, Autonomia…) · base TUTTO il testo corrente (intro, paragrafi, liste): 18px su mobile ·
      md descrizioni brevi nelle card e dettagli di voci (finestre modali comprese) · btn pulsanti ·
      nav voci e pulsante della navbar · sm note, pill e metadati ·
      xs etichette maiuscole ed eyebrow ·
@@ -521,7 +521,7 @@ section [class*="-intro-highlight"] cite,
 }
 
 .voce-titolo {
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: 0;

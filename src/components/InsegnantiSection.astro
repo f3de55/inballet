@@ -1,0 +1,183 @@
+---
+/**
+ * Sezione «Insegnanti» di Chi siamo: intestazione e schede (foto, nome, disciplina,
+ * presentazione), gestite dalla dashboard (sezione Insegnanti). Senza insegnanti non
+ * compare. Desktop 4 per riga (centrate se sono meno), tablet 3 e 2, mobile una per
+ * riga con la foto piccola a sinistra.
+ */
+import type { SezioneInsegnanti } from '../lib/insegnanti';
+import { grassettoDaTesto } from '../lib/text';
+
+interface Props {
+  dati: SezioneInsegnanti;
+}
+
+const { sezione, insegnanti } = Astro.props.dati;
+const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2).join('').toUpperCase();
+---
+
+{insegnanti.length > 0 && (
+  <section id="insegnanti" class="insegnanti-section" aria-labelledby="insegnanti-titolo">
+    <div class="intro-editoriale">
+      {sezione.eyebrow && <span class="eyebrow">{sezione.eyebrow}</span>}
+      <h2 class="titolo-sezione" id="insegnanti-titolo">{sezione.titolo}{sezione.accento && <> <em>{sezione.accento}</em></>}</h2>
+      {sezione.intro && <p set:html={grassettoDaTesto(sezione.intro)} />}
+    </div>
+
+    <div class="insegnanti-wrapper">
+      <ul class="insegnanti-lista">
+        {insegnanti.map((p) => (
+          <li class="insegnante">
+            <div class="insegnante-foto">
+              {p.foto
+                ? <img src={p.foto} alt={`${p.nome}${p.ruolo ? `, ${p.ruolo}` : ''}`} width="800" height="1000" loading="lazy" decoding="async" />
+                : <span class="insegnante-iniziali" aria-hidden="true">{iniziali(p.nome)}</span>}
+            </div>
+            <div class="insegnante-testo">
+              {p.ruolo && <p class="insegnante-ruolo">{p.ruolo}</p>}
+              <h3 class="insegnante-nome">{p.nome}</h3>
+              {p.bio && <p class="insegnante-bio" set:html={grassettoDaTesto(p.bio)} />}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .insegnanti-section {
+    padding: var(--section-y) 0;
+    background: var(--white);
+  }
+
+  .insegnanti-wrapper {
+    max-width: 1200px;
+    margin: 3rem auto 0;
+    padding: 0 2rem;
+  }
+
+  /* Righe centrate: con meno di quattro insegnanti le schede restano al centro */
+  .insegnanti-lista {
+    --colonne: 4;
+    --gap-x: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem var(--gap-x);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .insegnante {
+    flex: 0 0 calc((100% - (var(--colonne) - 1) * var(--gap-x)) / var(--colonne));
+    min-width: 0;
+  }
+
+  .insegnante-foto {
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-img);
+    background: var(--bg-soft);
+  }
+
+  .insegnante-foto img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .insegnante-iniziali {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    font-size: var(--text-4xl);
+    font-weight: 300;
+    color: var(--primary-blue-dark);
+  }
+
+  .insegnante-testo {
+    margin-top: 1.25rem;
+  }
+
+  .insegnante-ruolo {
+    margin: 0 0 .4rem;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary-blue-dark);
+  }
+
+  .insegnante-nome {
+    margin: 0;
+    font-size: var(--text-xl);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--dark-navy);
+  }
+
+  .insegnante-bio {
+    margin: .6rem 0 0;
+    font-size: var(--text-md);
+    line-height: 1.55;
+    color: var(--text-light);
+  }
+
+  @media (max-width: 1024px) {
+    .insegnanti-lista {
+      --colonne: 3;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .insegnanti-wrapper {
+      margin-top: 2.5rem;
+    }
+
+    .insegnanti-lista {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .insegnanti-wrapper {
+      padding: 0 1.5rem;
+    }
+
+    .insegnanti-lista {
+      --colonne: 2;
+      --gap-x: 1.5rem;
+      row-gap: 2.5rem;
+    }
+  }
+
+  /* Mobile: una scheda per riga, foto piccola a sinistra */
+  @media (max-width: 480px) {
+    .insegnanti-lista {
+      --colonne: 1;
+      row-gap: 1.75rem;
+    }
+
+    .insegnante {
+      display: grid;
+      grid-template-columns: 6rem minmax(0, 1fr);
+      column-gap: 1.25rem;
+      align-items: start;
+    }
+
+    .insegnante-foto {
+      border-radius: 14px;
+    }
+
+    .insegnante-iniziali {
+      font-size: var(--text-2xl);
+    }
+
+    .insegnante-testo {
+      margin-top: 0;
+    }
+  }
+</style>

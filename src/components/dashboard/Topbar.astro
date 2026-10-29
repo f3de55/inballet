@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 import logo from '../../assets/images/logo.png';
 
 interface Props {
-  sezione: 'eventi' | 'documenti' | 'bot';
+  sezione: 'eventi' | 'documenti' | 'insegnanti' | 'bot';
 }
 
 const { sezione } = Astro.props;
@@ -12,6 +12,7 @@ const voci = [
   { id: 'eventi', label: 'Eventi' },
   { id: 'bot', label: 'Chatbot' },
   { id: 'documenti', label: 'Documenti' },
+  { id: 'insegnanti', label: 'Insegnanti' },
 ] as const;
 ---
 

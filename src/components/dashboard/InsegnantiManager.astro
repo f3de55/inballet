@@ -1,0 +1,94 @@
+---
+/**
+ * Gestione della sezione «Insegnanti» di Chi siamo: intestazione e schede
+ * (nome, disciplina, presentazione, foto), con aggiunta, modifica, ordine ed
+ * eliminazione. Logica client in src/scripts/dashboard/insegnanti.ts.
+ */
+import { leggiInsegnanti } from '../../lib/insegnanti';
+import InsegnanteModal from './InsegnanteModal.astro';
+
+const { sezione, insegnanti } = await leggiInsegnanti();
+const n = insegnanti.length;
+const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2).join('').toUpperCase();
+---
+
+<div class="pagina-head">
+    <div>
+        <h1>Insegnanti</h1>
+        <p class="pagina-sotto">{n === 0 ? 'Nessun insegnante: la sezione non compare in Chi siamo' : n === 1 ? '1 insegnante in Chi siamo' : `${n} insegnanti in Chi siamo`}</p>
+    </div>
+    <div class="pagina-azioni pagina-azioni--due">
+        <a href="/chi-siamo#insegnanti" target="_blank" rel="noopener" class="btn btn-secondary">Vedi la pagina</a>
+        <button type="button" class="btn btn-primary" data-nuovo-insegnante><i class="fas fa-plus" aria-hidden="true"></i> Nuovo insegnante</button>
+    </div>
+</div>
+
+<section class="pannello doc-testi" aria-labelledby="testiTitolo">
+    <h2 id="testiTitolo">Intestazione della sezione</h2>
+    <form id="formTestiInsegnanti" novalidate>
+        <div class="campo">
+            <label for="eyebrow">Etichetta sopra il titolo</label>
+            <input type="text" id="eyebrow" name="eyebrow" value={sezione.eyebrow} maxlength="40" data-counter="40" autocomplete="off">
+            <small class="contatore" id="eyebrow-counter"></small>
+        </div>
+        <div class="campi-2 campi-2--impila">
+            <div class="campo">
+                <label for="titolo">Titolo <span class="nota">obbligatorio</span></label>
+                <input type="text" id="titolo" name="titolo" value={sezione.titolo} maxlength="60" data-counter="60" required autocomplete="off">
+                <small class="contatore" id="titolo-counter"></small>
+            </div>
+            <div class="campo">
+                <label for="accento">Parola in evidenza <span class="nota">in corsivo azzurro</span></label>
+                <input type="text" id="accento" name="accento" value={sezione.accento} maxlength="40" data-counter="40" autocomplete="off">
+                <small class="contatore" id="accento-counter"></small>
+            </div>
+        </div>
+        <p class="doc-anteprima-titolo" aria-live="polite">Anteprima: <strong id="anteprimaTitolo"></strong></p>
+        <div class="campo">
+            <label for="intro">Testo introduttivo</label>
+            <textarea id="intro" name="intro" rows="2" maxlength="300" data-counter="300">{sezione.intro}</textarea>
+            <small class="contatore" id="intro-counter"></small>
+            <small class="nota doc-aiuto">Per il grassetto scrivi la parola tra doppi asterischi: **così**.</small>
+        </div>
+        <div class="doc-testi-azioni">
+            <button type="submit" class="btn btn-primary" id="btnSalvaTesti">Salva i testi</button>
+        </div>
+    </form>
+</section>
+
+<h2 class="ev-gruppo-titolo doc-elenco-titolo">Insegnanti <span>{n}</span></h2>
+
+{n > 0 ? (
+    <ul class="ev-lista" id="insLista">
+        {insegnanti.map((d, i) => (
+            <li class="ev ins" data-id={d.id} data-modifica={JSON.stringify(d)}>
+                <button type="button" class="ev-apri" data-azione="modifica">
+                    <span class="ins-foto" aria-hidden="true">
+                        {d.foto ? <img src={d.foto} alt="" width="48" height="60" loading="lazy" /> : iniziali(d.nome)}
+                    </span>
+                    <span class="ev-testo">
+                        <span class="ev-titolo">{d.nome}</span>
+                        <span class="ev-meta">{d.ruolo || 'Disciplina non indicata'}</span>
+                    </span>
+                </button>
+                <div class="ev-azioni">
+                    <button type="button" data-azione="su" aria-label={`Sposta in alto ${d.nome}`} title="Sposta in alto" disabled={i === 0}><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
+                    <button type="button" data-azione="giu" aria-label={`Sposta in basso ${d.nome}`} title="Sposta in basso" disabled={i === n - 1}><i class="fas fa-arrow-down" aria-hidden="true"></i></button>
+                    <button type="button" data-azione="modifica" aria-label={`Modifica ${d.nome}`} title="Modifica"><i class="fas fa-pen" aria-hidden="true"></i></button>
+                    <button type="button" class="elimina" data-azione="elimina" aria-label={`Elimina ${d.nome}`} title="Elimina"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                </div>
+            </li>
+        ))}
+    </ul>
+) : (
+    <div class="vuoto">
+        <p>Qui compariranno gli insegnanti mostrati nella pagina Chi siamo. Finché l'elenco è vuoto, la sezione non compare sul sito.</p>
+        <button type="button" class="btn btn-primary" data-nuovo-insegnante><i class="fas fa-plus" aria-hidden="true"></i> Aggiungi il primo insegnante</button>
+    </div>
+)}
+
+<InsegnanteModal />
+
+<script>
+    import '../../scripts/dashboard/insegnanti';
+</script>

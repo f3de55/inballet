@@ -1,6 +1,6 @@
 ---
 /**
- * InBallet Dashboard: gestione eventi, pagina documenti e statistiche del chatbot.
+ * InBallet Dashboard: gestione eventi, pagina documenti, insegnanti e statistiche del chatbot.
  * Renderizzata on-demand e protetta dalla sessione di login.
  */
 import '../styles/dashboard.css';
@@ -9,6 +9,7 @@ import Topbar from '../components/dashboard/Topbar.astro';
 import BotAnalytics from '../components/dashboard/BotAnalytics.astro';
 import EventiManager from '../components/dashboard/EventiManager.astro';
 import DocumentiManager from '../components/dashboard/DocumentiManager.astro';
+import InsegnantiManager from '../components/dashboard/InsegnantiManager.astro';
 import Conferma from '../components/dashboard/Conferma.astro';
 import EliminaTuttoModal from '../components/dashboard/EliminaTuttoModal.astro';
 import { isLoggedIn, logout } from '../lib/auth';
@@ -24,8 +25,8 @@ if (Astro.url.searchParams.has('logout')) {
 
 // Gli eventi sono il lavoro di tutti i giorni: sezione predefinita
 const s = Astro.url.searchParams.get('s');
-const sezione = s === 'bot' || s === 'documenti' ? s : 'eventi';
-const titoli = { eventi: 'Eventi', documenti: 'Documenti', bot: 'Chatbot' };
+const sezione = s === 'bot' || s === 'documenti' || s === 'insegnanti' ? s : 'eventi';
+const titoli = { eventi: 'Eventi', documenti: 'Documenti', insegnanti: 'Insegnanti', bot: 'Chatbot' };
 ---
 
 <Admin title={`${titoli[sezione]} - Dashboard InBallet`}>
@@ -34,6 +35,7 @@ const titoli = { eventi: 'Eventi', documenti: 'Documenti', bot: 'Chatbot' };
     <main class="main">
         {sezione === 'eventi' && <EventiManager />}
         {sezione === 'documenti' && <DocumentiManager />}
+        {sezione === 'insegnanti' && <InsegnantiManager />}
         {sezione === 'bot' && <BotAnalytics />}
     </main>
 

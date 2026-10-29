@@ -14,6 +14,7 @@ import { caricaImmagini, elencaImmagini, eliminaImmagine } from '../lib/uploads'
 import { generaChat, generaEventi, MAX_EVENTI, MAX_MESSAGGI, rimuoviChatDemo, rimuoviEventiDemo } from '../lib/demo';
 import { eliminaTutto, PAROLA_CONFERMA } from '../lib/pulizia';
 import { eliminaDocumento, ErroreDocumenti, ordinaDocumenti, salvaDocumento, salvaTesti } from '../lib/documenti';
+import * as insegnanti from '../lib/insegnanti';
 
 /** Blocca le azioni della dashboard senza sessione valida. */
 async function soloAdmin(context: ActionAPIContext) {
@@ -27,7 +28,7 @@ async function conErrori<T>(fn: () => Promise<T>): Promise<T> {
   try {
     return await fn();
   } catch (e) {
-    if (e instanceof ErroreEvento || e instanceof ErroreDocumenti) throw new ActionError({ code: 'BAD_REQUEST', message: e.message });
+    if (e instanceof ErroreEvento || e instanceof ErroreDocumenti || e instanceof insegnanti.ErroreInsegnanti) throw new ActionError({ code: 'BAD_REQUEST', message: e.message });
     throw e;
   }
 }
@@ -188,6 +189,50 @@ export const server = {
       handler: async ({ ids }, context) => {
         await soloAdmin(context);
         await conErrori(() => ordinaDocumenti(ids));
+      },
+    }),
+  },
+
+  /** Sezione Insegnanti di Chi siamo: testi e schede, modificabili dalla dashboard. */
+  insegnanti: {
+    salvaTesti: defineAction({
+      input: z.object({ eyebrow: campo, titolo: campo, accento: campo, intro: campo }),
+      handler: async (input, context) => {
+        await soloAdmin(context);
+        await conErrori(() => insegnanti.salvaTesti(input));
+      },
+    }),
+
+    /** Crea o modifica un insegnante; con `foto` carica (o sostituisce) la foto. */
+    salva: defineAction({
+      accept: 'form',
+      input: z.object({
+        id: z.string().max(40).optional(),
+        nome: campo,
+        ruolo: campo,
+        bio: campo,
+        foto: z.instanceof(File).optional(),
+        togliFoto: z.string().max(5).optional(),
+      }),
+      handler: async (input, context) => {
+        await soloAdmin(context);
+        return { insegnante: await conErrori(() => insegnanti.salvaInsegnante({ ...input, togliFoto: input.togliFoto === 'true' })) };
+      },
+    }),
+
+    elimina: defineAction({
+      input: z.object({ id: z.string().max(40) }),
+      handler: async ({ id }, context) => {
+        await soloAdmin(context);
+        await conErrori(() => insegnanti.eliminaInsegnante(id));
+      },
+    }),
+
+    ordina: defineAction({
+      input: z.object({ ids: z.array(z.string().max(40)).max(60) }),
+      handler: async ({ ids }, context) => {
+        await soloAdmin(context);
+        await conErrori(() => insegnanti.ordinaInsegnanti(ids));
       },
     }),
   },

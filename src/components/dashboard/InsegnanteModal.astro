@@ -1,0 +1,56 @@
+---
+/** Modale crea/modifica insegnante: nome, disciplina, presentazione e foto. */
+---
+
+<div class="modal" id="modalInsegnante" role="dialog" aria-modal="true" aria-labelledby="modalInsegnanteTitle">
+    <div class="modal-box">
+        <form id="formInsegnante" novalidate>
+            <div class="modal-header">
+                <h2 id="modalInsegnanteTitle">Nuovo insegnante</h2>
+                <button type="button" class="modal-close" data-chiudi-insegnante aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="insegnanteId">
+
+                <div class="campo">
+                    <label for="insNome">Nome e cognome <span class="nota">obbligatorio</span></label>
+                    <input type="text" id="insNome" required placeholder="Es. Ilenia Nobile" maxlength="60" data-counter="60" autocomplete="off">
+                    <small class="contatore" id="insNome-counter"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="insRuolo">Disciplina o ruolo</label>
+                    <input type="text" id="insRuolo" placeholder="Es. Danza Classica e Modern" maxlength="80" data-counter="80" autocomplete="off">
+                    <small class="contatore" id="insRuolo-counter"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="insBio">Breve presentazione</label>
+                    <textarea id="insBio" rows="4" maxlength="400" data-counter="400" placeholder="Formazione, esperienza, corsi che segue"></textarea>
+                    <small class="contatore" id="insBio-counter"></small>
+                    <small class="nota doc-aiuto">Per il grassetto scrivi la parola tra doppi asterischi: **così**.</small>
+                </div>
+
+                <div class="campo">
+                    <span class="campo-label"><span>Foto</span> <span class="nota">facoltativa, verticale</span></span>
+                    <div class="ins-foto-attuale" id="insFotoAttuale" hidden>
+                        <img id="insFotoAnteprima" src="" alt="" width="64" height="80">
+                        <button type="button" class="btn-link" id="insTogliFoto">Togli la foto</button>
+                    </div>
+                    <div class="upload-zone" role="button" tabindex="0" data-upload-foto>
+                        <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                        <span><strong id="insUploadTesto">Carica la foto</strong> o trascinala qui</span>
+                        <small id="insUploadNota">JPG, PNG o WebP fino a 20 MB · viene ritagliata in verticale</small>
+                        <input type="file" id="insFile" accept="image/jpeg,image/png,image/webp">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-chiudi-insegnante>Annulla</button>
+                <button type="submit" class="btn btn-primary" id="btnSalvaInsegnante">Salva insegnante</button>
+            </div>
+        </form>
+    </div>
+</div>

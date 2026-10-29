@@ -45,6 +45,8 @@ File layout in `data/`:
 - `uploads/eventi/` — event posters: uploads are resized (1600px) and converted to WebP, plus a `<name>.mini.webp` thumbnail for the dashboard library
 - `documenti.json` — texts and PDF list of `/documenti` (defaults in `src/data/documenti.ts` until first save)
 - `uploads/documenti/` — PDFs uploaded from the dashboard, served on `/assets/documenti/<file>`
+- `insegnanti.json` — header and teacher cards of the «Insegnanti» section in `/chi-siamo` (dashboard › Insegnanti; defaults in `src/data/insegnanti.ts`, no teachers by default: the section is hidden while the list is empty). `/chi-siamo` is therefore rendered on demand
+- `uploads/insegnanti/` — teacher photos, cropped 4:5 (800x1000) and converted to WebP on upload, served on `/assets/images/insegnanti/<file>`
 - `conversazioni/` — chatbot conversations, one `<uuid>.json` per chat (deleted after 30 days)
 
 In Docker, this directory is a named volume (`inballet-data`) so data survives rebuilds.

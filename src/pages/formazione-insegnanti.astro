@@ -69,7 +69,7 @@ const enti = [
                 <ul class="breve-lista" aria-label="Il corso in breve">
                     {inBreve.map((b) => (
                         <li class="dato">
-                            <span class="dato-valore numero-grande">{b.valore}{b.unita && <span class="dato-unita"> {b.unita}</span>}</span>
+                            <span class="dato-valore">{b.valore}{b.unita && <span class="dato-unita"> {b.unita}</span>}</span>
                             <span class="dato-testo">{b.testo}</span>
                         </li>
                     ))}
@@ -205,11 +205,14 @@ const enti = [
 
 .dato-valore {
   display: block;
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  line-height: 1.1;
   color: var(--primary-blue-dark);
 }
 
 .dato-unita {
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);
   font-weight: 400;
 }
 

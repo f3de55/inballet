@@ -203,13 +203,13 @@ const numeri = [
 
 <script>
   // Timeline a serpentina: un unico tracciato che unisce i nodi, riga dopo riga (sempre letti da sinistra a
-  // destra). Alla fine di ogni riga la linea gira con un arco morbido a destra, scende tra le righe, torna
-  // indietro e curva dentro il nodo della prima tappa della riga sotto. Sul telefono resta la linea verticale.
+  // destra). Alla fine di ogni riga la linea gira a destra con due curve identiche, scende, torna indietro
+  // tra le righe e curva (stesso raggio) dentro il nodo della prima tappa della riga sotto.
+  // Sul telefono resta la linea verticale.
   const timeline = document.querySelector<HTMLElement>('.timeline');
   if (timeline) {
     const NS = 'http://www.w3.org/2000/svg';
-    const SPORGENZA = 28; // quanto l'arco esce a destra
-    const RAGGIO = 28; // curva che rientra nel nodo
+    const RAGGIO = 28; // stesso raggio per tutte e quattro le curve: a destra escono e rientrano, a sinistra entrano nel nodo
     const telefono = window.matchMedia('(max-width: 600px)');
 
     const disegna = () => {
@@ -238,11 +238,14 @@ const numeri = [
         const fondo = Math.max(...riga.map((v) => v.offsetTop + v.offsetHeight));
         const yg = (fondo + prossima[0].offsetTop) / 2;
         const xr = riga[riga.length - 1].offsetLeft + riga[riga.length - 1].offsetWidth;
-        const k = (SPORGENZA * 4) / 3;
         const nodoSotto = centro(prossima[0]);
-        const r = Math.min(RAGGIO, nodoSotto.y - yg);
-        d += ` L ${xr} ${ultimo.y} C ${xr + k} ${ultimo.y} ${xr + k} ${yg} ${xr} ${yg}`;
-        d += ` L ${nodoSotto.x + r} ${yg} Q ${nodoSotto.x} ${yg} ${nodoSotto.x} ${yg + r} L ${nodoSotto.x} ${nodoSotto.y}`;
+        // Raggio uguale per tutte le curve, ridotto se a destra non c'è abbastanza margine nello schermo
+        const margine = document.documentElement.clientWidth - timeline.getBoundingClientRect().right - 4;
+        const r = Math.min(RAGGIO, nodoSotto.y - yg, Math.max(12, margine));
+        // Giro a destra (due quarti di cerchio e un tratto dritto), ritorno, curva a sinistra dentro il nodo
+        d += ` L ${xr} ${ultimo.y} A ${r} ${r} 0 0 1 ${xr + r} ${ultimo.y + r}`;
+        d += ` L ${xr + r} ${yg - r} A ${r} ${r} 0 0 1 ${xr} ${yg}`;
+        d += ` L ${nodoSotto.x + r} ${yg} A ${r} ${r} 0 0 0 ${nodoSotto.x} ${yg + r} L ${nodoSotto.x} ${nodoSotto.y}`;
       });
 
       const svg = document.createElementNS(NS, 'svg');

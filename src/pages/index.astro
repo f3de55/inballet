@@ -570,13 +570,15 @@ const schema = schemaHome(socialImage);
 
 /* «Vedi di più» bianco, senza effetti hover */
 .corsi-stile-link,
-.corsi-stile-link:hover {
+.corsi-stile-link:hover,
+.corsi-stile:hover .corsi-stile-link {
   color: var(--white);
   border-color: var(--white);
 }
 
 .corsi-stile-link i,
-.corsi-stile-link:hover i {
+.corsi-stile-link:hover i,
+.corsi-stile:hover .corsi-stile-link i {
   color: var(--white);
   transform: none;
 }

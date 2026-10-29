@@ -1,0 +1,104 @@
+/*
+ * Reset e base del documento: box model, scorrimento, corpo della pagina, focus da tastiera e skip link.
+ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-blue) var(--dark-navy);
+  /* Le ancore atterrano subito sotto l'header fisso (e il banner eventi). Si usa l'altezza
+     dell'header ridotto (--header-h-scrolled): dopo il salto la pagina è scrollata e la barra
+     si rimpicciolisce. Niente scroll-margin-top nelle pagine: si sommerebbe a questo valore. */
+  scroll-padding-top: calc(var(--header-h-scrolled) + var(--banner-height, 0px));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--dark-navy);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: var(--radius-xs);
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue-dark);
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-rubik);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-dark);
+  overflow-x: hidden;
+  /* Navbar e banner sono fissi: la pagina parte sotto di loro, così nessuna sezione resta
+     coperta. --banner-spazio è l'altezza piena del banner (Banner.astro) e non cambia quando
+     si riduce allo scroll; anche --header-h resta fissa: il contenuto non salta mai */
+  padding-top: calc(var(--header-h) + var(--banner-spazio, 0px));
+}
+
+/* ---------- Accessibilità ---------- */
+
+/* Focus da tastiera: azzurro scuro sui fondi chiari (5:1), azzurro chiaro su quelli scuri e sulle foto (10:1) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible,
+[role="button"]:focus-visible {
+  outline: 3px solid var(--primary-blue-dark);
+  outline-offset: 3px;
+}
+
+.main-header :focus-visible,
+.mobile-menu :focus-visible,
+.footer :focus-visible,
+.sezione-scura :focus-visible,
+.hero :focus-visible,
+.chisiamo-hero :focus-visible {
+  outline-color: var(--primary-blue);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  background: var(--primary-blue);
+  color: var(--black);
+  padding: 12px 20px;
+  text-decoration: none;
+  z-index: 100000;
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  border-radius: 0 0 var(--radius-sm) 0;
+}
+
+.skip-link:focus {
+  left: 0;
+  top: 0;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  outline: 3px solid var(--dark-navy);
+  outline-offset: 2px;
+}

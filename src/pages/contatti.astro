@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Galleria from '../components/Galleria.astro';
 import { sfondo } from '../lib/images';
-import { categorieCorsi, FONDAZIONE, scuola, sedi, orari } from '../data/scuola';
+import { categorieCorsi, scuola, sedi, orari } from '../data/scuola';
 
 const { telefono: TEL, telefonoHref: TEL_HREF, email: EMAIL } = scuola;
 
@@ -13,16 +13,16 @@ const bg = {
 
 /** Settimana da lunedì con gli orari di scuola.ts (aggiornati poi da Google, se disponibile). */
 const ABBR: Record<string, string> = { Monday: 'Lun', Tuesday: 'Mar', Wednesday: 'Mer', Thursday: 'Gio', Friday: 'Ven', Saturday: 'Sab', Sunday: 'Dom' };
-// I fondamenti di InBallet: contenuti presi dalle pagine del sito (Chi siamo, FAQ, Classi Integrate,
-// Sportello Psicologico, Formazione Insegnanti), non testi nuovi
+// I fondamenti di InBallet, in sintesi dai contenuti del sito (Chi siamo, FAQ, Classi Integrate,
+// Sportello Psicologico, Formazione Insegnanti)
 const totaleCorsi = categorieCorsi.reduce((n, c) => n + c.corsi.length, 0);
 const fondamenti = [
-  { icona: 'fa-child', titolo: 'Ogni età', testo: "Si comincia <strong>dai 3 anni compiuti</strong> e non c'è un'età per smettere: anche gli adulti trovano corsi <strong>per principianti assoluti</strong>.", href: '/corsi' },
-  { icona: 'fa-layer-group', titolo: 'Classi per livello', testo: `Dalla tecnica classica alle danze urbane: <strong>${totaleCorsi} corsi</strong> in <strong>classi divise per livello</strong>, con insegnanti qualificati.`, href: '/corsi' },
-  { icona: 'fa-universal-access', titolo: 'Inclusione', testo: 'Quasi tutte le classi accolgono allievi con <strong>bisogni speciali</strong> e dal 2013 il <strong>progetto NoiConVoi</strong> porta la danza ai ragazzi con disabilità.', href: '/classi-integrate' },
-  { icona: 'fa-house-user', titolo: 'Comunità educante', testo: 'Una scuola <strong>in dialogo con le famiglie</strong>, con lo <strong>sportello psicologico</strong> su richiesta alla Direzione.', href: '/sportello-psicologico' },
-  { icona: 'fa-masks-theater', titolo: 'In teatro ogni anno', testo: "Ogni anno gli allievi portano <strong>in teatro</strong> uno spettacolo nato dal lavoro dell'anno.", href: '/spettacoli-eventi' },
-  { icona: 'fa-graduation-cap', titolo: 'Ente formativo', testo: 'Dal 2023 InBallet forma gli <strong>insegnanti di danza</strong> con titolo <strong>CSEN e CONI</strong> a valenza nazionale.', href: '/formazione-insegnanti' },
+  { icona: 'fa-child', titolo: 'Ogni età', testo: 'Dai 3 anni, senza limiti', href: '/corsi' },
+  { icona: 'fa-layer-group', titolo: 'Classi per livello', testo: `${totaleCorsi} corsi divisi per livello`, href: '/corsi' },
+  { icona: 'fa-universal-access', titolo: 'Inclusione', testo: 'Classi aperte ai bisogni speciali', href: '/classi-integrate' },
+  { icona: 'fa-house-user', titolo: 'Comunità educante', testo: 'In dialogo con le famiglie', href: '/sportello-psicologico' },
+  { icona: 'fa-masks-theater', titolo: 'In teatro ogni anno', testo: 'Lo spettacolo degli allievi', href: '/spettacoli-eventi' },
+  { icona: 'fa-graduation-cap', titolo: 'Ente formativo', testo: 'Titolo CSEN e CONI', href: '/formazione-insegnanti' },
 ];
 
 const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno) => {
@@ -119,43 +119,24 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
         </div>
     </section>
 
-    <!-- I fondamenti di InBallet: perché sceglierci, con i due contatti più rapidi.
-         Desktop: intro e pulsanti a sinistra, sei fondamenti in griglia 2x3 a destra.
-         Tablet e mobile: intro, fondamenti, poi i pulsanti (l'azione arriva dopo le ragioni) -->
+    <!-- I fondamenti di InBallet: sei punti brevi in celle uguali (3 per riga, 2 su mobile) -->
     <section class="fondamenti sezione-scura" aria-labelledby="fondamenti-titolo">
-        <div class="container fondamenti-layout">
-            <header class="fondamenti-testa">
-                <span class="eyebrow">I fondamenti di InBallet</span>
-                <h2 class="titolo-sezione" id="fondamenti-titolo">Perché scegliere <em>InBallet</em></h2>
-                <p class="intro-sezione">Dal {FONDAZIONE} a Lainate e Rho: una scuola di danza multidisciplinare, <strong>inclusiva e aperta a tutte le età</strong>.</p>
-            </header>
-
+        <div class="intro-editoriale">
+            <span class="eyebrow">I fondamenti di InBallet</span>
+            <h2 class="titolo-sezione" id="fondamenti-titolo">Perché scegliere <em>InBallet</em></h2>
+        </div>
+        <div class="fondamenti-wrapper">
             <ul class="fondamenti-lista">
                 {fondamenti.map((f) => (
                     <li>
                         <a href={f.href} class="fondamento">
                             <i class={`fas ${f.icona} fondamento-icona`} aria-hidden="true"></i>
-                            <h3 class="fondamento-titolo">{f.titolo}</h3>
-                            <p class="fondamento-testo" set:html={f.testo} />
+                            <span class="fondamento-titolo">{f.titolo}</span>
+                            <span class="fondamento-testo">{f.testo}</span>
                         </a>
                     </li>
                 ))}
             </ul>
-
-            <div class="fondamenti-cta">
-                <p class="fondamenti-cta-testo">Hai ancora un dubbio? <strong>Chiamaci o scrivici</strong>: ti aiutiamo a scegliere il corso giusto per età e livello.</p>
-                <div class="fondamenti-pulsanti">
-                    <a href={TEL_HREF} class="btn-primary">
-                        <i class="fas fa-phone" aria-hidden="true"></i>
-                        <span>Chiamaci</span>
-                    </a>
-                    <a href={scuola.whatsapp} target="_blank" rel="noopener" class="btn-secondary">
-                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
-                        <span>Scrivici su WhatsApp</span>
-                    </a>
-                </div>
-                <p class="fondamenti-email">Oppure scrivi a <a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
-            </div>
         </div>
     </section>
 
@@ -445,80 +426,19 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
   .fondamenti {
     padding: var(--section-y) 0;
     background: var(--dark-navy);
-    color: var(--white);
   }
 
-  .fondamenti-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    grid-template-areas:
-      "testa lista"
-      "cta   lista";
-    grid-template-rows: auto 1fr;
-    column-gap: 4.5rem;
+  .fondamenti-wrapper {
+    max-width: 1200px;
+    margin: 3rem auto 0;
+    padding: 0 2rem;
   }
 
-  .fondamenti-testa {
-    grid-area: testa;
-  }
-
-  .fondamenti-testa .eyebrow {
-    display: block;
-    margin-bottom: 1rem;
-  }
-
-  .fondamenti-testa .titolo-sezione {
-    margin-bottom: 1.25rem;
-  }
-
-  .fondamenti-testa .intro-sezione {
-    margin: 0;
-  }
-
-  .fondamenti-cta {
-    grid-area: cta;
-    align-self: start;
-    margin-top: 2.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, .18);
-  }
-
-  .fondamenti-cta-testo {
-    margin: 0 0 1.5rem;
-    font-size: var(--text-base);
-    line-height: 1.6;
-    color: rgba(255, 255, 255, .85);
-  }
-
-  /* Desktop: due pulsanti della stessa larghezza, uno sotto l'altro */
-  .fondamenti-pulsanti {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: .75rem;
-    max-width: 22rem;
-  }
-
-  .fondamenti-email {
-    margin: 1.25rem 0 0;
-    font-size: var(--text-sm);
-    color: rgba(255, 255, 255, .7);
-  }
-
-  .fondamenti-email a {
-    color: var(--white);
-    font-weight: 600;
-    text-decoration: underline;
-    text-decoration-color: var(--primary-blue);
-    text-underline-offset: 3px;
-  }
-
-  /* Sei celle uguali: il gap da 1px sul fondo chiaro disegna i filetti tra le celle */
+  /* Celle uguali: il gap da 1px sul fondo chiaro disegna i filetti tra le celle */
   .fondamenti-lista {
-    grid-area: lista;
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1px;
     margin: 0;
     padding: 0;
@@ -533,21 +453,24 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
 
   .fondamento {
     flex: 1;
-    display: block;
-    padding: 2rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1.25rem;
+    text-align: center;
     color: inherit;
     text-decoration: none;
     transition: background-color .3s ease;
   }
 
   .fondamento-icona {
-    font-size: var(--text-2xl);
+    font-size: var(--text-3xl);
     line-height: 1;
     color: var(--primary-blue);
   }
 
   .fondamento-titolo {
-    margin: 1rem 0 .5rem;
+    margin-top: 1rem;
     font-size: var(--text-xl);
     font-weight: 700;
     line-height: 1.25;
@@ -555,10 +478,10 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
   }
 
   .fondamento-testo {
-    margin: 0;
+    margin-top: .35rem;
     font-size: var(--text-md);
-    line-height: 1.55;
-    color: rgba(255, 255, 255, .78);
+    line-height: 1.45;
+    color: rgba(255, 255, 255, .75);
   }
 
   .fondamento:focus-visible {
@@ -572,59 +495,38 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     }
   }
 
-  /* Tablet e mobile: intro, fondamenti, poi i pulsanti */
-  @media (max-width: 1024px) {
-    .fondamenti-layout {
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-areas:
-        "testa"
-        "lista"
-        "cta";
-      grid-template-rows: none;
-    }
-
-    .fondamenti-testa {
-      margin-bottom: 2.5rem;
-    }
-
-    .fondamenti-cta {
+  @media (max-width: 900px) {
+    .fondamenti-wrapper {
       margin-top: 2.5rem;
-      padding-top: 0;
-      border-top: none;
-    }
-
-    .fondamenti-pulsanti {
-      flex-direction: row;
-      flex-wrap: wrap;
-      max-width: none;
     }
   }
 
+  @media (max-width: 768px) {
+    .fondamenti-wrapper {
+      padding: 0 1.5rem;
+    }
+  }
+
+  /* Mobile: due per riga */
   @media (max-width: 600px) {
+    .fondamenti-wrapper {
+      margin-top: 2rem;
+    }
+
     .fondamenti-lista {
-      grid-template-columns: minmax(0, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .fondamento {
-      display: grid;
-      grid-template-columns: 2rem minmax(0, 1fr);
-      column-gap: 1rem;
-      padding: 1.5rem 0;
+      padding: 1.5rem .75rem;
     }
 
     .fondamento-icona {
-      grid-row: 1 / span 2;
-      padding-top: .2rem;
-      font-size: var(--text-xl);
-      text-align: center;
+      font-size: var(--text-2xl);
     }
 
     .fondamento-titolo {
-      margin: 0 0 .35rem;
-    }
-
-    .fondamenti-pulsanti {
-      flex-direction: column;
+      margin-top: .75rem;
     }
   }
 </style>

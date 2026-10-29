@@ -29,11 +29,9 @@ const { insegnanti } = Astro.props.dati;
         {p.competenze.length > 0 && (
           <div class="ins-competenze">
             <h3 class="ins-competenze-titolo">Competenze</h3>
-            <div class="ins-competenze-voci">
-              <ul class="ins-competenze-lista">
-                {p.competenze.map((c) => <li>{c}</li>)}
-              </ul>
-            </div>
+            <ul class="ins-competenze-lista">
+              {p.competenze.map((c) => <li><i class="fas fa-check" aria-hidden="true"></i><span>{c}</span></li>)}
+            </ul>
           </div>
         )}
       </div>
@@ -167,7 +165,7 @@ const { insegnanti } = Astro.props.dati;
     margin-right: 1.5rem;
   }
 
-  /* Competenze: etichetta, poi le voci in riga separate da una barra verticale */
+  /* Competenze: etichetta, poi le voci ognuna con una piccola spunta */
   .ins-competenze {
     padding-top: 1.5rem;
     border-top: 1px solid rgba(26, 26, 26, .12);
@@ -182,36 +180,29 @@ const { insegnanti } = Astro.props.dati;
     color: var(--primary-blue-dark);
   }
 
-  /* La barra sta davanti a ogni voce; l'elenco sporge a sinistra quanto la barra e il
-     contenitore lo taglia: così a inizio riga la barra sparisce e non resta mai sola */
-  .ins-competenze-voci {
-    overflow: hidden;
-  }
-
   .ins-competenze-lista {
     display: flex;
     flex-wrap: wrap;
-    row-gap: .35rem;
-    margin: 0 0 0 -1.6rem;
+    gap: .6rem 1.75rem;
+    margin: 0;
     padding: 0;
     list-style: none;
     font-size: var(--text-md);
     font-weight: 600;
-    line-height: 1.5;
+    line-height: 1.4;
     color: var(--dark-navy);
   }
 
   .ins-competenze-lista li {
-    position: relative;
-    padding-left: 1.6rem;
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
   }
 
-  .ins-competenze-lista li::before {
-    content: '|';
-    position: absolute;
-    left: .65rem;
-    font-weight: 400;
-    color: var(--primary-blue);
+  .ins-competenze-lista i {
+    flex: none;
+    font-size: .7em;
+    color: var(--primary-blue-dark);
   }
 
   .ins-dialog-bio {

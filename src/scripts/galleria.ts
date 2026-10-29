@@ -83,7 +83,7 @@ if (track && dialog && foto && didascalia && contatore) {
     const avvolgi = (x: number) => ((x % giro()) + giro()) % giro();
 
     const passo = (t: number) => {
-      if (ultimo && !fermo && visibile && !dialog.open && !document.hidden) {
+      if (ultimo && !fermo && visibile && !document.querySelector('dialog[open]') && !document.hidden) {
         pos = avvolgi(pos + (giro() / DURATA_GIRO) * ((t - ultimo) / 1000));
         fila.scrollLeft = pos;
       }

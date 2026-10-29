@@ -676,6 +676,11 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
     linear-gradient(#000 0 0) 0 calc(var(--onda-h) - 1px) / 100% calc(100% - 2 * var(--onda-h) + 2px) no-repeat;
 }
 
+/* File a scorrimento continuo (galleria, insegnanti): ferme mentre una finestra è aperta */
+html:has(dialog[open]) :is(.gallery-track, .carosello-track) {
+  animation-play-state: paused;
+}
+
 /* Link d'azione testuale, sottolineato */
 .link-cta {
   display: inline-flex;

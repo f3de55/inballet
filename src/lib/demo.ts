@@ -382,8 +382,11 @@ const PROFILI: Pick<Insegnante, 'ruolo' | 'bio' | 'competenze'>[] = [
   { ruolo: 'Movimento Creativo', bio: 'Guida adulti, anche non danzatori, in un percorso di **ascolto ed espressione** attraverso il movimento.', competenze: ['Movimento creativo', 'Danzamovimentoterapia', 'Improvvisazione'] },
 ];
 
-/** Foto della scuola usate come ritratti di prova (mai quelle di persone reali riconoscibili per nome). */
-const FOTO_INSEGNANTI = ['gallery-1', 'gallery-2', 'gallery-3', 'gallery-4', 'gallery-5', 'gallery-7', 'gallery-8', 'gallery-9', 'ballerina', 'hero-danza-contemporanea'];
+/** Ritratti di prova: foto di singole persone in demo/insegnanti (JPG, PNG o WebP). Se la cartella è
+ *  vuota gli insegnanti demo restano senza foto (si vedono le iniziali): mai le foto del sito. */
+const DIR_RITRATTI = cartella('demo/insegnanti');
+const elencaRitratti = async () =>
+  (await readdir(DIR_RITRATTI).catch(() => [] as string[])).filter((f) => /\.(jpe?g|png|webp)$/i.test(f)).map((f) => path.join(DIR_RITRATTI, f));
 
 /** Crea `quanti` insegnanti demo (nome, ruolo, presentazione, competenze e foto), entro il limite totale. */
 export async function generaInsegnanti(quanti: number): Promise<number> {
@@ -395,7 +398,7 @@ export async function generaInsegnanti(quanti: number): Promise<number> {
 
   const nomiUsati = new Set<string>();
   const profili = [...PROFILI].sort(() => Math.random() - 0.5);
-  const foto = [...FOTO_INSEGNANTI].sort(() => Math.random() - 0.5);
+  const foto = (await elencaRitratti()).sort(() => Math.random() - 0.5);
   const nuovi: Insegnante[] = [];
   for (let i = 0; i < n; i++) {
     let nome = '';
@@ -404,8 +407,8 @@ export async function generaInsegnanti(quanti: number): Promise<number> {
     nomiUsati.add(nome);
 
     const file = `demo-${hex(4)}.webp`;
-    const sorgente = path.join(DIR_FOTO, `${foto[i % foto.length]}.jpg`);
-    const conFoto = existsSync(sorgente) && i % 6 !== 5; // ogni tanto uno senza foto, per vedere le iniziali
+    const sorgente = foto.length ? foto[i % foto.length] : '';
+    const conFoto = !!sorgente && i % 6 !== 5; // ogni tanto uno senza foto, per vedere le iniziali
     if (conFoto) {
       const buf = await sharp(sorgente).rotate().resize(800, 1000, { fit: 'cover', position: 'attention' }).webp({ quality: 80 }).toBuffer();
       await writeFile(percorsoFoto(file), buf);

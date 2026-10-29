@@ -502,7 +502,7 @@ const schema = schemaHome(socialImage);
 
 /* Quattro stili: un box per stile con la foto come sfondo, un velo scuro per la leggibilità e il testo
    bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i dispositivi:
-   2x2 su desktop e tablet (box larghi quanto metà sezione), 1 su mobile. */
+   4 in fila su desktop, 2x2 su tablet, 1 su mobile. */
 .corsi-indice {
   list-style: none;
   display: grid;
@@ -613,7 +613,36 @@ const schema = schemaHome(socialImage);
   text-align: center;
 }
 
-/* Tablet: stessi due box per riga, un po' più bassi */
+/* Desktop: i quattro stili in una sola riga, larghi quanto tutta la sezione */
+@media (min-width: 1025px) {
+  .corsi-indice {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: none;
+  }
+
+  /* Nome, frase e «Vedi di più» sullo stesso livello in tutti e quattro i box: il nome occupa sempre
+     due righe, la frase prende lo spazio avanzato e il pulsante resta in basso */
+  .corsi-stile {
+    justify-content: flex-start;
+    min-height: 26rem;
+    padding: 3.5rem 1.5rem 2.5rem;
+  }
+
+  .corsi-stile-testo {
+    flex: 1;
+    align-self: stretch;
+  }
+
+  .corsi-stile-nome {
+    min-height: 2.4em;
+  }
+
+  .corsi-stile-desc {
+    flex: 1;
+  }
+}
+
+/* Tablet: due box per riga, un po' più bassi */
 @media (max-width: 1024px) {
   .corsi-stile {
     min-height: 19rem;

@@ -366,7 +366,8 @@ export async function rimuoviChatDemo(): Promise<number> {
 
 export const MAX_INSEGNANTI_DEMO = 20;
 
-const NOMI = ['Giulia', 'Martina', 'Chiara', 'Sara', 'Francesca', 'Elena', 'Alessia', 'Valentina', 'Federica', 'Silvia', 'Marco', 'Luca', 'Andrea', 'Davide', 'Simone'];
+const NOMI_DONNA = ['Giulia', 'Martina', 'Chiara', 'Sara', 'Francesca', 'Elena', 'Alessia', 'Valentina', 'Federica', 'Silvia'];
+const NOMI_UOMO = ['Marco', 'Luca', 'Andrea', 'Davide', 'Simone', 'Matteo', 'Paolo', 'Stefano', 'Fabio', 'Daniele'];
 const COGNOMI = ['Rossi', 'Bianchi', 'Colombo', 'Ferrari', 'Russo', 'Galli', 'Conti', 'Fontana', 'Mariani', 'Rinaldi', 'Moretti', 'Barbieri', 'Lombardi', 'Testa', 'Villa'];
 
 /** Profili di prova sulle discipline della scuola: ruolo, presentazione (senza genere: i nomi sono casuali) e competenze. */
@@ -382,8 +383,9 @@ const PROFILI: Pick<Insegnante, 'ruolo' | 'bio' | 'competenze'>[] = [
   { ruolo: 'Movimento Creativo', bio: 'Guida adulti, anche non danzatori, in un percorso di **ascolto ed espressione** attraverso il movimento.', competenze: ['Movimento creativo', 'Danzamovimentoterapia', 'Improvvisazione'] },
 ];
 
-/** Ritratti di prova: foto di singole persone in demo/insegnanti (JPG, PNG o WebP). Se la cartella è
- *  vuota gli insegnanti demo restano senza foto (si vedono le iniziali): mai le foto del sito. */
+/** Ritratti di prova: foto di singole persone in demo/insegnanti (JPG, PNG o WebP). Il nome del file
+ *  comincia con «donna» o «uomo»: il nome dell'insegnante demo è scelto di conseguenza. Se la cartella
+ *  è vuota gli insegnanti demo restano senza foto (si vedono le iniziali): mai le foto del sito. */
 const DIR_RITRATTI = cartella('demo/insegnanti');
 const elencaRitratti = async () =>
   (await readdir(DIR_RITRATTI).catch(() => [] as string[])).filter((f) => /\.(jpe?g|png|webp)$/i.test(f)).map((f) => path.join(DIR_RITRATTI, f));
@@ -401,14 +403,16 @@ export async function generaInsegnanti(quanti: number): Promise<number> {
   const foto = (await elencaRitratti()).sort(() => Math.random() - 0.5);
   const nuovi: Insegnante[] = [];
   for (let i = 0; i < n; i++) {
+    // Ogni sei, uno senza foto (si vedono le iniziali); gli altri usano i ritratti a rotazione
+    const sorgente = foto.length && i % 6 !== 5 ? foto[i % foto.length] : '';
+    const conFoto = !!sorgente;
+    const donna = sorgente ? !/uomo/i.test(path.basename(sorgente)) : Math.random() < 0.5;
     let nome = '';
-    do nome = `${casuale(NOMI)} ${casuale(COGNOMI)}`;
-    while (nomiUsati.has(nome) && nomiUsati.size < NOMI.length * COGNOMI.length);
+    do nome = `${casuale(donna ? NOMI_DONNA : NOMI_UOMO)} ${casuale(COGNOMI)}`;
+    while (nomiUsati.has(nome) && nomiUsati.size < NOMI_DONNA.length * COGNOMI.length);
     nomiUsati.add(nome);
 
     const file = `demo-${hex(4)}.webp`;
-    const sorgente = foto.length ? foto[i % foto.length] : '';
-    const conFoto = !!sorgente && i % 6 !== 5; // ogni tanto uno senza foto, per vedere le iniziali
     if (conFoto) {
       const buf = await sharp(sorgente).rotate().resize(800, 1000, { fit: 'cover', position: 'attention' }).webp({ quality: 80 }).toBuffer();
       await writeFile(percorsoFoto(file), buf);

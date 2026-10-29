@@ -46,7 +46,7 @@ const dialog = $<HTMLDialogElement>('eventoDialog');
 const dialogLocandina = $<HTMLDialogElement>('locandinaDialog');
 let eventoCorrente: EventoSito | null = null;
 
-const riga = (label: string, valore: string) => `<div><dt>${label}</dt><dd>${valore}</dd></div>`;
+const riga = (label: string, valore: string) => `<div><dt class="titoletto">${label}</dt><dd>${valore}</dd></div>`;
 
 function apriEvento(slug: string) {
   const e = eventi.find((ev) => ev.slug === slug);
@@ -179,7 +179,7 @@ if (eventi.length) {
     const inizio = (new Date(anno, m - 1, 1).getDay() + 6) % 7;
     const giorni = new Date(anno, m, 0).getDate();
 
-    let html = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((g) => `<div class="cal-intestazione">${g}</div>`).join('');
+    let html = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((g) => `<div class="cal-intestazione titoletto">${g}</div>`).join('');
     html += '<div class="cal-giorno vuoto" aria-hidden="true"></div>'.repeat(inizio);
     for (let g = 1; g <= giorni; g++) {
       const data = `${anno}-${pad(m)}-${pad(g)}`;

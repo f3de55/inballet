@@ -19,7 +19,7 @@ interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'srcset'> {
 
 const { src, widths = [480, 800, 1280], sizes = '100vw', fuoco, rapporto, style, ...attrs } = Astro.props;
 const img = await webpSrcset(src, widths, rapporto);
-const stile = fuoco ? `${varFuoco(fuoco)}object-position:var(--fuoco);${style ?? ''}` : style;
+const stile = fuoco ? `${varFuoco(fuoco)}${style ?? ''}` : style;
 ---
 
 <img src={img.src} srcset={img.srcset} sizes={sizes} style={stile} {...attrs} />

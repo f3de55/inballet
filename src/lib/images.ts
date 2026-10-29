@@ -54,7 +54,7 @@ export async function sfondo(sorgenti: Sorgenti, fuoco: Fuoco = {}) {
   // Mobile e tablet ritagliano in altezza: servono comunque ~1400-1600px per gli schermi retina
   const [lg, md, sm] = await Promise.all([webp(s.desktop, 2560), webp(tablet, 1600), webp(mobile, 1400)]);
   return {
-    style: `--sfondo-lg:url('${lg}');--sfondo-md:url('${md}');--sfondo-sm:url('${sm}');${varFuoco(fuoco)}background-image:var(--sfondo);background-position:var(--fuoco);`,
+    style: `--sfondo-lg:url('${lg}');--sfondo-md:url('${md}');--sfondo-sm:url('${sm}');${varFuoco(fuoco)}`,
     preload: [
       { href: lg, media: '(min-width: 901px)' },
       { href: md, media: '(min-width: 601px) and (max-width: 900px)' },

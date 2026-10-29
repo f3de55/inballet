@@ -51,7 +51,7 @@ const gallery = await Promise.all(
 
     <!-- Due serie identiche: la seconda serve solo alla continuità dello scorrimento
          ed è nascosta a tastiera e screen reader -->
-    <div class="carosello-wrap" style="--fade-bg: var(--bg-soft)">
+    <div class="carosello-wrap carosello-wrap--soft">
     <div class="carosello gallery-infinite" data-giro="80">
         <div class="carosello-track gallery-track" id="galleryTrack">
             {[0, 1].map((set) =>
@@ -74,20 +74,20 @@ const gallery = await Promise.all(
 
 <!-- Lightbox galleria: dialog nativo (focus intrappolato, Esc, sfondo inerte) -->
 <dialog class="galleria-dialog" id="lightbox" aria-label="Galleria fotografica">
-    <button type="button" class="galleria-chiudi" id="lightbox-close" aria-label="Chiudi galleria">
+    <button type="button" class="btn-icon btn-icon--scuro galleria-chiudi" id="lightbox-close" aria-label="Chiudi galleria">
         <i class="fas fa-times" aria-hidden="true"></i>
     </button>
     <figure class="galleria-figura">
         <img class="galleria-foto" id="lightbox-image" src="data:," alt="">
         <figcaption class="galleria-didascalia">
             <span id="lightbox-caption"></span>
-            <span class="galleria-contatore" id="lightbox-counter" aria-live="polite"></span>
+            <span class="galleria-contatore titoletto" id="lightbox-counter" aria-live="polite"></span>
         </figcaption>
     </figure>
-    <button type="button" class="galleria-nav galleria-prev" id="lightbox-prev" aria-label="Foto precedente">
+    <button type="button" class="btn-icon btn-icon--scuro galleria-nav galleria-prev" id="lightbox-prev" aria-label="Foto precedente">
         <i class="fas fa-chevron-left" aria-hidden="true"></i>
     </button>
-    <button type="button" class="galleria-nav galleria-next" id="lightbox-next" aria-label="Foto successiva">
+    <button type="button" class="btn-icon btn-icon--scuro galleria-nav galleria-next" id="lightbox-next" aria-label="Foto successiva">
         <i class="fas fa-chevron-right" aria-hidden="true"></i>
     </button>
 </dialog>
@@ -210,7 +210,7 @@ const gallery = await Promise.all(
   width: 2.5rem;
   height: 2.5rem;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--testo-su-scuro);
   font-size: var(--text-sm);
   color: var(--dark-navy);
   opacity: 0;
@@ -288,7 +288,7 @@ const gallery = await Promise.all(
   margin: 0;
   padding: 4.5rem 6rem 2rem;
   border: none;
-  background: rgba(12, 12, 12, 0.96);
+  background: rgb(var(--scuro-rgb) / .96);
   color: var(--white);
 }
 
@@ -341,37 +341,22 @@ const gallery = await Promise.all(
   margin-top: 1rem;
   font-size: var(--text-md);
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--testo-su-scuro-debole);
 }
 
 .galleria-contatore {
   flex-shrink: 0;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgb(var(--bianco-rgb) / .6);
 }
 
 .galleria-chiudi,
 .galleria-nav {
   position: fixed;
-  display: grid;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: var(--radius-full);
-  background: transparent;
-  color: var(--white);
-  font-size: var(--text-base);
-  cursor: pointer;
-  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
 }
 
 .galleria-chiudi {
   top: 1.25rem;
   right: 1.25rem;
-  font-size: var(--text-base);
 }
 
 .galleria-nav {
@@ -385,13 +370,6 @@ const gallery = await Promise.all(
 
 .galleria-next {
   right: 1.5rem;
-}
-
-.galleria-chiudi:hover,
-.galleria-nav:hover {
-  background: var(--white);
-  border-color: var(--white);
-  color: var(--dark-navy);
 }
 
 /* Su schermi stretti le frecce scendono in basso, la foto usa tutta la larghezza */

@@ -15,7 +15,8 @@
     "preview": "astro preview",
     "start": "node --env-file-if-exists=.env ./dist/server/entry.mjs",
     "precheck": "npm run icons",
-    "check": "astro check"
+    "check": "astro check",
+    "verifica:stile": "node scripts/verifica-stile.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.1.0",

@@ -108,7 +108,7 @@ const enti = [
                     {enti.map((e) => (
                         <li class="ente">
                             <span class="ente-logo">
-                                <img src={e.logo.src} width={e.logo.width} height={e.logo.height} alt={`Logo ${e.sigla}`} style={`height: ${e.scala * 100}%`} loading="lazy" decoding="async">
+                                <img src={e.logo.src} width={e.logo.width} height={e.logo.height} alt={`Logo ${e.sigla}`} style={`--scala:${e.scala}`} loading="lazy" decoding="async">
                             </span>
                             <span class="ente-nome">{e.nome}</span>
                         </li>
@@ -241,7 +241,7 @@ const enti = [
   align-items: baseline;
   gap: 1rem;
   padding: 1.6rem 0;
-  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+  border-bottom: 1px solid var(--linea);
 }
 
 .area:first-child {
@@ -296,7 +296,7 @@ const enti = [
 
 .ente-logo img {
   width: auto;
-  height: 100%;
+  height: calc(var(--scala, 1) * 100%);
   max-width: 100%;
   object-fit: contain;
 }
@@ -326,7 +326,7 @@ const enti = [
 }
 
 .form-cta-overlay {
-  background: linear-gradient(135deg, rgba(26, 26, 26, .66) 0%, rgba(42, 42, 42, .62) 100%);
+  background: linear-gradient(135deg, rgb(var(--navy-rgb) / .66) 0%, rgb(var(--header-rgb) / .62) 100%);
 }
 
 .form-cta-wrapper {

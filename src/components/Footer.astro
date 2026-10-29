@@ -27,7 +27,7 @@ const colonne = [
       <Img src="logo.png" alt="InBallet" width="376" height="133" widths={[120, 240, 376]} sizes="120px" loading="lazy" decoding="async" />
     </a>
     <p>Scuola di danza a Lainate e Rho dal {FONDAZIONE}, per bambini dai 3 anni, ragazzi e adulti.</p>
-    <p class="footer-ente">Ente Formativo<br>CSEN · CONI</p>
+    <p class="footer-ente titoletto">Ente Formativo<br>CSEN · CONI</p>
     <div class="footer-social">
       <a href={scuola.social.instagram} target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
       <a href={scuola.social.facebook} target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
@@ -98,11 +98,6 @@ const colonne = [
 
   .footer-brand .footer-ente {
     margin-top: .9rem;
-    font-size: var(--text-3xs);
-    font-weight: 600;
-    letter-spacing: 1px;
-    line-height: 1.5;
-    text-transform: uppercase;
     color: var(--footer-testo);
   }
 
@@ -118,7 +113,7 @@ const colonne = [
     justify-content: center;
     width: 38px;
     height: 38px;
-    border: 1px solid rgba(255, 255, 255, .2);
+    border: 1px solid var(--linea-su-scuro);
     border-radius: var(--radius-full);
     color: var(--white);
     text-decoration: none;
@@ -214,7 +209,7 @@ const colonne = [
     min-height: 24px;
     padding: .2rem 0;
     margin-top: 1.25rem;
-    border-bottom: 1px solid rgba(255, 255, 255, .35);
+    border-bottom: 1px solid rgb(var(--bianco-rgb) / .35);
   }
 
   /* ---------- Barra finale ---------- */
@@ -227,9 +222,9 @@ const colonne = [
     width: min(100% - 4rem, 1200px - 4rem);
     margin: 0 auto;
     padding: 1.5rem 0 var(--footer-y);
-    border-top: 1px solid rgba(255, 255, 255, .12);
+    border-top: 1px solid var(--velo-chiaro);
     font-size: var(--text-3xs);
-    color: rgba(255, 255, 255, .55);
+    color: rgb(var(--bianco-rgb) / .55);
   }
 
   /* ---------- Responsive ---------- */
@@ -256,7 +251,7 @@ const colonne = [
       align-items: start;
       column-gap: 2.5rem;
       padding-bottom: 2.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, .12);
+      border-bottom: 1px solid var(--velo-chiaro);
     }
 
     /* Logo centrato in verticale rispetto al blocco di testo, solo in questa fascia */
@@ -317,11 +312,11 @@ const colonne = [
       grid-row: auto;
       grid-template-columns: minmax(0, 1fr);
       gap: 0;
-      border-top: 1px solid rgba(255, 255, 255, .12);
+      border-top: 1px solid var(--velo-chiaro);
     }
 
     .footer-col {
-      border-bottom: 1px solid rgba(255, 255, 255, .12);
+      border-bottom: 1px solid var(--velo-chiaro);
     }
 
     .footer-col summary {

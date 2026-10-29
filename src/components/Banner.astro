@@ -163,7 +163,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
   color: var(--dark-navy);
   padding: 0.7rem 1.5rem;
   display: none;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 12px rgb(var(--nero-rgb) / .15);
   transition: padding .3s ease;
 }
 
@@ -188,7 +188,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 .event-banner-icon {
   width: 24px;
   height: 24px;
-  background: rgba(255,255,255,0.2);
+  background: var(--linea-su-scuro);
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -197,7 +197,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 }
 
 .event-banner-icon :global(i) {
-  font-size: 10px;
+  font-size: var(--text-3xs);
   color: var(--dark-navy);
 }
 
@@ -235,7 +235,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
   text-decoration: none;
   font-size: var(--text-xs);
   font-weight: 700;
-  border-bottom: 1px solid rgba(0,0,0,0.4);
+  border-bottom: 1px solid rgb(var(--nero-rgb) / .4);
   padding-bottom: 1px;
   transition: all 0.2s ease;
   white-space: nowrap;
@@ -247,7 +247,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 }
 
 .event-banner-link :global(i) {
-  font-size: 9px;
+  font-size: var(--text-3xs);
 }
 
 .event-banner-close {
@@ -257,23 +257,23 @@ Astro.response.headers.set('Cache-Control', 'no-store');
   transform: translateY(-50%);
   width: 24px;
   height: 24px;
-  background: rgba(0,0,0,0.25);
+  background: rgb(var(--nero-rgb) / .25);
   border: none;
   border-radius: var(--radius-full);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--white);
   transition: background 0.2s;
 }
 
 .event-banner-close:hover {
-  background: rgba(0,0,0,0.4);
+  background: rgb(var(--nero-rgb) / .4);
 }
 
 .event-banner-close :global(i) {
-  font-size: 11px;
+  font-size: var(--text-3xs);
 }
 
 @media (max-width: 768px) {

@@ -183,7 +183,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
   .info {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-block: 1px solid rgba(26, 26, 26, .18);
+    border-block: 1px solid var(--linea-forte);
   }
 
   .info-blocco {
@@ -191,7 +191,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
   }
 
   .info-blocco + .info-blocco {
-    border-left: 1px solid rgba(26, 26, 26, .18);
+    border-left: 1px solid var(--linea-forte);
   }
 
   /* Contatti e orari su fondo azzurrino, le sedi al centro restano bianche */
@@ -314,15 +314,15 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
   }
 
   :global(.orari-status i) {
-    font-size: .5rem;
+    font-size: var(--icona-punto);
   }
 
   :global(.orari-status.aperto i) {
-    color: #22c55e;
+    color: var(--stato-ok);
   }
 
   :global(.orari-status.chiuso i) {
-    color: #ef4444;
+    color: var(--stato-errore);
   }
 
   .orari-grid {
@@ -372,11 +372,11 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
 
     .info-blocco:nth-child(2) {
       border-left: none;
-      border-top: 1px solid rgba(26, 26, 26, .18);
+      border-top: 1px solid var(--linea-forte);
     }
 
     .info-blocco:nth-child(3) {
-      border-top: 1px solid rgba(26, 26, 26, .18);
+      border-top: 1px solid var(--linea-forte);
     }
 
     .info-blocco:first-child .info-righe {
@@ -406,7 +406,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     }
 
     .info-blocco + .info-blocco {
-      border-top: 1px solid rgba(26, 26, 26, .18);
+      border-top: 1px solid var(--linea-forte);
     }
 
     .info-blocco:first-child .info-righe {
@@ -457,7 +457,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     place-items: center;
     width: 3.5rem;
     height: 3.5rem;
-    border: 1px solid rgba(135, 206, 235, .45);
+    border: 1px solid rgb(var(--blu-rgb) / .45);
     border-radius: 50%;
     font-size: var(--text-xl);
     color: var(--primary-blue);
@@ -479,7 +479,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     margin-top: .25rem;
     font-size: var(--text-md);
     line-height: 1.45;
-    color: rgba(255, 255, 255, .72);
+    color: var(--testo-su-scuro-debole);
   }
 
   .fondamento:focus-visible {

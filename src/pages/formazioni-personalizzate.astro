@@ -101,7 +101,7 @@ const bg = {
 <style>
 .perso-intro-section {
   padding: var(--section-y) 0;
-  background: #fff;
+  background: var(--white);
 }
 
 .perso-intro-label {
@@ -162,7 +162,7 @@ const bg = {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: rgba(135,206,235,.3);
+  background: rgb(var(--blu-rgb) / .3);
   transform: translateX(-50%);
 }
 
@@ -171,7 +171,7 @@ const bg = {
   grid-template-columns: 2.25rem 1fr;
   gap: 1rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(135,206,235,.3);
+  border-bottom: 1px solid rgb(var(--blu-rgb) / .3);
 }
 
 .perso-tipo-item:nth-last-child(-n+2) {
@@ -211,7 +211,7 @@ const bg = {
   }
 
   .perso-tipo-item:nth-last-child(2) {
-    border-bottom: 1px solid rgba(135,206,235,.3);
+    border-bottom: 1px solid rgb(var(--blu-rgb) / .3);
     padding-bottom: 2rem;
   }
 }

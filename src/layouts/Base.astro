@@ -117,18 +117,18 @@ const ondeSinistra = await webp('decorazioni/onde-sinistra.png', 1600);
   background: var(--header-dark);
   z-index: 1000;
   transition: background var(--transition-base);
-  box-shadow: 0 2px 20px rgba(0,0,0,.3);
+  box-shadow: 0 2px 20px rgb(var(--nero-rgb) / .3);
   min-height: var(--nav-h);
 }
 
 .main-header.is-scrolled {
-  background: rgba(42, 42, 42, 0.98);
-  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+  background: rgb(var(--header-rgb) / .98);
+  box-shadow: 0 4px 20px rgb(var(--nero-rgb) / .4);
 }
 
 .footer {
   background: var(--dark-navy);
-  color: #fff;
+  color: var(--white);
   /* Stessa scala della navbar: voci e testi a 14-15px */
   font-size: var(--text-xs);
   position: relative;
@@ -136,7 +136,7 @@ const ondeSinistra = await webp('decorazioni/onde-sinistra.png', 1600);
   /* Spazio sopra il logo e sotto il copyright: lo stesso valore */
   --footer-y: 3rem;
   /* Testi e link del footer: un solo colore, bianco pieno solo per titoli e hover */
-  --footer-testo: rgba(255, 255, 255, .72);
+  --footer-testo: var(--testo-su-scuro-debole);
   padding: var(--footer-y) 0 0;
 }
 
@@ -152,7 +152,7 @@ const ondeSinistra = await webp('decorazioni/onde-sinistra.png', 1600);
    pseudo-elemento perché il filtro scurisca allo stesso modo foto e fondo (nessuna giunta). */
 @media (max-width: 768px) {
   .footer {
-    background: #0e0e0e;
+    background: var(--footer-bg);
     overflow: clip;
   }
 
@@ -161,7 +161,7 @@ const ondeSinistra = await webp('decorazioni/onde-sinistra.png', 1600);
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: #0e0e0e url('/assets/images/footer-mobile.webp') center top / 100% auto no-repeat;
+    background: var(--footer-bg) url('/assets/images/footer-mobile.webp') center top / 100% auto no-repeat;
     filter: brightness(.2);
     pointer-events: none;
   }

@@ -207,21 +207,13 @@ const destinazioni: { nome: string; href?: string }[] = [
   margin-top: 2.5rem;
 }
 
-.sost-dona-btn {
-  font-size: var(--text-sm);
-}
-
-.sost-dona-btn i {
-  font-size: 1em;
-}
-
 .sost-dona-nota {
   display: flex;
   align-items: center;
   gap: .6rem;
   margin: 0;
   font-size: var(--text-sm);
-  color: rgba(255, 255, 255, .65);
+  color: rgb(var(--bianco-rgb) / .65);
 }
 
 .sost-dona-nota i {
@@ -252,7 +244,7 @@ const destinazioni: { nome: string; href?: string }[] = [
 }
 
 .utilizzo-lista li {
-  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+  border-bottom: 1px solid var(--linea);
 }
 
 .utilizzo-lista li:last-child {
@@ -316,7 +308,7 @@ const destinazioni: { nome: string; href?: string }[] = [
 }
 
 .sost-cta-overlay {
-  background: linear-gradient(135deg, rgba(26, 26, 26, .66) 0%, rgba(42, 42, 42, .62) 100%);
+  background: linear-gradient(135deg, rgb(var(--navy-rgb) / .66) 0%, rgb(var(--header-rgb) / .62) 100%);
 }
 
 .sost-cta-wrapper {

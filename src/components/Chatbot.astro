@@ -70,7 +70,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
   border: none;
   border-radius: var(--radius-full);
   background: var(--primary-blue);
-  box-shadow: 0 8px 24px rgba(26, 26, 26, .18);
+  box-shadow: 0 8px 24px var(--linea-forte);
   color: var(--dark-navy);
   cursor: pointer;
   transition: background-color .2s ease, color .2s ease;
@@ -133,7 +133,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
   overflow: hidden;
   border-radius: var(--radius-md);
   background: var(--white);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, .22);
+  box-shadow: 0 20px 60px rgb(var(--nero-rgb) / .22);
   animation: cb-entra .25s ease;
 }
 
@@ -186,7 +186,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
 
 .cb-head-testo p {
   font-size: var(--cb-piccolo);
-  color: rgba(255, 255, 255, .65);
+  color: rgb(var(--bianco-rgb) / .65);
 }
 
 .cb-head-btn {
@@ -199,7 +199,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
   border-radius: var(--radius-full);
   background: none;
   font-size: 1rem;
-  color: rgba(255, 255, 255, .75);
+  color: var(--testo-su-scuro-debole);
   cursor: pointer;
   transition: background-color .2s ease, color .2s ease;
 }
@@ -209,7 +209,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
 }
 
 .cb-head-btn:hover {
-  background: rgba(255, 255, 255, .1);
+  background: var(--velo-chiaro);
   color: var(--white);
 }
 
@@ -222,9 +222,9 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
   padding: 1rem;
   overflow-y: auto;
   overscroll-behavior: contain;
-  background: #f5f6f7;
+  background: var(--grigio-50);
   scrollbar-width: thin;
-  scrollbar-color: rgba(26, 26, 26, .2) transparent;
+  scrollbar-color: var(--linea-forte) transparent;
 }
 
 #cb-msgs :global(.cb-m) {
@@ -238,7 +238,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
 
 #cb-msgs :global(.cb-m.bot) {
   align-self: flex-start;
-  border: 1px solid #e6e8ea;
+  border: 1px solid var(--grigio-100);
   border-bottom-left-radius: var(--radius-xs);
   background: var(--white);
   color: var(--text-dark);
@@ -286,7 +286,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
   width: 7px;
   height: 7px;
   border-radius: var(--radius-full);
-  background: #9aa0a6;
+  background: var(--grigio-400);
   animation: cb-punto 1.2s infinite ease-in-out;
 }
 
@@ -315,7 +315,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
   flex-wrap: wrap;
   gap: .4rem;
   padding: 0 1rem .75rem;
-  background: #f5f6f7;
+  background: var(--grigio-50);
 }
 
 .cb-suggerimenti[hidden] {
@@ -336,7 +336,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
 }
 
 .cb-chip:hover {
-  background: rgba(135, 206, 235, .2);
+  background: rgb(var(--blu-rgb) / .2);
 }
 
 /* ---------- Scrittura ---------- */
@@ -344,7 +344,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
   display: flex;
   gap: .5rem;
   padding: .75rem .75rem .5rem;
-  border-top: 1px solid #e6e8ea;
+  border-top: 1px solid var(--grigio-100);
   background: var(--white);
 }
 
@@ -353,7 +353,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
   min-width: 0;
   min-height: 46px;
   padding: .6rem 1rem;
-  border: 1px solid #7b858c;
+  border: 1px solid var(--grigio-400);
   border-radius: var(--radius-pill);
   background: var(--white);
   font: inherit;

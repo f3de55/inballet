@@ -78,7 +78,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                                 <i class="fas fa-child" aria-hidden="true"></i>
                             </div>
                             <div class="corso-meta-info">
-                                <span class="corso-meta-label">Età</span>
+                                <span class="corso-meta-label titoletto">Età</span>
                                 <strong id="corsoEta">{data.eta}</strong>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                                 <i class="fas fa-calendar-alt" aria-hidden="true"></i>
                             </div>
                             <div class="corso-meta-info">
-                                <span class="corso-meta-label">Frequenza</span>
+                                <span class="corso-meta-label titoletto">Frequenza</span>
                                 <strong id="corsoFrequenza">{data.frequenza}</strong>
                             </div>
                         </div>
@@ -132,7 +132,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                 {data.impara.map((item, i) => (
                     <li>
                         <span class="impara-num numero-medio" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                        <span class="impara-testo titolo-card" set:html={item} />
+                        <span class="impara-testo testo-evidenza" set:html={item} />
                     </li>
                 ))}
             </ol>
@@ -220,7 +220,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
   align-items: center;
   gap: 1.2rem;
   padding: 1.1rem 0 0;
-  border-top: 1px solid rgba(26, 26, 26, 0.12);
+  border-top: 1px solid var(--linea);
   flex: 1;
   min-width: 180px;
 }
@@ -247,11 +247,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
 }
 
 .corso-meta-info .corso-meta-label {
-  font-size: var(--text-xs);
   color: var(--text-light);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 600;
 }
 
 .corso-meta-info :global(strong) {
@@ -342,7 +338,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
   list-style: none;
   padding: 0;
   margin: 0;
-  background: rgba(26, 26, 26, 0.1);
+  background: var(--linea);
 }
 
 .corso-impara-list li {

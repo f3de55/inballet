@@ -86,7 +86,7 @@ Shared classes and tokens live at the top of `src/styles/global.css`. Every cont
 
 - Section header: `<span class="eyebrow">` → `<h2 class="titolo-sezione">` (optional `<em>` for the light italic accent) → `<p class="intro-sezione">`
 - Dark or photo-background section: add `sezione-scura` on the `<section>` (eyebrow, title and intro switch to light colors)
-- Buttons: `btn-primary` (blue pill), `btn-secondary` (white outline, on photos/dark); text action link: `link-cta`
+- Buttons: `btn-primary` (blue pill), `btn-secondary` (white outline, on photos/dark); text action link: `link-cta`; round icon buttons `btn-icon` (see Type scale and single style system)
 - Tokens: `--section-y` (section vertical padding), `--bg-soft` (alternate section background), `--radius-card` / `--border-card` / `--shadow-card` / `--shadow-card-hover` (cards), `--radius-img` (photos, with the offset blue frame used in Contatti/Corsi/homepage story)
 - Page hero: the shared `chisiamo-hero` markup (see any inner page): photo, bottom gradient, `<Breadcrumb />` then title, text left-aligned and vertically centered (same space above and below). No glass panels.
 - Navigation data lives in `src/data/navigazione.ts`: the navbar (desktop + mobile, active page highlight) and the breadcrumbs (+ BreadcrumbList JSON-LD) are generated from it. Add new pages there; pages outside the menu go in `altrePagine`.
@@ -150,8 +150,17 @@ docker build -t inballet-site . && docker rm -f inballet-web && docker run -d --
 ## Deploy check
 Railway builds on every push to `main`. To see which commit is live, compare `curl -sI https://inballet-production.up.railway.app/ | grep -i last-modified` (UTC) with `git log -1 --format=%cd --date=format:%H:%M`: if the page is older than the last commit, that build failed or is still running (check the Railway deploy log).
 
-## Type scale
-One scale only, the `--text-*` tokens in `src/styles/global.css` (roles listed in the comment above them). Body text is `--text-base` (18px on mobile → 22px on desktop). Titles of cards/rows `--text-xl`, short descriptions in cards `--text-md`, notes/pills `--text-sm`, eyebrows `--text-xs`, page hero title `--text-title`. Never write a literal `font-size` (rem/px/clamp) in public pages or components, and no `--text-lg` (it doesn't exist). The dashboard/login (`dashboard.css`) and the chat panel keep their own scales.
+## Type scale and single style system
+One system, all in `src/styles/global.css`; pages and components only lay things out. Run `npm run verifica:stile` before pushing: it fails on a literal `font-size`, a hand-written colour, an inline style with real properties, or a heading restyled in a component.
+
+- **Scale**: 10 steps `--text-5xl` … `--text-3xs` (roles in the comment above them). Body `--text-base` (18px mobile → 22px desktop). No `--text-lg`, `--text-6xl`, `--text-title`, `--text-btn`, `--text-nav` (removed: buttons use `sm`, menu items `xs`). Dashboard/login (`dashboard.css`) and the chat panel keep their own scales.
+- **Headings are real headings**, styled by tag in global.css: `h1` (`5xl`, one per page, same on every page, smaller than the old 64px hero), `h2` section title (`4xl`, also `.titolo-sezione`), `h3` card/item title (`xl`), `h4` detail (`md`), dialog `h2` (`3xl`). Components never set size/weight/line-height/letter-spacing on a heading. A title is never a `<span>`/`<p>`: use `h3`. Non-heading labels in rows/links use `.titolo-card`; short highlighted statements `.testo-evidenza`; big numbers `.numero-grande` / `.numero-medio`.
+- **Labels**: one uppercase label style, `.titoletto` (and `.eyebrow`, same look plus margin): menu group titles, categories, table headers, footer column titles, any h2/h3 that is only a label.
+- **Hero lead** under the h1: `.hero-lead` (home and inner pages).
+- **Buttons**: `.btn-primary`, `.btn-secondary`, `.link-cta`; round icon buttons `.btn-icon` + `--scuro` (on photos/dark), `--contorno` (carousel arrows), `--nudo` (menu). 44px, same icon size. The navbar "Contattaci" is a `btn-primary` (`aria-current="page"` turns it white).
+- **Icons** follow the text next to them or a scale step: `--icona-in-testo`, `--icona-mini`, `--icona-punto`, never px/rem in components.
+- **Colours** only from the palette tokens: `--white`, `--dark-navy`, `--primary-blue*`, `--text-*`, greys `--grigio-*`, states `--stato-*`, lines `--linea` / `--linea-forte` / `--linea-su-scuro`, text on dark `--testo-su-scuro*`, and for transparencies `rgb(var(--navy-rgb) / .4)` (also `--bianco-rgb`, `--nero-rgb`, `--scuro-rgb`, `--blu-rgb`, `--blu-scuro-rgb`, `--header-rgb`).
+- **Inline `style=`** only carries data as CSS variables (`--sfondo-*` / `--fuoco-*` from `sfondo()` and `<Img fuoco>`, `--i`, `--n`, `--scala`, `--velo`, `--decoro-onde*`); the rules that use them are in global.css.
 
 ## Corsi simili
 Every course page (`[corso].astro`) shows `src/components/CorsiSimili.astro` right after "Gli obiettivi": the other courses of the same `categorieCorsi` entry (scuola.ts), current course excluded; age label and frequency come from the course's own data in corsi.json. A new course only needs to be listed in a category to appear there.

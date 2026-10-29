@@ -129,7 +129,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     gap: .6rem;
     min-height: 44px;
     padding: .6rem 1.15rem;
-    border: 1px solid rgba(70, 130, 180, .35);
+    border: 1px solid rgb(var(--blu-scuro-rgb) / .35);
     border-radius: var(--radius-pill);
     background: var(--white);
     color: var(--dark-navy);
@@ -369,7 +369,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
     aspect-ratio: 4 / 5;
     object-fit: cover;
     border-radius: var(--radius-img);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 24px 60px rgb(var(--nero-rgb) / .14);
   }
 
   /* Etichetta «Percorso 1 di 5» sopra il titolo */
@@ -395,11 +395,11 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
      Tutta la riga è il link; il filetto in alto chiude la lista come nelle altre sezioni del sito */
   .corsi-lista {
     list-style: none;
-    border-top: 1px solid rgba(26, 26, 26, 0.12);
+    border-top: 1px solid var(--linea);
   }
 
   .corsi-lista li {
-    border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+    border-bottom: 1px solid var(--linea);
   }
 
   .corsi-lista a {
@@ -489,7 +489,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
       gap: 0;
       max-width: 640px;
       margin-top: 1.5rem;
-      border-bottom: 1px solid rgba(26, 26, 26, .12);
+      border-bottom: 1px solid var(--linea);
       text-align: left;
     }
 
@@ -500,7 +500,7 @@ const hero = await sfondo('gallery-3.jpg', { desktop: '50% 55%', tablet: '50% 50
       min-height: 0;
       padding: 1rem 0;
       border: none;
-      border-top: 1px solid rgba(26, 26, 26, .12);
+      border-top: 1px solid var(--linea);
       border-radius: 0;
       background: none;
     }

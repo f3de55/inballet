@@ -150,3 +150,6 @@ Railway builds on every push to `main`. To see which commit is live, compare `cu
 
 ## Type scale
 One scale only, the `--text-*` tokens in `src/styles/global.css` (roles listed in the comment above them). Body text is `--text-base` (18px on mobile → 22px on desktop). Titles of cards/rows `--text-xl`, short descriptions in cards `--text-md`, notes/pills `--text-sm`, eyebrows `--text-xs`, page hero title `--text-title`. Never write a literal `font-size` (rem/px/clamp) in public pages or components, and no `--text-lg` (it doesn't exist). The dashboard/login (`dashboard.css`) and the chat panel keep their own scales.
+
+## Corsi simili
+Every course page (`[corso].astro`) shows `src/components/CorsiSimili.astro` right after "Gli obiettivi": the other courses of the same `categorieCorsi` entry (scuola.ts), current course excluded; age label and frequency come from the course's own data in corsi.json. A new course only needs to be listed in a category to appear there.

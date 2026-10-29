@@ -8,6 +8,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
+import CorsiSimili from '../components/CorsiSimili.astro';
 import { getImage } from 'astro:assets';
 import { getAsset, sfondo, sfondoCta } from '../lib/images';
 import { schemaCorso } from '../lib/schema';
@@ -137,6 +138,9 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
             </ol>
         </div>
     </section>
+
+    <!-- Corsi simili: gli altri corsi della stessa categoria -->
+    <CorsiSimili corso={Astro.params.corso} />
 
     <!-- CTA -->
     <section class="corso-contatto-section sezione-scura">

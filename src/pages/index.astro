@@ -118,8 +118,8 @@ const schema = schemaHome(socialImage);
                         <a href={`/corsi#${cat.id}`} class="corsi-stile">
                             <span class="corsi-stile-foto" style={cat.veloHome !== undefined ? `--velo:${cat.veloHome}` : undefined}>
                                 {cat.immagineHome
-                                    ? <Img src={cat.immagineHome.src} alt="" aria-hidden="true" fuoco={cat.immagineHome.fuoco} loading="lazy" decoding="async" widths={[400, 640, 800]} sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 300px" />
-                                    : <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[400, 640, 800]} sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 300px" />}
+                                    ? <Img src={cat.immagineHome.src} alt="" aria-hidden="true" fuoco={cat.immagineHome.fuoco} loading="lazy" decoding="async" widths={[640, 960, 1200]} sizes="(max-width: 600px) 100vw, 600px" />
+                                    : <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[640, 960, 1200]} sizes="(max-width: 600px) 100vw, 600px" />}
                             </span>
                             <span class="corsi-stile-testo">
                                 <span class="corsi-stile-nome">{cat.nome}</span>
@@ -502,11 +502,11 @@ const schema = schemaHome(socialImage);
 
 /* Quattro stili: un box per stile con la foto come sfondo, un velo scuro per la leggibilità e il testo
    bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i dispositivi:
-   4 colonne su desktop, 2 su tablet, 1 su mobile. */
+   2x2 su desktop e tablet (box larghi quanto metà sezione), 1 su mobile. */
 .corsi-indice {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -525,8 +525,8 @@ const schema = schemaHome(socialImage);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 24rem;
-  padding: 2rem 1.5rem;
+  min-height: 22rem;
+  padding: 2.5rem 2rem;
   overflow: hidden;
   border-radius: var(--radius-card);
   background: var(--dark-navy);
@@ -613,15 +613,11 @@ const schema = schemaHome(socialImage);
   text-align: center;
 }
 
-/* Tablet: due colonne, box più bassi */
+/* Tablet: stessi due box per riga, un po' più bassi */
 @media (max-width: 1024px) {
-  .corsi-indice {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 820px;
-  }
-
   .corsi-stile {
     min-height: 19rem;
+    padding: 2rem 1.5rem;
   }
 }
 

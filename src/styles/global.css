@@ -1203,38 +1203,40 @@ a:hover .link-cta i {
   background-repeat: no-repeat;
 }
 
-/* Sfondi e foto ritagliate (sfondo() e <Img fuoco> in src/lib/images.ts): sorgente e
-   punto focale per desktop, tablet (<=900px) e mobile (<=600px), usati dallo stile inline (solo variabili con i dati dell'immagine, mai regole di stile) */
-[style*="--sfondo-lg"] {
+/* Sfondi e foto ritagliate (sfondo() e <Img fuoco> in src/lib/images.ts): sorgente e punto focale per
+   desktop, tablet (<=900px) e mobile (<=600px), letti dallo stile inline (che contiene solo variabili con
+   i dati dell'immagine, mai regole di stile). Il doppio selettore d'attributo alza la specificità: le
+   regole dei componenti (es. `background: center / cover`) non devono azzerare l'immagine. */
+[style*="--sfondo-lg"][style*="--fuoco-lg"] {
   --sfondo: var(--sfondo-lg);
+  --fuoco: var(--fuoco-lg);
   background-image: var(--sfondo);
   background-position: var(--fuoco);
 }
 
-[style*="--fuoco-lg"] {
+img[style*="--fuoco-lg"][style*="--fuoco-md"] {
   --fuoco: var(--fuoco-lg);
-}
-
-img[style*="--fuoco-lg"] {
   object-position: var(--fuoco);
 }
 
 @media (max-width: 900px) {
-  [style*="--sfondo-lg"] {
+  [style*="--sfondo-lg"][style*="--fuoco-lg"] {
     --sfondo: var(--sfondo-md);
+    --fuoco: var(--fuoco-md);
   }
 
-  [style*="--fuoco-lg"] {
+  img[style*="--fuoco-lg"][style*="--fuoco-md"] {
     --fuoco: var(--fuoco-md);
   }
 }
 
 @media (max-width: 600px) {
-  [style*="--sfondo-lg"] {
+  [style*="--sfondo-lg"][style*="--fuoco-lg"] {
     --sfondo: var(--sfondo-sm);
+    --fuoco: var(--fuoco-sm);
   }
 
-  [style*="--fuoco-lg"] {
+  img[style*="--fuoco-lg"][style*="--fuoco-md"] {
     --fuoco: var(--fuoco-sm);
   }
 }

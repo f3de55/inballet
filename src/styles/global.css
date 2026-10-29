@@ -165,7 +165,7 @@ html::-webkit-scrollbar-thumb:hover {
   --icona-mini: .7em;
   --icona-punto: .5em;
   /* Virgolette decorative delle citazioni */
-  --glifo-citazione: 5.5rem;
+  --glifo-citazione: 4rem;
   --leading-none: 1;
   --leading-tight: 1.1;
   --leading-snug: 1.3;
@@ -583,19 +583,19 @@ section > .intro-editoriale {
 }
 
 /* Citazione in evidenza (box di approfondimento delle pagine, citazione della fondatrice in home e
-   in Chi siamo): virgolette azzurre grandi sopra il testo, corsivo, firma in maiuscoletto; il testo ha
-   lo stile dei paragrafi (stessa dimensione, peso e interlinea).
-   Nelle intro centrate la citazione è centrata; da tablet in giù è a sinistra. */
+   in Chi siamo): un box azzurrino con il cerchio delle virgolette in alto, il testo con lo stile
+   dei paragrafi (in corsivo) e la firma in maiuscoletto. Nelle intro centrate il box è centrato,
+   con icona e testo al centro; da tablet in giù è a sinistra. */
 .intro-editoriale > [class*="-highlight"],
 section [class*="-intro-highlight"],
 .story-quote,
 .fondatrice-citazione {
-  position: relative;
   max-width: 38rem;
-  margin: 0;
-  padding: 3.25rem 0 0;
-  border: none;
-  background: none;
+  margin: 1.25rem 0 0;
+  padding: 1.75rem 2rem 2rem;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+  background: rgb(var(--blu-rgb) / .14);
   box-shadow: none;
   text-align: left;
 }
@@ -605,16 +605,20 @@ section [class*="-intro-highlight"]::before,
 .story-quote::before,
 .fondatrice-citazione::before {
   content: '\201C';
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1.25rem;
+  padding-top: .7rem;
+  border-radius: var(--radius-full);
+  background: var(--primary-blue-dark);
   font-family: Georgia, 'Times New Roman', serif;
   font-size: var(--glifo-citazione);
   font-style: normal;
   line-height: 1;
-  height: 2.6rem;
-  overflow: visible;
-  color: var(--primary-blue);
+  color: var(--white);
 }
 
 .intro-editoriale > [class*="-highlight"] p,
@@ -645,13 +649,12 @@ section [class*="-intro-highlight"] cite,
 }
 
 .intro-editoriale > [class*="-highlight"] {
-  margin: 0 auto;
+  margin: 1.25rem auto 0;
   text-align: center;
 }
 
 .intro-editoriale > [class*="-highlight"]::before {
-  left: 50%;
-  transform: translateX(-50%);
+  margin-inline: auto;
 }
 
 @media (max-width: 900px) {
@@ -665,13 +668,12 @@ section [class*="-intro-highlight"] cite,
   }
 
   .intro-editoriale > [class*="-highlight"] {
-    margin: 0;
+    margin: 1.25rem 0 0;
     text-align: left;
   }
 
   .intro-editoriale > [class*="-highlight"]::before {
-    left: 0;
-    transform: none;
+    margin-inline: 0;
   }
 }
 

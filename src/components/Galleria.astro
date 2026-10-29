@@ -51,8 +51,9 @@ const gallery = await Promise.all(
 
     <!-- Due serie identiche: la seconda serve solo alla continuità dello scorrimento
          ed è nascosta a tastiera e screen reader -->
-    <div class="gallery-infinite">
-        <div class="gallery-track" id="galleryTrack">
+    <div class="carosello-wrap" style="--fade-bg: var(--bg-soft)">
+    <div class="carosello gallery-infinite" data-giro="80">
+        <div class="carosello-track gallery-track" id="galleryTrack">
             {[0, 1].map((set) =>
                 gallery.map((img, i) => (
                     <div class="gallery-item" aria-hidden={set === 1 ? 'true' : undefined}>
@@ -60,13 +61,14 @@ const gallery = await Promise.all(
                             {/* Anteprime già ritagliate in verticale (5:7). sizes = larghezza della foto a schermo:
                                 sui riquadri più stretti la decide l'altezza (altezza × 5/7).
                                 alt solo sulla prima serie (ricerca immagini); il nome del pulsante resta l'aria-label */}
-                            <Img src={img.file} alt={set === 0 ? img.alt : ''} width="300" height="420" loading="lazy" decoding="async" rapporto={1.4} widths={[300, 450, 600]} sizes="(max-width: 480px) 215px, (max-width: 768px) 245px, (max-width: 1024px) 275px, 300px" />
+                            <Img src={img.file} alt={set === 0 ? img.alt : ''} width="300" height="420" loading="eager" decoding="async" draggable="false" rapporto={1.4} widths={[300, 450, 600]} sizes="(max-width: 480px) 215px, (max-width: 768px) 245px, (max-width: 1024px) 275px, 300px" />
                             <span class="gallery-zoom-icon" aria-hidden="true"><i class="fas fa-expand"></i></span>
                         </button>
                     </div>
                 ))
             )}
         </div>
+    </div>
     </div>
 </section>
 
@@ -91,6 +93,7 @@ const gallery = await Promise.all(
 </dialog>
 
 <script>
+    import '../scripts/carosello';
     import '../scripts/galleria';
 </script>
 
@@ -139,37 +142,30 @@ const gallery = await Promise.all(
 }
 
 /* ---------- Galleria a scorrimento continuo ---------- */
-/* Due serie identiche di foto: la traslazione del 50% riporta all'inizio senza salti,
-   qualunque sia la larghezza delle foto */
+/* Scorrimento vero (src/scripts/carosello.ts): si sposta da sola e a mano, anche con il mouse.
+   Due serie identiche di foto: oltre la prima si torna indietro di una serie, senza salti.
+   Niente animazione CSS né maschere sul contenitore (le foto potevano sparire dopo un po'):
+   i bordi sfumati sono due sovrapposizioni sopra, non toccano le foto. */
 .gallery-infinite {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.gallery-infinite::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-infinite.trascinando {
+  cursor: grabbing;
 }
 
 .gallery-track {
   display: flex;
   width: max-content;
-  animation: galleria-scorri 80s linear infinite;
-}
-
-/* Pausa solo con focus da tastiera (non dopo un clic o la chiusura della lightbox)
-   e con hover di un mouse vero: sul touch l'hover resterebbe attivo dopo il tocco */
-.gallery-track:has(:focus-visible),
-.gallery-track.paused {
-  animation-play-state: paused;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .gallery-infinite:hover .gallery-track {
-    animation-play-state: paused;
-  }
-}
-
-@keyframes galleria-scorri {
-  to {
-    transform: translateX(-50%);
-  }
 }
 
 .gallery-item {
@@ -234,38 +230,15 @@ const gallery = await Promise.all(
   transform: none;
 }
 
-/* Telefono e tablet (touch): niente animazione CSS, la fila si trascina col dito e
-   scorre da sola via script (home.ts). Su PC resta l'animazione CSS */
-@media (hover: none), (pointer: coarse) {
-  .gallery-infinite {
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-  }
-
-  .gallery-infinite::-webkit-scrollbar {
-    display: none;
-  }
-
-  .gallery-track {
-    animation: none;
-  }
-}
-
 /* Movimento ridotto: niente scorrimento automatico, solo a mano, senza copie */
 @media (prefers-reduced-motion: reduce) {
 
   .gallery-infinite {
-    overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-padding-inline: 1.5rem;
-    scrollbar-width: none;
-    -webkit-mask-image: none;
-    mask-image: none;
   }
 
   .gallery-track {
-    animation: none;
     padding: 0 1.5rem;
   }
 
@@ -290,10 +263,6 @@ const gallery = await Promise.all(
 }
 
 @media (max-width: 768px) {
-  .gallery-track {
-    animation-duration: 70s;
-  }
-
   .gallery-item {
     width: min(44vw, 240px);
     height: 340px;
@@ -301,10 +270,6 @@ const gallery = await Promise.all(
 }
 
 @media (max-width: 480px) {
-  .gallery-track {
-    animation-duration: 60s;
-  }
-
   .gallery-item {
     height: 300px;
   }

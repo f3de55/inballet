@@ -2,8 +2,8 @@
 /**
  * Sezione «Insegnanti» di Chi siamo, gestita dalla dashboard (sezione Insegnanti).
  * Stesso schema della galleria «Le nostre sale»: intestazione centrata e fila di card
- * a scorrimento continuo (PC: animazione CSS, pausa al passaggio del mouse; touch: si
- * trascina col dito e scorre da sola, src/scripts/carosello.ts). Ogni card: foto, e su
+ * a scorrimento continuo (scorrimento vero, anche a mano con il mouse; pausa al passaggio; si
+ * trascina con il mouse o col dito e scorre da sola, src/scripts/carosello.ts). Ogni card: foto, e su
  * un velo scuro nome, disciplina e «Scopri di più», che apre la scheda completa
  * (InsegnantiDialoghi.astro). Senza insegnanti la sezione non compare.
  */
@@ -17,7 +17,7 @@ interface Props {
 const { sezione, insegnanti } = Astro.props.dati;
 const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2).join('').toUpperCase();
 // Ogni metà della fila deve essere più larga dello schermo: con pochi insegnanti l'elenco si ripete
-const ripetizioni = Math.max(1, Math.ceil(6 / Math.max(1, insegnanti.length)));
+const ripetizioni = Math.max(1, Math.ceil(10 / Math.max(1, insegnanti.length)));
 const meta = Array.from({ length: ripetizioni }, () => insegnanti).flat();
 ---
 
@@ -33,7 +33,8 @@ const meta = Array.from({ length: ripetizioni }, () => insegnanti).flat();
 
     <!-- Due metà identiche: la seconda serve solo alla continuità dello scorrimento ed è
          nascosta a tastiera e screen reader (come le ripetizioni nella prima metà) -->
-    <div class="carosello insegnanti-fila">
+    <div class="carosello-wrap" style="--fade-bg: var(--white)">
+    <div class="carosello insegnanti-fila" data-giro="70">
       <ul class="carosello-track insegnanti-track">
         {[0, 1].map((m) =>
           meta.map((p, i) => {
@@ -41,7 +42,7 @@ const meta = Array.from({ length: ripetizioni }, () => insegnanti).flat();
             return (
               <li class="insegnante" data-apri-insegnante={p.id} aria-hidden={copia ? 'true' : undefined}>
                 {p.foto
-                  ? <img class="insegnante-foto" src={p.foto} alt="" width="800" height="1000" loading="lazy" decoding="async" />
+                  ? <img class="insegnante-foto" src={p.foto} alt="" width="800" height="1000" loading={i < 8 ? 'eager' : 'lazy'} decoding="async" draggable="false" />
                   : <span class="insegnante-foto insegnante-iniziali" aria-hidden="true">{iniziali(p.nome)}</span>}
                 <div class="insegnante-velo">
                   <h3 class="insegnante-nome">{p.nome}</h3>
@@ -56,6 +57,7 @@ const meta = Array.from({ length: ripetizioni }, () => insegnanti).flat();
           })
         )}
       </ul>
+    </div>
     </div>
   </section>
 )}
@@ -97,11 +99,22 @@ const meta = Array.from({ length: ripetizioni }, () => insegnanti).flat();
     }
   }
 
-  /* ---------- Fila a scorrimento continuo (come la galleria) ---------- */
+  /* ---------- Fila a scorrimento (come la galleria; logica in src/scripts/carosello.ts) ---------- */
   .insegnanti-fila {
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .insegnanti-fila::-webkit-scrollbar {
+    display: none;
+  }
+
+  .insegnanti-fila.trascinando {
+    cursor: grabbing;
   }
 
   .insegnanti-track {
@@ -110,23 +123,6 @@ const meta = Array.from({ length: ripetizioni }, () => insegnanti).flat();
     margin: 0;
     padding: 0;
     list-style: none;
-    animation: insegnanti-scorri 70s linear infinite;
-  }
-
-  .insegnanti-track:has(:focus-visible) {
-    animation-play-state: paused;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .insegnanti-fila:hover .insegnanti-track {
-      animation-play-state: paused;
-    }
-  }
-
-  @keyframes insegnanti-scorri {
-    to {
-      transform: translateX(-50%);
-    }
   }
 
   .insegnante {
@@ -219,36 +215,14 @@ const meta = Array.from({ length: ripetizioni }, () => insegnanti).flat();
     }
   }
 
-  /* Touch: niente animazione CSS, la fila si trascina e scorre da sola via script */
-  @media (hover: none), (pointer: coarse) {
-    .insegnanti-fila {
-      overflow-x: auto;
-      overscroll-behavior-x: contain;
-      scrollbar-width: none;
-    }
-
-    .insegnanti-fila::-webkit-scrollbar {
-      display: none;
-    }
-
-    .insegnanti-track {
-      animation: none;
-    }
-  }
-
   /* Movimento ridotto: solo a mano, senza copie */
   @media (prefers-reduced-motion: reduce) {
     .insegnanti-fila {
-      overflow-x: auto;
       scroll-snap-type: x mandatory;
       scroll-padding-inline: 1.5rem;
-      scrollbar-width: none;
-      -webkit-mask-image: none;
-      mask-image: none;
     }
 
     .insegnanti-track {
-      animation: none;
       padding: 0 1.5rem;
     }
 

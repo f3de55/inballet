@@ -1,5 +1,5 @@
 /* ========================================
-   GALLERIA A SCORRIMENTO CON LIGHTBOX (componente Galleria.astro)
+   LIGHTBOX DELLA GALLERIA (componente Galleria.astro; lo scorrimento è in carosello.ts)
    ======================================== */
 
 const track = document.getElementById('galleryTrack');
@@ -64,57 +64,6 @@ if (track && dialog && foto && didascalia && contatore) {
     },
     { passive: true },
   );
-
-  // Touch (telefono/tablet): la fila si trascina col dito e scorre da sola via script.
-  // Al tocco si ferma, riparte 2 secondi dopo dal punto in cui è stata lasciata.
-  const touch = window.matchMedia('(hover: none), (pointer: coarse)');
-  const ridotto = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const fila = track.parentElement!;
-  if (touch.matches && !ridotto.matches) {
-    const DURATA_GIRO = 60; // secondi per far passare le 10 foto
-    let pos = 0;
-    let ultimo = 0;
-    let fermo = false;
-    let visibile = false;
-    let ripresa = 0;
-
-    const giro = () => track.scrollWidth / 2; // larghezza di una serie di 10 foto
-    // Giro infinito: oltre la prima serie si torna indietro di una serie (identica)
-    const avvolgi = (x: number) => ((x % giro()) + giro()) % giro();
-
-    const passo = (t: number) => {
-      if (ultimo && !fermo && visibile && !document.querySelector('dialog[open]') && !document.hidden) {
-        pos = avvolgi(pos + (giro() / DURATA_GIRO) * ((t - ultimo) / 1000));
-        fila.scrollLeft = pos;
-      }
-      ultimo = t;
-      requestAnimationFrame(passo);
-    };
-    requestAnimationFrame(passo);
-
-    new IntersectionObserver(([e]) => (visibile = e.isIntersecting)).observe(fila);
-
-    fila.addEventListener(
-      'touchstart',
-      () => {
-        fermo = true;
-        clearTimeout(ripresa);
-      },
-      { passive: true },
-    );
-    fila.addEventListener(
-      'touchend',
-      () => {
-        clearTimeout(ripresa);
-        ripresa = window.setTimeout(() => {
-          pos = avvolgi(fila.scrollLeft);
-          fila.scrollLeft = pos;
-          fermo = false;
-        }, 2000);
-      },
-      { passive: true },
-    );
-  }
 }
 
 export {};

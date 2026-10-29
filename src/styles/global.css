@@ -676,9 +676,36 @@ main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [cla
     linear-gradient(#000 0 0) 0 calc(var(--onda-h) - 1px) / 100% calc(100% - 2 * var(--onda-h) + 2px) no-repeat;
 }
 
-/* File a scorrimento continuo (galleria, insegnanti): ferme mentre una finestra è aperta */
-html:has(dialog[open]) :is(.gallery-track, .carosello-track) {
-  animation-play-state: paused;
+/* File a scorrimento (galleria, insegnanti): bordi che sfumano nel colore della sezione, come due
+   veli sopra la fila (non una maschera sul contenitore, che può far sparire le foto) */
+.carosello-wrap {
+  position: relative;
+}
+
+.carosello-wrap::before,
+.carosello-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: clamp(1.5rem, 5vw, 4rem);
+  pointer-events: none;
+}
+
+.carosello-wrap::before {
+  left: 0;
+  background: linear-gradient(to right, var(--fade-bg, var(--white)), transparent);
+}
+
+.carosello-wrap::after {
+  right: 0;
+  background: linear-gradient(to left, var(--fade-bg, var(--white)), transparent);
+}
+
+.carosello img {
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 /* Link d'azione testuale, sottolineato */

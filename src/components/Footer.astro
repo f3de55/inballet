@@ -49,14 +49,17 @@ const colonne = [
     <details class="footer-col footer-contatti" open>
       <summary><h2 class="footer-titolo titoletto">Contatti</h2></summary>
       <ul>
-        <li><a href={scuola.telefonoHref}>{scuola.telefono}</a></li>
-        <li><a href={`mailto:${scuola.email}`}>{scuola.email}</a></li>
+        <li class="footer-dato"><i class="fas fa-phone" aria-hidden="true"></i><a href={scuola.telefonoHref}>{scuola.telefono}</a></li>
+        <li class="footer-dato"><i class="fas fa-envelope" aria-hidden="true"></i><a href={`mailto:${scuola.email}`}>{scuola.email}</a></li>
       </ul>
       <ul class="footer-sedi">
         {sedi.map((s) => (
-          <li>
-            <p>{s.citta}</p>
-            <a href={s.maps} target="_blank" rel="noopener">{s.via}</a>
+          <li class="footer-dato">
+            <i class="fas fa-location-dot" aria-hidden="true"></i>
+            <div>
+              <p>{s.citta}</p>
+              <a href={s.maps} target="_blank" rel="noopener">{s.via}</a>
+            </div>
           </li>
         ))}
       </ul>

@@ -63,21 +63,53 @@
   display: grid;
   grid-template-columns: 1.75rem minmax(0, 1fr);
   column-gap: var(--spazio-icona);
-  align-items: start;
+  align-items: center;
 }
 
+/* Tutte le icone: stessa grandezza e stessa colonna larga 1.75rem, centrate in orizzontale nella colonna e in
+   verticale sulla riga del testo (sono sempre una sola riga: numero, e-mail, nomi dei canali) */
 .info-icona {
-  padding-top: .3em;
-  font-size: var(--text-base);
+  display: block;
+  width: 100%;
+  font-size: var(--text-xl);
+  line-height: 1;
+  text-align: center;
   color: var(--primary-blue-dark);
 }
 
-/* I glifi dei social sono più piccoli degli altri: li pareggiamo */
-.info-icona.fa-whatsapp,
-.info-icona.fa-instagram,
+/* Sedi: la spilla sta sulla riga del nome della città, non al centro dell'intero blocco (nome, indirizzo, link) */
+.info-riga.sede {
+  align-items: start;
+}
+
+/* Riquadro dell'icona alto come la riga del nome (stessa interlinea del testo): il glifo è centrato su quella riga */
+.info-riga.sede .info-icona {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(var(--body-lh) * var(--body-size));
+}
+
+/* Correzione ottica per glifo (in em, misurata sui pixel): i glifi di Font Awesome non sono centrati nel loro
+   riquadro; così il centro di ogni icona cade sul centro delle maiuscole del testo accanto */
+.info-icona.fa-phone {
+  transform: translateY(-.019em);
+}
+
+.info-icona.fa-envelope {
+  transform: translateY(-.042em);
+}
+
+.info-icona.fa-whatsapp {
+  transform: translateY(-.027em);
+}
+
+.info-icona.fa-instagram {
+  transform: translateY(-.012em);
+}
+
 .info-icona.fa-facebook {
-  font-size: var(--text-xl);
-  padding-top: .1em;
+  transform: translateY(-.032em);
 }
 
 /* I dati dei box (numero, e-mail, WhatsApp, social, nomi delle sedi) in grassetto */

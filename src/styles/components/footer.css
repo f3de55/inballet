@@ -42,7 +42,7 @@
 
 .footer-main {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 5.4fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 5.6fr);
   gap: 2.5rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -119,7 +119,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: .6rem;
+  gap: .4rem;
 }
 
 .footer-main ul a,
@@ -147,11 +147,46 @@
 }
 
 /* ---------- Contatti ---------- */
+/* Telefono, e-mail e sedi: icona a sinistra in una colonna fissa (centrata nella colonna), testo a destra.
+   Telefono ed e-mail sono una sola riga: icona e testo centrati insieme sulla riga. Nelle sedi l'icona ha lo
+   stesso riquadro della riga del nome (stessa interlinea) così il glifo cade sulla riga del nome della città */
+.footer-dato {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr);
+  column-gap: .75rem;
+  align-items: center;
+}
+
+.footer-dato > i {
+  display: block;
+  width: 100%;
+  font-size: var(--icona-in-testo);
+  line-height: 1;
+  text-align: center;
+  color: var(--primary-blue);
+}
+
+/* Numero ed e-mail restano su una riga */
+.footer-dato > a {
+  white-space: nowrap;
+}
+
+.footer-sedi .footer-dato {
+  align-items: start;
+}
+
+.footer-sedi .footer-dato > i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(var(--body-lh) * var(--text-xs));
+}
+
 .footer-sedi {
   margin-top: 1.25rem;
 }
 
-.footer-sedi li {
+.footer-sedi .footer-dato > div {
   display: flex;
   flex-direction: column;
   gap: .15rem;
@@ -350,27 +385,23 @@
     display: flex;
     align-items: center;
     width: 100%;
-    min-height: 44px;
-    padding-block: .35rem;
+    min-height: 38px;
+    padding-block: .2rem;
   }
 
   .footer-col .footer-link {
-    margin-top: .5rem;
+    margin-top: .25rem;
   }
 
   /* Contatti: nome della sede sopra, indirizzo a tutta larghezza sotto */
-  .footer-col .footer-sedi li {
+  .footer-col .footer-sedi div {
     gap: 0;
-  }
-
-  .footer-col .footer-sedi p {
-    padding-top: .5rem;
   }
 
   .footer-col .footer-sedi a {
     display: flex;
-    min-height: 44px;
-    padding-block: .35rem;
+    min-height: 38px;
+    padding-block: .2rem;
   }
 
   .footer-col > ul:last-child {

@@ -376,6 +376,17 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
     z-index: 1;
   }
 
+  /* Velo bianco limitato al titolo: sopra la ballerina, sotto le lettere.
+     I bordi sfumano nello sfondo senza aggiungere un riquadro. */
+  .corsi-stile--grafica .corsi-stile-nome::before {
+    content: '';
+    position: absolute;
+    inset: -.25rem -.5rem;
+    z-index: -1;
+    background: radial-gradient(ellipse at center, rgb(var(--bianco-rgb) / .94) 0%, rgb(var(--bianco-rgb) / .76) 55%, rgb(var(--bianco-rgb) / 0) 100%);
+    pointer-events: none;
+  }
+
   .corsi-stile-figura {
     position: absolute;
     top: -4rem;

@@ -303,14 +303,13 @@ a.info-valore:hover {
   }
 
   .info-illustrazione {
-    top: 2rem;
-    right: 1.5rem;
+    top: .5rem;
+    right: 1rem;
     left: auto;
-    width: 6rem;
-    height: 5.5rem;
+    width: 9rem;
+    height: 9rem;
     transform: none;
-    -webkit-mask-image: none;
-    mask-image: none;
+    /* Riprende la sfumatura desktop: il titolo resta davanti all'immagine. */
   }
 
   .info-titolo {

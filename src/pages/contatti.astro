@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import Img from '../components/Img.astro';
 import Galleria from '../components/Galleria.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import { categorieCorsi, scuola, sedi, orari } from '../data/scuola';
@@ -67,6 +68,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
 
             <div class="info">
                 <div class="info-blocco">
+                    <Img class="info-illustrazione" src="grafica-contatti/recapiti.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480]} sizes="176px" />
                     <h3 class="info-titolo">Recapiti</h3>
                     <div class="info-corpo">
                     <ul class="info-righe">
@@ -95,6 +97,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                 </div>
 
                 <div class="info-blocco">
+                    <Img class="info-illustrazione" src="grafica-contatti/sedi.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480]} sizes="176px" />
                     <h3 class="info-titolo">Le nostre sedi</h3>
                     <div class="info-corpo">
                     <ul class="info-righe">
@@ -115,6 +118,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                 </div>
 
                 <div class="info-blocco">
+                    <Img class="info-illustrazione" src="grafica-contatti/orari.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480]} sizes="176px" />
                     <h3 class="info-titolo">Orari segreteria</h3>
                     <div class="info-corpo">
                     <p id="open-status" class="orari-status" aria-live="polite"></p>

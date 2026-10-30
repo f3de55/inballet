@@ -21,6 +21,7 @@
 
 /* ---------- Tre celle a filetti (come La danza oltre i corsi): linee sopra, sotto e tra le celle; i dati principali (telefono, e-mail, sedi) hanno lo stesso titoletto grande ---------- */
 .info {
+  margin-top: 6rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   border-block: 1px solid var(--linea);
@@ -28,6 +29,8 @@
 
 /* Ogni blocco occupa 2 righe (titolo, dati): i titoli stanno alla stessa quota anche se uno va a capo */
 .info-blocco {
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-row: span 2;
   grid-template-rows: subgrid;
@@ -46,9 +49,33 @@
   background: var(--bg-soft);
 }
 
-/* Titolo del box: solo testo, niente icona */
+/* Come nelle card corsi: illustrazione davanti al bordo, dietro al titolo.
+   La parte inferiore sfuma sull'immagine stessa, senza aggiungere veli bianchi. */
+.info-illustrazione {
+  position: absolute;
+  top: -5rem;
+  left: 50%;
+  z-index: 0;
+  display: block;
+  width: 11rem;
+  height: 11rem;
+  object-fit: contain;
+  transform: translateX(-50%);
+  -webkit-mask-image: linear-gradient(to bottom, rgb(var(--nero-rgb)) 0%, rgb(var(--nero-rgb)) 35%, rgb(var(--nero-rgb) / .28) 60%, rgb(var(--nero-rgb) / .06) 76%, rgb(var(--nero-rgb) / 0) 90%);
+  mask-image: linear-gradient(to bottom, rgb(var(--nero-rgb)) 0%, rgb(var(--nero-rgb)) 35%, rgb(var(--nero-rgb) / .28) 60%, rgb(var(--nero-rgb) / .06) 76%, rgb(var(--nero-rgb) / 0) 90%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.info-titolo,
+.info-corpo {
+  position: relative;
+  z-index: 1;
+}
+
 .info-titolo {
   margin: 0 0 1.75rem;
+  text-align: center;
 }
 
 .info-righe {
@@ -210,6 +237,7 @@ a.info-valore:hover {
 @media (max-width: 1000px) {
   .info {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 6rem;
   }
 
   .info-blocco:first-child {
@@ -257,6 +285,22 @@ a.info-valore:hover {
 
   .info-blocco:first-child .info-righe {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Su telefono resta il layout compatto, come nelle card corsi della home. */
+@media (max-width: 600px) {
+  .info {
+    margin-top: 0;
+    row-gap: 0;
+  }
+
+  .info-illustrazione {
+    display: none;
+  }
+
+  .info-titolo {
+    text-align: left;
   }
 }
 

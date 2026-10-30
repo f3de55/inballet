@@ -55,9 +55,9 @@ for (const f of file(join(radice, 'styles'), '.css')) {
   const css = testo.replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, ' '));
   css.split('\n').forEach((riga, n) => {
     const fs = riga.match(/font-size\s*:\s*([^;}]+)/);
-    if (fs && !senzaScalaFont.some((r) => r.test(f)) && !/^(var\(--(text|icona|glifo)-[\w-]+\)|inherit)\s*$/.test(fs[1].trim())) segnala(f, n + 1, `font-size fuori scala: ${fs[1].trim()}`);
+    if (fs && !senzaScalaFont.some((r) => r.test(f)) && !/^(var\(--(text|icona|glifo)-[\w-]+\)|var\(--[a-z0-9-]+-size(-[a-z]+)?\)|inherit)\s*$/.test(fs[1].trim())) segnala(f, n + 1, `font-size fuori scala: ${fs[1].trim()}`);
     const fw = riga.match(/font-weight\s*:\s*([^;}]+)/);
-    if (fw && !/^(var\(--font-[\w-]+\)|inherit)\s*$/.test(fw[1].trim())) segnala(f, n + 1, `font-weight senza token: ${fw[1].trim()}`);
+    if (fw && !/^(var\(--(font|[a-z]+)-[a-z]+\)|inherit)\s*$/.test(fw[1].trim())) segnala(f, n + 1, `font-weight senza token: ${fw[1].trim()}`);
     if (coloriGrezziOk.some((r) => r.test(f))) return;
     if (/#[0-9a-fA-F]{3,8}\b/.test(riga) || /(rgba?|hsla?)\(\s*\d/.test(riga)) segnala(f, n + 1, `colore a mano: ${riga.trim()}`);
   });

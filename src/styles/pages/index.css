@@ -209,27 +209,21 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   padding: 0;
 }
 
-/* Un solo sfondo composto per card; nome, frase e link rimangono allineati. */
-.corsi-indice {
-  grid-auto-rows: 1rem auto auto auto minmax(11rem, 1fr);
-}
-
+/* Tutto il blocco di testo è centrato nei due assi, con altezza uniforme
+   per le quattro card. Lo sfondo rimane un'unica immagine composta. */
 .corsi-indice li {
-  display: grid;
-  grid-row: span 5;
-  grid-template-rows: subgrid;
-  row-gap: 0;
+  display: flex;
 }
 
 .corsi-stile {
   position: relative;
   isolation: isolate;
-  display: grid;
-  grid-row: 1 / -1;
-  grid-template-rows: subgrid;
-  row-gap: 0;
-  justify-items: center;
-  padding: 3rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 28rem;
+  padding: 2.5rem 1.5rem;
   overflow: hidden;
   border: 2px solid var(--primary-blue);
   border-radius: var(--radius-card);
@@ -270,27 +264,25 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 }
 
 .corsi-stile-testo {
-  display: contents;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 30rem;
   text-shadow: 0 1px 12px rgb(var(--nero-rgb) / .45);
 }
 
 .corsi-stile-nome {
-  grid-row: 2;
   color: inherit;
   display: block;
 }
 
 .corsi-stile-desc {
-  grid-row: 3;
   margin: .6rem 0 1.5rem;
   color: var(--body-color-su-scuro);
 }
 
 /* «Vedi di più» bianco; in hover la freccia scorre in avanti e il testo si fa più spazioso, senza cambiare colore */
-.corsi-stile-link {
-  grid-row: 4;
-}
-
 .corsi-stile-link,
 .corsi-stile-link:hover,
 .corsi-stile:hover .corsi-stile-link {
@@ -311,7 +303,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 }
 
 .corsi-stile--grafica .corsi-stile-foto::after {
-  background: linear-gradient(to bottom, rgb(var(--corsi-grafica-rgb) / .94) 0%, rgb(var(--corsi-grafica-rgb) / .94) 48%, rgb(var(--corsi-grafica-rgb) / 0) 66%);
+  background: radial-gradient(ellipse at 50% 48%, rgb(var(--corsi-grafica-rgb) / .96) 0%, rgb(var(--corsi-grafica-rgb) / .9) 26%, rgb(var(--corsi-grafica-rgb) / .45) 50%, rgb(var(--corsi-grafica-rgb) / .08) 70%, rgb(var(--corsi-grafica-rgb) / 0) 100%);
 }
 
 .corsi-stile--grafica .corsi-stile-testo {
@@ -366,19 +358,6 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
     max-width: none;
   }
 
-  /* Box tutti alti uguali; il contenuto resta centrato anche in verticale */
-  .corsi-stile {
-    padding: 2.5rem 1.5rem;
-  }
-
-}
-
-/* Tablet: due box per riga, un po' più bassi */
-@media (max-width: 1024px) {
-  .corsi-stile {
-    padding: 2.5rem 1.5rem;
-  }
-
 }
 
 /* Mobile: un box per riga */
@@ -388,23 +367,9 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
     gap: 1rem;
   }
 
-  /* Altezza naturale: niente griglia allineata tra i box, ognuno è alto quanto il suo contenuto più il
-     suo padding (con le righe condivise il padding si perdeva e il testo restava attaccato al bordo) */
-  .corsi-indice {
-    grid-auto-rows: auto;
-  }
-
-  .corsi-indice li {
-    display: block;
-    grid-row: auto;
-  }
-
   .corsi-stile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    grid-row: auto;
-    padding: 2.25rem 1.5rem 12rem;
+    min-height: 24rem;
+    padding: 2.25rem 1.5rem;
   }
 
   .corsi-stile-desc {

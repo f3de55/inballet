@@ -886,7 +886,7 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 }
 
 @media (max-width:900px) {
-  /* Una colonna: titolo, foto, testo, citazione e per ultimo il link
+  /* Una colonna: titolo, foto, testo, link «Scopri chi siamo» e per ultima la citazione
   (story-content "si scioglie" così i suoi figli si ordinano insieme alla foto) */
   .story-layout {
     display: flex;
@@ -913,13 +913,13 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
     order: 3;
   }
 
-  .story-quote {
+  .story-cta {
     order: 4;
+    align-self: flex-start;
   }
 
-  .story-cta {
+  .story-quote {
     order: 5;
-    align-self: flex-start;
   }
 
   .story-text,

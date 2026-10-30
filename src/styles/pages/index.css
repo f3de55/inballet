@@ -395,13 +395,23 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
     gap: 1rem;
   }
 
-  /* Altezza naturale: nessuno spazio minimo sopra e sotto il testo, il box è alto quanto il suo contenuto */
+  /* Altezza naturale: niente griglia allineata tra i box, ognuno è alto quanto il suo contenuto più il
+     suo padding (con le righe condivise il padding si perdeva e il testo restava attaccato al bordo) */
   .corsi-indice {
-    --corsi-spazio: 0rem;
+    grid-auto-rows: auto;
+  }
+
+  .corsi-indice li {
+    display: block;
+    grid-row: auto;
   }
 
   .corsi-stile {
-    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-row: auto;
+    padding: 2.25rem 1.5rem;
   }
 
   .corsi-stile-desc {

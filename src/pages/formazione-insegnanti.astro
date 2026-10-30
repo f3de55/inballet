@@ -76,7 +76,7 @@ const enti = [
                 <ul class="breve-lista" aria-label="Il corso in breve">
                     {inBreve.map((b) => (
                         <li class="dato">
-                            <p class="dato-valore numero-medio">{b.valore}{b.unita && ` ${b.unita}`}</p>
+                            <h3 class="dato-valore">{b.valore}{b.unita && ` ${b.unita}`}</h3>
                             <p class="dato-testo testo-piccolo">{b.testo}</p>
                         </li>
                     ))}

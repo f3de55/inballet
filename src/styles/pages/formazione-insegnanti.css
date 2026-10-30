@@ -1,5 +1,5 @@
 /* Il corso in breve: tre dati affiancati, centrati, divisi da filetti verticali e chiusi da due filetti
-(come "InBallet in numeri"): valore grande, sotto la sua etichetta */
+(come "InBallet in numeri"): titolo (h3 del progetto) e sotto la sua etichetta (testo-piccolo) */
 .breve-lista {
   list-style: none;
   display: grid;
@@ -20,7 +20,6 @@
 
 .dato-valore {
   margin: 0;
-  color: var(--primary-blue-dark);
 }
 
 .dato-testo {

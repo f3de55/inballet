@@ -209,12 +209,10 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   padding: 0;
 }
 
-/* Ogni card occupa 5 righe della griglia: spazio, nome, frase, «Vedi di più», spazio. Nome, frase e link
-   hanno la stessa quota in tutte le card della riga e il blocco resta centrato (le righe 1 e 5 si spartiscono lo spazio) */
+/* Nome, frase e link condividono le righe; lo spazio in basso ospita la
+   figura decorativa dello sfondo, senza sovrapporla al contenuto. */
 .corsi-indice {
-  /* Altezza minima dei box: lo spazio sopra e sotto il testo (--corsi-spazio) */
-  --corsi-spazio: 6.5rem;
-  grid-auto-rows: minmax(var(--corsi-spazio), 1fr) auto auto auto minmax(var(--corsi-spazio), 1fr);
+  grid-auto-rows: 2.5rem auto auto auto minmax(16rem, 1fr);
 }
 
 .corsi-indice li {
@@ -251,7 +249,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   overflow: hidden;
 }
 
-.corsi-stile-foto img {
+.corsi-stile-foto > img:not(.corsi-stile-figura) {
   display: block;
   width: 100%;
   height: 100%;
@@ -277,15 +275,16 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   text-shadow: 0 1px 12px rgb(var(--nero-rgb) / .45);
 }
 
-/* Figura nella prima riga libera: rimane separata da titoli, testo e link,
-   anche quando il contenuto cresce. Gli sfondi esistenti restano intatti. */
-.corsi-stile-figura {
-  grid-row: 1;
-  align-self: end;
-  width: 5rem;
-  height: 7.5rem;
+/* La ballerina fa parte della composizione di sfondo, nell'angolo inferiore
+   destro. Non occupa una riga del contenuto e non intercetta i clic. */
+.corsi-stile-foto > .corsi-stile-figura {
+  position: absolute;
+  right: 0;
+  bottom: -.5rem;
+  display: block;
+  width: 11rem;
+  height: 16.5rem;
   object-fit: contain;
-  margin-bottom: 1rem;
   pointer-events: none;
   user-select: none;
 }
@@ -350,7 +349,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .corsi-stile:hover .corsi-stile-foto img {
+  .corsi-stile:hover .corsi-stile-foto > img:not(.corsi-stile-figura) {
     transform: scale(1.05);
   }
 
@@ -391,10 +390,6 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 
 /* Tablet: due box per riga, un po' più bassi */
 @media (max-width: 1024px) {
-  .corsi-indice {
-    --corsi-spazio: 5rem;
-  }
-
   .corsi-stile {
     padding: 2.5rem 1.5rem;
   }
@@ -424,17 +419,11 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
     flex-direction: column;
     align-items: center;
     grid-row: auto;
-    padding: 2.25rem 1.5rem;
+    padding: 2.25rem 1.5rem 17rem;
   }
 
   .corsi-stile-desc {
     margin: .5rem 0 1.25rem;
-  }
-
-  .corsi-stile-figura {
-    flex: none;
-    align-self: center;
-    margin-bottom: 1.25rem;
   }
 
   .corsi-cta {

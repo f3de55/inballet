@@ -336,13 +336,22 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   text-align: center;
 }
 
-/* Tablet e desktop: figura in assoluto in alto, dietro al titolo;
-   non occupa spazio nel flusso e le card restano compatte. */
+/* Tablet e desktop: la figura esce oltre il bordo alto, passa davanti
+   alla cornice e dietro al titolo. Solo lo sfondo viene ritagliato. */
 @media (min-width: 601px) {
+  .corsi-indice {
+    row-gap: 5rem;
+  }
+
   .corsi-stile--grafica {
     background: var(--bg-soft);
     color: var(--dark-navy);
     padding-block: 1.25rem;
+    overflow: visible;
+  }
+
+  .corsi-stile--grafica .corsi-stile-foto {
+    border-radius: inherit;
   }
 
   .corsi-stile--grafica .corsi-stile-foto::after {
@@ -369,12 +378,12 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 
   .corsi-stile-figura {
     position: absolute;
-    top: 0;
+    top: -4rem;
     left: 50%;
     z-index: 0;
     display: block;
-    width: 8rem;
-    height: 9rem;
+    width: 9rem;
+    height: 11rem;
     object-fit: contain;
     transform: translateX(-50%);
     pointer-events: none;

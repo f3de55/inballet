@@ -67,6 +67,12 @@
   user-select: none;
 }
 
+.info-illustrazione--digitale {
+  top: -4rem;
+  width: 13rem;
+  height: 8rem;
+}
+
 .info-titolo,
 .info-corpo {
   position: relative;
@@ -288,7 +294,7 @@ a.info-valore:hover {
   }
 }
 
-/* Su telefono resta il layout compatto, come nelle card corsi della home. */
+/* Mobile: un solo sfondo composto per box, come nelle card corsi della home. */
 @media (max-width: 600px) {
   .info {
     margin-top: 0;
@@ -297,6 +303,29 @@ a.info-valore:hover {
 
   .info-illustrazione {
     display: none;
+  }
+
+  .info-blocco,
+  .info-blocco:first-child,
+  .info-blocco:last-child {
+    background: linear-gradient(rgb(var(--scuro-rgb) / .6), rgb(var(--scuro-rgb) / .6)), var(--info-sfondo-mobile) center / cover no-repeat;
+    color: var(--white);
+  }
+
+  .info .info-blocco :is(.info-titolo, .info-valore, .info-icona, .sede-tag, .sede-indirizzo, .orari-status, .orario-day, .orario-time, .link-cta, .link-cta i) {
+    color: var(--white);
+  }
+
+  .info .info-blocco .orario-item.oggi :is(.orario-day, .orario-time) {
+    color: var(--primary-blue);
+  }
+
+  .info-blocco .link-cta {
+    border-color: currentColor;
+  }
+
+  .info-blocco a.info-valore {
+    background-image: linear-gradient(currentColor, currentColor);
   }
 
   .info-titolo {

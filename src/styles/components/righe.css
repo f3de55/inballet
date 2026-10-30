@@ -37,7 +37,7 @@
 
 .riga-icona {
   /* Colonna dell'icona larga abbastanza per l'icona più larga: tutti i titoli partono dalla stessa x */
-  flex: 0 0 2.25rem;
+  flex: 0 0 1.75rem;
   font-size: var(--body-size);
   color: var(--primary-blue-dark);
 }

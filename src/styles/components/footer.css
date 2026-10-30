@@ -291,6 +291,11 @@
     border-bottom: 1px solid var(--velo-chiaro);
   }
 
+  /* Contatti è la prima voce della fisarmonica (su desktop e tablet resta l'ultima colonna) */
+  .footer-contatti {
+    order: -1;
+  }
+
   .footer-col summary {
     display: flex;
     justify-content: space-between;

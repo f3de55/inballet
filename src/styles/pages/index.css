@@ -209,8 +209,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   padding: 0;
 }
 
-/* Tutto il blocco di testo è centrato nei due assi, con altezza uniforme
-   per le quattro card. Lo sfondo rimane un'unica immagine composta. */
+/* Il contenuto è centrato nei due assi e le card di ogni riga hanno pari altezza. */
 .corsi-indice li {
   display: flex;
 }
@@ -242,12 +241,21 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   overflow: hidden;
 }
 
-.corsi-stile-foto > img {
+.corsi-stile-foto img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform .6s ease;
+}
+
+.corsi-stile-foto picture {
+  display: contents;
+}
+
+/* Su mobile restano la singola composizione di sfondo e il layout compatto. */
+.corsi-stile-figura {
+  display: none;
 }
 
 /* Velo uniforme: il testo è centrato su tutta la foto */
@@ -303,7 +311,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .corsi-stile:hover .corsi-stile-foto > img {
+  .corsi-stile:hover .corsi-stile-foto img {
     transform: scale(1.05);
   }
 
@@ -328,7 +336,53 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   text-align: center;
 }
 
-/* Desktop: i quattro stili in una sola riga, larghi quanto tutta la sezione */
+/* Tablet e desktop: figura separata sotto il titolo, sfondo originale chiaro. */
+@media (min-width: 601px) {
+  .corsi-stile--grafica {
+    background: var(--bg-soft);
+    color: var(--dark-navy);
+    padding-block: 1.25rem;
+  }
+
+  .corsi-stile--grafica .corsi-stile-foto::after {
+    display: none;
+  }
+
+  .corsi-stile--grafica .corsi-stile-testo {
+    text-shadow: none;
+  }
+
+  .corsi-stile--grafica .corsi-stile-nome {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2lh;
+  }
+
+  .corsi-stile-figura {
+    display: block;
+    flex: none;
+    width: 8rem;
+    height: 9rem;
+    object-fit: contain;
+    margin-top: .5rem;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .corsi-stile--grafica .corsi-stile-desc {
+    color: var(--text-body);
+  }
+
+  .corsi-stile--grafica .corsi-stile-link,
+  .corsi-stile--grafica:hover .corsi-stile-link,
+  .corsi-stile--grafica .corsi-stile-link i,
+  .corsi-stile--grafica:hover .corsi-stile-link i {
+    color: var(--dark-navy);
+    border-color: var(--primary-blue-dark);
+  }
+}
+
 @media (min-width: 1025px) {
   .corsi-indice {
     grid-template-columns: repeat(4, minmax(0, 1fr));

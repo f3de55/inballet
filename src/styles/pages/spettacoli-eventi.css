@@ -842,13 +842,22 @@ html:has(dialog[open]) {
     align-items: flex-start;
   }
 
+  .evento-azioni-calendario {
+    width: 100%;
+  }
+
+  /* Pulsanti Google Calendar e Apple / Outlook: testo più piccolo e a capo se serve, affiancati solo se ci stanno */
   .evento-azioni-btn {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    width: 100%;
   }
 
   .evento-azione {
-    padding: 0 .75rem;
+    padding: .5rem .75rem;
+    font-size: var(--text-xs);
+    line-height: 1.2;
+    text-align: center;
   }
 
   .locandina-dialog {

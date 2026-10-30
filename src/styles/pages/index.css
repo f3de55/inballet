@@ -395,8 +395,9 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
     gap: 1rem;
   }
 
+  /* Altezza naturale: nessuno spazio minimo sopra e sotto il testo, il box è alto quanto il suo contenuto */
   .corsi-indice {
-    --corsi-spazio: 3rem;
+    --corsi-spazio: 0rem;
   }
 
   .corsi-stile {

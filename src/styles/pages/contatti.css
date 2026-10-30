@@ -295,7 +295,7 @@ a.info-valore:hover {
 }
 
 /* Mobile: illustrazioni oblique che emergono dall'angolo in basso a destra;
-   un velo bianco sfumato resta fra le immagini e i testi. */
+   il velo sfumato riprende il colore del box fra le immagini e i testi. */
 @media (max-width: 600px) {
   .info {
     margin-top: 0;
@@ -303,7 +303,13 @@ a.info-valore:hover {
   }
 
   .info-blocco {
+    --info-colore-velo: var(--white);
     overflow: hidden;
+  }
+
+  .info-blocco:first-child,
+  .info-blocco:last-child {
+    --info-colore-velo: var(--bg-soft);
   }
 
   .info-illustrazione {
@@ -324,7 +330,7 @@ a.info-valore:hover {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(115deg, rgb(var(--bianco-rgb) / .96) 0%, rgb(var(--bianco-rgb) / .94) 45%, rgb(var(--bianco-rgb) / .86) 72%, rgb(var(--bianco-rgb) / .78) 100%);
+    background: linear-gradient(115deg, color-mix(in srgb, var(--info-colore-velo) 96%, transparent) 0%, color-mix(in srgb, var(--info-colore-velo) 94%, transparent) 45%, color-mix(in srgb, var(--info-colore-velo) 86%, transparent) 72%, color-mix(in srgb, var(--info-colore-velo) 78%, transparent) 100%);
     pointer-events: none;
   }
 

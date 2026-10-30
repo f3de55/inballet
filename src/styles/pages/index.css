@@ -649,19 +649,29 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
     order: 1;
   }
 
-  /* Frecce e pallini sopra la recensione: restano fermi senza riservare
-  l'altezza della recensione più lunga (che su schermi stretti lascia un buco) */
+  /* Recensione, firma e frecce formano un solo riquadro: le frecce stanno in fondo al riquadro, sotto la
+     recensione che cambiano, separate da un filetto, così è chiaro a quale recensione appartengono */
   .recensioni-carousel {
     order: 3;
     display: flex;
     flex-direction: column;
     margin-top: .5rem;
+    padding: 1.5rem 1.25rem 1.25rem;
+    border: 1px solid var(--linea);
+    border-radius: var(--radius-card);
+    background: var(--bg-soft);
+  }
+
+  /* L'iniziale su fondo bianco: il riquadro è già azzurrino */
+  .recensioni-carousel .author-avatar {
+    background: var(--white);
   }
 
   .recensioni-controlli {
-    order: -1;
-    margin: 0 0 1.5rem;
-    padding-left: 0;
+    justify-content: space-between;
+    margin: 1.5rem 0 0;
+    padding: 1.25rem 0 0;
+    border-top: 1px solid var(--linea);
   }
 
   .testimonials-track {

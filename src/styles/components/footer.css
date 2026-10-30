@@ -42,7 +42,7 @@
 
 .footer-main {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 4.4fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 5.4fr);
   gap: 2.5rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -94,8 +94,8 @@
 /* ---------- Colonne ---------- */
 .footer-nav {
   display: grid;
-  /* Colonne larghe quanto le loro voci: meno link spezzati a capo */
-  grid-template-columns: repeat(4, auto);
+  /* Colonne larghe quanto le loro voci: meno link spezzati a capo (quattro della mappa + Contatti) */
+  grid-template-columns: repeat(5, auto);
   justify-content: space-between;
   gap: 1.5rem;
 }
@@ -171,12 +171,23 @@
   padding: .2rem 0;
 }
 
+/* «Orari e contatti»: niente sottolineatura (si confonderebbe con i filetti delle altre voci), c'è la freccia */
 .footer-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
   min-height: 24px;
   padding: .2rem 0;
   margin-top: 1.25rem;
-  border-bottom: 1px solid rgb(var(--bianco-rgb) / .35);
+}
+
+.footer-link i {
+  font-size: var(--icona-in-testo);
+  transition: transform .3s ease;
+}
+
+.footer-link:hover i {
+  transform: translateX(4px);
 }
 
 /* ---------- Barra finale ---------- */
@@ -265,17 +276,11 @@
     padding: 0 1.5rem 2rem;
   }
 
-  .footer-brand,
-  .footer-contatti {
+  .footer-brand {
     grid-column: auto;
   }
 
-  .footer-contatti {
-    order: 1;
-  }
-
   .footer-nav {
-    order: 2;
     grid-row: auto;
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
@@ -316,7 +321,21 @@
   }
 
   .footer-col ul {
-    padding: .25rem 0 1.25rem;
+    padding: .25rem 0 0;
+  }
+
+  /* Contatti: i due elenchi e il link formano un solo blocco, con lo spazio finale della fisarmonica */
+  .footer-col .footer-sedi {
+    margin-top: 0;
+    padding-top: 1.25rem;
+  }
+
+  .footer-col .footer-link {
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-col > ul:last-child {
+    padding-bottom: 1.25rem;
   }
 
   /* La fisarmonica chiude già con un filetto: niente secondo filetto */

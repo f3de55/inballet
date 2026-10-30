@@ -45,24 +45,25 @@ const colonne = [
         </ul>
       </details>
     ))}
+    {/* Contatti: una colonna come le altre (aperta su desktop e tablet, a fisarmonica chiusa su mobile) */}
+    <details class="footer-col footer-contatti" open>
+      <summary><h2 class="footer-titolo titoletto">Contatti</h2></summary>
+      <ul>
+        <li><a href={scuola.telefonoHref}>{scuola.telefono}</a></li>
+        <li><a href={`mailto:${scuola.email}`}>{scuola.email}</a></li>
+      </ul>
+      <ul class="footer-sedi">
+        {sedi.map((s) => (
+          <li>
+            <p>{s.citta}</p>
+            <a href={s.maps} target="_blank" rel="noopener">{s.via}</a>
+          </li>
+        ))}
+      </ul>
+      <a href="/contatti" class="footer-link">Orari e contatti <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+    </details>
   </nav>
 
-  <div class="footer-contatti">
-    <h2 class="footer-titolo titoletto">Contatti</h2>
-    <ul>
-      <li><a href={scuola.telefonoHref}>{scuola.telefono}</a></li>
-      <li><a href={`mailto:${scuola.email}`}>{scuola.email}</a></li>
-    </ul>
-    <ul class="footer-sedi">
-      {sedi.map((s) => (
-        <li>
-          <p>{s.citta}</p>
-          <a href={s.maps} target="_blank" rel="noopener">{s.via}</a>
-        </li>
-      ))}
-    </ul>
-    <a href="/contatti" class="footer-link">Orari e contatti</a>
-  </div>
 </div>
 
 <div class="footer-bottom">

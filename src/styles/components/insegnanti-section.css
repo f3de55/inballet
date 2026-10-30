@@ -108,7 +108,7 @@
   margin-top: 1rem;
   padding: 0 0 .4rem;
   border: none;
-  border-bottom: 2px solid var(--primary-blue);
+  border-bottom: 2px solid currentColor;
   background: none;
   font-family: inherit;
   color: var(--white);

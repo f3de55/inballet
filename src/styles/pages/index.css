@@ -402,7 +402,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   .corsi-stile--grafica .corsi-stile-link i,
   .corsi-stile--grafica:hover .corsi-stile-link i {
     color: var(--dark-navy);
-    border-color: var(--primary-blue-dark);
+    border-color: currentColor;
   }
 }
 

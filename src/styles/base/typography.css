@@ -96,7 +96,7 @@ dialog h2 {
 
 /* Testo di apertura sotto il titolo delle hero (home e pagine interne) */
 .hero-lead {
-  font-size: var(--lead-size);
+  font-size: var(--hero-lead-size);
   font-weight: var(--lead-weight);
   line-height: var(--lead-lh);
   color: rgb(var(--bianco-rgb) / .88);

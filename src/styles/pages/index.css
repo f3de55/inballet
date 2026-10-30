@@ -176,7 +176,7 @@ davvero andando: niente riquadro nero mentre carica */
 
 .corsi-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: var(--spazio-intestazione);
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
@@ -705,7 +705,7 @@ l'altra (il gap da 1px sul fondo chiaro disegna le linee, come nei loghi dei sos
 
 .oltre-layout {
   max-width: 1200px;
-  margin: 3.5rem auto 0;
+  margin: var(--spazio-intestazione) auto 0;
   padding: 0 2rem;
 }
 
@@ -805,10 +805,6 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
 /* Tablet: due colonne */
 @media (max-width: 900px) {
-  .oltre-layout {
-    margin-top: 2.5rem;
-  }
-
   .oltre-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -828,10 +824,6 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
 /* Mobile: una voce per riga (icona a sinistra; nome, frase e «Scopri di più» a destra) */
 @media (max-width: 600px) {
-  .oltre-layout {
-    margin-top: 2rem;
-  }
-
   .oltre-lista {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -976,10 +968,6 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
   .hero-lead {
     margin-bottom: 1.5rem;
-  }
-
-  .corsi-header {
-    margin-bottom: 3rem;
   }
 
 }

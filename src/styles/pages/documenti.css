@@ -6,7 +6,7 @@
 
 .documenti-lista {
   list-style: none;
-  margin: 3.5rem 0 0;
+  margin: var(--spazio-intestazione) 0 0;
   padding: 0;
   border-top: 1px solid var(--linea);
 }
@@ -72,12 +72,6 @@
 }
 
 /* ---------- Tablet ---------- */
-@media (max-width: 900px) {
-  .documenti-lista {
-    margin-top: 2.5rem;
-  }
-}
-
 /* ---------- Mobile ---------- */
 @media (max-width: 600px) {
   /* Documento: icona e testo, sotto peso e "Scarica" */

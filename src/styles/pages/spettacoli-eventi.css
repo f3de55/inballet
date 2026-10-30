@@ -14,7 +14,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 3rem;
-  margin: 3.5rem 0 0;
+  margin: var(--spazio-intestazione) 0 0;
   padding: 0;
 }
 
@@ -22,7 +22,6 @@
   .cura-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2.5rem 2rem;
-    margin-top: 2.5rem;
   }
 }
 
@@ -43,7 +42,7 @@
   justify-content: space-between;
   align-items: flex-end;
   gap: 2rem 4rem;
-  margin-bottom: 3rem;
+  margin-bottom: var(--spazio-intestazione);
 }
 
 .eventi-intro {
@@ -874,7 +873,6 @@ html:has(dialog[open]) {
   .eventi-header {
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 2.5rem;
   }
 
   /* Calendario: niente titoli nelle celle, solo un punto; il tocco apre il primo evento del giorno */
@@ -909,7 +907,6 @@ html:has(dialog[open]) {
 @media (max-width: 600px) {
   .eventi-header {
     gap: 1.75rem;
-    margin-bottom: 2rem;
   }
 
   .vista-switch {

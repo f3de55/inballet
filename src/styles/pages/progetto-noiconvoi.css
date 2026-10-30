@@ -10,7 +10,7 @@
   list-style: none;
   display: grid;
   gap: 3rem;
-  margin: 3.5rem 0 0;
+  margin: var(--spazio-intestazione) 0 0;
   padding: 0;
 }
 
@@ -28,14 +28,6 @@
   /* Informazioni: griglia 2x2 */
   .info-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-}
-
-@media (max-width: 900px) {
-  .fasi-lista,
-  .info-lista {
-    margin-top: 2.5rem;
   }
 
 }

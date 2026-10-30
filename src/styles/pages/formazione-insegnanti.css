@@ -4,7 +4,7 @@
   list-style: none;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 4.5rem 0 0;
+  margin: var(--spazio-intestazione) 0 0;
   padding: 0;
   border-block: 1px solid var(--linea);
 }
@@ -30,7 +30,7 @@
 .enti-lista {
   list-style: none;
   max-width: 48rem;
-  margin: 3.5rem auto 0;
+  margin: var(--spazio-intestazione) auto 0;
   padding: 0;
 }
 
@@ -81,10 +81,6 @@
 
 /* ---------- Tablet ---------- */
 @media (max-width: 900px) {
-  .breve-lista {
-    margin-top: 3.5rem;
-  }
-
   .dato {
     padding: 1.75rem 1rem;
   }
@@ -92,7 +88,6 @@
   /* Diploma: enti a tutta larghezza, allineati all'intestazione */
   .enti-lista {
     max-width: none;
-    margin-top: 2.5rem;
   }
 
 }
@@ -102,7 +97,6 @@
   /* In breve: un dato sotto l'altro, divisi da filetti orizzontali */
   .breve-lista {
     grid-template-columns: minmax(0, 1fr);
-    margin-top: 3rem;
   }
 
   .dato {

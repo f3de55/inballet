@@ -12,7 +12,7 @@
 
 .simili-wrapper {
   max-width: 1200px;
-  margin: 3.5rem auto 0;
+  margin: var(--spazio-intestazione) auto 0;
   padding: 0 2rem;
 }
 
@@ -103,10 +103,6 @@
 
 /* Tablet: due colonne */
 @media (max-width: 900px) {
-  .simili-wrapper {
-    margin-top: 2.5rem;
-  }
-
   .simili-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -131,10 +127,6 @@
 
 /* Mobile: una voce per riga (icona a sinistra; nome, età e «Scopri il corso» a destra) */
 @media (max-width: 600px) {
-  .simili-wrapper {
-    margin-top: 2rem;
-  }
-
   .simili-lista:has(> li:last-child:nth-child(odd))::after {
     content: none;
   }

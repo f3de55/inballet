@@ -200,7 +200,7 @@
 .numeri-lista {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 3.5rem 0 0;
+  margin: calc(var(--spazio-intestazione) - .5rem) 0 0;
   text-align: center;
 }
 
@@ -244,8 +244,9 @@
   .numeri-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1px;
-    margin-top: 2.5rem;
+    margin-top: var(--spazio-intestazione);
     background: var(--linea-su-scuro);
+    border-block: 1px solid var(--linea-su-scuro);
   }
 
   .numero,
@@ -292,7 +293,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 3rem;
   max-width: 62rem;
-  margin: 3rem auto 0;
+  margin: var(--spazio-intestazione) auto 0;
   padding: 0;
 }
 
@@ -330,7 +331,6 @@
 @media (max-width: 700px) {
   .sedi {
     grid-template-columns: minmax(0, 1fr);
-    margin-top: 2rem;
   }
 
   .sede {

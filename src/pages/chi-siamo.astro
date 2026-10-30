@@ -123,7 +123,7 @@ const numeri = [
             </div>
         </section>
 
-        <!-- InBallet in Numeri: intestazione e quattro numeri in fila separati da filetti verticali -->
+        <!-- InBallet in Numeri: intestazione, pulsante e quattro numeri in fila separati da filetti verticali -->
         <section class="numeri-section sezione-scura" aria-labelledby="numeri-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">In sintesi</p>
@@ -131,6 +131,12 @@ const numeri = [
                 <p class="intro-sezione">Dai <strong>primi passi a 3 anni</strong> fino all'età adulta.</p>
             </div>
             <div class="container">
+                <div class="numeri-cta">
+                    <a href="/corsi" class="btn-secondary">
+                        Scopri i corsi
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
                 <dl class="numeri-lista">
                     {numeri.map((n) => (
                         <div class="numero">
@@ -140,12 +146,6 @@ const numeri = [
                         </div>
                     ))}
                 </dl>
-                <div class="numeri-cta">
-                    <a href="/corsi" class="btn-secondary">
-                        Scopri i corsi
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
             </div>
         </section>
 

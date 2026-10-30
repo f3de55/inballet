@@ -125,7 +125,7 @@
 }
 
 .corso-metodo-header {
-  margin-bottom: 3.5rem;
+  margin-bottom: var(--spazio-intestazione);
   text-align: center;
 }
 

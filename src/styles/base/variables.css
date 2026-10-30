@@ -162,6 +162,9 @@
 
   /* ---------- Struttura ---------- */
   --section-y: clamp(3.75rem, 3rem + 3.3333vw, 6rem);
+  /* Distanza fra l'intestazione di una sezione (etichetta, titolo, testo) e il suo contenuto (elenco, griglia, foto):
+     la stessa in tutte le pagine, misurata fino al primo elemento visibile (filetto, bordo, testo) */
+  --spazio-intestazione: 3.5rem;
   /* Altezza della navbar fissa: più bassa quando compare il menu hamburger */
   --header-h: 80px;
   /* Altezza della navbar dopo lo scroll (classe is-scrolled) */

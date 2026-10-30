@@ -19,21 +19,12 @@
 }
 
 .dato-valore {
-  display: block;
-  font-size: var(--numero-medio-size);
-  font-weight: var(--font-bold);
-  line-height: 1.1;
+  margin: 0;
   color: var(--primary-blue-dark);
 }
 
-.dato-unita {
-  font-size: var(--lead-size);
-  font-weight: var(--font-normal);
-}
-
 .dato-testo {
-  display: block;
-  margin-top: .75rem;
+  margin: .75rem 0 0;
 }
 
 /* Diploma: enti in una colonna centrata sotto l'intestazione */

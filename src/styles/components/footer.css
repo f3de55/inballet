@@ -339,6 +339,40 @@
     margin-bottom: 1.25rem;
   }
 
+  /* Voci cliccabili a tutta larghezza: l'intera riga (alta almeno 44px) è il link, non solo il testo.
+     Niente spazio tra le righe: l'altezza dell'area di tocco fa da distanza */
+  .footer-col ul {
+    gap: 0;
+  }
+
+  .footer-col ul a,
+  .footer-col .footer-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 44px;
+    padding-block: .35rem;
+  }
+
+  .footer-col .footer-link {
+    margin-top: .5rem;
+  }
+
+  /* Contatti: nome della sede sopra, indirizzo a tutta larghezza sotto */
+  .footer-col .footer-sedi li {
+    gap: 0;
+  }
+
+  .footer-col .footer-sedi p {
+    padding-top: .5rem;
+  }
+
+  .footer-col .footer-sedi a {
+    display: flex;
+    min-height: 44px;
+    padding-block: .35rem;
+  }
+
   .footer-col > ul:last-child {
     padding-bottom: 1.25rem;
   }

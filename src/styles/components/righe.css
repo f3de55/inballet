@@ -49,10 +49,8 @@
 }
 
 .riga-nome {
-  /* Titolo della riga: livello h4 (un gradino sopra il testo corrente) */
-  font-size: var(--h4-size);
+  /* Nome della riga: stessa misura del paragrafo, distinto solo dal grassetto */
   font-weight: var(--font-bold);
-  line-height: var(--h4-lh);
   transition: color .3s ease;
 }
 

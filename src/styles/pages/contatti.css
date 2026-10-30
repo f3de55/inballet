@@ -46,18 +46,9 @@
   background: var(--bg-soft);
 }
 
-/* Etichetta del box con icona */
+/* Titolo del box: solo testo, niente icona */
 .info-titolo {
-  display: flex;
-  align-items: flex-start;
-  gap: .25rem 1.5rem;
   margin: 0 0 1.75rem;
-}
-
-.info-titolo i {
-  margin-top: .3em;
-  font-size: var(--icona-in-testo);
-  color: var(--primary-blue-dark);
 }
 
 .info-righe {

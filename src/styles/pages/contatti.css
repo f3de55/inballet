@@ -294,7 +294,8 @@ a.info-valore:hover {
   }
 }
 
-/* Mobile: un solo sfondo composto per box, come nelle card corsi della home. */
+/* Mobile: box chiari e illustrazione separata accanto al titolo,
+   in uno spazio riservato che non si sovrappone ai dati. */
 @media (max-width: 600px) {
   .info {
     margin-top: 0;
@@ -302,33 +303,22 @@ a.info-valore:hover {
   }
 
   .info-illustrazione {
-    display: none;
-  }
-
-  .info-blocco,
-  .info-blocco:first-child,
-  .info-blocco:last-child {
-    background: linear-gradient(rgb(var(--scuro-rgb) / .6), rgb(var(--scuro-rgb) / .6)), var(--info-sfondo-mobile) center / cover no-repeat;
-    color: var(--white);
-  }
-
-  .info .info-blocco :is(.info-titolo, .info-valore, .info-icona, .sede-tag, .sede-indirizzo, .orari-status, .orario-day, .orario-time, .link-cta, .link-cta i) {
-    color: var(--white);
-  }
-
-  .info .info-blocco .orario-item.oggi :is(.orario-day, .orario-time) {
-    color: var(--primary-blue);
-  }
-
-  .info-blocco .link-cta {
-    border-color: currentColor;
-  }
-
-  .info-blocco a.info-valore {
-    background-image: linear-gradient(currentColor, currentColor);
+    top: 2rem;
+    right: 1.5rem;
+    left: auto;
+    width: 6rem;
+    height: 5.5rem;
+    transform: none;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .info-titolo {
+    display: flex;
+    align-items: center;
+    min-height: 5.5rem;
+    margin-bottom: 1.25rem;
+    padding-right: 7rem;
     text-align: left;
   }
 }

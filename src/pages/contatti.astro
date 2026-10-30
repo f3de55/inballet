@@ -4,7 +4,6 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import Galleria from '../components/Galleria.astro';
 import { heroPagina } from '../lib/hero-pagine';
-import { webp } from '../lib/images';
 import { categorieCorsi, scuola, sedi, orari } from '../data/scuola';
 import '../styles/pages/contatti.css';
 
@@ -27,11 +26,6 @@ const fondamenti = [
   { icona: 'fa-masks-theater', titolo: 'In teatro ogni anno', testo: 'Lo spettacolo degli allievi', href: '/spettacoli-eventi' },
   { icona: 'fa-graduation-cap', titolo: 'Ente formativo', testo: 'Titolo CSEN e CONI', href: '/formazione-insegnanti' },
 ];
-
-// Su mobile ogni box usa un'unica immagine con illustrazione già integrata.
-const fondiMobile = Object.fromEntries(await Promise.all(['recapiti', 'sedi', 'orari'].map(async (id) => [
-  id, { style: `--info-sfondo-mobile:url('${await webp(`grafica-contatti/${id}-mobile.webp`, 800)}');` },
-])));
 
 const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno) => {
   const o = orari.find((x) => x.giorni.some((d) => ABBR[d] === giorno));
@@ -73,7 +67,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
             </header>
 
             <div class="info">
-                <div class="info-blocco" style={fondiMobile.recapiti.style}>
+                <div class="info-blocco">
                     <Img class="info-illustrazione" src="grafica-contatti/recapiti-moderno.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480]} sizes="176px" />
                     <h3 class="info-titolo">Recapiti</h3>
                     <div class="info-corpo">
@@ -102,7 +96,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                     </div>
                 </div>
 
-                <div class="info-blocco" style={fondiMobile.sedi.style}>
+                <div class="info-blocco">
                     <Img class="info-illustrazione" src="grafica-contatti/sedi.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480]} sizes="176px" />
                     <h3 class="info-titolo">Le nostre sedi</h3>
                     <div class="info-corpo">
@@ -123,7 +117,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                     </div>
                 </div>
 
-                <div class="info-blocco" style={fondiMobile.orari.style}>
+                <div class="info-blocco">
                     <Img class="info-illustrazione info-illustrazione--digitale" src="grafica-contatti/orari-digitale.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480]} sizes="176px" />
                     <h3 class="info-titolo">Orari segreteria</h3>
                     <div class="info-corpo">

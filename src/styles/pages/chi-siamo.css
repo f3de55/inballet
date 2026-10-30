@@ -284,25 +284,24 @@
   position: relative;
 }
 
-/* Una riga per sede: ingresso, indirizzo e mappa sempre visibili. */
+/* Le due sedi sulla stessa riga: foto grande, poi nome, indirizzo e mappa, senza card.
+   Le righe (foto, testo, link) sono condivise: foto, titoli e link stanno alla stessa quota. */
 .sedi {
   list-style: none;
-  max-width: 54rem;
-  margin: 2.5rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 3rem;
+  max-width: 62rem;
+  margin: 3rem auto 0;
   padding: 0;
 }
 
 .sede {
   display: grid;
-  grid-template-columns: 13rem minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 1.5rem 2rem;
-}
-
-.sede + .sede {
-  margin-top: 1.75rem;
-  padding-top: 1.75rem;
-  border-top: 1px solid var(--linea);
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  justify-items: start;
 }
 
 .sede .sede-foto {
@@ -315,6 +314,7 @@
 
 .sede-testo {
   min-width: 0;
+  padding-top: 1.5rem;
 }
 
 .sede-nome {
@@ -322,39 +322,30 @@
 }
 
 .sede-cta {
-  justify-self: start;
   min-height: 44px;
+  margin-top: .5rem;
 }
 
-@media (max-width: 900px) {
-  .sede {
-    grid-template-columns: 13rem minmax(0, 1fr);
-    column-gap: 1.5rem;
-  }
-
-  .sede .sede-foto {
-    grid-row: span 2;
-  }
-
-  .sede-cta {
-    grid-column: 2;
-  }
-}
-
-@media (max-width: 600px) {
+/* Tablet stretto e mobile: una sede sotto l'altra */
+@media (max-width: 700px) {
   .sedi {
+    grid-template-columns: minmax(0, 1fr);
     margin-top: 2rem;
   }
 
   .sede {
-    grid-template-columns: 6rem minmax(0, 1fr);
-    align-items: start;
-    gap: .75rem 1rem;
+    grid-row: auto;
+    grid-template-rows: none;
   }
 
-  .sede .sede-foto {
-    grid-row: auto;
-    aspect-ratio: 1;
+  .sede + .sede {
+    margin-top: 2.5rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .sedi {
+    column-gap: 2rem;
   }
 }
 

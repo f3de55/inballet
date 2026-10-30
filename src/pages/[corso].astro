@@ -12,6 +12,7 @@ import CorsiSimili from '../components/CorsiSimili.astro';
 import { getImage } from 'astro:assets';
 import { getAsset, sfondo, sfondoCta } from '../lib/images';
 import { schemaCorso } from '../lib/schema';
+import '../styles/pages/corso.css';
 
 export const getStaticPaths = (async () => {
   const corsi = await getCollection('corsi');
@@ -42,16 +43,16 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
     ogImage={ogImage}
 >
     <Fragment slot="head">
-        {/* Fino a 768px le hero interne usano lo sfondo illustrato comune (global.css): si precarica quello */}
-        <link rel="preload" as="image" href={hero.preload[0].href} media={hero.preload[0].media} fetchpriority="high">
-        <link rel="preload" as="image" href={hero.preload[1].href} media="(min-width: 769px) and (max-width: 900px)" fetchpriority="high">
+        {/* Fino a 768px le hero interne usano lo sfondo illustrato comune (styles/components/hero.css): si precarica quello */}
+        <link rel="preload" as="image" href={hero.preload[0].href} media="(min-width: 1025px)" fetchpriority="high">
+        <link rel="preload" as="image" href={hero.preload[1].href} media="(min-width: 769px) and (max-width: 1024px)" fetchpriority="high">
         <link rel="preload" as="image" href="/assets/images/hero-mobile.webp" media="(max-width: 768px)" fetchpriority="high">
         <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     </Fragment>
 
     <!-- Hero Corso -->
-    <section class="chisiamo-hero">
-        <div class="chisiamo-hero-image" style={hero.style}></div>
+    <section class="chisiamo-hero corso-hero">
+        <div class="chisiamo-hero-image corso-hero-image" style={hero.style}></div>
         <div class="chisiamo-hero-overlay"></div>
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
@@ -78,7 +79,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                                 <i class="fas fa-child" aria-hidden="true"></i>
                             </div>
                             <div class="corso-meta-info">
-                                <span class="corso-meta-label titoletto">Età</span>
+                                <p class="corso-meta-label titoletto">Età</p>
                                 <strong id="corsoEta">{data.eta}</strong>
                             </div>
                         </div>
@@ -87,7 +88,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                                 <i class="fas fa-calendar-alt" aria-hidden="true"></i>
                             </div>
                             <div class="corso-meta-info">
-                                <span class="corso-meta-label titoletto">Frequenza</span>
+                                <p class="corso-meta-label titoletto">Frequenza</p>
                                 <strong id="corsoFrequenza">{data.frequenza}</strong>
                             </div>
                         </div>
@@ -105,7 +106,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
     <section class="corso-metodo-section sezione-scura">
         <div class="corso-metodo-wrapper">
             <div class="corso-metodo-header">
-                <span class="corso-metodo-label eyebrow">Come lavoriamo</span>
+                <p class="corso-metodo-label eyebrow">Come lavoriamo</p>
                 <h2 id="corsoMetodoTitolo" class="titolo-sezione" set:html={accento(data.metodoTitolo)} />
             </div>
             <div class="corso-metodo-list" id="corsoMetodoContent">
@@ -123,7 +124,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
     <section class="corso-impara-section">
         <div class="corso-impara-wrapper">
             <div class="corso-impara-header">
-                <span class="corso-impara-label eyebrow">Gli obiettivi</span>
+                <p class="corso-impara-label eyebrow">Gli obiettivi</p>
                 <h2 id="corsoImparaTitolo" class="titolo-sezione" set:html={accento(data.imparaTitolo)} />
                 <p class="corso-impara-subtitle intro-sezione">Le competenze che si sviluppano durante il percorso.</p>
             </div>
@@ -131,8 +132,8 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
             <ol class="corso-impara-list" id="corsoImparaGrid">
                 {data.impara.map((item, i) => (
                     <li>
-                        <span class="impara-num numero-medio" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                        <span class="impara-testo testo-evidenza" set:html={item} />
+                        <p class="impara-num numero-medio" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+                        <p class="impara-testo testo-evidenza" set:html={item} />
                     </li>
                 ))}
             </ol>
@@ -143,14 +144,14 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
     <CorsiSimili corso={Astro.params.corso} />
 
     <!-- CTA -->
-    <section class="corso-contatto-section sezione-scura">
-        <div class="corso-contatto-bg" style={contatto.style}></div>
-        <div class="corso-contatto-overlay"></div>
-        <div class="corso-contatto-wrapper">
-            <div class="corso-contatto-content">
-                <h2 class="titolo-sezione">Scegliamo insieme <em>il tuo corso</em></h2>
-                <p class="intro-sezione"><strong>Scrivici o chiamaci</strong>: ti aiutiamo a scegliere il gruppo e l'orario giusti per <strong>età e livello</strong>.</p>
-                <a href="/contatti" class="corso-btn-cta btn-primary">
+    <section class="cta-contatto sezione-scura">
+        <div class="cta-bg" style={contatto.style}></div>
+        <div class="cta-overlay"></div>
+        <div class="cta-wrapper">
+            <h2 class="titolo-sezione">Scegliamo insieme <em>il tuo corso</em></h2>
+            <p class="intro-sezione"><strong>Scrivici o chiamaci</strong>: ti aiutiamo a scegliere il gruppo e l'orario giusti per <strong>età e livello</strong>.</p>
+            <div class="cta-pulsanti">
+                <a href="/contatti" class="btn-primary">
                     Contattaci
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
@@ -158,313 +159,3 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         </div>
     </section>
 </Base>
-
-<style>
-.corso-intro-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-  position: relative;
-}
-
-.corso-story-layout {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.corso-story-content {
-  padding: 0;
-}
-
-.corso-section-header {
-  margin-bottom: 1.5rem;
-}
-
-.corso-section-tagline {
-  margin-bottom: 0.5rem;
-}
-
-.corso-section-title {
-  margin: 0;
-}
-
-.corso-story-text {
-  max-width: 550px;
-}
-
-.corso-story-text :global(p) {
-  font-size: var(--text-base);
-  line-height: 1.8;
-  color: var(--text-dark);
-  margin-bottom: 1.2rem;
-}
-
-.corso-story-text :global(p:last-child) {
-  margin-bottom: 0;
-}
-
-.corso-story-text :global(strong) {
-  color: var(--dark-navy);
-  font-weight: 600;
-}
-
-.corso-intro-meta {
-  display: flex;
-  gap: 1.2rem;
-  margin-top: 2rem;
-}
-
-.corso-meta-card {
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-  padding: 1.1rem 0 0;
-  border-top: 1px solid var(--linea);
-  flex: 1;
-  min-width: 180px;
-}
-
-.corso-meta-icon {
-  width: 1.75rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding-top: .15rem;
-  color: var(--primary-blue-dark);
-  font-size: var(--text-xl);
-  flex-shrink: 0;
-}
-
-.corso-meta-icon :global(i) {
-  color: inherit;
-}
-
-.corso-meta-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.corso-meta-info .corso-meta-label {
-  color: var(--text-light);
-}
-
-.corso-meta-info :global(strong) {
-  font-size: var(--text-base);
-  color: var(--dark-navy);
-  font-weight: 500;
-  line-height: 1.3;
-}
-
-.corso-story-image {
-  width: 100%;
-  max-width: 400px;
-  justify-self: center;
-}
-
-.corso-story-image :global(img) {
-  width: 100%;
-  height: 450px;
-  object-fit: cover;
-}
-
-.corso-metodo-section {
-  padding: var(--section-y) 0;
-  background: var(--dark-navy);
-  position: relative;
-}
-
-.corso-metodo-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.corso-metodo-header {
-  margin-bottom: 3.5rem;
-  text-align: center;
-}
-
-.corso-metodo-label {
-  margin-bottom: 0.5rem;
-}
-
-.corso-metodo-header :global(h2) {
-  margin: 0;
-}
-
-.corso-metodo-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem 3rem;
-}
-
-.corso-impara-section {
-  padding: var(--section-y) 0;
-  background: var(--bg-soft);
-  position: relative;
-}
-
-.corso-impara-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.corso-impara-header {
-  margin-bottom: 3.5rem;
-  text-align: center;
-}
-
-.corso-impara-label {
-  margin-bottom: 0.8rem;
-  display: block;
-}
-
-.corso-impara-header :global(h2) {
-  margin: 0 0 1rem 0;
-}
-
-.corso-impara-subtitle {
-  margin: 0;
-}
-
-/* Tre per riga: il gap da 1px sul fondo disegna i filetti solo tra le celle */
-.corso-impara-list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  background: var(--linea);
-}
-
-.corso-impara-list li {
-  display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr);
-  column-gap: 1rem;
-  align-items: center;
-  padding: 2.25rem 2rem;
-  background: var(--bg-soft);
-}
-
-/* Numero e testo sulla stessa riga, centrati sulla stessa linea: i numeri stanno tutti nella stessa colonna */
-.impara-num {
-  text-align: center;
-  color: var(--primary-blue-dark);
-  font-variant-numeric: tabular-nums;
-}
-
-/* Testo normale, grassetto solo sulle parole chiave (<strong> in corsi.json) */
-.impara-testo {
-  color: var(--text-dark);
-}
-
-/* Tablet e mobile: una colonna con titolo, foto, testo e dati del corso;
-   tutto allineato a sinistra come nel resto del sito */
-@media (max-width: 900px) {
-  .corso-story-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-
-  .corso-story-content {
-    display: contents;
-  }
-
-  .corso-section-header {
-    order: 1;
-  }
-
-  /* Spazio a sinistra e in basso per la cornice sfalsata, dentro i margini */
-  .corso-story-image {
-    order: 2;
-    width: auto;
-    max-width: none;
-    margin: 0 0 3.5rem 1.5rem;
-  }
-
-  .corso-story-image :global(img) {
-    height: auto;
-    aspect-ratio: 16 / 9;
-  }
-
-  .corso-story-text {
-    order: 3;
-    max-width: none;
-  }
-
-  .corso-intro-meta {
-    order: 4;
-  }
-
-  /* Intestazioni a sinistra, allineate ai contenuti sotto */
-  .corso-metodo-header,
-  .corso-impara-header {
-    text-align: left;
-    margin-bottom: 2rem;
-  }
-
-  .corso-metodo-list {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
-  }
-
-  .corso-impara-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .corso-impara-list li {
-    grid-template-columns: 3.5rem minmax(0, 1fr);
-    padding: 1.75rem 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .corso-intro-section,
-  .corso-metodo-section,
-  .corso-impara-section {
-    padding: 3.5rem 0;
-  }
-
-  .corso-metodo-wrapper,
-  .corso-impara-wrapper {
-    padding: 0 1.5rem;
-  }
-
-}
-
-@media (max-width: 600px) {
-  .corso-story-image {
-    margin: 0 0 2.75rem .75rem;
-  }
-
-  .corso-story-text :global(p) {
-    line-height: 1.75;
-  }
-
-  .corso-story-image :global(img) {
-    aspect-ratio: 3 / 2;
-  }
-
-  .corso-intro-meta {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-
-  /* Una riga per obiettivo, numero accanto al testo */
-  .corso-impara-list {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .corso-impara-list li {
-    grid-template-columns: 3rem minmax(0, 1fr);
-    padding: 1.25rem 0;
-  }
-}
-</style>

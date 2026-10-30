@@ -13,8 +13,9 @@
   --header-dark: #2a2a2a;
   --footer-bg: #0e0e0e;
   --bg-soft: #eef7fa;
-  --text-dark: #2c2c2c;
-  --text-light: #555;
+  /* Testo: corrente (paragrafi, liste) e attenuato (note, metadati, didascalie) */
+  --text-body: #444;
+  --text-muted: #666;
   --white: #fff;
   --black: #000;
   /* Neutri e stati: unici grigi e colori di stato del sito */
@@ -43,40 +44,89 @@
   /* Testo su fondo scuro o foto */
   --testo-su-scuro: rgb(var(--bianco-rgb) / .9);
   --testo-su-scuro-debole: rgb(var(--bianco-rgb) / .72);
+  /* Veli scuri sopra le foto di sfondo: hero delle pagine interne (desktop e mobile) e sezione contatto */
+  --velo-hero: linear-gradient(to top, rgb(15 15 15 / .92) 0%, rgb(15 15 15 / .6) 55%, rgb(15 15 15 / .4) 100%);
+  --velo-hero-mobile: linear-gradient(to top, rgb(10 10 10 / .92) 0%, rgb(10 10 10 / .6) 60%, rgb(10 10 10 / .4) 100%);
+  --velo-cta: linear-gradient(135deg, rgb(var(--navy-rgb) / .66) 0%, rgb(var(--header-rgb) / .62) 100%);
 
   /* ---------- Scala tipografica ----------
      Unica fonte delle dimensioni del testo del sito pubblico.
      Ogni gradino cresce in modo lineare tra 360px (minimo, mobile) e 1440px
      (massimo, desktop) di viewport, senza salti ai breakpoint; in rem, così
      segue lo zoom e la dimensione del testo scelti dall'utente.
-     Un ruolo = un gradino, su tutte le pagine: nessun font-size nelle media query
-     e nessun valore fisso nei componenti (le icone seguono il testo, vedi --icona-*).
-     Ruoli: 5xl H1 di ogni pagina e numeri grandi · 4xl H2 titoli di sezione ·
-     3xl titolo delle finestre modali e numeri/anni in evidenza · 2xl sottotitoli e righe in evidenza ·
-     xl H3 titoli di card e di voce, testo di apertura (lead) · base TUTTO il testo corrente
-     (intro, paragrafi, liste): 18px su mobile · md descrizioni brevi nelle card e dettagli di
-     voci · sm pulsanti, note, pill e metadati · xs voci di menu, etichette maiuscole ed eyebrow ·
-     3xs solo micro-dati in spazi stretti (calendario, footer).
+     Le pagine non scelgono mai un gradino: usano i RUOLI qui sotto (titoli, testo, etichette,
+     pulsanti). Per cambiare l'aspetto di tutto il sito basta cambiare un ruolo.
+     I gradini senza ruolo di testo servono a icone e numeri (3xl: numeri e anni in evidenza).
      Eccezione: il pannello della chat (larghezza fissa) ha una sua scala compatta in components/chatbot.css. */
   --text-5xl: clamp(2.125rem, 1.6667rem + 2.037vw, 3.5rem);      /* 34 → 56px */
   --text-4xl: clamp(1.7812rem, 1.4167rem + 1.6204vw, 2.875rem);  /* 28.5 → 46px */
   --text-3xl: clamp(1.5312rem, 1.25rem + 1.25vw, 2.375rem);      /* 24.5 → 38px */
-  --text-2xl: clamp(1.3125rem, 1.125rem + 0.8333vw, 1.875rem);   /* 21 → 30px */
+  --text-2xl: clamp(1.375rem, 1.1667rem + 0.9259vw, 2rem);       /* 22 → 32px */
   --text-xl: clamp(1.25rem, 1.125rem + 0.5556vw, 1.625rem);      /* 20 → 26px */
-  --text-md: clamp(1.0625rem, 1rem + 0.2778vw, 1.25rem);         /* 17 → 20px */
   --text-base: clamp(1.125rem, 1.0417rem + 0.3704vw, 1.375rem);  /* 18 → 22px */
-  --text-sm: clamp(0.9375rem, 0.875rem + 0.2778vw, 1.125rem);    /* 15 → 18px */
-  --text-xs: clamp(0.8125rem, 0.7708rem + 0.1852vw, 0.9375rem);  /* 13 → 15px */
-  --text-3xs: 0.8125rem;                                         /* 13px */
-
-  --leading-snug: 1.3;
+  --text-sm: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);          /* 16 → 20px */
+  --text-xs: clamp(0.875rem, 0.8125rem + 0.2778vw, 1.0625rem);    /* 14 → 17px */
 
   --font-light: 300;
   --font-normal: 400;
   --font-medium: 500;
   --font-semibold: 600;
   --font-bold: 700;
-  --font-black: 900;
+
+  /* ---------- Ruoli tipografici ----------
+     Ogni ruolo = dimensione, peso, interlinea, spaziatura, colore. base/typography.css li applica
+     ai tag (h1-h4, p, li…) e alle classi di ruolo; i componenti non li ridefiniscono.
+     Titoli: lo stesso stile in tutte le pagine; ogni livello è circa 1,25× il successivo.
+       h1 titolo della pagina · h2 titolo di sezione · h3 card, voce, sede, corso · h4 dettaglio */
+  --heading-color: var(--dark-navy);
+  --heading-weight: var(--font-bold);
+  --h1-size: var(--text-5xl);
+  --h1-lh: 1.08;
+  --h1-ls: -.02em;
+  --h2-size: var(--text-4xl);
+  --h2-lh: 1.15;
+  --h2-ls: -.02em;
+  --h3-size: var(--text-2xl);
+  --h3-lh: 1.25;
+  --h3-ls: -.01em;
+  --h4-size: var(--text-xl);
+  --h4-lh: 1.3;
+  --h4-ls: -.01em;
+  /* Testo corrente: paragrafi, liste, descrizioni (un solo stile per tutto il sito) */
+  --body-size: var(--text-base);
+  --body-weight: var(--font-normal);
+  --body-lh: 1.7;
+  --body-color: var(--text-body);
+  /* Testo piccolo: note, metadati, didascalie, età e frequenze nelle card (.testo-piccolo) */
+  --small-size: var(--text-sm);
+  --small-lh: 1.5;
+  --small-color: var(--text-muted);
+  /* Testo di apertura: sotto il titolo della hero (.hero-lead) e righe in evidenza (.testo-evidenza) */
+  --lead-size: var(--text-xl);
+  --lead-weight: var(--font-light);
+  --lead-lh: 1.55;
+  /* Etichetta maiuscola: eyebrow sopra i titoli, categorie, intestazioni di tabella (.titoletto, .eyebrow) */
+  --label-size: var(--text-xs);
+  --label-weight: var(--font-semibold);
+  --label-lh: 1.4;
+  --label-ls: 2px;
+  --label-color: var(--primary-blue-dark);
+  /* Pulsanti e link d'azione, voci di menu (maiuscolo) */
+  --ui-size: var(--text-sm);
+  --ui-weight: var(--font-semibold);
+  --ui-ls: 1px;
+  --nav-size: var(--text-xs);
+  /* Navbar rimpicciolita dopo lo scroll: voci di menu e pulsante un po' più piccoli */
+  --nav-size-scrolled: calc(var(--nav-size) * .94);
+  --ui-size-scrolled: calc(var(--ui-size) * .9);
+  /* Numeri e anni in evidenza (.numero-grande, .numero-medio) */
+  --numero-grande-size: var(--text-5xl);
+  --numero-medio-size: var(--text-3xl);
+  /* Su fondo scuro o foto */
+  --heading-color-su-scuro: var(--white);
+  --body-color-su-scuro: var(--testo-su-scuro);
+  --small-color-su-scuro: var(--testo-su-scuro-debole);
+  --label-color-su-scuro: var(--primary-blue);
 
   /* Icone: seguono il testo accanto (em) o un gradino della scala; mai pixel fissi nei componenti.
      in-testo icona accanto a una parola (pulsanti, link) · mini simbolo piccolo (spunte, frecce dei menu) ·
@@ -84,6 +134,8 @@
   --icona-in-testo: .85em;
   --icona-mini: .7em;
   --icona-punto: .5em;
+  /* Spazio tra un'icona e il testo che la accompagna (elenchi a righe, dati di contatto) */
+  --spazio-icona: 1rem;
   /* Virgolette decorative delle citazioni */
   --glifo-citazione: 5.5rem;
 
@@ -112,6 +164,9 @@
   --header-h: 80px;
   /* Altezza della navbar dopo lo scroll (classe is-scrolled) */
   --header-h-scrolled: 64px;
+  /* Hero delle pagine interne su desktop: proporzioni del banner e altezza minima (il testo ci sta sempre) */
+  --hero-rapporto: 16 / 4;
+  --hero-altezza-min: 22.5rem;
   /* Onda decorativa tra le sezioni: altezza e passo (più piccole su mobile) */
   --onda-h: 34px;
   --onda-w: 480px;
@@ -119,8 +174,8 @@
   --onda-svg-giu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28' preserveAspectRatio='none'%3E%3Cg transform='matrix(1 0 0 -1 0 28)'%3E%3Cpath fill-opacity='.55' d='M0 9Q30 1 60 9T120 9V28H0Z'/%3E%3Cpath d='M0 19Q30 11 60 19T120 19V28H0Z'/%3E%3C/g%3E%3C/svg%3E");
   /* Immagini decorative (percorsi risolti da Vite): onde azzurre già sbiadite nel file, la copia
      specchiata, e i veli per le sezioni scure senza foto */
-  --decoro-onde: url('../../assets/images/decorazioni/onde-destra.png');
-  --decoro-onde-sinistra: url('../../assets/images/decorazioni/onde-sinistra.png');
+  --decoro-onde: url('../../assets/images/decorazioni/onde-destra.webp');
+  --decoro-onde-sinistra: url('../../assets/images/decorazioni/onde-sinistra.webp');
   --decoro-veli-scuro: url('../../assets/images/decorazioni/veli-azzurri-scuro.png');
 }
 

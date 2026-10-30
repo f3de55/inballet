@@ -1,0 +1,30 @@
+/*
+ * Elementi grafici di sfondo delle sezioni (solo PC, sopra i 1024px).
+ * .decoro-onde / .decoro-onde--sinistra: onde azzurre su tutta la sezione, come immagine di sfondo sopra il
+ * colore della sezione (già sbiadite al 22% nel file; --sinistra: copia specchiata).
+ * "section." vince sul "background" delle pagine senza toccarne il colore.
+ * Le sezioni scure con fondo nero uniforme ricevono i veli azzurri.
+ */
+@media (min-width: 1025px) {
+  section.decoro-onde {
+    background-image: var(--decoro-onde);
+    background-position: right bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  section.decoro-onde--sinistra {
+    background-image: var(--decoro-onde-sinistra);
+    background-position: left bottom;
+  }
+
+  /* Le sezioni scure con foto hanno un elemento -bg e conservano il loro sfondo. */
+  section.sezione-scura:not(:has(> [class$="-bg"])) {
+    background-image:
+      linear-gradient(rgb(var(--navy-rgb) / .78), rgb(var(--navy-rgb) / .78)),
+      var(--decoro-veli-scuro);
+    background-position: right bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}

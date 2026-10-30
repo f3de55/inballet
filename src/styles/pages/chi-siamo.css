@@ -1,0 +1,439 @@
+.fondatrice-section {
+  padding: var(--section-y) 0;
+  background: var(--white);
+}
+
+.fondatrice-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.fondatrice-visual {
+  position: relative;
+}
+
+.fondatrice-image-wrapper {
+  max-width: 480px;
+}
+
+.fondatrice-image-wrapper img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.fondatrice-content {
+  padding: 0;
+}
+
+.fondatrice-label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.fondatrice-name {
+  margin: 0 0 0.5rem;
+}
+
+.fondatrice-bio p {
+  margin-bottom: 1.5rem;
+}
+
+.fondatrice-bio p:last-child {
+  margin-bottom: 0;
+}
+
+.storia-section {
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.storia-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+/* Timeline a serpentina: si legge da sinistra a destra, riga dopo riga, e una sola linea unisce tutte le
+   tappe dalla più vecchia alla più nuova. A fine riga la linea esce a destra, scende nello spazio tra le
+   righe, torna indietro fino al margine sinistro e rientra nel nodo della prima tappa della riga sotto.
+   Desktop: 3 tappe per riga; tablet: 2; telefono: una linea verticale a sinistra.
+   L'ultima tappa (Oggi) ha il nodo pieno. */
+.timeline {
+  --nodo: 20px;
+  --distanza: 3rem;
+  --riga: 4.25rem;
+  --sporgenza: 1.75rem;
+  --raggio: 1.75rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--riga) var(--distanza);
+  list-style: none;
+}
+
+.timeline .voce {
+  position: relative;
+  padding-top: 3rem;
+  border-top: none;
+}
+
+/* Nodo */
+.timeline .voce::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  width: var(--nodo);
+  height: var(--nodo);
+  border: 3px solid var(--primary-blue-dark);
+  border-radius: var(--radius-full);
+  background: var(--bg-soft);
+}
+
+.timeline .voce:last-child::before {
+  background: var(--primary-blue-dark);
+}
+
+/* Linea verso destra, fino al nodo della tappa successiva */
+.timeline .voce::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--nodo) / 2 - 1px);
+  left: var(--nodo);
+  right: calc(var(--distanza) * -1);
+  height: 2px;
+  background: var(--primary-blue);
+}
+
+.timeline .voce:last-child::after {
+  display: none;
+}
+
+.timeline .voce-anno::before {
+  display: none;
+}
+
+/* Con JavaScript la linea è un unico tracciato SVG (curve vere e spessore uniforme, vedi lo script in fondo):
+   le linee CSS tra le tappe non servono più. Senza JavaScript restano le linee dritte per riga. */
+.timeline {
+  position: relative;
+}
+
+.timeline .timeline-linea {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.timeline .timeline-linea path {
+  fill: none;
+  stroke: var(--primary-blue);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.timeline.con-linea .voce::after {
+  display: none;
+}
+
+/* Tablet: due tappe per riga */
+@media (min-width: 601px) and (max-width: 860px) {
+  .timeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Telefono: una tappa per riga, in verticale lungo una linea a sinistra */
+@media (max-width: 600px) {
+  .timeline {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .timeline .voce {
+    padding: 0 0 2.75rem 3.25rem;
+  }
+
+  .timeline .voce:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline .voce::before {
+    top: .35rem;
+  }
+
+  .timeline .voce::after {
+    top: calc(.35rem + var(--nodo));
+    bottom: -.35rem;
+    right: auto;
+    left: calc(var(--nodo) / 2 - 1px);
+    width: 2px;
+    height: auto;
+    background: var(--primary-blue);
+  }
+}
+
+.storia-label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.storia-title {
+  margin: 0;
+}
+
+/* ---------- InBallet in numeri ---------- */
+/* Fondo scuro; numeri bianchi in fila, divisi da filetti verticali */
+.numeri-section {
+  padding: var(--section-y) 0;
+  background: var(--dark-navy);
+}
+
+.numeri-lista {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 3.5rem 0 0;
+  text-align: center;
+}
+
+.numero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: .5rem 1.5rem;
+}
+
+.numero + .numero {
+  border-left: 1px solid var(--linea-su-scuro);
+}
+
+.numero-valore {
+  order: 1;
+  margin: 0;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+
+.numero-etichetta {
+  order: 2;
+  margin-top: 1rem;
+  color: var(--primary-blue);
+}
+
+.numero-nota {
+  order: 3;
+  margin: .35rem 0 0;
+}
+
+.numeri-cta {
+  margin-top: 3.5rem;
+  text-align: center;
+}
+
+/* Tablet e mobile: 2x2 a celle uguali, con filetti solo tra una cella e l'altra (come i loghi dei sostenitori):
+   il gap da 1px sul fondo chiaro disegna le linee, le celle hanno il fondo scuro */
+@media (max-width: 900px) {
+  .numeri-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 2.5rem;
+    background: var(--linea-su-scuro);
+  }
+
+  .numero,
+  .numero + .numero {
+    justify-content: center;
+    padding: 2rem 1rem;
+    border-left: none;
+    background: var(--dark-navy);
+  }
+
+  .numeri-cta {
+    margin-top: 2.5rem;
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .numero,
+  .numero + .numero {
+    padding: 1.5rem .75rem;
+  }
+
+  .numero-etichetta {
+    margin-top: .75rem;
+    text-align: center;
+  }
+
+  .numero-nota {
+    text-align: center;
+  }
+}
+
+.sede-section {
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
+  position: relative;
+}
+
+/* Una riga per sede: ingresso, indirizzo e mappa sempre visibili. */
+.sedi {
+  list-style: none;
+  max-width: 54rem;
+  margin: 2.5rem auto 0;
+  padding: 0;
+}
+
+.sede {
+  display: grid;
+  grid-template-columns: 13rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.5rem 2rem;
+}
+
+.sede + .sede {
+  margin-top: 1.75rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--linea);
+}
+
+.sede .sede-foto {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-img);
+}
+
+.sede-testo {
+  min-width: 0;
+}
+
+.sede-nome {
+  margin-bottom: .35rem;
+}
+
+.sede-cta {
+  justify-self: start;
+  min-height: 44px;
+}
+
+@media (max-width: 900px) {
+  .sede {
+    grid-template-columns: 13rem minmax(0, 1fr);
+    column-gap: 1.5rem;
+  }
+
+  .sede .sede-foto {
+    grid-row: span 2;
+  }
+
+  .sede-cta {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .sedi {
+    margin-top: 2rem;
+  }
+
+  .sede {
+    grid-template-columns: 6rem minmax(0, 1fr);
+    align-items: start;
+    gap: .75rem 1rem;
+  }
+
+  .sede .sede-foto {
+    grid-row: auto;
+    aspect-ratio: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .fondatrice-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .fondatrice-content {
+    display: contents;
+  }
+
+  .fondatrice-label {
+    order: 1;
+  }
+
+  .fondatrice-name {
+    order: 2;
+    margin-bottom: 1.75rem;
+  }
+
+  /* La cornice "--sinistra" sporge a destra e in basso: spazio dentro i margini */
+  .fondatrice-visual {
+    order: 3;
+    margin: 0 1.5rem 3.75rem 0;
+  }
+
+  .fondatrice-image-wrapper {
+    max-width: none;
+  }
+
+  .fondatrice-image-wrapper img {
+    aspect-ratio: 3 / 2;
+    object-position: center 25%;
+  }
+
+  .fondatrice-bio {
+    order: 4;
+  }
+
+  .fondatrice-citazione {
+    order: 5;
+  }
+
+  /* Intestazioni a sinistra, allineate ai contenuti sotto */
+  .storia-header {
+    text-align: left;
+    margin-bottom: 2.5rem;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .fondatrice-section,
+.storia-section,
+.sede-section {
+    padding: 3.5rem 0;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .fondatrice-section,
+.storia-section,
+.sede-section {
+    padding: 2.75rem 0;
+  }
+
+  .fondatrice-visual {
+    margin: 0 0 3rem .75rem;
+  }
+
+  .fondatrice-image-wrapper img {
+    aspect-ratio: 4 / 3;
+  }
+
+}

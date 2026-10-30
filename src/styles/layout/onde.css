@@ -1,0 +1,65 @@
+/*
+ * Bordo ondulato tra le sezioni.
+ * Ogni sezione dopo la prima (e il footer) ha il bordo superiore a doppia onda: una davanti, piena, e una
+ * dietro più alta e leggera (stesso colore, opacità .55, nella maschera). La fascia dell'onda è un bordo
+ * trasparente alto --onda-h, tirato su dal margine negativo: il layout non cambia, il fondo della sezione
+ * la riempie e la maschera ritaglia il profilo, lasciando vedere sotto la sezione precedente. Il bordo
+ * inferiore della precedente resta dritto: lo copre l'onda della successiva.
+ * Misure e immagini (--onda-h, --onda-w, --onda-svg) in base/variables.css.
+ */
+main > section:not(:first-child),
+.footer {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(var(--onda-h) * -1);
+  border-top: var(--onda-h) solid transparent;
+  background-origin: border-box;
+  -webkit-mask: var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x, linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
+  mask: var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x, linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
+}
+
+/* L'onda della sezione successiva copre gli ultimi --onda-h di ogni sezione: un bordo inferiore trasparente
+   (il fondo ci passa sotto) restituisce alla sezione il suo padding inferiore, così sopra e sotto lo spazio
+   visibile è lo stesso. L'hero (prima sezione) lo ha già nel padding. */
+main > section:not(:first-child) {
+  border-bottom: var(--onda-h) solid transparent;
+}
+
+/* Sezioni con foto e velo a parte (…-bg, …-overlay): salgono anch'esse nella fascia dell'onda */
+main > section:not(:first-child) > :is([class*="-bg "], [class$="-bg"], [class*="-overlay "], [class$="-overlay"]) {
+  top: calc(var(--onda-h) * -1);
+  height: calc(100% + 2 * var(--onda-h));
+}
+
+/* …e il loro overflow nascosto non deve tagliare la fascia dell'onda */
+main > section:not(:first-child):has(> :is([class*="-bg "], [class$="-bg"], [class*="-overlay "], [class$="-overlay"])) {
+  overflow: visible;
+}
+
+/* Fascia a tutta larghezza dietro un blocco (es. i percorsi di /corsi): colore --fascia, con la stessa doppia
+   onda sopra e sotto (quella sotto è speculare). Esce di --onda-h sopra e sotto il blocco, che deve avere
+   almeno quel padding verticale; la sezione che la contiene deve avere overflow-x: clip. */
+.fascia-onda {
+  position: relative;
+  isolation: isolate;
+}
+
+.fascia-onda::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: calc(var(--onda-h) * -1);
+  bottom: calc(var(--onda-h) * -1);
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: var(--fascia, var(--white));
+  -webkit-mask:
+    var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
+    var(--onda-svg-giu) 0 100% / var(--onda-w) var(--onda-h) repeat-x,
+    linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% calc(100% - 2 * var(--onda-h) + 2px) no-repeat;
+  mask:
+    var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
+    var(--onda-svg-giu) 0 100% / var(--onda-w) var(--onda-h) repeat-x,
+    linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% calc(100% - 2 * var(--onda-h) + 2px) no-repeat;
+}

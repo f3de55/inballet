@@ -1,0 +1,68 @@
+.sostenitori-section {
+  padding: var(--section-y) 0;
+  background: var(--white);
+}
+
+.sostenitori-intro .link-cta {
+  margin-top: .5rem;
+}
+
+/* Il gap da 1px sul fondo grigio disegna i filetti solo tra un logo e l'altro */
+.sostenitori-loghi {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 9.5rem;
+  gap: 1px;
+  max-width: 1200px;
+  margin: 3.5rem auto 0;
+  background: var(--linea);
+}
+
+/* Flex (non grid): così il max-height del logo si riferisce all'altezza fissa della cella */
+.sostenitori-loghi li {
+  display: flex;
+  min-height: 0;
+  background: var(--white);
+}
+
+.sostenitori-loghi a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: .75rem 1.5rem;
+}
+
+.sostenitori-loghi img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .sostenitori-loghi {
+    margin-top: 2.5rem;
+  }
+
+  .sostenitori-loghi a {
+    padding: .75rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .sostenitori-loghi {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 6.5rem;
+  }
+
+  .sostenitori-loghi a {
+    padding: .5rem .75rem;
+  }
+}

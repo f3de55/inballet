@@ -1,0 +1,464 @@
+[
+  {
+    "slug": "chi-siamo-desktop",
+    "page": "chi-siamo",
+    "format": "desktop",
+    "original": "gallery-7.jpg",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-7.jpg",
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1920,
+      "top": 0,
+      "width": 640,
+      "height": 800
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\chi-siamo-desktop-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 2560x800 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=1920..2560, y=0..800, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 3.2:1 canvas. Extend ONLY the unoccupied environment, never populate it. Where the original photo has partially visible people on its boundary, do not extend them or invent their bodies in the new area.",
+    "blend": {
+      "left": 19,
+      "top": 0
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\chi-siamo-desktop.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-f31a9736-1fd9-4c85-944a-59a64fef422e.png",
+    "finished": true
+  },
+  {
+    "slug": "chi-siamo-tablet",
+    "page": "chi-siamo",
+    "format": "tablet",
+    "original": "gallery-7.jpg",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-7.jpg",
+    "resize": {
+      "width": 1120,
+      "height": 1000,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 800,
+      "top": 0,
+      "width": 800,
+      "height": 1000
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\chi-siamo-tablet-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 1600x1000 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=800..1600, y=0..1000, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 1.6:1 canvas. Extend ONLY the unoccupied environment, never populate it. Where the original photo has partially visible people on its boundary, do not extend them or invent their bodies in the new area.",
+    "blend": {
+      "left": 24,
+      "top": 0
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\chi-siamo-tablet.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-3edb9a1a-c382-4257-b7b9-7c0ecc0aca4d.png",
+    "finished": true
+  },
+  {
+    "slug": "corsi-desktop",
+    "page": "corsi",
+    "format": "desktop",
+    "original": "gallery-3.jpg",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-3.jpg",
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1361,
+      "top": 0,
+      "width": 1199,
+      "height": 800
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\corsi-desktop-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 2560x800 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=1361..2560, y=0..800, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 3.2:1 canvas. Extend ONLY the unoccupied environment, never populate it. Where the original photo has partially visible people on its boundary, do not extend them or invent their bodies in the new area.",
+    "blend": {
+      "left": 0,
+      "top": 0
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\corsi-desktop.png",
+    "generated": "output/hero-pagine/corsi-desktop-corretto.png",
+    "finished": true
+  },
+  {
+    "slug": "corsi-tablet",
+    "page": "corsi",
+    "format": "tablet",
+    "original": "gallery-3.jpg",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-3.jpg",
+    "resize": {
+      "width": 1120,
+      "height": 1000,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 253,
+      "width": 1120,
+      "height": 747
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\corsi-tablet-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 1600x1000 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=480..1600, y=253..1000, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 1.6:1 canvas. Extend ONLY the unoccupied environment, never populate it. Where the original photo has partially visible people on its boundary, do not extend them or invent their bodies in the new area.",
+    "blend": {
+      "left": 32,
+      "top": 160
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\corsi-tablet.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-89cdcd7b-8526-4911-aae1-dd4d182da5b5.png",
+    "finished": true
+  },
+  {
+    "slug": "contatti-desktop",
+    "page": "contatti",
+    "format": "desktop",
+    "original": "foto/sede-lainate.jpg",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\sede-lainate.jpg",
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1139,
+      "top": 0,
+      "width": 1421,
+      "height": 800
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\contatti-desktop-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 2560x800 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=1139..2560, y=0..800, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 3.2:1 canvas. Extend ONLY the unoccupied environment, never populate it. Where the original photo has partially visible people on its boundary, do not extend them or invent their bodies in the new area.",
+    "blend": {
+      "left": 32,
+      "top": 0
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\contatti-desktop.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-87c66826-421e-4b2b-b363-00e3e9c9c202.png",
+    "finished": true,
+    "objectRemoval": {
+      "description": "Rimossa ala anteriore incompleta a sinistra della sede",
+      "before": "output/hero-pagine/contatti-desktop-prima-correzione.png",
+      "prompt": "Use case: object-removal. Edit this existing desktop website hero photograph. Remove ONLY the incomplete tall narrow FOREGROUND BUILDING WING immediately to the LEFT of the main gray dance school building. This unwanted wing has tall dark windows, two stacked air conditioners, a small ground-level entrance and a bench; it appears chopped off at its left and top boundaries and must be removed entirely. Keep the MAIN gray school building with the black InBallet sign and its rows of windows on the RIGHT at exactly the same position, size and perspective. Preserve the original sign and lettering exactly. Where the unwanted wing was, reconstruct a natural continuous sunset sky above and the empty courtyard and landscaping below, with a coherent COMPLETE left edge of the retained main school building. No new building on the left. No walls ending abruptly, no ghost building fragments, no blended or semitransparent facade, no floating air conditioners, no extra signage. Preserve the warm golden sunset lighting, realistic architecture, image framing and 3.2:1 ultrawide 2560x800 full canvas. Keep the left portion quiet and open for website text. This is a localized removal; do not redesign, move or zoom the retained main building.",
+      "tool": "imagegen integrato",
+      "previousGenerated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-6a683bf5-e138-47d8-9b42-cdbb52299ace.png"
+    }
+  },
+  {
+    "slug": "contatti-tablet",
+    "page": "contatti",
+    "format": "tablet",
+    "original": "foto/sede-lainate.jpg",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\sede-lainate.jpg",
+    "resize": {
+      "width": 1120,
+      "height": 1000,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 369,
+      "width": 1120,
+      "height": 631
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\contatti-tablet-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 1600x1000 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=480..1600, y=369..1000, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 1.6:1 canvas. Extend ONLY the unoccupied environment, never populate it. Where the original photo has partially visible people on its boundary, do not extend them or invent their bodies in the new area.",
+    "blend": {
+      "left": 32,
+      "top": 12
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\contatti-tablet.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-342c6aa9-3636-46d0-8cff-4a249cad0ad0.png",
+    "finished": true,
+    "objectRemoval": {
+      "description": "Rimossa ala anteriore incompleta a sinistra della sede",
+      "before": "output/hero-pagine/contatti-tablet-prima-correzione.png",
+      "prompt": "Use case: object-removal. Edit this existing tablet website hero photograph. Remove ONLY the incomplete tall narrow FOREGROUND BUILDING WING immediately to the LEFT of the main gray dance school building. This unwanted wing has tall dark windows, two stacked air conditioners, a small ground-level entrance and a bench; it appears chopped off at its left and top boundaries and must be removed entirely. Keep the MAIN gray school building with the black InBallet sign and its rows of windows on the RIGHT at exactly the same position, size and perspective. Preserve the original sign and lettering exactly. Where the unwanted wing was, reconstruct a natural continuous sunset sky above and the empty courtyard and landscaping below, with a coherent COMPLETE left edge of the retained main school building. No new building on the left. No walls ending abruptly, no ghost building fragments, no blended or semitransparent facade, no floating air conditioners, no extra signage. Preserve the warm golden sunset lighting, realistic architecture, image framing and 1.6:1 1600x1000 full canvas. Keep the left portion quiet and open for website text. This is a localized removal; do not redesign, move or zoom the retained main building.",
+      "tool": "imagegen integrato",
+      "previousGenerated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-7e398608-619c-4402-a177-316b3c7df929.png"
+    }
+  },
+  {
+    "slug": "classi-integrate-desktop",
+    "page": "classi-integrate",
+    "format": "desktop",
+    "original": "gallery-9.jpg",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-9.jpg",
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1866,
+      "top": 0,
+      "width": 694,
+      "height": 800
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\classi-integrate-desktop-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 2560x800 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=1866..2560, y=0..800, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 3.2:1 canvas. Extend ONLY the unoccupied environment, never populate it. Where the original photo has partially visible people on its boundary, do not extend them or invent their bodies in the new area.",
+    "blend": {
+      "left": 21,
+      "top": 0
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\classi-integrate-desktop.png",
+    "generated": "output/hero-pagine/classi-integrate-desktop-corretto.png",
+    "finished": true
+  },
+  {
+    "slug": "classi-integrate-tablet",
+    "page": "classi-integrate",
+    "format": "tablet",
+    "original": "gallery-9.jpg",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-9.jpg",
+    "resize": {
+      "width": 1120,
+      "height": 1000,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 733,
+      "top": 0,
+      "width": 867,
+      "height": 1000
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\classi-integrate-tablet-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 1600x1000 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=733..1600, y=0..1000, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 1.6:1 canvas. Extend ONLY the unoccupied environment, never populate it. Where the original photo has partially visible people on its boundary, do not extend them or invent their bodies in the new area.",
+    "blend": {
+      "left": 26,
+      "top": 0
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\classi-integrate-tablet.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-b21f5f76-184d-4ab1-bc8d-ab6c06df7cda.png",
+    "finished": true
+  },
+  {
+    "slug": "formazioni-personalizzate-desktop",
+    "page": "formazioni-personalizzate",
+    "format": "desktop",
+    "original": "foto/bambini-insegnante.jpg",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\bambini-insegnante.jpg",
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1358,
+      "top": 0,
+      "width": 1202,
+      "height": 800
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\formazioni-personalizzate-desktop-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 2560x800 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=1358..2560, y=0..800, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 3.2:1 canvas. Extend ONLY the unoccupied environment, never populate it. Where the original photo has partially visible people on its boundary, do not extend them or invent their bodies in the new area.",
+    "blend": {
+      "left": 32,
+      "top": 0
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\formazioni-personalizzate-desktop.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-6aa14379-24ed-46bb-920f-52ba0c68dd51.png",
+    "finished": true
+  },
+  {
+    "slug": "formazioni-personalizzate-tablet",
+    "page": "formazioni-personalizzate",
+    "format": "tablet",
+    "original": "foto/bambini-insegnante.jpg",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\bambini-insegnante.jpg",
+    "resize": {
+      "width": 1120,
+      "height": 1000,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 254,
+      "width": 1120,
+      "height": 746
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\formazioni-personalizzate-tablet-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 1600x1000 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=480..1600, y=254..1000, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 1.6:1 canvas. Extend ONLY the unoccupied environment, never populate it. Where the original photo has partially visible people on its boundary, do not extend them or invent their bodies in the new area.",
+    "blend": {
+      "left": 32,
+      "top": 12
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\formazioni-personalizzate-tablet.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-372179de-0b31-4139-9002-c5603c7070be.png",
+    "finished": true
+  },
+  {
+    "slug": "spettacoli-eventi-desktop",
+    "page": "spettacoli-eventi",
+    "format": "desktop",
+    "original": "ballerina.jpg",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\ballerina.jpg",
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1032,
+      "top": 0,
+      "width": 1528,
+      "height": 800
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\spettacoli-eventi-desktop-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 2560x800 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=1032..2560, y=0..800, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 3.2:1 canvas. Extend ONLY the unoccupied environment, never populate it. Where the original photo has partially visible people on its boundary, do not extend them or invent their bodies in the new area.",
+    "blend": {
+      "left": 32,
+      "top": 0
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\spettacoli-eventi-desktop.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-2694f1ce-b441-4e3e-ae6e-f3b340cfe808.png",
+    "finished": true
+  },
+  {
+    "slug": "spettacoli-eventi-tablet",
+    "page": "spettacoli-eventi",
+    "format": "tablet",
+    "original": "ballerina.jpg",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\ballerina.jpg",
+    "resize": {
+      "width": 1120,
+      "height": 1000,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 414,
+      "width": 1120,
+      "height": 586
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\spettacoli-eventi-tablet-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 1600x1000 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=480..1600, y=414..1000, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 1.6:1 canvas. Extend ONLY the unoccupied environment, never populate it. Where the original photo has partially visible people on its boundary, do not extend them or invent their bodies in the new area.",
+    "blend": {
+      "left": 32,
+      "top": 140
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\spettacoli-eventi-tablet.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-9e18d05e-41c0-4220-b8b7-1cd99376c6cc.png",
+    "finished": true
+  },
+  {
+    "slug": "sportello-psicologico-desktop",
+    "page": "sportello-psicologico",
+    "format": "desktop",
+    "original": "foto/sportellopsicologico-adulti.jpg",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\sportellopsicologico-adulti.jpg",
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1360,
+      "top": 0,
+      "width": 1200,
+      "height": 800
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\sportello-psicologico-desktop-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 2560x800 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=1360..2560, y=0..800, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 3.2:1 canvas. This is an illustration: extend ONLY its flat pale cream background, preserve the head and tree illustration exactly.",
+    "blend": {
+      "left": 32,
+      "top": 0
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\sportello-psicologico-desktop.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-e2d73d87-f0ca-4199-ab57-d96ea0a7a091.png",
+    "finished": true
+  },
+  {
+    "slug": "sportello-psicologico-tablet",
+    "page": "sportello-psicologico",
+    "format": "tablet",
+    "original": "foto/sportellopsicologico-adulti.jpg",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\sportellopsicologico-adulti.jpg",
+    "resize": {
+      "width": 1120,
+      "height": 1000,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 253,
+      "width": 1120,
+      "height": 747
+    },
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-pagine\\sportello-psicologico-tablet-canvas.png",
+    "prompt": "Use case: identity-preserve. Edit target: this 1600x1000 website hero canvas. OUTPAINT ONLY THE LIGHT GRAY EMPTY AREA. The original image occupies x=480..1600, y=253..1000, at the RIGHT. Preserve its exact scale, location, perspective and every pixel. Extend its background seamlessly into the gray area with consistent light, colors and perspective. Keep all original people, faces, bodies, hands, clothing and poses absolutely unchanged, no duplication, no extra people, no human silhouettes or reflected people. Leave the entire left side empty for website text. Do not move, crop, enlarge or redraw the existing image. No text, borders, blur, gradients or placeholders. Deliver the full 1.6:1 canvas. This is an illustration: extend ONLY its flat pale cream background, preserve the head and tree illustration exactly.",
+    "blend": {
+      "left": 32,
+      "top": 100
+    },
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\sportello-psicologico-tablet.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-5bd60a32-2ecf-4f49-9a45-0a81e37a3e2e.png",
+    "finished": true
+  },
+  {
+    "slug": "documenti-desktop",
+    "page": "documenti",
+    "format": "desktop",
+    "original": null,
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "prompt": "Create a sophisticated photorealistic website hero banner for the documents and enrollment forms page of an Italian dance school. Canvas 2560x800, exact aspect 3.2:1. On the RIGHT THIRD: a neat ivory paper folder with two clean unprinted sheets and a slim black pen, resting on a warm wooden reception desk. Understated ballet studio context in the background with a softly defocused pale blue wall and a wooden ballet barre. Left sixty percent quiet dark desaturated blue, natural photographic falloff and room depth, generous empty space for white website headline. Warm side light on the paper, elegant editorial still life, physically plausible objects. No people, no faces, no hands, no logos, no typography, no readable writing, no watermarks. Keep the folder fully visible and entirely at the right, with comfortable margins. Real photograph, not illustration. Extra wide composition, all visual interest at right.",
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\documenti-desktop.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-bfb8d058-a1c9-4d1e-bd18-dbd9ef73a44b.png",
+    "finished": true
+  },
+  {
+    "slug": "documenti-tablet",
+    "page": "documenti",
+    "format": "tablet",
+    "original": null,
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "prompt": "Create a sophisticated photorealistic website hero banner for the documents and enrollment forms page of an Italian dance school. Canvas 1600x1000, exact aspect 1.6:1. On the RIGHT THIRD: a neat ivory paper folder with two clean unprinted sheets and a slim black pen, resting on a warm wooden reception desk. Understated ballet studio context in the background with a softly defocused pale blue wall and a wooden ballet barre. Left sixty percent quiet dark desaturated blue, natural photographic falloff and room depth, generous empty space for white website headline. Warm side light on the paper, elegant editorial still life, physically plausible objects. No people, no faces, no hands, no logos, no typography, no readable writing, no watermarks. Keep the folder fully visible and entirely at the right, with comfortable margins. Real photograph, not illustration. Use a taller composition, props at lower right, upper left quiet.",
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-pagine\\documenti-tablet.png",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-335903da-b528-4291-8a08-37614e0907e4.png",
+    "finished": true
+  }
+]

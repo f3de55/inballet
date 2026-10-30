@@ -2,11 +2,15 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { sfondo, sfondoCta } from '../lib/images';
+import { sfondoCta } from '../lib/images';
+import { heroPagina } from '../lib/hero-pagine';
 import { scuola } from '../data/scuola';
+import '../styles/components/intro-split.css';
+import '../styles/components/righe.css';
+import '../styles/pages/progetto-noiconvoi.css';
 
 const bg = {
-  hero: await sfondo('gallery-8.jpg', { desktop: '50% 40%', tablet: '50% 45%' }),
+  hero: await heroPagina('progetto-noiconvoi'),
   cta: await sfondoCta('foto/bambini-gioco.jpg', { desktop: '50% 40%' }),
 };
 
@@ -37,9 +41,13 @@ const info = [
     ogDescription="Dal 2013 ragazzi con disabilità e volontari insieme in sala: psicomotricità, danza e spettacolo di fine anno."
 >
 
+    <Fragment slot="head">
+        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
+    </Fragment>
+
         <!-- Hero Section -->
-        <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
+        <section class="chisiamo-hero hero-banner">
+            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -49,21 +57,21 @@ const info = [
         </section>
 
         <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo) -->
-        <section id="intro" class="noi-intro-section">
-            <div class="container noi-intro-layout">
-                <div class="noi-intro-content">
-                    <span class="noi-intro-label eyebrow">La nostra missione</span>
-                    <h2 class="noi-intro-title titolo-sezione">La danza come <em>strumento di inclusione</em></h2>
-                    <div class="noi-intro-testo">
+        <section id="intro" class="intro-split">
+            <div class="container intro-split-layout">
+                <div class="intro-split-content">
+                    <p class="intro-split-label eyebrow">La nostra missione</p>
+                    <h2 class="intro-split-title titolo-sezione">La danza come <em>strumento di inclusione</em></h2>
+                    <div class="intro-split-testo">
                         <p>NoiConVoi è il <strong>progetto di volontariato</strong> nato nel 2013 da un'idea della Direttrice Artistica {scuola.fondatrice}: la danza è per tutti, e ognuno può portare il proprio <strong>contributo artistico</strong>.</p>
                         <p>Accoglie <strong>ragazzi con disabilità</strong> in esperienze di danza con <strong>supporto psicomotorio</strong>, insieme a un <strong>team di volontari</strong>. Quasi tutti i corsi della scuola sono anche <a href="/classi-integrate">classi integrate</a>.</p>
                     </div>
-                    <div class="noi-intro-highlight">
+                    <div class="intro-split-highlight">
                         <p>La danza è capace di creare racconti in tutti i corpi e in tutte le menti.</p>
                         <cite>{scuola.fondatrice}</cite>
                     </div>
                 </div>
-                <div class="noi-intro-visual foto-cornice">
+                <div class="intro-split-visual foto-cornice">
                     <Img src="foto/bambini-mani.jpg" alt="Una mano adulta stringe quella di una bambina durante la lezione" fuoco={{ desktop: '55% 50%' }} widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
                 </div>
             </div>
@@ -72,7 +80,7 @@ const info = [
         <!-- Metodo: intestazione editoriale e due fasi -->
         <section class="noi-metodo-section" aria-labelledby="metodo-titolo">
             <div class="intro-editoriale">
-                <span class="eyebrow">La metodologia</span>
+                <p class="eyebrow">La metodologia</p>
                 <h2 class="titolo-sezione" id="metodo-titolo">Un approccio pedagogico <em>strutturato</em></h2>
                 <p>Ogni lezione del <strong>lunedì sera</strong> si articola in due momenti: prima la <strong>pratica psicomotoria</strong>, poi la <strong>danza</strong>.</p>
             </div>
@@ -90,18 +98,18 @@ const info = [
         </section>
 
         <!-- Destinatari: intestazione a sinistra, elenco a destra -->
-        <section class="noi-target-section decoro-onde" aria-labelledby="target-titolo">
-            <div class="container noi-target-layout">
-                <div class="noi-target-header">
-                    <span class="eyebrow">A chi è rivolto</span>
+        <section class="split-section decoro-onde" aria-labelledby="target-titolo">
+            <div class="container split-layout">
+                <div class="split-header">
+                    <p class="eyebrow">A chi è rivolto</p>
                     <h2 class="titolo-sezione" id="target-titolo">Un progetto <em>aperto a tutti</em></h2>
                     <p class="intro-sezione">NoiConVoi mette insieme ragazzi, famiglie e volontari. Dal 2024 accoglie anche <strong>volontari da aziende</strong> e realtà del territorio, grazie ai <a href="/sostenitori">sostenitori dei progetti sociali</a>.</p>
                 </div>
-                <ul class="target-lista">
+                <ul class="righe">
                     {destinatari.map((d) => (
-                        <li class="target">
-                            <i class="fas fa-check" aria-hidden="true"></i>
-                            <span>{d}</span>
+                        <li class="riga">
+                            <i class="riga-icona fas fa-check" aria-hidden="true"></i>
+                            <p class="riga-nome">{d}</p>
                         </li>
                     ))}
                 </ul>
@@ -111,7 +119,7 @@ const info = [
         <!-- Informazioni pratiche: intestazione editoriale e quattro voci -->
         <section class="noi-info-section" aria-labelledby="info-titolo">
             <div class="intro-editoriale">
-                <span class="eyebrow">Come funziona</span>
+                <p class="eyebrow">Come funziona</p>
                 <h2 class="titolo-sezione" id="info-titolo">Informazioni <em>pratiche</em></h2>
                 <p>Tutto quello che serve sapere per partecipare al progetto.</p>
             </div>
@@ -129,13 +137,13 @@ const info = [
         </section>
 
         <!-- CTA -->
-        <section class="noi-cta-section sezione-scura">
-            <div class="noi-cta-bg" style={bg.cta.style}></div>
-            <div class="noi-cta-overlay"></div>
-            <div class="noi-cta-wrapper">
+        <section class="cta-contatto sezione-scura">
+            <div class="cta-bg" style={bg.cta.style}></div>
+            <div class="cta-overlay"></div>
+            <div class="cta-wrapper">
                 <h2 class="titolo-sezione">Unisciti a <em>NoiConVoi</em></h2>
                 <p class="intro-sezione">Vuoi <strong>partecipare</strong> o <strong>diventare volontario</strong>? Contattaci per scoprire come far parte del progetto.</p>
-                <div class="noi-cta-buttons">
+                <div class="cta-pulsanti">
                     <a href={`mailto:${scuola.email}?subject=Progetto%20NoiConVoi%20-%20Richiesta%20Informazioni`} class="btn-primary">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici
                     </a>
@@ -146,266 +154,3 @@ const info = [
             </div>
         </section>
 </Base>
-
-<style>
-/* ---------- Intro ---------- */
-.noi-intro-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-.noi-intro-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 5rem;
-  align-items: center;
-}
-
-.noi-intro-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.noi-intro-title {
-  margin-bottom: 1.75rem;
-}
-
-.noi-intro-testo p {
-  margin-bottom: 1.25rem;
-  font-size: var(--text-base);
-  line-height: 1.8;
-  color: var(--text-dark);
-}
-
-.noi-intro-testo p:last-child {
-  margin-bottom: 0;
-}
-
-/* La cornice sporge a sinistra e in basso: spazio dentro la colonna */
-.noi-intro-visual {
-  max-width: 520px;
-  margin: 0 0 1.5rem 1.5rem;
-  justify-self: end;
-}
-
-.noi-intro-visual :global(img) {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-}
-
-/* ---------- Metodo e informazioni: voci in colonne ---------- */
-.noi-metodo-section,
-.noi-info-section {
-  padding: var(--section-y) 0;
-  background: var(--bg-soft);
-}
-
-.fasi-lista,
-.info-lista {
-  list-style: none;
-  display: grid;
-  gap: 3rem;
-  margin: 3.5rem 0 0;
-  padding: 0;
-}
-
-.fasi-lista {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.info-lista {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 2.5rem;
-}
-
-.fasi-lista .voce-testo {
-  font-size: var(--text-base);
-}
-
-/* ---------- Destinatari ---------- */
-.noi-target-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-.noi-target-layout {
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-  gap: 5rem;
-  align-items: start;
-}
-
-.noi-target-header .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.target-lista {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.target {
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
-  align-items: baseline;
-  gap: .75rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--linea);
-}
-
-.target:first-child {
-  padding-top: .5rem;
-}
-
-.target:last-child {
-  border-bottom: none;
-}
-
-.target i {
-  font-size: var(--text-base);
-  color: var(--primary-blue-dark);
-}
-
-.target span {
-  font-size: var(--text-base);
-  font-weight: 500;
-  line-height: var(--leading-snug);
-  color: var(--dark-navy);
-}
-
-/* ---------- CTA ---------- */
-.noi-cta-section {
-  position: relative;
-  padding: var(--section-y) 0;
-  overflow: hidden;
-}
-
-.noi-cta-bg,
-.noi-cta-overlay {
-  position: absolute;
-  inset: 0;
-}
-
-.noi-cta-bg {
-  background: center / cover no-repeat;
-}
-
-.noi-cta-overlay {
-  background: linear-gradient(135deg, rgb(var(--navy-rgb) / .66) 0%, rgb(var(--header-rgb) / .62) 100%);
-}
-
-.noi-cta-wrapper {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  text-align: center;
-}
-
-.noi-cta-wrapper .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.noi-cta-wrapper .intro-sezione {
-  margin-bottom: 2.5rem;
-}
-
-.noi-cta-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-}
-
-/* ---------- Tablet ---------- */
-@media (max-width: 1024px) {
-  /* Informazioni: griglia 2x2 */
-  .info-lista {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 900px) {
-  /* Intro: etichetta e titolo, foto, testo, citazione */
-  .noi-intro-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-
-  .noi-intro-content {
-    display: contents;
-  }
-
-  .noi-intro-label {
-    order: 1;
-  }
-
-  .noi-intro-title {
-    order: 2;
-  }
-
-  .noi-intro-visual {
-    order: 3;
-    max-width: none;
-    margin: 0 0 3.75rem 1.5rem;
-  }
-
-  .noi-intro-visual :global(img) {
-    aspect-ratio: 3 / 2;
-  }
-
-  .noi-intro-testo {
-    order: 4;
-  }
-
-  .noi-intro-highlight {
-    order: 5;
-  }
-
-  .fasi-lista,
-  .info-lista {
-    margin-top: 2.5rem;
-  }
-
-  /* Destinatari: intestazione sopra l'elenco */
-  .noi-target-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
-  }
-}
-
-/* ---------- Mobile ---------- */
-@media (max-width: 600px) {
-  .noi-intro-visual {
-    margin: 0 0 3rem .75rem;
-  }
-
-  .noi-intro-visual :global(img) {
-    aspect-ratio: 4 / 3;
-  }
-
-  .fasi-lista,
-  .info-lista {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.25rem;
-  }
-
-  .target {
-    padding: 1.25rem 0;
-  }
-
-
-  .noi-cta-wrapper {
-    padding: 0 1.5rem;
-  }
-
-  .noi-cta-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-</style>

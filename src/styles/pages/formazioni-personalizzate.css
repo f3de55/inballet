@@ -1,0 +1,109 @@
+.perso-intro-section {
+  padding: var(--section-y) 0;
+  background: var(--white);
+}
+
+.perso-intro-label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.perso-intro-title {
+  margin-bottom: 2rem;
+}
+
+.perso-intro-text {
+  margin-bottom: 1.5rem;
+}
+
+.perso-tipo-section {
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.perso-tipo-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.perso-tipo-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.perso-tipo-label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.perso-tipo-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 2.5rem 4rem;
+  position: relative;
+}
+
+.perso-tipo-grid::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgb(var(--blu-rgb) / .3);
+  transform: translateX(-50%);
+}
+
+.perso-tipo-item {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgb(var(--blu-rgb) / .3);
+}
+
+.perso-tipo-item:nth-last-child(-n+2) {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Icona del destinatario accanto al titolo (niente cerchio colorato) */
+.perso-tipo-num {
+  padding-top: .2rem;
+  font-size: var(--text-xl);
+  color: var(--primary-blue-dark);
+}
+
+.perso-tipo-content h3 {
+  margin-bottom: .4rem;
+}
+
+.perso-tipo-content p {
+  margin: 0;
+}
+
+@media(max-width:768px) {
+  .perso-tipo-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .perso-tipo-grid::before {
+    display: none;
+  }
+
+  .perso-tipo-item:nth-last-child(2) {
+    border-bottom: 1px solid rgb(var(--blu-rgb) / .3);
+    padding-bottom: 2rem;
+  }
+}
+/* Tablet e mobile: intestazione a sinistra, come il resto dei contenuti */
+@media (max-width: 900px) {
+  .perso-tipo-header {
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+}

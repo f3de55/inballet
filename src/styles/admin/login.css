@@ -1,0 +1,21 @@
+body{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1.5rem 1rem}
+
+.login{width:100%;max-width:400px}
+.login-box{overflow:hidden;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:0 12px 40px rgba(0,0,0,.06)}
+.login-head{display:flex;justify-content:center;padding:1.75rem 1rem;background:var(--bar)}
+.login-head img{display:block;width:130px;height:auto}
+
+.login-form{padding:1.75rem 1.75rem 2rem}
+.login-form h1{font-size:1.4rem;font-weight:700}
+.login-sotto{margin:.25rem 0 1.5rem;color:var(--text-muted);font-size:.95rem}
+.login-form label{display:block;margin-bottom:.4rem;font-size:.9rem;font-weight:600}
+.login-form input{display:block;width:100%;min-height:48px;padding:.7rem .9rem;border:1px solid var(--line-strong);border-radius:8px;background:#fff;font:inherit;font-size:16px;color:var(--text)}
+.login-form input:focus{outline:none;border-color:var(--primary-dark);box-shadow:0 0 0 3px rgba(135,206,235,.35)}
+
+.login-btn{width:100%;min-height:48px;margin-top:1.25rem;border:none;border-radius:999px;background:var(--primary);font:inherit;font-weight:600;color:var(--text);cursor:pointer;transition:background-color .2s,color .2s}
+.login-btn:hover{background:var(--primary-dark);color:#fff}
+
+.login-errore{display:flex;align-items:center;gap:.6rem;margin-bottom:1.25rem;padding:.75rem 1rem;border-radius:8px;background:#fbeceb;color:var(--danger);font-size:.9rem}
+
+.login-sito{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.25rem;font-size:.9rem;color:var(--text-muted);text-decoration:none}
+.login-sito:hover{color:var(--primary-dark)}

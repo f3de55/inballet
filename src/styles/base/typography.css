@@ -1,49 +1,67 @@
 /*
- * Tipografia: un solo stile per ogni livello di titolo, valido in tutte le pagine.
- * I componenti non ridefiniscono dimensione, peso o interlinea dei titoli: scelgono
- * il tag giusto (h1 titolo della pagina, h2 sezione, h3 card/voce, h4 dettaglio).
+ * Tipografia: ogni ruolo (titoli, testo, testo piccolo, etichette, lead, numeri) ha un solo stile,
+ * valido in tutte le pagine. Dimensioni, pesi, interlinee e colori stanno in base/variables.css
+ * ("Ruoli tipografici"): qui si applicano ai tag e alle classi di ruolo.
+ *
+ * I componenti e le pagine NON ridefiniscono dimensione, peso, interlinea o colore del testo: scelgono
+ * il tag giusto (h1 titolo della pagina, h2 sezione, h3 card/voce, h4 dettaglio, p testo) o una
+ * classe di ruolo (.testo-piccolo, .titoletto, .testo-evidenza, .numero-*). Mai uno <span> al posto di p o h3.
  */
+
+/* ---------- Testo corrente ---------- */
+body {
+  font-family: var(--font-rubik);
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  color: var(--body-color);
+}
 
 /* ---------- Titoli ---------- */
 h1,
 h2,
 h3,
 h4 {
-  font-weight: var(--font-bold);
-  color: var(--dark-navy);
+  font-weight: var(--heading-weight);
+  color: var(--heading-color);
   text-transform: none;
 }
 
 h1 {
-  font-size: var(--text-5xl);
-  line-height: 1.08;
-  letter-spacing: -.02em;
+  font-size: var(--h1-size);
+  line-height: var(--h1-lh);
+  letter-spacing: var(--h1-ls);
 }
 
 h2,
 .titolo-sezione {
-  font-size: var(--text-4xl);
-  line-height: 1.15;
-  letter-spacing: -.02em;
+  font-size: var(--h2-size);
+  line-height: var(--h2-lh);
+  letter-spacing: var(--h2-ls);
 }
 
-h3,
-.titolo-card {
-  font-size: var(--text-xl);
-  font-weight: var(--font-bold);
-  line-height: 1.25;
-  letter-spacing: -.01em;
+h3 {
+  font-size: var(--h3-size);
+  line-height: var(--h3-lh);
+  letter-spacing: var(--h3-ls);
 }
 
-h4 {
-  font-size: var(--text-md);
-  line-height: 1.3;
+h4,
+.valore {
+  font-size: var(--h4-size);
+  line-height: var(--h4-lh);
+  letter-spacing: var(--h4-ls);
+}
+
+/* Valore in evidenza che non è un titolo (telefono, email, indirizzo): stile h4 */
+.valore {
+  font-weight: var(--heading-weight);
 }
 
 /* Titolo di sezione: l'accento in corsivo leggero */
 .titolo-sezione {
-  font-weight: var(--font-bold);
-  color: var(--dark-navy);
+  font-weight: var(--heading-weight);
+  color: var(--heading-color);
 }
 
 .titolo-sezione em {
@@ -52,41 +70,35 @@ h4 {
   color: var(--primary-blue-dark);
 }
 
-/* Titolo delle finestre modali (evento, insegnante) */
+/* Titolo delle finestre modali (evento, insegnante): stesso stile di un h3 */
 dialog h2 {
-  font-size: var(--text-3xl);
-  line-height: 1.2;
-  letter-spacing: -.01em;
-}
-
-/* Su foto e sfondi scuri i titoli sono bianchi */
-:where(.hero, .chisiamo-hero, .sezione-scura) :is(h1, h2, h3, h4) {
-  color: var(--white);
+  font-size: var(--h3-size);
+  line-height: var(--h3-lh);
+  letter-spacing: var(--h3-ls);
 }
 
 /* ---------- Testo ---------- */
 
-/* Testo di apertura sotto il titolo di una sezione */
-.intro-sezione {
-  font-size: var(--text-base);
-  font-weight: var(--font-normal);
-  line-height: 1.75;
-  color: var(--text-light);
+/* Testo piccolo: note, metadati, didascalie, età e frequenze nelle card */
+.testo-piccolo {
+  font-size: var(--small-size);
+  line-height: var(--small-lh);
+  color: var(--small-color);
 }
 
-/* Testo in evidenza (frasi brevi di una lista): grandezza dei titoli di card, peso normale,
+/* Testo in evidenza (frasi brevi di una lista): stesso corpo del lead, peso normale,
    grassetto solo sulle parole chiave */
 .testo-evidenza {
-  font-size: var(--text-xl);
-  font-weight: var(--font-normal);
-  line-height: 1.4;
+  font-size: var(--lead-size);
+  font-weight: var(--body-weight);
+  line-height: var(--lead-lh);
 }
 
 /* Testo di apertura sotto il titolo delle hero (home e pagine interne) */
 .hero-lead {
-  font-size: var(--text-xl);
-  font-weight: var(--font-light);
-  line-height: 1.55;
+  font-size: var(--lead-size);
+  font-weight: var(--lead-weight);
+  line-height: var(--lead-lh);
   color: rgb(var(--bianco-rgb) / .88);
   max-width: 38rem;
   margin: 1rem 0 0;
@@ -94,13 +106,13 @@ dialog h2 {
 
 /* Numeri e anni in evidenza */
 .numero-grande {
-  font-size: var(--text-5xl);
+  font-size: var(--numero-grande-size);
   font-weight: var(--font-bold);
   line-height: 1;
 }
 
 .numero-medio {
-  font-size: var(--text-3xl);
+  font-size: var(--numero-medio-size);
   font-weight: var(--font-light);
   line-height: 1;
 }
@@ -110,7 +122,7 @@ dialog h2 {
 main strong,
 main b {
   font-weight: var(--font-semibold);
-  color: var(--dark-navy);
+  color: var(--heading-color);
 }
 
 /* Link dentro il testo corrente (collegamenti tra corsi e pagine): link senza
@@ -124,7 +136,7 @@ main p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
 }
 
 main p a:is(:not([class]), [class^="astro-"]:not([class*=" "])):hover {
-  color: var(--dark-navy);
+  color: var(--heading-color);
 }
 
 /* ---------- Etichette ---------- */
@@ -133,12 +145,12 @@ main p a:is(:not([class]), [class^="astro-"]:not([class*=" "])):hover {
    intestazioni delle tabelle, anche su h2/h3 nel footer e nei box). Un solo stile ovunque. */
 .titoletto,
 .eyebrow {
-  font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
-  line-height: 1.4;
-  letter-spacing: 2px;
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  line-height: var(--label-lh);
+  letter-spacing: var(--label-ls);
   text-transform: uppercase;
-  color: var(--primary-blue-dark);
+  color: var(--label-color);
 }
 
 .eyebrow {
@@ -147,18 +159,26 @@ main p a:is(:not([class]), [class^="astro-"]:not([class*=" "])):hover {
 }
 
 /* ---------- Su fondo scuro o foto ---------- */
-.sezione-scura .eyebrow,
+:where(.hero, .chisiamo-hero, .sezione-scura) :is(h1, h2, h3, h4) {
+  color: var(--heading-color-su-scuro);
+}
+
+.sezione-scura {
+  color: var(--body-color-su-scuro);
+}
+
 .sezione-scura .titoletto,
+.sezione-scura .eyebrow,
 .sezione-scura .titolo-sezione em {
-  color: var(--primary-blue);
+  color: var(--label-color-su-scuro);
 }
 
 .sezione-scura .titolo-sezione {
-  color: var(--white);
+  color: var(--heading-color-su-scuro);
 }
 
-.sezione-scura .intro-sezione {
-  color: rgb(var(--bianco-rgb) / .92);
+.sezione-scura .testo-piccolo {
+  color: var(--small-color-su-scuro);
 }
 
 /* Il grassetto è bianco; i link nel testo pure */
@@ -167,7 +187,7 @@ main .sezione-scura b,
 main .chisiamo-hero strong,
 main .hero strong,
 main .sezione-scura p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
-  color: var(--white);
+  color: var(--heading-color-su-scuro);
 }
 
 /* Telefono: sul lead delle hero il peso 300 si legge male, qui è più pieno e a tutta larghezza */

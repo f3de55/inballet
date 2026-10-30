@@ -83,8 +83,8 @@ async function initGoogle() {
         const card = document.createElement('li');
         card.className = `orario-item${giorno === oggi ? ' oggi' : ''}`;
         const chiuso = /closed|chiuso/i.test(orario);
-        const d = Object.assign(document.createElement('span'), { className: 'orario-day', textContent: giorno });
-        const t = Object.assign(document.createElement('span'), { className: chiuso ? 'orario-time chiuso' : 'orario-time', textContent: orario });
+        const d = Object.assign(document.createElement('p'), { className: 'orario-day', textContent: giorno });
+        const t = Object.assign(document.createElement('p'), { className: chiuso ? 'orario-time chiuso' : 'orario-time', textContent: orario });
         card.append(d, t);
         return card;
       }),

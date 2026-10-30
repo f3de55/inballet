@@ -1,0 +1,135 @@
+/* Il corso in breve: tre dati affiancati, centrati, divisi da filetti verticali e chiusi da due filetti
+(come "InBallet in numeri"): valore grande, sotto la sua etichetta */
+.breve-lista {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 4.5rem 0 0;
+  padding: 0;
+  border-block: 1px solid var(--linea);
+}
+
+.dato {
+  padding: 2.25rem 1.5rem;
+  text-align: center;
+}
+
+.dato + .dato {
+  border-left: 1px solid var(--linea);
+}
+
+.dato-valore {
+  display: block;
+  font-size: var(--numero-medio-size);
+  font-weight: var(--font-bold);
+  line-height: 1.1;
+  color: var(--primary-blue-dark);
+}
+
+.dato-unita {
+  font-size: var(--lead-size);
+  font-weight: var(--font-normal);
+}
+
+.dato-testo {
+  display: block;
+  margin-top: .75rem;
+}
+
+/* Diploma: enti in una colonna centrata sotto l'intestazione */
+.enti-lista {
+  list-style: none;
+  max-width: 48rem;
+  margin: 3.5rem auto 0;
+  padding: 0;
+}
+
+/* Icona dell'area accanto al nome */
+/* ---------- Diploma ---------- */
+.form-cert-section {
+  padding: var(--section-y) 0;
+  background: var(--white);
+}
+
+/* Loghi in riquadri della stessa misura: altezza uguale, larghezza libera (CONI è più largo) */
+.enti-lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.ente {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 2.25rem 1.5rem;
+  background: var(--bg-soft);
+  border-radius: var(--radius-card);
+  text-align: center;
+}
+
+.ente-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 8.5rem;
+}
+
+.ente-logo img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Equilibrio ottico: il logo CONI è più largo, a parità di altezza sembrerebbe più grande */
+.ente-logo img[data-sigla="CONI"] {
+  height: 84%;
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .breve-lista {
+    margin-top: 3.5rem;
+  }
+
+  .dato {
+    padding: 1.75rem 1rem;
+  }
+
+  /* Diploma: enti a tutta larghezza, allineati all'intestazione */
+  .enti-lista {
+    max-width: none;
+    margin-top: 2.5rem;
+  }
+
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  /* In breve: un dato sotto l'altro, divisi da filetti orizzontali */
+  .breve-lista {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 3rem;
+  }
+
+  .dato {
+    padding: 1.5rem 0;
+  }
+
+  .dato + .dato {
+    border-top: 1px solid var(--linea);
+    border-left: none;
+  }
+
+  .ente {
+    padding: 1.75rem 1rem;
+  }
+
+  .ente-logo {
+    height: 6rem;
+  }
+
+}

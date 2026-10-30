@@ -242,8 +242,7 @@ async function elimina(riga: HTMLElement) {
   if (error) return toast(error.message || "Errore durante l'eliminazione", 'error');
 
   toast('Insegnante eliminato', 'success');
-  riga.style.transition = 'opacity .25s';
-  riga.style.opacity = '0';
+  riga.classList.add('in-uscita');
   setTimeout(() => location.reload(), 700); // aggiorna conteggi e stato vuoto
 }
 

@@ -7,10 +7,14 @@
     "badge": "Adulti",
     "titolo": "Adulti",
     "tagline": "Iniziare da zero, ricominciare o continuare a danzare",
-    "heroImage": "assets/images/foto/danza-dolce.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/adulti-desktop.png",
+      "tablet": "assets/images/hero-corsi/adulti-tablet.png",
+      "mobile": "assets/images/foto/danza-dolce.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 40%",
-      "tablet": "45% 50%",
+      "desktop": "100% 50%",
+      "tablet": "100% 50%",
       "mobile": "40% 50%"
     },
     "introTitolo": "Danza per adulti, <em>anche da zero</em>",
@@ -107,10 +111,14 @@
     "badge": "9-11 anni",
     "titolo": "Bambini",
     "tagline": "L'età per consolidare la tecnica e scoprire il proprio stile",
-    "heroImage": "assets/images/bg-progetti-territorio.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/bambini-desktop.png",
+      "tablet": "assets/images/hero-corsi/bambini-tablet.png",
+      "mobile": "assets/images/bg-progetti-territorio.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 35%",
-      "tablet": "50% 50%"
+      "desktop": "100% 50%",
+      "tablet": "100% 50%"
     },
     "introTitolo": "Danza per bambini <em>da 9 a 11 anni</em>",
     "introImage": "assets/images/foto/hip-hop-img4.jpg",
@@ -155,10 +163,14 @@
     "badge": "Dai 6 anni",
     "titolo": "Breaking",
     "tagline": "La danza della cultura Hip-Hop, dal cerchio ai freeze",
-    "heroImage": "assets/images/foto/breaking.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/breaking-desktop.png",
+      "tablet": "assets/images/hero-corsi/breaking-tablet.png",
+      "mobile": "assets/images/foto/breaking.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 25%",
-      "tablet": "50% 50%"
+      "desktop": "100% 50%",
+      "tablet": "100% 50%"
     },
     "introTitolo": "Cos'è il <em>Breaking</em>",
     "introImage": "assets/images/foto/breaking-img3.jpg",
@@ -203,10 +215,14 @@
     "badge": "Adulti",
     "titolo": "Classi di Gruppo",
     "tagline": "Hatha Yoga e Pilates in gruppo, per corpo e mente",
-    "heroImage": "assets/images/gallery-5.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/classi-desktop.png",
+      "tablet": "assets/images/hero-corsi/classi-tablet.png",
+      "mobile": "assets/images/gallery-5.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 45%",
-      "tablet": "50% 50%"
+      "desktop": "100% 50%",
+      "tablet": "100% 50%"
     },
     "introTitolo": "Classi di gruppo <em>per il benessere</em>",
     "introImage": "assets/images/foto/pilates-img4.jpg",
@@ -252,10 +268,14 @@
     "badge": "Improvvisazione",
     "titolo": "Contact Improvisation",
     "tagline": "Due corpi in ascolto, un linguaggio universale",
-    "heroImage": "assets/images/foto/contactimprovisation.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/contact-improvisation-desktop.png",
+      "tablet": "assets/images/hero-corsi/contact-improvisation-tablet.png",
+      "mobile": "assets/images/foto/contactimprovisation.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 35%",
-      "tablet": "50% 50%"
+      "desktop": "100% 50%",
+      "tablet": "100% 50%"
     },
     "introTitolo": "Cos'è la Contact <em>Improvisation</em>",
     "introImage": "assets/images/foto/contact-improvisation-img3.jpg",
@@ -300,10 +320,14 @@
     "badge": "Dai 16 anni",
     "titolo": "Contaminato",
     "tagline": "Tecniche liriche e urbane che confluiscono in un unico stile",
-    "heroImage": "assets/images/foto/contaminato.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/contaminato-desktop.png",
+      "tablet": "assets/images/hero-corsi/contaminato-tablet.png",
+      "mobile": "assets/images/foto/contaminato.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 40%",
-      "tablet": "50% 50%"
+      "desktop": "100% 50%",
+      "tablet": "100% 50%"
     },
     "introTitolo": "Cos'è il <em>Contaminato</em>",
     "introImage": "assets/images/foto/contaminato-img2.jpg",
@@ -349,10 +373,14 @@
     "badge": "Dai 40 anni",
     "titolo": "Danza Contemporanea Adulti",
     "tagline": "Ricominciare dopo anni di stop o iniziare da zero, dai 40 anni in su",
-    "heroImage": "assets/images/foto/danza-dolce.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/adulti-desktop.png",
+      "tablet": "assets/images/hero-corsi/adulti-tablet.png",
+      "mobile": "assets/images/foto/danza-dolce.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 50%",
-      "tablet": "40% 50%",
+      "desktop": "100% 50%",
+      "tablet": "100% 50%",
       "mobile": "35% 50%"
     },
     "introTitolo": "Danza contemporanea <em>dai 40 anni</em>",
@@ -399,10 +427,14 @@
     "badge": "Ogni stile",
     "titolo": "Danza Acrobatica",
     "tagline": "Dinamiche aeree e linee precise, per stupire e stupirsi",
-    "heroImage": "assets/images/foto/danzacontemporanea.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/danza-acrobatica-desktop.png",
+      "tablet": "assets/images/hero-corsi/danza-acrobatica-tablet.png",
+      "mobile": "assets/images/foto/danzacontemporanea.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 0%",
-      "tablet": "45% 50%",
+      "desktop": "100% 50%",
+      "tablet": "100% 50%",
       "mobile": "45% 50%"
     },
     "introTitolo": "Cos'è la Danza <em>Acrobatica</em>",
@@ -500,10 +532,14 @@
     "badge": "Dai 10 anni",
     "titolo": "Danza Contemporanea",
     "tagline": "L'evoluzione più attuale della danza, l'arte più libera del movimento",
-    "heroImage": "assets/images/hero-danza-contemporanea.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-danza-contemporanea.jpg",
+      "tablet": "assets/images/hero-corsi/danza-contemporanea-tablet.png",
+      "mobile": "assets/images/hero-danza-contemporanea.jpg"
+    },
     "heroFuoco": {
       "desktop": "100% 30%",
-      "tablet": "80% 50%",
+      "tablet": "100% 50%",
       "mobile": "80% 50%"
     },
     "introTitolo": "Cos'è la Danza <em>Contemporanea</em>",
@@ -601,9 +637,14 @@
     "badge": "Urban",
     "titolo": "Heels",
     "tagline": "Portamento, femminilità e sensualità sui tacchi",
-    "heroImage": "assets/images/gallery-2.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/heels-desktop.png",
+      "tablet": "assets/images/hero-corsi/heels-tablet.png",
+      "mobile": "assets/images/gallery-2.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 50%"
+      "desktop": "100% 50%",
+      "tablet": "100% 50%"
     },
     "introTitolo": "Cos'è <em>Heels</em>",
     "introImage": "assets/images/foto/hip-hop-img3.jpg",
@@ -648,10 +689,14 @@
     "badge": "Dai 6 anni",
     "titolo": "Hip-Hop",
     "tagline": "Energia, groove e stile urbano in ogni passo",
-    "heroImage": "assets/images/foto/hiphop.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/hip-hop-desktop.png",
+      "tablet": "assets/images/hero-corsi/hip-hop-tablet.png",
+      "mobile": "assets/images/foto/hiphop.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 15%",
-      "tablet": "45% 50%",
+      "desktop": "100% 50%",
+      "tablet": "100% 50%",
       "mobile": "40% 50%"
     },
     "introTitolo": "Cos'è l'<em>Hip-Hop</em>",
@@ -698,10 +743,14 @@
     "badge": "Tutte le età",
     "titolo": "Lezioni Individuali",
     "tagline": "Un percorso su misura, pensato esclusivamente per te",
-    "heroImage": "assets/images/gallery-4.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/lezioni-individuali-desktop.png",
+      "tablet": "assets/images/hero-corsi/lezioni-individuali-tablet.png",
+      "mobile": "assets/images/gallery-4.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 10%",
-      "tablet": "50% 30%",
+      "desktop": "100% 50%",
+      "tablet": "100% 50%",
       "mobile": "50% 50%"
     },
     "introTitolo": "Lezioni individuali <em>di danza</em>",
@@ -799,9 +848,14 @@
     "badge": "Dai 18 anni",
     "titolo": "Movimento Creativo",
     "tagline": "Dialogare con il proprio corpo, partendo dalla mente",
-    "heroImage": "assets/images/gallery-10.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/movimento-creativo-desktop.png",
+      "tablet": "assets/images/hero-corsi/movimento-creativo-tablet.png",
+      "mobile": "assets/images/gallery-10.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 50%"
+      "desktop": "100% 50%",
+      "tablet": "100% 50%"
     },
     "introTitolo": "Cos'è il Movimento <em>Creativo</em>",
     "introImage": "assets/images/foto/movimento-creativo-riflessidise.jpg",
@@ -847,10 +901,14 @@
     "badge": "Adulti - tutti i livelli",
     "titolo": "Pilates",
     "tagline": "Controllare i muscoli con la mente, partendo dalla Power House",
-    "heroImage": "assets/images/foto/pilates.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/pilates-desktop.png",
+      "tablet": "assets/images/hero-corsi/pilates-tablet.png",
+      "mobile": "assets/images/foto/pilates.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 50%",
-      "tablet": "60% 50%",
+      "desktop": "100% 50%",
+      "tablet": "100% 50%",
       "mobile": "70% 50%"
     },
     "introTitolo": "Cos'è il <em>Pilates</em>",
@@ -897,10 +955,14 @@
     "badge": "3-5 anni",
     "titolo": "Prima Infanzia",
     "tagline": "I primi passi nella danza, attraverso il gioco e la musica",
-    "heroImage": "assets/images/gallery-8.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/prima-infanzia-desktop.png",
+      "tablet": "assets/images/hero-corsi/prima-infanzia-tablet.png",
+      "mobile": "assets/images/gallery-8.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 40%",
-      "tablet": "50% 45%"
+      "desktop": "100% 50%",
+      "tablet": "100% 50%"
     },
     "introTitolo": "Danza per bambini <em>da 3 a 5 anni</em>",
     "introImage": "assets/images/foto/bambini-insegnante.jpg",
@@ -945,10 +1007,14 @@
     "badge": "12-16 anni",
     "titolo": "Ragazzi",
     "tagline": "Tecnica, stile personale e palcoscenico",
-    "heroImage": "assets/images/gallery-6.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/ragazzi-desktop.png",
+      "tablet": "assets/images/hero-corsi/ragazzi-tablet.png",
+      "mobile": "assets/images/gallery-6.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 45%",
-      "tablet": "50% 50%"
+      "desktop": "100% 50%",
+      "tablet": "100% 50%"
     },
     "introTitolo": "Danza per ragazzi <em>da 12 a 16 anni</em>",
     "introImage": "assets/images/foto/contaminato-img3.jpg",
@@ -993,10 +1059,14 @@
     "badge": "6-8 anni",
     "titolo": "Seconda Infanzia",
     "tagline": "A 6 anni si sceglie il primo stile: dal gioco alla tecnica",
-    "heroImage": "assets/images/gallery-1.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/seconda-infanzia-desktop.png",
+      "tablet": "assets/images/hero-corsi/seconda-infanzia-tablet.png",
+      "mobile": "assets/images/gallery-1.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 30%",
-      "tablet": "50% 50%"
+      "desktop": "100% 50%",
+      "tablet": "100% 50%"
     },
     "introTitolo": "Danza per bambini <em>da 6 a 8 anni</em>",
     "introImage": "assets/images/foto/bambini-mani.jpg",
@@ -1041,9 +1111,14 @@
     "badge": "Adulti - tutti i livelli",
     "titolo": "Yoga",
     "tagline": "Un'ora e mezza dedicata a te: respiro, posture e quiete",
-    "heroImage": "assets/images/foto/yoga.jpg",
+    "heroImage": {
+      "desktop": "assets/images/hero-corsi/yoga-desktop.png",
+      "tablet": "assets/images/hero-corsi/yoga-tablet.png",
+      "mobile": "assets/images/foto/yoga.jpg"
+    },
     "heroFuoco": {
-      "desktop": "50% 50%"
+      "desktop": "100% 50%",
+      "tablet": "100% 50%"
     },
     "introTitolo": "Hatha Yoga <em>a InBallet</em>",
     "introImage": "assets/images/foto/yoga-img4.jpg",

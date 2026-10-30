@@ -6,7 +6,7 @@
 import '../styles/icons.css';
 import '../styles/global.css';
 import { Font, getImage } from 'astro:assets';
-import { getAsset, webp } from '../lib/images';
+import { getAsset } from '../lib/images';
 import Banner from '../components/Banner.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
@@ -40,14 +40,10 @@ const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(^|\/)index$/, '
 const canonical = new URL(path, Astro.site).href;
 // Immagine social predefinita 1200x630 (le pagine possono passarne una propria)
 const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
-// Elemento grafico (onde azzurre, già sbiadite nel file) delle sezioni con la classe
-// decoro-onde: WebP con trasparenza, più la copia specchiata per decoro-onde--sinistra
-const onde = await webp('decorazioni/onde-destra.png', 1600);
-const ondeSinistra = await webp('decorazioni/onde-sinistra.png', 1600);
 ---
 
 <!doctype html>
-<html lang="it" style={`--decoro-onde: url(${onde}); --decoro-onde-sinistra: url(${ondeSinistra})`}>
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -76,7 +72,7 @@ const ondeSinistra = await webp('decorazioni/onde-sinistra.png', 1600);
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <Font cssVariable="--font-rubik" preload={[{ style: 'normal', subset: 'latin' }]} />
-    <style is:inline>body{min-height:100vh}.main-header{min-height:var(--nav-h,80px)}</style>
+    
     <slot name="head" />
 </head>
 <body>
@@ -108,62 +104,3 @@ const ondeSinistra = await webp('decorazioni/onde-sinistra.png', 1600);
     <slot name="scripts" />
 </body>
 </html>
-
-<style>
-.main-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: var(--header-dark);
-  z-index: 1000;
-  transition: background var(--transition-base);
-  box-shadow: 0 2px 20px rgb(var(--nero-rgb) / .3);
-  min-height: var(--nav-h);
-}
-
-.main-header.is-scrolled {
-  background: rgb(var(--header-rgb) / .98);
-  box-shadow: 0 4px 20px rgb(var(--nero-rgb) / .4);
-}
-
-.footer {
-  background: var(--dark-navy);
-  color: var(--white);
-  /* Stessa scala della navbar: voci e testi a 14-15px */
-  font-size: var(--text-xs);
-  position: relative;
-  z-index: 10;
-  /* Spazio sopra il logo e sotto il copyright: lo stesso valore */
-  --footer-y: 3rem;
-  /* Testi e link del footer: un solo colore, bianco pieno solo per titoli e hover */
-  --footer-testo: var(--testo-su-scuro-debole);
-  padding: var(--footer-y) 0 0;
-}
-
-@media (max-width: 1024px) {
-  .footer {
-    --footer-y: 2rem;
-  }
-}
-
-/* Mobile: illustrazione decorativa (757x2076, sfondo ~#0e0e0e) larga quanto il footer e
-   ancorata in alto: la sua scala dipende solo dalla larghezza, quindi resta ferma quando le
-   fisarmoniche allungano il footer. Sotto l'immagine continua lo stesso nero, messo nello
-   pseudo-elemento perché il filtro scurisca allo stesso modo foto e fondo (nessuna giunta). */
-@media (max-width: 768px) {
-  .footer {
-    background: var(--footer-bg);
-    overflow: clip;
-  }
-
-  .footer::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--footer-bg) url('/assets/images/footer-mobile.webp') center top / 100% auto no-repeat;
-    filter: brightness(.2);
-    pointer-events: none;
-  }
-}
-</style>

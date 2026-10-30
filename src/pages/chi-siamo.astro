@@ -5,14 +5,16 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import InsegnantiSection from '../components/InsegnantiSection.astro';
 import InsegnantiDialoghi from '../components/InsegnantiDialoghi.astro';
-import { sfondo, sfondoCta, type Fuoco } from '../lib/images';
+import { sfondoCta, type Fuoco } from '../lib/images';
+import { heroPagina } from '../lib/hero-pagine';
 import { leggiInsegnanti } from '../lib/insegnanti';
+import '../styles/pages/chi-siamo.css';
 
 // Gli insegnanti si gestiscono dalla dashboard: la pagina è generata a ogni richiesta
 export const prerender = false;
 
 const bg = {
-  hero: await sfondo('gallery-7.jpg', { desktop: '50% 40%', tablet: '50% 55%' }),
+  hero: await heroPagina('chi-siamo'),
   cta: await sfondoCta('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
 };
 
@@ -21,10 +23,10 @@ const insegnanti = await leggiInsegnanti();
 
 const [lainate, rho] = sedi;
 
-// Sedi: foto e frase per ciascuna (indirizzo e link alla mappa da src/data/scuola.ts)
-const sediFoto: { sede: typeof lainate; foto: string; alt: string; fuoco?: Fuoco; testo: string }[] = [
-  { sede: lainate, foto: 'foto/sede-lainate.jpg', alt: "L'edificio della sede di Lainate al tramonto, con l'insegna IN.Ballet sulla facciata", fuoco: { desktop: '35% 50%', mobile: '38% 50%' }, testo: 'La sede principale: corsi per tutte le età, dai primi passi ai livelli avanzati.' },
-  { sede: rho, foto: 'foto/sede-rho.jpg', alt: "L'ingresso della sede di Rho al tramonto", testo: 'Lo stesso metodo della sede centrale, vicino alle famiglie di Rho e dintorni.' },
+// Sedi: foto dell'ingresso; indirizzi e mappe dai dati ufficiali della scuola.
+const sediFoto: { sede: typeof lainate; foto: string; alt: string; fuoco?: Fuoco }[] = [
+  { sede: lainate, foto: 'foto/sede-lainate.jpg', alt: "L'edificio della sede di Lainate al tramonto, con l'insegna IN.Ballet sulla facciata", fuoco: { desktop: '35% 50%', mobile: '38% 50%' } },
+  { sede: rho, foto: 'foto/sede-rho.jpg', alt: "L'ingresso della sede di Rho al tramonto" },
 ];
 const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
@@ -44,9 +46,13 @@ const numeri = [
     ogDescription={`La storia e la visione di InBallet, scuola di danza a Lainate e Rho dal ${FONDAZIONE}: una scuola aperta a tutte le età.`}
 >
 
+    <Fragment slot="head">
+        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
+    </Fragment>
+
         <!-- Hero Chi Siamo -->
-        <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
+        <section class="chisiamo-hero hero-banner">
+            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -65,7 +71,7 @@ const numeri = [
                         </div>
                     </div>
                     <div class="fondatrice-content">
-                        <span class="fondatrice-label eyebrow">Fondatrice & Direttrice Artistica</span>
+                        <p class="fondatrice-label eyebrow">Fondatrice & Direttrice Artistica</p>
                         <h2 class="fondatrice-name titolo-sezione">Ilenia <em>Nobile</em></h2>
                         <div class="fondatrice-bio">
                             <p><strong>Ilenia Nobile</strong> ha fondato I.N. Ballet nel {FONDAZIONE} e ne è la <strong>Direttrice Artistica</strong>: una scuola di danza multidisciplinare, oggi con <strong>due sedi a Lainate e Rho</strong>, in cui la danza è accessibile a tutti.</p>
@@ -84,32 +90,32 @@ const numeri = [
         <section class="storia-section decoro-onde decoro-onde--sinistra">
             <div class="container">
                 <div class="storia-header">
-                    <span class="storia-label eyebrow">Il nostro percorso</span>
+                    <p class="storia-label eyebrow">Il nostro percorso</p>
                     <h2 class="storia-title titolo-sezione">Dal {FONDAZIONE} <em>a oggi</em></h2>
                 </div>
                 <ol class="timeline">
                     <li class="voce">
-                        <span class="voce-anno numero-medio">{FONDAZIONE}</span>
+                        <p class="voce-anno numero-medio">{FONDAZIONE}</p>
                         <h3 class="voce-titolo">La fondazione</h3>
                         <p class="voce-testo">Ilenia Nobile fonda a Lainate <strong>I.N. Ballet</strong>, scuola di danza multidisciplinare.</p>
                     </li>
                     <li class="voce">
-                        <span class="voce-anno numero-medio">2013</span>
+                        <p class="voce-anno numero-medio">2013</p>
                         <h3 class="voce-titolo">Nasce NoiConVoi</h3>
                         <p class="voce-testo">Il progetto di volontariato che accoglie in sala <strong>ragazzi con disabilità</strong>, con supporto psicomotorio.</p>
                     </li>
                     <li class="voce">
-                        <span class="voce-anno numero-medio">2023</span>
+                        <p class="voce-anno numero-medio">2023</p>
                         <h3 class="voce-titolo">Ente formativo</h3>
                         <p class="voce-testo">Riconoscimento per il titolo di <strong>Insegnante di Danza</strong>, valido CSEN e CONI a livello nazionale.</p>
                     </li>
                     <li class="voce">
-                        <span class="voce-anno numero-medio">2024</span>
+                        <p class="voce-anno numero-medio">2024</p>
                         <h3 class="voce-titolo">Volontariato d'impresa</h3>
                         <p class="voce-testo">Aziende ed enti entrano nei progetti sociali con i loro <strong>volontari</strong>.</p>
                     </li>
                     <li class="voce">
-                        <span class="voce-anno numero-medio">Oggi</span>
+                        <p class="voce-anno numero-medio">Oggi</p>
                         <h3 class="voce-titolo">Due sedi, ogni età</h3>
                         <p class="voce-testo">Lainate e Rho, <strong>{totaleCorsi} corsi</strong> dai 3 anni all'età adulta e uno spettacolo in teatro ogni anno.</p>
                     </li>
@@ -120,7 +126,7 @@ const numeri = [
         <!-- InBallet in Numeri: intestazione e quattro numeri in fila separati da filetti verticali -->
         <section class="numeri-section sezione-scura" aria-labelledby="numeri-titolo">
             <div class="intro-editoriale">
-                <span class="eyebrow">In sintesi</span>
+                <p class="eyebrow">In sintesi</p>
                 <h2 class="titolo-sezione" id="numeri-titolo">InBallet <em>in numeri</em></h2>
                 <p class="intro-sezione">Dai <strong>primi passi a 3 anni</strong> fino all'età adulta.</p>
             </div>
@@ -130,13 +136,13 @@ const numeri = [
                         <div class="numero">
                             <dt class="numero-etichetta titoletto">{n.etichetta}</dt>
                             <dd class="numero-valore numero-grande"><span class="numero-value" data-target={n.valore}>{n.valore}</span></dd>
-                            <dd class="numero-nota">{n.nota}</dd>
+                            <dd class="numero-nota testo-piccolo">{n.nota}</dd>
                         </div>
                     ))}
                 </dl>
                 <div class="numeri-cta">
                     <a href="/corsi" class="btn-secondary">
-                        <span>Scopri i corsi</span>
+                        Scopri i corsi
                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -146,29 +152,25 @@ const numeri = [
         <!-- Insegnanti (gestiti dalla dashboard; la sezione compare solo se ce ne sono) -->
         <InsegnantiSection dati={insegnanti} />
 
-        <!-- Carosello Sede Fullwidth -->
-        <!-- Sedi: intestazione editoriale e le due sedi affiancate (foto grande; sotto tipo,
-             città, descrizione e indicazioni) -->
-        <section class="sede-section decoro-onde" aria-labelledby="sedi-titolo">
+        <!-- Sedi: due righe con ingresso, indirizzo e accesso diretto alla mappa. -->
+        <section class="sede-section" aria-labelledby="sedi-titolo">
             <div class="intro-editoriale">
-                <span class="eyebrow">I nostri spazi</span>
-                <h2 class="titolo-sezione" id="sedi-titolo">Le nostre <em>sale</em></h2>
-                <p class="intro-sezione"><strong>Due sedi</strong> a nord-ovest di Milano, a Lainate e a Rho.</p>
+                <h2 class="titolo-sezione" id="sedi-titolo">Dove <em>trovarci</em></h2>
             </div>
             <div class="container">
                 <ul class="sedi">
-                    {sediFoto.map(({ sede, foto, alt, fuoco, testo }) => (
+                    {sediFoto.map(({ sede, foto, alt, fuoco }) => (
                         <li class="sede">
-                            <Img class="sede-foto" src={foto} alt={alt} fuoco={fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 640px) 100vw, 384px" />
+                            <Img class="sede-foto" src={foto} alt={alt} fuoco={fuoco} loading="lazy" decoding="async" widths={[240, 480]} sizes="(max-width: 600px) 96px, 208px" />
                             <div class="sede-testo">
-                                <p class="sede-tipo titoletto">{sede.titolo}</p>
                                 <h3 class="sede-nome">{sede.citta}</h3>
-                                <p class="sede-descrizione">{testo}</p>
-                                <a href={sede.maps} target="_blank" rel="noopener" class="link-cta sede-cta" aria-label={`Indicazioni per la sede di ${sede.citta}, ${sede.via}`}>
-                                    Indicazioni
-                                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                                </a>
+                                <p>{sede.via}</p>
+                                <p class="testo-piccolo">{sede.cap} {sede.citta} ({sede.provincia})</p>
                             </div>
+                            <a href={sede.maps} target="_blank" rel="noopener noreferrer" class="link-cta sede-cta" aria-label={`Apri la mappa della sede di ${sede.citta}, ${sede.via} (si apre in una nuova scheda)`}>
+                                Apri la mappa
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
                         </li>
                     ))}
                 </ul>
@@ -176,14 +178,14 @@ const numeri = [
         </section>
 
         <!-- CTA Finale - Stesso stile template corsi -->
-        <section class="corso-contatto-section sezione-scura">
-            <div class="corso-contatto-bg" style={bg.cta.style}></div>
-            <div class="corso-contatto-overlay"></div>
-            <div class="corso-contatto-wrapper">
-                <div class="corso-contatto-content">
-                    <h2 class="titolo-sezione">Vuoi conoscerci <em>meglio?</em></h2>
-                    <p class="intro-sezione"><strong>Scrivici o chiamaci</strong>: ti raccontiamo corsi, orari e sedi.</p>
-                    <a href="/contatti" class="corso-btn-cta btn-primary">
+        <section class="cta-contatto sezione-scura">
+            <div class="cta-bg" style={bg.cta.style}></div>
+            <div class="cta-overlay"></div>
+            <div class="cta-wrapper">
+                <h2 class="titolo-sezione">Vuoi conoscerci <em>meglio?</em></h2>
+                <p class="intro-sezione"><strong>Scrivici o chiamaci</strong>: ti raccontiamo corsi, orari e sedi.</p>
+                <div class="cta-pulsanti">
+                    <a href="/contatti" class="btn-primary">
                         Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -264,480 +266,3 @@ const numeri = [
     telefono.addEventListener('change', disegna);
   }
 </script>
-
-<style>
-.fondatrice-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-.fondatrice-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
-  align-items: center;
-}
-
-.fondatrice-visual {
-  position: relative;
-}
-
-.fondatrice-image-wrapper {
-  max-width: 480px;
-}
-
-.fondatrice-image-wrapper :global(img) {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-}
-
-.fondatrice-content {
-  padding: 0;
-}
-
-.fondatrice-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.fondatrice-name {
-  margin: 0 0 0.5rem;
-}
-
-.fondatrice-bio :global(p) {
-  font-size: var(--text-base);
-  color: var(--text-dark);
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-}
-
-.fondatrice-bio :global(p:last-child) {
-  margin-bottom: 0;
-}
-
-.storia-section {
-  padding: var(--section-y) 0;
-  background: var(--bg-soft);
-  position: relative;
-  overflow: hidden;
-}
-
-.storia-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
-
-/* Timeline a serpentina: si legge da sinistra a destra, riga dopo riga, e una sola linea unisce tutte le
-   tappe dalla più vecchia alla più nuova. A fine riga la linea esce a destra, scende nello spazio tra le
-   righe, torna indietro fino al margine sinistro e rientra nel nodo della prima tappa della riga sotto.
-   Desktop: 3 tappe per riga; tablet: 2; telefono: una linea verticale a sinistra.
-   L'ultima tappa (Oggi) ha il nodo pieno. */
-.timeline {
-  --nodo: 20px;
-  --distanza: 3rem;
-  --riga: 4.25rem;
-  --sporgenza: 1.75rem;
-  --raggio: 1.75rem;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--riga) var(--distanza);
-  list-style: none;
-}
-
-.timeline .voce {
-  position: relative;
-  padding-top: 3rem;
-  border-top: none;
-}
-
-/* Nodo */
-.timeline .voce::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  box-sizing: border-box;
-  width: var(--nodo);
-  height: var(--nodo);
-  border: 3px solid var(--primary-blue-dark);
-  border-radius: var(--radius-full);
-  background: var(--bg-soft);
-}
-
-.timeline .voce:last-child::before {
-  background: var(--primary-blue-dark);
-}
-
-/* Linea verso destra, fino al nodo della tappa successiva */
-.timeline .voce::after {
-  content: '';
-  position: absolute;
-  top: calc(var(--nodo) / 2 - 1px);
-  left: var(--nodo);
-  right: calc(var(--distanza) * -1);
-  height: 2px;
-  background: var(--primary-blue);
-}
-
-.timeline .voce:last-child::after {
-  display: none;
-}
-
-.timeline .voce-anno::before {
-  display: none;
-}
-
-/* Con JavaScript la linea è un unico tracciato SVG (curve vere e spessore uniforme, vedi lo script in fondo):
-   le linee CSS tra le tappe non servono più. Senza JavaScript restano le linee dritte per riga. */
-.timeline {
-  position: relative;
-}
-
-.timeline :global(.timeline-linea) {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: visible;
-  pointer-events: none;
-}
-
-.timeline :global(.timeline-linea path) {
-  fill: none;
-  stroke: var(--primary-blue);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.timeline.con-linea .voce::after {
-  display: none;
-}
-
-/* Tablet: due tappe per riga */
-@media (min-width: 601px) and (max-width: 860px) {
-  .timeline {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-/* Telefono: una tappa per riga, in verticale lungo una linea a sinistra */
-@media (max-width: 600px) {
-  .timeline {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-
-  .timeline .voce {
-    padding: 0 0 2.75rem 3.25rem;
-  }
-
-  .timeline .voce:last-child {
-    padding-bottom: 0;
-  }
-
-  .timeline .voce::before {
-    top: .35rem;
-  }
-
-  .timeline .voce::after {
-    top: calc(.35rem + var(--nodo));
-    bottom: -.35rem;
-    right: auto;
-    left: calc(var(--nodo) / 2 - 1px);
-    width: 2px;
-    height: auto;
-    background: var(--primary-blue);
-  }
-}
-
-.storia-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.storia-title {
-  margin: 0;
-}
-
-/* ---------- InBallet in numeri ---------- */
-/* Fondo scuro; numeri bianchi in fila, divisi da filetti verticali */
-.numeri-section {
-  padding: var(--section-y) 0;
-  background: var(--dark-navy);
-}
-
-.numeri-lista {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 3.5rem 0 0;
-  text-align: center;
-}
-
-.numero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: .5rem 1.5rem;
-}
-
-.numero + .numero {
-  border-left: 1px solid var(--linea-su-scuro);
-}
-
-.numero-valore {
-  order: 1;
-  margin: 0;
-  color: var(--white);
-  font-variant-numeric: tabular-nums;
-}
-
-.numero-etichetta {
-  order: 2;
-  margin-top: 1rem;
-  color: var(--primary-blue);
-}
-
-.numero-nota {
-  order: 3;
-  margin: .35rem 0 0;
-  font-size: var(--text-sm);
-  color: rgb(var(--bianco-rgb) / .7);
-}
-
-.numeri-cta {
-  margin-top: 3.5rem;
-  text-align: center;
-}
-
-/* Tablet e mobile: 2x2 a celle uguali, con filetti solo tra una cella e l'altra (come i loghi dei sostenitori):
-   il gap da 1px sul fondo chiaro disegna le linee, le celle hanno il fondo scuro */
-@media (max-width: 900px) {
-  .numeri-lista {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1px;
-    margin-top: 2.5rem;
-    background: var(--linea-su-scuro);
-  }
-
-  .numero,
-  .numero + .numero {
-    justify-content: center;
-    padding: 2rem 1rem;
-    border-left: none;
-    background: var(--dark-navy);
-  }
-
-  .numeri-cta {
-    margin-top: 2.5rem;
-    text-align: left;
-  }
-}
-
-@media (max-width: 640px) {
-  .numero,
-  .numero + .numero {
-    padding: 1.5rem .75rem;
-  }
-
-  .numero-etichetta {
-    margin-top: .75rem;
-    text-align: center;
-  }
-
-  .numero-nota {
-    text-align: center;
-  }
-}
-
-.sede-section {
-  padding: var(--section-y) 0;
-  background: var(--bg-soft);
-  position: relative;
-}
-
-/* Le due sedi affiancate sulla stessa riga, divise da un filetto verticale (niente card):
-   foto di misura media, sotto tipo, città, descrizione e indicazioni allineati a sinistra */
-.sedi {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  max-width: 54rem;
-  margin: 3rem auto 0;
-  padding: 0;
-}
-
-.sede {
-  display: flex;
-  flex-direction: column;
-  padding-right: 3rem;
-}
-
-.sede + .sede {
-  padding: 0 0 0 calc(3rem - 1px);
-  border-left: 1px solid var(--linea);
-}
-
-.sede :global(.sede-foto) {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: var(--radius-img);
-}
-
-.sede-testo {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: 1.5rem;
-}
-
-.sede-tipo {
-  margin-bottom: .4rem;
-  color: var(--primary-blue-dark);
-}
-
-.sede-nome {
-  margin-bottom: .6rem;
-  color: var(--dark-navy);
-}
-
-.sede-descrizione {
-  max-width: 24rem;
-  font-size: var(--text-base);
-  line-height: 1.7;
-  color: var(--text-light);
-}
-
-/* «Indicazioni» sempre sulla stessa riga nelle due sedi, qualunque sia la lunghezza del testo */
-.sede-cta {
-  margin-top: auto;
-  padding-top: 1.25rem;
-}
-
-@media (max-width: 900px) {
-  .sedi {
-    margin-top: 2.5rem;
-  }
-
-  .sede {
-    padding-right: 1.75rem;
-  }
-
-  .sede + .sede {
-    padding-left: calc(1.75rem - 1px);
-  }
-}
-
-/* Telefono: una sede sotto l'altra, con il filetto orizzontale */
-@media (max-width: 640px) {
-  .sedi {
-    grid-template-columns: minmax(0, 1fr);
-    margin-top: 2rem;
-  }
-
-  .sede,
-  .sede + .sede {
-    padding: 0;
-  }
-
-  .sede + .sede {
-    margin-top: 2.25rem;
-    padding-top: 2.25rem;
-    border-left: none;
-    border-top: 1px solid var(--linea);
-  }
-
-  .sede :global(.sede-foto) {
-    max-width: 24rem;
-  }
-
-  .sede-testo {
-    margin-top: 1.25rem;
-  }
-}
-
-@media (max-width: 900px) {
-  .fondatrice-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-
-  .fondatrice-content {
-    display: contents;
-  }
-
-  .fondatrice-label {
-    order: 1;
-  }
-
-  .fondatrice-name {
-    order: 2;
-    margin-bottom: 1.75rem;
-  }
-
-  /* La cornice "--sinistra" sporge a destra e in basso: spazio dentro i margini */
-  .fondatrice-visual {
-    order: 3;
-    margin: 0 1.5rem 3.75rem 0;
-  }
-
-  .fondatrice-image-wrapper {
-    max-width: none;
-  }
-
-  .fondatrice-image-wrapper :global(img) {
-    aspect-ratio: 3 / 2;
-    object-position: center 25%;
-  }
-
-  .fondatrice-bio {
-    order: 4;
-  }
-
-  .fondatrice-citazione {
-    order: 5;
-  }
-
-  /* Intestazioni a sinistra, allineate ai contenuti sotto */
-  .storia-header {
-    text-align: left;
-    margin-bottom: 2.5rem;
-  }
-
-}
-
-@media (max-width: 768px) {
-
-  .fondatrice-section,
-.storia-section,
-.sede-section {
-    padding: 3.5rem 0;
-  }
-
-}
-
-@media (max-width: 480px) {
-
-  .fondatrice-section,
-.storia-section,
-.sede-section {
-    padding: 2.75rem 0;
-  }
-
-  .fondatrice-visual {
-    margin: 0 0 3rem .75rem;
-  }
-
-  .fondatrice-image-wrapper :global(img) {
-    aspect-ratio: 4 / 3;
-  }
-
-
-}
-</style>

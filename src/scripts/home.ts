@@ -55,9 +55,9 @@ function renderStats(rating: number, total: number) {
   const box = document.getElementById('googleStatsCard');
   if (!box || !rating) return;
   box.innerHTML = `
-            <span class="sintesi-voto">${rating.toFixed(1).replace('.', ',')}</span>
-            <span class="sintesi-stelle" aria-hidden="true">${stars(Math.round(rating))}</span>
-            <span class="sintesi-totale">${total ? `${total} recensioni su Google` : 'Recensioni su Google'}</span>
+            <p class="sintesi-voto">${rating.toFixed(1).replace('.', ',')}</p>
+            <div class="sintesi-stelle" aria-hidden="true">${stars(Math.round(rating))}</div>
+            <p class="sintesi-totale testo-piccolo">${total ? `${total} recensioni su Google` : 'Recensioni su Google'}</p>
         `;
   box.setAttribute('aria-label', `Valutazione media ${rating.toFixed(1)} su 5${total ? `, ${total} recensioni su Google` : ''}`);
   box.hidden = false;
@@ -89,11 +89,11 @@ function createSlide(review: Review, index: number) {
                 </p>
             </blockquote>
             <figcaption class="recensione-autore">
-                <span class="author-avatar" aria-hidden="true">${escapeHtml(initials(review.author_name))}</span>
-                <span>
+                <div class="author-avatar" aria-hidden="true">${escapeHtml(initials(review.author_name))}</div>
+                <div>
                     <strong>${escapeHtml(review.author_name)}</strong>
-                    <span class="recensione-fonte">Recensione su Google</span>
-                </span>
+                    <p class="recensione-fonte testo-piccolo">Recensione su Google</p>
+                </div>
             </figcaption>
         `;
   if (isLong) {

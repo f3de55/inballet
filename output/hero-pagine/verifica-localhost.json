@@ -1,0 +1,242 @@
+[
+  {
+    "page": "chi-siamo",
+    "status": 200,
+    "images": [
+      {
+        "url": "/_image?href=%2F_astro%2Fchi-siamo-desktop.DdqrGAWe.png&w=2560&h=800&f=webp",
+        "width": 2560,
+        "height": 800,
+        "format": "webp",
+        "bytes": 152146
+      },
+      {
+        "url": "/_image?href=%2F_astro%2Fchi-siamo-tablet.D9JbvITu.png&w=1600&h=1000&f=webp",
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "bytes": 127856
+      }
+    ]
+  },
+  {
+    "page": "corsi",
+    "status": 200,
+    "images": [
+      {
+        "url": "/_astro/corsi-desktop.D9Zyc4t3_1MDQvH.webp",
+        "width": 2560,
+        "height": 800,
+        "format": "webp",
+        "bytes": 82600
+      },
+      {
+        "url": "/_astro/corsi-tablet.DQUYOhKH_1Pljqr.webp",
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "bytes": 69892
+      }
+    ]
+  },
+  {
+    "page": "contatti",
+    "status": 200,
+    "images": [
+      {
+        "url": "/_astro/contatti-desktop.Be5_pjPz_Z1Hy90e.webp",
+        "width": 2560,
+        "height": 800,
+        "format": "webp",
+        "bytes": 238790
+      },
+      {
+        "url": "/_astro/contatti-tablet.mxPmjnjl_22axze.webp",
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "bytes": 169744
+      }
+    ]
+  },
+  {
+    "page": "documenti",
+    "status": 200,
+    "images": [
+      {
+        "url": "/_image?href=%2F_astro%2Fdocumenti-desktop.BJl-m2S7.png&w=2560&h=800&f=webp",
+        "width": 2560,
+        "height": 800,
+        "format": "webp",
+        "bytes": 47228
+      },
+      {
+        "url": "/_image?href=%2F_astro%2Fdocumenti-tablet.CXNXeHtn.png&w=1600&h=1000&f=webp",
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "bytes": 55608
+      }
+    ]
+  },
+  {
+    "page": "formazione-insegnanti",
+    "status": 200,
+    "images": [
+      {
+        "url": "/_astro/lezioni-individuali-desktop.DvDl4sJm_Z1uGxIH.webp",
+        "width": 2560,
+        "height": 800,
+        "format": "webp",
+        "bytes": 75618
+      },
+      {
+        "url": "/_astro/lezioni-individuali-tablet.BBoSkHKP_ZTYehp.webp",
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "bytes": 70626
+      }
+    ]
+  },
+  {
+    "page": "formazioni-personalizzate",
+    "status": 200,
+    "images": [
+      {
+        "url": "/_astro/formazioni-personalizzate-desktop.BAJwJamk_Z1Xyatq.webp",
+        "width": 2560,
+        "height": 800,
+        "format": "webp",
+        "bytes": 84182
+      },
+      {
+        "url": "/_astro/formazioni-personalizzate-tablet.Bauy8ygu_28Yp6d.webp",
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "bytes": 64900
+      }
+    ]
+  },
+  {
+    "page": "collaborazioni-scuole",
+    "status": 200,
+    "images": [
+      {
+        "url": "/_astro/bambini-desktop.DL3dU5nh_ctvFK.webp",
+        "width": 2560,
+        "height": 800,
+        "format": "webp",
+        "bytes": 145472
+      },
+      {
+        "url": "/_astro/bambini-tablet.M7N93ITS_18pzmf.webp",
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "bytes": 130156
+      }
+    ]
+  },
+  {
+    "page": "classi-integrate",
+    "status": 200,
+    "images": [
+      {
+        "url": "/_astro/classi-integrate-desktop.CnxmpSBM_ZffQM5.webp",
+        "width": 2560,
+        "height": 800,
+        "format": "webp",
+        "bytes": 164840
+      },
+      {
+        "url": "/_astro/classi-integrate-tablet.DsPUfseP_108TiR.webp",
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "bytes": 122290
+      }
+    ]
+  },
+  {
+    "page": "progetto-noiconvoi",
+    "status": 200,
+    "images": [
+      {
+        "url": "/_astro/prima-infanzia-desktop.DdajIhlH_Z25gNQc.webp",
+        "width": 2560,
+        "height": 800,
+        "format": "webp",
+        "bytes": 157230
+      },
+      {
+        "url": "/_astro/prima-infanzia-tablet.De0C4bT7_1Y5o6x.webp",
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "bytes": 107680
+      }
+    ]
+  },
+  {
+    "page": "sostenitori",
+    "status": 200,
+    "images": [
+      {
+        "url": "/_astro/prima-infanzia-desktop.DdajIhlH_Z25gNQc.webp",
+        "width": 2560,
+        "height": 800,
+        "format": "webp",
+        "bytes": 157230
+      },
+      {
+        "url": "/_astro/prima-infanzia-tablet.De0C4bT7_1Y5o6x.webp",
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "bytes": 107680
+      }
+    ]
+  },
+  {
+    "page": "sportello-psicologico",
+    "status": 200,
+    "images": [
+      {
+        "url": "/_astro/sportello-psicologico-desktop.BFGC17Gt_ZOzNQT.webp",
+        "width": 2560,
+        "height": 800,
+        "format": "webp",
+        "bytes": 21954
+      },
+      {
+        "url": "/_astro/sportello-psicologico-tablet.CHhcqKAL_Z1VPkNL.webp",
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "bytes": 19398
+      }
+    ]
+  },
+  {
+    "page": "spettacoli-eventi",
+    "status": 200,
+    "images": [
+      {
+        "url": "/_image?href=%2F_astro%2Fspettacoli-eventi-desktop.TDBGXv0a.png&w=2560&h=800&f=webp",
+        "width": 2560,
+        "height": 800,
+        "format": "webp",
+        "bytes": 165236
+      },
+      {
+        "url": "/_image?href=%2F_astro%2Fspettacoli-eventi-tablet.BuG01nue.png&w=1600&h=1000&f=webp",
+        "width": 1600,
+        "height": 1000,
+        "format": "webp",
+        "bytes": 110690
+      }
+    ]
+  }
+]

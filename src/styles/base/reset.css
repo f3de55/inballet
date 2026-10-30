@@ -41,10 +41,6 @@ html::-webkit-scrollbar-thumb:hover {
 
 body {
   min-height: 100vh;
-  font-family: var(--font-rubik);
-  font-size: var(--text-base);
-  line-height: var(--leading-relaxed);
-  color: var(--text-dark);
   overflow-x: hidden;
   /* Navbar e banner sono fissi: la pagina parte sotto di loro, così nessuna sezione resta
      coperta. --banner-spazio è l'altezza piena del banner (Banner.astro) e non cambia quando
@@ -88,8 +84,8 @@ summary:focus-visible,
   padding: 12px 20px;
   text-decoration: none;
   z-index: 100000;
-  font-weight: var(--font-semibold);
-  font-size: var(--text-sm);
+  font-weight: var(--ui-weight);
+  font-size: var(--ui-size);
   border-radius: 0 0 var(--radius-sm) 0;
 }
 

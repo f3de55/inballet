@@ -1,0 +1,85 @@
+/*
+ * Elenco a righe (colonna destra delle sezioni «intestazione + elenco»: classi integrate, progetti, aree di studio,
+ * destinazioni, destinatari, servizi): ogni voce è una riga con filetto sotto, icona facoltativa a sinistra,
+ * nome in grassetto, descrizione facoltativa e freccia facoltativa a destra (se la riga è un link).
+ *
+ *   <ul class="righe">
+ *     <li><a class="riga" href="…"> <i class="riga-icona fas fa-check"></i> <p class="riga-nome">Nome</p> <i class="riga-freccia fas fa-arrow-right"></i></a></li>
+ *     <li class="riga"> … <div class="riga-corpo"><p class="riga-nome">Nome</p><p>Descrizione</p></div> </li>
+ */
+.righe {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.righe > li {
+  border-bottom: 1px solid var(--linea);
+}
+
+.righe > li:last-child {
+  border-bottom: none;
+}
+
+.riga {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spazio-icona);
+  padding: 1.5rem 0;
+  color: var(--heading-color);
+  text-decoration: none;
+}
+
+.righe > li:first-child > .riga,
+.righe > .riga:first-child {
+  padding-top: .5rem;
+}
+
+.riga-icona {
+  flex: 0 0 1.75rem;
+  font-size: var(--text-base);
+  color: var(--primary-blue-dark);
+}
+
+.riga-corpo,
+.riga > .riga-nome {
+  flex: 1;
+  min-width: 0;
+}
+
+.riga-nome {
+  font-weight: var(--font-bold);
+  transition: color .3s ease;
+}
+
+.riga-corpo > .riga-nome {
+  margin-bottom: .35rem;
+}
+
+.riga-freccia {
+  flex-shrink: 0;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  transition: transform .3s ease;
+}
+
+a.riga:focus-visible {
+  outline: 2px solid var(--primary-blue-dark);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.riga:hover .riga-nome {
+    color: var(--primary-blue-dark);
+  }
+
+  a.riga:hover .riga-freccia {
+    transform: translateX(6px);
+  }
+}
+
+@media (max-width: 600px) {
+  .riga {
+    padding: 1.15rem 0;
+  }
+}

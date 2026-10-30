@@ -1,0 +1,35 @@
+/* File a scorrimento (galleria, insegnanti): bordi che sfumano nel colore della sezione, come due
+   veli sopra la fila (non una maschera sul contenitore, che può far sparire le foto) */
+.carosello-wrap {
+  position: relative;
+}
+
+.carosello-wrap::before,
+.carosello-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: clamp(1.5rem, 5vw, 4rem);
+  pointer-events: none;
+}
+
+.carosello-wrap--soft {
+  --fade-bg: var(--bg-soft);
+}
+
+.carosello-wrap::before {
+  left: 0;
+  background: linear-gradient(to right, var(--fade-bg, var(--white)), transparent);
+}
+
+.carosello-wrap::after {
+  right: 0;
+  background: linear-gradient(to left, var(--fade-bg, var(--white)), transparent);
+}
+
+.carosello img {
+  -webkit-user-drag: none;
+  user-select: none;
+}

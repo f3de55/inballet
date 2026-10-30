@@ -1,0 +1,56 @@
+/* Voci: punti di un elenco in colonne, con filetto in alto (niente card) */
+.voce {
+  text-align: left;
+  padding-top: 1.75rem;
+  border-top: 2px solid var(--primary-blue);
+}
+
+.voce-icona {
+  display: block;
+  font-size: var(--text-xl);
+  line-height: 1;
+  color: var(--primary-blue-dark);
+  margin-bottom: 1.1rem;
+}
+
+.voce-anno {
+  display: block;
+  color: var(--primary-blue-dark);
+  margin-bottom: .9rem;
+}
+
+.voce-titolo {
+  margin: 0 0 .6rem;
+}
+
+.voce-testo {
+  margin: 0;
+}
+
+.sezione-scura .voce-anno {
+  color: var(--primary-blue);
+}
+
+
+/* Righe allineate: in una griglia di voci l'icona o l'anno, il titolo e il testo stanno alla stessa quota in tutte
+   le colonne, anche quando un titolo va a capo (subgrid: le tre righe sono quelle della lista). */
+.voce {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  align-content: start;
+}
+
+.voce > .voce-icona,
+.voce > .voce-anno {
+  grid-row: 1;
+}
+
+.voce > .voce-titolo {
+  grid-row: 2;
+}
+
+.voce > .voce-testo {
+  grid-row: 3;
+}

@@ -1,0 +1,307 @@
+/* Stesse proporzioni dei banner preparati: il browser non ritaglia di nuovo
+   volti, mani e piedi. Se il testo richiede più spazio la sezione può crescere. */
+@media (min-width: 769px) {
+  .chisiamo-hero.corso-hero {
+    min-height: var(--hero-altezza-min);
+    aspect-ratio: var(--hero-rapporto);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .chisiamo-hero.corso-hero {
+    aspect-ratio: 8 / 5;
+  }
+
+  .corso-hero > .corso-hero-image[style*="--sfondo-lg"][style*="--fuoco-lg"] {
+    background-image: var(--sfondo-md);
+    background-position: var(--fuoco-md);
+  }
+}
+
+.corso-intro-section {
+  padding: var(--section-y) 0;
+  background: var(--white);
+  position: relative;
+}
+
+.corso-story-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.corso-story-content {
+  padding: 0;
+}
+
+.corso-section-header {
+  margin-bottom: 1.5rem;
+}
+
+.corso-section-tagline {
+  margin-bottom: 0.5rem;
+}
+
+.corso-section-title {
+  margin: 0;
+}
+
+.corso-story-text {
+  max-width: 550px;
+}
+
+.corso-story-text p {
+  margin-bottom: 1.2rem;
+}
+
+.corso-story-text p:last-child {
+  margin-bottom: 0;
+}
+
+.corso-intro-meta {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+
+.corso-meta-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  padding: 1.1rem 0 0;
+  border-top: 1px solid var(--linea);
+  flex: 1;
+  min-width: 180px;
+}
+
+.corso-meta-icon {
+  width: 1.75rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: .15rem;
+  color: var(--primary-blue-dark);
+  font-size: var(--text-xl);
+  flex-shrink: 0;
+}
+
+.corso-meta-icon i {
+  color: inherit;
+}
+
+.corso-meta-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.corso-meta-info .corso-meta-label {
+  color: var(--text-muted);
+}
+
+.corso-story-image {
+  width: 100%;
+  max-width: 400px;
+  justify-self: center;
+}
+
+.corso-story-image img {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+}
+
+.corso-metodo-section {
+  padding: var(--section-y) 0;
+  background: var(--dark-navy);
+  position: relative;
+}
+
+.corso-metodo-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.corso-metodo-header {
+  margin-bottom: 3.5rem;
+  text-align: center;
+}
+
+.corso-metodo-label {
+  margin-bottom: 0.5rem;
+}
+
+.corso-metodo-header h2 {
+  margin: 0;
+}
+
+.corso-metodo-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem 3rem;
+}
+
+.corso-impara-section {
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
+  position: relative;
+}
+
+.corso-impara-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.corso-impara-header {
+  margin-bottom: 3.5rem;
+  text-align: center;
+}
+
+.corso-impara-label {
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.corso-impara-header h2 {
+  margin: 0 0 1rem 0;
+}
+
+.corso-impara-subtitle {
+  margin: 0;
+}
+
+/* Tre per riga: il gap da 1px sul fondo disegna i filetti solo tra le celle */
+.corso-impara-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: var(--linea);
+}
+
+.corso-impara-list li {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  column-gap: 1rem;
+  align-items: start;
+  padding: 2.25rem 2rem;
+  background: var(--bg-soft);
+}
+
+/* Numero e testo sulla stessa riga, centrati sulla stessa linea: i numeri stanno tutti nella stessa colonna */
+.impara-num {
+  text-align: center;
+  color: var(--primary-blue-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Testo normale, grassetto solo sulle parole chiave (<strong> in corsi.json) */
+.impara-testo {
+  color: var(--text-body);
+}
+
+/* Tablet e mobile: una colonna con titolo, foto, testo e dati del corso;
+   tutto allineato a sinistra come nel resto del sito */
+@media (max-width: 900px) {
+  .corso-story-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .corso-story-content {
+    display: contents;
+  }
+
+  .corso-section-header {
+    order: 1;
+  }
+
+  /* Spazio a sinistra e in basso per la cornice sfalsata, dentro i margini */
+  .corso-story-image {
+    order: 2;
+    width: auto;
+    max-width: none;
+    margin: 0 0 3.5rem 1.5rem;
+  }
+
+  .corso-story-image img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .corso-story-text {
+    order: 3;
+    max-width: none;
+  }
+
+  .corso-intro-meta {
+    order: 4;
+  }
+
+  /* Intestazioni a sinistra, allineate ai contenuti sotto */
+  .corso-metodo-header,
+  .corso-impara-header {
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+
+  .corso-metodo-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .corso-impara-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .corso-impara-list li {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    padding: 1.75rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .corso-intro-section,
+  .corso-metodo-section,
+  .corso-impara-section {
+    padding: 3.5rem 0;
+  }
+
+  .corso-metodo-wrapper,
+  .corso-impara-wrapper {
+    padding: 0 1.5rem;
+  }
+
+}
+
+@media (max-width: 600px) {
+  .corso-story-image {
+    margin: 0 0 2.75rem .75rem;
+  }
+
+  .corso-story-image img {
+    aspect-ratio: 3 / 2;
+  }
+
+  .corso-intro-meta {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Una riga per obiettivo, numero accanto al testo */
+  .corso-impara-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .corso-impara-list li {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    padding: 1.25rem 0;
+  }
+}

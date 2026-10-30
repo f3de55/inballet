@@ -1,0 +1,77 @@
+/* ---------- Fasce d'età ---------- */
+.collab-fasce-section {
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
+}
+
+/* Il gap da 1px sul fondo scuro disegna i filetti solo tra le celle */
+/* Quattro card bianche separate sul fondo azzurrino della sezione */
+.fasce-lista {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin: 3.5rem 0 0;
+  padding: 0;
+}
+
+.fascia {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem 1.75rem;
+  text-align: center;
+  background: var(--white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.fascia-icona {
+  font-size: var(--text-2xl);
+  line-height: 1;
+  color: var(--primary-blue-dark);
+}
+
+.fascia-eta {
+  color: var(--primary-blue-dark);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Icona del progetto accanto al titolo */
+/* ---------- Tablet ---------- */
+@media (max-width: 1024px) {
+  .fascia {
+    padding: 1.75rem 1.5rem;
+  }
+
+}
+
+@media (max-width: 900px) {
+  /* Fasce: griglia 2x2 */
+  .fasce-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .fascia {
+    gap: .5rem;
+    padding: 1.5rem 1.25rem;
+  }
+
+}
+
+/* Schermi molto stretti (320px): una fascia per riga, senza scorrimento orizzontale */
+@media (max-width: 400px) {
+  .fasce-lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+}

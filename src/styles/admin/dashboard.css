@@ -353,3 +353,6 @@ body{min-height:100vh;font-size:16px;line-height:1.5}
 .ins-foto img{width:100%;height:100%;object-fit:cover}
 .ins-foto-attuale{display:flex;align-items:center;gap:1rem;margin-bottom:.75rem}
 .ins-foto-attuale img{width:64px;height:80px;object-fit:cover;border-radius:8px}
+
+/* Riga appena eliminata: svanisce prima del ricaricamento */
+.in-uscita{opacity:0;transition:opacity .25s}

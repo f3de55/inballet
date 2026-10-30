@@ -1,5 +1,6 @@
 ---
 import Img from './Img.astro';
+import '../styles/components/sostenitori-section.css';
 
 interface Props {
   /** Link alla pagina Sostieni (falso sulla pagina stessa). */
@@ -9,20 +10,20 @@ interface Props {
 const { link = true } = Astro.props;
 
 const sponsors = [
-  { file: 'panta-rei.png', alt: 'Panta Rei' },
-  { file: 'clifford-chance.png', alt: 'Clifford Chance' },
-  { file: 'banca-generali.png', alt: 'Banca Generali Private' },
-  { file: 'terna.png', alt: 'Terna Rete Italia' },
-  { file: 'mastrorlando.png', alt: 'Mastrorlando' },
-  { file: 'santoro.png', alt: 'Santoro' },
-  { file: 'tacchini.png', alt: 'Tacchini Denis' },
-  { file: 'bottega-sport.png', alt: 'La Bottega dello Sport' },
+  { file: 'panta-rei.png', alt: 'Panta Rei', href: 'https://pantareirehab.it/' },
+  { file: 'clifford-chance.png', alt: 'Clifford Chance', href: 'https://www.cliffordchance.com/' },
+  { file: 'banca-generali.png', alt: 'Banca Generali Private', href: 'https://www.bancageneraliprivate.it/' },
+  { file: 'terna.png', alt: 'Terna Rete Italia', href: 'https://www.terna.it/it' },
+  { file: 'mastrorlando.png', alt: 'Mastrorlando', href: 'https://www.mastrorlando.it/' },
+  { file: 'santoro.png', alt: 'Santoro', href: 'https://www.studiodentisticosantoro.com/' },
+  { file: 'tacchini.png', alt: 'Tacchini Denis', href: 'https://www.aziendaagricolatacchini.it/' },
+  { file: 'bottega-sport.png', alt: 'La Bottega dello Sport', href: 'https://labottegadellosport.it/' },
 ];
 ---
 
 <section class="sostenitori-section" aria-labelledby="sostenitori-titolo">
     <div class="intro-editoriale sostenitori-intro">
-        <span class="eyebrow">Grazie a chi ci sostiene</span>
+        <p class="eyebrow">Grazie a chi ci sostiene</p>
         <h2 class="titolo-sezione" id="sostenitori-titolo">I nostri <em>sostenitori</em></h2>
         <p class="intro-sezione">Aziende e realtà del territorio che credono nella danza come <strong>strumento educativo</strong> e sostengono i nostri <strong>progetti sociali</strong>, a partire da NoiConVoi.</p>
         {link && (
@@ -38,72 +39,11 @@ const sponsors = [
         <ul class="sostenitori-loghi">
             {sponsors.map((s) => (
                 <li>
-                    <Img src={`sponsors/${s.file}`} alt={s.alt} widths={[388]} sizes="(max-width: 600px) 45vw, 280px" loading="lazy" decoding="async" />
+                    <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`Visita il sito di ${s.alt} (si apre in una nuova scheda)`}>
+                        <Img src={`sponsors/${s.file}`} alt={s.alt} widths={[388]} sizes="(max-width: 600px) 45vw, 280px" loading="lazy" decoding="async" />
+                    </a>
                 </li>
             ))}
         </ul>
     </div>
 </section>
-
-<style>
-.sostenitori-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-.sostenitori-intro .link-cta {
-  margin-top: .5rem;
-}
-
-/* Il gap da 1px sul fondo grigio disegna i filetti solo tra un logo e l'altro */
-.sostenitori-loghi {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-rows: 9.5rem;
-  gap: 1px;
-  max-width: 1200px;
-  margin: 3.5rem auto 0;
-  background: var(--linea);
-}
-
-/* Flex (non grid): così il max-height del logo si riferisce all'altezza fissa della cella */
-.sostenitori-loghi li {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 0;
-  padding: .75rem 1.5rem;
-  background: var(--white);
-}
-
-.sostenitori-loghi :global(img) {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-}
-
-@media (max-width: 900px) {
-  .sostenitori-loghi {
-    margin-top: 2.5rem;
-  }
-
-  .sostenitori-loghi li {
-    padding: .75rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .sostenitori-loghi {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 6.5rem;
-  }
-
-  .sostenitori-loghi li {
-    padding: .5rem .75rem;
-  }
-}
-</style>

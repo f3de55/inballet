@@ -2,13 +2,17 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { sfondo, sfondoCta } from '../lib/images';
+import { sfondoCta } from '../lib/images';
+import { heroPagina } from '../lib/hero-pagine';
 import { scuola } from '../data/scuola';
 import logoCsen from '../assets/images/csen-logo.svg';
 import logoConi from '../assets/images/logo_coni.svg';
+import '../styles/components/intro-split.css';
+import '../styles/components/righe.css';
+import '../styles/pages/formazione-insegnanti.css';
 
 const bg = {
-  hero: await sfondo('gallery-4.jpg', { desktop: '50% 10%', tablet: '50% 30%' }),
+  hero: await heroPagina('formazione-insegnanti'),
   cta: await sfondoCta('foto/danza-dolce-img3.jpg', { desktop: '50% 50%' }),
 };
 
@@ -26,9 +30,8 @@ const aree = [
 ];
 
 const enti = [
-  // scala: equilibrio ottico (il logo CONI è più largo, a parità di altezza sembrerebbe più grande)
-  { sigla: 'CSEN', nome: 'Centro Sportivo Educativo Nazionale', logo: logoCsen, scala: 1 },
-  { sigla: 'CONI', nome: 'Comitato Olimpico Nazionale Italiano', logo: logoConi, scala: 0.84 },
+  { sigla: 'CSEN', nome: 'Centro Sportivo Educativo Nazionale', logo: logoCsen },
+  { sigla: 'CONI', nome: 'Comitato Olimpico Nazionale Italiano', logo: logoConi },
 ];
 ---
 
@@ -39,9 +42,13 @@ const enti = [
     ogDescription="Percorso biennale con specializzazione Modern: titolo riconosciuto CSEN e CONI a valenza nazionale."
 >
 
+    <Fragment slot="head">
+        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
+    </Fragment>
+
         <!-- Hero Section -->
-        <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
+        <section class="chisiamo-hero hero-banner">
+            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -51,17 +58,17 @@ const enti = [
         </section>
 
         <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo); sotto, il corso in breve -->
-        <section id="intro" class="form-intro-section decoro-onde">
-            <div class="container form-intro-layout">
-                <div class="form-intro-content">
-                    <span class="form-intro-label eyebrow">Il percorso</span>
-                    <h2 class="form-intro-title titolo-sezione">Diventa insegnante <em>di danza</em></h2>
-                    <div class="form-intro-testo">
+        <section id="intro" class="intro-split decoro-onde">
+            <div class="container intro-split-layout">
+                <div class="intro-split-content">
+                    <p class="intro-split-label eyebrow">Il percorso</p>
+                    <h2 class="intro-split-title titolo-sezione">Diventa insegnante <em>di danza</em></h2>
+                    <div class="intro-split-testo">
                         <p><strong>Dal 2023</strong> I.N. Ballet è <strong>ente formativo riconosciuto</strong> per il titolo di <strong>Insegnante di Danza</strong>, con specializzazione nello stile <a href="/modern">Modern</a>.</p>
                         <p>Il percorso è <strong>biennale</strong>, con <strong>sei master</strong> a seguire: moduli multidisciplinari tra danza, pedagogia e sviluppo, dalla prima infanzia all'età adulta, fino ai casi più complessi di disabilità.</p>
                     </div>
                 </div>
-                <div class="form-intro-visual foto-cornice">
+                <div class="intro-split-visual foto-cornice">
                     <Img src="gallery-7.jpg" alt="Le insegnanti di InBallet in sala" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
                 </div>
             </div>
@@ -69,8 +76,8 @@ const enti = [
                 <ul class="breve-lista" aria-label="Il corso in breve">
                     {inBreve.map((b) => (
                         <li class="dato">
-                            <span class="dato-valore">{b.valore}{b.unita && <span class="dato-unita"> {b.unita}</span>}</span>
-                            <span class="dato-testo">{b.testo}</span>
+                            <p class="dato-valore">{b.valore}{b.unita && <span class="dato-unita"> {b.unita}</span>}</p>
+                            <p class="dato-testo testo-piccolo">{b.testo}</p>
                         </li>
                     ))}
                 </ul>
@@ -78,18 +85,18 @@ const enti = [
         </section>
 
         <!-- Aree di studio: intestazione a sinistra (fissa su desktop), elenco numerato a destra -->
-        <section class="form-aree-section" aria-labelledby="aree-titolo">
-            <div class="container form-aree-layout">
-                <div class="form-aree-header">
-                    <span class="eyebrow">Il programma</span>
+        <section class="split-section split-section--soft" aria-labelledby="aree-titolo">
+            <div class="container split-layout">
+                <div class="split-header split-header--sticky">
+                    <p class="eyebrow">Il programma</p>
                     <h2 class="titolo-sezione" id="aree-titolo">Aree <em>di studio</em></h2>
                     <p class="intro-sezione">Per insegnare a <strong>ogni età e a ogni corpo</strong>.</p>
                 </div>
-                <ol class="aree-lista">
+                <ol class="righe">
                     {aree.map((a) => (
-                        <li class="area">
-                            <i class={`fas ${a.icona} area-num`} aria-hidden="true"></i>
-                            <h3 class="area-nome">{a.nome}</h3>
+                        <li class="riga">
+                            <i class={`riga-icona fas ${a.icona}`} aria-hidden="true"></i>
+                            <p class="riga-nome">{a.nome}</p>
                         </li>
                     ))}
                 </ol>
@@ -99,7 +106,7 @@ const enti = [
         <!-- Diploma: intestazione editoriale, sotto gli enti che lo riconoscono -->
         <section class="form-cert-section" aria-labelledby="cert-titolo">
             <div class="intro-editoriale">
-                <span class="eyebrow">Riconoscimenti</span>
+                <p class="eyebrow">Riconoscimenti</p>
                 <h2 class="titolo-sezione" id="cert-titolo">Diploma a <em>valenza nazionale</em></h2>
                 <p class="intro-sezione">Il titolo di Insegnante di Danza è <strong>riconosciuto dallo CSEN e dal CONI</strong> e vale su <strong>tutto il territorio nazionale</strong>: un punto di riferimento per la formazione dei maestri di danza.</p>
             </div>
@@ -107,10 +114,10 @@ const enti = [
                 <ul class="enti-lista">
                     {enti.map((e) => (
                         <li class="ente">
-                            <span class="ente-logo">
-                                <img src={e.logo.src} width={e.logo.width} height={e.logo.height} alt={`Logo ${e.sigla}`} style={`--scala:${e.scala}`} loading="lazy" decoding="async">
-                            </span>
-                            <span class="ente-nome">{e.nome}</span>
+                            <div class="ente-logo">
+                                <img src={e.logo.src} width={e.logo.width} height={e.logo.height} alt={`Logo ${e.sigla}`} data-sigla={e.sigla} loading="lazy" decoding="async">
+                            </div>
+                            <p class="ente-nome">{e.nome}</p>
                         </li>
                     ))}
                 </ul>
@@ -118,13 +125,13 @@ const enti = [
         </section>
 
         <!-- CTA -->
-        <section class="form-cta-section sezione-scura">
-            <div class="form-cta-bg" style={bg.cta.style}></div>
-            <div class="form-cta-overlay"></div>
-            <div class="form-cta-wrapper">
+        <section class="cta-contatto sezione-scura">
+            <div class="cta-bg" style={bg.cta.style}></div>
+            <div class="cta-overlay"></div>
+            <div class="cta-wrapper">
                 <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
                 <p class="intro-sezione">Contattaci per informazioni su <strong>date, costi e modalità di iscrizione</strong>.</p>
-                <div class="form-cta-buttons">
+                <div class="cta-pulsanti">
                     <a href={`mailto:${scuola.email}?subject=Corso%20Formazione%20Insegnanti%20-%20Richiesta%20Informazioni`} class="btn-primary">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Richiedi informazioni
                     </a>
@@ -135,361 +142,3 @@ const enti = [
             </div>
         </section>
 </Base>
-
-<style>
-/* ---------- Intro ---------- */
-.form-intro-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-.form-intro-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 5rem;
-  align-items: center;
-}
-
-.form-intro-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.form-intro-title {
-  margin-bottom: 1.75rem;
-}
-
-.form-intro-testo p {
-  margin-bottom: 1.25rem;
-  font-size: var(--text-base);
-  line-height: 1.8;
-  color: var(--text-dark);
-}
-
-.form-intro-testo p:last-child {
-  margin-bottom: 0;
-}
-
-/* La cornice sporge a sinistra e in basso: spazio dentro la colonna */
-.form-intro-visual {
-  max-width: 520px;
-  margin: 0 0 1.5rem 1.5rem;
-  justify-self: end;
-}
-
-.form-intro-visual :global(img) {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-}
-
-/* Il corso in breve: tre dati affiancati, centrati, divisi da filetti verticali e chiusi da due filetti
-   (come "InBallet in numeri"): valore grande, sotto la sua etichetta */
-.breve-lista {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 4.5rem 0 0;
-  padding: 0;
-  border-block: 1px solid var(--linea);
-}
-
-.dato {
-  padding: 2.25rem 1.5rem;
-  text-align: center;
-}
-
-.dato + .dato {
-  border-left: 1px solid var(--linea);
-}
-
-.dato-valore {
-  display: block;
-  font-size: var(--text-3xl);
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--primary-blue-dark);
-}
-
-.dato-unita {
-  font-size: var(--text-xl);
-  font-weight: 400;
-}
-
-.dato-testo {
-  display: block;
-  margin-top: .75rem;
-  font-size: var(--text-base);
-  line-height: 1.4;
-  color: var(--text-light);
-}
-
-/* ---------- Aree di studio ---------- */
-.form-aree-section {
-  padding: var(--section-y) 0;
-  background: var(--bg-soft);
-}
-
-/* Aree: intestazione a sinistra (fissa su desktop), elenco numerato a destra */
-.form-aree-layout {
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-  gap: 5rem;
-  align-items: start;
-}
-
-.form-aree-header {
-  position: sticky;
-  top: calc(var(--header-h) + var(--banner-height, 0px) + 2rem);
-}
-
-.form-aree-header .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.aree-lista {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* Diploma: enti in una colonna centrata sotto l'intestazione */
-.enti-lista {
-  list-style: none;
-  max-width: 48rem;
-  margin: 3.5rem auto 0;
-  padding: 0;
-}
-
-
-.area {
-  display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  align-items: baseline;
-  gap: 1rem;
-  padding: 1.6rem 0;
-  border-bottom: 1px solid var(--linea);
-}
-
-.area:first-child {
-  padding-top: .5rem;
-}
-
-.area:last-child {
-  border-bottom: none;
-}
-
-/* Icona dell'area accanto al nome */
-.area-num {
-  font-size: var(--text-xl);
-  color: var(--primary-blue-dark);
-}
-
-.area-nome {
-  color: var(--dark-navy);
-}
-
-/* ---------- Diploma ---------- */
-.form-cert-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-/* Loghi in riquadri della stessa misura: altezza uguale, larghezza libera (CONI è più largo) */
-.enti-lista {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
-}
-
-.ente {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 2.25rem 1.5rem;
-  background: var(--bg-soft);
-  border-radius: var(--radius-card);
-  text-align: center;
-}
-
-.ente-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 8.5rem;
-}
-
-.ente-logo img {
-  width: auto;
-  height: calc(var(--scala, 1) * 100%);
-  max-width: 100%;
-  object-fit: contain;
-}
-
-.ente-nome {
-  font-size: var(--text-base);
-  font-weight: 400;
-  line-height: var(--leading-snug);
-  color: var(--dark-navy);
-}
-
-/* ---------- CTA ---------- */
-.form-cta-section {
-  position: relative;
-  padding: var(--section-y) 0;
-  overflow: hidden;
-}
-
-.form-cta-bg,
-.form-cta-overlay {
-  position: absolute;
-  inset: 0;
-}
-
-.form-cta-bg {
-  background: center / cover no-repeat;
-}
-
-.form-cta-overlay {
-  background: linear-gradient(135deg, rgb(var(--navy-rgb) / .66) 0%, rgb(var(--header-rgb) / .62) 100%);
-}
-
-.form-cta-wrapper {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  text-align: center;
-}
-
-.form-cta-wrapper .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.form-cta-wrapper .intro-sezione {
-  margin-bottom: 2.5rem;
-}
-
-.form-cta-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-}
-
-/* ---------- Tablet ---------- */
-@media (max-width: 900px) {
-  /* Intro: etichetta e titolo, foto, testo */
-  .form-intro-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-
-  .form-intro-content {
-    display: contents;
-  }
-
-  .form-intro-label {
-    order: 1;
-  }
-
-  .form-intro-title {
-    order: 2;
-  }
-
-  .form-intro-visual {
-    order: 3;
-    max-width: none;
-    margin: 0 0 3.75rem 1.5rem;
-  }
-
-  .form-intro-visual :global(img) {
-    aspect-ratio: 3 / 2;
-  }
-
-  .form-intro-testo {
-    order: 4;
-  }
-
-  .breve-lista {
-    margin-top: 3.5rem;
-  }
-
-  .dato {
-    padding: 1.75rem 1rem;
-  }
-
-  /* Aree: intestazione sopra l'elenco */
-  .form-aree-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
-  }
-
-  .form-aree-header {
-    position: static;
-  }
-
-  /* Diploma: enti a tutta larghezza, allineati all'intestazione */
-  .enti-lista {
-    max-width: none;
-    margin-top: 2.5rem;
-  }
-}
-
-/* ---------- Mobile ---------- */
-@media (max-width: 600px) {
-  .form-intro-visual {
-    margin: 0 0 3rem .75rem;
-  }
-
-  .form-intro-visual :global(img) {
-    aspect-ratio: 4 / 3;
-  }
-
-
-  /* In breve: un dato sotto l'altro, divisi da filetti orizzontali */
-  .breve-lista {
-    grid-template-columns: minmax(0, 1fr);
-    margin-top: 3rem;
-  }
-
-  .dato {
-    padding: 1.5rem 0;
-  }
-
-  .dato + .dato {
-    border-top: 1px solid var(--linea);
-    border-left: none;
-  }
-
-  .area {
-    grid-template-columns: 2.25rem minmax(0, 1fr);
-    gap: .75rem;
-    padding: 1.25rem 0;
-  }
-
-
-  .ente {
-    padding: 1.75rem 1rem;
-  }
-
-  .ente-logo {
-    height: 6rem;
-  }
-
-
-
-  .form-cta-wrapper {
-    padding: 0 1.5rem;
-  }
-
-  .form-cta-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-</style>

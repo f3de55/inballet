@@ -1,0 +1,86 @@
+/* Citazione in evidenza (box di approfondimento delle pagine, citazione della fondatrice in home e
+   in Chi siamo): box azzurrino compatto con le virgolette azzurre a cavallo del bordo alto (metà fuori),
+   testo con lo stile dei paragrafi (in corsivo) e firma in maiuscoletto. Nelle intro centrate il box
+   e le virgolette sono centrati; da tablet in giù è a sinistra. */
+.intro-editoriale > [class*="-highlight"],
+.intro-split-highlight,
+.story-quote,
+.fondatrice-citazione {
+  position: relative;
+  max-width: 34rem;
+  margin: 2.25rem 0 0;
+  padding: 2.1rem 1.5rem 1.25rem;
+  border: none;
+  border-radius: var(--radius-md);
+  background: rgb(var(--blu-rgb) / .16);
+  box-shadow: none;
+  text-align: left;
+}
+
+.intro-editoriale > [class*="-highlight"]::before,
+.intro-split-highlight::before,
+.story-quote::before,
+.fondatrice-citazione::before {
+  content: '\201C';
+  position: absolute;
+  top: 0;
+  left: 1.25rem;
+  height: 2rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: var(--glifo-citazione);
+  font-style: normal;
+  font-weight: var(--font-bold);
+  line-height: 1;
+  color: var(--primary-blue-dark);
+  transform: translateY(-.2em);
+}
+
+.intro-editoriale > [class*="-highlight"] p,
+.intro-split-highlight p,
+.story-quote p,
+.fondatrice-citazione p {
+  margin: 0;
+  font-style: italic;
+}
+
+.intro-editoriale > [class*="-highlight"] cite,
+.intro-split-highlight cite,
+.story-quote cite,
+.fondatrice-citazione cite {
+  display: block;
+  margin-top: .75rem;
+  font-size: var(--label-size);
+  font-style: normal;
+  font-weight: var(--label-weight);
+  letter-spacing: var(--label-ls);
+  text-transform: uppercase;
+  color: var(--label-color);
+}
+
+.story-quote cite::before,
+.fondatrice-citazione cite::before {
+  content: none;
+}
+
+/* Nelle intro editoriali centrate (desktop) il box e le virgolette sono centrati */
+.intro-editoriale > [class*="-highlight"] {
+  margin: 2.25rem auto 0;
+  text-align: center;
+}
+
+.intro-editoriale > [class*="-highlight"]::before {
+  left: 50%;
+  margin-left: -.3em;
+}
+
+@media (max-width: 900px) {
+  .intro-editoriale > [class*="-highlight"] {
+    margin: 2.25rem 0 0;
+    text-align: left;
+  }
+
+  .intro-editoriale > [class*="-highlight"]::before {
+    left: 1.25rem;
+    margin-left: 0;
+  }
+}

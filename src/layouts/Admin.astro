@@ -5,6 +5,8 @@
  */
 import '../styles/icons.css';
 import { Font } from 'astro:assets';
+import '../styles/admin/variables.css';
+import '../styles/admin/base.css';
 
 interface Props {
   title: string;
@@ -29,16 +31,3 @@ Astro.response.headers.set('Cache-Control', 'no-store');
     <slot />
 </body>
 </html>
-
-<style is:global>
-    :root{
-        --primary:#87CEEB;--primary-dark:#4682B4;
-        --bar:#2a2a2a;--bg:#f4f5f6;--surface:#fff;--soft:#eef7fa;
-        --line:#e3e6e9;--line-strong:#cfd4d9;
-        --text:#1a1a1a;--text-muted:#6a6f75;
-        --success:#2e7d4f;--warning:#a86400;--danger:#c0392b;
-        --radius:10px;
-    }
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:var(--font-rubik),'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
-</style>

@@ -1,0 +1,51 @@
+/* ---------- Metodo e informazioni: voci in colonne ---------- */
+.noi-metodo-section,
+.noi-info-section {
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
+}
+
+.fasi-lista,
+.info-lista {
+  list-style: none;
+  display: grid;
+  gap: 3rem;
+  margin: 3.5rem 0 0;
+  padding: 0;
+}
+
+.fasi-lista {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.info-lista {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2.5rem;
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1024px) {
+  /* Informazioni: griglia 2x2 */
+  .info-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+@media (max-width: 900px) {
+  .fasi-lista,
+  .info-lista {
+    margin-top: 2.5rem;
+  }
+
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .fasi-lista,
+  .info-lista {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.25rem;
+  }
+
+}

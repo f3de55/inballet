@@ -2,11 +2,15 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { sfondo, sfondoCta } from '../lib/images';
+import { sfondoCta } from '../lib/images';
+import { heroPagina } from '../lib/hero-pagine';
 import { scuola } from '../data/scuola';
+import '../styles/components/intro-split.css';
+import '../styles/components/righe.css';
+import '../styles/pages/classi-integrate.css';
 
 const bg = {
-  hero: await sfondo('gallery-9.jpg', { desktop: '50% 15%', tablet: '50% 40%' }),
+  hero: await heroPagina('classi-integrate'),
   cta: await sfondoCta('foto/bambini-mani.jpg'),
 };
 
@@ -33,9 +37,13 @@ const classi = [
     ogDescription="Quasi tutti i corsi InBallet possono accogliere bambini e ragazzi con bisogni speciali, dopo un colloquio con la famiglia."
 >
 
+    <Fragment slot="head">
+        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
+    </Fragment>
+
         <!-- Hero Section -->
-        <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
+        <section class="chisiamo-hero hero-banner">
+            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -45,20 +53,20 @@ const classi = [
         </section>
 
         <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo) -->
-        <section id="intro" class="integrate-intro-section">
-            <div class="container integrate-intro-layout">
-                <div class="integrate-intro-content">
-                    <span class="integrate-intro-label eyebrow">Il nostro approccio</span>
-                    <h2 class="integrate-intro-title titolo-sezione">Un ambiente dove tutti <em>sono benvenuti</em></h2>
-                    <div class="integrate-intro-testo">
+        <section id="intro" class="intro-split">
+            <div class="container intro-split-layout">
+                <div class="intro-split-content">
+                    <p class="intro-split-label eyebrow">Il nostro approccio</p>
+                    <h2 class="intro-split-title titolo-sezione">Un ambiente dove tutti <em>sono benvenuti</em></h2>
+                    <div class="intro-split-testo">
                         <p>Quasi tutte le classi di InBallet hanno la <strong>predisposizione tecnica e professionale</strong> per accogliere bambini e ragazzi con bisogni speciali, entro il nostro livello di preparazione.</p>
                         <p>Si parte sempre da un <strong>consulto con la Direzione</strong> e da un <strong>colloquio con la famiglia</strong>, per scegliere insieme il gruppo classe più adeguato.</p>
                     </div>
-                    <div class="integrate-intro-highlight">
+                    <div class="intro-split-highlight">
                         <p>La danza è capace di creare racconti in tutti i corpi e in tutte le menti: per questo l'<strong>inclusione</strong> è centrale in ogni fascia d'età.</p>
                     </div>
                 </div>
-                <div class="integrate-intro-visual foto-cornice">
+                <div class="intro-split-visual foto-cornice">
                     <Img src="gallery-4.jpg" alt="Un'insegnante guida un'allieva durante la lezione" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
                 </div>
             </div>
@@ -67,7 +75,7 @@ const classi = [
         <!-- Valori: intestazione editoriale e tre voci -->
         <section class="integrate-valori-section" aria-labelledby="valori-titolo">
             <div class="intro-editoriale">
-                <span class="eyebrow">Come funziona</span>
+                <p class="eyebrow">Come funziona</p>
                 <h2 class="titolo-sezione" id="valori-titolo">Dal primo contatto <em>alla classe</em></h2>
                 <p>Tre passaggi per costruire un'<strong>accoglienza su misura</strong>, insieme alla famiglia.</p>
             </div>
@@ -85,19 +93,19 @@ const classi = [
         </section>
 
         <!-- Classi: intestazione a sinistra, elenco delle discipline (con link al corso) a destra -->
-        <section class="integrate-classi-section decoro-onde decoro-onde--sinistra" aria-labelledby="classi-titolo">
-            <div class="container integrate-classi-layout">
-                <div class="integrate-classi-header">
-                    <span class="eyebrow">Le nostre discipline</span>
+        <section class="split-section decoro-onde decoro-onde--sinistra" aria-labelledby="classi-titolo">
+            <div class="container split-layout">
+                <div class="split-header">
+                    <p class="eyebrow">Le nostre discipline</p>
                     <h2 class="titolo-sezione" id="classi-titolo">Classi disponibili <em>per l'inserimento</em></h2>
                     <p class="intro-sezione">Alcuni dei corsi predisposti per l'inserimento: apri un corso per conoscerne <strong>età e livelli</strong>. Per i ragazzi con disabilità c'è anche il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, il <strong>lunedì sera</strong>.</p>
                 </div>
-                <ul class="classi-lista">
+                <ul class="righe">
                     {classi.map((c) => (
                         <li>
-                            <a class="classe" href={c.href}>
-                                <h3 class="classe-nome">{c.nome}</h3>
-                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            <a class="riga" href={c.href}>
+                                <p class="riga-nome">{c.nome}</p>
+                                <i class="riga-freccia fas fa-arrow-right" aria-hidden="true"></i>
                             </a>
                         </li>
                     ))}
@@ -106,13 +114,13 @@ const classi = [
         </section>
 
         <!-- CTA -->
-        <section class="integrate-cta-section sezione-scura">
-            <div class="integrate-cta-bg" style={bg.cta.style}></div>
-            <div class="integrate-cta-overlay"></div>
-            <div class="integrate-cta-wrapper">
+        <section class="cta-contatto sezione-scura">
+            <div class="cta-bg" style={bg.cta.style}></div>
+            <div class="cta-overlay"></div>
+            <div class="cta-wrapper">
                 <h2 class="titolo-sezione">Parliamo <em>del tuo bambino</em></h2>
                 <p class="intro-sezione">Contatta la Direzione per fissare un <strong>colloquio conoscitivo</strong>: insieme troveremo il gruppo classe più adatto.</p>
-                <div class="integrate-cta-buttons">
+                <div class="cta-pulsanti">
                     <a href={`mailto:${scuola.email}?subject=Classi%20Integrate%20-%20Richiesta%20Informazioni`} class="btn-primary">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Richiedi informazioni
                     </a>
@@ -123,258 +131,3 @@ const classi = [
             </div>
         </section>
 </Base>
-
-<style>
-/* ---------- Intro ---------- */
-.integrate-intro-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-.integrate-intro-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 5rem;
-  align-items: center;
-}
-
-.integrate-intro-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.integrate-intro-title {
-  margin-bottom: 1.75rem;
-}
-
-.integrate-intro-testo p {
-  margin-bottom: 1.25rem;
-  font-size: var(--text-base);
-  line-height: 1.8;
-  color: var(--text-dark);
-}
-
-.integrate-intro-testo p:last-child {
-  margin-bottom: 0;
-}
-
-/* La cornice sporge a sinistra e in basso: spazio dentro la colonna */
-.integrate-intro-visual {
-  max-width: 520px;
-  margin: 0 0 1.5rem 1.5rem;
-  justify-self: end;
-}
-
-.integrate-intro-visual :global(img) {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-}
-
-/* ---------- Valori ---------- */
-.integrate-valori-section {
-  padding: var(--section-y) 0;
-  background: var(--bg-soft);
-}
-
-.valori-lista {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 3rem;
-  margin: 3.5rem 0 0;
-  padding: 0;
-}
-
-.valori-lista .voce-testo {
-  font-size: var(--text-base);
-}
-
-/* ---------- Classi ---------- */
-.integrate-classi-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-.integrate-classi-layout {
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-  gap: 5rem;
-  align-items: start;
-}
-
-.integrate-classi-header .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.classi-lista {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.classi-lista li {
-  border-bottom: 1px solid var(--linea);
-}
-
-.classi-lista li:last-child {
-  border-bottom: none;
-}
-
-.classe {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 1.35rem 0;
-  color: var(--dark-navy);
-  text-decoration: none;
-}
-
-.classi-lista li:first-child .classe {
-  padding-top: .5rem;
-}
-
-.classe-nome {
-  transition: color .3s ease;
-}
-
-.classe i {
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  transition: transform .3s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .classe:hover .classe-nome {
-    color: var(--primary-blue-dark);
-  }
-
-  .classe:hover i {
-    transform: translateX(6px);
-  }
-}
-
-/* ---------- CTA ---------- */
-.integrate-cta-section {
-  position: relative;
-  padding: var(--section-y) 0;
-  overflow: hidden;
-}
-
-.integrate-cta-bg,
-.integrate-cta-overlay {
-  position: absolute;
-  inset: 0;
-}
-
-.integrate-cta-bg {
-  background: center / cover no-repeat;
-}
-
-.integrate-cta-overlay {
-  background: linear-gradient(135deg, rgb(var(--navy-rgb) / .66) 0%, rgb(var(--header-rgb) / .62) 100%);
-}
-
-.integrate-cta-wrapper {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  text-align: center;
-}
-
-.integrate-cta-wrapper .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.integrate-cta-wrapper .intro-sezione {
-  margin-bottom: 2.5rem;
-}
-
-.integrate-cta-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-}
-
-/* ---------- Tablet ---------- */
-@media (max-width: 900px) {
-  /* Intro: etichetta e titolo, foto, testo, citazione */
-  .integrate-intro-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-
-  .integrate-intro-content {
-    display: contents;
-  }
-
-  .integrate-intro-label {
-    order: 1;
-  }
-
-  .integrate-intro-title {
-    order: 2;
-  }
-
-  .integrate-intro-visual {
-    order: 3;
-    max-width: none;
-    margin: 0 0 3.75rem 1.5rem;
-  }
-
-  .integrate-intro-visual :global(img) {
-    aspect-ratio: 3 / 2;
-  }
-
-  .integrate-intro-testo {
-    order: 4;
-  }
-
-  .integrate-intro-highlight {
-    order: 5;
-  }
-
-  /* Valori: una colonna */
-  .valori-lista {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
-    margin-top: 2.5rem;
-  }
-
-  /* Classi: intestazione sopra l'elenco */
-  .integrate-classi-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
-  }
-}
-
-/* ---------- Mobile ---------- */
-@media (max-width: 600px) {
-  .integrate-intro-visual {
-    margin: 0 0 3rem .75rem;
-  }
-
-  .integrate-intro-visual :global(img) {
-    aspect-ratio: 4 / 3;
-  }
-
-  .classe {
-    padding: 1.15rem 0;
-  }
-
-
-  .integrate-cta-wrapper {
-    padding: 0 1.5rem;
-  }
-
-  .integrate-cta-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-</style>

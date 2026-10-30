@@ -1,0 +1,180 @@
+/*
+ * Pulsanti e link d'azione: ogni pagina usa queste classi, le pagine definiscono solo il layout.
+ * .btn-primary pieno azzurro (principale) · .btn-secondary contorno bianco (su foto/scuro) ·
+ * .btn-icon tondo con sola icona (+ varianti) · .link-cta link testuale sottolineato.
+ */
+
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  padding: .8rem 1.75rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--ui-size);
+  line-height: 1.2;
+  font-weight: var(--ui-weight);
+  letter-spacing: var(--ui-ls);
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+}
+
+.btn-primary {
+  background: var(--primary-blue);
+  color: var(--dark-navy);
+  border: 2px solid var(--primary-blue);
+  box-shadow: var(--shadow-blue);
+}
+
+.btn-primary:hover {
+  background: var(--primary-blue-dark);
+  border-color: var(--primary-blue-dark);
+  color: var(--white);
+}
+
+/* Pagina corrente (Contattaci nella navbar quando si è in Contatti) */
+.btn-primary[aria-current="page"] {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--dark-navy);
+}
+
+.btn-secondary {
+  background: rgb(var(--nero-rgb) / .15);
+  color: var(--white);
+  border: 2px solid rgb(var(--bianco-rgb) / .85);
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--dark-navy);
+}
+
+.btn-primary i,
+.btn-secondary i {
+  /* Icona alla stessa scala del testo, centrata sulla riga */
+  font-size: var(--icona-in-testo);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .btn-primary,
+  .btn-secondary {
+    padding: .75rem 1.5rem;
+    gap: .4rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-primary,
+  .btn-secondary {
+    padding: .7rem 1.3rem;
+  }
+}
+
+/* ---------- Pulsanti tondi con sola icona ----------
+   (chiudi, frecce, menu): stessa misura (44px, area di tocco minima), stessa icona;
+   la variante dipende dallo sfondo su cui stanno */
+.btn-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  background: rgb(var(--bianco-rgb) / .92);
+  box-shadow: var(--shadow-sm);
+  color: var(--dark-navy);
+  font-size: var(--text-base);
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+}
+
+.btn-icon:hover {
+  background: var(--primary-blue);
+}
+
+/* Su foto e sfondi scuri */
+.btn-icon--scuro {
+  background: rgb(var(--bianco-rgb) / .15);
+  border-color: rgb(var(--bianco-rgb) / .3);
+  box-shadow: none;
+  color: var(--white);
+}
+
+.btn-icon--scuro:hover {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--dark-navy);
+}
+
+/* Su fondo chiaro, solo contorno (frecce dei caroselli) */
+.btn-icon--contorno {
+  background: transparent;
+  border-color: rgb(var(--navy-rgb) / .2);
+  box-shadow: none;
+  color: var(--primary-blue-dark);
+}
+
+.btn-icon--contorno:hover {
+  background: var(--primary-blue);
+  border-color: var(--primary-blue);
+  color: var(--dark-navy);
+}
+
+/* Solo icona bianca, senza cerchio (apri e chiudi del menu mobile) */
+.btn-icon--nudo {
+  border: none;
+  background: none;
+  box-shadow: none;
+  color: var(--white);
+  font-size: var(--text-2xl);
+}
+
+.btn-icon--nudo:hover {
+  background: none;
+  color: var(--primary-blue);
+}
+
+/* ---------- Link d'azione testuale, sottolineato ---------- */
+.link-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  padding-bottom: .4rem;
+  border-bottom: 2px solid var(--primary-blue);
+  color: var(--dark-navy);
+  font-size: var(--label-size);
+  font-weight: var(--ui-weight);
+  letter-spacing: var(--ui-ls);
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color .3s ease, border-color .3s ease;
+}
+
+.link-cta i {
+  color: var(--black);
+  transition: transform .3s ease, color .3s ease;
+}
+
+.link-cta:hover,
+a:hover .link-cta {
+  color: var(--primary-blue-dark);
+  border-color: var(--primary-blue-dark);
+}
+
+.link-cta:hover i,
+a:hover .link-cta i {
+  color: var(--primary-blue-dark);
+  transform: translateX(6px);
+}

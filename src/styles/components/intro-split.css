@@ -1,0 +1,133 @@
+/*
+ * Schema condiviso dalle pagine con introduzione "testo + foto" e sezione "intestazione + elenco"
+ * (classi integrate, collaborazioni, formazione insegnanti, NoiConVoi, sostenitori, sportello psicologico).
+ *
+ * intro-split: testo a sinistra e foto a destra; sotto i 900px titolo, foto, testo, citazione.
+ * split-section: intestazione a sinistra (split-header, sticky con --sticky) ed elenco a destra;
+ *   sotto i 900px una colonna. --soft: fondo azzurrino.
+ */
+.intro-split {
+  background: var(--white);
+  padding: var(--section-y) 0;
+}
+
+.intro-split-layout {
+  align-items: center;
+  display: grid;
+  gap: 5rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.intro-split-label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.intro-split-title {
+  margin-bottom: 1.75rem;
+}
+
+.intro-split-testo p {
+  margin-bottom: 1.25rem;
+}
+
+.intro-split-testo p:last-child {
+  margin-bottom: 0;
+}
+
+.intro-split-visual {
+  justify-self: end;
+  margin: 0 0 1.5rem 1.5rem;
+  max-width: 520px;
+}
+
+.intro-split-visual img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  width: 100%;
+}
+
+.split-section {
+  background: var(--white);
+  padding: var(--section-y) 0;
+}
+
+.split-layout {
+  align-items: start;
+  display: grid;
+  gap: 5rem;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+}
+
+.split-header .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
+.split-header--sticky {
+  position: sticky;
+  top: calc(var(--header-h) + var(--banner-height, 0px) + 2rem);
+}
+
+.split-section--soft {
+  background: var(--bg-soft);
+  padding: var(--section-y) 0;
+}
+
+@media (max-width: 900px) {
+  .intro-split-layout {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .intro-split-content {
+    display: contents;
+  }
+
+  .intro-split-label {
+    order: 1;
+  }
+
+  .intro-split-title {
+    order: 2;
+  }
+
+  .intro-split-visual {
+    margin: 0 0 3.75rem 1.5rem;
+    max-width: none;
+    order: 3;
+  }
+
+  .intro-split-visual img {
+    aspect-ratio: 3 / 2;
+  }
+
+  .intro-split-testo {
+    order: 4;
+  }
+
+  .intro-split-highlight {
+    order: 5;
+  }
+
+  .split-layout {
+    gap: 2.5rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .split-header--sticky {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .intro-split-visual {
+    margin: 0 0 3rem .75rem;
+  }
+
+  .intro-split-visual img {
+    aspect-ratio: 4 / 3;
+  }
+}
+

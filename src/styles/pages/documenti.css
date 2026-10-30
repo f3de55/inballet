@@ -1,0 +1,100 @@
+/* ---------- Documenti ---------- */
+.documenti-section {
+  padding: var(--section-y) 0;
+  background: var(--white);
+}
+
+.documenti-lista {
+  list-style: none;
+  margin: 3.5rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--linea);
+}
+
+.documenti-lista li {
+  border-bottom: 1px solid var(--linea);
+}
+
+.documento {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.documento-icona {
+  font-size: var(--text-3xl);
+  color: var(--primary-blue-dark);
+}
+
+.documento-testo {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+.documento-nome {
+  color: var(--dark-navy);
+  transition: color .3s ease;
+}
+
+.documento-azione {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.documento-peso {
+  white-space: nowrap;
+}
+
+.documento-scarica {
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .documento:hover .documento-nome,
+  .documento:hover .documento-scarica {
+    color: var(--primary-blue-dark);
+  }
+
+  .documento:hover .documento-scarica {
+    border-color: var(--primary-blue-dark);
+  }
+
+  .documento:hover .documento-scarica i {
+    color: var(--primary-blue-dark);
+    transform: translateY(3px);
+  }
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .documenti-lista {
+    margin-top: 2.5rem;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  /* Documento: icona e testo, sotto peso e "Scarica" */
+  .documento {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    align-items: start;
+    gap: .5rem 1rem;
+    padding: 1.5rem 0;
+  }
+
+  .documento-icona {
+    padding-top: .15rem;
+  }
+
+  .documento-azione {
+    grid-column: 2;
+    justify-content: space-between;
+    margin-top: .75rem;
+  }
+}

@@ -1,0 +1,178 @@
+.insegnanti-section {
+  padding: var(--section-y) 0;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.insegnanti-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.insegnanti-eyebrow,
+.insegnanti-titolo {
+  margin-bottom: 1.5rem;
+}
+
+.insegnanti-intro {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .insegnanti-header {
+    margin-bottom: 2rem;
+    text-align: left;
+  }
+
+  .insegnanti-intro {
+    margin: 0;
+  }
+}
+
+/* ---------- Fila a scorrimento (come la galleria; logica in src/scripts/carosello.ts) ---------- */
+.insegnanti-fila {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.insegnanti-fila::-webkit-scrollbar {
+  display: none;
+}
+
+.insegnanti-fila.trascinando {
+  cursor: grabbing;
+}
+
+.insegnanti-track {
+  display: flex;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.insegnante {
+  position: relative;
+  flex: 0 0 auto;
+  cursor: pointer;
+  width: 300px;
+  height: 420px;
+  margin-right: 8px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--bg-soft);
+}
+
+.insegnante-foto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+
+.insegnante-iniziali {
+  display: grid;
+  place-items: center;
+  font-size: var(--numero-grande-size);
+  font-weight: var(--font-light);
+  color: var(--primary-blue-dark);
+}
+
+/* Velo scuro in basso: nome, disciplina e pulsante leggibili su qualsiasi foto */
+.insegnante-velo {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 7rem 1.5rem 1.5rem;
+  background: linear-gradient(to top, rgb(var(--scuro-rgb) / .92) 0%, rgb(var(--scuro-rgb) / .78) 45%, rgb(var(--scuro-rgb) / 0) 100%);
+}
+
+.insegnante-ruolo {
+  margin: .35rem 0 0;
+  color: var(--primary-blue);
+}
+
+.insegnante-nome {
+  margin: 0;
+  color: var(--white);
+}
+
+/* Pulsante sotto il nome; anche il resto della card apre la scheda (data-apri-insegnante sul <li>) */
+.insegnante-cta {
+  position: static;
+  margin-top: 1rem;
+  padding: 0 0 .4rem;
+  border: none;
+  border-bottom: 2px solid var(--primary-blue);
+  background: none;
+  font-family: inherit;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.insegnante-cta i {
+  color: var(--white);
+}
+
+.insegnante-cta:hover {
+  color: var(--white);
+  border-color: var(--white);
+}
+
+.insegnante-cta:focus-visible {
+  outline: none;
+}
+
+.insegnante:has(.insegnante-cta:focus-visible) {
+  outline: 3px solid var(--primary-blue);
+  outline-offset: -3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .insegnante:hover .insegnante-foto {
+    transform: scale(1.04);
+  }
+}
+
+/* Movimento ridotto: solo a mano, senza copie */
+@media (prefers-reduced-motion: reduce) {
+  .insegnanti-fila {
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1.5rem;
+  }
+
+  .insegnanti-track {
+    padding: 0 1.5rem;
+  }
+
+  .insegnante {
+    scroll-snap-align: start;
+  }
+
+  .insegnante[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .insegnante {
+    width: 280px;
+    height: 380px;
+  }
+}
+
+@media (max-width: 768px) {
+  .insegnante {
+    width: min(62vw, 260px);
+    height: 340px;
+  }
+
+  .insegnante-velo {
+    padding: 6rem 1.25rem 1.25rem;
+  }
+}

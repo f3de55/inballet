@@ -1,11 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import { sfondo, sfondoCta } from '../lib/images';
+import { sfondoCta } from '../lib/images';
+import { heroPagina } from '../lib/hero-pagine';
 import { scuola } from '../data/scuola';
+import '../styles/pages/formazioni-personalizzate.css';
 
 const bg = {
-  hero: await sfondo('gallery-10.jpg'),
+  hero: await heroPagina('formazioni-personalizzate'),
   cta: await sfondoCta('bg-progetti-territorio.jpg', { desktop: '50% 35%' }),
 };
 ---
@@ -17,9 +19,13 @@ const bg = {
     ogDescription="Corsi di formazione su misura che intrecciano linguaggi espressivi, corporeità e motricità."
 >
 
+    <Fragment slot="head">
+        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
+    </Fragment>
+
         <!-- Hero Section -->
-        <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
+        <section class="chisiamo-hero hero-banner">
+            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -31,7 +37,7 @@ const bg = {
         <!-- Intro Section -->
         <section id="intro" class="perso-intro-section decoro-onde">
             <div class="perso-intro-wrapper intro-editoriale">
-                <span class="perso-intro-label eyebrow">Formazione su misura</span>
+                <p class="perso-intro-label eyebrow">Formazione su misura</p>
                 <h2 class="perso-intro-title titolo-sezione">Progettiamo insieme <em>il tuo percorso</em></h2>
                 <p class="perso-intro-text">
                     Corsi per <strong>professionisti dell'educazione e della terapia</strong>, pedagogisti e insegnanti, tra linguaggi espressivi, corporeità, motricità ed esplorazione del sé.
@@ -46,7 +52,7 @@ const bg = {
         <section class="perso-tipo-section">
             <div class="perso-tipo-wrapper">
                 <div class="perso-tipo-header">
-                    <span class="perso-tipo-label eyebrow">I percorsi</span>
+                    <p class="perso-tipo-label eyebrow">I percorsi</p>
                     <h2 class="perso-tipo-title titolo-sezione">A chi <em>ci rivolgiamo</em></h2>
                 </div>
                 <div class="perso-tipo-grid">
@@ -83,143 +89,17 @@ const bg = {
         </section>
 
         <!-- CTA Section -->
-        <section class="corso-contatto-section sezione-scura">
-            <div class="corso-contatto-bg" style={bg.cta.style}></div>
-            <div class="corso-contatto-overlay"></div>
-            <div class="corso-contatto-wrapper">
-                <div class="corso-contatto-content">
-                    <h2 class="titolo-sezione">Hai un progetto <em>in mente?</em></h2>
-                    <p class="intro-sezione">Contattaci per un <strong>primo colloquio</strong>: definiamo insieme obiettivi e contenuti del tuo percorso.</p>
-                    <a href={`mailto:${scuola.email}?subject=Formazione%20Personalizzata%20-%20Richiesta%20Info`} class="corso-btn-cta btn-primary">
+        <section class="cta-contatto sezione-scura">
+            <div class="cta-bg" style={bg.cta.style}></div>
+            <div class="cta-overlay"></div>
+            <div class="cta-wrapper">
+                <h2 class="titolo-sezione">Hai un progetto <em>in mente?</em></h2>
+                <p class="intro-sezione">Contattaci per un <strong>primo colloquio</strong>: definiamo insieme obiettivi e contenuti del tuo percorso.</p>
+                <div class="cta-pulsanti">
+                    <a href={`mailto:${scuola.email}?subject=Formazione%20Personalizzata%20-%20Richiesta%20Info`} class="btn-primary">
                         Richiedi informazioni <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
         </section>
 </Base>
-
-<style>
-.perso-intro-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-.perso-intro-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.perso-intro-title {
-  margin-bottom: 2rem;
-}
-
-.perso-intro-text {
-  font-size: var(--text-base);
-  color: var(--text-light);
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-}
-
-.perso-intro-text :global(strong) {
-  color: var(--dark-navy);
-  font-weight: 600;
-}
-
-.perso-tipo-section {
-  padding: var(--section-y) 0;
-  background: var(--bg-soft);
-  position: relative;
-  overflow: hidden;
-}
-
-.perso-tipo-wrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.perso-tipo-header {
-  text-align: center;
-  margin-bottom: 3.5rem;
-}
-
-.perso-tipo-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.perso-tipo-grid {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 2.5rem 4rem;
-  position: relative;
-}
-
-.perso-tipo-grid::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: rgb(var(--blu-rgb) / .3);
-  transform: translateX(-50%);
-}
-
-.perso-tipo-item {
-  display: grid;
-  grid-template-columns: 2.25rem 1fr;
-  gap: 1rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid rgb(var(--blu-rgb) / .3);
-}
-
-.perso-tipo-item:nth-last-child(-n+2) {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-/* Icona del destinatario accanto al titolo (niente cerchio colorato) */
-.perso-tipo-num {
-  padding-top: .2rem;
-  font-size: var(--text-xl);
-  color: var(--primary-blue-dark);
-}
-
-.perso-tipo-content :global(h3) {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  color: var(--dark-navy);
-  margin-bottom: .4rem;
-}
-
-.perso-tipo-content :global(p) {
-  font-size: var(--text-base);
-  color: var(--text-light);
-  margin: 0;
-  line-height: 1.6;
-}
-
-@media(max-width:768px) {
-  .perso-tipo-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .perso-tipo-grid::before {
-    display: none;
-  }
-
-  .perso-tipo-item:nth-last-child(2) {
-    border-bottom: 1px solid rgb(var(--blu-rgb) / .3);
-    padding-bottom: 2rem;
-  }
-}
-/* Tablet e mobile: intestazione a sinistra, come il resto dei contenuti */
-@media (max-width: 900px) {
-  .perso-tipo-header {
-    text-align: left;
-    margin-bottom: 2rem;
-  }
-}
-</style>

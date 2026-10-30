@@ -1,0 +1,550 @@
+/* Fondo azzurrino (intro e percorsi pari); i percorsi dispari sono fasce bianche con doppia onda */
+.corsi {
+  padding: 0 0 var(--section-y);
+  background: var(--bg-soft);
+  overflow-x: clip;
+}
+
+/* ---------- Introduzione ---------- */
+.corsi-intro {
+  margin: 0;
+  padding: var(--section-y) 0 4.5rem;
+  text-align: center;
+}
+
+.corsi-lead {
+  max-width: 44rem;
+  margin: 1.25rem auto 0;
+}
+
+/* Indice dei percorsi su PC: pillole centrate (nome e freccia in giù, portano più
+   sotto nella pagina); il numero compare solo nella versione a righe sotto i 900px */
+.salti {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .6rem;
+  margin: 2.5rem auto 0;
+}
+
+/* Posizione del percorso (--i): sfasa le animazioni dei salti uno dopo l'altro */
+.salti a:nth-child(2) { --i: 1; }
+.salti a:nth-child(3) { --i: 2; }
+.salti a:nth-child(4) { --i: 3; }
+.salti a:nth-child(5) { --i: 4; }
+.salti a:nth-child(6) { --i: 5; }
+.salti a:nth-child(7) { --i: 6; }
+.salti a:nth-child(8) { --i: 7; }
+
+.salti a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  min-height: 44px;
+  padding: .6rem 1.15rem;
+  border: 1px solid rgb(var(--blu-scuro-rgb) / .35);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  color: var(--dark-navy);
+  text-decoration: none;
+  transition: background-color .25s ease, border-color .25s ease;
+}
+
+/* Su ogni percorso scorre di continuo un tratto azzurro lungo il bordo inferiore, come un ballerino
+   alla sbarra: un percorso dopo l'altro (--i) disegna un'onda e invita a scegliere. La freccia
+   accompagna il passaggio con un piccolo passo verso il basso */
+.salti a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 45%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-blue) 35%, var(--primary-blue-dark) 65%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: salto-sbarra 5.5s cubic-bezier(.4, 0, .2, 1) infinite;
+  animation-delay: calc(var(--i, 0) * .7s);
+}
+
+/* Il tratto entra da sinistra sfumando, attraversa la riga e svanisce a destra (solo transform e
+   opacità: fluido anche su telefono); poi una pausa prima del giro successivo */
+@keyframes salto-sbarra {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  15%,
+  45% {
+    opacity: 1;
+  }
+
+  60%,
+  100% {
+    transform: translateX(222%);
+    opacity: 0;
+  }
+}
+
+@property --angolo {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes salto-giro {
+  to {
+    --angolo: 360deg;
+  }
+}
+
+@keyframes salto-passo {
+  0%,
+  55%,
+  100% {
+    transform: none;
+  }
+
+  27% {
+    transform: translateY(4px);
+  }
+}
+
+.salto-numero {
+  display: none;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+}
+
+.salto-nome {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  line-height: 1.3;
+}
+
+.salti a i {
+  font-size: var(--text-xs);
+  color: var(--primary-blue-dark);
+  transition: transform .25s ease, color .25s ease;
+}
+
+.salti a .fa-arrow-down {
+  will-change: transform;
+  animation: salto-passo 5.5s cubic-bezier(.4, 0, .2, 1) infinite;
+  animation-delay: calc(var(--i, 0) * .7s);
+}
+
+/* "Riduci movimento": il tratto non scorre, ma resta un respiro lento di luce sotto ogni percorso
+   (solo opacità): un'animazione c'è comunque su ogni dispositivo */
+@media (prefers-reduced-motion: reduce) {
+  .salti a::after {
+    width: 100%;
+    background: linear-gradient(90deg, transparent, var(--primary-blue) 25%, var(--primary-blue) 75%, transparent);
+    animation: salto-respiro 4s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * .5s);
+  }
+
+  .salti a .fa-arrow-down {
+    animation: none;
+  }
+}
+
+@keyframes salto-respiro {
+  0%,
+  100% {
+    opacity: .15;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* PC: pillole ben visibili, quasi un bottone da titolo di sezione */
+@media (min-width: 901px) {
+  .salti {
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .salti a {
+    gap: .9rem;
+    min-height: 68px;
+    padding: 1rem 2rem;
+    border-width: 1.5px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .salto-nome {
+    font-size: var(--text-sm);
+  }
+
+  .salti a i {
+    font-size: var(--text-sm);
+  }
+
+  /* Sulle pillole il contorno è una linea continua che cambia colore girando (azzurro, blu scuro, azzurro); ogni percorso parte da un punto diverso (--i) */
+  .salti a::after {
+    inset: -1.5px;
+    width: auto;
+    height: auto;
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+    padding: 3px;
+    border-radius: var(--radius-pill);
+    background: conic-gradient(from var(--angolo), var(--primary-blue), var(--primary-blue-dark) 50%, var(--primary-blue));
+    -webkit-mask: linear-gradient(var(--black) 0 0) content-box, linear-gradient(var(--black) 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(var(--black) 0 0) content-box exclude, linear-gradient(var(--black) 0 0);
+    animation: salto-giro 4.5s linear infinite;
+    animation-delay: calc(var(--i, 0) * -.9s);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .salti a::after {
+      opacity: .15;
+      background: var(--primary-blue);
+      animation: salto-respiro 4s ease-in-out infinite;
+      animation-delay: calc(var(--i, 0) * .5s);
+    }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 901px) {
+  .salti a:hover {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+  }
+
+  .salti a:hover i {
+    color: var(--dark-navy);
+    transform: translateY(3px);
+    animation: none;
+  }
+
+  .salti a:hover::after {
+    animation: none;
+    opacity: 1;
+    background: var(--primary-blue-dark);
+  }
+}
+
+.salti a:focus-visible {
+  outline: 2px solid var(--primary-blue-dark);
+  outline-offset: 4px;
+}
+
+/* ---------- Categorie: foto e corsi, alternate ---------- */
+/* Larghezza del container (1200px come la home): il testo con i corsi ha più spazio,
+   la foto è la colonna stretta, in formato fisso e centrata rispetto al testo */
+.categoria {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 4rem;
+  align-items: center;
+  padding: 4.5rem 0;
+}
+
+.categoria:nth-of-type(even) {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+}
+
+.categoria:nth-of-type(even) .categoria-foto {
+  order: 2;
+}
+
+.categoria-foto {
+  position: relative;
+  isolation: isolate;
+  margin: 0 1.5rem 1.5rem 1.5rem;
+}
+
+/* Cornice azzurra sfalsata verso il testo, come in Contatti e nella homepage */
+.categoria-foto::before {
+  content: '';
+  position: absolute;
+  inset: 2.5rem -1.5rem -1.5rem 2.5rem;
+  border: 2px solid var(--primary-blue);
+  border-radius: var(--radius-img);
+  z-index: -1;
+}
+
+.categoria:nth-of-type(even) .categoria-foto::before {
+  inset: 2.5rem 2.5rem -1.5rem -1.5rem;
+}
+
+.categoria-foto img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radius-img);
+  box-shadow: 0 24px 60px rgb(var(--nero-rgb) / .14);
+}
+
+/* Etichetta «Percorso 1 di 5» sopra il titolo */
+.categoria-percorso {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.categoria-titolo {
+  color: var(--dark-navy);
+  margin-bottom: 0.9rem;
+}
+
+.categoria-descrizione {
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- Elenco corsi ---------- */
+/* Righe separate da filetti, senza riquadri: nome e fascia d'età a sinistra, freccia a destra.
+   Tutta la riga è il link; il filetto in alto chiude la lista come nelle altre sezioni del sito */
+.corsi-lista {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 2.5rem;
+  border-top: 1px solid var(--linea);
+}
+
+@media (max-width: 640px) {
+  .corsi-lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Ogni voce occupa 2 righe (nome, età): in una riga di due voci nomi ed età stanno alla stessa quota */
+.corsi-lista li {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  border-bottom: 1px solid var(--linea);
+}
+
+.corsi-lista a {
+  display: grid;
+  grid-row: 1 / -1;
+  grid-template-rows: subgrid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 1rem;
+  padding: 1.1rem 0;
+  color: var(--dark-navy);
+  text-decoration: none;
+}
+
+.corso-nome {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+  transition: color 0.3s ease;
+}
+
+.corso-eta {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+  margin-top: .2rem;
+}
+
+.corso-freccia {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  font-size: var(--text-sm);
+  color: var(--primary-blue-dark);
+  transition: transform 0.3s ease;
+}
+
+.corsi-lista a:focus-visible {
+  outline: 2px solid var(--primary-blue-dark);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .corsi-lista a:hover .corso-nome {
+    color: var(--primary-blue-dark);
+  }
+
+  .corsi-lista a:hover .corso-freccia {
+    transform: translateX(4px);
+  }
+}
+
+/* ---------- Chiusura ---------- */
+/* Card di chiusura: titolo e testo a sinistra, pulsante principale a destra */
+.corsi-fine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 3rem;
+  /* Stesso spazio azzurrino sopra (dopo l'onda dell'ultima fascia) e sotto (prima del footer) */
+  margin-top: calc(var(--onda-h) + var(--section-y));
+  padding: 2.5rem 3rem;
+  background: var(--white);
+  border-radius: var(--radius-card);
+}
+
+.corsi-fine-titolo {
+  margin: 0 0 .5rem;
+  color: var(--dark-navy);
+}
+
+.corsi-fine p {
+  margin: 0;
+  max-width: 38rem;
+}
+
+.corsi-fine .btn-primary {
+  flex-shrink: 0;
+}
+
+/* ---------- Responsive ---------- */
+
+/* Tablet: percorsi a righe; foto e testo restano affiancati (alternati), corsi su una colonna */
+@media (max-width: 900px) {
+  /* Percorsi a righe (5 colonne non ci stanno): numero, nome, freccia a destra */
+  .salti {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    max-width: 640px;
+    margin-top: 1.5rem;
+    border-bottom: 1px solid var(--linea);
+    text-align: left;
+  }
+
+  .salti a {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+    align-items: center;
+    min-height: 0;
+    padding: 1rem 0;
+    border: none;
+    border-top: 1px solid var(--linea);
+    border-radius: 0;
+    background: none;
+  }
+
+  /* A righe il tratto attraversa la riga lungo il filetto in basso, senza uscire dallo schermo */
+  .salti a {
+    overflow: hidden;
+  }
+
+  .salto-numero {
+    display: block;
+  }
+
+  .salto-nome {
+    font-size: var(--text-base);
+    font-weight: var(--font-bold);
+  }
+
+  .corsi-intro {
+    padding-bottom: 3.5rem;
+  }
+
+  .categoria {
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    gap: 2.5rem;
+    padding: 3.5rem 0;
+  }
+
+  .categoria:nth-of-type(even) {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+  }
+
+  .categoria-foto {
+    margin: 0 1rem 1rem 1rem;
+  }
+
+  .categoria-foto::before {
+    inset: 1.5rem -1rem -1rem 1.5rem;
+  }
+
+  .categoria:nth-of-type(even) .categoria-foto::before {
+    inset: 1.5rem 1.5rem -1rem -1rem;
+  }
+
+  .categoria-descrizione {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Mobile: foto sopra in formato basso, testo e corsi sotto; intro a sinistra */
+@media (max-width: 640px) {
+  .corsi-intro {
+    padding-bottom: 3rem;
+    text-align: left;
+  }
+
+  .corsi-lead {
+    margin-left: 0;
+  }
+
+  /* Ordine: etichetta e titolo, poi la foto, poi descrizione e corsi
+     (il blocco di testo "si scioglie" così i suoi elementi si ordinano insieme alla foto) */
+  .categoria,
+  .categoria:nth-of-type(even) {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 3rem 0;
+  }
+
+  .categoria-testo {
+    display: contents;
+  }
+
+  .categoria-percorso {
+    order: 1;
+  }
+
+  .categoria-titolo {
+    order: 3;
+  }
+
+  .categoria .categoria-foto,
+  .categoria:nth-of-type(even) .categoria-foto {
+    order: 4;
+    margin: .75rem .75rem 2.75rem 0;
+  }
+
+  .categoria-descrizione {
+    order: 5;
+  }
+
+  .corsi-lista {
+    order: 6;
+  }
+
+  .corsi-fine {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 1.5rem;
+  }
+
+  .categoria-foto {
+    margin: 0 .75rem .75rem 0;
+  }
+
+  .categoria-foto::before,
+  .categoria:nth-of-type(even) .categoria-foto::before {
+    inset: 1.25rem -.75rem -.75rem 1.25rem;
+  }
+
+  .categoria-foto img {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Riga alta abbastanza per un bersaglio del tocco ampio */
+  .corsi-lista a {
+    min-height: 4.25rem;
+  }
+}

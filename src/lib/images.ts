@@ -31,7 +31,7 @@ export interface Fuoco {
   mobile?: string;
 }
 
-/** Variabili CSS del punto focale (lette dalle regole responsive in global.css). */
+/** Variabili CSS del punto focale (lette dalle regole responsive in styles/components/sfondo.css). */
 export function varFuoco(fuoco: Fuoco = {}): string {
   const lg = fuoco.desktop ?? '50% 50%';
   const md = fuoco.tablet ?? lg;

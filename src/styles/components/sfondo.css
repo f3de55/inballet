@@ -1,0 +1,39 @@
+/*
+ * Sfondi e foto ritagliate (sfondo() e <Img fuoco> in src/lib/images.ts): sorgente e punto focale per
+ * desktop, tablet (<=900px) e mobile (<=600px), letti dallo stile inline (che contiene solo variabili con
+ * i dati dell'immagine, mai regole di stile). Il doppio selettore d'attributo alza la specificità: le
+ * regole dei componenti (es. `background: center / cover`) non devono azzerare l'immagine.
+ */
+[style*="--sfondo-lg"][style*="--fuoco-lg"] {
+  --sfondo: var(--sfondo-lg);
+  --fuoco: var(--fuoco-lg);
+  background-image: var(--sfondo);
+  background-position: var(--fuoco);
+}
+
+img[style*="--fuoco-lg"][style*="--fuoco-md"] {
+  --fuoco: var(--fuoco-lg);
+  object-position: var(--fuoco);
+}
+
+@media (max-width: 900px) {
+  [style*="--sfondo-lg"][style*="--fuoco-lg"] {
+    --sfondo: var(--sfondo-md);
+    --fuoco: var(--fuoco-md);
+  }
+
+  img[style*="--fuoco-lg"][style*="--fuoco-md"] {
+    --fuoco: var(--fuoco-md);
+  }
+}
+
+@media (max-width: 600px) {
+  [style*="--sfondo-lg"][style*="--fuoco-lg"] {
+    --sfondo: var(--sfondo-sm);
+    --fuoco: var(--fuoco-sm);
+  }
+
+  img[style*="--fuoco-lg"][style*="--fuoco-md"] {
+    --fuoco: var(--fuoco-sm);
+  }
+}

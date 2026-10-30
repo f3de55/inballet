@@ -188,8 +188,7 @@ async function eliminaEvento(row: HTMLElement) {
   if (error) return toast(error.message || "Errore durante l'eliminazione", 'error');
 
   toast('Evento eliminato', 'success');
-  row.style.transition = 'opacity .25s';
-  row.style.opacity = '0';
+  row.classList.add('in-uscita');
   setTimeout(() => location.reload(), 700); // aggiorna conteggi e gruppi
 }
 

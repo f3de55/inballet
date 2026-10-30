@@ -3,11 +3,15 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import SostenitoriSection from '../components/SostenitoriSection.astro';
-import { sfondo, sfondoCta } from '../lib/images';
+import { sfondoCta } from '../lib/images';
+import { heroPagina } from '../lib/hero-pagine';
 import { scuola } from '../data/scuola';
+import '../styles/components/intro-split.css';
+import '../styles/components/righe.css';
+import '../styles/pages/sostenitori.css';
 
 const bg = {
-  hero: await sfondo('gallery-2.jpg'),
+  hero: await heroPagina('sostenitori'),
   cta: await sfondoCta('gallery-3.jpg', { desktop: '50% 45%' }),
 };
 
@@ -27,9 +31,13 @@ const destinazioni: { nome: string; href?: string }[] = [
     ogDescription="Donazioni e volontariato d'impresa per la danza inclusiva: dal 2013 in provincia di Milano."
 >
 
+    <Fragment slot="head">
+        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
+    </Fragment>
+
         <!-- Hero Section -->
-        <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
+        <section class="chisiamo-hero hero-banner">
+            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -39,17 +47,17 @@ const destinazioni: { nome: string; href?: string }[] = [
         </section>
 
         <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo) -->
-        <section class="sost-intro-section decoro-onde">
-            <div class="container sost-intro-layout">
-                <div class="sost-intro-content">
-                    <span class="sost-intro-label eyebrow">La nostra missione</span>
-                    <h2 class="sost-intro-title titolo-sezione">Inclusione <em>attraverso la danza</em></h2>
-                    <div class="sost-intro-testo">
+        <section class="intro-split decoro-onde">
+            <div class="container intro-split-layout">
+                <div class="intro-split-content">
+                    <p class="intro-split-label eyebrow">La nostra missione</p>
+                    <h2 class="intro-split-title titolo-sezione">Inclusione <em>attraverso la danza</em></h2>
+                    <div class="intro-split-testo">
                         <p><strong>Dal 2013</strong> I.N. Ballet diffonde la danza anche come <strong>disciplina educativa e di sostegno</strong> a chi vive una difficoltà.</p>
                         <p>Ogni anno costruiamo progetti per accogliere in provincia di Milano <strong>giovani e adulti con disabilità</strong>, come il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, a partire da un momento di conoscenza con le famiglie.</p>
                     </div>
                 </div>
-                <div class="sost-intro-visual foto-cornice">
+                <div class="intro-split-visual foto-cornice">
                     <Img src="gallery-6.jpg" alt="Allievi in scena durante uno spettacolo" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
                 </div>
             </div>
@@ -58,7 +66,7 @@ const destinazioni: { nome: string; href?: string }[] = [
         <!-- Volontariato d'impresa: intestazione editoriale -->
         <section class="sost-impresa-section" aria-labelledby="impresa-titolo">
             <div class="intro-editoriale">
-                <span class="eyebrow">Aziende ed enti, dal 2024</span>
+                <p class="eyebrow">Aziende ed enti, dal 2024</p>
                 <h2 class="titolo-sezione" id="impresa-titolo">Volontariato <em>d'impresa</em></h2>
                 <p>Dipendenti di aziende ed enti possono vivere un'<strong>esperienza di volontariato</strong> accanto ai ragazzi, nel contesto educativo della scuola.</p>
                 <p>Crediamo che anche il lavoro possa offrire <strong>esperienze di umanità</strong>: da ogni collaborazione nascono nuovi progetti.</p>
@@ -71,7 +79,7 @@ const destinazioni: { nome: string; href?: string }[] = [
         <!-- Dona: intestazione editoriale, sotto il pulsante PayPal -->
         <section id="dona" class="sost-dona-section sezione-scura" aria-labelledby="dona-titolo">
             <div class="intro-editoriale">
-                <span class="eyebrow">Dona ora</span>
+                <p class="eyebrow">Dona ora</p>
                 <h2 class="titolo-sezione" id="dona-titolo">Il tuo contributo <em>fa la differenza</em></h2>
                 <p class="intro-sezione"><strong>Ogni donazione</strong> ci aiuta a continuare il nostro lavoro di <strong>inclusione</strong> e permette a più persone di vivere l'esperienza della danza.</p>
             </div>
@@ -80,7 +88,7 @@ const destinazioni: { nome: string; href?: string }[] = [
                     <a href={paypal} target="_blank" rel="noopener" class="btn-primary sost-dona-btn">
                         <i class="fab fa-paypal" aria-hidden="true"></i> Dona con PayPal
                     </a>
-                    <p class="sost-dona-nota">
+                    <p class="sost-dona-nota testo-piccolo">
                         <i class="fas fa-lock" aria-hidden="true"></i>
                         Pagamento sicuro tramite PayPal
                     </p>
@@ -89,26 +97,26 @@ const destinazioni: { nome: string; href?: string }[] = [
         </section>
 
         <!-- Destinazioni: intestazione a sinistra, elenco a destra (con link ai progetti che hanno una pagina) -->
-        <section class="sost-utilizzo-section decoro-onde decoro-onde--sinistra" aria-labelledby="utilizzo-titolo">
-            <div class="container sost-utilizzo-layout">
-                <div class="sost-utilizzo-header">
-                    <span class="eyebrow">I progetti che sostieni</span>
+        <section class="split-section split-section--soft decoro-onde decoro-onde--sinistra" aria-labelledby="utilizzo-titolo">
+            <div class="container split-layout">
+                <div class="split-header">
+                    <p class="eyebrow">I progetti che sostieni</p>
                     <h2 class="titolo-sezione" id="utilizzo-titolo">Dove va <em>la tua donazione</em></h2>
                     <p class="intro-sezione">Le donazioni sostengono i <strong>progetti sociali</strong> di InBallet.</p>
                 </div>
-                <ul class="utilizzo-lista">
+                <ul class="righe">
                     {destinazioni.map((d) => (
                         <li>
                             {d.href ? (
-                                <a class="utilizzo utilizzo--link" href={d.href}>
-                                    <i class="fas fa-check" aria-hidden="true"></i>
-                                    <h3 class="utilizzo-nome">{d.nome}</h3>
-                                    <i class="fas fa-arrow-right utilizzo-freccia" aria-hidden="true"></i>
+                                <a class="riga" href={d.href}>
+                                    <i class="riga-icona fas fa-check" aria-hidden="true"></i>
+                                    <p class="riga-nome">{d.nome}</p>
+                                    <i class="riga-freccia fas fa-arrow-right" aria-hidden="true"></i>
                                 </a>
                             ) : (
-                                <div class="utilizzo">
-                                    <i class="fas fa-check" aria-hidden="true"></i>
-                                    <h3 class="utilizzo-nome">{d.nome}</h3>
+                                <div class="riga">
+                                    <i class="riga-icona fas fa-check" aria-hidden="true"></i>
+                                    <p class="riga-nome">{d.nome}</p>
                                 </div>
                             )}
                         </li>
@@ -121,13 +129,13 @@ const destinazioni: { nome: string; href?: string }[] = [
         <SostenitoriSection link={false} />
 
         <!-- CTA -->
-        <section class="sost-cta-section sezione-scura">
-            <div class="sost-cta-bg" style={bg.cta.style}></div>
-            <div class="sost-cta-overlay"></div>
-            <div class="sost-cta-wrapper">
+        <section class="cta-contatto sezione-scura">
+            <div class="cta-bg" style={bg.cta.style}></div>
+            <div class="cta-overlay"></div>
+            <div class="cta-wrapper">
                 <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
                 <p class="intro-sezione">Contatta la Direzione per informazioni sui progetti o per proporre un'<strong>esperienza di volontariato con la tua azienda</strong>.</p>
-                <div class="sost-cta-buttons">
+                <div class="cta-pulsanti">
                     <a href={`mailto:${scuola.email}?subject=Informazioni%20Progetti%20Sociali`} class="btn-primary">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici
                     </a>
@@ -138,272 +146,3 @@ const destinazioni: { nome: string; href?: string }[] = [
             </div>
         </section>
 </Base>
-
-<style>
-/* ---------- Intro ---------- */
-.sost-intro-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-.sost-intro-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 5rem;
-  align-items: center;
-}
-
-.sost-intro-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.sost-intro-title {
-  margin-bottom: 1.75rem;
-}
-
-.sost-intro-testo p {
-  margin-bottom: 1.25rem;
-  font-size: var(--text-base);
-  line-height: 1.8;
-  color: var(--text-dark);
-}
-
-.sost-intro-testo p:last-child {
-  margin-bottom: 0;
-}
-
-/* La cornice sporge a sinistra e in basso: spazio dentro la colonna */
-.sost-intro-visual {
-  max-width: 520px;
-  margin: 0 0 1.5rem 1.5rem;
-  justify-self: end;
-}
-
-.sost-intro-visual :global(img) {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-}
-
-/* ---------- Volontariato d'impresa ---------- */
-.sost-impresa-section {
-  padding: var(--section-y) 0;
-  background: var(--bg-soft);
-}
-
-/* ---------- Dona ---------- */
-.sost-dona-section {
-  padding: var(--section-y) 0;
-  background: var(--dark-navy);
-}
-
-/* Pulsante e nota centrati sotto l'intestazione; a sinistra sotto i 900px */
-.sost-dona-azione {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
-  margin-top: 2.5rem;
-}
-
-.sost-dona-nota {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  margin: 0;
-  font-size: var(--text-sm);
-  color: rgb(var(--bianco-rgb) / .65);
-}
-
-.sost-dona-nota i {
-  color: var(--primary-blue);
-}
-
-/* ---------- Destinazioni ---------- */
-.sost-utilizzo-section {
-  padding: var(--section-y) 0;
-  background: var(--bg-soft);
-}
-
-.sost-utilizzo-layout {
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-  gap: 5rem;
-  align-items: start;
-}
-
-.sost-utilizzo-header .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.utilizzo-lista {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.utilizzo-lista li {
-  border-bottom: 1px solid var(--linea);
-}
-
-.utilizzo-lista li:last-child {
-  border-bottom: none;
-}
-
-.utilizzo {
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: .75rem;
-  padding: 1.5rem 0;
-  color: var(--dark-navy);
-  text-decoration: none;
-}
-
-.utilizzo-lista li:first-child .utilizzo {
-  padding-top: .5rem;
-}
-
-.utilizzo > .fa-check {
-  font-size: var(--text-base);
-  color: var(--primary-blue-dark);
-}
-
-.utilizzo-nome {
-  transition: color .3s ease;
-}
-
-.utilizzo-freccia {
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  transition: transform .3s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .utilizzo--link:hover .utilizzo-nome {
-    color: var(--primary-blue-dark);
-  }
-
-  .utilizzo--link:hover .utilizzo-freccia {
-    transform: translateX(6px);
-  }
-}
-
-/* ---------- CTA ---------- */
-.sost-cta-section {
-  position: relative;
-  padding: var(--section-y) 0;
-  overflow: hidden;
-}
-
-.sost-cta-bg,
-.sost-cta-overlay {
-  position: absolute;
-  inset: 0;
-}
-
-.sost-cta-bg {
-  background: center / cover no-repeat;
-}
-
-.sost-cta-overlay {
-  background: linear-gradient(135deg, rgb(var(--navy-rgb) / .66) 0%, rgb(var(--header-rgb) / .62) 100%);
-}
-
-.sost-cta-wrapper {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  text-align: center;
-}
-
-.sost-cta-wrapper .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.sost-cta-wrapper .intro-sezione {
-  margin-bottom: 2.5rem;
-}
-
-.sost-cta-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-}
-
-/* ---------- Tablet ---------- */
-@media (max-width: 900px) {
-  /* Intro: etichetta e titolo, foto, testo */
-  .sost-intro-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-
-  .sost-intro-content {
-    display: contents;
-  }
-
-  .sost-intro-label {
-    order: 1;
-  }
-
-  .sost-intro-title {
-    order: 2;
-  }
-
-  .sost-intro-visual {
-    order: 3;
-    max-width: none;
-    margin: 0 0 3.75rem 1.5rem;
-  }
-
-  .sost-intro-visual :global(img) {
-    aspect-ratio: 3 / 2;
-  }
-
-  .sost-intro-testo {
-    order: 4;
-  }
-
-  /* Dona: allineato all'intestazione; destinazioni: intestazione sopra l'elenco */
-  .sost-dona-azione {
-    align-items: flex-start;
-  }
-
-  .sost-utilizzo-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
-  }
-}
-
-/* ---------- Mobile ---------- */
-@media (max-width: 600px) {
-  .sost-intro-visual {
-    margin: 0 0 3rem .75rem;
-  }
-
-  .sost-intro-visual :global(img) {
-    aspect-ratio: 4 / 3;
-  }
-
-
-  .utilizzo {
-    padding: 1.25rem 0;
-  }
-
-
-  .sost-cta-wrapper {
-    padding: 0 1.5rem;
-  }
-
-  .sost-cta-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-</style>

@@ -1,0 +1,189 @@
+
+.simili-section {
+  padding: calc(var(--section-y) * .85) 0;
+  background: var(--white);
+}
+
+@media (min-width: 769px) {
+  .simili-section {
+    padding: var(--section-y) 0;
+  }
+}
+
+.simili-wrapper {
+  max-width: 1200px;
+  margin: 3.5rem auto 0;
+  padding: 0 2rem;
+}
+
+/* Il gap da 1px sul fondo chiaro disegna i filetti tra le celle (come nei loghi dei sostenitori) */
+.simili-lista {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  background: var(--linea);
+  border-block: 1px solid var(--linea);
+}
+
+/* Ogni cella occupa 5 righe della griglia (icona, titolo, età, frequenza, «Scopri il corso») e le
+   eredita con subgrid: titoli, testi e link stanno alla stessa altezza in tutte le celle della riga */
+/* Numero di voci (--n): una colonna per voce, fino a 6 */
+.simili-lista { --n: 1; }
+.simili-lista:has(> :nth-child(2)) { --n: 2; }
+.simili-lista:has(> :nth-child(3)) { --n: 3; }
+.simili-lista:has(> :nth-child(4)) { --n: 4; }
+.simili-lista:has(> :nth-child(5)) { --n: 5; }
+.simili-lista:has(> :nth-child(6)) { --n: 6; }
+
+.simili-lista li {
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  background: var(--white);
+}
+
+/* Alternanza come nei blocchi di Contatti: azzurrina, bianca, azzurrina… */
+.simili-lista li:nth-child(odd) {
+  background: var(--bg-soft);
+}
+
+.simili-voce {
+  display: grid;
+  grid-row: 1 / -1;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  justify-items: center;
+  align-content: start;
+  padding: 3rem 2rem;
+  text-align: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.simili-icona {
+  font-size: var(--text-3xl);
+  line-height: 1;
+  color: var(--primary-blue-dark);
+}
+
+/* Il contenitore non genera un box: titolo, età e frequenza sono righe della griglia della cella */
+.simili-testo {
+  display: contents;
+}
+
+.simili-cta {
+  align-self: end;
+  margin-top: 2rem;
+}
+
+.simili-nome {
+  display: block;
+  margin-top: 1.5rem;
+  color: var(--dark-navy);
+}
+
+.simili-eta {
+  display: block;
+  margin-top: .75rem;
+}
+
+.simili-desc {
+  display: block;
+  margin-top: .4rem;
+}
+
+.simili-voce:focus-visible {
+  outline: 2px solid var(--primary-blue-dark);
+  outline-offset: -4px;
+}
+
+/* Tablet: due colonne */
+@media (max-width: 900px) {
+  .simili-wrapper {
+    margin-top: 2.5rem;
+  }
+
+  .simili-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Ogni voce occupa sempre una colonna: con un numero dispari resta un riquadro vuoto */
+  .simili-lista:has(> li:last-child:nth-child(odd))::after {
+    content: '';
+    grid-row: span 5;
+    background: var(--white);
+  }
+
+  .simili-voce {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .simili-wrapper {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Mobile: una voce per riga (icona a sinistra; nome, età e «Scopri il corso» a destra) */
+@media (max-width: 600px) {
+  .simili-wrapper {
+    margin-top: 2rem;
+  }
+
+  .simili-lista:has(> li:last-child:nth-child(odd))::after {
+    content: none;
+  }
+
+  .simili-lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .simili-lista li {
+    display: flex;
+    grid-row: auto;
+  }
+
+  .simili-voce {
+    display: grid;
+    grid-row: auto;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 1rem;
+    justify-items: stretch;
+    align-items: start;
+    padding: 1.75rem 1.5rem;
+    text-align: left;
+  }
+
+  .simili-icona {
+    grid-row: 1 / span 2;
+    font-size: var(--text-xl);
+  }
+
+  .simili-testo {
+    display: block;
+  }
+
+  .simili-nome {
+    margin-top: 0;
+  }
+
+  .simili-eta {
+    margin-top: .35rem;
+  }
+
+  .simili-desc {
+    display: none;
+  }
+
+  .simili-cta {
+    justify-self: start;
+    align-self: start;
+    margin-top: 1.1rem;
+  }
+}

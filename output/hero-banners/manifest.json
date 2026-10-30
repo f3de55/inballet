@@ -1,0 +1,1231 @@
+[
+  {
+    "slug": "adulti-desktop",
+    "course": "adulti",
+    "format": "desktop",
+    "courses": [
+      "adulti",
+      "contemporanea-adulti"
+    ],
+    "original": "assets/images/foto/danza-dolce.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\danza-dolce.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\adulti-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1360,
+      "top": 0,
+      "width": 1200,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1360..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-5d9cb6fd-e1e0-46aa-84de-d6d2092d23bd.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\adulti-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 96,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "adulti-tablet",
+    "course": "adulti",
+    "format": "tablet",
+    "courses": [
+      "adulti",
+      "contemporanea-adulti"
+    ],
+    "original": "assets/images/foto/danza-dolce.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\danza-dolce.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\adulti-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 127,
+      "width": 1120,
+      "height": 746
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=127..873; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-2f1a2f49-5b21-4361-90d5-51a6246ba177.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\adulti-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 35,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "bambini-desktop",
+    "course": "bambini",
+    "format": "desktop",
+    "courses": [
+      "bambini"
+    ],
+    "original": "assets/images/bg-progetti-territorio.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\bg-progetti-territorio.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\bambini-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1361,
+      "top": 0,
+      "width": 1199,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1361..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-2e964181-7b98-4a7f-83e0-aa8e5b5c0a12.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\bambini-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 96,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "bambini-tablet",
+    "course": "bambini",
+    "format": "tablet",
+    "courses": [
+      "bambini"
+    ],
+    "original": "assets/images/bg-progetti-territorio.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\bg-progetti-territorio.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\bambini-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 127,
+      "width": 1120,
+      "height": 747
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=127..874; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-47fa0473-b8a3-4957-821a-e576fe9b64cd.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\bambini-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 20,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "breaking-desktop",
+    "course": "breaking",
+    "format": "desktop",
+    "courses": [
+      "breaking"
+    ],
+    "original": "assets/images/foto/breaking.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\breaking.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\breaking-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1360,
+      "top": 0,
+      "width": 1200,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1360..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:/Users/feder/.codex/generated_images/01a188d3-4ce0-7741-a0ab-8d2bfaefc46a/exec-a0dc473d-3683-43ae-9fe5-a9a2c7361b63.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\breaking-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 96,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "breaking-tablet",
+    "course": "breaking",
+    "format": "tablet",
+    "courses": [
+      "breaking"
+    ],
+    "original": "assets/images/foto/breaking.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\breaking.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\breaking-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 127,
+      "width": 1120,
+      "height": 746
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=127..873; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-b985cc8b-fb7d-4706-acaf-2d8a863d4c77.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\breaking-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 25,
+      "bottom": 8
+    }
+  },
+  {
+    "slug": "classi-desktop",
+    "course": "classi",
+    "format": "desktop",
+    "courses": [
+      "classi"
+    ],
+    "original": "assets/images/gallery-5.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-5.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\classi-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1361,
+      "top": 0,
+      "width": 1199,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1361..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-b32a679e-99dd-4361-9ad8-576a88f4515c.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\classi-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 96,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "classi-tablet",
+    "course": "classi",
+    "format": "tablet",
+    "courses": [
+      "classi"
+    ],
+    "original": "assets/images/gallery-5.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-5.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\classi-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 127,
+      "width": 1120,
+      "height": 747
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=127..874; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-79a3a84f-da4d-4e85-b10d-094131921e9b.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\classi-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 30,
+      "bottom": 60
+    }
+  },
+  {
+    "slug": "contact-improvisation-desktop",
+    "course": "contact-improvisation",
+    "format": "desktop",
+    "courses": [
+      "contact-improvisation"
+    ],
+    "original": "assets/images/foto/contactimprovisation.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\contactimprovisation.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\contact-improvisation-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1360,
+      "top": 0,
+      "width": 1200,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1360..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-0c338a4b-d1aa-462f-9e44-16df90866daa.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\contact-improvisation-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 96,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "contact-improvisation-tablet",
+    "course": "contact-improvisation",
+    "format": "tablet",
+    "courses": [
+      "contact-improvisation"
+    ],
+    "original": "assets/images/foto/contactimprovisation.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\contactimprovisation.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\contact-improvisation-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 127,
+      "width": 1120,
+      "height": 746
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=127..873; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-f78d85a0-5a6e-4338-8073-c2295b74804b.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\contact-improvisation-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 70,
+      "bottom": 55
+    }
+  },
+  {
+    "slug": "contaminato-desktop",
+    "course": "contaminato",
+    "format": "desktop",
+    "courses": [
+      "contaminato"
+    ],
+    "original": "assets/images/foto/contaminato.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\contaminato.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\contaminato-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1360,
+      "top": 0,
+      "width": 1200,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1360..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "output/hero-banners/contaminato-desktop-corretto.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\contaminato-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 96,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "contaminato-tablet",
+    "course": "contaminato",
+    "format": "tablet",
+    "courses": [
+      "contaminato"
+    ],
+    "original": "assets/images/foto/contaminato.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\contaminato.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\contaminato-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 127,
+      "width": 1120,
+      "height": 746
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=127..873; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-78b28fd5-6337-429d-ae11-5544cf543b61.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\contaminato-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 25,
+      "bottom": 25
+    }
+  },
+  {
+    "slug": "danza-acrobatica-desktop",
+    "course": "danza-acrobatica",
+    "format": "desktop",
+    "courses": [
+      "danza-acrobatica"
+    ],
+    "original": "assets/images/foto/danzacontemporanea.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\danzacontemporanea.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\danza-acrobatica-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1360,
+      "top": 0,
+      "width": 1200,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1360..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-ce99a51a-5743-4a88-9938-3332270e5542.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\danza-acrobatica-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 96,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "danza-acrobatica-tablet",
+    "course": "danza-acrobatica",
+    "format": "tablet",
+    "courses": [
+      "danza-acrobatica"
+    ],
+    "original": "assets/images/foto/danzacontemporanea.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\danzacontemporanea.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\danza-acrobatica-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 127,
+      "width": 1120,
+      "height": 746
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=127..873; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-d28d602c-208a-41be-b65d-456f9ffc6b3c.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\danza-acrobatica-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 0,
+      "bottom": 25
+    }
+  },
+  {
+    "slug": "danza-contemporanea-tablet",
+    "course": "danza-contemporanea",
+    "format": "tablet",
+    "courses": [
+      "danza-contemporanea"
+    ],
+    "original": "assets/images/hero-danza-contemporanea.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-danza-contemporanea.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\danza-contemporanea-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 213,
+      "width": 1120,
+      "height": 574
+    },
+    "tabletOnly": true,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=213..787; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-758c90bf-53a5-4977-bb20-98e944c0787d.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\danza-contemporanea-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 70,
+      "bottom": 40
+    }
+  },
+  {
+    "slug": "heels-desktop",
+    "course": "heels",
+    "format": "desktop",
+    "courses": [
+      "heels"
+    ],
+    "original": "assets/images/gallery-2.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-2.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\heels-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1489,
+      "top": 0,
+      "width": 1071,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1489..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-40e44e6d-bcc7-478e-bae6-6de87e418737.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\heels-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 86,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "heels-tablet",
+    "course": "heels",
+    "format": "tablet",
+    "courses": [
+      "heels"
+    ],
+    "original": "assets/images/gallery-2.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-2.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\heels-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 82,
+      "width": 1120,
+      "height": 837
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=82..919; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-35b5d276-4315-4cb5-bfb0-50b1ffce9aca.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\heels-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 60,
+      "bottom": 40
+    }
+  },
+  {
+    "slug": "hip-hop-desktop",
+    "course": "hip-hop",
+    "format": "desktop",
+    "courses": [
+      "hip-hop"
+    ],
+    "original": "assets/images/foto/hiphop.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\hiphop.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\hip-hop-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1360,
+      "top": 0,
+      "width": 1200,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1360..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-d26d4262-8f94-43fa-9621-f59483d286ba.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\hip-hop-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 96,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "hip-hop-tablet",
+    "course": "hip-hop",
+    "format": "tablet",
+    "courses": [
+      "hip-hop"
+    ],
+    "original": "assets/images/foto/hiphop.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\hiphop.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\hip-hop-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 127,
+      "width": 1120,
+      "height": 746
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=127..873; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-a5cdef66-32e4-4f09-9090-fda59203fa95.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\hip-hop-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 35,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "lezioni-individuali-desktop",
+    "course": "lezioni-individuali",
+    "format": "desktop",
+    "courses": [
+      "lezioni-individuali"
+    ],
+    "original": "assets/images/gallery-4.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-4.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\lezioni-individuali-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1560,
+      "top": 0,
+      "width": 640,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1920..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-f3880db4-15ca-41bd-a209-a6ca6ae9fc4b.png",
+    "finished": true,
+    "refinement": "Soggetti originali spostati a x=1560; fondale vuoto rigenerato separatamente per eliminare qualsiasi duplicato",
+    "backgroundPlate": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\lezioni-individuali-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 51,
+      "right": 24,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "lezioni-individuali-tablet",
+    "course": "lezioni-individuali",
+    "format": "tablet",
+    "courses": [
+      "lezioni-individuali"
+    ],
+    "original": "assets/images/gallery-4.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-4.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\lezioni-individuali-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 880,
+      "top": 50,
+      "width": 720,
+      "height": 900
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=880..1600, y=50..950; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-60ab3ea9-7842-44ba-94f4-e5d69863a196.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\lezioni-individuali-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 58,
+      "right": 0,
+      "top": 8,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "movimento-creativo-desktop",
+    "course": "movimento-creativo",
+    "format": "desktop",
+    "courses": [
+      "movimento-creativo"
+    ],
+    "original": "assets/images/gallery-10.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-10.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\movimento-creativo-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1270,
+      "top": 0,
+      "width": 1290,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1270..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-117c1c1f-a931-440c-afb2-86546663fe37.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\movimento-creativo-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 100,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "movimento-creativo-tablet",
+    "course": "movimento-creativo",
+    "format": "tablet",
+    "courses": [
+      "movimento-creativo"
+    ],
+    "original": "assets/images/gallery-10.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-10.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\movimento-creativo-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 153,
+      "width": 1120,
+      "height": 695
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=153..848; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-72382d76-8e81-4895-9e7e-d35f85463cf0.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\movimento-creativo-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 60,
+      "bottom": 12
+    }
+  },
+  {
+    "slug": "pilates-desktop",
+    "course": "pilates",
+    "format": "desktop",
+    "courses": [
+      "pilates"
+    ],
+    "original": "assets/images/foto/pilates.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\pilates.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\pilates-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1360,
+      "top": 0,
+      "width": 1200,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1360..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-6161236e-a5b3-4f1c-907a-eaba5060ced4.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\pilates-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 96,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "pilates-tablet",
+    "course": "pilates",
+    "format": "tablet",
+    "courses": [
+      "pilates"
+    ],
+    "original": "assets/images/foto/pilates.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\pilates.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\pilates-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 127,
+      "width": 1120,
+      "height": 746
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=127..873; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-03a0ddd5-5ca6-4c0e-8937-4e864215a26e.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\pilates-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 25,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "prima-infanzia-desktop",
+    "course": "prima-infanzia",
+    "format": "desktop",
+    "courses": [
+      "prima-infanzia"
+    ],
+    "original": "assets/images/gallery-8.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-8.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\prima-infanzia-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1920,
+      "top": 0,
+      "width": 640,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1920..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:/Users/feder/.codex/generated_images/01a188d3-4ce0-7741-a0ab-8d2bfaefc46a/exec-a825c2aa-c516-44cd-9938-9eb5fa248946.png",
+    "finished": true,
+    "refinement": "Foto verticale conservata sul lato destro, senza ricostruire le persone",
+    "backgroundPlate": false,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\prima-infanzia-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 51,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "prima-infanzia-tablet",
+    "course": "prima-infanzia",
+    "format": "tablet",
+    "courses": [
+      "prima-infanzia"
+    ],
+    "original": "assets/images/gallery-8.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-8.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\prima-infanzia-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 880,
+      "top": 50,
+      "width": 720,
+      "height": 900
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=880..1600, y=50..950; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-1e0e1477-cfb2-49d9-9e1b-4171c20fc957.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\prima-infanzia-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 58,
+      "right": 0,
+      "top": 60,
+      "bottom": 12
+    }
+  },
+  {
+    "slug": "ragazzi-desktop",
+    "course": "ragazzi",
+    "format": "desktop",
+    "courses": [
+      "ragazzi"
+    ],
+    "original": "assets/images/gallery-6.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-6.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\ragazzi-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1361,
+      "top": 0,
+      "width": 1199,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1361..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "output/hero-banners/ragazzi-desktop-fondale-corretto.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\ragazzi-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 8,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "refinement": "Fondale generato vuoto esteso a sinistra; persone originali reinserite senza duplicati"
+  },
+  {
+    "slug": "ragazzi-tablet",
+    "course": "ragazzi",
+    "format": "tablet",
+    "courses": [
+      "ragazzi"
+    ],
+    "original": "assets/images/gallery-6.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-6.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\ragazzi-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 127,
+      "width": 1120,
+      "height": 747
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=127..874; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "output/hero-banners/ragazzi-tablet-fondale-corretto.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\ragazzi-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 8,
+      "right": 0,
+      "top": 40,
+      "bottom": 5
+    },
+    "refinement": "Fondale generato vuoto esteso a sinistra; persone originali reinserite senza duplicati"
+  },
+  {
+    "slug": "seconda-infanzia-desktop",
+    "course": "seconda-infanzia",
+    "format": "desktop",
+    "courses": [
+      "seconda-infanzia"
+    ],
+    "original": "assets/images/gallery-1.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-1.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\seconda-infanzia-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1358,
+      "top": 0,
+      "width": 1202,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1358..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-471b7535-c59a-440c-829b-9ffac84a696d.png",
+    "finished": true,
+    "backgroundPlate": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\seconda-infanzia-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 96,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "seconda-infanzia-tablet",
+    "course": "seconda-infanzia",
+    "format": "tablet",
+    "courses": [
+      "seconda-infanzia"
+    ],
+    "original": "assets/images/gallery-1.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\gallery-1.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\seconda-infanzia-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "height": 1000
+    },
+    "patch": {
+      "left": 98,
+      "top": 0,
+      "width": 1502,
+      "height": 1000
+    },
+    "tabletOnly": false,
+    "prompt": "Photographic outpaint ONLY: keep the original photograph filling x=98..1600 and ALL the image height unchanged, including every face, person, expression, hand, body, hairstyle and pose. Fill ONLY the narrow gray blank strip on the far LEFT by extending the empty black theatrical backdrop. Never add, remove or duplicate people. Do not zoom, move, crop or repaint the original photograph. Keep exact 1600x1000 (1.6:1) full canvas. Do not add anything above or below the existing photo.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-e5405cb2-1d4d-4617-9ff6-a2221c20d86e.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\seconda-infanzia-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 100,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "yoga-desktop",
+    "course": "yoga",
+    "format": "desktop",
+    "courses": [
+      "yoga"
+    ],
+    "original": "assets/images/foto/yoga.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\yoga.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\yoga-desktop-canvas.png",
+    "canvas": {
+      "width": 2560,
+      "height": 800
+    },
+    "resize": {
+      "height": 800
+    },
+    "patch": {
+      "left": 1360,
+      "top": 0,
+      "width": 1200,
+      "height": 800
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 2560x800 desktop hero banner. There is one ORIGINAL real photograph at the right, occupying x=1360..2560, y=0..800; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 3.2:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. The photograph already covers the FULL HEIGHT: extend ONLY to the LEFT, never zoom or add above or below.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-74fce5e0-c12e-47a0-a147-dee6e102a7bb.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\yoga-desktop.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 96,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  {
+    "slug": "yoga-tablet",
+    "course": "yoga",
+    "format": "tablet",
+    "courses": [
+      "yoga"
+    ],
+    "original": "assets/images/foto/yoga.jpg",
+    "source": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\foto\\yoga.jpg",
+    "input": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\output\\hero-banners\\yoga-tablet-canvas.png",
+    "canvas": {
+      "width": 1600,
+      "height": 1000
+    },
+    "resize": {
+      "width": 1120,
+      "height": 900,
+      "fit": "inside"
+    },
+    "patch": {
+      "left": 480,
+      "top": 127,
+      "width": 1120,
+      "height": 746
+    },
+    "tabletOnly": false,
+    "prompt": "Use case: identity-preserve. Photographic OUTPAINT ONLY. Edit target: the supplied 1600x1000 tablet hero banner. There is one ORIGINAL real photograph at the right, occupying x=480..1600, y=127..873; the rest is flat light gray EMPTY CANVAS TO FILL. This photograph is already placed at exactly the correct size and coordinates. Keep the entire existing photograph UNCHANGED: do not move it, resize it, zoom it, crop it, redraw it or alter its perspective. Generate ONLY the missing gray area by extending the empty room, stage, backdrop, mirror wall, ceiling and floor visible in the photograph. Preserve ALL existing faces, identities, expressions, bodies, limbs, hands, poses and clothing exactly; no added people or duplicated human silhouettes or reflections. Keep the original people fully visible in the right portion and leave the left portion empty for website text. Extend original light, texture, color and perspective seamlessly, without inventing distracting objects. No text, graphics, borders, blur, gradients, or gray placeholder. Deliver the full supplied canvas aspect ratio 1.6:1 with the photograph at exactly its current placement. This is blank-area restoration, not generating a new photo. Keep the existing photo at its current size; extend its environment above, below and to the left, without enlarging or moving the people.",
+    "generated": "C:\\Users\\feder\\.codex\\generated_images\\01a188d3-4ce0-7741-a0ab-8d2bfaefc46a\\exec-afe57533-6bf1-4580-a5fb-d7b060f027c7.png",
+    "finished": true,
+    "output": "C:\\Users\\feder\\Documents\\GitHub\\inballet\\src\\assets\\images\\hero-corsi\\yoga-tablet.png",
+    "generator": "imagegen (built-in), con ricomposizione della foto originale",
+    "blend": {
+      "left": 90,
+      "right": 0,
+      "top": 0,
+      "bottom": 50
+    }
+  }
+]

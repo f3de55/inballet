@@ -2,11 +2,15 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
-import { sfondo, sfondoCta } from '../lib/images';
+import { sfondoCta } from '../lib/images';
+import { heroPagina } from '../lib/hero-pagine';
 import { scuola } from '../data/scuola';
+import '../styles/components/intro-split.css';
+import '../styles/components/righe.css';
+import '../styles/pages/collaborazioni-scuole.css';
 
 const bg = {
-  hero: await sfondo('bg-progetti-territorio.jpg', { desktop: '50% 35%', tablet: '50% 50%' }),
+  hero: await heroPagina('collaborazioni-scuole'),
   cta: await sfondoCta('gallery-4.jpg', { desktop: '50% 20%' }),
 };
 
@@ -32,9 +36,13 @@ const progetti = [
     ogDescription="Da molti anni portiamo la danza nelle scuole del territorio, con progetti educativi costruiti insieme ai docenti."
 >
 
+    <Fragment slot="head">
+        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
+    </Fragment>
+
         <!-- Hero Section -->
-        <section class="chisiamo-hero">
-            <div class="chisiamo-hero-image" style={bg.hero.style}></div>
+        <section class="chisiamo-hero hero-banner">
+            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
             <div class="chisiamo-hero-overlay"></div>
             <div class="chisiamo-hero-glass">
                 <Breadcrumb />
@@ -44,20 +52,20 @@ const progetti = [
         </section>
 
         <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo) -->
-        <section id="intro" class="collab-intro-section">
-            <div class="container collab-intro-layout">
-                <div class="collab-intro-content">
-                    <span class="collab-intro-label eyebrow">Danza a scuola</span>
-                    <h2 class="collab-intro-title titolo-sezione">Da molti anni accanto <em>alle scuole del territorio</em></h2>
-                    <div class="collab-intro-testo">
+        <section id="intro" class="intro-split">
+            <div class="container intro-split-layout">
+                <div class="intro-split-content">
+                    <p class="intro-split-label eyebrow">Danza a scuola</p>
+                    <h2 class="intro-split-title titolo-sezione">Da molti anni accanto <em>alle scuole del territorio</em></h2>
+                    <div class="intro-split-testo">
                         <p>I.N. Ballet collabora con nidi, scuole dell'infanzia, primarie e secondarie di primo e secondo grado, a <strong>Lainate, Rho e in provincia di Milano</strong>.</p>
                         <p>Ogni progetto nasce dalle <strong>richieste educative e didattiche della scuola</strong> ed è costruito con il team degli insegnanti o con l'équipe di lavoro.</p>
                     </div>
-                    <div class="collab-intro-highlight">
+                    <div class="intro-split-highlight">
                         <p>In ogni progetto c'è il <strong>supporto psicomotorio</strong> ai bambini, a sostegno dell'integrazione sociale.</p>
                     </div>
                 </div>
-                <div class="collab-intro-visual foto-cornice">
+                <div class="intro-split-visual foto-cornice">
                     <Img src="gallery-7.jpg" alt="Lo staff di InBallet in sala" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
                 </div>
             </div>
@@ -66,7 +74,7 @@ const progetti = [
         <!-- Fasce d'età: intestazione editoriale e quattro numeri -->
         <section class="collab-fasce-section" aria-labelledby="fasce-titolo">
             <div class="intro-editoriale">
-                <span class="eyebrow">A chi ci rivolgiamo</span>
+                <p class="eyebrow">A chi ci rivolgiamo</p>
                 <h2 class="titolo-sezione" id="fasce-titolo">Progetti per ogni <em>fascia d'età</em></h2>
                 <p>Adattiamo i programmi a <strong>ogni tipo di istituto</strong> e alle sue esigenze.</p>
             </div>
@@ -75,8 +83,8 @@ const progetti = [
                     {fasce.map((f) => (
                         <li class="fascia">
                             <i class={`fas ${f.icona} fascia-icona`} aria-hidden="true"></i>
-                            <span class="fascia-eta titolo-card">{f.eta} anni</span>
-                            <span class="fascia-nome">{f.nome}</span>
+                            <h3 class="fascia-eta">{f.eta} anni</h3>
+                            <p class="fascia-nome">{f.nome}</p>
                         </li>
                     ))}
                 </ul>
@@ -84,20 +92,20 @@ const progetti = [
         </section>
 
         <!-- Progetti: intestazione a sinistra (fissa su desktop), elenco numerato a destra -->
-        <section class="collab-progetti-section decoro-onde" aria-labelledby="progetti-titolo">
-            <div class="container collab-progetti-layout">
-                <div class="collab-progetti-header">
-                    <span class="eyebrow">I nostri progetti</span>
+        <section class="split-section decoro-onde" aria-labelledby="progetti-titolo">
+            <div class="container split-layout">
+                <div class="split-header split-header--sticky">
+                    <p class="eyebrow">I nostri progetti</p>
                     <h2 class="titolo-sezione" id="progetti-titolo">Cosa possiamo offrire <em>alla tua scuola</em></h2>
                     <p class="intro-sezione"><strong>Programmi flessibili</strong>, costruiti sulle richieste educative e didattiche di ogni scuola.</p>
                 </div>
-                <ol class="progetti-lista">
+                <ol class="righe">
                     {progetti.map((p) => (
-                        <li class="progetto">
-                            <i class={`fas ${p.icona} progetto-num`} aria-hidden="true"></i>
-                            <div>
-                                <h3 class="progetto-nome">{p.nome}</h3>
-                                <p class="progetto-testo" set:html={p.testo} />
+                        <li class="riga">
+                            <i class={`riga-icona fas ${p.icona}`} aria-hidden="true"></i>
+                            <div class="riga-corpo">
+                                <p class="riga-nome">{p.nome}</p>
+                                <p set:html={p.testo} />
                             </div>
                         </li>
                     ))}
@@ -106,13 +114,13 @@ const progetti = [
         </section>
 
         <!-- CTA -->
-        <section class="collab-cta-section sezione-scura">
-            <div class="collab-cta-bg" style={bg.cta.style}></div>
-            <div class="collab-cta-overlay"></div>
-            <div class="collab-cta-wrapper">
+        <section class="cta-contatto sezione-scura">
+            <div class="cta-bg" style={bg.cta.style}></div>
+            <div class="cta-overlay"></div>
+            <div class="cta-wrapper">
                 <h2 class="titolo-sezione">Portiamo la danza <em>nella tua scuola</em></h2>
                 <p class="intro-sezione">Contattaci per un <strong>incontro conoscitivo senza impegno</strong>: costruiamo insieme un progetto su misura per la tua scuola.</p>
-                <div class="collab-cta-buttons">
+                <div class="cta-pulsanti">
                     <a href={`mailto:${scuola.email}?subject=Collaborazione%20Scuola`} class="btn-primary">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Richiedi informazioni
                     </a>
@@ -123,313 +131,3 @@ const progetti = [
             </div>
         </section>
 </Base>
-
-<style>
-/* ---------- Intro ---------- */
-.collab-intro-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-.collab-intro-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 5rem;
-  align-items: center;
-}
-
-.collab-intro-label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.collab-intro-title {
-  margin-bottom: 1.75rem;
-}
-
-.collab-intro-testo p {
-  margin-bottom: 1.25rem;
-  font-size: var(--text-base);
-  line-height: 1.8;
-  color: var(--text-dark);
-}
-
-.collab-intro-testo p:last-child {
-  margin-bottom: 0;
-}
-
-/* La cornice sporge a sinistra e in basso: spazio dentro la colonna */
-.collab-intro-visual {
-  max-width: 520px;
-  margin: 0 0 1.5rem 1.5rem;
-  justify-self: end;
-}
-
-.collab-intro-visual :global(img) {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-}
-
-/* ---------- Fasce d'età ---------- */
-.collab-fasce-section {
-  padding: var(--section-y) 0;
-  background: var(--bg-soft);
-}
-
-/* Il gap da 1px sul fondo scuro disegna i filetti solo tra le celle */
-/* Quattro card bianche separate sul fondo azzurrino della sezione */
-.fasce-lista {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.5rem;
-  margin: 3.5rem 0 0;
-  padding: 0;
-}
-
-.fascia {
-  display: flex;
-  flex-direction: column;
-  gap: .75rem;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 2rem 1.75rem;
-  text-align: center;
-  background: var(--white);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-}
-
-.fascia-icona {
-  font-size: var(--text-2xl);
-  line-height: 1;
-  color: var(--primary-blue-dark);
-}
-
-.fascia-eta {
-  color: var(--primary-blue-dark);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-.fascia-nome {
-  font-size: var(--text-base);
-  font-weight: 400;
-  color: var(--text-dark);
-}
-
-/* ---------- Progetti ---------- */
-.collab-progetti-section {
-  padding: var(--section-y) 0;
-  background: var(--white);
-}
-
-.collab-progetti-layout {
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-  gap: 5rem;
-  align-items: start;
-}
-
-.collab-progetti-header {
-  position: sticky;
-  top: calc(var(--header-h) + var(--banner-height, 0px) + 2rem);
-}
-
-.collab-progetti-header .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.progetti-lista {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.progetto {
-  display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  gap: 1rem;
-  padding: 1.75rem 0;
-  border-bottom: 1px solid var(--linea);
-}
-
-.progetto:first-child {
-  padding-top: 0;
-}
-
-.progetto:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-/* Icona del progetto accanto al titolo */
-.progetto-num {
-  padding-top: .35rem;
-  font-size: var(--text-xl);
-  color: var(--primary-blue-dark);
-}
-
-.progetto-nome {
-  margin-bottom: .5rem;
-  color: var(--dark-navy);
-}
-
-.progetto-testo {
-  font-size: var(--text-base);
-  line-height: 1.7;
-  color: var(--text-light);
-}
-
-/* ---------- CTA ---------- */
-.collab-cta-section {
-  position: relative;
-  padding: var(--section-y) 0;
-  overflow: hidden;
-}
-
-.collab-cta-bg,
-.collab-cta-overlay {
-  position: absolute;
-  inset: 0;
-}
-
-.collab-cta-bg {
-  background: center / cover no-repeat;
-}
-
-.collab-cta-overlay {
-  background: linear-gradient(135deg, rgb(var(--navy-rgb) / .66) 0%, rgb(var(--header-rgb) / .62) 100%);
-}
-
-.collab-cta-wrapper {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  text-align: center;
-}
-
-.collab-cta-wrapper .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.collab-cta-wrapper .intro-sezione {
-  margin-bottom: 2.5rem;
-}
-
-.collab-cta-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-}
-
-/* ---------- Tablet ---------- */
-@media (max-width: 1024px) {
-  .fascia {
-    padding: 1.75rem 1.5rem;
-  }
-}
-
-@media (max-width: 900px) {
-  /* Intro: etichetta e titolo, foto, testo, citazione */
-  .collab-intro-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-
-  .collab-intro-content {
-    display: contents;
-  }
-
-  .collab-intro-label {
-    order: 1;
-  }
-
-  .collab-intro-title {
-    order: 2;
-  }
-
-  .collab-intro-visual {
-    order: 3;
-    max-width: none;
-    margin: 0 0 3.75rem 1.5rem;
-  }
-
-  .collab-intro-visual :global(img) {
-    aspect-ratio: 3 / 2;
-  }
-
-  .collab-intro-testo {
-    order: 4;
-  }
-
-  .collab-intro-highlight {
-    order: 5;
-  }
-
-  /* Fasce: griglia 2x2 */
-  .fasce-lista {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-    margin-top: 2.5rem;
-  }
-
-  /* Progetti: intestazione sopra l'elenco */
-  .collab-progetti-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
-  }
-
-  .collab-progetti-header {
-    position: static;
-  }
-}
-
-/* ---------- Mobile ---------- */
-@media (max-width: 600px) {
-  .collab-intro-visual {
-    margin: 0 0 3rem .75rem;
-  }
-
-  .collab-intro-visual :global(img) {
-    aspect-ratio: 4 / 3;
-  }
-
-
-  .fascia {
-    gap: .5rem;
-    padding: 1.5rem 1.25rem;
-  }
-
-
-
-
-  .progetto {
-    grid-template-columns: 2.25rem minmax(0, 1fr);
-    gap: .75rem;
-    padding: 1.5rem 0;
-  }
-
-
-
-  .collab-cta-wrapper {
-    padding: 0 1.5rem;
-  }
-
-  .collab-cta-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-/* Schermi molto stretti (320px): una fascia per riga, senza scorrimento orizzontale */
-@media (max-width: 400px) {
-  .fasce-lista {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-</style>

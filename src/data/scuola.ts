@@ -78,10 +78,8 @@ export const categorieCorsi = [
     nome: 'Danza Classica e Moderna',
     sintesi: 'La base tecnica di ogni stile: si comincia a 3 anni e si arriva ai livelli avanzati.',
     immagine: { src: 'foto/tutu-classica.jpg', alt: 'Tutù rosa di danza classica', fuoco: { desktop: '60% 50%', mobile: '50% 45%' } },
-    /** Foto di sfondo del box in homepage (quadrata, soggetto al centro) */
-    immagineHome: { src: 'foto/classica-moderna-home.jpg', fuoco: { desktop: '50% 30%', mobile: '50% 0%' } },
-    /** Opacità del velo nero sul box della home */
-    veloHome: 0.6,
+    /** Fondo grafico della card in homepage, ispirato agli azzurri delle immagini del team. */
+    immagineHome: { src: 'grafica-corsi/classica-moderna.png', fuoco: { desktop: '50% 50%' } },
     descrizione: 'Si comincia a 3 anni con Avviamento alla Danza, a 4-5 anni con Educazione alla Danza; dai 6 anni Danza Classica e Modern, fino ai livelli avanzati.',
     evidenzia: ['3 anni', '4-5 anni', 'dai 6 anni'],
     corsi: [
@@ -97,8 +95,7 @@ export const categorieCorsi = [
     nome: 'Danza Contemporanea',
     sintesi: "L'arte più libera del movimento, dai 10 anni all'età adulta.",
     immagine: { src: 'foto/contact-improvisation-img2.jpg', alt: 'Due danzatori a terra durante una sequenza di contact improvisation', fuoco: { desktop: '50% 50%' } },
-    immagineHome: { src: 'foto/contemporanea-home.jpg', fuoco: { desktop: '50% 30%', mobile: '50% 75%' } },
-    veloHome: 0.6,
+    immagineHome: { src: 'grafica-corsi/contemporanea.png', fuoco: { desktop: '50% 50%' } },
     descrizione: "L'arte più libera del movimento: Danza Contemporanea dai 10 anni, Contemporanea Adulti dai 40 anni, Contact Improvisation e Movimento Creativo, aperto dai 18 anni anche a chi non ha mai danzato.",
     evidenzia: ['dai 10 anni', 'dai 40 anni', 'dai 18 anni'],
     corsi: [
@@ -114,8 +111,7 @@ export const categorieCorsi = [
     nome: 'Urban Dance',
     sintesi: 'Gli stili urbani tra energia, tecnica e cultura Hip-Hop, dai 6 anni.',
     immagine: { src: 'foto/breaking-img2.jpg', alt: 'Allievi di breaking in freeze sul parquet della sala', fuoco: { desktop: '50% 50%', mobile: '50% 60%' } },
-    immagineHome: { src: 'foto/urban-dance-home.jpg', fuoco: { desktop: '50% 30%', mobile: '50% 40%' } },
-    veloHome: 0.6,
+    immagineHome: { src: 'grafica-corsi/urban.png', fuoco: { desktop: '50% 50%' } },
     descrizione: 'Hip-Hop e Breaking dai 6 anni, Heels, Danza Acrobatica e, dai 16 anni, il Contaminato: gli stili urbani tra energia, tecnica e cultura Hip-Hop.',
     evidenzia: ['dai 6 anni', 'dai 16 anni'],
     corsi: [
@@ -132,8 +128,7 @@ export const categorieCorsi = [
     nome: 'Benessere e Movimento',
     sintesi: 'Per il benessere di corpo e mente, da soli o accanto a un corso di danza.',
     immagine: { src: 'foto/yoga-img2.jpg', alt: 'Lezione di yoga in sala, con le mani giunte sopra la testa', fuoco: { desktop: '55% 50%', mobile: '50% 35%' } },
-    immagineHome: { src: 'foto/benessere-movimento-home.jpg', fuoco: { desktop: '50% 30%', mobile: '50% 60%' } },
-    veloHome: 0.6,
+    immagineHome: { src: 'grafica-corsi/benessere.png', fuoco: { desktop: '50% 50%' } },
     descrizione: "Hatha Yoga, Pilates per livelli e lezioni individuali: per il benessere di corpo e mente, da soli o accanto a un corso di danza.",
     evidenzia: ['Hatha Yoga', 'Pilates', 'lezioni individuali'],
     corsi: [

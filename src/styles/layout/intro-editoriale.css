@@ -1,0 +1,48 @@
+/* Intro editoriale: etichetta, titolo e testo uno sotto l'altro.
+   Desktop: blocco centrato (sezioni di solo testo o intestazioni sopra a una griglia);
+   tablet e mobile: allineato a sinistra come il resto dei contenuti. */
+section > .intro-editoriale {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.intro-editoriale > .eyebrow {
+  display: block;
+  margin: 0 0 1.25rem;
+}
+
+.intro-editoriale > .titolo-sezione {
+  margin: 0 0 1.5rem;
+}
+
+/* Testo sotto il titolo, con una misura di riga leggibile */
+.intro-editoriale > :not(.eyebrow):not(.titolo-sezione) {
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.intro-editoriale > p {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  section > .intro-editoriale {
+    text-align: left;
+  }
+
+  .intro-editoriale > :not(.eyebrow):not(.titolo-sezione) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* Stesso margine laterale del .container */
+@media (max-width: 768px) {
+  section > .intro-editoriale {
+    padding: 0 1.5rem;
+  }
+}

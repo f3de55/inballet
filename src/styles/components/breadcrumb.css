@@ -1,0 +1,71 @@
+/* Breadcrumb nell'hero delle pagine interne (componente Breadcrumb) */
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .35rem .6rem;
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+}
+
+.breadcrumb li {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  color: rgb(var(--bianco-rgb) / .75);
+}
+
+.breadcrumb li + li::before {
+  content: '/';
+  color: var(--primary-blue);
+}
+
+.breadcrumb a {
+  display: inline-block;
+  padding: .2rem 0;
+  color: rgb(var(--bianco-rgb) / .85);
+  text-decoration: none;
+  transition: color .3s ease;
+}
+
+.breadcrumb a:hover {
+  color: var(--primary-blue);
+}
+
+.breadcrumb [aria-current="page"] {
+  color: var(--primary-blue);
+  font-weight: var(--font-semibold);
+}
+
+@media (max-width: 768px) {
+  .breadcrumb [aria-current="page"] {
+    color: var(--white);
+  }
+
+  /* Su una sola riga: Home e sezione restano intere, la pagina corrente occupa lo spazio che resta
+     e si tronca con i puntini (il testo completo resta nell'HTML) */
+  .breadcrumb ol {
+    flex-wrap: nowrap;
+    gap: 0 .45rem;
+    white-space: nowrap;
+  }
+
+  .breadcrumb li {
+    flex: 0 0 auto;
+    gap: .45rem;
+  }
+
+  .breadcrumb li:last-child {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .breadcrumb li:last-child [aria-current="page"] {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

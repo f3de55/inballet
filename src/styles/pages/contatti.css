@@ -324,7 +324,7 @@ a.info-valore:hover {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(115deg, rgb(var(--bianco-rgb) / .86) 0%, rgb(var(--bianco-rgb) / .76) 45%, rgb(var(--bianco-rgb) / .28) 72%, rgb(var(--bianco-rgb) / 0) 100%);
+    background: linear-gradient(115deg, rgb(var(--bianco-rgb) / .9) 0%, rgb(var(--bianco-rgb) / .84) 45%, rgb(var(--bianco-rgb) / .62) 72%, rgb(var(--bianco-rgb) / .38) 100%);
     pointer-events: none;
   }
 

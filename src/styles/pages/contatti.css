@@ -89,9 +89,10 @@
   padding-top: .1em;
 }
 
-/* Numero, e-mail, WhatsApp e nomi delle sedi: testo corrente, mai in grassetto */
+/* I dati dei box (numero, e-mail, WhatsApp, social, nomi delle sedi) in grassetto */
 .info-valore {
   margin: 0;
+  font-weight: var(--font-semibold);
   color: var(--dark-navy);
   overflow-wrap: anywhere;
 }
@@ -114,6 +115,7 @@ a.info-valore:hover {
 .sede-tag {
   margin-left: .6rem;
   font-size: var(--small-size);
+  font-weight: var(--font-normal);
   color: var(--small-color);
 }
 
@@ -159,6 +161,11 @@ a.info-valore:hover {
   grid-template-columns: 3.5rem 1fr;
   gap: 1rem;
   padding: .4rem 0;
+}
+
+.orario-day,
+.orario-time {
+  font-weight: var(--font-semibold);
 }
 
 .orario-time {

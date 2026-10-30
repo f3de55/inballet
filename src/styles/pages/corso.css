@@ -182,6 +182,7 @@
   padding: 0;
   margin: 0;
   background: var(--linea);
+  border-block: 1px solid var(--linea);
 }
 
 .corso-impara-list li {

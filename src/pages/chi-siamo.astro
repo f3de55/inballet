@@ -152,16 +152,18 @@ const numeri = [
         <!-- Insegnanti (gestiti dalla dashboard; la sezione compare solo se ce ne sono) -->
         <InsegnantiSection dati={insegnanti} />
 
-        <!-- Sedi: due righe con ingresso, indirizzo e accesso diretto alla mappa. -->
+        <!-- Sedi: le due sedi affiancate sulla stessa riga, foto dell'ingresso, indirizzo e mappa. -->
         <section class="sede-section" aria-labelledby="sedi-titolo">
             <div class="intro-editoriale">
+                <p class="eyebrow">Le nostre sedi</p>
                 <h2 class="titolo-sezione" id="sedi-titolo">Dove <em>trovarci</em></h2>
+                <p class="intro-sezione">Due sedi, <strong>Lainate e Rho</strong>: scegli quella più comoda e vieni a conoscerci.</p>
             </div>
             <div class="container">
                 <ul class="sedi">
                     {sediFoto.map(({ sede, foto, alt, fuoco }) => (
                         <li class="sede">
-                            <Img class="sede-foto" src={foto} alt={alt} fuoco={fuoco} loading="lazy" decoding="async" widths={[240, 480]} sizes="(max-width: 600px) 96px, 208px" />
+                            <Img class="sede-foto" src={foto} alt={alt} fuoco={fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 700px) 100vw, (max-width: 1200px) 45vw, 540px" />
                             <div class="sede-testo">
                                 <h3 class="sede-nome">{sede.citta}</h3>
                                 <p>{sede.via}</p>

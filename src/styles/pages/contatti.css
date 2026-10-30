@@ -294,30 +294,47 @@ a.info-valore:hover {
   }
 }
 
-/* Mobile: box chiari e illustrazione separata accanto al titolo,
-   in uno spazio riservato che non si sovrappone ai dati. */
+/* Mobile: illustrazioni oblique che emergono dall'angolo in basso a destra;
+   un velo bianco sfumato resta fra le immagini e i testi. */
 @media (max-width: 600px) {
   .info {
     margin-top: 0;
     row-gap: 0;
   }
 
+  .info-blocco {
+    overflow: hidden;
+  }
+
   .info-illustrazione {
-    top: .5rem;
-    right: 1rem;
+    top: auto;
+    right: -1.5rem;
+    bottom: -2rem;
     left: auto;
-    width: 9rem;
-    height: 9rem;
-    transform: none;
-    /* Riprende la sfumatura desktop: il titolo resta davanti all'immagine. */
+    width: 13rem;
+    height: 15rem;
+    object-position: right bottom;
+    transform: rotate(-14deg);
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .info-blocco::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(115deg, rgb(var(--bianco-rgb) / .86) 0%, rgb(var(--bianco-rgb) / .76) 45%, rgb(var(--bianco-rgb) / .28) 72%, rgb(var(--bianco-rgb) / 0) 100%);
+    pointer-events: none;
+  }
+
+  .info-titolo,
+  .info-corpo {
+    z-index: 2;
   }
 
   .info-titolo {
-    display: flex;
-    align-items: center;
-    min-height: 5.5rem;
-    margin-bottom: 1.25rem;
-    padding-right: 7rem;
+    margin-bottom: 1.75rem;
     text-align: left;
   }
 }

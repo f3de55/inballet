@@ -631,8 +631,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   background: var(--primary-blue-dark);
 }
 
-/* Una colonna: intro, valutazione Google (prova di fiducia subito visibile),
-recensione e per ultimo il link a tutte le recensioni */
+/* Una colonna: intro, valutazione Google con il link subito sotto, poi recensione. */
 @media (max-width: 900px) {
   .recensioni-layout {
     display: flex;
@@ -641,15 +640,13 @@ recensione e per ultimo il link a tutte le recensioni */
   }
 
   .recensioni-sintesi {
-    display: contents;
+    order: 2;
+    padding-top: 0;
+    border-top: none;
   }
 
   .recensioni-intro {
     order: 1;
-  }
-
-  .sintesi-google {
-    order: 2;
   }
 
   /* Frecce e pallini sopra la recensione: restano fermi senza riservare
@@ -669,11 +666,6 @@ recensione e per ultimo il link a tutte le recensioni */
 
   .testimonials-track {
     min-height: 0 !important;
-  }
-
-  .recensioni-sintesi .link-cta {
-    order: 4;
-    align-self: flex-start;
   }
 
 }

@@ -222,8 +222,8 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 28rem;
-  padding: 2.5rem 1.5rem;
+  min-height: 20rem;
+  padding: 1.5rem 1.25rem;
   overflow: hidden;
   border: 2px solid var(--primary-blue);
   border-radius: var(--radius-card);
@@ -278,7 +278,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 }
 
 .corsi-stile-desc {
-  margin: .6rem 0 1.5rem;
+  margin: .5rem 0 1rem;
   color: var(--body-color-su-scuro);
 }
 
@@ -296,33 +296,10 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   color: var(--white);
 }
 
-/* Fondi grafici azzurri ispirati al team: centro libero e testo scuro leggibile. */
-.corsi-stile--grafica {
-  background: var(--bg-soft);
-  color: var(--dark-navy);
-}
-
-.corsi-stile--grafica .corsi-stile-foto::after {
-  background: radial-gradient(ellipse at 50% 48%, rgb(var(--corsi-grafica-rgb) / .96) 0%, rgb(var(--corsi-grafica-rgb) / .9) 26%, rgb(var(--corsi-grafica-rgb) / .45) 50%, rgb(var(--corsi-grafica-rgb) / .08) 70%, rgb(var(--corsi-grafica-rgb) / 0) 100%);
-}
-
-.corsi-stile--grafica .corsi-stile-testo {
-  text-shadow: none;
-}
-
+/* Un velo scuro uniforme mantiene visibile l'illustrazione anche dietro
+   al blocco centrale; il testo bianco conserva contrasto su tutto lo sfondo. */
 .corsi-stile--grafica .corsi-stile-desc {
-  color: var(--text-body);
-}
-
-.corsi-stile--grafica .corsi-stile-link,
-.corsi-stile--grafica:hover .corsi-stile-link {
-  color: var(--dark-navy);
-  border-color: var(--primary-blue-dark);
-}
-
-.corsi-stile--grafica .corsi-stile-link i,
-.corsi-stile--grafica:hover .corsi-stile-link i {
-  color: var(--dark-navy);
+  color: var(--white);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -368,12 +345,12 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   }
 
   .corsi-stile {
-    min-height: 24rem;
-    padding: 2.25rem 1.5rem;
+    min-height: 16rem;
+    padding: 1.5rem 1.25rem;
   }
 
   .corsi-stile-desc {
-    margin: .5rem 0 1.25rem;
+    margin: .5rem 0 1rem;
   }
 
   .corsi-cta {

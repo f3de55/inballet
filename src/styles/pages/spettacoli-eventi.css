@@ -814,9 +814,13 @@ html:has(dialog[open]) {
     padding: 1.5rem 1.5rem 2rem;
   }
 
-  /* Con locandina il testo inizia sotto: la X sta sopra l'immagine */
+  /* Il testo precede la locandina anche negli eventi con immagine. */
   .evento-dialog-corpo:not(.con-locandina) {
     padding-top: 2rem;
+  }
+
+  .evento-dialog-testo {
+    order: -1;
   }
 
   .evento-locandina {
@@ -825,7 +829,7 @@ html:has(dialog[open]) {
 
   .evento-dialog-corpo.con-locandina .evento-dialog-titolo,
   .evento-dialog-corpo.con-locandina .evento-etichette {
-    margin-right: 0;
+    margin-right: 2.5rem;
   }
 
   .evento-dialog-titolo {

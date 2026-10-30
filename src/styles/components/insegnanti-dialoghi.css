@@ -180,17 +180,17 @@ html:has(dialog.ins-dialog[open]) {
     padding-top: 2rem;
   }
 
+  .ins-dialog-testo {
+    order: -1;
+  }
+
   .ins-dialog-foto {
     aspect-ratio: 4 / 5;
   }
 
-  /* Senza ruolo il nome porta da solo lo spazio verso il testo */
-.ins-dialog-nome:not(:has(+ .ins-dialog-ruolo)) {
-  margin-bottom: 1.5rem;
-}
-
-.con-foto .ins-dialog-ruolo,
+  /* Il testo viene prima della foto: lascia spazio alla X accanto al nome. */
+  .con-foto .ins-dialog-ruolo,
   .con-foto .ins-dialog-nome {
-    margin-right: 0;
+    margin-right: 2.5rem;
   }
 }

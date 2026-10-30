@@ -277,6 +277,19 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   text-shadow: 0 1px 12px rgb(var(--nero-rgb) / .45);
 }
 
+/* Figura nella prima riga libera: rimane separata da titoli, testo e link,
+   anche quando il contenuto cresce. Gli sfondi esistenti restano intatti. */
+.corsi-stile-figura {
+  grid-row: 1;
+  align-self: end;
+  width: 5rem;
+  height: 7.5rem;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  pointer-events: none;
+  user-select: none;
+}
+
 .corsi-stile-nome {
   grid-row: 2;
   color: inherit;
@@ -416,6 +429,12 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 
   .corsi-stile-desc {
     margin: .5rem 0 1.25rem;
+  }
+
+  .corsi-stile-figura {
+    flex: none;
+    align-self: center;
+    margin-bottom: 1.25rem;
   }
 
   .corsi-cta {

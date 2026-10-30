@@ -24,7 +24,7 @@
 .riga {
   display: flex;
   align-items: baseline;
-  gap: var(--spazio-icona);
+  gap: .5rem;
   padding: 1.5rem 0;
   color: var(--heading-color);
   text-decoration: none;

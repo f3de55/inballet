@@ -121,9 +121,6 @@ const schema = schemaHome(socialImage);
                                 {cat.immagineHome
                                     ? <Img src={cat.immagineHome.src} alt="" aria-hidden="true" fuoco={cat.immagineHome.fuoco} loading="lazy" decoding="async" widths={[640, 960, 1200]} sizes="(max-width: 600px) 100vw, 600px" />
                                     : <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[640, 960, 1200]} sizes="(max-width: 600px) 100vw, 600px" />}
-                                {cat.immagineHome && (
-                                    <Img class="corsi-stile-figura" src={`grafica-corsi/figure/${cat.id}.webp`} alt="" aria-hidden="true" width="176" height="264" loading="lazy" decoding="async" widths={[240, 480]} sizes="176px" />
-                                )}
                             </div>
                             <div class="corsi-stile-testo">
                                 <h3 class="corsi-stile-nome">{cat.nome}</h3>

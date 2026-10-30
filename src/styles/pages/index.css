@@ -209,10 +209,9 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   padding: 0;
 }
 
-/* Nome, frase e link condividono le righe; lo spazio in basso ospita la
-   figura decorativa dello sfondo, senza sovrapporla al contenuto. */
+/* Un solo sfondo composto per card; nome, frase e link rimangono allineati. */
 .corsi-indice {
-  grid-auto-rows: 2.5rem auto auto auto minmax(16rem, 1fr);
+  grid-auto-rows: 1rem auto auto auto minmax(11rem, 1fr);
 }
 
 .corsi-indice li {
@@ -249,7 +248,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   overflow: hidden;
 }
 
-.corsi-stile-foto > img:not(.corsi-stile-figura) {
+.corsi-stile-foto > img {
   display: block;
   width: 100%;
   height: 100%;
@@ -273,20 +272,6 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 .corsi-stile-testo {
   display: contents;
   text-shadow: 0 1px 12px rgb(var(--nero-rgb) / .45);
-}
-
-/* La ballerina fa parte della composizione di sfondo, nell'angolo inferiore
-   destro. Non occupa una riga del contenuto e non intercetta i clic. */
-.corsi-stile-foto > .corsi-stile-figura {
-  position: absolute;
-  right: 0;
-  bottom: -.5rem;
-  display: block;
-  width: 11rem;
-  height: 16.5rem;
-  object-fit: contain;
-  pointer-events: none;
-  user-select: none;
 }
 
 .corsi-stile-nome {
@@ -326,7 +311,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 }
 
 .corsi-stile--grafica .corsi-stile-foto::after {
-  display: none;
+  background: linear-gradient(to bottom, rgb(var(--corsi-grafica-rgb) / .94) 0%, rgb(var(--corsi-grafica-rgb) / .94) 48%, rgb(var(--corsi-grafica-rgb) / 0) 66%);
 }
 
 .corsi-stile--grafica .corsi-stile-testo {
@@ -349,7 +334,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .corsi-stile:hover .corsi-stile-foto > img:not(.corsi-stile-figura) {
+  .corsi-stile:hover .corsi-stile-foto > img {
     transform: scale(1.05);
   }
 
@@ -419,7 +404,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
     flex-direction: column;
     align-items: center;
     grid-row: auto;
-    padding: 2.25rem 1.5rem 17rem;
+    padding: 2.25rem 1.5rem 12rem;
   }
 
   .corsi-stile-desc {

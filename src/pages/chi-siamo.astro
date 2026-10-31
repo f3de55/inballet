@@ -5,7 +5,8 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import InsegnantiSection from '../components/InsegnantiSection.astro';
 import InsegnantiDialoghi from '../components/InsegnantiDialoghi.astro';
-import { sfondoCta, type Fuoco } from '../lib/images';
+import SediMappa from '../components/SediMappa.astro';
+import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import { leggiInsegnanti } from '../lib/insegnanti';
 import '../styles/pages/chi-siamo.css';
@@ -23,11 +24,6 @@ const insegnanti = await leggiInsegnanti();
 
 const [lainate, rho] = sedi;
 
-// Sedi: foto dell'ingresso; indirizzi e mappe dai dati ufficiali della scuola.
-const sediFoto: { sede: typeof lainate; foto: string; alt: string; fuoco?: Fuoco }[] = [
-  { sede: lainate, foto: 'foto/sede-lainate.jpg', alt: "L'edificio della sede di Lainate al tramonto, con l'insegna IN.Ballet sulla facciata", fuoco: { desktop: '35% 50%', mobile: '38% 50%' } },
-  { sede: rho, foto: 'foto/sede-rho.jpg', alt: "L'ingresso della sede di Rho al tramonto" },
-];
 const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
 // InBallet in numeri: valore (animato dal conteggio), etichetta e nota
@@ -152,30 +148,15 @@ const numeri = [
         <!-- Insegnanti (gestiti dalla dashboard; la sezione compare solo se ce ne sono) -->
         <InsegnantiSection dati={insegnanti} />
 
-        <!-- Sedi: le due sedi affiancate sulla stessa riga, foto dell'ingresso, indirizzo e mappa. -->
-        <section class="sede-section" aria-labelledby="sedi-titolo">
+        <!-- Foto delle sedi collegate agli indirizzi sulla cartografia originale. -->
+        <section class="sede-section" id="dove-trovarci" aria-labelledby="sedi-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">Le nostre sedi</p>
                 <h2 class="titolo-sezione" id="sedi-titolo">Dove <em>trovarci</em></h2>
                 <p class="intro-sezione">Due sedi, <strong>Lainate e Rho</strong>: scegli quella più comoda e vieni a conoscerci.</p>
             </div>
             <div class="container">
-                <ul class="sedi">
-                    {sediFoto.map(({ sede, foto, alt, fuoco }) => (
-                        <li class="sede">
-                            <Img class="sede-foto" src={foto} alt={alt} fuoco={fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 700px) 100vw, (max-width: 1200px) 45vw, 540px" />
-                            <div class="sede-testo">
-                                <h3 class="sede-nome">{sede.citta}</h3>
-                                <p>{sede.via}</p>
-                                <p class="testo-piccolo">{sede.cap} {sede.citta} ({sede.provincia})</p>
-                            </div>
-                            <a href={sede.maps} target="_blank" rel="noopener noreferrer" class="link-cta sede-cta" aria-label={`Apri la mappa della sede di ${sede.citta}, ${sede.via} (si apre in una nuova scheda)`}>
-                                Apri la mappa
-                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    ))}
-                </ul>
+                <SediMappa />
             </div>
         </section>
 

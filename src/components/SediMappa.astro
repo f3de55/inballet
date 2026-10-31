@@ -1,0 +1,53 @@
+---
+import Img from './Img.astro';
+import { sedi } from '../data/scuola';
+import '../styles/components/sedi-mappa.css';
+
+// Nuovo screenshot: 1014 × 792, Google Mercator a zoom 13.
+// Origine in pixel mondo: 1100792, 749563; registrazione sul precedente: +34, -104 px.
+// Civici geocodificati con ArcGIS World Geocoding (StreetAddressExt, interpolati):
+// Puccini 14: 45.55948194798, 9.029441965882; Tevere 19: 45.520685271447, 9.049223252559.
+// Le foto sono richiami: i punti dei collegamenti rappresentano gli indirizzi.
+const posizioni = [
+  { id: 'lainate', x: 384.31, y: 203.12, foto: 'foto/sede-lainate.jpg', alt: "L'edificio della sede di Lainate con l'insegna InBallet", fuoco: { desktop: '35% 50%' } },
+  { id: 'rho', x: 499.55, y: 525.8, foto: 'foto/sede-rho.jpg', alt: "L'ingresso della sede di Rho", fuoco: { desktop: '50% 50%' } },
+];
+const luoghi = posizioni.map((p, i) => ({ ...p, sede: sedi.find((s) => s.id === p.id)!, numero: `0${i + 1}` }));
+---
+
+<div class="sedi-composizione">
+    <figure class="sedi-mappa" aria-label="Le sedi InBallet di Lainate e Rho sulla mappa">
+        <div class="sedi-mappa-tavola">
+            <Img class="sedi-mappa-base" src="sedi/mappa-lainate-rho-v2.png" alt="Mappa dell'area fra Lainate, Rho e i comuni a nord-ovest di Milano" width="1014" height="792" widths={[480, 800, 1014]} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 800px" loading="lazy" />
+            <div class="sedi-mappa-velo" aria-hidden="true"></div>
+
+            <svg class="sedi-mappa-linee sedi-mappa-linee--desktop" viewBox="0 0 1440 792" fill="none" aria-hidden="true">
+                <path class="sedi-mappa-linea-fondo" d="M432 200 H520 Q560 200 597.31 203.12 M1008 500 H860 Q820 500 790 525.8 H712.55" />
+                <path class="sedi-mappa-linea" d="M432 200 H520 Q560 200 597.31 203.12 M1008 500 H860 Q820 500 790 525.8 H712.55" />
+            </svg>
+            <svg class="sedi-mappa-linee sedi-mappa-linee--mobile" viewBox="0 0 1014 1120" fill="none" aria-hidden="true">
+                <path class="sedi-mappa-linea-fondo" d="M619 203.12 H384.31 M456 760 C550 760 565 610 499.55 525.8" />
+                <path class="sedi-mappa-linea" d="M619 203.12 H384.31 M456 760 C550 760 565 610 499.55 525.8" />
+            </svg>
+
+            {luoghi.map(({ sede, id, foto, alt, fuoco, numero, x, y }) => (
+                <>
+                    <a class={`sedi-mappa-foto sedi-mappa-foto--${id}`} href={sede.maps} target="_blank" rel="noopener noreferrer" aria-label={`Apri su Google Maps la sede di ${sede.citta}, ${sede.via} (nuova scheda)`}>
+                        <Img src={foto} alt={alt} fuoco={fuoco} width="640" height="360" widths={[320, 480, 720]} sizes="(max-width: 768px) 42vw, (max-width: 1200px) 27vw, 307px" loading="lazy" rapporto={9 / 16} />
+                        <div class="sedi-mappa-didascalia">
+                            <span class="sedi-mappa-numero" aria-hidden="true">{numero}</span>
+                            <div class="sedi-mappa-dettaglio">
+                                <p class="valore">{sede.citta}</p>
+                                <span class="sedi-mappa-azione testo-piccolo">Vedi di più <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="sedi-mappa-punto" href={sede.maps} target="_blank" rel="noopener noreferrer" style={`--punto-x:${(213 + x) / 1440 * 100}%;--punto-y:${y / 792 * 100}%;--punto-mobile-x:${x / 1014 * 100}%;--punto-mobile-y:${y / 1120 * 100}%;`} aria-label={`${sede.citta}, ${sede.via}: apri la mappa (nuova scheda)`}>
+                        <span>{numero}</span>
+                    </a>
+                </>
+            ))}
+
+        </div>
+    </figure>
+</div>

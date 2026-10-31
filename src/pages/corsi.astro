@@ -48,16 +48,14 @@ const hero = await heroPagina('corsi');
 
     <section id="corsi" class="corsi">
         <div class="container">
-            <header class="corsi-intro intro-sezione">
-                <p class="eyebrow">{totale} corsi in {categorieCorsi.length} percorsi</p>
-                <h2 class="titolo titolo-sezione">Trova il tuo <em>percorso</em></h2>
-                <p class="corsi-lead">A Lainate e Rho si comincia <strong>a 3 anni</strong> con Avviamento alla Danza e <strong>non c'è un'età per smettere</strong>: per gli adulti ci sono corsi anche per chi <strong>parte da zero</strong>.</p>
+            <!-- Una frase e sotto le scelte: le schede dei percorsi (src/scripts/corsi.ts) -->
+            <header class="corsi-intro">
+                <h2 class="titolo-sezione">Da dove vuoi <em>cominciare</em>?</h2>
                 <nav class="salti" aria-label="Scegli il percorso">
                     {categorieCorsi.map((cat) => (
                         <a href={`#${cat.id}`} data-percorso={cat.id}>
-                            <i class={`fas ${cat.icona} salto-numero`} aria-hidden="true"></i>
-                            <p class="salto-nome">{cat.nome}</p>
-                            <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                            <i class={`fas ${cat.icona} salto-icona`} aria-hidden="true"></i>
+                            <p class="salto-nome">{cat.breve}</p>
                         </a>
                     ))}
                 </nav>
@@ -66,11 +64,10 @@ const hero = await heroPagina('corsi');
             <!-- Percorsi: una fascia bianca; con JavaScript le pillole sopra li mostrano uno alla volta (src/scripts/corsi.ts),
                  senza restano tutti visibili uno sotto l'altro -->
             <div class="corsi-percorsi fascia-onda decoro-fascia">
-            {percorsi.map((cat, i) => (
+            {percorsi.map((cat) => (
                 <article class="categoria" id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
                     <div class="categoria-testo">
-                        <p class="eyebrow categoria-percorso">Percorso {i + 1} di {categorieCorsi.length}</p>
-                        <h2 class="categoria-titolo" id={`${cat.id}-titolo`}>{cat.nome}</h2>
+                        <h3 class="categoria-titolo" id={`${cat.id}-titolo`}>{cat.nome}</h3>
                         <p class="categoria-descrizione" set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
                         <ul class="corsi-lista">
                             {cat.corsi.map((c) => (

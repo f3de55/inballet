@@ -4,6 +4,10 @@
   .chisiamo-hero.corso-hero {
     min-height: var(--hero-altezza-min);
     aspect-ratio: var(--hero-rapporto);
+    /* Larghezza esplicita: con solo aspect-ratio e min-height, sotto i 1440px Chrome ricava la larghezza
+       dall'altezza minima (22.5rem x 4 = 1440px), il banner esce dallo schermo e la pagina scorre in
+       orizzontale. Così resta largo quanto lo schermo e, se serve, diventa più alto del rapporto */
+    width: 100%;
   }
 }
 

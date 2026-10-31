@@ -160,9 +160,6 @@
   --shadow-sm: 0 2px 8px rgb(var(--nero-rgb) / .05);
   --shadow-blue: 0 4px 15px rgb(var(--blu-rgb) / .3);
   --shadow-card: 0 4px 20px rgb(var(--nero-rgb) / .05);
-  /* Card su sfondo bianco o azzurrino che devono staccarsi una dall'altra (schede dei corsi): ombra a due livelli */
-  --shadow-scheda: 0 14px 32px rgb(var(--navy-rgb) / .14), 0 2px 6px rgb(var(--navy-rgb) / .08);
-  --shadow-scheda-hover: 0 22px 44px rgb(var(--navy-rgb) / .2), 0 4px 10px rgb(var(--navy-rgb) / .1);
 
   /* ---------- Struttura ---------- */
   --section-y: clamp(3.75rem, 3rem + 3.3333vw, 6rem);

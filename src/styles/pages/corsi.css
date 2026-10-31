@@ -238,269 +238,151 @@
   outline-offset: 4px;
 }
 
-/* ---------- Categorie: foto e corsi, alternate ---------- */
-/* Larghezza del container (1200px come la home): foto e testo con i corsi su due colonne uguali,
-   la foto in formato fisso e centrata rispetto al testo */
+/* ---------- Percorsi: intestazione centrata e striscia di box a tutta larghezza ---------- */
 .categoria {
-  display: grid;
-  grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
-  gap: 4rem;
-  align-items: center;
   padding: 4.5rem 0;
-}
-
-/* Percorsi pari: foto a destra */
-.categoria:nth-of-type(even) {
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
-}
-
-.categoria:nth-of-type(even) .categoria-foto {
-  order: 2;
-}
-
-.categoria-foto {
-  position: relative;
-  isolation: isolate;
-  margin: 0 1.5rem 1.5rem 1.5rem;
-}
-
-/* Cornice azzurra sfalsata verso il testo, come in Contatti e nella homepage */
-.categoria-foto::before {
-  content: '';
-  position: absolute;
-  inset: 2.5rem -1.5rem -1.5rem 2.5rem;
-  border: 2px solid var(--primary-blue);
-  border-radius: var(--radius-img);
-  z-index: -1;
-}
-
-.categoria:nth-of-type(even) .categoria-foto::before {
-  inset: 2.5rem 2.5rem -1.5rem -1.5rem;
-}
-
-.categoria-foto img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  border-radius: var(--radius-img);
-  box-shadow: 0 24px 60px rgb(var(--nero-rgb) / .14);
+  text-align: center;
 }
 
 /* Etichetta «Percorso 1 di 5» sopra il titolo */
 .categoria-percorso {
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: .85rem;
 }
 
 .categoria-titolo {
   color: var(--dark-navy);
-  margin-bottom: 0.9rem;
+  margin-bottom: 0;
 }
 
 .categoria-descrizione {
-  margin-bottom: 1.5rem;
+  max-width: 49rem;
+  margin: 1.25rem auto 0;
 }
 
-/* ---------- Elenco corsi ---------- */
+/* ---------- Sottocorsi: box a tutta larghezza ---------- */
+/* La striscia esce dal container e dai margini della sezione e occupa tutto lo schermo: un box per corso, uno
+   accanto all'altro (fino a 6), ognuno con la foto di sfondo, un velo scuro, nome, età e frequenza e il bottone.
+   Tutto il box è il link. La sezione ha overflow-x: clip, quindi niente scroll orizzontale.
+   Ogni box occupa 4 righe della griglia (spazio per la foto, nome, dettagli, bottone) e le eredita con subgrid:
+   nomi, dettagli e bottoni stanno alla stessa quota in tutti i box della riga, anche se un testo va a capo */
+.corsi-lista {
+  --n: 1;
+  --corso-foto-h: 19rem;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  grid-auto-rows: minmax(var(--corso-foto-h), 1fr) auto auto auto;
+  width: 100vw;
+  margin: 3rem calc(50% - 50vw) 0;
+  padding: 0;
+}
+
+.corsi-lista:has(> :nth-child(2)) { --n: 2; }
+.corsi-lista:has(> :nth-child(3)) { --n: 3; }
+.corsi-lista:has(> :nth-child(4)) { --n: 4; }
+.corsi-lista:has(> :nth-child(5)) { --n: 5; }
+.corsi-lista:has(> :nth-child(6)) { --n: 6; }
+
+.corsi-lista li {
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+}
+
+.corsi-lista li + li {
+  border-left: 1px solid var(--linea-su-scuro);
+}
+
+.corso-voce {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-row: 1 / -1;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  justify-items: start;
+  padding: 2.25rem 1.75rem;
+  overflow: hidden;
+  background: var(--dark-navy);
+  color: var(--white);
+  text-align: left;
+  text-decoration: none;
+}
+
 .corso-foto {
-  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: block;
+  overflow: hidden;
 }
 
+.corso-foto picture {
+  display: contents;
+}
+
+.corso-foto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+
+/* Velo: scuro in basso dove sta il testo, leggero in alto così la foto resta visibile */
+.corso-foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(var(--scuro-rgb) / .88) 0%, rgb(var(--scuro-rgb) / .5) 50%, rgb(var(--scuro-rgb) / .12) 100%);
+}
+
+/* Il contenitore non genera un box: nome, dettagli e bottone sono righe della griglia del box */
 .corso-scheda-testo {
   display: contents;
 }
 
-/* Due colonne di voci, ognuna interamente cliccabile: nome del corso (titolo h4), età e frequenza, «Scopri il corso».
-   Ogni voce occupa 3 righe (nome, dettagli, link) e le eredita con subgrid: in una riga di due voci nomi, dettagli e
-   link stanno alla stessa quota anche se un nome va a capo. Il filetto in alto chiude la lista come nel resto del sito */
-.corsi-lista {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 2.5rem;
-  border-top: 1px solid var(--linea);
-}
-
-.corsi-lista li {
-  display: grid;
-  grid-row: span 3;
-  grid-template-rows: subgrid;
-  row-gap: 0;
-  border-bottom: 1px solid var(--linea);
-}
-
-.corso-voce {
-  display: grid;
-  grid-row: 1 / -1;
-  grid-template-rows: subgrid;
-  align-content: start;
-  padding: 1.25rem 0;
-  color: var(--dark-navy);
-  text-decoration: none;
-}
-
 .corso-nome {
-  margin: 0;
+  grid-row: 2;
   align-self: end;
+  margin: 0;
   color: inherit;
-  transition: color .3s ease;
+  text-shadow: 0 1px 12px rgb(var(--nero-rgb) / .45);
 }
 
-.corso-dettagli {
-  margin: .25rem 0 0;
+.corso-voce .corso-dettagli {
+  grid-row: 3;
+  margin: .5rem 0 1.5rem;
+  color: var(--body-color-su-scuro);
+  text-shadow: 0 1px 12px rgb(var(--nero-rgb) / .45);
 }
 
 .corso-cta {
-  align-self: end;
-  justify-self: start;
-  margin-top: .75rem;
+  grid-row: 4;
 }
 
 .corso-voce:focus-visible {
-  outline: 2px solid var(--primary-blue-dark);
-  outline-offset: 3px;
+  outline: 2px solid var(--primary-blue);
+  outline-offset: -6px;
 }
 
-/* Desktop: card allineate, con foto e dettagli di ogni sottocorso.
-   Le schede restano link nativi, leggibili e utilizzabili anche senza JavaScript. */
-@media (min-width: 901px) {
-  .categoria,
-  .categoria:nth-of-type(even) {
-    display: block;
-    padding: 5rem 0;
-  }
-
-  .categoria-foto {
-    display: none;
-  }
-
-  .categoria-testo {
-    text-align: center;
-  }
-
-  .categoria-percorso {
-    margin-bottom: .85rem;
-  }
-
-  .categoria-descrizione {
-    max-width: 49rem;
-    margin: 1.25rem auto 0;
-  }
-
-  .corsi-lista {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: stretch;
-    gap: 2rem 1.75rem;
-    margin: 3rem auto 0;
-    padding: 0;
-    border: 0;
-  }
-
-  .corsi-lista li {
-    display: flex;
-    flex: 0 0 calc((100% - 5.25rem) / 4);
-    min-width: 0;
-    max-width: none;
-    border: 0;
-  }
-
-  .corso-voce {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 0;
-    overflow: hidden;
-    border: 1px solid rgb(var(--navy-rgb) / .16);
-    border-radius: var(--radius-card);
-    background: var(--white);
-    box-shadow: var(--shadow-scheda);
-    text-align: left;
-    transition: box-shadow .4s ease, border-color .3s ease;
-  }
-
-  .corso-foto {
-    display: block;
-    overflow: hidden;
-    flex-shrink: 0;
-    aspect-ratio: 3 / 2;
-    background: var(--bg-soft);
-  }
-
-  .corso-foto img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform .5s ease;
-  }
-
-  .corso-scheda-testo {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1.5rem;
-  }
-
-  .corso-nome {
-    align-self: auto;
-  }
-
-  .corso-dettagli {
-    margin-top: .6rem;
-  }
-
-  .corso-cta {
-    align-self: auto;
-    margin-top: auto;
-    padding-top: 1.2rem;
-  }
-
-  .corso-voce:focus-visible {
-    outline-offset: 5px;
-    border-color: var(--primary-blue-dark);
-    box-shadow: var(--shadow-scheda);
-  }
-}
-
-@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
-  .corso-voce:hover {
-    border-color: var(--primary-blue-dark);
-    box-shadow: var(--shadow-scheda-hover);
-  }
-
+@media (hover: hover) and (pointer: fine) {
   .corso-voce:hover .corso-foto img {
-    transform: scale(1.035);
+    transform: scale(1.05);
+  }
+
+  .corso-voce:hover .corso-cta {
+    background: var(--white);
+    border-color: var(--white);
+    color: var(--dark-navy);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .corso-voce,
   .corso-foto img {
     transition: none;
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .corso-voce:hover .corso-nome {
-    color: var(--primary-blue-dark);
-  }
-}
-
-@media (max-width: 640px) {
-  .corsi-lista {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .corso-voce {
-    padding: 1rem 0;
-  }
-
-  .corso-cta {
-    margin-top: .5rem;
   }
 }
 
@@ -534,7 +416,7 @@
 
 /* ---------- Responsive ---------- */
 
-/* Tablet: percorsi a righe; foto e testo restano affiancati (alternati), corsi su una colonna */
+/* Tablet: percorsi a righe; box dei sottocorsi su due colonne */
 @media (max-width: 900px) {
   /* Percorsi a righe (5 colonne non ci stanno): numero, nome, freccia a destra */
   .salti {
@@ -578,33 +460,37 @@
   }
 
   .categoria {
-    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
-    gap: 2.5rem;
     padding: 3.5rem 0;
   }
 
-  .categoria:nth-of-type(even) {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+  .corsi-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 2.5rem;
   }
 
-  .categoria-foto {
-    margin: 0 1rem 1rem 1rem;
+  .corsi-lista li + li {
+    border-left: 0;
   }
 
-  .categoria-foto::before {
-    inset: 1.5rem -1rem -1rem 1.5rem;
+  .corsi-lista li:nth-child(even) {
+    border-left: 1px solid var(--linea-su-scuro);
   }
 
-  .categoria:nth-of-type(even) .categoria-foto::before {
-    inset: 1.5rem 1.5rem -1rem -1rem;
+  /* Con un numero dispari l'ultimo box occupa tutta la riga */
+  .corsi-lista li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
-  .categoria-descrizione {
-    margin-bottom: 1rem;
+  .corsi-lista {
+    --corso-foto-h: 12rem;
+  }
+
+  .corso-voce {
+    padding: 1.75rem 1.5rem;
   }
 }
 
-/* Mobile: foto sopra in formato basso, testo e corsi sotto; intro a sinistra */
+/* Mobile: intro a sinistra, intestazioni dei percorsi a sinistra, box a una colonna */
 @media (max-width: 640px) {
   .corsi-intro {
     padding-bottom: 3rem;
@@ -615,59 +501,39 @@
     margin-left: 0;
   }
 
-  /* Ordine: etichetta e titolo, poi la foto, poi descrizione e corsi
-     (il blocco di testo "si scioglie" così i suoi elementi si ordinano insieme alla foto) */
-  .categoria,
-  .categoria:nth-of-type(even) {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
+  .categoria {
     padding: 3rem 0;
-  }
-
-  .categoria-testo {
-    display: contents;
-  }
-
-  .categoria-percorso {
-    order: 1;
-  }
-
-  .categoria-titolo {
-    order: 3;
-  }
-
-  .categoria .categoria-foto,
-  .categoria:nth-of-type(even) .categoria-foto {
-    order: 4;
-    margin: .75rem .75rem 2.75rem 0;
+    text-align: left;
   }
 
   .categoria-descrizione {
-    order: 5;
+    margin-left: 0;
   }
 
   .corsi-lista {
-    order: 6;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 2rem;
+  }
+
+  .corsi-lista li:nth-child(even) {
+    border-left: 0;
+  }
+
+  .corsi-lista li + li {
+    border-top: 1px solid var(--linea-su-scuro);
+  }
+
+  .corsi-lista {
+    --corso-foto-h: 8rem;
+  }
+
+  .corso-voce {
+    padding: 1.5rem;
   }
 
   .corsi-fine {
     flex-direction: column;
     align-items: flex-start;
     padding: 2rem 1.5rem;
-  }
-
-  .categoria-foto {
-    margin: 0 .75rem .75rem 0;
-  }
-
-  .categoria-foto::before,
-  .categoria:nth-of-type(even) .categoria-foto::before {
-    inset: 1.25rem -.75rem -.75rem 1.25rem;
-  }
-
-  .categoria-foto img {
-    aspect-ratio: 16 / 9;
   }
 }

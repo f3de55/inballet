@@ -65,9 +65,6 @@ const hero = await heroPagina('corsi');
 
             {percorsi.map((cat, i) => (
                 <article class={`categoria${i % 2 === 0 ? ` fascia-onda decoro-fascia${i % 4 === 2 ? ' decoro-fascia--sinistra' : ''}` : ''}`} id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
-                    <figure class="categoria-foto">
-                        <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 640px) 100vw, 30vw" />
-                    </figure>
                     <div class="categoria-testo">
                         <p class="eyebrow categoria-percorso">Percorso {i + 1} di {categorieCorsi.length}</p>
                         <h2 class="categoria-titolo" id={`${cat.id}-titolo`}>{cat.nome}</h2>
@@ -77,12 +74,12 @@ const hero = await heroPagina('corsi');
                                 <li>
                                     <a href={c.url} class="corso-voce">
                                         <span class="corso-foto" aria-hidden="true">
-                                            <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[320, 480, 640]} sizes="(min-width: 1200px) 266px, (min-width: 901px) calc((100vw - 136px) / 4), 0px" width="450" height="300" />
+                                            <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(min-width: 901px) 25vw, (min-width: 601px) 50vw, 100vw" width="450" height="300" />
                                         </span>
                                         <div class="corso-scheda-testo">
                                             <h4 class="corso-nome">{nomeBreve(c.nome)}</h4>
                                             <p class="corso-dettagli testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
-                                            <p class="link-cta corso-cta">
+                                            <p class="btn-secondary corso-cta">
                                                 Scopri il corso
                                                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                             </p>

@@ -266,8 +266,6 @@
 .categoria {
   padding: 4.5rem 0;
   text-align: center;
-  /* Dalla scheda su tablet e mobile si scorre fino al titolo: resta sotto l'header fisso */
-  scroll-margin-top: calc(var(--header-h) + var(--banner-height, 0px) + 1rem);
 }
 
 .categoria[hidden] {

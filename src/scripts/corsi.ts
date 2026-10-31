@@ -15,12 +15,19 @@ function mostra(id: string) {
   });
 }
 
+/* Porta in vista il percorso. Lo spazio per l'header fisso è già nello scroll-padding-top di html (reset.css);
+ * lo scorrimento è fluido o immediato secondo il CSS (scroll-behavior, che rispetta "riduci movimento"). */
+function vai(id: string, behavior: ScrollBehavior = 'auto') {
+  document.getElementById(id)?.scrollIntoView({ block: 'start', behavior });
+}
+
 function scegli(a: HTMLAnchorElement) {
   const id = a.dataset.percorso!;
   mostra(id);
   history.replaceState(null, '', `#${id}`);
-  // Tablet e mobile: le pillole sono una lista alta, il percorso scelto sta sotto; si scorre fino al titolo
-  if (stretto.matches) document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Tablet e mobile: le pillole sono una lista alta, il percorso scelto sta sotto; si scorre fino al titolo.
+  // Su PC le pillole sono subito sopra il percorso: la pagina resta ferma
+  if (stretto.matches) vai(id);
 }
 
 if (nav && schede.length && pannelli.every(Boolean)) {
@@ -49,11 +56,19 @@ if (nav && schede.length && pannelli.every(Boolean)) {
     });
   });
 
-  // Dal footer o da un link condiviso (/corsi#urban) si apre quel percorso; altrimenti il primo
+  // Da un link condiviso o da un'altra pagina (/corsi#urban) si apre quel percorso; altrimenti il primo.
+  // Il browser può aver già saltato all'ancora quando i percorsi erano tutti visibili (la pagina era più lunga):
+  // dopo averli nascosti si riporta il percorso in vista, subito e senza animazione
   const daHash = () => schede.find((a) => `#${a.dataset.percorso}` === location.hash)?.dataset.percorso;
-  mostra(daHash() ?? schede[0].dataset.percorso!);
+  const iniziale = daHash();
+  mostra(iniziale ?? schede[0].dataset.percorso!);
+  if (iniziale) vai(iniziale, 'instant');
+
+  // Link del footer con la pagina già aperta: il percorso era nascosto e il browser non ha potuto scorrere
   window.addEventListener('hashchange', () => {
     const id = daHash();
-    if (id) mostra(id);
+    if (!id) return;
+    mostra(id);
+    vai(id);
   });
 }

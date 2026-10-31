@@ -42,7 +42,7 @@
 
 .footer-main {
   display: grid;
-  grid-template-columns: 14rem minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 5.6fr);
   gap: 2.5rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -61,6 +61,7 @@
   line-height: 1.6;
   color: var(--footer-testo);
   max-width: 16rem;
+  text-wrap-style: balance;
 }
 
 .footer-brand .footer-ente {
@@ -95,10 +96,10 @@
 /* ---------- Colonne ---------- */
 .footer-nav {
   display: grid;
-  /* Cinque colonne della stessa larghezza (quattro della mappa + Contatti): voci lunghe o corte, la distanza
-     fra le colonne è sempre la stessa e nessuna voce si attacca alla vicina */
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 1.5rem 2rem;
+  /* Colonne larghe quanto le loro voci: meno link spezzati a capo (quattro della mappa + Contatti) */
+  grid-template-columns: repeat(5, auto);
+  justify-content: space-between;
+  gap: 1.5rem;
 }
 
 .footer-col summary {
@@ -129,7 +130,23 @@
   line-height: 1.4;
   color: var(--footer-testo);
   text-decoration: none;
+  /* A capo bilanciato: le righe di una voce lunga hanno una lunghezza simile, senza una parola sola in coda
+     (solo lo stile: il nowrap di telefono ed e-mail resta) */
+  text-wrap-style: balance;
   transition: color .3s ease;
+}
+
+/* Il bilanciamento agisce sui blocchi, non sui link in linea: le voci della mappa sono inline-block */
+.footer-main ul a {
+  display: inline-block;
+}
+
+/* Tablet e PC: le voci della mappa del sito sono larghe al massimo 7em, quindi quelle a più parole vanno tutte a capo
+   su due righe bilanciate (Spettacoli / ed Eventi, Classi / Integrate…) e le colonne risultano della stessa larghezza */
+@media (min-width: 701px) {
+  .footer-col:not(.footer-contatti) ul a {
+    max-inline-size: 7em;
+  }
 }
 
 .footer-main ul a:hover,
@@ -290,10 +307,11 @@
   }
 }
 
-/* Da 1001px a 1240px cinque colonne uguali */
+/* Da 1001px a 1240px cinque colonne larghe quanto le loro voci */
 @media (min-width: 1001px) and (max-width: 1240px) {
   .footer-main {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(5, auto);
+    justify-content: space-between;
   }
 }
 

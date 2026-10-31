@@ -5,7 +5,7 @@
 - `georeferenziazione-v3.json`: registrazione del nuovo screenshot 1111 × 852 a zoom 14.
 - `georeferenziazione.json` e `georeferenziazione-v2.json`: registrazioni precedenti conservate per tracciabilità.
 
-Il sito usa l'ultimo screenshot fornito dall'utente. Su desktop Lainate è a sinistra, Rho a destra e la mappa al centro. Su mobile entrambe le card grandi sono contenute in un'unica cornice: la cartografia riempie tutto lo sfondo, anche dietro e tra le foto, separate da 24 px. I pallini restano di 56 px; città e azioni usano dimensioni leggibili. Foto e segnaposto aprono Google Maps; «Vedi di più» e icona restano sotto ciascuna città. Nessun box aggiuntivo sotto la composizione.
+Il sito usa l'ultimo screenshot fornito dall'utente. Su desktop Lainate è a sinistra, Rho a destra e la mappa al centro. Su mobile una sola cornice contiene la mappa continua e due foto più compatte, senza struttura bianca da card. Città e icona esterna sono dentro ciascuna immagine, su un gradiente scuro; i numeri interni e «Vedi di più» sono nascosti solo su mobile. La cartografia occupa più della metà della composizione. I pallini geografici rimangono di 56 px. Foto e segnaposto aprono Google Maps.
 
 I segnaposto sono figli della cartografia e seguono le percentuali dell'immagine: il ritaglio mobile non ne altera le coordinate. La scala e il ritaglio vengono adattati alle dimensioni delle card: i due punti occupano le fasce libere sopra e sotto le foto, sempre sugli stessi luoghi. I collegamenti SVG si aggiornano sulle posizioni reali tramite `ResizeObserver`, anche dopo resize e caricamento dei font.
 
@@ -24,4 +24,4 @@ La geocodifica interpola i civici lungo la strada: i punti sono indicativi e non
 
 ## Verifiche
 
-Controllo Astro/TypeScript e controllo stile. Verifica browser a 320, 360, 390, 430, 600, 768, 769, 900, 1024 e 1440 px: card completamente dentro la mappa, sfondo cartografico continuo, nessuna foto o pallino tagliato, nessuna sovrapposizione o overflow orizzontale. Sul telefono a 390 px: fotografie alte circa 178 px, città di 22 px, composizione unica di circa 800 px e pallini invariati di 56 px. Misurati in browser l'allineamento geografico dei punti e l'arrivo delle curve ai rispettivi pallini. Build Docker e verifica su localhost:3000.
+Controllo stile e build Docker. Verifica browser a 320, 360, 390, 430, 600, 768, 769, 900, 1024 e 1440 px: immagini contenute nella mappa, sfondo continuo, nessun pallino tagliato, nessuna sovrapposizione o overflow. Su mobile sono verificati overlay, testo bianco, icona visibile, assenza del numero e di «Vedi di più» e assenza di fondo e padding da card. Sul telefono a 390 px: foto di circa 279 × 157 px, città di 22 px, cornice di circa 644 px, circa il 63% di mappa libera e pallini invariati di 56 px. Desktop con numeri e «Vedi di più» conservati. Misurati l'allineamento geografico e l'arrivo delle curve ai pallini. Verifica finale su localhost:3000.

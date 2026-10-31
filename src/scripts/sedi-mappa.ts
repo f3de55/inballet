@@ -17,12 +17,13 @@ document.querySelectorAll<HTMLElement>('[data-sedi-mappa]').forEach((tavola) => 
       }));
       // La cartografia riempie l'intero riquadro. I punti occupano le due
       // fasce libere sopra e sotto le card, senza cambiare le coordinate.
-      const altezza = (box.height - 80) / (coordinate[1].y - coordinate[0].y);
+      const altezza = Math.max((box.height - 80) / (coordinate[1].y - coordinate[0].y), box.width * 852 / 1111);
       const larghezza = altezza * 1111 / 852;
       const distanzaX = (coordinate[1].x - coordinate[0].x) * larghezza;
       cartografia.style.setProperty('--carta-width', `${larghezza}px`);
       cartografia.style.setProperty('--carta-height', `${altezza}px`);
-      cartografia.style.setProperty('--carta-x', `${(box.width - distanzaX) / 2 - coordinate[0].x * larghezza}px`);
+      const origineX = (box.width - distanzaX) / 2 - coordinate[0].x * larghezza;
+      cartografia.style.setProperty('--carta-x', `${Math.min(0, Math.max(box.width - larghezza, origineX))}px`);
       cartografia.style.setProperty('--carta-y', `${Math.min(0, 40 - coordinate[0].y * altezza)}px`);
     }
     const area = svg.getBoundingClientRect();

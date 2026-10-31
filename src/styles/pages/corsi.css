@@ -243,10 +243,15 @@
    la foto in formato fisso e centrata rispetto al testo */
 .categoria {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
   gap: 4rem;
   align-items: center;
   padding: 4.5rem 0;
+}
+
+/* Percorsi pari: foto a destra */
+.categoria:nth-of-type(even) {
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
 }
 
 .categoria:nth-of-type(even) .categoria-foto {
@@ -298,25 +303,221 @@
 }
 
 /* ---------- Elenco corsi ---------- */
-/* Righe del componente condiviso (righe.css), una sotto l'altra: nome del corso (titolo h4), età e frequenza,
-   poi il link «Scopri il corso» a sinistra sotto il testo. Il filetto in alto chiude la lista come nelle altre
-   sezioni del sito */
-.corsi-lista.righe {
+.corso-foto {
+  display: none;
+}
+
+.corso-scheda-testo {
+  display: contents;
+}
+
+/* Due colonne di voci, ognuna interamente cliccabile: nome del corso (titolo h4), età e frequenza, «Scopri il corso».
+   Ogni voce occupa 3 righe (nome, dettagli, link) e le eredita con subgrid: in una riga di due voci nomi, dettagli e
+   link stanno alla stessa quota anche se un nome va a capo. Il filetto in alto chiude la lista come nel resto del sito */
+.corsi-lista {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 2.5rem;
   border-top: 1px solid var(--linea);
 }
 
-.corsi-lista.righe > .riga {
-  padding: 1.5rem 0;
+.corsi-lista li {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  row-gap: 0;
   border-bottom: 1px solid var(--linea);
+}
+
+.corso-voce {
+  display: grid;
+  grid-row: 1 / -1;
+  grid-template-rows: subgrid;
+  align-content: start;
+  padding: 1.25rem 0;
+  color: var(--dark-navy);
+  text-decoration: none;
 }
 
 .corso-nome {
   margin: 0;
-  color: var(--dark-navy);
+  align-self: end;
+  color: inherit;
+  transition: color .3s ease;
 }
 
 .corso-dettagli {
-  margin: .35rem 0 1rem;
+  margin: .25rem 0 0;
+}
+
+.corso-cta {
+  align-self: end;
+  justify-self: start;
+  margin-top: .75rem;
+}
+
+.corso-voce:focus-visible {
+  outline: 2px solid var(--primary-blue-dark);
+  outline-offset: 3px;
+}
+
+/* Desktop: ogni percorso si apre in un ventaglio di vere pagine corso.
+   Le schede restano link nativi, leggibili e utilizzabili anche senza JavaScript. */
+@media (min-width: 901px) {
+  .categoria,
+  .categoria:nth-of-type(even) {
+    display: block;
+    padding: 5rem 0 6.5rem;
+  }
+
+  .categoria-foto {
+    display: none;
+  }
+
+  .categoria-testo {
+    text-align: center;
+  }
+
+  .categoria-percorso {
+    margin-bottom: .85rem;
+  }
+
+  .categoria-descrizione {
+    max-width: 49rem;
+    margin: 1.25rem auto 0;
+  }
+
+  .corsi-lista {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1rem;
+    max-width: 68rem;
+    margin: 4rem auto 0;
+    padding: 0 1.5rem 2rem;
+    border: 0;
+  }
+
+  .corsi-lista li {
+    position: relative;
+    display: flex;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 16rem;
+    border: 0;
+    transform: translateY(var(--ventaglio-discesa)) rotate(var(--ventaglio-angolo));
+    transform-origin: 50% 90%;
+    transition: transform .4s cubic-bezier(.2, .7, .2, 1);
+  }
+
+  .corso-voce {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: .45rem;
+    border: 1px solid var(--linea);
+    border-radius: var(--radius-card);
+    background: var(--white);
+    box-shadow: 0 10px 28px rgb(var(--navy-rgb) / .09);
+    text-align: left;
+    transition: box-shadow .4s ease, border-color .3s ease;
+  }
+
+  .corso-foto {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 5 / 6;
+    border-radius: calc(var(--radius-card) - .45rem);
+    background: var(--bg-soft);
+  }
+
+  .corso-foto img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s ease;
+  }
+
+  .corso-scheda-testo {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.1rem .65rem .85rem;
+  }
+
+  .corso-nome {
+    align-self: auto;
+  }
+
+  .corso-dettagli {
+    margin-top: .6rem;
+  }
+
+  .corso-cta {
+    align-self: auto;
+    margin-top: auto;
+    padding-top: 1.2rem;
+  }
+
+  .corsi-lista li:focus-within {
+    z-index: 2;
+    transform: translateY(-1rem) rotate(0deg);
+  }
+
+  .corso-voce:focus-visible {
+    outline-offset: 5px;
+    border-color: var(--primary-blue-dark);
+    box-shadow: var(--shadow-card);
+  }
+}
+
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  .corsi-lista li:hover {
+    z-index: 2;
+    transform: translateY(-1rem) rotate(0deg);
+  }
+
+  .corso-voce:hover {
+    border-color: var(--primary-blue-dark);
+    box-shadow: 0 20px 40px rgb(var(--navy-rgb) / .16);
+  }
+
+  .corso-voce:hover .corso-foto img {
+    transform: scale(1.035);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .corsi-lista li,
+  .corso-voce,
+  .corso-foto img {
+    transition: none;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .corso-voce:hover .corso-nome {
+    color: var(--primary-blue-dark);
+  }
+}
+
+@media (max-width: 640px) {
+  .corsi-lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .corso-voce {
+    padding: 1rem 0;
+  }
+
+  .corso-cta {
+    margin-top: .5rem;
+  }
 }
 
 /* ---------- Chiusura ---------- */

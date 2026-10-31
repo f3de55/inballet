@@ -6,11 +6,19 @@ import Img from '../components/Img.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import { categorieCorsi } from '../data/scuola';
 import { enfatizza } from '../lib/text';
-import '../styles/components/righe.css';
 import '../styles/pages/corsi.css';
 
 // Fascia d'età e frequenza di ogni corso, dalla sua pagina (es. "/hip-hop" → "Dai 6 anni · 1-2 lezioni a settimana")
-const dettagli = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, `${c.data.badge.replace(' - ', ' · ')} · ${c.data.frequenza}`]));
+const pagineCorsi = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.data]));
+const percorsi = categorieCorsi.map((cat) => ({
+    ...cat,
+    corsi: cat.corsi.map((c, indice) => {
+        const pagina = pagineCorsi.get(c.url);
+        if (!pagina) throw new Error(`Pagina del sottocorso non trovata: ${c.url}`);
+        const posizione = indice - (cat.corsi.length - 1) / 2;
+        return { ...c, pagina, rotazione: posizione * 3.5, discesa: Math.pow(Math.abs(posizione), 1.5) * 10 };
+    }),
+}));
 // Nel nome basta la disciplina: l'età è già nell'etichetta accanto
 const nomeBreve = (nome: string) => nome.replace(/\s*\(.*\)$/, '');
 const totale = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
@@ -56,7 +64,7 @@ const hero = await heroPagina('corsi');
                 </nav>
             </header>
 
-            {categorieCorsi.map((cat, i) => (
+            {percorsi.map((cat, i) => (
                 <article class={`categoria${i % 2 === 0 ? ' fascia-onda' : ''}`} id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
                     <figure class="categoria-foto">
                         <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 640px) 100vw, 30vw" />
@@ -65,17 +73,22 @@ const hero = await heroPagina('corsi');
                         <p class="eyebrow categoria-percorso">Percorso {i + 1} di {categorieCorsi.length}</p>
                         <h2 class="categoria-titolo" id={`${cat.id}-titolo`}>{cat.nome}</h2>
                         <p class="categoria-descrizione" set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
-                        <ul class="righe corsi-lista">
+                        <ul class="corsi-lista">
                             {cat.corsi.map((c) => (
-                                <li class="riga">
-                                    <div class="riga-corpo">
+                                <li style={`--ventaglio-angolo:${c.rotazione}deg;--ventaglio-discesa:${c.discesa}px;`}>
+                                    <a href={c.url} class="corso-voce">
+                                        <span class="corso-foto" aria-hidden="true">
+                                            <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[320, 480, 640]} sizes="(min-width: 901px) 260px, 0px" width="320" height="384" />
+                                        </span>
+                                        <div class="corso-scheda-testo">
                                         <h4 class="corso-nome">{nomeBreve(c.nome)}</h4>
-                                        <p class="corso-dettagli testo-piccolo">{dettagli.get(c.url)}</p>
-                                        <a href={c.url} class="link-cta corso-link" aria-label={`Scopri il corso ${nomeBreve(c.nome)}`}>
+                                        <p class="corso-dettagli testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
+                                        <p class="link-cta corso-cta">
                                             Scopri il corso
                                             <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
+                                        </p>
+                                        </div>
+                                    </a>
                                 </li>
                             ))}
                         </ul>

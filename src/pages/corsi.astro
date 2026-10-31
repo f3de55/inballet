@@ -69,10 +69,13 @@ const hero = await heroPagina('corsi');
                             {cat.corsi.map((c) => (
                                 <li class="riga">
                                     <div class="riga-corpo">
-                                        <p class="riga-nome">{nomeBreve(c.nome)}</p>
+                                        <h4 class="corso-nome">{nomeBreve(c.nome)}</h4>
                                         <p class="corso-dettagli testo-piccolo">{dettagli.get(c.url)}</p>
+                                        <a href={c.url} class="link-cta corso-link" aria-label={`Scopri il corso ${nomeBreve(c.nome)}`}>
+                                            Scopri il corso
+                                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                        </a>
                                     </div>
-                                    <a href={c.url} class="btn-secondary btn-secondary--chiaro btn-compatto" aria-label={`Scopri il corso ${nomeBreve(c.nome)}`}>Scopri</a>
                                 </li>
                             ))}
                         </ul>

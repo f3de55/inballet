@@ -24,7 +24,7 @@
 .riga {
   display: flex;
   align-items: baseline;
-  gap: .5rem;
+  gap: .75rem;
   padding: 1.5rem 0;
   color: var(--heading-color);
   text-decoration: none;
@@ -36,9 +36,11 @@
 }
 
 .riga-icona {
-  /* Colonna dell'icona larga abbastanza per l'icona più larga: tutti i titoli partono dalla stessa x */
-  flex: 0 0 1.75rem;
+  /* Colonna dell'icona larga abbastanza per l'icona più larga, glifo centrato: tutti i testi partono dalla stessa x
+     e lo spazio fra icona e testo è lo stesso con qualunque icona */
+  flex: 0 0 2rem;
   font-size: var(--body-size);
+  text-align: center;
   color: var(--primary-blue-dark);
 }
 

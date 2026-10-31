@@ -42,7 +42,7 @@
 
 .footer-main {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 5.6fr);
+  grid-template-columns: 14rem minmax(0, 1fr);
   gap: 2.5rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -65,6 +65,7 @@
 
 .footer-brand .footer-ente {
   margin-top: .9rem;
+  font-size: var(--text-2xs);
   color: var(--footer-testo);
 }
 
@@ -94,10 +95,10 @@
 /* ---------- Colonne ---------- */
 .footer-nav {
   display: grid;
-  /* Colonne larghe quanto le loro voci: meno link spezzati a capo (quattro della mappa + Contatti) */
-  grid-template-columns: repeat(5, auto);
-  justify-content: space-between;
-  gap: 1.5rem;
+  /* Cinque colonne della stessa larghezza (quattro della mappa + Contatti): voci lunghe o corte, la distanza
+     fra le colonne è sempre la stessa e nessuna voce si attacca alla vicina */
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1.5rem 2rem;
 }
 
 .footer-col summary {
@@ -289,11 +290,10 @@
   }
 }
 
-/* Da 1001px a 1240px cinque colonne larghe quanto le loro voci */
+/* Da 1001px a 1240px cinque colonne uguali */
 @media (min-width: 1001px) and (max-width: 1240px) {
   .footer-main {
-    grid-template-columns: repeat(5, auto);
-    justify-content: space-between;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
 

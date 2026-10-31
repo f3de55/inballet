@@ -194,33 +194,33 @@
 }
 
 @media (max-width: 768px) {
+  .sedi-composizione {
+    margin-inline: -.75rem;
+  }
+
   .sedi-mappa-tavola {
-    --sedi-mappa-altezza: clamp(25rem, 115vw, 32rem);
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
+    gap: 1.5rem;
+    padding: 5.5rem 1rem;
     aspect-ratio: auto;
-    overflow: visible;
-    background: transparent;
-    border: 0;
-    border-radius: 0;
   }
 
   .sedi-mappa-viewport {
-    position: relative;
-    inset: auto;
-    order: 2;
-    height: var(--sedi-mappa-altezza);
+    position: absolute;
+    inset: 0;
     overflow: hidden;
-    background: var(--bg-soft);
-    border-radius: var(--radius-img);
   }
 
   .sedi-mappa-cartografia {
-    top: 1rem;
-    left: calc(50% - (var(--sedi-mappa-altezza) - 2rem) * .4563967136);
-    width: calc((var(--sedi-mappa-altezza) - 2rem) * 1.3039906103);
-    height: calc(var(--sedi-mappa-altezza) - 2rem);
+    top: var(--carta-y, 0px);
+    left: var(--carta-x, -60%);
+    width: var(--carta-width, 280%);
+    height: var(--carta-height, 100%);
+  }
+
+  .sedi-mappa-base {
+    mask-image: none;
   }
 
   .sedi-mappa-velo {
@@ -231,16 +231,17 @@
     position: relative;
     inset: auto;
     width: 100%;
+    max-width: 32rem;
     padding: .5rem;
     border-radius: var(--radius-card);
   }
 
   .sedi-mappa-foto--lainate {
-    order: 1;
+    justify-self: end;
   }
 
   .sedi-mappa-foto--rho {
-    order: 3;
+    justify-self: start;
   }
 
   .sedi-mappa-didascalia {

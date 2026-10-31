@@ -298,22 +298,25 @@
 }
 
 /* ---------- Elenco corsi ---------- */
-/* Righe del componente condiviso (righe.css): nome in grassetto della misura del paragrafo, età e frequenza
-   sotto, pulsante «Scopri» a destra. Il filetto in alto chiude la lista come nelle altre sezioni del sito */
+/* Righe del componente condiviso (righe.css), una sotto l'altra: nome del corso (titolo h4), età e frequenza,
+   poi il link «Scopri il corso» a sinistra sotto il testo. Il filetto in alto chiude la lista come nelle altre
+   sezioni del sito */
 .corsi-lista.righe {
   border-top: 1px solid var(--linea);
 }
 
 .corsi-lista.righe > .riga {
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding: 1rem 0;
+  padding: 1.5rem 0;
   border-bottom: 1px solid var(--linea);
 }
 
-.corso-dettagli {
+.corso-nome {
   margin: 0;
+  color: var(--dark-navy);
+}
+
+.corso-dettagli {
+  margin: .35rem 0 1rem;
 }
 
 /* ---------- Chiusura ---------- */

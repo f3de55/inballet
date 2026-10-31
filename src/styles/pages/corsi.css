@@ -389,10 +389,11 @@
   }
 
   .corsi-lista {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: stretch;
-    gap: 2rem 1.5rem;
+    gap: 2rem 1.75rem;
     margin: 3rem auto 0;
     padding: 0;
     border: 0;
@@ -400,7 +401,7 @@
 
   .corsi-lista li {
     display: flex;
-    grid-row: auto;
+    flex: 0 0 calc((100% - 5.25rem) / 4);
     min-width: 0;
     max-width: none;
     border: 0;
@@ -412,10 +413,10 @@
     width: 100%;
     padding: 0;
     overflow: hidden;
-    border: 1px solid var(--linea);
+    border: 1px solid rgb(var(--navy-rgb) / .16);
     border-radius: var(--radius-card);
     background: var(--white);
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-scheda);
     text-align: left;
     transition: box-shadow .4s ease, border-color .3s ease;
   }
@@ -424,7 +425,7 @@
     display: block;
     overflow: hidden;
     flex-shrink: 0;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 2;
     background: var(--bg-soft);
   }
 
@@ -461,14 +462,14 @@
   .corso-voce:focus-visible {
     outline-offset: 5px;
     border-color: var(--primary-blue-dark);
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-scheda);
   }
 }
 
 @media (min-width: 901px) and (hover: hover) and (pointer: fine) {
   .corso-voce:hover {
     border-color: var(--primary-blue-dark);
-    box-shadow: 0 20px 40px rgb(var(--navy-rgb) / .16);
+    box-shadow: var(--shadow-scheda-hover);
   }
 
   .corso-voce:hover .corso-foto img {

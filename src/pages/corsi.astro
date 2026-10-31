@@ -46,7 +46,7 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <section id="corsi" class="corsi decoro-onde">
+    <section id="corsi" class="corsi">
         <div class="container">
             <header class="corsi-intro intro-sezione">
                 <p class="eyebrow">{totale} corsi in {categorieCorsi.length} percorsi</p>
@@ -64,7 +64,7 @@ const hero = await heroPagina('corsi');
             </header>
 
             {percorsi.map((cat, i) => (
-                <article class={`categoria${i % 2 === 0 ? ' fascia-onda' : ''}`} id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
+                <article class={`categoria${i % 2 === 0 ? ` fascia-onda decoro-fascia${i % 4 === 2 ? ' decoro-fascia--sinistra' : ''}` : ''}`} id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
                     <figure class="categoria-foto">
                         <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 640px) 100vw, 30vw" />
                     </figure>
@@ -77,7 +77,7 @@ const hero = await heroPagina('corsi');
                                 <li>
                                     <a href={c.url} class="corso-voce">
                                         <span class="corso-foto" aria-hidden="true">
-                                            <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[320, 480, 800]} sizes="(min-width: 1200px) 363px, (min-width: 901px) calc((100vw - 112px) / 3), 0px" width="400" height="300" />
+                                            <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[320, 480, 640]} sizes="(min-width: 1200px) 266px, (min-width: 901px) calc((100vw - 136px) / 4), 0px" width="450" height="300" />
                                         </span>
                                         <div class="corso-scheda-testo">
                                             <h4 class="corso-nome">{nomeBreve(c.nome)}</h4>

@@ -52,9 +52,9 @@ const hero = await heroPagina('corsi');
                 <p class="eyebrow">{totale} corsi in {categorieCorsi.length} percorsi</p>
                 <h2 class="titolo titolo-sezione">Trova il tuo <em>percorso</em></h2>
                 <p class="corsi-lead">A Lainate e Rho si comincia <strong>a 3 anni</strong> con Avviamento alla Danza e <strong>non c'è un'età per smettere</strong>: per gli adulti ci sono corsi anche per chi <strong>parte da zero</strong>.</p>
-                <nav class="salti" aria-label="Vai al percorso">
+                <nav class="salti" aria-label="Scegli il percorso">
                     {categorieCorsi.map((cat) => (
-                        <a href={`#${cat.id}`}>
+                        <a href={`#${cat.id}`} data-percorso={cat.id}>
                             <i class={`fas ${cat.icona} salto-numero`} aria-hidden="true"></i>
                             <p class="salto-nome">{cat.nome}</p>
                             <i class="fas fa-arrow-down" aria-hidden="true"></i>
@@ -63,8 +63,11 @@ const hero = await heroPagina('corsi');
                 </nav>
             </header>
 
+            <!-- Percorsi: una fascia bianca; con JavaScript le pillole sopra li mostrano uno alla volta (src/scripts/corsi.ts),
+                 senza restano tutti visibili uno sotto l'altro -->
+            <div class="corsi-percorsi fascia-onda decoro-fascia">
             {percorsi.map((cat, i) => (
-                <article class={`categoria${i % 2 === 0 ? ` fascia-onda decoro-fascia${i % 4 === 2 ? ' decoro-fascia--sinistra' : ''}` : ''}`} id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
+                <article class="categoria" id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
                     <div class="categoria-testo">
                         <p class="eyebrow categoria-percorso">Percorso {i + 1} di {categorieCorsi.length}</p>
                         <h2 class="categoria-titolo" id={`${cat.id}-titolo`}>{cat.nome}</h2>
@@ -79,7 +82,7 @@ const hero = await heroPagina('corsi');
                                         <div class="corso-scheda-testo">
                                             <h4 class="corso-nome">{nomeBreve(c.nome)}</h4>
                                             <p class="corso-dettagli testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
-                                            <p class="btn-secondary corso-cta">
+                                            <p class="link-cta corso-cta">
                                                 Scopri il corso
                                                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                             </p>
@@ -91,6 +94,7 @@ const hero = await heroPagina('corsi');
                     </div>
                 </article>
             ))}
+            </div>
 
             <!-- Chiusura: invito al contatto, stesso schema della homepage -->
             <aside class="corsi-fine" aria-labelledby="corsi-fine-titolo">
@@ -105,4 +109,10 @@ const hero = await heroPagina('corsi');
             </aside>
         </div>
     </section>
+
+    <Fragment slot="scripts">
+        <script>
+            import '../scripts/corsi';
+        </script>
+    </Fragment>
 </Base>

@@ -238,10 +238,40 @@
   outline-offset: 4px;
 }
 
-/* ---------- Percorsi: intestazione centrata e striscia di box a tutta larghezza ---------- */
+/* ---------- Pillole come schede (src/scripts/corsi.ts) ---------- */
+/* Con JavaScript le pillole diventano schede: la freccia in giù non serve più (il percorso compare sotto, al
+   posto del precedente) e la scheda scelta resta piena, come al passaggio del mouse */
+.salti[role="tablist"] .fa-arrow-down {
+  display: none;
+}
+
+.salti a[aria-selected="true"] .salto-nome {
+  color: var(--primary-blue-dark);
+}
+
+@media (min-width: 901px) {
+  .salti a[aria-selected="true"] {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+  }
+
+  .salti a[aria-selected="true"] .salto-nome,
+  .salti a[aria-selected="true"] i {
+    color: var(--dark-navy);
+  }
+}
+
+/* ---------- Percorsi: una fascia bianca con l'intestazione centrata e la striscia di box a tutta larghezza ---------- */
+/* Un percorso alla volta (gli altri hanno l'attributo hidden); senza JavaScript tutti, uno sotto l'altro */
 .categoria {
   padding: 4.5rem 0;
   text-align: center;
+  /* Dalla scheda su tablet e mobile si scorre fino al titolo: resta sotto l'header fisso */
+  scroll-margin-top: calc(var(--header-h) + var(--banner-height, 0px) + 1rem);
+}
+
+.categoria[hidden] {
+  display: none;
 }
 
 /* Etichetta «Percorso 1 di 5» sopra il titolo */
@@ -354,13 +384,20 @@
 
 .corso-voce .corso-dettagli {
   grid-row: 3;
-  margin: .5rem 0 1.5rem;
+  margin: .5rem 0 1.25rem;
   color: var(--body-color-su-scuro);
   text-shadow: 0 1px 12px rgb(var(--nero-rgb) / .45);
 }
 
+/* «Scopri il corso»: link sottolineato bianco (come nei box degli stili in homepage); in hover la freccia avanza */
 .corso-cta {
   grid-row: 4;
+  color: var(--white);
+  border-color: var(--white);
+}
+
+.corso-cta i {
+  color: var(--white);
 }
 
 .corso-voce:focus-visible {
@@ -374,9 +411,13 @@
   }
 
   .corso-voce:hover .corso-cta {
-    background: var(--white);
-    border-color: var(--white);
-    color: var(--dark-navy);
+    gap: 1rem;
+    color: var(--white);
+  }
+
+  .corso-voce:hover .corso-cta i {
+    color: var(--white);
+    transform: translateX(6px);
   }
 }
 

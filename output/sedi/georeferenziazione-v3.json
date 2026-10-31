@@ -1,0 +1,31 @@
+{
+  "zoom": 14,
+  "worldPixelOrigin": {
+    "x": 2202115,
+    "y": 1499493
+  },
+  "matchScore": 0.43588927388191223,
+  "screenshot": {
+    "file": "mappa-lainate-rho-v3.png",
+    "width": 1111,
+    "height": 852
+  },
+  "points": {
+    "lainate": {
+      "lat": 45.55948194798,
+      "lng": 9.029441965882,
+      "x": 237.624,
+      "y": 39.247,
+      "percentX": 21.38828,
+      "percentY": 4.60649
+    },
+    "rho": {
+      "lat": 45.520685271447,
+      "lng": 9.049223252559,
+      "x": 468.092,
+      "y": 684.604,
+      "percentX": 42.13253,
+      "percentY": 80.35254
+    }
+  }
+}

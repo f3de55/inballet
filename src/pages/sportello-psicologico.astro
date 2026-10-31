@@ -21,10 +21,10 @@ const pilastri = [
 ];
 
 const servizi = [
-  'Colloqui individuali',
-  'Incontri per coppie',
-  'Tutela del rapporto genitore-figlio',
-  'Riservatezza garantita',
+  'Colloqui <strong>individuali</strong>',
+  'Incontri <strong>per coppie</strong>',
+  'Tutela del <strong>rapporto genitore-figlio</strong>',
+  '<strong>Riservatezza</strong> garantita',
 ];
 ---
 
@@ -102,7 +102,7 @@ const servizi = [
                     {servizi.map((s) => (
                         <li class="riga">
                             <i class="riga-icona fas fa-check" aria-hidden="true"></i>
-                            <p class="riga-nome">{s}</p>
+                            <p class="riga-nome" set:html={s} />
                         </li>
                     ))}
                 </ul>

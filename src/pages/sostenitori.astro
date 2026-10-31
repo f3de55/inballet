@@ -18,9 +18,9 @@ const bg = {
 const paypal = 'https://www.paypal.com/cgi-bin/webscr?business=inballetasd%40gmail.com&cmd=_donations&item_name=Donazione%20progetti%20sociali%20InBallet&item_number=donazione&currency_code=EUR';
 
 const destinazioni: { nome: string; href?: string }[] = [
-  { nome: 'Accoglienza di giovani e adulti con disabilità e delle loro famiglie' },
-  { nome: 'Progetto NoiConVoi, danza inclusiva dal 2013', href: '/progetto-noiconvoi' },
-  { nome: 'Classi integrate per bambini con bisogni speciali', href: '/classi-integrate' },
+  { nome: 'Accoglienza di <strong>giovani e adulti con disabilità</strong> e delle loro famiglie' },
+  { nome: '<strong>Progetto NoiConVoi</strong>, danza inclusiva dal 2013', href: '/progetto-noiconvoi' },
+  { nome: '<strong>Classi integrate</strong> per bambini con bisogni speciali', href: '/classi-integrate' },
 ];
 ---
 
@@ -110,13 +110,13 @@ const destinazioni: { nome: string; href?: string }[] = [
                             {d.href ? (
                                 <a class="riga" href={d.href}>
                                     <i class="riga-icona fas fa-check" aria-hidden="true"></i>
-                                    <p class="riga-nome">{d.nome}</p>
+                                    <p class="riga-nome" set:html={d.nome} />
                                     <i class="riga-freccia fas fa-arrow-right" aria-hidden="true"></i>
                                 </a>
                             ) : (
                                 <div class="riga">
                                     <i class="riga-icona fas fa-check" aria-hidden="true"></i>
-                                    <p class="riga-nome">{d.nome}</p>
+                                    <p class="riga-nome" set:html={d.nome} />
                                 </div>
                             )}
                         </li>

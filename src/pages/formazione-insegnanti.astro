@@ -23,10 +23,10 @@ const inBreve = [
 ];
 
 const aree = [
-  { nome: 'Tecnica e didattica della danza Modern', icona: 'fa-shoe-prints' },
-  { nome: 'Pedagogia applicata alla danza', icona: 'fa-book-open' },
-  { nome: "Sviluppo dall'infanzia all'età adulta", icona: 'fa-seedling' },
-  { nome: 'Danza e disabilità', icona: 'fa-universal-access' },
+  { nome: 'Tecnica e didattica della <strong>danza Modern</strong>', icona: 'fa-shoe-prints' },
+  { nome: '<strong>Pedagogia</strong> applicata alla danza', icona: 'fa-book-open' },
+  { nome: "Sviluppo <strong>dall'infanzia all'età adulta</strong>", icona: 'fa-seedling' },
+  { nome: 'Danza e <strong>disabilità</strong>', icona: 'fa-universal-access' },
 ];
 
 const enti = [
@@ -96,7 +96,7 @@ const enti = [
                     {aree.map((a) => (
                         <li class="riga">
                             <i class={`riga-icona fas ${a.icona}`} aria-hidden="true"></i>
-                            <p class="riga-nome">{a.nome}</p>
+                            <p class="riga-nome" set:html={a.nome} />
                         </li>
                     ))}
                 </ol>

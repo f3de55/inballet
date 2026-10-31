@@ -20,10 +20,10 @@ const fasi = [
 ];
 
 const destinatari = [
-  'Ragazzi con disabilità',
-  'Le loro famiglie, accolte fin dal primo incontro',
-  'Volontari, anche non danzatori',
-  'Aziende e realtà che vogliono fare volontariato',
+  '<strong>Ragazzi con disabilità</strong>',
+  'Le loro <strong>famiglie</strong>, accolte fin dal primo incontro',
+  '<strong>Volontari</strong>, anche non danzatori',
+  '<strong>Aziende</strong> e realtà che vogliono fare volontariato',
 ];
 
 const info = [
@@ -109,7 +109,7 @@ const info = [
                     {destinatari.map((d) => (
                         <li class="riga">
                             <i class="riga-icona fas fa-check" aria-hidden="true"></i>
-                            <p class="riga-nome">{d}</p>
+                            <p class="riga-nome" set:html={d} />
                         </li>
                     ))}
                 </ul>

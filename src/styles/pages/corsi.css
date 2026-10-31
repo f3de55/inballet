@@ -239,18 +239,14 @@
 }
 
 /* ---------- Categorie: foto e corsi, alternate ---------- */
-/* Larghezza del container (1200px come la home): il testo con i corsi ha più spazio,
-   la foto è la colonna stretta, in formato fisso e centrata rispetto al testo */
+/* Larghezza del container (1200px come la home): foto e testo con i corsi su due colonne uguali,
+   la foto in formato fisso e centrata rispetto al testo */
 .categoria {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 4rem;
   align-items: center;
   padding: 4.5rem 0;
-}
-
-.categoria:nth-of-type(even) {
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
 }
 
 .categoria:nth-of-type(even) .categoria-foto {
@@ -280,7 +276,7 @@
 .categoria-foto img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
   border-radius: var(--radius-img);
   box-shadow: 0 24px 60px rgb(var(--nero-rgb) / .14);
@@ -302,78 +298,22 @@
 }
 
 /* ---------- Elenco corsi ---------- */
-/* Righe separate da filetti, senza riquadri: nome e fascia d'età a sinistra, freccia a destra.
-   Tutta la riga è il link; il filetto in alto chiude la lista come nelle altre sezioni del sito */
-.corsi-lista {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 2.5rem;
+/* Righe del componente condiviso (righe.css): nome in grassetto della misura del paragrafo, età e frequenza
+   sotto, pulsante «Scopri» a destra. Il filetto in alto chiude la lista come nelle altre sezioni del sito */
+.corsi-lista.righe {
   border-top: 1px solid var(--linea);
 }
 
-@media (max-width: 640px) {
-  .corsi-lista {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-/* Ogni voce occupa 2 righe (nome, età): in una riga di due voci nomi ed età stanno alla stessa quota */
-.corsi-lista li {
-  display: grid;
-  grid-row: span 2;
-  grid-template-rows: subgrid;
-  row-gap: 0;
+.corsi-lista.righe > .riga {
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1rem 0;
   border-bottom: 1px solid var(--linea);
 }
 
-.corsi-lista a {
-  display: grid;
-  grid-row: 1 / -1;
-  grid-template-rows: subgrid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  column-gap: 1rem;
-  padding: 1.1rem 0;
-  color: var(--dark-navy);
-  text-decoration: none;
-}
-
-.corso-nome {
-  grid-column: 1;
-  grid-row: 1;
-  align-self: end;
-  transition: color 0.3s ease;
-}
-
-.corso-eta {
-  grid-column: 1;
-  grid-row: 2;
-  align-self: start;
-  margin-top: .2rem;
-}
-
-.corso-freccia {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-  transition: transform 0.3s ease;
-}
-
-.corsi-lista a:focus-visible {
-  outline: 2px solid var(--primary-blue-dark);
-  outline-offset: 3px;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .corsi-lista a:hover .corso-nome {
-    color: var(--primary-blue-dark);
-  }
-
-  .corsi-lista a:hover .corso-freccia {
-    transform: translateX(4px);
-  }
+.corso-dettagli {
+  margin: 0;
 }
 
 /* ---------- Chiusura ---------- */
@@ -541,10 +481,5 @@
 
   .categoria-foto img {
     aspect-ratio: 16 / 9;
-  }
-
-  /* Riga alta abbastanza per un bersaglio del tocco ampio */
-  .corsi-lista a {
-    min-height: 4.25rem;
   }
 }

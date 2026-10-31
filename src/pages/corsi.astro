@@ -6,10 +6,11 @@ import Img from '../components/Img.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import { categorieCorsi } from '../data/scuola';
 import { enfatizza } from '../lib/text';
+import '../styles/components/righe.css';
 import '../styles/pages/corsi.css';
 
-// Fascia d'età di ogni corso, dalla sua pagina (es. "/hip-hop" → "Ragazzi e adulti")
-const eta = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.data.badge.replace(' - ', ' · ')]));
+// Fascia d'età e frequenza di ogni corso, dalla sua pagina (es. "/hip-hop" → "Dai 6 anni · 1-2 lezioni a settimana")
+const dettagli = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, `${c.data.badge.replace(' - ', ' · ')} · ${c.data.frequenza}`]));
 // Nel nome basta la disciplina: l'età è già nell'etichetta accanto
 const nomeBreve = (nome: string) => nome.replace(/\s*\(.*\)$/, '');
 const totale = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
@@ -64,14 +65,14 @@ const hero = await heroPagina('corsi');
                         <p class="eyebrow categoria-percorso">Percorso {i + 1} di {categorieCorsi.length}</p>
                         <h2 class="categoria-titolo" id={`${cat.id}-titolo`}>{cat.nome}</h2>
                         <p class="categoria-descrizione" set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
-                        <ul class="corsi-lista">
+                        <ul class="righe corsi-lista">
                             {cat.corsi.map((c) => (
-                                <li>
-                                    <a href={c.url}>
-                                        <h3 class="corso-nome">{nomeBreve(c.nome)}</h3>
-                                        <p class="corso-eta testo-piccolo">{eta.get(c.url)}</p>
-                                        <i class="fas fa-arrow-right corso-freccia" aria-hidden="true"></i>
-                                    </a>
+                                <li class="riga">
+                                    <div class="riga-corpo">
+                                        <p class="riga-nome">{nomeBreve(c.nome)}</p>
+                                        <p class="corso-dettagli testo-piccolo">{dettagli.get(c.url)}</p>
+                                    </div>
+                                    <a href={c.url} class="btn-secondary btn-secondary--chiaro btn-compatto" aria-label={`Scopri il corso ${nomeBreve(c.nome)}`}>Scopri</a>
                                 </li>
                             ))}
                         </ul>

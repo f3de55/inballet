@@ -1,7 +1,7 @@
 /*
  * Elenco a righe (colonna destra delle sezioni «intestazione + elenco»: classi integrate, progetti, aree di studio,
  * destinazioni, destinatari, servizi): ogni voce è una riga con filetto sotto, icona facoltativa a sinistra,
- * nome in grassetto, descrizione facoltativa e freccia facoltativa a destra (se la riga è un link).
+ * nome, descrizione facoltativa e freccia facoltativa a destra (se la riga è un link).
  *
  *   <ul class="righe">
  *     <li><a class="riga" href="…"> <i class="riga-icona fas fa-check"></i> <p class="riga-nome">Nome</p> <i class="riga-freccia fas fa-arrow-right"></i></a></li>
@@ -49,13 +49,14 @@
 }
 
 .riga-nome {
-  /* Nome della riga: stessa misura del paragrafo, distinto solo dal grassetto */
-  font-weight: var(--font-bold);
+  /* Nome della riga: testo normale della misura del paragrafo, con in grassetto (<strong>) solo le parole chiave */
   transition: color .3s ease;
 }
 
+/* Se sotto c'è una descrizione, il nome è il titolo della voce: tutto in grassetto */
 .riga-corpo > .riga-nome {
   margin-bottom: .35rem;
+  font-weight: var(--font-bold);
 }
 
 .riga-freccia {

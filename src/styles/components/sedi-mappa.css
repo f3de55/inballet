@@ -9,17 +9,30 @@
 .sedi-mappa-tavola {
   position: relative;
   isolation: isolate;
-  aspect-ratio: 1440 / 792;
+  aspect-ratio: 1440 / 852;
   overflow: hidden;
   background: var(--bg-soft);
   border: 1px solid var(--linea);
   border-radius: var(--radius-img);
 }
 
+.sedi-mappa-viewport {
+  position: absolute;
+  inset: 0;
+}
+
+.sedi-mappa-cartografia {
+  position: absolute;
+  top: 1rem;
+  left: calc(11.4236111% + 1.3039906103rem);
+  width: calc(77.1527778% - 2.6079812206rem);
+  height: calc(100% - 2rem);
+}
+
 .sedi-mappa-base {
   position: absolute;
-  inset: 0 auto 0 14.7916667%;
-  width: 70.4166667%;
+  inset: 0;
+  width: 100%;
   height: 100%;
   object-fit: fill;
   mask-image: linear-gradient(to bottom, var(--black) calc(100% - 12px), transparent);
@@ -34,14 +47,12 @@
 
 .sedi-mappa-linee {
   position: absolute;
+  z-index: 1;
   inset: 0;
   width: 100%;
   height: 100%;
+  overflow: visible;
   pointer-events: none;
-}
-
-.sedi-mappa-linee--mobile {
-  display: none;
 }
 
 .sedi-mappa-linea-fondo,
@@ -63,7 +74,7 @@
 
 .sedi-mappa-foto {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   left: 3%;
   width: 27%;
   padding: .4rem;
@@ -72,11 +83,11 @@
   box-shadow: var(--shadow-card);
   text-decoration: none;
   color: var(--dark-navy);
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition: box-shadow var(--transition-base);
 }
 
 .sedi-mappa-foto--lainate {
-  top: 8%;
+  top: 18%;
 }
 
 .sedi-mappa-foto--rho {
@@ -131,7 +142,7 @@
 
 .sedi-mappa-punto {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   left: var(--punto-x);
   top: var(--punto-y);
   transform: translate(-50%, -50%);
@@ -163,7 +174,6 @@
 
 .sedi-mappa-foto:hover,
 .sedi-mappa-foto:focus-visible {
-  transform: translateY(-4px);
   box-shadow: var(--shadow-blue);
 }
 
@@ -172,7 +182,7 @@
   background: var(--dark-navy);
 }
 
-@media (max-width: 900px) {
+@media (min-width: 769px) and (max-width: 900px) {
   .sedi-mappa-didascalia {
     gap: .75rem;
     padding: .5rem .5rem .35rem;
@@ -185,82 +195,77 @@
 
 @media (max-width: 768px) {
   .sedi-mappa-tavola {
-    aspect-ratio: 1014 / 1120;
+    --sedi-mappa-altezza: clamp(25rem, 115vw, 32rem);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    aspect-ratio: auto;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
   }
 
-  .sedi-mappa-base {
-    left: 0;
-    width: 100%;
-    height: auto;
-    bottom: auto;
-    mask-image: linear-gradient(to bottom, var(--black) 90%, transparent);
+  .sedi-mappa-viewport {
+    position: relative;
+    inset: auto;
+    order: 2;
+    height: var(--sedi-mappa-altezza);
+    overflow: hidden;
+    background: var(--bg-soft);
+    border-radius: var(--radius-img);
   }
 
-  .sedi-mappa-velo,
-  .sedi-mappa-linee--desktop {
+  .sedi-mappa-cartografia {
+    top: 1rem;
+    left: calc(50% - (var(--sedi-mappa-altezza) - 2rem) * .4563967136);
+    width: calc((var(--sedi-mappa-altezza) - 2rem) * 1.3039906103);
+    height: calc(var(--sedi-mappa-altezza) - 2rem);
+  }
+
+  .sedi-mappa-velo {
     display: none;
   }
 
-  .sedi-mappa-linee--mobile {
-    display: block;
-  }
-
   .sedi-mappa-foto {
-    width: 42%;
-    padding: .25rem;
-    border-radius: var(--radius-sm);
+    position: relative;
+    inset: auto;
+    width: 100%;
+    padding: .5rem;
+    border-radius: var(--radius-card);
   }
 
   .sedi-mappa-foto--lainate {
-    width: 36%;
-    left: auto;
-    right: 3%;
-    top: 3%;
+    order: 1;
   }
 
   .sedi-mappa-foto--rho {
-    left: 3%;
-    right: auto;
-    top: 58%;
-  }
-
-  .sedi-mappa-foto img {
-    border-radius: var(--radius-xs);
+    order: 3;
   }
 
   .sedi-mappa-didascalia {
-    display: block;
-    padding: .5rem;
+    gap: 1rem;
+    padding: 1rem .75rem .75rem;
   }
 
   .sedi-mappa-didascalia .valore {
-    font-size: var(--text-sm);
+    font-size: var(--h3-size);
   }
 
   .sedi-mappa-numero {
-    position: absolute;
-    top: .65rem;
-    left: .65rem;
     display: grid;
     place-items: center;
-    min-width: 32px;
-    min-height: 32px;
-    padding: .25rem;
+    min-width: 44px;
+    min-height: 44px;
+    padding: .4rem;
     border-radius: var(--radius-full);
-    background: var(--white);
-    font-size: var(--text-xs);
-    box-shadow: var(--shadow-sm);
+    background: var(--bg-soft);
+    font-size: var(--text-sm);
   }
 
-  .sedi-mappa-punto {
-    left: var(--punto-mobile-x);
-    top: var(--punto-mobile-y);
-  }
-
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sedi-mappa-foto {
-    transition: none;
+  .sedi-mappa-azione {
+    min-height: 44px;
+    margin-top: .25rem;
+    font-size: var(--ui-size);
   }
 }

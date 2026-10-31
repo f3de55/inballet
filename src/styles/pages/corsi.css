@@ -362,13 +362,13 @@
   outline-offset: 3px;
 }
 
-/* Desktop: ogni percorso si apre in un ventaglio di vere pagine corso.
+/* Desktop: card allineate, con foto e dettagli di ogni sottocorso.
    Le schede restano link nativi, leggibili e utilizzabili anche senza JavaScript. */
 @media (min-width: 901px) {
   .categoria,
   .categoria:nth-of-type(even) {
     display: block;
-    padding: 5rem 0 6.5rem;
+    padding: 5rem 0;
   }
 
   .categoria-foto {
@@ -389,39 +389,33 @@
   }
 
   .corsi-lista {
-    position: relative;
-    isolation: isolate;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: stretch;
-    gap: 1rem;
-    max-width: 68rem;
-    margin: 4rem auto 0;
-    padding: 0 1.5rem 2rem;
+    gap: 2rem 1.5rem;
+    margin: 3rem auto 0;
+    padding: 0;
     border: 0;
   }
 
   .corsi-lista li {
-    position: relative;
     display: flex;
-    flex: 1 1 0;
+    grid-row: auto;
     min-width: 0;
-    max-width: 16rem;
+    max-width: none;
     border: 0;
-    transform: translateY(var(--ventaglio-discesa)) rotate(var(--ventaglio-angolo));
-    transform-origin: 50% 90%;
-    transition: transform .4s cubic-bezier(.2, .7, .2, 1);
   }
 
   .corso-voce {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: .45rem;
+    padding: 0;
+    overflow: hidden;
     border: 1px solid var(--linea);
     border-radius: var(--radius-card);
     background: var(--white);
-    box-shadow: 0 10px 28px rgb(var(--navy-rgb) / .09);
+    box-shadow: var(--shadow-card);
     text-align: left;
     transition: box-shadow .4s ease, border-color .3s ease;
   }
@@ -429,8 +423,8 @@
   .corso-foto {
     display: block;
     overflow: hidden;
-    aspect-ratio: 5 / 6;
-    border-radius: calc(var(--radius-card) - .45rem);
+    flex-shrink: 0;
+    aspect-ratio: 4 / 3;
     background: var(--bg-soft);
   }
 
@@ -447,7 +441,7 @@
     flex: 1;
     flex-direction: column;
     align-items: flex-start;
-    padding: 1.1rem .65rem .85rem;
+    padding: 1.5rem;
   }
 
   .corso-nome {
@@ -464,11 +458,6 @@
     padding-top: 1.2rem;
   }
 
-  .corsi-lista li:focus-within {
-    z-index: 2;
-    transform: translateY(-1rem) rotate(0deg);
-  }
-
   .corso-voce:focus-visible {
     outline-offset: 5px;
     border-color: var(--primary-blue-dark);
@@ -477,11 +466,6 @@
 }
 
 @media (min-width: 901px) and (hover: hover) and (pointer: fine) {
-  .corsi-lista li:hover {
-    z-index: 2;
-    transform: translateY(-1rem) rotate(0deg);
-  }
-
   .corso-voce:hover {
     border-color: var(--primary-blue-dark);
     box-shadow: 0 20px 40px rgb(var(--navy-rgb) / .16);
@@ -493,7 +477,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .corsi-lista li,
   .corso-voce,
   .corso-foto img {
     transition: none;

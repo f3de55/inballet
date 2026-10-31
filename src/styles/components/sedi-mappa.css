@@ -267,6 +267,13 @@
     color: var(--white);
   }
 
+  .sedi-mappa-dettaglio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .65rem;
+  }
+
   .sedi-mappa-numero {
     display: none;
   }
@@ -277,7 +284,8 @@
 
   .sedi-mappa-azione {
     min-height: 24px;
-    margin-top: .25rem;
+    margin-top: 0;
+    flex-shrink: 0;
     color: var(--white);
     font-size: var(--text-base);
   }

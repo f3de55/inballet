@@ -12,11 +12,10 @@ import '../styles/pages/corsi.css';
 const pagineCorsi = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.data]));
 const percorsi = categorieCorsi.map((cat) => ({
     ...cat,
-    corsi: cat.corsi.map((c, indice) => {
+    corsi: cat.corsi.map((c) => {
         const pagina = pagineCorsi.get(c.url);
         if (!pagina) throw new Error(`Pagina del sottocorso non trovata: ${c.url}`);
-        const posizione = indice - (cat.corsi.length - 1) / 2;
-        return { ...c, pagina, rotazione: posizione * 3.5, discesa: Math.pow(Math.abs(posizione), 1.5) * 10 };
+        return { ...c, pagina };
     }),
 }));
 // Nel nome basta la disciplina: l'età è già nell'etichetta accanto
@@ -75,18 +74,18 @@ const hero = await heroPagina('corsi');
                         <p class="categoria-descrizione" set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
                         <ul class="corsi-lista">
                             {cat.corsi.map((c) => (
-                                <li style={`--ventaglio-angolo:${c.rotazione}deg;--ventaglio-discesa:${c.discesa}px;`}>
+                                <li>
                                     <a href={c.url} class="corso-voce">
                                         <span class="corso-foto" aria-hidden="true">
-                                            <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[320, 480, 640]} sizes="(min-width: 901px) 260px, 0px" width="320" height="384" />
+                                            <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[320, 480, 800]} sizes="(min-width: 1200px) 363px, (min-width: 901px) calc((100vw - 112px) / 3), 0px" width="400" height="300" />
                                         </span>
                                         <div class="corso-scheda-testo">
-                                        <h4 class="corso-nome">{nomeBreve(c.nome)}</h4>
-                                        <p class="corso-dettagli testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
-                                        <p class="link-cta corso-cta">
-                                            Scopri il corso
-                                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                                        </p>
+                                            <h4 class="corso-nome">{nomeBreve(c.nome)}</h4>
+                                            <p class="corso-dettagli testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
+                                            <p class="link-cta corso-cta">
+                                                Scopri il corso
+                                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                            </p>
                                         </div>
                                     </a>
                                 </li>

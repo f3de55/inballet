@@ -5,7 +5,7 @@
 - `georeferenziazione-v3.json`: registrazione del nuovo screenshot 1111 × 852 a zoom 14.
 - `georeferenziazione.json` e `georeferenziazione-v2.json`: registrazioni precedenti conservate per tracciabilità.
 
-Il sito usa l'ultimo screenshot fornito dall'utente. Su desktop Lainate è a sinistra, Rho a destra e la mappa al centro. Su mobile una sola cornice contiene la mappa continua e due foto più compatte, senza struttura bianca da card. Città e icona esterna sono dentro ciascuna immagine, su un gradiente scuro; i numeri interni e «Vedi di più» sono nascosti solo su mobile. La cartografia occupa più della metà della composizione. I pallini geografici rimangono di 56 px. Foto e segnaposto aprono Google Maps.
+Il sito usa l'ultimo screenshot fornito dall'utente. Su desktop Lainate è a sinistra, Rho a destra e la mappa al centro. Su mobile una sola cornice contiene la mappa continua e due foto più compatte, senza struttura bianca da card. Città e icona esterna sono affiancate e centrate sulla stessa riga dentro ciascuna immagine, su un gradiente scuro; i numeri interni e «Vedi di più» sono nascosti solo su mobile. La cartografia occupa più della metà della composizione. I pallini geografici rimangono di 56 px. Foto e segnaposto aprono Google Maps.
 
 I segnaposto sono figli della cartografia e seguono le percentuali dell'immagine: il ritaglio mobile non ne altera le coordinate. La scala e il ritaglio vengono adattati alle dimensioni delle card: i due punti occupano le fasce libere sopra e sotto le foto, sempre sugli stessi luoghi. I collegamenti SVG si aggiornano sulle posizioni reali tramite `ResizeObserver`, anche dopo resize e caricamento dei font.
 

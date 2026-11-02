@@ -45,6 +45,12 @@
   margin-bottom: 0;
 }
 
+.fondatrice-bio a .fa-arrow-up-right-from-square {
+  margin-inline-start: .35em;
+  font-size: var(--icona-mini);
+  vertical-align: .08em;
+}
+
 .storia-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);

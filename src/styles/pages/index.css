@@ -727,25 +727,11 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
   }
 }
 
-/* Alternanza: una cella bianca, una azzurrina (come i blocchi di Contatti) */
-.oltre-lista li:nth-child(odd) {
-  background: var(--white);
-}
-
-/* Desktop: quattro voci per riga, a scacchiera (la seconda riga parte con la cella azzurrina) */
+/* Celle tutte uguali, dello stesso colore della sezione: le linee tra le celle le disegna il gap da 1px */
+/* Desktop: quattro voci per riga */
 @media (min-width: 1025px) {
   .oltre-lista {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .oltre-lista li:nth-child(8n + 5),
-  .oltre-lista li:nth-child(8n + 7) {
-    background: var(--bg-soft);
-  }
-
-  .oltre-lista li:nth-child(8n + 6),
-  .oltre-lista li:nth-child(8n + 8) {
-    background: var(--white);
   }
 }
 

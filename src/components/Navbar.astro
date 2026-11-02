@@ -81,7 +81,6 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
                             </ul>
                         </div>
                     ))}
-                    {m.href && <a href={m.href} class="link-cta mobile-tutti" aria-current={attiva(m.href) ? 'page' : undefined}>Tutti i corsi <i class="fas fa-arrow-right" aria-hidden="true"></i></a>}
                 </div>
             </div>
         </div>

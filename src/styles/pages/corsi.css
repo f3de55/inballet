@@ -1,10 +1,9 @@
 /*
  * Pagina Corsi.
- * «Trova il tuo corso» (fondo azzurrino): una card bianca per stile (foto, nome, una riga, «Vedi i N corsi»), che
- * porta alla sezione dello stile. Poi una sezione per stile, fondi alternati bianco / azzurrino con le onde
- * decorative (decoro-onde, layout/decori.css): titolo, descrizione e la griglia dei suoi corsi (foto, nome, età e
- * frequenza, «Scopri il corso»; tutta la card è il link). In fondo l'invito al contatto.
- * Le griglie usano mezze colonne (ogni card ne occupa due): l'ultima riga incompleta si centra.
+ * «Trova il tuo corso» (fondo azzurrino): un riquadro fotografico per stile, con nome e numero dei corsi sopra la
+ * foto, che porta alla sezione dello stile. Poi una sezione per stile con lo schema «intestazione + elenco» delle
+ * altre pagine (components/intro-split.css e righe.css): titolo e testo a sinistra, i corsi a righe a destra.
+ * In fondo l'invito al contatto.
  */
 
 /* ---------- Trova il tuo corso ---------- */
@@ -13,192 +12,115 @@
   background: var(--bg-soft);
 }
 
-.stili-griglia {
+/* PC e tablet: tre riquadri in alto, i due dell'ultima riga più larghi (6 colonne) */
+.stili {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 1.5rem;
+  gap: 1.25rem;
   margin: var(--spazio-intestazione) 0 0;
   padding: 0;
 }
 
-.stili-griglia li {
+.stili li {
   display: flex;
   grid-column: span 2;
 }
 
-.stile-card {
+.stili li:nth-child(3n + 1):nth-last-child(2),
+.stili li:nth-child(3n + 2):last-child {
+  grid-column: span 3;
+}
+
+.stili li:nth-child(3n + 1):last-child {
+  grid-column: 1 / -1;
+}
+
+.stile {
+  position: relative;
+  isolation: isolate;
   display: flex;
-  flex-direction: column;
+  align-items: flex-end;
   width: 100%;
+  min-height: 17rem;
   overflow: hidden;
   border-radius: var(--radius-card);
-  background: var(--white);
-  color: var(--dark-navy);
+  background: var(--dark-navy);
+  color: var(--white);
   text-decoration: none;
-  transition: box-shadow .3s ease, transform .3s ease;
 }
 
 .stile-foto {
-  display: block;
-  overflow: hidden;
-}
-
-.stile-foto picture {
-  display: contents;
-}
-
-.stile-foto img {
-  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: -2;
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 10;
+  height: 100%;
   object-fit: cover;
 }
 
+/* Velo scuro dal basso: il testo bianco resta leggibile su ogni foto */
+.stile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgb(var(--nero-rgb) / .78) 0%, rgb(var(--nero-rgb) / .35) 45%, rgb(var(--nero-rgb) / 0) 75%);
+}
+
 .stile-testo {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 1.5rem 1.75rem 1.75rem;
+  padding: 1.5rem 1.75rem;
 }
 
 .stile-nome {
   margin: 0;
-  color: inherit;
+  color: var(--white);
 }
 
-.stile-sintesi {
-  margin: .5rem 0 1.25rem;
+.stile-numero {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin: .35rem 0 0;
+  font-size: var(--small-size);
+  font-weight: var(--font-semibold);
+  color: rgb(var(--bianco-rgb) / .85);
 }
 
-/* «Vedi i N corsi»: in fondo alla card, alla stessa quota in tutta la riga; la freccia scende verso la sezione */
-.stile-link {
-  margin-top: auto;
+.stile-numero i {
+  font-size: var(--icona-in-testo);
+  transition: transform .3s ease;
 }
 
-.stile-card:focus-visible {
+.stile:focus-visible {
   outline: 2px solid var(--primary-blue-dark);
   outline-offset: 4px;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .stile-card:hover {
-    box-shadow: var(--shadow-card);
-    transform: translateY(-4px);
+  .stile:hover .stile-numero i {
+    transform: translateY(4px);
   }
 
-  .stile-card:hover .stile-link i {
-    transform: translateY(4px);
+  .stile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgb(var(--navy-rgb) / .25);
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+
+  .stile:hover::before {
+    opacity: 1;
   }
 }
 
 /* ---------- Sezioni degli stili ---------- */
-.percorso {
-  padding: var(--section-y) 0;
-  background-color: var(--white);
-}
-
-.percorso--soft {
-  background-color: var(--bg-soft);
-}
-
-.corsi-griglia {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  gap: 2.25rem 1.5rem;
-  margin: var(--spazio-intestazione) 0 0;
-  padding: 0;
-}
-
-/* Ogni card occupa due righe della griglia (foto, testo) e le eredita con subgrid: i testi partono alla stessa
-   quota in tutta la riga */
-.corsi-griglia li {
-  display: grid;
-  grid-column: span 2;
-  grid-row: span 2;
-  grid-template-rows: subgrid;
-  row-gap: 0;
-}
-
-.corso-card {
-  display: grid;
-  grid-row: 1 / -1;
-  grid-template-rows: subgrid;
-  row-gap: 0;
-  color: var(--dark-navy);
-  text-decoration: none;
-}
-
-.corso-foto {
-  display: block;
-  overflow: hidden;
-  border-radius: var(--radius-md);
-  background: var(--bg-soft);
-}
-
-.corso-foto picture {
-  display: contents;
-}
-
-.corso-foto img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-}
-
-.corso-testo {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-top: 1rem;
-}
-
-.corso-nome {
+/* Età e frequenza sotto il nome del corso */
+.righe .riga-corpo > .testo-piccolo {
   margin: 0;
-  color: inherit;
-  transition: color .3s ease;
-}
-
-.corso-dettagli {
-  margin: .3rem 0 0;
-}
-
-/* «Scopri il corso»: piccolo, in fondo alla card */
-.corso-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  margin-top: auto;
-  padding-top: .75rem;
-  font-size: var(--small-size);
-  font-weight: var(--font-semibold);
-  color: var(--primary-blue-dark);
-}
-
-.corso-cta i {
-  font-size: var(--icona-in-testo);
-  transition: transform .3s ease;
-}
-
-.corso-card:focus-visible {
-  outline: 2px solid var(--primary-blue-dark);
-  outline-offset: 6px;
-  border-radius: var(--radius-md);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .corso-card:hover .corso-nome {
-    color: var(--primary-blue-dark);
-  }
-
-  .corso-card:hover .corso-cta i {
-    transform: translateX(5px);
-  }
 }
 
 /* ---------- Chiusura ---------- */
@@ -233,73 +155,36 @@
 
 /* ---------- Responsive ---------- */
 
-/* PC e tablet: stili 3 + 2 (6 mezze colonne), seconda riga al centro */
-@media (min-width: 801px) {
-  .stili-griglia li:nth-child(3n + 1):nth-last-child(2) {
-    grid-column: 2 / span 2;
-  }
-
-  .stili-griglia li:nth-child(3n + 1):last-child {
-    grid-column: 3 / span 2;
-  }
-}
-
-/* PC: 4 corsi per riga (8 mezze colonne) */
-@media (min-width: 1101px) {
-  .corsi-griglia li:nth-child(4n + 1):last-child {
-    grid-column: 4 / span 2;
-  }
-
-  .corsi-griglia li:nth-child(4n + 1):nth-last-child(2) {
-    grid-column: 3 / span 2;
-  }
-
-  .corsi-griglia li:nth-child(4n + 1):nth-last-child(3) {
-    grid-column: 2 / span 2;
-  }
-}
-
-/* PC stretto e tablet: 3 corsi per riga (6 mezze colonne) */
-@media (min-width: 801px) and (max-width: 1100px) {
-  .corsi-griglia {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
-  .corsi-griglia li:nth-child(3n + 1):last-child {
-    grid-column: 3 / span 2;
-  }
-
-  .corsi-griglia li:nth-child(3n + 1):nth-last-child(2) {
-    grid-column: 2 / span 2;
+@media (max-width: 1100px) {
+  .stile {
+    min-height: 14rem;
   }
 
   .stile-testo {
-    padding: 1.25rem 1.25rem 1.5rem;
+    padding: 1.25rem 1.5rem;
   }
 }
 
-/* Tablet stretto e telefono grande: 2 per riga (4 mezze colonne), l'ultima dispari al centro */
-@media (min-width: 481px) and (max-width: 800px) {
-  .stili-griglia,
-  .corsi-griglia {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .corsi-griglia {
-    gap: 1.75rem 1rem;
-  }
-
-  .stili-griglia {
+/* Tablet stretto e telefono grande: due riquadri per riga, l'ultimo dispari su tutta la riga */
+@media (max-width: 800px) {
+  .stili {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
 
-  .stili-griglia li:nth-child(odd):last-child,
-  .corsi-griglia li:nth-child(odd):last-child {
-    grid-column: 2 / span 2;
+  .stili li,
+  .stili li:nth-child(3n + 1):nth-last-child(2),
+  .stili li:nth-child(3n + 2):last-child,
+  .stili li:nth-child(3n + 1):last-child {
+    grid-column: auto;
   }
 
-  .stile-testo {
-    padding: 1.25rem 1.25rem 1.5rem;
+  .stili li:nth-child(odd):last-child {
+    grid-column: 1 / -1;
+  }
+
+  .stile {
+    min-height: 12rem;
   }
 }
 
@@ -311,83 +196,18 @@
   }
 }
 
-/* Telefono piccolo: righe compatte, miniatura a sinistra e testo a destra */
+/* Telefono: un riquadro per riga, più basso */
 @media (max-width: 480px) {
-  .stili-griglia,
-  .corsi-griglia {
+  .stili {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .stili-griglia {
     gap: .75rem;
   }
 
-  .stili-griglia li,
-  .corsi-griglia li {
-    grid-column: 1 / -1;
-  }
-
-  .stile-card {
-    flex-direction: row;
-    align-items: stretch;
-  }
-
-  .stile-foto {
-    flex: 0 0 6.75rem;
-  }
-
-  .stile-foto img {
-    height: 100%;
-    aspect-ratio: auto;
+  .stile {
+    min-height: 8.5rem;
   }
 
   .stile-testo {
-    padding: 1rem 1.25rem 1.1rem 1rem;
-  }
-
-  .stile-sintesi {
-    display: none;
-  }
-
-  .stile-link {
-    margin-top: .6rem;
-  }
-
-  .corsi-griglia {
-    gap: 0;
-  }
-
-  .corsi-griglia li {
-    display: block;
-    grid-row: auto;
-  }
-
-  .corsi-griglia li + li {
-    border-top: 1px solid var(--linea);
-  }
-
-  .corso-card {
-    display: grid;
-    grid-template-columns: 6.75rem minmax(0, 1fr);
-    grid-template-rows: auto;
-    column-gap: 1rem;
-    align-items: center;
-    padding: .9rem 0;
-  }
-
-  .corso-foto {
-    border-radius: var(--radius-sm);
-  }
-
-  .corso-foto img {
-    aspect-ratio: 4 / 3;
-  }
-
-  .corso-testo {
-    padding-top: 0;
-  }
-
-  .corso-cta {
-    padding-top: .4rem;
+    padding: 1rem 1.25rem;
   }
 }

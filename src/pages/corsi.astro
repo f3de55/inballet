@@ -6,6 +6,8 @@ import Img from '../components/Img.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import { categorieCorsi } from '../data/scuola';
 import { enfatizza } from '../lib/text';
+import '../styles/components/intro-split.css';
+import '../styles/components/righe.css';
 import '../styles/pages/corsi.css';
 
 // Fascia d'età e frequenza di ogni corso, dalla sua pagina (es. "/hip-hop" → "Dai 6 anni · 1-2 lezioni a settimana")
@@ -48,24 +50,21 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <!-- Trova il tuo corso: una card per stile, porta alla sua sezione qui sotto -->
+    <!-- Trova il tuo corso: un riquadro fotografico per stile, porta alla sua sezione qui sotto -->
     <section class="trova-section" aria-labelledby="trova-titolo">
         <div class="intro-editoriale">
             <h2 class="titolo-sezione" id="trova-titolo">Trova il tuo <em>corso</em></h2>
             <p>{totale} corsi a Lainate e Rho, <strong>dai 3 anni agli adulti</strong>: scegli lo stile che fa per te.</p>
         </div>
         <div class="container">
-            <ul class="stili-griglia">
+            <ul class="stili">
                 {percorsi.map((cat) => (
                     <li>
-                        <a href={`#${cat.id}`} class="stile-card">
-                            <span class="stile-foto" aria-hidden="true">
-                                <Img src={cat.immagine.src} alt="" fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[400, 640]} sizes="(min-width: 1101px) 230px, (min-width: 801px) 33vw, (min-width: 481px) 50vw, 110px" width="450" height="300" />
-                            </span>
+                        <a href={`#${cat.id}`} class="stile">
+                            <Img class="stile-foto" src={cat.immagine.src} alt="" aria-hidden="true" fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(min-width: 1101px) 560px, (min-width: 481px) 50vw, 100vw" />
                             <div class="stile-testo">
                                 <h3 class="stile-nome titolo-card">{cat.nome}</h3>
-                                <p class="stile-sintesi testo-piccolo">{cat.sintesi}</p>
-                                <span class="link-cta stile-link">Vedi i {cat.corsi.length} corsi <i class="fas fa-arrow-down" aria-hidden="true"></i></span>
+                                <p class="stile-numero">{cat.corsi.length} corsi <i class="fas fa-arrow-down" aria-hidden="true"></i></p>
                             </div>
                         </a>
                     </li>
@@ -74,27 +73,24 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <!-- Una sezione per stile, con tutti i suoi corsi. Fondi alternati (bianco / azzurrino) con le onde
-         decorative, una volta a destra e una a sinistra -->
+    <!-- Una sezione per stile, come le sezioni «intestazione + elenco» delle altre pagine: titolo e testo a
+         sinistra (fissi su PC), i corsi a righe a destra. Fondi alternati bianco / azzurrino con le onde decorative -->
     {percorsi.map((cat, i) => (
-        <section id={cat.id} class:list={['percorso', 'decoro-onde', { 'percorso--soft': i % 2 === 1, 'decoro-onde--sinistra': i % 2 === 1 }]} aria-labelledby={`${cat.id}-titolo`}>
-            <div class="intro-editoriale">
-                <h2 class="titolo-sezione" id={`${cat.id}-titolo`} set:html={titoloEm(cat.nome)} />
-                <p set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
-            </div>
-            <div class="container">
-                <ul class="corsi-griglia">
+        <section id={cat.id} class:list={['split-section', 'decoro-onde', { 'split-section--soft': i % 2 === 1, 'decoro-onde--sinistra': i % 2 === 1 }]} aria-labelledby={`${cat.id}-titolo`}>
+            <div class="container split-layout">
+                <div class="split-header split-header--sticky">
+                    <h2 class="titolo-sezione" id={`${cat.id}-titolo`} set:html={titoloEm(cat.nome)} />
+                    <p class="intro-sezione" set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
+                </div>
+                <ul class="righe">
                     {cat.corsi.map((c) => (
                         <li>
-                            <a href={c.url} class="corso-card">
-                                <span class="corso-foto" aria-hidden="true">
-                                    <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[400, 640]} sizes="(min-width: 1101px) 280px, (min-width: 801px) 33vw, (min-width: 481px) 50vw, 110px" width="450" height="300" />
-                                </span>
-                                <div class="corso-testo">
-                                    <h3 class="corso-nome titolo-card">{nomeBreve(c.nome)}</h3>
-                                    <p class="corso-dettagli testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
-                                    <span class="corso-cta">Scopri il corso <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                            <a href={c.url} class="riga">
+                                <div class="riga-corpo">
+                                    <p class="riga-nome">{nomeBreve(c.nome)}</p>
+                                    <p class="testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
                                 </div>
+                                <i class="riga-freccia fas fa-arrow-right" aria-hidden="true"></i>
                             </a>
                         </li>
                     ))}

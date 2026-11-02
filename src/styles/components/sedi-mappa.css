@@ -225,7 +225,7 @@
   }
 
   .sedi-mappa-tavola {
-    min-height: clamp(28rem, 125vw, 34rem);
+    min-height: max(clamp(28rem, 125vw, 34rem), var(--mappa-altezza-min, 0px));
     aspect-ratio: auto;
   }
 
@@ -284,7 +284,7 @@
 
   .sedi-mappa-popup-logo {
     display: block;
-    width: 7rem;
+    width: 5rem;
     height: auto;
     filter: brightness(0);
   }

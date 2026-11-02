@@ -25,7 +25,7 @@ const luoghi = posizioni.map((p, i) => ({ ...p, sede: sedi.find((s) => s.id === 
                             <span>{numero}</span>
                         </a>
                         <a class="sedi-mappa-popup" data-sede={sede.id} href={sede.maps} target="_blank" rel="noopener noreferrer" style={`--punto-x:${x / 1111 * 100}%;--punto-y:${y / 852 * 100}%;`} aria-label={`Sede InBallet di ${sede.citta}: apri su Google Maps (nuova scheda)`}>
-                            <Img class="sedi-mappa-popup-logo" src="logo.png" alt="InBallet" width="376" height="133" widths={[150, 300]} sizes="112px" loading="lazy" />
+                            <Img class="sedi-mappa-popup-logo" src="logo.png" alt="InBallet" width="376" height="133" widths={[150, 300]} sizes="80px" loading="lazy" />
                             <p class="titoletto">Sede {sede.citta}</p>
                         </a>
                       </Fragment>

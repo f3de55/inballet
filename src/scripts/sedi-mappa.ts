@@ -11,7 +11,7 @@ document.querySelectorAll<HTMLElement>('[data-sedi-mappa]').forEach((tavola) => 
 
   const disegna = () => {
     if (mobile.matches) {
-      const box = viewport.getBoundingClientRect();
+      let box = viewport.getBoundingClientRect();
       const coordinate = punti.map((punto) => ({
         x: parseFloat(punto.style.getPropertyValue('--punto-x')) / 100,
         y: parseFloat(punto.style.getPropertyValue('--punto-y')) / 100,
@@ -20,13 +20,20 @@ document.querySelectorAll<HTMLElement>('[data-sedi-mappa]').forEach((tavola) => 
       const altezzaPopup = Math.max(...popup.map((el) => el.getBoundingClientRect().height));
       const raggio = punti[0].getBoundingClientRect().height / 2;
       const primoY = 16 + raggio;
+      const distanzaY = coordinate[1].y - coordinate[0].y;
+      const altezzaMinCarta = box.width * 852 / 1111;
+      // La mappa copre tutta la larghezza, con spazio per entrambi i popup.
+      const altezzaMinTavola = primoY + altezzaMinCarta * distanzaY + 16 + altezzaPopup + raggio + 8;
+      tavola.style.setProperty('--mappa-altezza-min', `${Math.ceil(altezzaMinTavola)}px`);
+      box = viewport.getBoundingClientRect();
       const ultimoY = box.height - 16 - altezzaPopup - raggio - 8;
-      const altezza = (ultimoY - primoY) / (coordinate[1].y - coordinate[0].y);
+      const altezza = Math.max(altezzaMinCarta, (ultimoY - primoY) / distanzaY);
       const larghezza = altezza * 1111 / 852;
       const distanzaX = (coordinate[1].x - coordinate[0].x) * larghezza;
       cartografia.style.setProperty('--carta-width', `${larghezza}px`);
       cartografia.style.setProperty('--carta-height', `${altezza}px`);
-      const origineX = (box.width - distanzaX) / 2 - coordinate[0].x * larghezza;
+      const centro = (box.width - distanzaX) / 2 - coordinate[0].x * larghezza;
+      const origineX = Math.min(0, Math.max(box.width - larghezza, centro));
       cartografia.style.setProperty('--carta-x', `${origineX}px`);
       cartografia.style.setProperty('--carta-y', `${primoY - coordinate[0].y * altezza}px`);
       return;

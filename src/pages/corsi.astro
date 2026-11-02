@@ -46,56 +46,62 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <!-- Introduzione: una domanda e i percorsi come scelte (nome e per chi è), che portano alla sezione sotto -->
-    <section class="corsi-intro" aria-labelledby="corsi-titolo">
+    <!-- Catalogo: tutti i corsi, raggruppati per stile. La barra dei filtri resta in vista mentre si scorre:
+         «Tutti» mostra ogni gruppo, uno stile mostra solo il suo (src/scripts/corsi.ts). Senza JavaScript i filtri
+         sono link ai gruppi e si vede tutto -->
+    <section class="catalogo" aria-labelledby="catalogo-titolo">
         <div class="intro-editoriale">
-            <h2 class="titolo-sezione" id="corsi-titolo">Trova il tuo <em>percorso</em></h2>
-            <p>Scegli lo stile che ti incuriosisce: sotto trovi i suoi corsi, con <strong>età e frequenza</strong>.</p>
+            <h2 class="titolo-sezione" id="catalogo-titolo">Trova il tuo <em>corso</em></h2>
+            <p>Tutti i corsi a Lainate e Rho, <strong>dai 3 anni agli adulti</strong>: scegli uno stile per vedere solo i suoi.</p>
         </div>
-        <div class="container">
-            <nav class="corsi-indice-percorsi" aria-label="Scegli il percorso">
-                {percorsi.map((cat) => (
-                    <a href={`#${cat.id}`} class="indice-voce">
-                        <i class={`fas ${cat.icona} indice-icona`} aria-hidden="true"></i>
-                        <span class="indice-nome">{cat.breve}</span>
-                        <span class="indice-chi testo-piccolo">{cat.perChi}</span>
-                    </a>
-                ))}
-            </nav>
+
+        <div class="catalogo-filtri">
+            <div class="container">
+                <nav class="filtri" aria-label="Filtra per stile">
+                    <a href="#catalogo-corsi" class="filtro" data-filtro="tutti">Tutti i corsi</a>
+                    {percorsi.map((cat) => (
+                        <a href={`#${cat.id}`} class="filtro" data-filtro={cat.id}>
+                            <i class={`fas ${cat.icona}`} aria-hidden="true"></i>
+                            {cat.breve}
+                        </a>
+                    ))}
+                </nav>
+            </div>
+        </div>
+
+        <div class="container" id="catalogo-corsi">
+            {percorsi.map((cat) => (
+                <div class="gruppo" id={cat.id} data-gruppo={cat.id} role="group" aria-labelledby={`${cat.id}-titolo`}>
+                    <div class="gruppo-intestazione">
+                        <h3 class="gruppo-titolo" id={`${cat.id}-titolo`}>
+                            <i class={`fas ${cat.icona}`} aria-hidden="true"></i>
+                            {cat.nome}
+                        </h3>
+                        <p class="gruppo-sintesi testo-piccolo">{cat.sintesi}</p>
+                    </div>
+                    <ul class="corsi-griglia">
+                        {cat.corsi.map((c) => (
+                            <li>
+                                <a href={c.url} class="corso-card">
+                                    <span class="corso-foto" aria-hidden="true">
+                                        <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[400, 640]} sizes="(min-width: 1100px) 280px, (min-width: 801px) 33vw, (min-width: 481px) 50vw, 110px" width="450" height="300" />
+                                    </span>
+                                    <div class="corso-testo">
+                                        <h4 class="corso-nome">{nomeBreve(c.nome)}</h4>
+                                        <p class="corso-dettagli testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
+                                        <span class="corso-cta">Scopri il corso <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                    </div>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
         </div>
     </section>
 
-    <!-- Un percorso per sezione, tutte visibili: intestazione (posizione, nome, descrizione) e i suoi corsi.
-         Le sezioni alternano fondo bianco e azzurrino -->
-    {percorsi.map((cat, i) => (
-        <section class:list={['percorso', { 'percorso--soft': i % 2 === 1 }]} id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
-            <div class="intro-editoriale">
-                <h2 class="titolo-sezione" id={`${cat.id}-titolo`}>{cat.nome}</h2>
-                <p set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
-            </div>
-            <div class="container">
-                <ul class="percorso-corsi">
-                    {cat.corsi.map((c) => (
-                        <li>
-                            <a href={c.url} class="corso-scheda">
-                                <span class="corso-foto" aria-hidden="true">
-                                    <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[480, 800]} sizes="(min-width: 1025px) 250px, (min-width: 601px) 20vw, 120px" width="450" height="338" />
-                                </span>
-                                <div class="corso-testo">
-                                    <h3 class="corso-nome">{nomeBreve(c.nome)}</h3>
-                                    <p class="corso-dettagli testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
-                                    <span class="link-cta corso-cta">Scopri il corso <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-                                </div>
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </section>
-    ))}
-
     <!-- Chiusura: invito al contatto (fondo opposto all'ultimo percorso) -->
-    <section class:list={['corsi-chiusura', { 'percorso--soft': percorsi.length % 2 === 1 }]} aria-labelledby="corsi-fine-titolo">
+    <section class="corsi-chiusura" aria-labelledby="corsi-fine-titolo">
         <div class="container">
             <aside class="corsi-fine">
                 <div class="corsi-fine-testo">
@@ -109,4 +115,9 @@ const hero = await heroPagina('corsi');
             </aside>
         </div>
     </section>
+    <Fragment slot="scripts">
+        <script>
+            import '../scripts/corsi';
+        </script>
+    </Fragment>
 </Base>

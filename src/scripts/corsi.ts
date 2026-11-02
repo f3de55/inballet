@@ -13,18 +13,26 @@ function applica(id: string) {
   return scelto;
 }
 
-/* Porta l'inizio del catalogo appena sotto la barra dei filtri (che è sticky), solo se non è già in vista */
+/* Porta l'inizio del catalogo appena sotto la barra dei filtri, nella posizione in cui la barra resta fissa sotto la
+ * navbar: i corsi scelti sono subito in vista, qualunque sia il punto della pagina da cui si parte */
 function inizio(behavior: ScrollBehavior = 'smooth') {
-  if (!catalogo) return;
   const barra = document.querySelector<HTMLElement>('.catalogo-filtri');
-  const sotto = (barra?.getBoundingClientRect().bottom ?? 0) + 16;
-  const top = catalogo.getBoundingClientRect().top;
-  if (top < sotto || top > window.innerHeight * 0.6) window.scrollBy({ top: top - sotto, behavior });
+  if (!catalogo || !barra) return;
+  const fissa = parseFloat(getComputedStyle(barra).top) || 0;
+  const obiettivo = fissa + barra.offsetHeight + 16;
+  const scarto = catalogo.getBoundingClientRect().top - obiettivo;
+  if (Math.abs(scarto) > 4) window.scrollBy({ top: scarto, behavior });
 }
 
 const daHash = () => location.hash.replace('#', '');
 
 if (filtri.length && gruppi.length && catalogo) {
+  // Altezza della barra dei filtri: l'ancora dei gruppi atterra subito sotto (scroll-margin-top in corsi.css)
+  const barra = document.querySelector<HTMLElement>('.catalogo-filtri');
+  const misura = () => barra && document.documentElement.style.setProperty('--altezza-filtri', `${barra.offsetHeight}px`);
+  misura();
+  window.addEventListener('resize', misura);
+
   filtri.forEach((f) => {
     f.setAttribute('role', 'button');
     f.addEventListener('click', (e) => {
@@ -44,7 +52,14 @@ if (filtri.length && gruppi.length && catalogo) {
 
   // Da un link (/corsi#urban): catalogo già filtrato e portato in vista, subito
   const iniziale = applica(daHash());
-  if (iniziale !== 'tutti') inizio('instant');
+  if (iniziale !== 'tutti') {
+    inizio('instant');
+    // Il browser salta all'ancora dopo aver caricato la pagina (quando i gruppi erano tutti visibili): si ripete
+    // il posizionamento a caricamento finito
+    const riposiziona = () => requestAnimationFrame(() => inizio('instant'));
+    if (document.readyState === 'complete') riposiziona();
+    else window.addEventListener('load', riposiziona, { once: true });
+  }
 
   window.addEventListener('hashchange', () => {
     applica(daHash());

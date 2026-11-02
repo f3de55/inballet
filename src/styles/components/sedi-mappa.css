@@ -203,7 +203,7 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
     padding: 5.5rem 1rem;
-    min-height: clamp(36rem, 165vw, 45rem);
+    min-height: clamp(28rem, 125vw, 34rem);
     align-content: space-between;
     aspect-ratio: auto;
   }

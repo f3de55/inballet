@@ -63,13 +63,17 @@ export async function sfondo(sorgenti: Sorgenti, fuoco: Fuoco = {}) {
   };
 }
 
-/** Foto mobile comune a tutte le sezioni CTA prima del footer (verticale, ballerina a destra in basso). */
-const CTA_MOBILE = { src: 'Danzatrice in controluce sul palco.png', fuoco: '85% 65%' };
+/** Fotografie CTA dedicate, con tre tagli e inquadrature per tema. */
+export const TEMI_CTA = ['danza', 'urban', 'bambini', 'benessere', 'formazione', 'comunita', 'ascolto'] as const;
+export type TemaCta = (typeof TEMI_CTA)[number];
 
-/** Come sfondo(), per le sezioni CTA prima del footer: su mobile usa CTA_MOBILE salvo foto mobile esplicita. */
-export function sfondoCta(sorgenti: Sorgenti, fuoco: Fuoco = {}) {
-  const s = typeof sorgenti === 'string' ? { desktop: sorgenti } : sorgenti;
-  return sfondo({ ...s, mobile: s.mobile ?? CTA_MOBILE.src }, { ...fuoco, mobile: fuoco.mobile ?? CTA_MOBILE.fuoco });
+/** I formati si scelgono con gli stessi breakpoint delle CTA (900 e 600px). */
+export function sfondoCta(tema: TemaCta = 'danza') {
+  return sfondo({
+    desktop: `cta/${tema}-desktop.webp`,
+    tablet: `cta/${tema}-tablet.webp`,
+    mobile: `cta/${tema}-mobile.webp`,
+  }, { desktop: tema === 'danza' ? '50% 100%' : '50% 50%', tablet: '50% 50%', mobile: '50% 100%' });
 }
 
 /**

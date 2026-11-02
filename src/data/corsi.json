@@ -50,7 +50,8 @@
       "Benefici per il <strong>corpo</strong> e per la <strong>mente</strong>",
       "Un <strong>gruppo</strong> con cui condividere la passione",
       "Una classe <strong>tecnica</strong> o <strong>funzionale</strong> da affiancare alla danza"
-    ]
+    ],
+    "ctaTema": "danza"
   },
   "avviamento-danza": {
     "title": "Avviamento alla Danza dai 3 anni a Lainate e Rho | InBallet",
@@ -101,7 +102,7 @@
       "Esprimersi attraverso il <strong>gioco</strong>",
       "Allenare <strong>attenzione</strong> e capacità cognitive"
     ],
-    "ctaImage": "assets/images/foto/bambini-mani.jpg"
+    "ctaTema": "bambini"
   },
   "bambini": {
     "title": "Danza per bambini 9-11 anni a Lainate e Rho | InBallet",
@@ -153,7 +154,7 @@
       "Il lavoro in scena per lo <strong>spettacolo</strong>",
       "<strong>Autonomia</strong> e responsabilità in sala"
     ],
-    "ctaImage": "assets/images/gallery-3.jpg"
+    "ctaTema": "bambini"
   },
   "breaking": {
     "title": "Corso di Breaking dai 6 anni a Lainate e Rho | InBallet",
@@ -205,7 +206,7 @@
       "Danzare nel <strong>cerchio</strong>, a turno al centro",
       "Tenere vivo il <strong>beat</strong> musicale"
     ],
-    "ctaImage": "assets/images/foto/breaking-img2.jpg"
+    "ctaTema": "urban"
   },
   "classi": {
     "title": "Classi di Yoga e Pilates a Lainate e Rho | InBallet",
@@ -258,7 +259,7 @@
       "<strong>Forza</strong> e flessibilità",
       "Un lavoro <strong>su misura</strong> accanto alla danza"
     ],
-    "ctaImage": "assets/images/foto/yoga-img3.jpg"
+    "ctaTema": "benessere"
   },
   "contact-improvisation": {
     "title": "Contact Improvisation a Lainate e Rho | InBallet",
@@ -310,7 +311,7 @@
       "<strong>Morbidezza</strong> e leggerezza del movimento",
       "<strong>Empatia</strong> e complicità"
     ],
-    "ctaImage": "assets/images/foto/contact-improvisation-img4.jpg"
+    "ctaTema": "danza"
   },
   "contaminato": {
     "title": "Corso Contaminato dai 16 anni a Lainate e Rho | InBallet",
@@ -363,7 +364,7 @@
       "<strong>Costruzione</strong> coreografica",
       "<strong>Eleganza</strong> e definizione del movimento"
     ],
-    "ctaImage": "assets/images/foto/contaminato-img4.jpg"
+    "ctaTema": "urban"
   },
   "contemporanea-adulti": {
     "title": "Danza Contemporanea over 40 a Lainate e Rho | InBallet",
@@ -417,7 +418,7 @@
       "<strong>Diagonali</strong> e coreografia contemporanea",
       "<strong>Coordinazione</strong> e memoria del movimento"
     ],
-    "ctaImage": "assets/images/foto/danza-dolce-img2.jpg"
+    "ctaTema": "danza"
   },
   "danza-acrobatica": {
     "title": "Danza Acrobatica a Lainate e Rho | InBallet",
@@ -471,7 +472,7 @@
       "Inserire l'<strong>acrobatica</strong> nella coreografia",
       "<strong>Sicurezza</strong> e fiducia nei propri mezzi"
     ],
-    "ctaImage": "assets/images/foto/breaking-img4.jpg"
+    "ctaTema": "urban"
   },
   "danza-classica": {
     "title": "Danza Classica a Lainate e Rho | InBallet",
@@ -522,7 +523,7 @@
       "<strong>Salti</strong>, <strong>giri</strong> e combinazioni",
       "<strong>Musicalità</strong> ed espressività"
     ],
-    "ctaImage": "assets/images/foto/danza-classica-accademica-img2-1.jpg"
+    "ctaTema": "danza"
   },
   "danza-contemporanea": {
     "title": "Danza Contemporanea dai 10 anni a Lainate e Rho | InBallet",
@@ -575,7 +576,7 @@
       "<strong>Improvvisazione</strong> e ricerca personale",
       "<strong>Composizione</strong> coreografica"
     ],
-    "ctaImage": "assets/images/foto/danza-contemporanea-img3.jpg"
+    "ctaTema": "danza"
   },
   "educazione-danza": {
     "title": "Educazione alla Danza 4-5 anni a Lainate e Rho | InBallet",
@@ -627,7 +628,7 @@
       "Muoversi in <strong>autonomia</strong> sulla musica",
       "Stare in gruppo con <strong>ascolto</strong> e <strong>rispetto</strong>"
     ],
-    "ctaImage": "assets/images/foto/educazione-alla-danza-autonomia.jpg"
+    "ctaTema": "bambini"
   },
   "heels": {
     "title": "Corso di Heels a Lainate e Rho | InBallet",
@@ -679,7 +680,8 @@
       "Passaggi <strong>veloci</strong> tra i passi",
       "Elementi presi da <strong>altri stili</strong>",
       "<strong>Presenza scenica</strong> e interpretazione"
-    ]
+    ],
+    "ctaTema": "urban"
   },
   "hip-hop": {
     "title": "Corso di Hip-Hop dai 6 anni a Lainate e Rho | InBallet",
@@ -733,7 +735,7 @@
       "<strong>Groove</strong> e interpretazione musicale",
       "Storia e cultura <strong>Hip-Hop</strong>"
     ],
-    "ctaImage": "assets/images/foto/hip-hop-img4.jpg"
+    "ctaTema": "urban"
   },
   "lezioni-individuali": {
     "title": "Lezioni Individuali di Danza a Lainate e Rho | InBallet",
@@ -786,7 +788,8 @@
       "Coreografie costruite <strong>su di te</strong>",
       "Orari <strong>concordati</strong> con l'insegnante",
       "Percorsi legati alle <strong>borse di studio</strong>"
-    ]
+    ],
+    "ctaTema": "danza"
   },
   "modern": {
     "title": "Danza Modern dai 6 anni a Lainate e Rho | InBallet",
@@ -838,7 +841,7 @@
       "Movimenti che nascono da un <strong>impulso</strong>",
       "Interpretazione emotiva e <strong>immaginazione</strong>"
     ],
-    "ctaImage": "assets/images/foto/modern-definizione.jpg"
+    "ctaTema": "danza"
   },
   "movimento-creativo": {
     "title": "Movimento Creativo per adulti a Lainate e Rho | InBallet",
@@ -891,7 +894,7 @@
       "Riconoscere qualcosa in più <strong>di sé</strong>",
       "Vivere l'atto creativo in <strong>libertà</strong>"
     ],
-    "ctaImage": "assets/images/foto/movimento-creativo-stimolazione-1.jpg"
+    "ctaTema": "danza"
   },
   "pilates": {
     "title": "Corso di Pilates a Lainate e Rho | InBallet",
@@ -945,7 +948,7 @@
       "Rafforzare i muscoli <strong>posturali</strong>",
       "Forza, flessibilità ed <strong>equilibrio</strong>"
     ],
-    "ctaImage": "assets/images/foto/pilates-img2.jpg"
+    "ctaTema": "benessere"
   },
   "prima-infanzia": {
     "title": "Danza per bambini 3-5 anni a Lainate e Rho | InBallet",
@@ -997,7 +1000,8 @@
       "Distinguere le <strong>prime posizioni</strong>",
       "Stare in <strong>gruppo</strong> con gli altri bambini",
       "Esprimersi attraverso il <strong>gioco</strong>"
-    ]
+    ],
+    "ctaTema": "bambini"
   },
   "ragazzi": {
     "title": "Danza per ragazzi 12-16 anni a Lainate e Rho | InBallet",
@@ -1049,7 +1053,8 @@
       "Un <strong>linguaggio personale</strong>",
       "Il <strong>lavoro di gruppo</strong> nei progetti coreografici",
       "Lo studio di <strong>più discipline</strong> insieme"
-    ]
+    ],
+    "ctaTema": "urban"
   },
   "seconda-infanzia": {
     "title": "Danza per bambini 6-8 anni a Lainate e Rho | InBallet",
@@ -1101,7 +1106,8 @@
       "Prime <strong>sequenze</strong> coreografiche",
       "Disciplina e <strong>rispetto</strong> delle regole",
       "Lavorare in gruppo con <strong>armonia</strong>"
-    ]
+    ],
+    "ctaTema": "bambini"
   },
   "yoga": {
     "title": "Corso di Hatha Yoga a Lainate e Rho | InBallet",
@@ -1153,6 +1159,6 @@
       "Una <strong>schiena</strong> più forte e flessibile",
       "Liberarsi dalla <strong>pesantezza</strong> quotidiana"
     ],
-    "ctaImage": "assets/images/foto/yoga-img2.jpg"
+    "ctaTema": "benessere"
   }
 }

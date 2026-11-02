@@ -6,7 +6,10 @@
  */
 .cta-contatto {
   position: relative;
-  padding: var(--section-y) 0;
+  /* Sopra c'è un titolo, sotto un pulsante: la riga del titolo ha ~.17em di aria sopra le maiuscole,
+     il pulsante no. Si toglie quell'aria dal padding superiore così lo spazio che si vede (dal bordo al
+     bordo delle lettere e del pulsante) è uguale sopra e sotto */
+  padding: calc(var(--section-y) - .17 * var(--h2-size)) 0 var(--section-y);
   overflow: hidden;
 }
 

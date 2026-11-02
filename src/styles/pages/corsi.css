@@ -1,8 +1,8 @@
 /*
  * Pagina Corsi.
  * «Trova il tuo corso» (fondo azzurrino): un riquadro fotografico per stile, con nome e numero dei corsi sopra la
- * foto, che porta alla sezione dello stile. Ogni famiglia ha una griglia editoriale di fotografie dedicate,
- * con composizioni diverse e schede accessibili. In fondo l'invito al contatto.
+ * foto, che porta alla sezione dello stile. Tutte le famiglie usano le stesse righe editoriali aperte,
+ * con fotografie e blocchi di testo di misure uniformi. In fondo l'invito al contatto.
  */
 
 /* ---------- Trova il tuo corso ---------- */
@@ -186,7 +186,11 @@
   }
 }
 
-/* ---------- Sezioni degli stili ---------- */
+/* ---------- Sezioni degli stili ----------
+   Un unico formato per tutti i sottocorsi: righe editoriali aperte, con foto 3:2
+   e testi sulla pagina. Nessuna variante per categoria, nessun pannello o ombra.
+   Le righe tipografiche riservano lo stesso spazio in tutte le sezioni, così
+   larghezza e altezza restano uguali anche con nomi e descrizioni diversi. */
 .corsi-stile {
   padding: var(--section-y) 0;
   background: var(--white);
@@ -198,8 +202,7 @@
 
 .corsi-stile-elenco {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2rem;
   list-style: none;
   padding: 0;
@@ -220,31 +223,31 @@
 }
 
 .corsi-scheda {
-  grid-column: span 6;
   min-width: 0;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.corsi-scheda:last-child {
+  border-bottom-color: transparent;
 }
 
 .corsi-scheda-link {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-  border: 1px solid var(--linea);
-  border-radius: var(--radius-card);
-  background: var(--white);
-  box-shadow: var(--shadow-card);
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
   color: inherit;
   text-decoration: none;
-  transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
 }
 
 .corsi-scheda-link:focus-visible {
   outline: 3px solid var(--primary-blue-dark);
-  outline-offset: 5px;
+  outline-offset: 8px;
 }
 
 .corsi-scheda-visual {
-  position: relative;
   overflow: hidden;
   aspect-ratio: 3 / 2;
   background: var(--bg-soft);
@@ -255,28 +258,35 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .6s ease;
+  transition: filter var(--transition-base);
 }
 
 .corsi-scheda-corpo {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 1.75rem 2rem;
+  display: grid;
+  grid-template-rows:
+    calc(2 * var(--label-size) * var(--label-lh))
+    calc(2 * var(--h3-size) * var(--h3-lh))
+    calc(3 * var(--small-size) * var(--small-lh))
+    calc(2 * var(--small-size) * var(--small-lh));
+  align-content: center;
+  gap: .5rem;
+  min-width: 0;
 }
 
 .corsi-scheda-corpo h3 {
-  margin: 0 0 .75rem;
+  align-self: center;
+  margin: 0;
   text-wrap: balance;
 }
 
 .corsi-scheda-eta {
-  margin: 0 0 .75rem;
+  align-self: end;
+  margin: 0;
 }
 
 .corsi-scheda-descrizione {
-  margin: 0 0 1.5rem;
+  align-self: center;
+  margin: 0;
   max-width: 38rem;
 }
 
@@ -284,11 +294,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: .75rem;
-  width: 100%;
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px solid var(--linea);
+  gap: 1rem;
 }
 
 .corsi-scheda-frequenza {
@@ -299,6 +305,7 @@
 }
 
 .corsi-scheda-frequenza i {
+  flex-shrink: 0;
   color: var(--primary-blue-dark);
   font-size: var(--icona-in-testo);
 }
@@ -306,157 +313,62 @@
 .corsi-scheda-freccia {
   display: grid;
   place-items: center;
-  flex: 0 0 2.75rem;
+  flex-shrink: 0;
+  width: 2.75rem;
   height: 2.75rem;
-  border: 1px solid var(--primary-blue);
-  border-radius: var(--radius-full);
-  background: var(--bg-soft);
   color: var(--primary-blue-dark);
-  font-size: var(--text-sm);
-  transition: background-color var(--transition-base), color var(--transition-base);
+  font-size: var(--text-xl);
+  transition: transform var(--transition-base);
 }
 
 .corsi-scheda-freccia i {
   transform: rotate(-45deg);
 }
 
-/* Classica: due colonne sfalsate, come pagine di una rivista. */
-@media (min-width: 901px) {
-  .corsi-stile--classica-moderna .corsi-scheda:nth-child(even) {
-    margin-top: 3rem;
-  }
-
-  /* Contemporanea: alternanza di inquadrature larghe e raccolte. */
-  .corsi-stile--contemporanea .corsi-scheda:nth-child(4n + 1),
-  .corsi-stile--contemporanea .corsi-scheda:nth-child(4n) {
-    grid-column: span 7;
-  }
-
-  .corsi-stile--contemporanea .corsi-scheda:nth-child(4n + 2),
-  .corsi-stile--contemporanea .corsi-scheda:nth-child(4n + 3) {
-    grid-column: span 5;
-  }
-
-  /* Urban: due aperture grandi, poi tre discipline affiancate. */
-  .corsi-stile--urban .corsi-scheda:nth-child(n + 3) {
-    grid-column: span 4;
-  }
-
-  .corsi-stile--urban .corsi-scheda:nth-child(n + 3) .corsi-scheda-corpo {
-    padding: 1.5rem;
-  }
-
-  /* Benessere: fotografia e testo dialogano in orizzontale. */
-  .corsi-stile--benessere .corsi-scheda {
-    grid-column: 1 / -1;
-  }
-
-  .corsi-stile--benessere .corsi-scheda-link {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .corsi-stile--benessere .corsi-scheda-visual {
-    align-self: center;
-  }
-
-  .corsi-stile--benessere .corsi-scheda:nth-child(even) .corsi-scheda-visual {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .corsi-stile--benessere .corsi-scheda:nth-child(even) .corsi-scheda-corpo {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .corsi-stile--benessere .corsi-scheda-corpo {
-    justify-content: center;
-    padding: 2rem;
-  }
-
-  /* Età: i primi passi in apertura, poi tre tappe della crescita. */
-  .corsi-stile--eta .corsi-scheda:nth-child(n + 3) {
-    grid-column: span 4;
-  }
-
-  .corsi-stile--eta .corsi-scheda:nth-child(n + 3) .corsi-scheda-corpo {
-    padding: 1.5rem;
-  }
-}
-
-/* Le schede della stessa riga condividono l'altezza anche con testi diversi. */
-.corsi-stile--urban .corsi-stile-elenco,
-.corsi-stile--eta .corsi-stile-elenco,
-.corsi-stile--benessere .corsi-stile-elenco,
-.corsi-stile--contemporanea .corsi-stile-elenco {
-  align-items: stretch;
-}
-
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .corsi-scheda-link:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary-blue);
-    box-shadow: var(--shadow-blue);
-  }
-
+@media (hover: hover) and (pointer: fine) {
   .corsi-scheda-link:hover .corsi-scheda-foto {
-    transform: scale(1.035);
+    filter: brightness(1.06);
   }
-}
 
-.corsi-scheda-link:is(:hover, :focus-visible) .corsi-scheda-freccia {
-  background: var(--primary-blue);
-  color: var(--dark-navy);
+  .corsi-scheda-link:hover .corsi-scheda-freccia {
+    transform: translate(3px, -3px);
+  }
 }
 
 @media (max-width: 900px) {
-  .corsi-stile-indice {
+  .corsi-stile .corsi-stile-indice {
     justify-content: flex-start;
-  }
-
-  .corsi-stile-elenco {
-    gap: 1.5rem;
-    align-items: stretch;
-  }
-
-  .corsi-scheda-corpo {
-    padding: 1.5rem;
-  }
-
-  .corsi-stile--urban .corsi-scheda:last-child,
-  .corsi-stile--eta .corsi-scheda:last-child {
-    grid-column: 4 / span 6;
   }
 }
 
 @media (max-width: 700px) {
   .corsi-stile-elenco {
-    grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
   }
 
-  .corsi-scheda,
-  .corsi-stile--urban .corsi-scheda:last-child,
-  .corsi-stile--eta .corsi-scheda:last-child {
-    grid-column: 1 / -1;
+  .corsi-scheda {
+    padding-bottom: 1.5rem;
   }
 
-  .corsi-scheda-corpo {
-    padding: 1.25rem;
+  .corsi-scheda-link {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
   }
 
-  .corsi-stile-indice {
+  .corsi-stile .corsi-stile-indice {
     flex-wrap: wrap;
     gap: .6rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .corsi-scheda-link,
   .corsi-scheda-foto,
   .corsi-scheda-freccia {
     transition: none;
+  }
+
+  .corsi-scheda-link:hover .corsi-scheda-freccia {
+    transform: none;
   }
 }
 

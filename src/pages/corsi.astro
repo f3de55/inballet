@@ -76,9 +76,9 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <!-- Ogni famiglia ha una composizione fotografica dedicata; titoli e testi mantengono il sistema del sito. -->
+    <!-- Tutti i sottocorsi condividono lo stesso formato editoriale: foto e testo, senza pannelli da card. -->
     {percorsi.map((cat, i) => (
-        <section id={cat.id} class:list={['corsi-stile', `corsi-stile--${cat.id}`, { 'corsi-stile--soft': i % 2 === 1 }, i === 0 || i === 4 ? ['decoro-onde', { 'decoro-onde--sinistra': i === 4 }] : '']} aria-labelledby={`${cat.id}-titolo`}>
+        <section id={cat.id} class:list={['corsi-stile', { 'corsi-stile--soft': i % 2 === 1 }, i === 0 || i === 4 ? ['decoro-onde', { 'decoro-onde--sinistra': i === 4 }] : '']} aria-labelledby={`${cat.id}-titolo`}>
             <div class="intro-editoriale">
                 <p class="eyebrow corsi-stile-indice"><span aria-hidden="true">0{i + 1} / 05</span> {cat.corsi.length} percorsi da scoprire</p>
                 <h2 class="titolo-sezione" id={`${cat.id}-titolo`} set:html={titoloEm(cat.nome)} />
@@ -90,11 +90,11 @@ const hero = await heroPagina('corsi');
                         <li class="corsi-scheda">
                             <a href={c.url} class="corsi-scheda-link" aria-labelledby={`${c.url.slice(1)}-nome`}>
                                 <div class="corsi-scheda-visual">
-                                    <Img class="corsi-scheda-foto" src={c.immagine.src} alt={c.immagine.alt} width={1536} height={1024} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(min-width: 1200px) 620px, (min-width: 701px) 50vw, 100vw" />
+                                    <Img class="corsi-scheda-foto" src={c.immagine.src} alt={c.immagine.alt} width={1536} height={1024} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(min-width: 1200px) 442px, (min-width: 701px) 40vw, 100vw" />
                                 </div>
                                 <div class="corsi-scheda-corpo">
                                     <p class="eyebrow corsi-scheda-eta">{c.pagina.badge.replace(' - ', ' · ')}</p>
-                                    <h3 class="titolo-card" id={`${c.url.slice(1)}-nome`}>{nomeBreve(c.nome)}</h3>
+                                    <h3 id={`${c.url.slice(1)}-nome`}>{nomeBreve(c.nome)}</h3>
                                     <p class="testo-piccolo corsi-scheda-descrizione">{c.pagina.tagline}</p>
                                     <div class="corsi-scheda-fondo">
                                         <p class="testo-piccolo corsi-scheda-frequenza"><i class="far fa-clock" aria-hidden="true"></i> {c.pagina.frequenza}</p>

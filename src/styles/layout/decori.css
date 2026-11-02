@@ -1,7 +1,8 @@
 /*
  * Elementi grafici di sfondo delle sezioni (solo PC, sopra i 1024px).
  * .decoro-onde / .decoro-onde--sinistra: onde azzurre su tutta la sezione, come immagine di sfondo sopra il
- * colore della sezione (già sbiadite al 22% nel file; --sinistra: copia specchiata).
+ * colore della sezione (già sbiadite al 22% nel file; --sinistra: copia specchiata). Solo sulle sezioni bianche:
+ * quelle azzurrine (--bg-soft) restano senza.
  * .decoro-fascia / .decoro-fascia--sinistra: le stesse onde dentro una fascia bianca con doppia onda (.fascia-onda),
  * sopra il suo bianco: le parti azzurrine tra una fascia e l'altra restano senza decorazione.
  * "section." vince sul "background" delle pagine senza toccarne il colore.

@@ -74,9 +74,10 @@ const hero = await heroPagina('corsi');
     </section>
 
     <!-- Una sezione per stile, come le sezioni «intestazione + elenco» delle altre pagine: titolo e testo a
-         sinistra (fissi su PC), i corsi a righe a destra. Fondi alternati bianco / azzurrino con le onde decorative -->
+         sinistra (fissi su PC), i corsi a righe a destra. Fondi alternati bianco / azzurrino; le onde decorative solo
+         sulle sezioni bianche, una volta a destra e una a sinistra -->
     {percorsi.map((cat, i) => (
-        <section id={cat.id} class:list={['split-section', 'decoro-onde', { 'split-section--soft': i % 2 === 1, 'decoro-onde--sinistra': i % 2 === 1 }]} aria-labelledby={`${cat.id}-titolo`}>
+        <section id={cat.id} class:list={['split-section', i % 2 === 1 ? 'split-section--soft' : ['decoro-onde', { 'decoro-onde--sinistra': i % 4 === 2 }]]} aria-labelledby={`${cat.id}-titolo`}>
             <div class="container split-layout">
                 <div class="split-header split-header--sticky">
                     <h2 class="titolo-sezione" id={`${cat.id}-titolo`} set:html={titoloEm(cat.nome)} />

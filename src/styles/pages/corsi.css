@@ -77,14 +77,42 @@
   color: var(--white);
 }
 
+/* Icona dello stile, in alto a sinistra in un cerchio di vetro */
+.stile-icona {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.5rem;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgb(var(--bianco-rgb) / .35);
+  border-radius: var(--radius-full);
+  background: rgb(var(--bianco-rgb) / .16);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: var(--white);
+  font-size: var(--icona-in-testo);
+  transition: background-color .3s ease, border-color .3s ease;
+}
+
+/* Numero dei corsi: etichetta di vetro con la freccia verso la sezione */
 .stile-numero {
   display: inline-flex;
   align-items: center;
   gap: .5rem;
-  margin: .35rem 0 0;
+  margin: .65rem 0 0;
+  padding: .3rem .8rem;
+  border: 1px solid rgb(var(--bianco-rgb) / .3);
+  border-radius: var(--radius-pill);
+  background: rgb(var(--bianco-rgb) / .14);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   font-size: var(--small-size);
   font-weight: var(--font-semibold);
-  color: rgb(var(--bianco-rgb) / .85);
+  line-height: 1.3;
+  color: var(--white);
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
 }
 
 .stile-numero i {
@@ -92,28 +120,97 @@
   transition: transform .3s ease;
 }
 
+/* Contorno animato: una linea continua che gira lungo tutto il bordo cambiando colore (azzurro, blu, azzurro);
+   ogni riquadro parte da un punto diverso del giro */
+@property --angolo {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes stile-giro {
+  to {
+    --angolo: 360deg;
+  }
+}
+
+.stile-bordo {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 3px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--angolo), var(--primary-blue), var(--primary-blue-dark) 50%, var(--primary-blue));
+  -webkit-mask: linear-gradient(var(--black) 0 0) content-box, linear-gradient(var(--black) 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(var(--black) 0 0) content-box exclude, linear-gradient(var(--black) 0 0);
+  pointer-events: none;
+  animation: stile-giro 6s linear infinite;
+  animation-delay: calc(var(--i, 0) * -1.2s);
+}
+
 .stile:focus-visible {
   outline: 2px solid var(--primary-blue-dark);
   outline-offset: 4px;
 }
 
+/* PC: il riquadro si solleva, la foto si schiarisce appena, l'etichetta diventa azzurra e la freccia scende */
 @media (hover: hover) and (pointer: fine) {
+  .stile {
+    transition: transform .35s ease, box-shadow .35s ease;
+  }
+
+  .stile-foto {
+    transition: filter .35s ease;
+  }
+
+  .stile:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgb(var(--blu-rgb) / .35);
+  }
+
+  .stile:hover .stile-foto {
+    filter: brightness(1.08);
+  }
+
+  .stile:hover .stile-numero {
+    border-color: var(--primary-blue);
+    background: var(--primary-blue);
+    color: var(--dark-navy);
+  }
+
+  .stile:hover .stile-icona {
+    border-color: rgb(var(--bianco-rgb) / .6);
+    background: rgb(var(--bianco-rgb) / .28);
+  }
+
   .stile:hover .stile-numero i {
-    transform: translateY(4px);
+    transform: translateY(3px);
   }
+}
 
-  .stile::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: rgb(var(--navy-rgb) / .25);
+/* Entrata: i riquadri salgono e appaiono mentre entrano nello schermo (solo dove il browser lo supporta) */
+@keyframes stile-entra {
+  from {
     opacity: 0;
-    transition: opacity .3s ease;
+    transform: translateY(32px);
   }
+}
 
-  .stile:hover::before {
-    opacity: 1;
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .stili li {
+      animation: stile-entra linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+  }
+}
+
+/* Movimento ridotto: contorno fermo */
+@media (prefers-reduced-motion: reduce) {
+  .stile-bordo {
+    animation: none;
   }
 }
 
@@ -209,10 +306,18 @@
   }
 
   .stile {
-    min-height: 8.5rem;
+    min-height: 9.5rem;
   }
 
   .stile-testo {
     padding: 1rem 1.25rem;
+  }
+
+  .stile-icona {
+    top: 1rem;
+    left: auto;
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }

@@ -46,23 +46,19 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <!-- Introduzione e indice: una frase e i percorsi come link alle sezioni sotto -->
+    <!-- Introduzione: una domanda e i percorsi come scelte (nome e per chi è), che portano alla sezione sotto -->
     <section class="corsi-intro" aria-labelledby="corsi-titolo">
         <div class="intro-editoriale">
-            <p class="eyebrow">{totale} corsi in {percorsi.length} percorsi</p>
             <h2 class="titolo-sezione" id="corsi-titolo">Trova il tuo <em>percorso</em></h2>
-            <p>A Lainate e Rho si comincia <strong>a 3 anni</strong> e non c'è un'età per smettere: scegli lo stile, poi il corso adatto a età e livello.</p>
+            <p>Scegli lo stile che ti incuriosisce: sotto trovi i suoi corsi, con <strong>età e frequenza</strong>.</p>
         </div>
         <div class="container">
-            <nav class="corsi-indice-percorsi" aria-label="Vai al percorso">
+            <nav class="corsi-indice-percorsi" aria-label="Scegli il percorso">
                 {percorsi.map((cat) => (
                     <a href={`#${cat.id}`} class="indice-voce">
                         <i class={`fas ${cat.icona} indice-icona`} aria-hidden="true"></i>
-                        <span class="indice-testo">
-                            <span class="indice-nome">{cat.breve}</span>
-                            <span class="indice-conta testo-piccolo">{cat.corsi.length} corsi</span>
-                        </span>
-                        <i class="fas fa-arrow-down indice-freccia" aria-hidden="true"></i>
+                        <span class="indice-nome">{cat.breve}</span>
+                        <span class="indice-chi testo-piccolo">{cat.perChi}</span>
                     </a>
                 ))}
             </nav>
@@ -74,7 +70,6 @@ const hero = await heroPagina('corsi');
     {percorsi.map((cat, i) => (
         <section class:list={['percorso', { 'percorso--soft': i % 2 === 1 }]} id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
             <div class="intro-editoriale">
-                <p class="eyebrow">Percorso {i + 1} di {percorsi.length} · {cat.corsi.length} corsi</p>
                 <h2 class="titolo-sezione" id={`${cat.id}-titolo`}>{cat.nome}</h2>
                 <p set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
             </div>
@@ -84,11 +79,13 @@ const hero = await heroPagina('corsi');
                         <li>
                             <a href={c.url} class="corso-scheda">
                                 <span class="corso-foto" aria-hidden="true">
-                                    <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[480, 800]} sizes="(min-width: 1025px) 260px, (min-width: 601px) 45vw, 100vw" width="450" height="338" />
+                                    <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[480, 800]} sizes="(min-width: 1025px) 250px, (min-width: 601px) 20vw, 120px" width="450" height="338" />
                                 </span>
-                                <h3 class="corso-nome">{nomeBreve(c.nome)}</h3>
-                                <p class="corso-dettagli testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
-                                <span class="link-cta corso-cta">Scopri il corso <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                <div class="corso-testo">
+                                    <h3 class="corso-nome">{nomeBreve(c.nome)}</h3>
+                                    <p class="corso-dettagli testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
+                                    <span class="link-cta corso-cta">Scopri il corso <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                </div>
                             </a>
                         </li>
                     ))}

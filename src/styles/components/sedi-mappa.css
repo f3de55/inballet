@@ -182,6 +182,28 @@
   background: var(--dark-navy);
 }
 
+@media (min-width: 901px) {
+  .sedi-mappa-tavola {
+    aspect-ratio: 1440 / 660;
+  }
+
+  .sedi-mappa-cartografia {
+    left: 50%;
+    width: auto;
+    aspect-ratio: 1111 / 852;
+    transform: translateX(-50%);
+  }
+
+  .sedi-mappa-foto--lainate {
+    left: 14%;
+  }
+
+  .sedi-mappa-foto--rho {
+    right: 14%;
+    top: 32%;
+  }
+}
+
 @media (min-width: 769px) and (max-width: 900px) {
   .sedi-mappa-didascalia {
     gap: .75rem;

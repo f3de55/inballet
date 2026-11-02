@@ -10,7 +10,7 @@
   background: var(--dark-navy);
 }
 
-/* Pulsante e nota centrati sotto l'intestazione; a sinistra sotto i 900px */
+/* Pulsante e nota sempre centrati sotto l'intestazione, su ogni dispositivo */
 .sost-dona-azione {
   display: flex;
   flex-direction: column;
@@ -22,21 +22,14 @@
 .sost-dona-nota {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: .6rem;
   margin: 0;
+  text-align: center;
 }
 
 .sost-dona-nota i {
   color: var(--primary-blue);
-}
-
-/* ---------- Tablet ---------- */
-@media (max-width: 900px) {
-  /* Dona: allineato all'intestazione; destinazioni: intestazione sopra l'elenco */
-  .sost-dona-azione {
-    align-items: flex-start;
-  }
-
 }
 
 /* ---------- Mobile ---------- */

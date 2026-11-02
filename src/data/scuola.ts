@@ -76,7 +76,7 @@ export const categorieCorsi = [
     /** Icona Font Awesome della categoria (classe completa, così `npm run icons` la include) */
     icona: 'fa-feather',
     nome: 'Danza Classica e Moderna',
-    /** Nome corto per i filtri di /corsi */
+    /** Nome corto della categoria */
     breve: 'Classica e Moderna',
     sintesi: 'La base tecnica di ogni stile: si comincia a 3 anni e si arriva ai livelli avanzati.',
     immagine: { src: 'foto/tutu-classica.jpg', alt: 'Tutù rosa di danza classica', fuoco: { desktop: '60% 50%', mobile: '50% 45%' } },

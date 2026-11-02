@@ -46,8 +46,10 @@ h3 {
   letter-spacing: var(--h3-ls);
 }
 
+/* .titolo-card: titolo di una card piccola (più card per riga, es. i corsi di /corsi), h3 nel documento con la misura da h4 */
 h4,
-.valore {
+.valore,
+.titolo-card {
   font-size: var(--h4-size);
   line-height: var(--h4-lh);
   letter-spacing: var(--h4-ls);

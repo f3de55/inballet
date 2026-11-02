@@ -70,7 +70,6 @@
 }
 
 .stile-sintesi {
-  display: block;
   margin: .5rem 0 1.25rem;
 }
 
@@ -166,8 +165,7 @@
 }
 
 .corso-dettagli {
-  display: block;
-  margin-top: .3rem;
+  margin: .3rem 0 0;
 }
 
 /* «Scopri il corso»: piccolo, in fondo alla card */

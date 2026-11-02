@@ -224,7 +224,7 @@
   padding: .2rem 0;
 }
 
-/* «Orari e contatti»: niente sottolineatura (si confonderebbe con i filetti delle altre voci), c'è la freccia */
+/* «Altre informazioni»: niente sottolineatura (si confonderebbe con i filetti delle altre voci), c'è la freccia */
 .footer-link {
   display: inline-flex;
   align-items: center;

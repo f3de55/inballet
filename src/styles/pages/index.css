@@ -246,7 +246,6 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .6s ease;
 }
 
 .corsi-stile-foto picture {
@@ -311,10 +310,6 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .corsi-stile:hover .corsi-stile-foto img {
-    transform: scale(1.05);
-  }
-
   .corsi-stile:hover .corsi-stile-link i {
     transform: translateX(8px);
   }
@@ -705,7 +700,7 @@ l'altra (il gap da 1px sul fondo chiaro disegna le linee, come nei loghi dei sos
 .oltre-lista {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
   margin: 0;
   padding: 0;
@@ -723,22 +718,8 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
   background: var(--bg-soft);
 }
 
-/* Ogni voce occupa sempre una colonna: se l'ultima riga resta incompleta, lo spazio che avanza è un riquadro
-   vuoto dello stesso colore della sezione (non una voce più larga) */
-@media (min-width: 901px) {
-  .oltre-lista:has(> li:last-child:nth-child(3n + 2))::after,
-  .oltre-lista:has(> li:last-child:nth-child(3n + 1))::after {
-    content: '';
-    grid-row: span 4;
-    background: var(--bg-soft);
-  }
-
-  .oltre-lista:has(> li:last-child:nth-child(3n + 1))::after {
-    grid-column: span 2;
-  }
-}
-
-@media (min-width: 601px) and (max-width: 900px) {
+/* Con un numero dispari di voci l'ultima riga resterebbe incompleta: il resto è un riquadro dello stesso colore */
+@media (min-width: 601px) and (max-width: 1024px) {
   .oltre-lista:has(> li:last-child:nth-child(odd))::after {
     content: '';
     grid-row: span 4;
@@ -749,6 +730,23 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 /* Alternanza: una cella bianca, una azzurrina (come i blocchi di Contatti) */
 .oltre-lista li:nth-child(odd) {
   background: var(--white);
+}
+
+/* Desktop: quattro voci per riga, a scacchiera (la seconda riga parte con la cella azzurrina) */
+@media (min-width: 1025px) {
+  .oltre-lista {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .oltre-lista li:nth-child(8n + 5),
+  .oltre-lista li:nth-child(8n + 7) {
+    background: var(--bg-soft);
+  }
+
+  .oltre-lista li:nth-child(8n + 6),
+  .oltre-lista li:nth-child(8n + 8) {
+    background: var(--white);
+  }
 }
 
 .oltre-voce {
@@ -797,7 +795,7 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 }
 
 /* Tablet: due colonne */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .oltre-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

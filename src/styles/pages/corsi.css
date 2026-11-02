@@ -1,9 +1,8 @@
 /*
  * Pagina Corsi.
  * «Trova il tuo corso» (fondo azzurrino): un riquadro fotografico per stile, con nome e numero dei corsi sopra la
- * foto, che porta alla sezione dello stile. Poi una sezione per stile con lo schema «intestazione + elenco» delle
- * altre pagine (components/intro-split.css e righe.css): titolo e testo a sinistra, i corsi a righe a destra.
- * In fondo l'invito al contatto.
+ * foto, che porta alla sezione dello stile. Ogni famiglia ha una griglia editoriale di fotografie dedicate,
+ * con composizioni diverse e schede accessibili. In fondo l'invito al contatto.
  */
 
 /* ---------- Trova il tuo corso ---------- */
@@ -59,13 +58,15 @@
   object-fit: cover;
 }
 
-/* Velo scuro dal basso: il testo bianco resta leggibile su ogni foto */
+/* Velo su tutta la foto: una tinta blu leggera uguale per tutti (foto chiare e scure diventano uniformi tra loro) e
+   sopra uno scuro che cresce verso il basso, dove sta il testo, così il bianco resta leggibile su ognuna */
 .stile::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(to top, rgb(var(--nero-rgb) / .78) 0%, rgb(var(--nero-rgb) / .35) 45%, rgb(var(--nero-rgb) / 0) 75%);
+  background: linear-gradient(to top, rgb(var(--navy-rgb) / .85) 0%, rgb(var(--navy-rgb) / .45) 50%, rgb(var(--navy-rgb) / .15) 100%) rgb(var(--blu-scuro-rgb) / .3);
+  transition: opacity .35s ease;
 }
 
 .stile-testo {
@@ -75,25 +76,6 @@
 .stile-nome {
   margin: 0;
   color: var(--white);
-}
-
-/* Icona dello stile, in alto a sinistra in un cerchio di vetro */
-.stile-icona {
-  position: absolute;
-  top: 1.25rem;
-  left: 1.5rem;
-  display: grid;
-  place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border: 1px solid rgb(var(--bianco-rgb) / .35);
-  border-radius: var(--radius-full);
-  background: rgb(var(--bianco-rgb) / .16);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  color: var(--white);
-  font-size: var(--icona-in-testo);
-  transition: background-color .3s ease, border-color .3s ease;
 }
 
 /* Numero dei corsi: etichetta di vetro con la freccia verso la sezione */
@@ -154,34 +136,24 @@
   outline-offset: 4px;
 }
 
-/* PC: il riquadro si solleva, la foto si schiarisce appena, l'etichetta diventa azzurra e la freccia scende */
+/* PC: il riquadro resta fermo; la foto si schiarisce appena, l'etichetta diventa azzurra e la freccia scende */
 @media (hover: hover) and (pointer: fine) {
-  .stile {
-    transition: transform .35s ease, box-shadow .35s ease;
-  }
-
   .stile-foto {
     transition: filter .35s ease;
-  }
-
-  .stile:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 18px 40px rgb(var(--blu-rgb) / .35);
   }
 
   .stile:hover .stile-foto {
     filter: brightness(1.08);
   }
 
+  .stile:hover::after {
+    opacity: .85;
+  }
+
   .stile:hover .stile-numero {
     border-color: var(--primary-blue);
     background: var(--primary-blue);
     color: var(--dark-navy);
-  }
-
-  .stile:hover .stile-icona {
-    border-color: rgb(var(--bianco-rgb) / .6);
-    background: rgb(var(--bianco-rgb) / .28);
   }
 
   .stile:hover .stile-numero i {
@@ -215,9 +187,277 @@
 }
 
 /* ---------- Sezioni degli stili ---------- */
-/* Età e frequenza sotto il nome del corso */
-.righe .riga-corpo > .testo-piccolo {
+.corsi-stile {
+  padding: var(--section-y) 0;
+  background: var(--white);
+}
+
+.corsi-stile--soft {
+  background: var(--bg-soft);
+}
+
+.corsi-stile-elenco {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: start;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: var(--spazio-intestazione) 0 0;
+}
+
+.corsi-stile .corsi-stile-indice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.corsi-stile-indice span {
+  padding-right: 1rem;
+  border-right: 1px solid var(--linea);
+  font-variant-numeric: tabular-nums;
+}
+
+.corsi-scheda {
+  grid-column: span 6;
+  min-width: 0;
+}
+
+.corsi-scheda-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--linea);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.corsi-scheda-link:focus-visible {
+  outline: 3px solid var(--primary-blue-dark);
+  outline-offset: 5px;
+}
+
+.corsi-scheda-visual {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  background: var(--bg-soft);
+}
+
+.corsi-scheda-foto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+
+.corsi-scheda-corpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.75rem 2rem;
+}
+
+.corsi-scheda-corpo h3 {
+  margin: 0 0 .75rem;
+  text-wrap: balance;
+}
+
+.corsi-scheda-eta {
+  margin: 0 0 .75rem;
+}
+
+.corsi-scheda-descrizione {
+  margin: 0 0 1.5rem;
+  max-width: 38rem;
+}
+
+.corsi-scheda-fondo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--linea);
+}
+
+.corsi-scheda-frequenza {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
   margin: 0;
+}
+
+.corsi-scheda-frequenza i {
+  color: var(--primary-blue-dark);
+  font-size: var(--icona-in-testo);
+}
+
+.corsi-scheda-freccia {
+  display: grid;
+  place-items: center;
+  flex: 0 0 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--primary-blue);
+  border-radius: var(--radius-full);
+  background: var(--bg-soft);
+  color: var(--primary-blue-dark);
+  font-size: var(--text-sm);
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+.corsi-scheda-freccia i {
+  transform: rotate(-45deg);
+}
+
+/* Classica: due colonne sfalsate, come pagine di una rivista. */
+@media (min-width: 901px) {
+  .corsi-stile--classica-moderna .corsi-scheda:nth-child(even) {
+    margin-top: 3rem;
+  }
+
+  /* Contemporanea: alternanza di inquadrature larghe e raccolte. */
+  .corsi-stile--contemporanea .corsi-scheda:nth-child(4n + 1),
+  .corsi-stile--contemporanea .corsi-scheda:nth-child(4n) {
+    grid-column: span 7;
+  }
+
+  .corsi-stile--contemporanea .corsi-scheda:nth-child(4n + 2),
+  .corsi-stile--contemporanea .corsi-scheda:nth-child(4n + 3) {
+    grid-column: span 5;
+  }
+
+  /* Urban: due aperture grandi, poi tre discipline affiancate. */
+  .corsi-stile--urban .corsi-scheda:nth-child(n + 3) {
+    grid-column: span 4;
+  }
+
+  .corsi-stile--urban .corsi-scheda:nth-child(n + 3) .corsi-scheda-corpo {
+    padding: 1.5rem;
+  }
+
+  /* Benessere: fotografia e testo dialogano in orizzontale. */
+  .corsi-stile--benessere .corsi-scheda {
+    grid-column: 1 / -1;
+  }
+
+  .corsi-stile--benessere .corsi-scheda-link {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .corsi-stile--benessere .corsi-scheda-visual {
+    align-self: center;
+  }
+
+  .corsi-stile--benessere .corsi-scheda:nth-child(even) .corsi-scheda-visual {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .corsi-stile--benessere .corsi-scheda:nth-child(even) .corsi-scheda-corpo {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .corsi-stile--benessere .corsi-scheda-corpo {
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  /* Età: i primi passi in apertura, poi tre tappe della crescita. */
+  .corsi-stile--eta .corsi-scheda:nth-child(n + 3) {
+    grid-column: span 4;
+  }
+
+  .corsi-stile--eta .corsi-scheda:nth-child(n + 3) .corsi-scheda-corpo {
+    padding: 1.5rem;
+  }
+}
+
+/* Le schede della stessa riga condividono l'altezza anche con testi diversi. */
+.corsi-stile--urban .corsi-stile-elenco,
+.corsi-stile--eta .corsi-stile-elenco,
+.corsi-stile--benessere .corsi-stile-elenco,
+.corsi-stile--contemporanea .corsi-stile-elenco {
+  align-items: stretch;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .corsi-scheda-link:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-blue);
+    box-shadow: var(--shadow-blue);
+  }
+
+  .corsi-scheda-link:hover .corsi-scheda-foto {
+    transform: scale(1.035);
+  }
+}
+
+.corsi-scheda-link:is(:hover, :focus-visible) .corsi-scheda-freccia {
+  background: var(--primary-blue);
+  color: var(--dark-navy);
+}
+
+@media (max-width: 900px) {
+  .corsi-stile-indice {
+    justify-content: flex-start;
+  }
+
+  .corsi-stile-elenco {
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .corsi-scheda-corpo {
+    padding: 1.5rem;
+  }
+
+  .corsi-stile--urban .corsi-scheda:last-child,
+  .corsi-stile--eta .corsi-scheda:last-child {
+    grid-column: 4 / span 6;
+  }
+}
+
+@media (max-width: 700px) {
+  .corsi-stile-elenco {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .corsi-scheda,
+  .corsi-stile--urban .corsi-scheda:last-child,
+  .corsi-stile--eta .corsi-scheda:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .corsi-scheda-corpo {
+    padding: 1.25rem;
+  }
+
+  .corsi-stile-indice {
+    flex-wrap: wrap;
+    gap: .6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .corsi-scheda-link,
+  .corsi-scheda-foto,
+  .corsi-scheda-freccia {
+    transition: none;
+  }
 }
 
 /* ---------- Chiusura ---------- */
@@ -311,13 +551,5 @@
 
   .stile-testo {
     padding: 1rem 1.25rem;
-  }
-
-  .stile-icona {
-    top: 1rem;
-    left: auto;
-    right: 1rem;
-    width: 2.5rem;
-    height: 2.5rem;
   }
 }

@@ -6,8 +6,7 @@ import Img from '../components/Img.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import { categorieCorsi } from '../data/scuola';
 import { enfatizza } from '../lib/text';
-import '../styles/components/intro-split.css';
-import '../styles/components/righe.css';
+import { immaginiSottocorsi } from '../data/immagini-sottocorsi';
 import '../styles/pages/corsi.css';
 
 // Fascia d'età e frequenza di ogni corso, dalla sua pagina (es. "/hip-hop" → "Dai 6 anni · 1-2 lezioni a settimana")
@@ -17,7 +16,9 @@ const percorsi = categorieCorsi.map((cat) => ({
     corsi: cat.corsi.map((c) => {
         const pagina = pagineCorsi.get(c.url);
         if (!pagina) throw new Error(`Pagina del sottocorso non trovata: ${c.url}`);
-        return { ...c, pagina };
+        const immagine = immaginiSottocorsi[c.url.slice(1)];
+        if (!immagine) throw new Error(`Immagine del sottocorso non trovata: ${c.url}`);
+        return { ...c, pagina, immagine };
     }),
 }));
 // Nel nome basta la disciplina: l'età è già nell'etichetta accanto
@@ -63,7 +64,6 @@ const hero = await heroPagina('corsi');
                     <li style={`--i: ${i}`}>
                         <a href={`#${cat.id}`} class="stile">
                             <span class="stile-bordo" aria-hidden="true"></span>
-                            <span class="stile-icona" aria-hidden="true"><i class={`fas ${cat.icona}`}></i></span>
                             <Img class="stile-foto" src={cat.immagine.src} alt="" aria-hidden="true" fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(min-width: 1101px) 560px, (min-width: 481px) 50vw, 100vw" />
                             <div class="stile-testo">
                                 <h3 class="stile-nome titolo-card">{cat.nome}</h3>
@@ -76,25 +76,31 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <!-- Una sezione per stile, come le sezioni «intestazione + elenco» delle altre pagine: titolo e testo a
-         sinistra (fissi su PC), i corsi a righe a destra. Fondi alternati bianco / azzurrino; le onde decorative solo
-         sulle sezioni bianche, una volta a destra e una a sinistra -->
+    <!-- Ogni famiglia ha una composizione fotografica dedicata; titoli e testi mantengono il sistema del sito. -->
     {percorsi.map((cat, i) => (
-        <section id={cat.id} class:list={['split-section', i % 2 === 1 ? 'split-section--soft' : ['decoro-onde', { 'decoro-onde--sinistra': i % 4 === 2 }]]} aria-labelledby={`${cat.id}-titolo`}>
-            <div class="container split-layout">
-                <div class="split-header split-header--sticky">
-                    <h2 class="titolo-sezione" id={`${cat.id}-titolo`} set:html={titoloEm(cat.nome)} />
-                    <p class="intro-sezione" set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
-                </div>
-                <ul class="righe">
+        <section id={cat.id} class:list={['corsi-stile', `corsi-stile--${cat.id}`, { 'corsi-stile--soft': i % 2 === 1 }, i === 0 || i === 4 ? ['decoro-onde', { 'decoro-onde--sinistra': i === 4 }] : '']} aria-labelledby={`${cat.id}-titolo`}>
+            <div class="intro-editoriale">
+                <p class="eyebrow corsi-stile-indice"><span aria-hidden="true">0{i + 1} / 05</span> {cat.corsi.length} percorsi da scoprire</p>
+                <h2 class="titolo-sezione" id={`${cat.id}-titolo`} set:html={titoloEm(cat.nome)} />
+                <p set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
+            </div>
+            <div class="container">
+                <ul class="corsi-stile-elenco">
                     {cat.corsi.map((c) => (
-                        <li>
-                            <a href={c.url} class="riga">
-                                <div class="riga-corpo">
-                                    <p class="riga-nome">{nomeBreve(c.nome)}</p>
-                                    <p class="testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
+                        <li class="corsi-scheda">
+                            <a href={c.url} class="corsi-scheda-link" aria-labelledby={`${c.url.slice(1)}-nome`}>
+                                <div class="corsi-scheda-visual">
+                                    <Img class="corsi-scheda-foto" src={c.immagine.src} alt={c.immagine.alt} width={1536} height={1024} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(min-width: 1200px) 620px, (min-width: 701px) 50vw, 100vw" />
                                 </div>
-                                <i class="riga-freccia fas fa-arrow-right" aria-hidden="true"></i>
+                                <div class="corsi-scheda-corpo">
+                                    <p class="eyebrow corsi-scheda-eta">{c.pagina.badge.replace(' - ', ' · ')}</p>
+                                    <h3 class="titolo-card" id={`${c.url.slice(1)}-nome`}>{nomeBreve(c.nome)}</h3>
+                                    <p class="testo-piccolo corsi-scheda-descrizione">{c.pagina.tagline}</p>
+                                    <div class="corsi-scheda-fondo">
+                                        <p class="testo-piccolo corsi-scheda-frequenza"><i class="far fa-clock" aria-hidden="true"></i> {c.pagina.frequenza}</p>
+                                        <span class="corsi-scheda-freccia" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                                    </div>
+                                </div>
                             </a>
                         </li>
                     ))}

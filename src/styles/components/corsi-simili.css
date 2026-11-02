@@ -1,13 +1,7 @@
 
 .simili-section {
-  padding: calc(var(--section-y) * .85) 0;
+  padding: var(--section-y) 0;
   background: var(--white);
-}
-
-@media (min-width: 769px) {
-  .simili-section {
-    padding: var(--section-y) 0;
-  }
 }
 
 .simili-wrapper {

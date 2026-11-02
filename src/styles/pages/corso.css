@@ -272,12 +272,6 @@
 }
 
 @media (max-width: 768px) {
-  .corso-intro-section,
-  .corso-metodo-section,
-  .corso-impara-section {
-    padding: 3.5rem 0;
-  }
-
   .corso-metodo-wrapper,
   .corso-impara-wrapper {
     padding: 0 1.5rem;

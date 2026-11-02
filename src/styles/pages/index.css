@@ -692,15 +692,8 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 l'altra (il gap da 1px sul fondo chiaro disegna le linee, come nei loghi dei sostenitori):
 4 per riga su desktop, 2 su tablet, una per riga su mobile. */
 .oltre-section {
-  padding: calc(var(--section-y) * .85) 0;
+  padding: var(--section-y) 0;
   background: var(--bg-soft);
-}
-
-@media (min-width: 769px) {
-  .oltre-section {
-    padding: var(--section-y) 0;
-  }
-
 }
 
 .oltre-layout {

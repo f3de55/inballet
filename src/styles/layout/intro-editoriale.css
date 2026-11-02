@@ -29,6 +29,11 @@ section > .intro-editoriale {
   margin-bottom: 1.25rem;
 }
 
+/* Sezione fatta della sola intro: l'ultimo elemento non aggiunge margine, così sopra e sotto c'è lo stesso spazio */
+section > .intro-editoriale:last-child > :last-child {
+  margin-bottom: 0;
+}
+
 @media (max-width: 900px) {
   section > .intro-editoriale {
     text-align: left;

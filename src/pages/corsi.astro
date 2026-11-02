@@ -46,55 +46,61 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <section id="corsi" class="corsi">
+    <!-- Introduzione e indice: una frase e i percorsi come link alle sezioni sotto -->
+    <section class="corsi-intro" aria-labelledby="corsi-titolo">
+        <div class="intro-editoriale">
+            <p class="eyebrow">{totale} corsi in {percorsi.length} percorsi</p>
+            <h2 class="titolo-sezione" id="corsi-titolo">Trova il tuo <em>percorso</em></h2>
+            <p>A Lainate e Rho si comincia <strong>a 3 anni</strong> e non c'è un'età per smettere: scegli lo stile, poi il corso adatto a età e livello.</p>
+        </div>
         <div class="container">
-            <!-- Una frase e sotto le scelte: le schede dei percorsi (src/scripts/corsi.ts) -->
-            <header class="corsi-intro">
-                <h2 class="titolo-sezione">Da dove vuoi <em>cominciare</em>?</h2>
-                <nav class="salti" aria-label="Scegli il percorso">
-                    {categorieCorsi.map((cat) => (
-                        <a href={`#${cat.id}`} data-percorso={cat.id}>
-                            <i class={`fas ${cat.icona} salto-icona`} aria-hidden="true"></i>
-                            <p class="salto-nome">{cat.breve}</p>
-                        </a>
-                    ))}
-                </nav>
-            </header>
+            <nav class="corsi-indice-percorsi" aria-label="Vai al percorso">
+                {percorsi.map((cat) => (
+                    <a href={`#${cat.id}`} class="indice-voce">
+                        <i class={`fas ${cat.icona} indice-icona`} aria-hidden="true"></i>
+                        <span class="indice-testo">
+                            <span class="indice-nome">{cat.breve}</span>
+                            <span class="indice-conta testo-piccolo">{cat.corsi.length} corsi</span>
+                        </span>
+                        <i class="fas fa-arrow-down indice-freccia" aria-hidden="true"></i>
+                    </a>
+                ))}
+            </nav>
+        </div>
+    </section>
 
-            <!-- Percorsi: una fascia bianca; con JavaScript le pillole sopra li mostrano uno alla volta (src/scripts/corsi.ts),
-                 senza restano tutti visibili uno sotto l'altro -->
-            <div class="corsi-percorsi fascia-onda decoro-fascia">
-            {percorsi.map((cat) => (
-                <article class="categoria" id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
-                    <div class="categoria-testo">
-                        <h3 class="categoria-titolo" id={`${cat.id}-titolo`}>{cat.nome}</h3>
-                        <p class="categoria-descrizione" set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
-                        <ul class="corsi-lista">
-                            {cat.corsi.map((c) => (
-                                <li>
-                                    <a href={c.url} class="corso-voce">
-                                        <span class="corso-foto" aria-hidden="true">
-                                            <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(min-width: 901px) 25vw, (min-width: 601px) 50vw, 100vw" width="450" height="300" />
-                                        </span>
-                                        <div class="corso-scheda-testo">
-                                            <h4 class="corso-nome">{nomeBreve(c.nome)}</h4>
-                                            <p class="corso-dettagli testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
-                                            <p class="link-cta corso-cta">
-                                                Scopri il corso
-                                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </article>
-            ))}
+    <!-- Un percorso per sezione, tutte visibili: intestazione (posizione, nome, descrizione) e i suoi corsi.
+         Le sezioni alternano fondo bianco e azzurrino -->
+    {percorsi.map((cat, i) => (
+        <section class:list={['percorso', { 'percorso--soft': i % 2 === 1 }]} id={cat.id} aria-labelledby={`${cat.id}-titolo`}>
+            <div class="intro-editoriale">
+                <p class="eyebrow">Percorso {i + 1} di {percorsi.length} · {cat.corsi.length} corsi</p>
+                <h2 class="titolo-sezione" id={`${cat.id}-titolo`}>{cat.nome}</h2>
+                <p set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
             </div>
+            <div class="container">
+                <ul class="percorso-corsi">
+                    {cat.corsi.map((c) => (
+                        <li>
+                            <a href={c.url} class="corso-scheda">
+                                <span class="corso-foto" aria-hidden="true">
+                                    <Img src={c.pagina.introImage} alt="" fuoco={c.pagina.introFuoco} loading="lazy" decoding="async" widths={[480, 800]} sizes="(min-width: 1025px) 260px, (min-width: 601px) 45vw, 100vw" width="450" height="338" />
+                                </span>
+                                <h3 class="corso-nome">{nomeBreve(c.nome)}</h3>
+                                <p class="corso-dettagli testo-piccolo">{c.pagina.badge.replace(' - ', ' · ')} · {c.pagina.frequenza}</p>
+                                <span class="link-cta corso-cta">Scopri il corso <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </section>
+    ))}
 
-            <!-- Chiusura: invito al contatto, stesso schema della homepage -->
-            <aside class="corsi-fine" aria-labelledby="corsi-fine-titolo">
+    <!-- Chiusura: invito al contatto (fondo opposto all'ultimo percorso) -->
+    <section class:list={['corsi-chiusura', { 'percorso--soft': percorsi.length % 2 === 1 }]} aria-labelledby="corsi-fine-titolo">
+        <div class="container">
+            <aside class="corsi-fine">
                 <div class="corsi-fine-testo">
                     <h3 class="corsi-fine-titolo" id="corsi-fine-titolo">Non sai quale corso scegliere?</h3>
                     <p>Raccontaci <strong>età, esperienza</strong> e cosa ti piacerebbe provare: ti aiutiamo a trovare il percorso giusto.</p>
@@ -106,10 +112,4 @@ const hero = await heroPagina('corsi');
             </aside>
         </div>
     </section>
-
-    <Fragment slot="scripts">
-        <script>
-            import '../scripts/corsi';
-        </script>
-    </Fragment>
 </Base>

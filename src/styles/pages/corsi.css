@@ -12,7 +12,7 @@
   background: var(--bg-soft);
 }
 
-/* PC e tablet: tre riquadri in alto, i due dell'ultima riga più larghi (6 colonne) */
+/* PC e tablet: tre riquadri per riga, la seconda riga al centro (6 mezze colonne) */
 .stili {
   list-style: none;
   display: grid;
@@ -27,13 +27,13 @@
   grid-column: span 2;
 }
 
-.stili li:nth-child(3n + 1):nth-last-child(2),
-.stili li:nth-child(3n + 2):last-child {
-  grid-column: span 3;
+/* Riquadri tutti larghi uguali: l'ultima riga incompleta si centra (griglia a mezze colonne, ogni riquadro ne occupa due) */
+.stili li:nth-child(3n + 1):nth-last-child(2) {
+  grid-column: 2 / span 2;
 }
 
 .stili li:nth-child(3n + 1):last-child {
-  grid-column: 1 / -1;
+  grid-column: 3 / span 2;
 }
 
 .stile {
@@ -165,22 +165,21 @@
   }
 }
 
-/* Tablet stretto e telefono grande: due riquadri per riga, l'ultimo dispari su tutta la riga */
+/* Tablet stretto e telefono grande: due riquadri per riga, l'ultimo dispari al centro */
 @media (max-width: 800px) {
   .stili {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
   }
 
   .stili li,
   .stili li:nth-child(3n + 1):nth-last-child(2),
-  .stili li:nth-child(3n + 2):last-child,
   .stili li:nth-child(3n + 1):last-child {
-    grid-column: auto;
+    grid-column: span 2;
   }
 
   .stili li:nth-child(odd):last-child {
-    grid-column: 1 / -1;
+    grid-column: 2 / span 2;
   }
 
   .stile {
@@ -201,6 +200,12 @@
   .stili {
     grid-template-columns: minmax(0, 1fr);
     gap: .75rem;
+  }
+
+  .stili li,
+  .stili li:nth-child(3n + 1):nth-last-child(2),
+  .stili li:nth-child(odd):last-child {
+    grid-column: 1 / -1;
   }
 
   .stile {

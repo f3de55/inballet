@@ -62,6 +62,8 @@ for (const t of tendine) {
   t.trigger.addEventListener('click', (e) => {
     if (conPagina) return;
     e.preventDefault();
+    // Con il mouse il pannello si apre già al passaggio: il clic lo lascia aperto invece di chiuderlo
+    if (HOVER.matches) return apri(t);
     aperta(t) ? imposta(t, false) : apri(t);
   });
 

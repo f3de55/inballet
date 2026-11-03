@@ -225,7 +225,9 @@ html.menu-aperto {
   left: 0;
   right: 0;
   bottom: 100%;
-  height: calc(var(--popup-gap) + 1rem);
+  /* Solo lo spazio tra il bordo basso della voce e il pannello: più alto coprirebbe la pillola e ne
+     intercetterebbe i clic */
+  height: calc(var(--popup-gap) - .55rem + 2px);
 }
 
 /* Freccetta che punta alla voce padre, dello stesso azzurro della pillola (la posizione orizzontale

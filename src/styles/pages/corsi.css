@@ -10,8 +10,25 @@
   margin-bottom: 0;
 }
 
+.trova-citazione {
+  width: fit-content;
+  max-width: 100%;
+  margin: 1.75rem auto 0;
+}
+
+.trova-virgolette {
+  display: block;
+  color: var(--primary-blue-dark);
+  font-size: var(--text-2xl);
+  line-height: 1;
+}
+
+.trova-virgolette--fine {
+  text-align: right;
+}
+
 .trova-frase {
-  margin: 1.75rem 0 0;
+  margin: .5rem 0;
   color: var(--heading-color);
   text-align: center;
 }
@@ -57,6 +74,7 @@ html:has(.trova-popup[open]) {
 
 .trova-popup {
   width: min(36rem, calc(100% - 3rem));
+  max-width: none;
   max-height: calc(100dvh - 3rem);
   margin: auto;
   padding: 2rem;
@@ -203,6 +221,10 @@ html:has(.trova-popup[open]) {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
+  .trova-citazione {
+    margin-inline: 0;
+  }
+
   .trova-frase {
     text-align: left;
   }
@@ -228,12 +250,42 @@ html:has(.trova-popup[open]) {
   .trova-popup {
     width: calc(100% - 1.5rem);
     max-height: calc(100dvh - 1.5rem);
-    padding: 1.5rem;
+    padding: 1.25rem;
     border-radius: var(--radius-md);
   }
 
   .trova-popup-chiudi {
     top: .75rem;
     right: .75rem;
+  }
+
+  .trova-popup-intro {
+    margin-bottom: .75rem;
+    font-size: var(--label-size);
+  }
+
+  .trova-opzione {
+    min-height: 56px;
+    gap: .75rem;
+    padding: .7rem 0;
+  }
+
+  .trova-opzione-testo {
+    display: contents;
+  }
+
+  .trova-opzione-nome {
+    font-size: var(--body-size);
+    font-weight: var(--font-semibold);
+    line-height: 1.35;
+  }
+
+  .trova-opzione-testo > .testo-piccolo {
+    font-size: var(--label-size);
+    white-space: nowrap;
+  }
+
+  .trova-opzione > i {
+    display: none;
   }
 }

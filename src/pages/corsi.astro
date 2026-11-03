@@ -59,7 +59,8 @@ const hero = await heroPagina('corsi');
             <p>{totale} corsi a Lainate e Rho, <strong>dai 3 anni agli adulti</strong>.</p>
         </div>
         <div class="container">
-            <div id="trova-scelta" hidden>
+            <div class="trova-citazione" id="trova-scelta" hidden>
+                <span class="trova-virgolette" aria-hidden="true"><i class="fas fa-quote-left"></i></span>
                 <p class="trova-frase testo-evidenza">
                     Voglio scoprire
                     <button type="button" class="trova-selettore" id="trova-apri" aria-haspopup="dialog" aria-controls="trova-popup" aria-expanded="false">
@@ -67,6 +68,7 @@ const hero = await heroPagina('corsi');
                         <i class="fas fa-chevron-down" aria-hidden="true"></i>
                     </button>
                 </p>
+                <span class="trova-virgolette trova-virgolette--fine" aria-hidden="true"><i class="fas fa-quote-right"></i></span>
             </div>
             <noscript>
                 <ul class="trova-alternative">

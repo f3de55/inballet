@@ -4,39 +4,39 @@
 */
 /** `breve`: nome corto usato nel footer, dove lo spazio è minore. */
 export interface Voce { nome: string; href: string; breve?: string }
-export interface Menu { id: string; label: string; href?: string; compatto: boolean; sezioni: { titolo: string; voci: Voce[] }[] }
+export interface Menu { id: string; label: string; href?: string; compatto: boolean; sezioni: { titolo: string; href?: string; voci: Voce[] }[] }
 
 /** Voci della navigazione (desktop e mobile). Corsi apre la sua pagina al clic. */
 export const menu: Menu[] = [
   {
     id: 'corsi', label: 'Corsi', href: '/corsi', compatto: false,
     sezioni: [
-      { titolo: 'Danza Classica e Moderna', voci: [
+      { titolo: 'Danza Classica e Moderna', href: '/corsi#classica-moderna', voci: [
         { nome: 'Avviamento alla Danza', href: '/avviamento-danza' },
         { nome: 'Educazione alla Danza', href: '/educazione-danza' },
         { nome: 'Danza Classica', href: '/danza-classica' },
         { nome: 'Modern', href: '/modern' },
       ] },
-      { titolo: 'Danza Contemporanea', voci: [
+      { titolo: 'Danza Contemporanea', href: '/corsi#contemporanea', voci: [
         { nome: 'Danza Contemporanea', href: '/danza-contemporanea' },
         { nome: 'Danza Contemporanea Adulti', href: '/contemporanea-adulti' },
         { nome: 'Contact Improvisation', href: '/contact-improvisation' },
         { nome: 'Movimento Creativo', href: '/movimento-creativo' },
       ] },
-      { titolo: 'Urban Dance', voci: [
+      { titolo: 'Urban Dance', href: '/corsi#urban', voci: [
         { nome: 'Hip-Hop', href: '/hip-hop' },
         { nome: 'Heels', href: '/heels' },
         { nome: 'Breaking', href: '/breaking' },
         { nome: 'Danza Acrobatica', href: '/danza-acrobatica' },
         { nome: 'Contaminato', href: '/contaminato' },
       ] },
-      { titolo: 'Benessere e Movimento', voci: [
+      { titolo: 'Benessere e Movimento', href: '/corsi#benessere', voci: [
         { nome: 'Yoga', href: '/yoga' },
         { nome: 'Pilates', href: '/pilates' },
         { nome: 'Classi', href: '/classi' },
         { nome: 'Lezioni Individuali', href: '/lezioni-individuali' },
       ] },
-      { titolo: 'Percorsi per Età', voci: [
+      { titolo: 'Percorsi per Età', href: '/corsi#eta', voci: [
         { nome: 'Prima Infanzia', href: '/prima-infanzia' },
         { nome: 'Seconda Infanzia', href: '/seconda-infanzia' },
         { nome: 'Bambini', href: '/bambini' },

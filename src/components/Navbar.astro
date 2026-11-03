@@ -32,7 +32,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
                         <div class="mega-menu-content">
                             {m.sezioni.map((s) => (
                                 <div class="mega-menu-section">
-                                    <p class="mega-titolo titoletto">{s.titolo}</p>
+                                    <p class="mega-titolo titoletto">{s.href ? <a href={s.href}>{s.titolo}</a> : s.titolo}</p>
                                     <ul>
                                         {s.voci.map((v) => (
                                             <li><a href={v.href} class:list={{ attiva: attiva(v.href) }} aria-current={attiva(v.href) ? 'page' : undefined}>{v.nome}</a></li>
@@ -73,7 +73,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
                 <div class="mobile-submenu-inner">
                     {m.sezioni.map((s) => (
                         <div class="mobile-gruppo">
-                            {s.titolo !== m.label && <p class="mobile-gruppo-titolo titoletto">{s.titolo}</p>}
+                            {s.titolo !== m.label && <p class="mobile-gruppo-titolo titoletto">{s.href ? <a href={s.href}>{s.titolo}</a> : s.titolo}</p>}
                             <ul>
                                 {s.voci.map((v) => (
                                     <li><a href={v.href} class:list={{ attiva: attiva(v.href) }} aria-current={attiva(v.href) ? 'page' : undefined}>{v.nome}</a></li>

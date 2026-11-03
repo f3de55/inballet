@@ -27,10 +27,6 @@
   min-width: 0;
 }
 
-.trova-domanda {
-  margin: 0 0 .5rem;
-}
-
 .trova-selettore {
   display: flex;
   align-items: center;

@@ -1,11 +1,14 @@
 ---
 /**
  * «Corsi simili»: gli altri corsi della stessa categoria (scuola.ts → categorieCorsi), escluso
- * quello della pagina. Stesso schema di «La danza oltre i corsi» in homepage: celle uguali con
- * filetti tra una cella e l'altra, centrate; 3-4 per riga su desktop, 2 su tablet, elenco compatto su mobile.
+ * quello della pagina. Desktop e tablet mantengono le celle a filetti; su mobile
+ * si usano le stesse card fotografiche e lo scorrimento della pagina /corsi.
  */
 import { getCollection } from 'astro:content';
 import { categorieCorsi } from '../data/scuola';
+import { immaginiSottocorsi } from '../data/immagini-sottocorsi';
+import ElencoPercorsi from './ElencoPercorsi.astro';
+import SchedaPercorso from './SchedaPercorso.astro';
 import '../styles/components/corsi-simili.css';
 
 interface Props {
@@ -20,12 +23,17 @@ const pagine = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.
 const nomeBreve = (nome: string) => nome.replace(/\s*\(.*\)$/, '');
 const altri = (categoria?.corsi ?? [])
   .filter((k) => k.url !== `/${corso}`)
-  .map((k) => ({
-    nome: nomeBreve(k.nome),
-    href: k.url,
-    eta: (pagine.get(k.url)?.badge ?? '').replace(' - ', ' · '),
-    frequenza: pagine.get(k.url)?.frequenza ?? '',
-  }));
+  .map((k) => {
+    const immagine = immaginiSottocorsi[k.url.slice(1)];
+    if (!immagine) throw new Error(`Immagine del corso simile non trovata: ${k.url}`);
+    return {
+      nome: nomeBreve(k.nome),
+      href: k.url,
+      eta: (pagine.get(k.url)?.badge ?? '').replace(' - ', ' · '),
+      frequenza: pagine.get(k.url)?.frequenza ?? '',
+      immagine,
+    };
+  });
 ---
 
 {categoria && altri.length > 0 && (
@@ -53,6 +61,12 @@ const altri = (categoria?.corsi ?? [])
         ))}
       </ul>
     </div>
+
+    <ElencoPercorsi class={`container simili-mobile${categoria.id === 'eta' ? ' simili-mobile--eta' : ''}`} id="simili-corsi" titolo="simili-titolo" nome={categoria.nome}>
+      {altri.map((c) => (
+        <SchedaPercorso href={c.href} nome={c.nome} idTitolo={`simili-${c.href.slice(1)}-nome`} etichetta={c.eta} dettaglio={c.frequenza} immagine={c.immagine} iconaDettaglio="far fa-clock" />
+      ))}
+    </ElencoPercorsi>
   </section>
 )}
 

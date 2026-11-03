@@ -159,3 +159,20 @@ document.getElementById('skip-link')?.addEventListener('click', (e) => {
   main.focus();
   main.scrollIntoView({ block: 'start' });
 });
+
+// --- Link verso un'ancora della pagina in cui ci si trova (es. /corsi#urban dentro /corsi) ---
+// Il browser non rifà la navigazione: serve chiudere menu e tendine e scorrere alla sezione a mano
+document.querySelectorAll<HTMLAnchorElement>('.nav-container a[href*="#"], .mobile-menu a[href*="#"]').forEach((link) => {
+  link.addEventListener('click', (e) => {
+    const url = new URL(link.href, location.href);
+    if (url.origin !== location.origin || url.pathname.replace(/(.)\/$/, '$1') !== location.pathname.replace(/(.)\/$/, '$1')) return;
+    const target = url.hash.length > 1 ? document.getElementById(decodeURIComponent(url.hash.slice(1))) : null;
+    if (!target) return;
+    e.preventDefault();
+    chiudiTutte();
+    if (menu.classList.contains('active')) impostaMenu(false);
+    (document.activeElement as HTMLElement | null)?.blur();
+    history.pushState(null, '', url.hash);
+    target.scrollIntoView({ block: 'start' });
+  });
+});

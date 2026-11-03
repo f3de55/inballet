@@ -133,7 +133,14 @@ davvero andando: niente riquadro nero mentre carica */
 }
 
 .story-cta {
-  margin-top: 2.25rem;
+  /* A blocco (non inline): niente spazio in più dalla riga di testo sopra e sotto */
+  display: flex;
+  width: fit-content;
+  margin-top: 1.85rem;
+}
+
+.story-cta + .story-quote {
+  margin-top: 2.65rem;
 }
 
 /* Spazio per la cornice sfalsata (in basso a sinistra) dentro la colonna */

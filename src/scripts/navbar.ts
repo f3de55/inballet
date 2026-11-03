@@ -22,7 +22,17 @@ const tendine: Tendina[] = [...document.querySelectorAll<HTMLElement>('.nav-item
   return trigger && pannello ? [{ item, trigger, pannello }] : [];
 });
 
+/** La freccetta del pannello punta al centro della voce padre (il pannello Corsi è centrato sulla pagina, non sulla voce). */
+function puntaFreccia(t: Tendina) {
+  const p = t.pannello.getBoundingClientRect();
+  const v = t.trigger.getBoundingClientRect();
+  if (!p.width || !v.width) return;
+  const x = Math.min(Math.max(v.left + v.width / 2 - p.left, 24), p.width - 24);
+  t.pannello.style.setProperty('--freccia-x', `${x}px`);
+}
+
 function imposta(t: Tendina, aperta: boolean) {
+  if (aperta) puntaFreccia(t);
   clearTimeout(t.timer);
   t.pannello.classList.toggle('active', aperta);
   t.pannello.inert = !aperta;
@@ -72,6 +82,15 @@ for (const t of tendine) {
 document.addEventListener('click', (e) => {
   if (!(e.target as Element).closest('.nav-item')) chiudiTutte();
 });
+
+// Voci e pannelli cambiano misura (resize, navbar ridotta allo scroll): la freccetta li segue
+const aggiornaFrecce = () => tendine.forEach(puntaFreccia);
+const osservatore = new ResizeObserver(aggiornaFrecce);
+const nav = document.querySelector('.nav-menu');
+if (nav) osservatore.observe(nav);
+tendine.forEach((t) => osservatore.observe(t.trigger));
+window.addEventListener('resize', aggiornaFrecce);
+document.fonts?.ready.then(aggiornaFrecce);
 
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape') return;

@@ -1,7 +1,7 @@
 /*
  * Pagina Corsi.
  * «Trova il tuo corso» (fondo azzurrino): un riquadro fotografico per stile, con nome e numero dei corsi sopra la
- * foto, che porta alla sezione dello stile. Tutte le famiglie usano le stesse righe editoriali aperte,
+ * foto, che porta alla sezione dello stile. Ogni famiglia occupa una sola fila orizzontale,
  * con fotografie e blocchi di testo di misure uniformi. In fondo l'invito al contatto.
  */
 
@@ -187,12 +187,11 @@
 }
 
 /* ---------- Sezioni degli stili ----------
-   Un unico formato per tutti i sottocorsi: righe editoriali aperte, con foto 3:2
-   e testi sulla pagina. Nessuna variante per categoria, nessun pannello o ombra.
-   Le righe tipografiche riservano lo stesso spazio in tutte le sezioni, così
-   larghezza e altezza restano uguali anche con nomi e descrizioni diversi. */
+   Una sola fila per categoria, senza ritorni a capo: cinque colonne su desktop.
+   Le categorie con quattro elementi mantengono la stessa larghezza e si centrano.
+   Su schermi più stretti si scorre orizzontalmente, anche con frecce e tastiera. */
 .corsi-stile {
-  padding: var(--section-y) 0;
+  padding: calc(var(--section-y) * .75) 0;
   background: var(--white);
 }
 
@@ -200,13 +199,40 @@
   background: var(--bg-soft);
 }
 
+.corsi-stile-contenuto {
+  margin-top: 2rem;
+}
+
+.corsi-stile-comandi:not([hidden]) {
+  display: flex;
+  justify-content: flex-end;
+  gap: .5rem;
+  margin-bottom: .75rem;
+}
+
+.corsi-stile-comandi button:disabled {
+  opacity: .35;
+  cursor: default;
+}
+
 .corsi-stile-elenco {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 2rem;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1.5rem;
+  justify-content: safe center;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-blue) transparent;
   list-style: none;
-  padding: 0;
-  margin: var(--spazio-intestazione) 0 0;
+  padding: .5rem .5rem 1rem;
+  margin: -.5rem -.5rem 0;
+}
+
+.corsi-stile-elenco:focus-visible {
+  outline: 2px solid var(--primary-blue-dark);
+  outline-offset: 4px;
 }
 
 .corsi-stile .corsi-stile-indice {
@@ -223,20 +249,15 @@
 }
 
 .corsi-scheda {
+  flex: 0 0 calc((100% - 6rem) / 5);
   min-width: 0;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--linea);
-}
-
-.corsi-scheda:last-child {
-  border-bottom-color: transparent;
+  scroll-snap-align: start;
 }
 
 .corsi-scheda-link {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-  align-items: center;
-  gap: 2rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .75rem;
   width: 100%;
   color: inherit;
   text-decoration: none;
@@ -265,10 +286,8 @@
   display: grid;
   grid-template-rows:
     calc(2 * var(--label-size) * var(--label-lh))
-    calc(2 * var(--h3-size) * var(--h3-lh))
-    calc(3 * var(--small-size) * var(--small-lh))
-    calc(2 * var(--small-size) * var(--small-lh));
-  align-content: center;
+    calc(2 * var(--h4-size) * var(--h4-lh))
+    calc(2 * var(--small-size) * var(--small-lh) + .75rem);
   gap: .5rem;
   min-width: 0;
 }
@@ -284,17 +303,13 @@
   margin: 0;
 }
 
-.corsi-scheda-descrizione {
-  align-self: center;
-  margin: 0;
-  max-width: 38rem;
-}
-
 .corsi-scheda-fondo {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: .5rem;
+  padding-top: .5rem;
+  border-top: 1px solid var(--linea);
 }
 
 .corsi-scheda-frequenza {
@@ -314,8 +329,8 @@
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
   color: var(--primary-blue-dark);
   font-size: var(--text-xl);
   transition: transform var(--transition-base);
@@ -335,29 +350,36 @@
   }
 }
 
+@media (max-width: 1200px) {
+  .corsi-scheda {
+    flex-basis: calc((100% - 4.5rem) / 4);
+  }
+}
+
 @media (max-width: 900px) {
   .corsi-stile .corsi-stile-indice {
     justify-content: flex-start;
   }
+
+  .corsi-scheda {
+    flex-basis: calc((100% - 3rem) / 3);
+  }
 }
 
 @media (max-width: 700px) {
-  .corsi-stile-elenco {
-    gap: 1.5rem;
-  }
-
   .corsi-scheda {
-    padding-bottom: 1.5rem;
-  }
-
-  .corsi-scheda-link {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
+    flex-basis: calc((100% - 1.5rem) / 2);
   }
 
   .corsi-stile .corsi-stile-indice {
     flex-wrap: wrap;
     gap: .6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .corsi-scheda {
+    flex-basis: 80%;
   }
 }
 

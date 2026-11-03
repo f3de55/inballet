@@ -296,6 +296,10 @@ davvero andando: niente riquadro nero mentre carica */
   display: block;
 }
 
+.corsi-stile-segno {
+  display: none;
+}
+
 .corsi-stile-desc {
   margin: .5rem 0 1rem;
   color: var(--body-color-su-scuro);
@@ -459,10 +463,26 @@ davvero andando: niente riquadro nero mentre carica */
   }
 
   .corsi-stile-nome {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
     grid-column: 1;
     font-size: var(--h4-size);
     line-height: var(--h4-lh);
     letter-spacing: var(--h4-ls);
+  }
+
+  .corsi-stile-segno {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--primary-blue) 30%, var(--white));
+    color: var(--primary-blue-dark);
+    font-size: var(--text-xs);
+    line-height: 1;
   }
 
   .corsi-indice .corsi-stile-desc {

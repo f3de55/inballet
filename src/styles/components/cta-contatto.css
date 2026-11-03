@@ -50,6 +50,12 @@
   gap: 1rem;
 }
 
+@media (max-width: 768px) {
+  .cta-wrapper {
+    padding: 0 1.5rem;
+  }
+}
+
 @media (max-width: 600px) {
   .cta-wrapper {
     padding: 0 1.5rem;

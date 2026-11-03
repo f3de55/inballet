@@ -321,6 +321,17 @@
   }
 }
 
+/* Stesso margine laterale del .container (1.5rem) già da 768px */
+@media (max-width: 768px) {
+  .footer-main {
+    padding-inline: 1.5rem;
+  }
+
+  .footer-bottom {
+    width: min(100% - 3rem, 1200px - 4rem);
+  }
+}
+
 /* Mobile: contatti subito dopo il marchio, mappa del sito a fisarmonica */
 @media (max-width: 700px) {
   .footer-main {

@@ -5,9 +5,9 @@ Il riferimento visivo è la grafica di `grafica-contatti`: soggetti leggeri,
 inclinati nell'angolo inferiore destro e attenuati da un velo dello stesso
 colore del riquadro. Le illustrazioni sono visibili su desktop e tablet,
 con maggiore evidenza nell'angolo e protezione dietro ai testi. Nel layout
-mobile le illustrazioni sono immagini separate dal testo, nelle stesse card
-scorrevoli dei singoli corsi di `/corsi`. Su desktop e tablet rimangono
-illustrazioni di sfondo nella griglia a filetti.
+mobile le card scorrevoli usano invece le fotografie delle pagine collegate,
+definite in `src/data/immagini-pagine.ts`. Queste illustrazioni rimangono
+solo come sfondi nella griglia a filetti di desktop e tablet.
 
 | File | Soggetto e significato |
 | --- | --- |

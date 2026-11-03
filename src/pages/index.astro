@@ -10,6 +10,7 @@ import { ANNI_ATTIVITA, categorieCorsi, faqHome, FONDAZIONE, scuola } from '../d
 import { getAsset, sfondo, webpSrcset } from '../lib/images';
 import { schemaHome } from '../lib/schema';
 import { enfatizza } from '../lib/text';
+import { immaginePagina } from '../data/immagini-pagine';
 import { PUBLIC_GOOGLE_PLACE_ID } from 'astro:env/client';
 
 // Video dell'hero (ricodificati da src/assets/video/hero-video-inballet.mp4, senza audio):
@@ -217,7 +218,7 @@ const schema = schemaHome(socialImage);
 
         <ElencoPercorsi class="container oltre-mobile" id="oltre-percorsi" titolo="oltre-titolo" nome="La danza oltre i corsi" tipo="Percorsi">
             {vociOltre.map((v, indice) => (
-                <SchedaPercorso href={v.href} nome={v.nome} idTitolo={`oltre-${v.illustrazione}-nome`} etichetta={indice < formazione.voci.length ? 'Formazione' : 'Progetto'} dettaglio={v.testo} immagine={{ src: `grafica-oltre/${v.illustrazione}.png` }} illustrazione />
+                <SchedaPercorso href={v.href} nome={v.nome} idTitolo={`oltre-${v.illustrazione}-nome`} etichetta={indice < formazione.voci.length ? 'Formazione' : 'Progetto'} dettaglio={v.testo} immagine={immaginePagina(v.href)} />
             ))}
         </ElencoPercorsi>
     </section>

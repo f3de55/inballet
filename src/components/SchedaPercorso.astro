@@ -1,6 +1,7 @@
 ---
 /** La stessa card per i singoli corsi e per formazione e progetti della home. */
 import Img from './Img.astro';
+import type { Fuoco } from '../lib/images';
 
 interface Props {
   href: string;
@@ -8,18 +9,17 @@ interface Props {
   idTitolo: string;
   etichetta: string;
   dettaglio: string;
-  immagine: { src: string; alt?: string };
-  illustrazione?: boolean;
+  immagine: { src: string; alt?: string; fuoco?: Fuoco };
   iconaDettaglio?: string;
 }
 
-const { href, nome, idTitolo, etichetta, dettaglio, immagine, illustrazione = false, iconaDettaglio } = Astro.props;
+const { href, nome, idTitolo, etichetta, dettaglio, immagine, iconaDettaglio } = Astro.props;
 ---
 
 <li class="corsi-scheda">
   <a href={href} class="corsi-scheda-link" aria-labelledby={idTitolo}>
-    <div class:list={['corsi-scheda-visual', { 'corsi-scheda-visual--illustrazione': illustrazione }]}>
-      <Img class:list={['corsi-scheda-foto', { 'corsi-scheda-foto--illustrazione': illustrazione }]} src={immagine.src} alt={immagine.alt ?? ''} width={illustrazione ? 480 : 1536} height={illustrazione ? 480 : 1024} loading="lazy" decoding="async" widths={[320, 480, 800]} sizes="(min-width: 1200px) 352px, (min-width: 901px) 33vw, (min-width: 601px) 50vw, 80vw" />
+    <div class="corsi-scheda-visual">
+      <Img class="corsi-scheda-foto" src={immagine.src} alt={immagine.alt ?? ''} fuoco={immagine.fuoco} width={1536} height={1024} loading="lazy" decoding="async" widths={[320, 480, 800]} sizes="(min-width: 1200px) 352px, (min-width: 901px) 33vw, (min-width: 601px) 50vw, 80vw" />
     </div>
     <div class="corsi-scheda-corpo">
       <p class="eyebrow corsi-scheda-eta">{etichetta}</p>

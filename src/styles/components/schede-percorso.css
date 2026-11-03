@@ -239,12 +239,3 @@
     transform: none;
   }
 }
-
-/* Le illustrazioni della home sono immagini separate dal testo. */
-.corsi-scheda-visual--illustrazione {
-  background: var(--white);
-}
-
-.corsi-scheda-foto--illustrazione {
-  object-fit: contain;
-}

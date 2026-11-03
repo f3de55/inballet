@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
+import { immaginiPagine } from '../data/immagini-pagine';
 import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import '../styles/components/intro-split.css';
@@ -66,7 +67,7 @@ const classi = [
                     </div>
                 </div>
                 <div class="intro-split-visual foto-cornice">
-                    <Img src="gallery-4.jpg" alt="Un'insegnante guida un'allieva durante la lezione" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
+                    <Img {...immaginiPagine['classi-integrate']} widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 560px" />
                 </div>
             </div>
         </section>

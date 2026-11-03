@@ -76,11 +76,11 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <!-- Griglie editoriali ariose: 2 + 2 o 3 + 2 corsi su desktop, tutti dello stesso formato. -->
+    <!-- Tre sottocorsi per riga su desktop, con lo stesso formato in tutte le categorie. -->
     {percorsi.map((cat, i) => (
         <section id={cat.id} class:list={['corsi-stile', { 'corsi-stile--soft': i % 2 === 1 }, i === 0 || i === 4 ? ['decoro-onde', { 'decoro-onde--sinistra': i === 4 }] : '']} aria-labelledby={`${cat.id}-titolo`}>
             <div class="intro-editoriale">
-                <p class="eyebrow corsi-stile-indice"><span aria-hidden="true">0{i + 1} / 05</span> {cat.corsi.length} percorsi da scoprire</p>
+                <p class="eyebrow">Corso {i + 1}</p>
                 <h2 class="titolo-sezione" id={`${cat.id}-titolo`} set:html={titoloEm(cat.nome)} />
                 <p set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
             </div>

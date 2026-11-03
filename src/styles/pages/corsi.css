@@ -187,8 +187,8 @@
 }
 
 /* ---------- Sezioni degli stili ----------
-   Moduli aperti e tutti uguali: 2 + 2 o 3 + 2 su due righe desktop.
-   La griglia a mezze colonne mantiene la stessa larghezza in tutte le categorie.
+   Moduli aperti e tutti uguali: tre colonne fisse su desktop in tutte le categorie.
+   Le righe incomplete seguono lo stesso allineamento delle righe piene.
    Filetti tra le colonne e le righe, senza pannelli, ombre o bordi esterni. */
 .corsi-stile {
   padding: calc(var(--section-y) * .75) 0;
@@ -217,23 +217,17 @@
 
 .corsi-stile-elenco {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2.5rem;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Cinque corsi: tre sopra e due centrati sotto. Quattro: due coppie centrate. */
+/* La larghezza non dipende dal numero di corsi della categoria. */
 .corsi-scheda {
   position: relative;
-  grid-column: span 2;
   min-width: 0;
-}
-
-.corsi-scheda:nth-child(3n + 1):nth-last-child(2),
-.corsi-stile-elenco:has(> :nth-child(4):last-child) > .corsi-scheda:nth-child(odd) {
-  grid-column: 2 / span 2;
 }
 
 /* I divisori seguono i moduli, senza disegnare una cornice intorno alla griglia. */
@@ -256,23 +250,16 @@
   content: none;
 }
 
-:where(.corsi-stile-elenco:has(> :nth-child(4):last-child)) > .corsi-scheda::before {
-  content: '';
-}
-
-:where(.corsi-stile-elenco:has(> :nth-child(4):last-child)) > .corsi-scheda:where(:nth-child(odd))::before {
-  content: none;
-}
-
 .corsi-scheda::after {
+  content: none;
   right: 0;
   bottom: -1.25rem;
   left: 0;
   height: 1px;
 }
 
-.corsi-scheda:nth-last-child(-n + 2)::after {
-  content: none;
+.corsi-scheda:where(:has(~ .corsi-scheda:nth-child(3n + 1)))::after {
+  content: '';
 }
 
 .corsi-scheda-link {
@@ -292,6 +279,7 @@
 .corsi-scheda-visual {
   overflow: hidden;
   aspect-ratio: 3 / 2;
+  border-radius: var(--radius-img);
   background: var(--bg-soft);
 }
 
@@ -371,37 +359,10 @@
   }
 }
 
-.corsi-stile .corsi-stile-indice {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.corsi-stile-indice span {
-  padding-right: 1rem;
-  border-right: 1px solid var(--linea);
-  font-variant-numeric: tabular-nums;
-}
-
 @media (max-width: 900px) {
-  .corsi-stile .corsi-stile-indice {
-    justify-content: flex-start;
-  }
-
   .corsi-stile-elenco {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2rem;
-  }
-
-  .corsi-stile-elenco > .corsi-scheda,
-  .corsi-scheda:nth-child(3n + 1):nth-last-child(2),
-  .corsi-stile-elenco:has(> :nth-child(4):last-child) > .corsi-scheda:nth-child(odd) {
-    grid-column: span 2;
-  }
-
-  .corsi-stile-elenco > .corsi-scheda:last-child:nth-child(odd) {
-    grid-column: 2 / span 2;
   }
 
   .corsi-stile-elenco > .corsi-scheda::before {
@@ -414,13 +375,12 @@
   }
 
   .corsi-stile-elenco > .corsi-scheda::after {
-    content: '';
+    content: none;
     bottom: -1rem;
   }
 
-  .corsi-stile-elenco > .corsi-scheda:last-child::after,
-  .corsi-stile-elenco:has(> :last-child:nth-child(even)) > .corsi-scheda:nth-last-child(2)::after {
-    content: none;
+  .corsi-stile-elenco > .corsi-scheda:where(:has(~ .corsi-scheda:nth-child(2n + 1)))::after {
+    content: '';
   }
 }
 
@@ -458,11 +418,6 @@
       calc(2 * var(--label-size) * var(--label-lh))
       calc(2 * var(--h4-size) * var(--h4-lh))
       calc(2 * var(--small-size) * var(--small-lh));
-  }
-
-  .corsi-stile .corsi-stile-indice {
-    flex-wrap: wrap;
-    gap: .6rem;
   }
 }
 

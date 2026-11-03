@@ -106,6 +106,7 @@
   /* Testo di apertura: sotto il titolo della hero (.hero-lead) e righe in evidenza (.testo-evidenza) */
   --lead-size: var(--text-xl);
   --hero-lead-size: calc(var(--lead-size) * .92);
+  --hero-lead-size-mobile: calc(var(--lead-size) * .86);
   --lead-weight: var(--font-light);
   --lead-lh: 1.55;
   /* Etichetta maiuscola: eyebrow sopra i titoli, categorie, intestazioni di tabella (.titoletto, .eyebrow) */

@@ -1,5 +1,6 @@
 # Workflow del repository
 
-- Al termine di ogni intervento, eseguire `npm run build`, creare il commit delle modifiche dell’intervento e fare push sul branch corrente, salvo istruzioni diverse dell’utente.
+- Al termine di ogni intervento, eseguire la build del sito e anche quella Docker con `docker build -t inballet-site .` (il Dockerfile esegue `npm run build`), aggiornare il container locale, creare il commit delle modifiche dell’intervento e fare push sul branch corrente, salvo istruzioni diverse dell’utente. La sola build npm non basta.
+- Dopo una build Docker riuscita, ricreare `inballet-web` con `docker rm -f inballet-web` e `docker run -d --name inballet-web -p 3000:8080 --env-file .env -v inballet-data:/app/data inballet-site`, preservando il volume dati e le eventuali altre impostazioni del container esistente. Non rimuovere il volume. Verificare che `http://localhost:3000/corsi` risponda e contenga le modifiche prima di concludere.
 - Preservare le modifiche locali preesistenti e includerle nel commit solo se fanno parte dell’intervento autorizzato.
 - Nella pagina `/corsi`, ogni categoria deve avere una sola fila orizzontale di sottocorsi affiancati, con cinque elementi visibili su desktop e scorrimento orizzontale sui display più stretti. Tutti i sottocorsi devono avere larghezza e altezza uguali a parità di viewport. Usare un layout editoriale aperto con immagini uniformi, evitando pannelli da card, varianti di misura tra categorie e liste verticali con un corso per riga.

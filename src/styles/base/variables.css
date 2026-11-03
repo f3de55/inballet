@@ -180,10 +180,10 @@
   --onda-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28' preserveAspectRatio='none'%3E%3Cpath fill-opacity='.55' d='M0 9Q30 1 60 9T120 9V28H0Z'/%3E%3Cpath d='M0 19Q30 11 60 19T120 19V28H0Z'/%3E%3C/svg%3E");
   --onda-svg-giu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28' preserveAspectRatio='none'%3E%3Cg transform='matrix(1 0 0 -1 0 28)'%3E%3Cpath fill-opacity='.55' d='M0 9Q30 1 60 9T120 9V28H0Z'/%3E%3Cpath d='M0 19Q30 11 60 19T120 19V28H0Z'/%3E%3C/g%3E%3C/svg%3E");
   /* Immagini decorative (percorsi risolti da Vite): onde azzurre già sbiadite nel file, la copia
-     specchiata, e i veli per le sezioni scure senza foto */
+     specchiata, e le curve leggere per le sezioni scure senza foto */
   --decoro-onde: url('../../assets/images/decorazioni/onde-destra.webp');
   --decoro-onde-sinistra: url('../../assets/images/decorazioni/onde-sinistra.webp');
-  --decoro-veli-scuro: url('../../assets/images/decorazioni/veli-azzurri-scuro.png');
+  --decoro-curve-scuro: url('../../assets/images/decorazioni/curve-scuro.svg');
 }
 
 /* Tablet e mobile: navbar più bassa (menu hamburger) */

@@ -341,7 +341,7 @@ html.menu-aperto {
 /* Titolo di gruppo cliccabile (porta alla sua sezione in /corsi): stesso aspetto del titolo semplice */
 .mega-menu-section .mega-titolo a,
 .mobile-gruppo .mobile-gruppo-titolo a {
-  display: inline;
+  display: block;
   padding: 0;
   color: inherit;
   font: inherit;

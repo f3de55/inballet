@@ -29,18 +29,18 @@ const fondiDesktop = Object.fromEntries(await Promise.all(stili.map(async (cat) 
 // Formazione e progetti, come nel menu del sito: due gruppi con titolo, frase e voci
 const formazione = {
   voci: [
-    { nome: 'Formazione Insegnanti di Danza', testo: 'Biennale, titolo nazionale CSEN e CONI', icona: 'fa-graduation-cap', href: '/formazione-insegnanti' },
-    { nome: 'Formazioni Personalizzate', testo: 'Workshop per educatori e terapeuti', icona: 'fa-chalkboard-user', href: '/formazioni-personalizzate' },
+    { nome: 'Formazione Insegnanti di Danza', testo: 'Biennale, titolo nazionale CSEN e CONI', href: '/formazione-insegnanti' },
+    { nome: 'Formazioni Personalizzate', testo: 'Workshop per educatori e terapeuti', href: '/formazioni-personalizzate' },
   ],
 };
 const progetti = {
   voci: [
-    { nome: 'Spettacoli ed Eventi', testo: 'Spettacoli, saggi e workshop', icona: 'fa-masks-theater', href: '/spettacoli-eventi' },
-    { nome: 'Collaborazioni con le Scuole', testo: 'Danza a scuola, dal nido alle superiori', icona: 'fa-school', href: '/collaborazioni-scuole' },
-    { nome: 'Sportello Psicologico', testo: 'Ascolto per famiglie e bambini', icona: 'fa-comments', href: '/sportello-psicologico' },
-    { nome: 'Progetto NoiConVoi', testo: 'Danza per ragazzi con disabilità', icona: 'fa-heart', href: '/progetto-noiconvoi' },
-    { nome: 'Classi Integrate', testo: 'Corsi aperti ai bisogni speciali', icona: 'fa-universal-access', href: '/classi-integrate' },
-    { nome: 'Sostenitori', testo: "Donazioni e volontariato d'impresa", icona: 'fa-hand-holding-heart', href: '/sostenitori' },
+    { nome: 'Spettacoli ed Eventi', testo: 'Spettacoli, saggi e workshop', href: '/spettacoli-eventi' },
+    { nome: 'Collaborazioni con le Scuole', testo: 'Danza a scuola, dal nido alle superiori', href: '/collaborazioni-scuole' },
+    { nome: 'Sportello Psicologico', testo: 'Ascolto per famiglie e bambini', href: '/sportello-psicologico' },
+    { nome: 'Progetto NoiConVoi', testo: 'Danza per ragazzi con disabilità', href: '/progetto-noiconvoi' },
+    { nome: 'Classi Integrate', testo: 'Corsi aperti ai bisogni speciali', href: '/classi-integrate' },
+    { nome: 'Sostenitori', testo: "Donazioni e volontariato d'impresa", href: '/sostenitori' },
   ],
 };
 // Le voci di entrambi i gruppi (come nel menu) in un'unica griglia regolare: 8 celle, 4 per riga
@@ -189,8 +189,8 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Formazione e progetti (come nel menu): una sola griglia regolare di 8 celle uguali con filetti tra le
-         celle (come i loghi dei sostenitori). Desktop 4 per riga, tablet 2, mobile elenco compatto -->
+    <!-- Formazione e progetti: fondali grafici come nei corsi, con box compatti senza icone.
+         Desktop 4 per riga, tablet 2, mobile una colonna. -->
     <section class="oltre-section" aria-labelledby="oltre-titolo">
         <div class="intro-editoriale">
             <p class="eyebrow">Formazione e progetti</p>
@@ -200,14 +200,12 @@ const schema = schemaHome(socialImage);
 
         <div class="oltre-layout">
             <ul class="oltre-lista">
-                {vociOltre.map((v) => (
+                {vociOltre.map((v, indice) => (
                     <li>
+                        <Img class="oltre-sfondo" src={`grafica-corsi/${stili[indice % stili.length].id}.png`} alt="" aria-hidden="true" widths={[400, 640, 960]} sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 280px" loading="lazy" decoding="async" />
                         <a href={v.href} class="oltre-voce">
-                            <div class="oltre-icona" aria-hidden="true"><i class={`fas ${v.icona}`}></i></div>
-                            <div class="oltre-testo-voce">
-                                <h3 class="oltre-nome">{v.nome}</h3>
-                                <p class="oltre-desc testo-piccolo">{v.testo}</p>
-                            </div>
+                            <h3 class="oltre-nome">{v.nome}</h3>
+                            <p class="oltre-desc testo-piccolo">{v.testo}</p>
                             <p class="link-cta oltre-cta">Scopri di più <i class="fas fa-arrow-right" aria-hidden="true"></i></p>
                         </a>
                     </li>

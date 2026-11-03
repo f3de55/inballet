@@ -338,6 +338,22 @@ html.menu-aperto {
   color: var(--white);
 }
 
+/* Titolo di gruppo cliccabile (porta alla sua sezione in /corsi): stesso aspetto del titolo semplice */
+.mega-menu-section .mega-titolo a,
+.mobile-gruppo .mobile-gruppo-titolo a {
+  display: inline;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-transform: inherit;
+}
+
+.mega-menu-section .mega-titolo a::before {
+  content: none;
+}
+
 /* Area di tocco 44px, icona a filo destro come la X del menu */
 .mobile-menu-btn {
   display: none;

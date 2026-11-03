@@ -689,7 +689,7 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 
 }
 
-/* Formazione e progetti: box con gli stessi fondali azzurri dei corsi.
+/* Formazione e progetti: fondali azzurri dei corsi e filetti divisori originali.
    4 per riga su desktop, 2 su tablet, una colonna compatta su mobile. */
 .oltre-section {
   padding: var(--section-y) 0;
@@ -706,9 +706,11 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   list-style: none;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
+  gap: 1px;
   margin: 0;
   padding: 0;
+  background: var(--linea);
+  border-block: 1px solid var(--linea);
 }
 
 /* Ogni box occupa 3 righe della griglia (nome, frase, «Scopri di più») e le eredita con
@@ -721,8 +723,6 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
   grid-template-rows: subgrid;
   row-gap: 0;
   overflow: hidden;
-  border: 2px solid var(--primary-blue);
-  border-radius: var(--radius-card);
   background: rgb(var(--corsi-grafica-rgb));
 }
 
@@ -796,7 +796,6 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 @media (max-width: 600px) {
   .oltre-lista {
     grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
   }
 
   .oltre-lista li {

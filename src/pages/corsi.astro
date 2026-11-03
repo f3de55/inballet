@@ -51,8 +51,7 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <!-- Trova il tuo corso: un riquadro fotografico per stile, porta alla sua sezione qui sotto. Il contorno di ogni
-         riquadro è una linea che gira cambiando colore, da un punto diverso per ognuno (--i) -->
+    <!-- Trova il tuo corso: un riquadro fotografico per stile, porta alla sua sezione qui sotto -->
     <section class="trova-section" aria-labelledby="trova-titolo">
         <div class="intro-editoriale">
             <h2 class="titolo-sezione" id="trova-titolo">Trova il tuo <em>corso</em></h2>
@@ -63,7 +62,6 @@ const hero = await heroPagina('corsi');
                 {percorsi.map((cat, i) => (
                     <li style={`--i: ${i}`}>
                         <a href={`#${cat.id}`} class="stile">
-                            <span class="stile-bordo" aria-hidden="true"></span>
                             <Img class="stile-foto" src={cat.immagine.src} alt="" aria-hidden="true" fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(min-width: 1101px) 560px, (min-width: 481px) 50vw, 100vw" />
                             <div class="stile-testo">
                                 <h3 class="stile-nome titolo-card">{cat.nome}</h3>

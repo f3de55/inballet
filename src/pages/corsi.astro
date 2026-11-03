@@ -76,7 +76,7 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <!-- Una sola fila orizzontale per categoria: cinque corsi visibili su desktop, scorrimento sui display più stretti. -->
+    <!-- Griglie editoriali ariose: 2 + 2 o 3 + 2 corsi su desktop, tutti dello stesso formato. -->
     {percorsi.map((cat, i) => (
         <section id={cat.id} class:list={['corsi-stile', { 'corsi-stile--soft': i % 2 === 1 }, i === 0 || i === 4 ? ['decoro-onde', { 'decoro-onde--sinistra': i === 4 }] : '']} aria-labelledby={`${cat.id}-titolo`}>
             <div class="intro-editoriale">
@@ -94,7 +94,7 @@ const hero = await heroPagina('corsi');
                         <li class="corsi-scheda">
                             <a href={c.url} class="corsi-scheda-link" aria-labelledby={`${c.url.slice(1)}-nome`}>
                                 <div class="corsi-scheda-visual">
-                                    <Img class="corsi-scheda-foto" src={c.immagine.src} alt={c.immagine.alt} width={1536} height={1024} loading="lazy" decoding="async" widths={[320, 480, 800]} sizes="(min-width: 1201px) 208px, (min-width: 901px) 25vw, (min-width: 701px) 33vw, (min-width: 481px) 50vw, 80vw" />
+                                    <Img class="corsi-scheda-foto" src={c.immagine.src} alt={c.immagine.alt} width={1536} height={1024} loading="lazy" decoding="async" widths={[320, 480, 800]} sizes="(min-width: 1200px) 352px, (min-width: 901px) 33vw, (min-width: 601px) 50vw, 80vw" />
                                 </div>
                                 <div class="corsi-scheda-corpo">
                                     <p class="eyebrow corsi-scheda-eta">{c.pagina.badge.replace(' - ', ' · ')}</p>

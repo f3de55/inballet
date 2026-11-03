@@ -1,4 +1,4 @@
-/** Controlli delle file dei corsi: nessuna riproduzione automatica, scorrimento nativo. */
+/** Su mobile la griglia diventa una fila sfogliabile; su desktop tutti i corsi sono visibili. */
 document.querySelectorAll<HTMLElement>('.corsi-stile-contenuto').forEach((contenuto) => {
   const fila = contenuto.querySelector<HTMLElement>('.corsi-stile-elenco');
   const comandi = contenuto.querySelector<HTMLElement>('.corsi-stile-comandi');
@@ -9,6 +9,7 @@ document.querySelectorAll<HTMLElement>('.corsi-stile-contenuto').forEach((conten
   const aggiorna = () => {
     const fine = fila.scrollWidth - fila.clientWidth;
     comandi.hidden = fine <= 1;
+    fila.tabIndex = fine <= 1 ? -1 : 0;
     indietro.disabled = fila.scrollLeft <= 1;
     avanti.disabled = fila.scrollLeft >= fine - 1;
   };

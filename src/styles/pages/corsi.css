@@ -1,8 +1,8 @@
 /*
  * Pagina Corsi.
  * «Trova il tuo corso» (fondo azzurrino): un riquadro fotografico per stile, con nome e numero dei corsi sopra la
- * foto, che porta alla sezione dello stile. Ogni famiglia occupa una sola fila orizzontale,
- * con fotografie e blocchi di testo di misure uniformi. In fondo l'invito al contatto.
+ * foto, che porta alla sezione dello stile. I sottocorsi sono distribuiti in due righe ariose su desktop,
+ * con misure uniformi e filetti divisori; su mobile si sfogliano. In fondo l'invito al contatto.
  */
 
 /* ---------- Trova il tuo corso ---------- */
@@ -187,9 +187,9 @@
 }
 
 /* ---------- Sezioni degli stili ----------
-   Una sola fila per categoria, senza ritorni a capo: cinque colonne su desktop.
-   Le categorie con quattro elementi mantengono la stessa larghezza e si centrano.
-   Su schermi più stretti si scorre orizzontalmente, anche con frecce e tastiera. */
+   Moduli aperti e tutti uguali: 2 + 2 o 3 + 2 su due righe desktop.
+   La griglia a mezze colonne mantiene la stessa larghezza in tutte le categorie.
+   Filetti tra le colonne e le righe, senza pannelli, ombre o bordi esterni. */
 .corsi-stile {
   padding: calc(var(--section-y) * .75) 0;
   background: var(--white);
@@ -216,48 +216,69 @@
 }
 
 .corsi-stile-elenco {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 1.5rem;
-  justify-content: safe center;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary-blue) transparent;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 2.5rem;
   list-style: none;
-  padding: .5rem .5rem 1rem;
-  margin: -.5rem -.5rem 0;
+  padding: 0;
+  margin: 0;
 }
 
-.corsi-stile-elenco:focus-visible {
-  outline: 2px solid var(--primary-blue-dark);
-  outline-offset: 4px;
-}
-
-.corsi-stile .corsi-stile-indice {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.corsi-stile-indice span {
-  padding-right: 1rem;
-  border-right: 1px solid var(--linea);
-  font-variant-numeric: tabular-nums;
-}
-
+/* Cinque corsi: tre sopra e due centrati sotto. Quattro: due coppie centrate. */
 .corsi-scheda {
-  flex: 0 0 calc((100% - 6rem) / 5);
+  position: relative;
+  grid-column: span 2;
   min-width: 0;
-  scroll-snap-align: start;
+}
+
+.corsi-scheda:nth-child(3n + 1):nth-last-child(2),
+.corsi-stile-elenco:has(> :nth-child(4):last-child) > .corsi-scheda:nth-child(odd) {
+  grid-column: 2 / span 2;
+}
+
+/* I divisori seguono i moduli, senza disegnare una cornice intorno alla griglia. */
+.corsi-scheda::before,
+.corsi-scheda::after {
+  content: '';
+  position: absolute;
+  background: var(--linea);
+  pointer-events: none;
+}
+
+.corsi-scheda::before {
+  top: 0;
+  bottom: 0;
+  left: -1.25rem;
+  width: 1px;
+}
+
+.corsi-scheda:where(:nth-child(3n + 1))::before {
+  content: none;
+}
+
+:where(.corsi-stile-elenco:has(> :nth-child(4):last-child)) > .corsi-scheda::before {
+  content: '';
+}
+
+:where(.corsi-stile-elenco:has(> :nth-child(4):last-child)) > .corsi-scheda:where(:nth-child(odd))::before {
+  content: none;
+}
+
+.corsi-scheda::after {
+  right: 0;
+  bottom: -1.25rem;
+  left: 0;
+  height: 1px;
+}
+
+.corsi-scheda:nth-last-child(-n + 2)::after {
+  content: none;
 }
 
 .corsi-scheda-link {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: .75rem;
+  gap: 1rem;
   width: 100%;
   color: inherit;
   text-decoration: none;
@@ -265,7 +286,7 @@
 
 .corsi-scheda-link:focus-visible {
   outline: 3px solid var(--primary-blue-dark);
-  outline-offset: 8px;
+  outline-offset: 6px;
 }
 
 .corsi-scheda-visual {
@@ -285,9 +306,9 @@
 .corsi-scheda-corpo {
   display: grid;
   grid-template-rows:
-    calc(2 * var(--label-size) * var(--label-lh))
+    calc(var(--label-size) * var(--label-lh))
     calc(2 * var(--h4-size) * var(--h4-lh))
-    calc(2 * var(--small-size) * var(--small-lh) + .75rem);
+    calc(2 * var(--small-size) * var(--small-lh));
   gap: .5rem;
   min-width: 0;
 }
@@ -307,9 +328,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: .5rem;
-  padding-top: .5rem;
-  border-top: 1px solid var(--linea);
+  gap: .75rem;
 }
 
 .corsi-scheda-frequenza {
@@ -329,11 +348,12 @@
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-bottom: 2px solid var(--primary-blue);
   color: var(--primary-blue-dark);
   font-size: var(--text-xl);
-  transition: transform var(--transition-base);
+  transition: transform var(--transition-base), border-color var(--transition-base);
 }
 
 .corsi-scheda-freccia i {
@@ -347,13 +367,21 @@
 
   .corsi-scheda-link:hover .corsi-scheda-freccia {
     transform: translate(3px, -3px);
+    border-color: var(--primary-blue-dark);
   }
 }
 
-@media (max-width: 1200px) {
-  .corsi-scheda {
-    flex-basis: calc((100% - 4.5rem) / 4);
-  }
+.corsi-stile .corsi-stile-indice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.corsi-stile-indice span {
+  padding-right: 1rem;
+  border-right: 1px solid var(--linea);
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 900px) {
@@ -361,14 +389,75 @@
     justify-content: flex-start;
   }
 
-  .corsi-scheda {
-    flex-basis: calc((100% - 3rem) / 3);
+  .corsi-stile-elenco {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  .corsi-stile-elenco > .corsi-scheda,
+  .corsi-scheda:nth-child(3n + 1):nth-last-child(2),
+  .corsi-stile-elenco:has(> :nth-child(4):last-child) > .corsi-scheda:nth-child(odd) {
+    grid-column: span 2;
+  }
+
+  .corsi-stile-elenco > .corsi-scheda:last-child:nth-child(odd) {
+    grid-column: 2 / span 2;
+  }
+
+  .corsi-stile-elenco > .corsi-scheda::before {
+    content: none;
+  }
+
+  .corsi-stile-elenco > .corsi-scheda:nth-child(even)::before {
+    content: '';
+    left: -1rem;
+  }
+
+  .corsi-stile-elenco > .corsi-scheda::after {
+    content: '';
+    bottom: -1rem;
+  }
+
+  .corsi-stile-elenco > .corsi-scheda:last-child::after,
+  .corsi-stile-elenco:has(> :last-child:nth-child(even)) > .corsi-scheda:nth-last-child(2)::after {
+    content: none;
   }
 }
 
-@media (max-width: 700px) {
+/* Mobile: un modulo ampio e un'anteprima del successivo; niente lunga colonna. */
+@media (max-width: 600px) {
+  .corsi-stile-elenco {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-blue) transparent;
+    padding: .5rem .5rem 1rem;
+    margin: -.5rem -.5rem 0;
+  }
+
   .corsi-scheda {
-    flex-basis: calc((100% - 1.5rem) / 2);
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+  }
+
+  .corsi-stile-elenco > .corsi-scheda::before {
+    content: '';
+    left: -1rem;
+  }
+
+  .corsi-stile-elenco > .corsi-scheda:first-child::before,
+  .corsi-stile-elenco > .corsi-scheda::after {
+    content: none;
+  }
+
+  .corsi-scheda-corpo {
+    grid-template-rows:
+      calc(2 * var(--label-size) * var(--label-lh))
+      calc(2 * var(--h4-size) * var(--h4-lh))
+      calc(2 * var(--small-size) * var(--small-lh));
   }
 
   .corsi-stile .corsi-stile-indice {
@@ -377,10 +466,9 @@
   }
 }
 
-@media (max-width: 480px) {
-  .corsi-scheda {
-    flex-basis: 80%;
-  }
+.corsi-stile-elenco:focus-visible {
+  outline: 2px solid var(--primary-blue-dark);
+  outline-offset: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {

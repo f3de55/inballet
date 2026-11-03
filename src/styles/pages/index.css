@@ -729,11 +729,11 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
 .oltre-sfondo {
   position: absolute;
-  right: -2rem;
-  bottom: -2.5rem;
+  right: -.75rem;
+  bottom: -1.5rem;
   z-index: 0;
-  width: 13.5rem;
-  height: 14rem;
+  width: 15rem;
+  height: 15rem;
   object-fit: contain;
   object-position: right bottom;
   transform: rotate(-12deg);
@@ -741,14 +741,14 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
   user-select: none;
 }
 
-/* Il velo lascia emergere il soggetto nell'angolo e protegge titoli e descrizioni.
-   La stessa composizione vale per desktop, tablet e mobile. */
+/* Protezione più forte dietro ai titoli, leggera nell'angolo illustrato:
+   il soggetto resta riconoscibile senza ridurre il contrasto del testo. */
 .oltre-lista li::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(125deg, color-mix(in srgb, var(--bg-soft) 98%, transparent) 0%, color-mix(in srgb, var(--bg-soft) 94%, transparent) 38%, color-mix(in srgb, var(--bg-soft) 85%, transparent) 68%, color-mix(in srgb, var(--bg-soft) 65%, transparent) 100%);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--bg-soft) 96%, transparent) 0%, color-mix(in srgb, var(--bg-soft) 86%, transparent) 32%, color-mix(in srgb, var(--bg-soft) 42%, transparent) 63%, color-mix(in srgb, var(--bg-soft) 12%, transparent) 100%);
   pointer-events: none;
 }
 
@@ -788,6 +788,7 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 .oltre-desc {
   display: block;
   margin-top: .75rem;
+  color: var(--dark-navy);
 }
 
 .oltre-voce:focus-visible {
@@ -814,6 +815,12 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 @media (max-width: 600px) {
   .oltre-lista {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Sul layout a colonna singola restano solo testi e filetti. */
+  .oltre-sfondo,
+  .oltre-lista li::after {
+    display: none;
   }
 
   .oltre-lista li {

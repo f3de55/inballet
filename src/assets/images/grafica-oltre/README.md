@@ -3,8 +3,10 @@
 Otto illustrazioni originali ad acquerello azzurro, con fondo trasparente.
 Il riferimento visivo è la grafica di `grafica-contatti`: soggetti leggeri,
 inclinati nell'angolo inferiore destro e attenuati da un velo dello stesso
-colore del riquadro. Il trattamento vale anche su desktop, senza modificare
-i filetti della griglia.
+colore del riquadro. Le illustrazioni sono visibili su desktop e tablet,
+con maggiore evidenza nell'angolo e protezione dietro ai testi. Nel layout
+mobile a colonna singola sono nascoste: restano fondo uniforme, testi e
+filetti originali della griglia.
 
 | File | Soggetto e significato |
 | --- | --- |

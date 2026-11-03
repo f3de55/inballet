@@ -5,8 +5,9 @@ Il riferimento visivo è la grafica di `grafica-contatti`: soggetti leggeri,
 inclinati nell'angolo inferiore destro e attenuati da un velo dello stesso
 colore del riquadro. Le illustrazioni sono visibili su desktop e tablet,
 con maggiore evidenza nell'angolo e protezione dietro ai testi. Nel layout
-mobile a colonna singola sono nascoste: restano fondo uniforme, testi e
-filetti originali della griglia.
+mobile le illustrazioni sono immagini separate dal testo, nelle stesse card
+scorrevoli dei singoli corsi di `/corsi`. Su desktop e tablet rimangono
+illustrazioni di sfondo nella griglia a filetti.
 
 | File | Soggetto e significato |
 | --- | --- |
@@ -20,6 +21,6 @@ filetti originali della griglia.
 | `sostenitori.png` | Mani che sostengono un cuore: donazioni e volontariato a supporto dei progetti. |
 
 Sorgenti PNG trasparenti, convertite in WebP da `Img.astro` al build
-nelle sole misure 240/480 px e caricate in modo differito. I file originali
+in varianti responsive da 240 a 800 px e caricate in modo differito. I file originali
 non vengono serviti al browser. Le immagini sono decorative (`alt=""`)
 perché titoli e descrizioni forniscono già il contenuto della cella.

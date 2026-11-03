@@ -10,7 +10,9 @@ document.querySelectorAll<HTMLElement>('.corsi-stile-contenuto').forEach((conten
     const fine = fila.scrollWidth - fila.clientWidth;
     comandi.hidden = fine <= 1;
     fila.tabIndex = fine <= 1 ? -1 : 0;
-    indietro.disabled = fila.scrollLeft <= 1;
+    // Il primo punto di snap comprende il padding interno della fila.
+    const inizio = parseFloat(getComputedStyle(fila).paddingLeft) || 0;
+    indietro.disabled = fila.scrollLeft <= inizio + 1;
     avanti.disabled = fila.scrollLeft >= fine - 1;
   };
 

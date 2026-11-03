@@ -689,9 +689,8 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 
 }
 
-/* Formazione e progetti: illustrazioni tematiche tenui, come nei contatti mobile,
-   su tutti i dispositivi. Restano i filetti divisori originali.
-   4 per riga su desktop, 2 su tablet, una colonna compatta su mobile. */
+/* Formazione e progetti: griglia illustrata a filetti su desktop e tablet;
+   su mobile le card condivise con i singoli corsi di /corsi. */
 .oltre-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
@@ -701,6 +700,10 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
   max-width: 1200px;
   margin: var(--spazio-intestazione) auto 0;
   padding: 0 2rem;
+}
+
+.oltre-mobile {
+  display: none;
 }
 
 .oltre-lista {
@@ -811,45 +814,16 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
 }
 
-/* Mobile: tutta la larghezza al testo, senza la colonna riservata all'icona. */
+/* Mobile: immagine separata dal testo e fila sfogliabile come nella pagina corsi. */
 @media (max-width: 600px) {
-  .oltre-lista {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  /* Sul layout a colonna singola restano solo testi e filetti. */
-  .oltre-sfondo,
-  .oltre-lista li::after {
+  .oltre-layout {
     display: none;
   }
 
-  .oltre-lista li {
-    display: flex;
-    grid-row: auto;
+  .oltre-mobile {
+    display: block;
+    margin-top: var(--spazio-intestazione);
   }
-
-  .oltre-voce {
-    display: grid;
-    grid-row: auto;
-    width: 100%;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: repeat(3, auto);
-    justify-items: stretch;
-    align-items: start;
-    padding: 1.75rem 1.5rem;
-    text-align: left;
-  }
-
-  .oltre-desc {
-    margin-top: .35rem;
-  }
-
-  .oltre-cta {
-    justify-self: start;
-    align-self: start;
-    margin-top: 1.1rem;
-  }
-
 }
 
 @media (max-width:1024px) {

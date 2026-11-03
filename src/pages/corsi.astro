@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
+import ElencoPercorsi from '../components/ElencoPercorsi.astro';
+import SchedaPercorso from '../components/SchedaPercorso.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import { categorieCorsi } from '../data/scuola';
 import { enfatizza } from '../lib/text';
@@ -82,31 +84,11 @@ const hero = await heroPagina('corsi');
                 <h2 class="titolo-sezione" id={`${cat.id}-titolo`} set:html={titoloEm(cat.nome)} />
                 <p set:html={enfatizza(cat.descrizione, cat.evidenzia)} />
             </div>
-            <div class="container corsi-stile-contenuto">
-                <div class="corsi-stile-comandi" hidden>
-                    <button type="button" class="btn-icon btn-icon--contorno" data-corsi-direzione="-1" aria-label={`Corsi precedenti: ${cat.nome}`} aria-controls={`${cat.id}-corsi`}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
-                    <button type="button" class="btn-icon btn-icon--contorno" data-corsi-direzione="1" aria-label={`Corsi successivi: ${cat.nome}`} aria-controls={`${cat.id}-corsi`}><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
-                </div>
-                <ul class="corsi-stile-elenco" id={`${cat.id}-corsi`} tabindex="0" aria-labelledby={`${cat.id}-titolo`}>
-                    {cat.corsi.map((c) => (
-                        <li class="corsi-scheda">
-                            <a href={c.url} class="corsi-scheda-link" aria-labelledby={`${c.url.slice(1)}-nome`}>
-                                <div class="corsi-scheda-visual">
-                                    <Img class="corsi-scheda-foto" src={c.immagine.src} alt={c.immagine.alt} width={1536} height={1024} loading="lazy" decoding="async" widths={[320, 480, 800]} sizes="(min-width: 1200px) 352px, (min-width: 901px) 33vw, (min-width: 601px) 50vw, 80vw" />
-                                </div>
-                                <div class="corsi-scheda-corpo">
-                                    <p class="eyebrow corsi-scheda-eta">{c.pagina.badge.replace(' - ', ' · ')}</p>
-                                    <h3 class="titolo-card" id={`${c.url.slice(1)}-nome`}>{nomeBreve(c.nome)}</h3>
-                                    <div class="corsi-scheda-fondo">
-                                        <p class="testo-piccolo corsi-scheda-frequenza"><i class="far fa-clock" aria-hidden="true"></i> {c.pagina.frequenza}</p>
-                                        <span class="corsi-scheda-freccia" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            <ElencoPercorsi class="container" id={`${cat.id}-corsi`} titolo={`${cat.id}-titolo`} nome={cat.nome}>
+                {cat.corsi.map((c) => (
+                    <SchedaPercorso href={c.url} nome={nomeBreve(c.nome)} idTitolo={`${c.url.slice(1)}-nome`} etichetta={c.pagina.badge.replace(' - ', ' · ')} dettaglio={c.pagina.frequenza} immagine={c.immagine} iconaDettaglio="far fa-clock" />
+                ))}
+            </ElencoPercorsi>
         </section>
     ))}
 
@@ -126,7 +108,3 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 </Base>
-
-<script>
-    import '../scripts/corsi';
-</script>

@@ -1,0 +1,33 @@
+---
+/** La stessa card per i singoli corsi e per formazione e progetti della home. */
+import Img from './Img.astro';
+
+interface Props {
+  href: string;
+  nome: string;
+  idTitolo: string;
+  etichetta: string;
+  dettaglio: string;
+  immagine: { src: string; alt?: string };
+  illustrazione?: boolean;
+  iconaDettaglio?: string;
+}
+
+const { href, nome, idTitolo, etichetta, dettaglio, immagine, illustrazione = false, iconaDettaglio } = Astro.props;
+---
+
+<li class="corsi-scheda">
+  <a href={href} class="corsi-scheda-link" aria-labelledby={idTitolo}>
+    <div class:list={['corsi-scheda-visual', { 'corsi-scheda-visual--illustrazione': illustrazione }]}>
+      <Img class:list={['corsi-scheda-foto', { 'corsi-scheda-foto--illustrazione': illustrazione }]} src={immagine.src} alt={immagine.alt ?? ''} width={illustrazione ? 480 : 1536} height={illustrazione ? 480 : 1024} loading="lazy" decoding="async" widths={[320, 480, 800]} sizes="(min-width: 1200px) 352px, (min-width: 901px) 33vw, (min-width: 601px) 50vw, 80vw" />
+    </div>
+    <div class="corsi-scheda-corpo">
+      <p class="eyebrow corsi-scheda-eta">{etichetta}</p>
+      <h3 class="titolo-card" id={idTitolo}>{nome}</h3>
+      <div class="corsi-scheda-fondo">
+        <p class="testo-piccolo corsi-scheda-frequenza">{iconaDettaglio && <i class={iconaDettaglio} aria-hidden="true"></i>} {dettaglio}</p>
+        <span class="corsi-scheda-freccia" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+      </div>
+    </div>
+  </a>
+</li>

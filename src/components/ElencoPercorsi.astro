@@ -1,0 +1,27 @@
+---
+import '../styles/components/schede-percorso.css';
+
+interface Props {
+  id: string;
+  titolo: string;
+  nome: string;
+  tipo?: 'Corsi' | 'Percorsi';
+  class?: string;
+}
+
+const { id, titolo, nome, tipo = 'Corsi', class: className } = Astro.props;
+---
+
+<div class:list={['corsi-stile-contenuto', className]}>
+  <div class="corsi-stile-comandi" hidden>
+    <button type="button" class="btn-icon btn-icon--contorno" data-corsi-direzione="-1" aria-label={`${tipo} precedenti: ${nome}`} aria-controls={id}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+    <button type="button" class="btn-icon btn-icon--contorno" data-corsi-direzione="1" aria-label={`${tipo} successivi: ${nome}`} aria-controls={id}><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+  </div>
+  <ul class="corsi-stile-elenco" id={id} tabindex="0" aria-labelledby={titolo}>
+    <slot />
+  </ul>
+</div>
+
+<script>
+  import '../scripts/corsi';
+</script>

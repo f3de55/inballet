@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
+import ElencoPercorsi from '../components/ElencoPercorsi.astro';
+import SchedaPercorso from '../components/SchedaPercorso.astro';
 import SostenitoriSection from '../components/SostenitoriSection.astro';
 import Galleria from '../components/Galleria.astro';
 import { getImage } from 'astro:assets';
@@ -189,8 +191,8 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Formazione e progetti: illustrazioni tematiche su desktop e tablet;
-         su mobile solo testi e filetti originali. -->
+    <!-- Desktop e tablet: griglia a filetti con illustrazioni di sfondo.
+         Mobile: le stesse card e lo stesso scorrimento dei singoli corsi di /corsi. -->
     <section class="oltre-section" aria-labelledby="oltre-titolo">
         <div class="intro-editoriale">
             <p class="eyebrow">Formazione e progetti</p>
@@ -212,6 +214,12 @@ const schema = schemaHome(socialImage);
                 ))}
             </ul>
         </div>
+
+        <ElencoPercorsi class="container oltre-mobile" id="oltre-percorsi" titolo="oltre-titolo" nome="La danza oltre i corsi" tipo="Percorsi">
+            {vociOltre.map((v, indice) => (
+                <SchedaPercorso href={v.href} nome={v.nome} idTitolo={`oltre-${v.illustrazione}-nome`} etichetta={indice < formazione.voci.length ? 'Formazione' : 'Progetto'} dettaglio={v.testo} immagine={{ src: `grafica-oltre/${v.illustrazione}.png` }} illustrazione />
+            ))}
+        </ElencoPercorsi>
     </section>
 
      <section class="dicono-di-noi-section decoro-onde" aria-labelledby="recensioni-titolo">

@@ -35,7 +35,7 @@ const meta = Array.from({ length: ripetizioni }, () => insegnanti).flat();
     <!-- Due metà identiche: la seconda serve solo alla continuità dello scorrimento ed è
          nascosta a tastiera e screen reader (come le ripetizioni nella prima metà) -->
     <div class="carosello-wrap">
-    <div class="carosello insegnanti-fila" data-giro="70">
+    <div class="carosello insegnanti-fila" data-giro="35">
       <ul class="carosello-track insegnanti-track">
         {[0, 1].map((m) =>
           meta.map((p, i) => {

@@ -194,7 +194,7 @@ html.menu-aperto {
   /* Distanza dalla pillola della voce padre (la pillola finisce .55rem sopra il bordo basso della voce).
      Il pannello è ancorato alla voce, non all'header: restringendosi allo scroll la voce e il pannello
      si muovono insieme e la distanza resta identica */
-  --popup-gap: 12px;
+  --popup-gap: 14px;
   --freccia: 10px;
   position: absolute;
   top: calc(100% - .55rem + var(--popup-gap));
@@ -229,11 +229,12 @@ html.menu-aperto {
 }
 
 /* Freccetta che punta alla voce padre, dello stesso azzurro della pillola (la posizione orizzontale
-   la imposta navbar.ts con --freccia-x). La base copre il bordo del pannello */
+   la imposta navbar.ts con --freccia-x). Sta tutta fuori dal pannello, poggiata sul suo bordo alto: il bordo
+   corre intero sotto la base e la freccetta sembra uscire da dietro il popup, senza scalini */
 .mega-menu::after {
   content: '';
   position: absolute;
-  bottom: calc(100% - 1px);
+  bottom: calc(100% + 1px);
   left: var(--freccia-x, 50%);
   width: calc(var(--freccia) * 2);
   height: var(--freccia);

@@ -1,31 +1,3 @@
-/* Il corso in breve: tre dati affiancati, centrati, divisi da filetti verticali e chiusi da due filetti
-(come "InBallet in numeri"): titolo (h3 del progetto) e sotto la sua etichetta (testo-piccolo) */
-.breve-lista {
-  list-style: none;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  margin: var(--spazio-intestazione) 0 0;
-  padding: 0;
-  border-block: 1px solid var(--linea);
-}
-
-.dato {
-  padding: 2.25rem 1.5rem;
-  text-align: center;
-}
-
-.dato + .dato {
-  border-left: 1px solid var(--linea);
-}
-
-.dato-valore {
-  margin: 0;
-}
-
-.dato-testo {
-  margin: .75rem 0 0;
-}
-
 /* Diploma: enti in una colonna centrata sotto l'intestazione */
 .enti-lista {
   list-style: none;
@@ -81,10 +53,6 @@
 
 /* ---------- Tablet ---------- */
 @media (max-width: 900px) {
-  .dato {
-    padding: 1.75rem 1rem;
-  }
-
   /* Diploma: enti a tutta larghezza, allineati all'intestazione */
   .enti-lista {
     max-width: none;
@@ -94,20 +62,6 @@
 
 /* ---------- Mobile ---------- */
 @media (max-width: 600px) {
-  /* In breve: un dato sotto l'altro, divisi da filetti orizzontali */
-  .breve-lista {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .dato {
-    padding: 1.5rem 0;
-  }
-
-  .dato + .dato {
-    border-top: 1px solid var(--linea);
-    border-left: none;
-  }
-
   .ente {
     padding: 1.75rem 1rem;
   }

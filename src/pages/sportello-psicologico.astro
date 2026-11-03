@@ -4,7 +4,6 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
-import { scuola } from '../data/scuola';
 import '../styles/components/intro-split.css';
 import '../styles/components/righe.css';
 import '../styles/pages/sportello-psicologico.css';
@@ -117,11 +116,8 @@ const servizi = [
                 <h2 class="titolo-sezione">Prenota un colloquio <em>conoscitivo</em></h2>
                 <p class="intro-sezione"><strong>Scrivici o chiamaci</strong>: fissiamo insieme il primo incontro, nella <strong>massima riservatezza</strong>.</p>
                 <div class="cta-pulsanti">
-                    <a href={`mailto:${scuola.email}?subject=Richiesta%20Sportello%20Psicologico`} class="btn-primary">
-                        <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici
-                    </a>
-                    <a href={scuola.telefonoHref} class="btn-secondary">
-                        <i class="fas fa-phone" aria-hidden="true"></i> Chiamaci
+                    <a href="/contatti" class="btn-primary">
+                        Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>

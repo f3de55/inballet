@@ -4,7 +4,6 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
-import { scuola } from '../data/scuola';
 import '../styles/components/intro-split.css';
 import '../styles/components/righe.css';
 import '../styles/pages/classi-integrate.css';
@@ -121,11 +120,8 @@ const classi = [
                 <h2 class="titolo-sezione">Parliamo <em>del tuo bambino</em></h2>
                 <p class="intro-sezione">Contatta la Direzione per fissare un <strong>colloquio conoscitivo</strong>: insieme troveremo il gruppo classe più adatto.</p>
                 <div class="cta-pulsanti">
-                    <a href={`mailto:${scuola.email}?subject=Classi%20Integrate%20-%20Richiesta%20Informazioni`} class="btn-primary">
-                        <i class="fas fa-envelope" aria-hidden="true"></i> Scrivici
-                    </a>
-                    <a href={scuola.telefonoHref} class="btn-secondary">
-                        <i class="fas fa-phone" aria-hidden="true"></i> Chiamaci
+                    <a href="/contatti" class="btn-primary">
+                        Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>

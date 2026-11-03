@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
-import { scuola } from '../data/scuola';
 import '../styles/pages/formazioni-personalizzate.css';
 
 const bg = {
@@ -96,8 +95,8 @@ const bg = {
                 <h2 class="titolo-sezione">Hai un progetto <em>in mente?</em></h2>
                 <p class="intro-sezione">Contattaci per un <strong>primo colloquio</strong>: definiamo insieme obiettivi e contenuti del tuo percorso.</p>
                 <div class="cta-pulsanti">
-                    <a href={`mailto:${scuola.email}?subject=Formazione%20Personalizzata%20-%20Richiesta%20Info`} class="btn-primary">
-                        Scrivici <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    <a href="/contatti" class="btn-primary">
+                        Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>

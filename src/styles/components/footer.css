@@ -2,7 +2,7 @@
 .footer {
   background: var(--dark-navy);
   color: var(--white);
-  /* Stessa scala della navbar: voci e testi a 14-15px */
+  /* Scala compatta per i testi di servizio; il menu ha dimensioni dedicate. */
   font-size: var(--text-xs);
   position: relative;
   z-index: 10;
@@ -113,6 +113,7 @@
 }
 
 .footer-titolo {
+  font-size: var(--ui-size);
   color: var(--primary-blue);
   margin-bottom: 1.1rem;
 }
@@ -126,7 +127,7 @@
 
 .footer-main ul a,
 .footer-link {
-  font-size: var(--text-xs);
+  font-size: var(--small-size);
   line-height: 1.4;
   color: var(--footer-testo);
   text-decoration: none;
@@ -141,11 +142,15 @@
   display: inline-block;
 }
 
-/* Tablet e PC: le voci della mappa del sito sono larghe al massimo 7em, quindi quelle a più parole vanno tutte a capo
+/* Tablet e PC: le voci della mappa del sito sono larghe al massimo 8em, quindi quelle a più parole vanno a capo
    su due righe bilanciate (Spettacoli / ed Eventi, Classi / Integrate…) e le colonne risultano della stessa larghezza */
 @media (min-width: 701px) {
   .footer-col:not(.footer-contatti) ul a {
-    max-inline-size: 7em;
+    max-inline-size: 8em;
+  }
+
+  .footer-contatti {
+    min-inline-size: max-content;
   }
 }
 

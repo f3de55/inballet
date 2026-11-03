@@ -52,23 +52,19 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <!-- Trova il tuo corso: una frase e un selettore dei percorsi. -->
+    <!-- Trova il tuo corso: introduzione e scelta del percorso nello stesso blocco. -->
     <section class="trova-section" aria-labelledby="trova-titolo">
-        <div class="intro-editoriale">
-            <h2 class="titolo-sezione" id="trova-titolo">Trova il tuo <em>corso</em></h2>
-            <p>{totale} corsi a Lainate e Rho, <strong>dai 3 anni agli adulti</strong>.</p>
-        </div>
-        <div class="container">
-            <div class="trova-citazione" id="trova-scelta" hidden>
-                <span class="trova-virgolette" aria-hidden="true"><i class="fas fa-quote-left"></i></span>
-                <p class="trova-frase testo-evidenza">
-                    Voglio scoprire
-                    <button type="button" class="trova-selettore" id="trova-apri" aria-haspopup="dialog" aria-controls="trova-popup" aria-expanded="false">
-                        <span id="trova-percorso">un percorso</span>
-                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                    </button>
-                </p>
-                <span class="trova-virgolette trova-virgolette--fine" aria-hidden="true"><i class="fas fa-quote-right"></i></span>
+        <div class="container trova-layout">
+            <div class="trova-intro">
+                <h2 class="titolo-sezione" id="trova-titolo">Trova il tuo <em>corso</em></h2>
+                <p>{totale} corsi a Lainate e Rho, <strong>dai 3 anni agli adulti</strong>.</p>
+            </div>
+            <div class="trova-scelta" id="trova-scelta" hidden>
+                <p class="trova-domanda testo-piccolo" id="trova-domanda">Cosa ti piacerebbe provare?</p>
+                <button type="button" class="trova-selettore" id="trova-apri" aria-describedby="trova-domanda" aria-haspopup="dialog" aria-controls="trova-popup" aria-expanded="false">
+                    <span id="trova-percorso">Scegli un percorso</span>
+                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                </button>
             </div>
             <noscript>
                 <ul class="trova-alternative">

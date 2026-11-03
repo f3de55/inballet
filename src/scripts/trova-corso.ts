@@ -10,7 +10,7 @@ if (apri && scelta && percorso && popup) {
   const opzioni = [...popup.querySelectorAll<HTMLAnchorElement>('.trova-opzione')];
 
   const seleziona = (opzione?: HTMLAnchorElement) => {
-    percorso.textContent = opzione?.dataset.percorso || 'un percorso';
+    percorso.textContent = opzione?.dataset.percorso || 'Scegli un percorso';
     for (const voce of opzioni) voce.removeAttribute('aria-current');
     opzione?.setAttribute('aria-current', 'location');
   };

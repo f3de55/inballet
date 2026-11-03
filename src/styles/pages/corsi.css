@@ -2,59 +2,58 @@
 
 /* ---------- Trova il tuo corso ---------- */
 .trova-section {
-  padding: var(--section-y) 0;
+  padding: calc(var(--section-y) * .75) 0;
   background: var(--bg-soft);
 }
 
-.trova-section > .intro-editoriale > p {
-  margin-bottom: 0;
+.trova-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, .9fr);
+  align-items: center;
+  gap: 2rem 4rem;
 }
 
-.trova-citazione {
-  width: fit-content;
-  max-width: 100%;
-  margin: 1.75rem auto 0;
+.trova-intro .titolo-sezione {
+  margin: 0 0 .75rem;
 }
 
-.trova-virgolette {
-  display: block;
-  color: var(--primary-blue-dark);
-  font-size: var(--text-2xl);
-  line-height: 1;
+.trova-intro > p {
+  max-width: 38rem;
+  margin: 0;
+  text-wrap: balance;
 }
 
-.trova-virgolette--fine {
-  text-align: right;
+.trova-scelta {
+  min-width: 0;
 }
 
-.trova-frase {
-  margin: .5rem 0;
-  color: var(--heading-color);
-  text-align: center;
+.trova-domanda {
+  margin: 0 0 .5rem;
 }
 
 .trova-selettore {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: .65rem;
-  max-width: 100%;
-  min-height: 44px;
-  margin-inline-start: .25rem;
-  padding: .15rem 0;
-  border: 0;
-  border-bottom: 1px solid currentColor;
-  background: transparent;
-  color: var(--primary-blue-dark);
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 64px;
+  padding: .85rem 1.1rem;
+  border: 1px solid var(--linea);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--heading-color);
   font: inherit;
   font-weight: var(--font-medium);
   line-height: 1.4;
   text-align: left;
   cursor: pointer;
-  transition: color var(--transition-base);
+  transition: border-color var(--transition-base);
 }
 
 .trova-selettore i {
   flex-shrink: 0;
+  color: var(--primary-blue-dark);
   font-size: var(--icona-mini);
   transition: transform var(--transition-base);
 }
@@ -63,8 +62,9 @@
   transform: rotate(180deg);
 }
 
-.trova-selettore:hover {
-  color: var(--heading-color);
+.trova-selettore:hover,
+.trova-selettore[aria-expanded="true"] {
+  border-color: var(--primary-blue-dark);
 }
 
 html:has(.trova-popup[open]) {
@@ -152,15 +152,20 @@ html:has(.trova-popup[open]) {
 .trova-alternative {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  grid-column: 1 / -1;
+  justify-content: flex-start;
   gap: .75rem 1.5rem;
-  margin-top: 1.75rem;
+  margin-top: 0;
 }
 
 .trova-alternative a {
   color: var(--primary-blue-dark);
   text-decoration: underline;
   text-underline-offset: .2em;
+}
+
+.trova-layout > noscript {
+  grid-column: 1 / -1;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -221,16 +226,14 @@ html:has(.trova-popup[open]) {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
-  .trova-citazione {
-    margin-inline: 0;
+  .trova-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
   }
 
-  .trova-frase {
-    text-align: left;
-  }
-
-  .trova-alternative {
-    justify-content: flex-start;
+  .trova-scelta {
+    width: 100%;
+    max-width: 36rem;
   }
 }
 
@@ -244,7 +247,7 @@ html:has(.trova-popup[open]) {
 
 @media (max-width: 600px) {
   .trova-selettore {
-    margin-inline-start: 0;
+    min-height: 60px;
   }
 
   .trova-popup {

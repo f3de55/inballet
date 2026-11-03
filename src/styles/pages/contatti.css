@@ -37,6 +37,7 @@
   row-gap: 0;
   align-content: start;
   padding: 2.5rem 2rem;
+  text-align: center;
 }
 
 .info-blocco + .info-blocco {
@@ -94,7 +95,8 @@
 
 .info-riga {
   display: grid;
-  grid-template-columns: 1.75rem minmax(0, 1fr);
+  /* La colonna vuota a destra bilancia l'icona: il testo cade al centro del box. */
+  grid-template-columns: 1.75rem minmax(0, 1fr) 1.75rem;
   column-gap: var(--spazio-icona);
   align-items: center;
 }
@@ -155,7 +157,7 @@
 
 /* La linea in hover segue la sola parola: il link non si allarga alla colonna della griglia */
 a.info-valore {
-  justify-self: start;
+  justify-self: center;
   width: fit-content;
   text-decoration: none;
   background: linear-gradient(var(--primary-blue), var(--primary-blue)) 0 100% / 0 2px no-repeat;
@@ -169,7 +171,8 @@ a.info-valore:hover {
 
 /* Sedi */
 .sede-tag {
-  margin-left: .6rem;
+  display: block;
+  margin-top: .25rem;
   font-size: var(--small-size);
   font-weight: var(--font-normal);
   color: var(--small-color);
@@ -184,6 +187,7 @@ a.info-valore:hover {
 .orari-status {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: .45rem;
   margin: -.5rem 0 .75rem;
   font-size: var(--small-size);
@@ -208,7 +212,9 @@ a.info-valore:hover {
 
 .orari-grid {
   list-style: none;
-  margin: 0;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
   padding: 0;
 }
 
@@ -289,6 +295,10 @@ a.info-valore:hover {
     border-top: 1px solid var(--linea);
   }
 
+  .info-riga {
+    column-gap: .5rem;
+  }
+
   .info-blocco:first-child .info-righe {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -341,7 +351,6 @@ a.info-valore:hover {
 
   .info-titolo {
     margin-bottom: 1.75rem;
-    text-align: left;
   }
 }
 

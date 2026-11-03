@@ -338,10 +338,9 @@
   flex-shrink: 0;
   width: 2.75rem;
   height: 2.75rem;
-  border-bottom: 2px solid var(--primary-blue);
   color: var(--primary-blue-dark);
   font-size: var(--text-xl);
-  transition: transform var(--transition-base), border-color var(--transition-base);
+  transition: transform var(--transition-base);
 }
 
 .corsi-scheda-freccia i {
@@ -355,7 +354,6 @@
 
   .corsi-scheda-link:hover .corsi-scheda-freccia {
     transform: translate(3px, -3px);
-    border-color: var(--primary-blue-dark);
   }
 }
 

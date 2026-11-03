@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import Img from '../components/Img.astro';
 import ElencoPercorsi from '../components/ElencoPercorsi.astro';
 import SchedaPercorso from '../components/SchedaPercorso.astro';
 import { heroPagina } from '../lib/hero-pagine';
@@ -53,27 +52,51 @@ const hero = await heroPagina('corsi');
         </div>
     </section>
 
-    <!-- Trova il tuo corso: un riquadro fotografico per stile, porta alla sua sezione qui sotto -->
+    <!-- Trova il tuo corso: una frase e un selettore dei percorsi. -->
     <section class="trova-section" aria-labelledby="trova-titolo">
         <div class="intro-editoriale">
             <h2 class="titolo-sezione" id="trova-titolo">Trova il tuo <em>corso</em></h2>
-            <p>{totale} corsi a Lainate e Rho, <strong>dai 3 anni agli adulti</strong>: scegli lo stile che fa per te.</p>
+            <p>{totale} corsi a Lainate e Rho, <strong>dai 3 anni agli adulti</strong>.</p>
         </div>
         <div class="container">
-            <ul class="stili">
-                {percorsi.map((cat, i) => (
-                    <li style={`--i: ${i}`}>
-                        <a href={`#${cat.id}`} class="stile">
-                            <Img class="stile-foto" src={cat.immagine.src} alt="" aria-hidden="true" fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(min-width: 1101px) 560px, (min-width: 481px) 50vw, 100vw" />
-                            <div class="stile-testo">
-                                <h3 class="stile-nome titolo-card">{cat.nome}</h3>
-                                <p class="stile-numero">{cat.corsi.length} corsi <i class="fas fa-arrow-down" aria-hidden="true"></i></p>
-                            </div>
+            <div id="trova-scelta" hidden>
+                <p class="trova-frase testo-evidenza">
+                    Voglio scoprire
+                    <button type="button" class="trova-selettore" id="trova-apri" aria-haspopup="dialog" aria-controls="trova-popup" aria-expanded="false">
+                        <span id="trova-percorso">un percorso</span>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                </p>
+            </div>
+            <noscript>
+                <ul class="trova-alternative">
+                    {percorsi.map((cat) => <li><a href={`#${cat.id}`}>{cat.nome}</a></li>)}
+                </ul>
+            </noscript>
+        </div>
+
+        <dialog class="trova-popup" id="trova-popup" aria-labelledby="trova-popup-titolo" aria-describedby="trova-popup-intro">
+            <form method="dialog" class="trova-popup-chiudi">
+                <button type="submit" class="btn-icon btn-icon--contorno" aria-label="Chiudi la scelta del percorso">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </form>
+            <h2 id="trova-popup-titolo">Da dove iniziamo?</h2>
+            <p id="trova-popup-intro" class="trova-popup-intro testo-piccolo">Scegli un percorso e scopri i suoi corsi.</p>
+            <ul class="trova-opzioni">
+                {percorsi.map((cat) => (
+                    <li>
+                        <a href={`#${cat.id}`} class="trova-opzione" data-percorso={cat.nome}>
+                            <span class="trova-opzione-testo">
+                                <span class="trova-opzione-nome valore">{cat.nome}</span>
+                                <span class="testo-piccolo">{cat.corsi.length} corsi</span>
+                            </span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
                         </a>
                     </li>
                 ))}
             </ul>
-        </div>
+        </dialog>
     </section>
 
     <!-- Tre sottocorsi per riga su desktop, con lo stesso formato in tutte le categorie. -->
@@ -107,4 +130,10 @@ const hero = await heroPagina('corsi');
             </aside>
         </div>
     </section>
+
+    <Fragment slot="scripts">
+        <script>
+            import '../scripts/trova-corso';
+        </script>
+    </Fragment>
 </Base>

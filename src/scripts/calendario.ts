@@ -59,10 +59,11 @@ function apriEvento(slug: string) {
     (stato ? `<span class="evento-stato${e.stato === 'annullato' ? ' evento-stato--forte' : ''}">${escapeHtml(stato)}</span>` : '');
   $('dialogTitolo').textContent = e.titolo;
 
-  const mappa = e.mappa ? ` <a class="evento-mappa" href="${escapeHtml(e.mappa)}" target="_blank" rel="noopener"><i class="fas fa-location-arrow" aria-hidden="true"></i>Indicazioni</a>` : '';
+  const luogo = escapeHtml(e.luogo);
+  const dove = e.mappa ? `<a class="evento-mappa" href="${escapeHtml(e.mappa)}" target="_blank" rel="noopener noreferrer" aria-label="${luogo}, indicazioni (si apre in una nuova scheda)">${luogo}&nbsp;<i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>` : luogo;
   $('dialogDettagli').innerHTML =
     riga('Quando', escapeHtml(e.quando)) +
-    (e.luogo ? riga('Dove', escapeHtml(e.luogo) + mappa) : '') +
+    (e.luogo ? riga('Dove', dove) : '') +
     (e.destinatari ? riga('Per chi', escapeHtml(e.destinatari)) : '') +
     (e.costo ? riga('Costo', escapeHtml(e.costo)) : '');
   $('dialogDescrizione').innerHTML = e.descrizione;

@@ -608,28 +608,28 @@ html:has(dialog[open]) {
   color: var(--text-muted);
 }
 
-/* Valore e link (es. "Indicazioni") affiancati; se non c'è spazio il link va a capo */
 .evento-dettagli dd {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: .15rem .75rem;
   margin: 0;
   font-weight: var(--font-semibold);
   color: var(--dark-navy);
 }
 
 .evento-dettagli .evento-mappa {
-  display: inline-flex;
-  align-items: center;
-  gap: .4rem;
-  font-size: var(--ui-size);
-  font-weight: var(--ui-weight);
   color: var(--primary-blue-dark);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+  transition: color var(--transition-base);
+}
+
+.evento-dettagli .evento-mappa:hover {
+  color: var(--heading-color);
 }
 
 .evento-dettagli .evento-mappa i {
-  font-size: var(--text-xs);
+  margin-inline-start: .35em;
+  font-size: var(--icona-mini);
+  vertical-align: .08em;
 }
 
 .evento-descrizione:empty {

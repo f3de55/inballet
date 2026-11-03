@@ -529,6 +529,11 @@ html.menu-aperto {
   font-weight: var(--font-bold);
 }
 
+.mobile-gruppo .mobile-gruppo-titolo a,
+.mobile-gruppo .mobile-gruppo-titolo a:hover {
+  color: inherit;
+}
+
 .mobile-tutti {
   margin: .25rem 0 1.5rem;
   color: var(--white);

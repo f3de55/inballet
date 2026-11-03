@@ -689,7 +689,8 @@ bianco centrato (nome, frase, «Vedi di più»). Stesso componente su tutti i di
 
 }
 
-/* Formazione e progetti: fondali azzurri dei corsi e filetti divisori originali.
+/* Formazione e progetti: illustrazioni tematiche tenui, come nei contatti mobile,
+   su tutti i dispositivi. Restano i filetti divisori originali.
    4 per riga su desktop, 2 su tablet, una colonna compatta su mobile. */
 .oltre-section {
   padding: var(--section-y) 0;
@@ -723,16 +724,31 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
   grid-template-rows: subgrid;
   row-gap: 0;
   overflow: hidden;
-  background: rgb(var(--corsi-grafica-rgb));
+  background: var(--bg-soft);
 }
 
 .oltre-sfondo {
   position: absolute;
+  right: -2rem;
+  bottom: -2.5rem;
+  z-index: 0;
+  width: 13.5rem;
+  height: 14rem;
+  object-fit: contain;
+  object-position: right bottom;
+  transform: rotate(-12deg);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Il velo lascia emergere il soggetto nell'angolo e protegge titoli e descrizioni.
+   La stessa composizione vale per desktop, tablet e mobile. */
+.oltre-lista li::after {
+  content: '';
+  position: absolute;
   inset: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  z-index: 1;
+  background: linear-gradient(125deg, color-mix(in srgb, var(--bg-soft) 98%, transparent) 0%, color-mix(in srgb, var(--bg-soft) 94%, transparent) 38%, color-mix(in srgb, var(--bg-soft) 85%, transparent) 68%, color-mix(in srgb, var(--bg-soft) 65%, transparent) 100%);
   pointer-events: none;
 }
 
@@ -744,6 +760,8 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 }
 
 .oltre-voce {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-row: 1 / -1;
   grid-template-rows: subgrid;

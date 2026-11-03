@@ -262,7 +262,7 @@ html.menu-aperto {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0;
-  padding: 1.5rem 1rem;
+  padding: 1.1rem .75rem;
 }
 
 /* Menu a una sola colonna (La Scuola, Progetti, Formazione): tendina compatta
@@ -281,7 +281,7 @@ html.menu-aperto {
 .mega-menu--compatto .mega-menu-content {
   display: block;
   max-width: none;
-  padding: 1.5rem 1.75rem 1.25rem;
+  padding: 1.1rem 1.5rem .9rem;
 }
 
 .mega-menu--compatto .mega-menu-section {
@@ -290,7 +290,7 @@ html.menu-aperto {
 }
 
 .mega-menu-section {
-  padding: 1rem 1.25rem;
+  padding: .75rem 1rem;
   border-right: 1px solid rgb(var(--blu-rgb) / .2);
   height: auto;
 }
@@ -371,6 +371,20 @@ html.menu-aperto {
 
   .mega-menu-section a::before {
     display: none;
+  }
+
+  /* Lineetta leggera e centrata tra una sottovoce e l'altra */
+  .mega-menu-section li {
+    margin-bottom: 0;
+  }
+
+  .mega-menu-section li + li::before {
+    content: '';
+    display: block;
+    width: 1.75rem;
+    height: 1px;
+    margin: .15rem auto;
+    background: rgb(var(--blu-rgb) / .3);
   }
 }
 

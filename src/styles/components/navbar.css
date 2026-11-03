@@ -194,7 +194,7 @@ html.menu-aperto {
   /* Distanza dalla pillola della voce padre (la pillola finisce .55rem sopra il bordo basso della voce).
      Il pannello è ancorato alla voce, non all'header: restringendosi allo scroll la voce e il pannello
      si muovono insieme e la distanza resta identica */
-  --popup-gap: 10px;
+  --popup-gap: 12px;
   --freccia: 10px;
   position: absolute;
   top: calc(100% - .55rem + var(--popup-gap));
@@ -228,20 +228,18 @@ html.menu-aperto {
   height: calc(var(--popup-gap) + 1rem);
 }
 
-/* Freccetta che punta alla voce padre (la posizione orizzontale la imposta navbar.ts con --freccia-x) */
+/* Freccetta che punta alla voce padre, dello stesso azzurro della pillola (la posizione orizzontale
+   la imposta navbar.ts con --freccia-x). La base copre il bordo del pannello */
 .mega-menu::after {
   content: '';
   position: absolute;
-  bottom: calc(100% - var(--freccia) / 2 - 1px);
+  bottom: calc(100% - 1px);
   left: var(--freccia-x, 50%);
-  width: var(--freccia);
+  width: calc(var(--freccia) * 2);
   height: var(--freccia);
-  margin-left: calc(var(--freccia) / -2);
-  transform: rotate(45deg);
-  background: var(--header-dark);
-  border-top: 1px solid rgb(var(--blu-rgb) / .35);
-  border-left: 1px solid rgb(var(--blu-rgb) / .35);
-  border-top-left-radius: 2px;
+  margin-left: calc(var(--freccia) * -1);
+  background: var(--primary-blue-dark);
+  clip-path: polygon(50% 0, 0 100%, 100% 100%);
   pointer-events: none;
 }
 
@@ -278,11 +276,6 @@ html.menu-aperto {
   overflow: visible;
   border: 1px solid rgb(var(--bianco-rgb) / .08);
   border-radius: var(--radius-md);
-}
-
-.mega-menu--compatto::after {
-  border-top-color: rgb(var(--bianco-rgb) / .08);
-  border-left-color: rgb(var(--bianco-rgb) / .08);
 }
 
 .mega-menu--compatto .mega-menu-content {

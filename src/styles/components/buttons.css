@@ -10,10 +10,18 @@
   align-items: center;
   justify-content: center;
   gap: .6rem;
-  padding: .8rem 1.75rem;
+  /* Centratura ottica del testo. Il browser arrotonda a pixel interi ascendente (.935em) e discendente
+     (.25em) di Rubik, quindi con un'altezza di riga fissa le maiuscole (alte .7em) finivano più in alto o più
+     in basso del centro, di un valore diverso a ogni dimensione. Con line-height: normal la riga è
+     ascendente + discendente: si sposta il padding dal basso all'alto della metà della differenza
+     (--btn-sposta), a pixel interi. Verificato misurando i pixel del testo a più larghezze. */
+  --btn-pad: .8rem;
+  --btn-sposta-base: calc((round(nearest, .25em, 1px) - round(nearest, .935em, 1px) + .7em) / 2);
+  --btn-sposta: round(nearest, calc(var(--btn-sposta-base) - max(0px, calc(.25em - round(nearest, .25em, 1px)))), 1px);
+  padding: calc(round(nearest, var(--btn-pad), 1px) + var(--btn-sposta)) 1.75rem calc(round(nearest, var(--btn-pad), 1px) - var(--btn-sposta));
   border-radius: var(--radius-pill);
   font-size: var(--ui-size);
-  line-height: 1.2;
+  line-height: normal;
   font-weight: var(--ui-weight);
   letter-spacing: var(--ui-ls);
   text-transform: uppercase;
@@ -66,7 +74,8 @@
 @media (max-width: 768px) {
   .btn-primary,
   .btn-secondary {
-    padding: .75rem 1.5rem;
+    --btn-pad: .75rem;
+    padding: calc(round(nearest, var(--btn-pad), 1px) + var(--btn-sposta)) 1.5rem calc(round(nearest, var(--btn-pad), 1px) - var(--btn-sposta));
     gap: .4rem;
     text-align: center;
   }
@@ -75,7 +84,8 @@
 @media (max-width: 480px) {
   .btn-primary,
   .btn-secondary {
-    padding: .7rem 1.3rem;
+    --btn-pad: .7rem;
+    padding: calc(round(nearest, var(--btn-pad), 1px) + var(--btn-sposta)) 1.3rem calc(round(nearest, var(--btn-pad), 1px) - var(--btn-sposta));
   }
 }
 

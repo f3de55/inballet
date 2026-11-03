@@ -176,7 +176,8 @@ html.menu-aperto {
 }
 
 .main-header.is-scrolled .nav-container > .btn-primary {
-  padding: .45rem .85rem;
+  --btn-pad: .45rem;
+  padding: calc(round(nearest, var(--btn-pad), 1px) + var(--btn-sposta)) .85rem calc(round(nearest, var(--btn-pad), 1px) - var(--btn-sposta));
   font-size: var(--ui-size-scrolled);
 }
 
@@ -551,6 +552,11 @@ html.menu-aperto {
 }
 
 /* Centrato, larghezza del contenuto (non tutto il pannello) */
+/* Nel pannello mobile le maiuscole risultano più alte del centro: lo spostamento si arrotonda per eccesso */
+.mobile-cta.btn-primary {
+  --btn-sposta: round(up, var(--btn-sposta-base), 1px);
+}
+
 .mobile-cta {
   align-self: center;
   margin-top: 2rem;

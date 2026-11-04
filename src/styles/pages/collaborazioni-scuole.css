@@ -35,7 +35,7 @@
 }
 
 .fascia-eta {
-  color: var(--primary-blue-dark);
+  color: var(--heading-color);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }

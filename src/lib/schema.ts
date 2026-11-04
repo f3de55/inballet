@@ -61,14 +61,14 @@ export function schemaHome(immagine: string) {
         taxID: scuola.codiceFiscale,
         alternateName: scuola.nomiAlternativi,
         description:
-          'Scuola di danza multidisciplinare a Lainate e Rho (MI): danza classica, modern, contemporanea, hip-hop, breaking, yoga e pilates per bambini dai 3 anni, ragazzi e adulti. Ente formativo CSEN e CONI per insegnanti di danza.',
+          `Scuola di danza multidisciplinare a Lainate e Rho (MI), fondata nel ${FONDAZIONE} da ${scuola.fondatrice}: danza classica, modern, contemporanea, hip-hop, breaking, yoga e pilates per bambini dai 3 anni, ragazzi e adulti. Classi integrate, progetto NoiConVoi per persone con disabilità ed ente formativo CSEN e CONI per insegnanti di danza.`,
         url: `${site}/`,
         logo: `${site}/assets/images/logo.png`,
         image: immagine,
         telephone: scuola.telefonoSchema,
         email: scuola.email,
         foundingDate: String(FONDAZIONE),
-        founder: { '@type': 'Person', name: scuola.fondatrice },
+        founder: { '@type': 'Person', name: scuola.fondatrice, jobTitle: 'Direttrice Artistica' },
         address: indirizzo(principale),
         ...(principale.geo && {
           geo: { '@type': 'GeoCoordinates', latitude: principale.geo.lat, longitude: principale.geo.lng },

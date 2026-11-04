@@ -32,17 +32,17 @@ const fondiDesktop = Object.fromEntries(await Promise.all(stili.map(async (cat) 
 // Formazione e progetti, come nel menu del sito: due gruppi con titolo, frase e voci
 const formazione = {
   voci: [
-    { nome: 'Formazione Insegnanti di Danza', testo: 'Biennale, titolo nazionale CSEN e CONI', href: '/formazione-insegnanti', illustrazione: 'formazione-insegnanti' },
-    { nome: 'Formazioni Personalizzate', testo: 'Workshop per educatori e terapeuti', href: '/formazioni-personalizzate', illustrazione: 'formazioni-personalizzate' },
+    { nome: 'Formazione Insegnanti di Danza', testo: 'Biennio con titolo nazionale CSEN e CONI', href: '/formazione-insegnanti', illustrazione: 'formazione-insegnanti' },
+    { nome: 'Formazioni Personalizzate', testo: 'Percorsi per educatori e terapeuti', href: '/formazioni-personalizzate', illustrazione: 'formazioni-personalizzate' },
   ],
 };
 const progetti = {
   voci: [
-    { nome: 'Spettacoli ed Eventi', testo: 'Spettacoli, saggi e workshop', href: '/spettacoli-eventi', illustrazione: 'spettacoli-eventi' },
+    { nome: 'Spettacoli ed Eventi', testo: 'Lo spettacolo in teatro e gli eventi', href: '/spettacoli-eventi', illustrazione: 'spettacoli-eventi' },
     { nome: 'Collaborazioni con le Scuole', testo: 'Danza a scuola, dal nido alle superiori', href: '/collaborazioni-scuole', illustrazione: 'collaborazioni-scuole' },
-    { nome: 'Sportello Psicologico', testo: 'Ascolto per famiglie e bambini', href: '/sportello-psicologico', illustrazione: 'sportello-psicologico' },
-    { nome: 'Progetto NoiConVoi', testo: 'Danza per ragazzi con disabilità', href: '/progetto-noiconvoi', illustrazione: 'progetto-noiconvoi' },
-    { nome: 'Classi Integrate', testo: 'Corsi aperti ai bisogni speciali', href: '/classi-integrate', illustrazione: 'classi-integrate' },
+    { nome: 'Sportello Psicologico', testo: 'Uno spazio di ascolto per le famiglie', href: '/sportello-psicologico', illustrazione: 'sportello-psicologico' },
+    { nome: 'Progetto NoiConVoi', testo: 'Danza e disabilità, dal 2013', href: '/progetto-noiconvoi', illustrazione: 'progetto-noiconvoi' },
+    { nome: 'Classi Integrate', testo: 'Corsi che accolgono i bisogni speciali', href: '/classi-integrate', illustrazione: 'classi-integrate' },
     { nome: 'Sostenitori', testo: "Donazioni e volontariato d'impresa", href: '/sostenitori', illustrazione: 'sostenitori' },
   ],
 };
@@ -61,10 +61,10 @@ const schema = schemaHome(socialImage);
 ---
 
 <Base
-    title="Scuola di Danza a Lainate e Rho | InBallet"
-    description={`Scuola di danza a Lainate e Rho (MI) dal ${FONDAZIONE}: classica, modern, contemporanea, hip-hop, yoga e pilates per bambini dai 3 anni, ragazzi e adulti.`}
-    ogTitle="InBallet - Scuola di Danza a Lainate e Rho"
-    ogDescription={`Corsi di danza per bambini dai 3 anni, ragazzi e adulti a Lainate e Rho, dal ${FONDAZIONE}. Inclusione e formazione insegnanti CSEN e CONI.`}
+    title="Scuola di Danza a Lainate e Rho, dai 3 anni | InBallet"
+    description={`Scuola di danza a Lainate e Rho dal ${FONDAZIONE}: classica, modern, contemporanea, hip-hop, yoga e pilates per bambini dai 3 anni, ragazzi e adulti.`}
+    ogTitle="InBallet, la scuola di danza di Lainate e Rho"
+    ogDescription={`Dal ${FONDAZIONE} un luogo dove la danza è per tutti: corsi dai 3 anni all'età adulta, classi inclusive e formazione insegnanti CSEN e CONI.`}
     ogImage={socialImage}
     skipLinkId="skip-link"
 >
@@ -94,7 +94,7 @@ const schema = schemaHome(socialImage);
             <h1>Scuola di Danza a Lainate e Rho</h1>
 
             <p class="hero-lead">
-                Corsi di danza <strong>dai 3 anni agli adulti</strong>, anche per <strong>principianti</strong>.
+                Qui la danza è per tutti: <strong>dai 3 anni all'età adulta</strong>, anche se non hai mai danzato.
             </p>
 
             <div class="hero-cta">
@@ -115,8 +115,8 @@ const schema = schemaHome(socialImage);
             <!-- Header -->
             <div class="corsi-header">
                 <p class="corsi-label eyebrow">Corsi di danza a Lainate e Rho</p>
-                <h2 class="corsi-title titolo-sezione" id="corsi-home-titolo">I nostri <em>corsi</em></h2>
-                <p class="corsi-intro intro-sezione"><strong>Dai 3 anni all'età adulta</strong>, dalla danza classica all'hip-hop fino a yoga e pilates: scegli <strong>lo stile che fa per te</strong>.</p>
+                <h2 class="corsi-title titolo-sezione" id="corsi-home-titolo">Un corso <em>per ogni età</em></h2>
+                <p class="corsi-intro intro-sezione">Dalla danza classica all'hip-hop, fino a yoga e pilates: scegli <strong>lo stile che fa per te</strong>, a qualsiasi età e livello.</p>
             </div>
 
             <!-- Figure sporgenti in alto su desktop e ritagliate in basso su mobile; fila sfogliabile su telefono. -->
@@ -162,13 +162,13 @@ const schema = schemaHome(socialImage);
                 <div class="story-content">
                     <div class="section-header chi-siamo-header">
                         <p class="section-tagline eyebrow">Dal {FONDAZIONE} a Lainate e Rho</p>
-                        <h2 class="section-title titolo-sezione">La nostra <em>storia</em></h2>
+                        <h2 class="section-title titolo-sezione">Un luogo <em>di vita</em></h2>
                     </div>
 
                     <div class="story-text">
-                        <p class="story-lead">I.N. Ballet, per tutti InBallet, è la <strong>scuola di danza multidisciplinare</strong> di Lainate e Rho fondata nel {FONDAZIONE} da {scuola.fondatrice}, per bambini <strong>dai 3 anni</strong>, ragazzi e adulti.</p>
+                        <p class="story-lead">I.N. Ballet, per tutti InBallet, è la <strong>scuola di danza multidisciplinare</strong> di Lainate e Rho fondata nel {FONDAZIONE} da {scuola.fondatrice}: qui bambini <strong>dai 3 anni</strong>, ragazzi e adulti crescono insieme, dai primi passi ai corsi avanzati.</p>
 
-                        <p>Quasi tutte le <a href="/classi-integrate">classi accolgono allievi con bisogni speciali</a> e dal 2013 il <a href="/progetto-noiconvoi">progetto NoiConVoi</a> porta la danza ai <strong>ragazzi con disabilità</strong>.</p>
+                        <p>Ogni corpo ha il suo posto: quasi tutte le <a href="/classi-integrate">classi accolgono allievi con bisogni speciali</a> e dal 2013 il <a href="/progetto-noiconvoi">progetto NoiConVoi</a> apre la sala ai <strong>ragazzi con disabilità</strong>, insieme a un team di volontari.</p>
                     </div>
 
                     <a href="/chi-siamo" class="link-cta story-cta">
@@ -197,7 +197,7 @@ const schema = schemaHome(socialImage);
         <div class="intro-editoriale">
             <p class="eyebrow">Formazione e progetti</p>
             <h2 class="titolo-sezione" id="oltre-titolo">La danza <em>oltre i corsi</em></h2>
-            <p><strong>Formazione</strong> per chi insegna e <strong>progetti</strong> con scuole, famiglie e territorio.</p>
+            <p><strong>Formazione</strong> per chi insegna e <strong>progetti</strong> con scuole, famiglie e territorio: siamo una comunità che educa.</p>
         </div>
 
         <div class="oltre-layout">
@@ -225,9 +225,9 @@ const schema = schemaHome(socialImage);
      <section class="dicono-di-noi-section decoro-onde" aria-labelledby="recensioni-titolo">
         <div class="container recensioni-layout">
             <div class="recensioni-intro">
-                <p class="eyebrow">Le voci della nostra community</p>
+                <p class="eyebrow">Le voci di chi danza con noi</p>
                 <h2 class="titolo-sezione" id="recensioni-titolo">Dicono <em>di noi</em></h2>
-                <p class="intro-sezione">Allievi e famiglie raccontano InBallet nelle <strong>recensioni pubblicate su Google</strong>.</p>
+                <p class="intro-sezione">Allievi e famiglie raccontano com'è stare con noi, nelle <strong>recensioni su Google</strong>.</p>
             </div>
 
             <!-- Valutazione media (compilata da home.ts) e link a tutte le recensioni -->
@@ -276,7 +276,7 @@ const schema = schemaHome(socialImage);
             <div class="faq-intro">
                 <p class="faq-label eyebrow">Domande frequenti</p>
                 <h2 class="faq-title titolo-sezione" id="faq-titolo">Tutto quello che <em>vuoi sapere</em></h2>
-                <p class="faq-text intro-sezione">Età, sedi, corsi e iscrizioni. Non trovi la risposta? <strong>Scrivici o chiamaci</strong>.</p>
+                <p class="faq-text intro-sezione">Età, sedi, corsi e iscrizioni. Non trovi la risposta? <strong>Scrivici o chiamaci</strong>: siamo qui per questo.</p>
                 <ul class="faq-contatti">
                     <li><a href={`mailto:${scuola.email}`}><i class="fas fa-envelope" aria-hidden="true"></i>{scuola.email}</a></li>
                     <li><a href={scuola.telefonoHref}><i class="fas fa-phone" aria-hidden="true"></i>{scuola.telefono}</a></li>

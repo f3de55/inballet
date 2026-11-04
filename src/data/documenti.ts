@@ -37,7 +37,7 @@ export const documentiPredefiniti: PaginaDocumenti = {
     titolo: 'Moduli da',
     accento: 'scaricare',
     intro:
-      "Compila il modulo e consegnalo firmato in segreteria. **Dai 6 anni** serve anche il **certificato medico non agonistico**; sotto i 6 anni basta l'**autocertificazione** dei genitori.",
+      "Compila il modulo e consegnalo firmato in segreteria: per qualsiasi dubbio, ti aiutiamo noi. **Dai 6 anni** serve anche il **certificato medico non agonistico**; sotto i 6 anni basta l'**autocertificazione** dei genitori.",
   },
   documenti: [
     {

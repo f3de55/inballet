@@ -326,7 +326,7 @@ a.info-valore:hover {
   }
 }
 
-/* ---------- InBallet in breve: tre punti, senza foto o pannelli ---------- */
+/* ---------- InBallet in breve: tre box essenziali con icona ---------- */
 .fondamenti {
   padding: 0 0 calc(var(--section-y) * .5);
   background: var(--white);
@@ -335,6 +335,7 @@ a.info-valore:hover {
 .fondamenti-layout {
   padding-top: 2rem;
   border-top: 1px solid var(--linea);
+  text-align: center;
 }
 
 .fondamenti-intro {
@@ -348,35 +349,43 @@ a.info-valore:hover {
 .fondamenti-lista {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 3rem;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .fondamento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
   min-width: 0;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid var(--linea);
+  border-radius: var(--radius-card);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--transition-base);
+}
+
+.fondamento:hover {
+  border-color: var(--primary-blue-dark);
+}
+
+.fondamento-icona {
+  margin-bottom: 1rem;
+  color: var(--primary-blue-dark);
+  font-size: var(--text-3xl);
+  line-height: 1;
 }
 
 .fondamento-titolo {
   margin: 0 0 .5rem;
 }
 
-.fondamento-titolo a {
-  display: inline-block;
-  min-height: 2rem;
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: .2em;
-  transition: color var(--transition-base);
-}
-
-.fondamento-titolo a:hover {
-  color: var(--primary-blue-dark);
-}
-
 .fondamento-testo {
+  max-width: 20rem;
   margin: 0;
 }
 
@@ -394,16 +403,7 @@ a.info-valore:hover {
     gap: 1rem;
   }
 
-  .fondamento-titolo {
-    display: inline;
-    margin: 0 .5rem 0 0;
-  }
-
-  .fondamento-titolo::after {
-    content: ':';
-  }
-
-  .fondamento-testo {
-    display: inline;
+  .fondamento {
+    padding: 1.5rem;
   }
 }

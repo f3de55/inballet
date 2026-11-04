@@ -35,7 +35,7 @@
 .corsi-scheda::after {
   content: '';
   position: absolute;
-  background: var(--linea);
+  background: rgb(var(--blu-rgb) / .65);
   pointer-events: none;
 }
 

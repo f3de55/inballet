@@ -17,9 +17,9 @@ const bg = {
 const ABBR: Record<string, string> = { Monday: 'Lun', Tuesday: 'Mar', Wednesday: 'Mer', Thursday: 'Gio', Friday: 'Ven', Saturday: 'Sab', Sunday: 'Dom' };
 // Tre punti di accesso alla scuola, con una sola frase per ciascuno.
 const fondamenti = [
-  { titolo: 'Corsi', testo: 'Per bambini dai 3 anni, ragazzi e adulti.', href: '/corsi' },
-  { titolo: 'Inclusione', testo: 'Classi integrate e ascolto per le famiglie.', href: '/classi-integrate' },
-  { titolo: 'Formazione', testo: 'Due anni di formazione per insegnare danza.', href: '/formazione-insegnanti' },
+  { titolo: 'Corsi', testo: 'Per bambini dai 3 anni, ragazzi e adulti.', href: '/corsi', icona: 'fa-shoe-prints' },
+  { titolo: 'Inclusione', testo: 'Classi integrate e ascolto per le famiglie.', href: '/classi-integrate', icona: 'fa-users' },
+  { titolo: 'Formazione', testo: 'Due anni di formazione per insegnare danza.', href: '/formazione-insegnanti', icona: 'fa-graduation-cap' },
 ];
 
 const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno) => {
@@ -140,9 +140,12 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
             </header>
             <ul class="fondamenti-lista">
                 {fondamenti.map((f) => (
-                    <li class="fondamento">
-                        <h3 class="fondamento-titolo titolo-card"><a href={f.href}>{f.titolo}</a></h3>
-                        <p class="fondamento-testo">{f.testo}</p>
+                    <li>
+                        <a class="fondamento" href={f.href}>
+                            <i class={`fas ${f.icona} fondamento-icona`} aria-hidden="true"></i>
+                            <h3 class="fondamento-titolo titolo-card">{f.titolo}</h3>
+                            <p class="fondamento-testo">{f.testo}</p>
+                        </a>
                     </li>
                 ))}
             </ul>

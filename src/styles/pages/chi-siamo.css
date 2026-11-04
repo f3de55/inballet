@@ -63,8 +63,7 @@
   margin-bottom: 4rem;
 }
 
-/* Tre tappe per riga, sempre in ordine cronologico da sinistra a destra.
-   Ogni riga ripete la stessa curva senza invertire le colonne. */
+/* Tre tappe per riga, da sinistra a destra; il raccordo passa fra le righe. */
 .timeline {
   --nodo: 14px;
   position: relative;

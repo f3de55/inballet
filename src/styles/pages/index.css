@@ -462,6 +462,17 @@ davvero andando: niente riquadro nero mentre carica */
     text-align: center;
   }
 
+  /* Onde leggere su tutta la card, sotto alle figure e ai testi. */
+  .corsi-indice .corsi-stile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--decoro-onde) center / cover no-repeat;
+    opacity: .65;
+    pointer-events: none;
+  }
+
   .corsi-stile-foto {
     display: none;
   }
@@ -813,6 +824,20 @@ davvero andando: niente riquadro nero mentre carica */
   border-top: 1px solid var(--linea);
 }
 
+.oltre-elemento::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1rem;
+  border-left: 1px solid var(--linea);
+  pointer-events: none;
+}
+
+.oltre-elemento:nth-child(2n + 1)::after {
+  content: none;
+}
+
 .oltre-mobile {
   display: none;
 }
@@ -835,6 +860,14 @@ davvero andando: niente riquadro nero mentre carica */
 @media (min-width: 1025px) {
   .oltre-lista {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .oltre-elemento:nth-child(2n + 1)::after {
+    content: '';
+  }
+
+  .oltre-elemento:nth-child(4n + 1)::after {
+    content: none;
   }
 }
 

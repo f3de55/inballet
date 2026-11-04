@@ -1,4 +1,4 @@
-/** Una curva per riga, da sinistra a destra: il cambio riga non attraversa i testi. */
+/** Una curva continua: le righe si raccordano lungo i margini e nello spazio fra le tappe. */
 export {};
 
 const timeline = document.querySelector<HTMLElement>('.timeline');
@@ -20,7 +20,7 @@ if (timeline) {
     const nodo = parseFloat(getComputedStyle(timeline).getPropertyValue('--nodo'));
     const punti = [...timeline.querySelectorAll<HTMLElement>(':scope > .voce')].map((voce) => {
       const box = voce.getBoundingClientRect();
-      return { x: box.left - area.left + nodo / 2, y: box.top - area.top + nodo / 2 };
+      return { x: box.left - area.left + nodo / 2, y: box.top - area.top + nodo / 2, top: box.top - area.top, bottom: box.bottom - area.top };
     });
     if (punti.length < 2) return;
     svg.setAttribute('viewBox', `0 0 ${area.width} ${area.height}`);
@@ -29,7 +29,21 @@ if (timeline) {
       const a = punti[i - 1];
       const b = punti[i];
       if (b.x <= a.x) {
-        d += ` M ${b.x} ${b.y}`;
+        // La linea torna a sinistra nel corridoio libero fra le due righe.
+        const fondoRiga = Math.max(...punti.slice(Math.max(0, i - 3), i).map((p) => p.bottom));
+        const mezzo = (fondoRiga + b.top) / 2;
+        const raggio = Math.min(16, (b.y - mezzo) / 2, (b.top - fondoRiga) / 3);
+        const destra = area.width + 20;
+        const sinistra = -20;
+        d += ` L ${destra - raggio} ${a.y}`;
+        d += ` Q ${destra} ${a.y} ${destra} ${a.y + raggio}`;
+        d += ` L ${destra} ${mezzo - raggio}`;
+        d += ` Q ${destra} ${mezzo} ${destra - raggio} ${mezzo}`;
+        d += ` L ${sinistra + raggio} ${mezzo}`;
+        d += ` Q ${sinistra} ${mezzo} ${sinistra} ${mezzo + raggio}`;
+        d += ` L ${sinistra} ${b.y - raggio}`;
+        d += ` Q ${sinistra} ${b.y} ${sinistra + raggio} ${b.y}`;
+        d += ` L ${b.x} ${b.y}`;
         continue;
       }
       const centro = (a.x + b.x) / 2;

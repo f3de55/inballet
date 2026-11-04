@@ -26,8 +26,8 @@
   gap: 1px;
   margin: 0;
   padding: 0;
-  background: var(--linea);
-  border-block: 1px solid var(--linea);
+  background: rgb(var(--blu-rgb) / .65);
+  border-block: 1px solid rgb(var(--blu-rgb) / .65);
 }
 
 /* Ogni cella occupa 5 righe della griglia (icona, titolo, età, frequenza, «Scopri il corso») e le

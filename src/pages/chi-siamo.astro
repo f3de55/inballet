@@ -187,20 +187,21 @@ const numeri = [
 </Base>
 
 <script>
-  // Timeline a serpentina: un unico tracciato che unisce i nodi, riga dopo riga (sempre letti da sinistra a
+  // Solo su tablet: un unico tracciato che unisce i nodi, riga dopo riga (sempre letti da sinistra a
   // destra). Alla fine di ogni riga la linea gira a destra con due curve identiche, scende, torna indietro
   // tra le righe e curva (stesso raggio) dentro il nodo della prima tappa della riga sotto.
-  // Sul telefono resta la linea verticale.
+  // Desktop e telefono usano rispettivamente la linea orizzontale e verticale in CSS.
   const timeline = document.querySelector<HTMLElement>('.timeline');
   if (timeline) {
     const NS = 'http://www.w3.org/2000/svg';
     const RAGGIO = 28; // stesso raggio per tutte e quattro le curve: a destra escono e rientrano, a sinistra entrano nel nodo
     const telefono = window.matchMedia('(max-width: 600px)');
+    const desktop = window.matchMedia('(min-width: 1025px)');
 
     const disegna = () => {
       timeline.querySelector('.timeline-linea')?.remove();
       timeline.classList.remove('con-linea');
-      if (telefono.matches) return;
+      if (telefono.matches || desktop.matches) return;
 
       const nodo = parseFloat(getComputedStyle(timeline).getPropertyValue('--nodo')) || 20;
       const voci = [...timeline.children] as HTMLElement[];
@@ -247,5 +248,6 @@ const numeri = [
     new ResizeObserver(disegna).observe(timeline);
     document.fonts?.ready.then(disegna);
     telefono.addEventListener('change', disegna);
+    desktop.addEventListener('change', disegna);
   }
 </script>

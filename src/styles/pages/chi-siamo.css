@@ -63,10 +63,8 @@
   margin-bottom: 4rem;
 }
 
-/* Timeline a serpentina: si legge da sinistra a destra, riga dopo riga, e una sola linea unisce tutte le
-   tappe dalla più vecchia alla più nuova. A fine riga la linea esce a destra, scende nello spazio tra le
-   righe, torna indietro fino al margine sinistro e rientra nel nodo della prima tappa della riga sotto.
-   Desktop: 3 tappe per riga; tablet: 2; telefono: una linea verticale a sinistra.
+/* Percorso cronologico: su desktop cinque tappe lungo un asse orizzontale;
+   su tablet resta il collegamento tra le righe, sul telefono la linea verticale a sinistra.
    L'ultima tappa (Oggi) ha il nodo pieno. */
 .timeline {
   --nodo: 20px;
@@ -124,8 +122,8 @@
   display: none;
 }
 
-/* Con JavaScript la linea è un unico tracciato SVG (curve vere e spessore uniforme, vedi lo script in fondo):
-   le linee CSS tra le tappe non servono più. Senza JavaScript restano le linee dritte per riga. */
+/* Su tablet JavaScript collega le righe con un tracciato SVG; desktop e telefono usano solo il CSS.
+   Senza JavaScript restano le linee dritte per riga. */
 .timeline {
   position: relative;
 }
@@ -148,6 +146,37 @@
 
 .timeline.con-linea .voce::after {
   display: none;
+}
+
+/* Desktop: tutte le tappe sulla stessa linea, con date e testi centrati sotto ciascun nodo. */
+@media (min-width: 1025px) {
+  .timeline {
+    --nodo: 16px;
+    --distanza: 1.5rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .timeline .voce {
+    padding-top: 2.5rem;
+    text-align: center;
+    overflow-wrap: break-word;
+  }
+
+  .timeline .voce::before {
+    left: calc(50% - var(--nodo) / 2);
+    border-width: 2px;
+  }
+
+  .timeline .voce::after {
+    top: calc(var(--nodo) / 2 - .5px);
+    left: calc(50% + var(--nodo) / 2);
+    right: calc(-50% - var(--distanza) + var(--nodo) / 2);
+    height: 1px;
+  }
+
+  .timeline .voce:last-child::before {
+    box-shadow: 0 0 0 6px rgb(var(--blu-rgb) / .2);
+  }
 }
 
 /* Tablet: due tappe per riga */

@@ -133,7 +133,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                 {data.impara.map((item, i) => (
                     <li>
                         <p class="impara-num numero-medio" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
-                        <p class="impara-testo testo-evidenza" set:html={item} />
+                        <p class="impara-testo" set:html={item} />
                     </li>
                 ))}
             </ol>

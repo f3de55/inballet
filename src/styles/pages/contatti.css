@@ -322,60 +322,45 @@ a.info-valore:hover {
   }
 }
 
-/* ---------- I fondamenti di InBallet ---------- */
+/* ---------- InBallet in breve: tre punti, senza foto o pannelli ---------- */
 .fondamenti {
-  padding: var(--section-y) 0;
-  background: var(--bg-soft);
+  padding: 0 0 calc(var(--section-y) * .5);
+  background: var(--white);
 }
 
 .fondamenti-layout {
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.5fr);
-  align-items: start;
-  gap: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--linea);
 }
 
-.fondamenti-intro .eyebrow {
-  margin-bottom: 1rem;
+.fondamenti-intro {
+  margin-bottom: 2rem;
 }
 
 .fondamenti-intro .titolo-sezione {
   margin: 0;
 }
 
-.fondamenti-foto {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: var(--radius-img);
-  margin-top: 2rem;
-}
-
 .fondamenti-lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .fondamento {
-  display: grid;
-  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
-  gap: 1.5rem;
-  padding: 1.5rem 0;
-  border-top: 1px solid var(--linea);
-}
-
-.fondamento:last-child {
-  border-bottom: 1px solid var(--linea);
+  min-width: 0;
 }
 
 .fondamento-titolo {
-  margin: 0;
+  margin: 0 0 .5rem;
 }
 
 .fondamento-titolo a {
+  display: inline-block;
+  min-height: 2rem;
   color: inherit;
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -391,65 +376,30 @@ a.info-valore:hover {
   margin: 0;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 700px) {
   .fondamenti-layout {
-    gap: 2.5rem;
-  }
-
-  .fondamento {
-    grid-template-columns: minmax(0, 1fr);
-    gap: .5rem;
-  }
-}
-
-@media (max-width: 900px) {
-  .fondamenti-layout {
-    grid-template-columns: minmax(0, 1fr);
+    padding-top: 1.5rem;
   }
 
   .fondamenti-intro {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: start;
-    gap: 0 2.5rem;
+    margin-bottom: 1.5rem;
   }
 
-  .fondamenti-intro .eyebrow {
-    grid-column: 1;
-  }
-
-  .fondamenti-intro .titolo-sezione {
-    grid-column: 1;
-  }
-
-  .fondamenti-foto {
-    grid-column: 2;
-    grid-row: 1 / 3;
-    margin-top: 0;
-  }
-
-  .fondamento {
-    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
-    gap: 1.5rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .fondamenti-intro,
-  .fondamento {
-    display: block;
-  }
-
-  .fondamenti-foto {
-    aspect-ratio: 3 / 2;
-    margin-top: 1.5rem;
-  }
-
-  .fondamento {
-    padding: 1.25rem 0;
+  .fondamenti-lista {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
   }
 
   .fondamento-titolo {
-    margin-bottom: .5rem;
+    display: inline;
+    margin: 0 .5rem 0 0;
+  }
+
+  .fondamento-titolo::after {
+    content: ':';
+  }
+
+  .fondamento-testo {
+    display: inline;
   }
 }

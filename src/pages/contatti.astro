@@ -4,7 +4,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import Galleria from '../components/Galleria.astro';
 import { heroPagina } from '../lib/hero-pagine';
-import { categorieCorsi, scuola, sedi, orari } from '../data/scuola';
+import { scuola, sedi, orari } from '../data/scuola';
 import '../styles/pages/contatti.css';
 
 const { telefono: TEL, telefonoHref: TEL_HREF, email: EMAIL } = scuola;
@@ -15,16 +15,11 @@ const bg = {
 
 /** Settimana da lunedì con gli orari di scuola.ts (aggiornati poi da Google, se disponibile). */
 const ABBR: Record<string, string> = { Monday: 'Lun', Tuesday: 'Mar', Wednesday: 'Mer', Thursday: 'Gio', Friday: 'Ven', Saturday: 'Sab', Sunday: 'Dom' };
-// I fondamenti di InBallet, in sintesi dai contenuti del sito (Chi siamo, FAQ, Classi Integrate,
-// Sportello Psicologico, Formazione Insegnanti)
-const totaleCorsi = categorieCorsi.reduce((n, c) => n + c.corsi.length, 0);
+// Tre punti di accesso alla scuola, con una sola frase per ciascuno.
 const fondamenti = [
-  { titolo: 'Dai 3 anni agli adulti', testo: 'Corsi per bambini, ragazzi e adulti, anche per chi si avvicina alla danza per la prima volta.', href: '/corsi' },
-  { titolo: 'Percorsi per livello', testo: `Classica, modern, contemporanea, urban, yoga e pilates: ${totaleCorsi} corsi da scegliere in base a età ed esperienza.`, href: '/corsi' },
-  { titolo: 'Classi integrate', testo: 'L’inserimento degli allievi con bisogni speciali si prepara insieme alla famiglia e alla Direzione.', href: '/classi-integrate' },
-  { titolo: 'Spazio alle famiglie', testo: 'Su richiesta alla Direzione, lo sportello psicologico offre incontri con una psicoterapeuta.', href: '/sportello-psicologico' },
-  { titolo: 'Dalla sala al teatro', testo: 'Spettacoli, saggi e workshop fanno parte del percorso degli allievi.', href: '/spettacoli-eventi' },
-  { titolo: 'Formazione insegnanti', testo: 'Un biennio dedicato alla danza Modern, con titolo CSEN e CONI e sei master successivi.', href: '/formazione-insegnanti' },
+  { titolo: 'Corsi', testo: 'Per bambini dai 3 anni, ragazzi e adulti.', href: '/corsi' },
+  { titolo: 'Inclusione', testo: 'Classi integrate e ascolto per le famiglie.', href: '/classi-integrate' },
+  { titolo: 'Formazione', testo: 'Due anni di formazione per insegnare danza.', href: '/formazione-insegnanti' },
 ];
 
 const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno) => {
@@ -138,19 +133,17 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
         </div>
     </section>
 
-    <!-- La scuola raccontata attraverso una foto e sei voci, senza riquadri. -->
+    <!-- Una sintesi della scuola: tre argomenti e tre collegamenti. -->
     <section id="fondamenti" class="fondamenti" aria-labelledby="fondamenti-titolo">
         <div class="container fondamenti-layout">
-            <div class="fondamenti-intro">
-                <p class="eyebrow">I fondamenti di InBallet</p>
-                <h2 class="titolo-sezione" id="fondamenti-titolo">Il nostro modo di <em>fare scuola</em></h2>
-                <Img class="fondamenti-foto" src="gallery-7.jpg" alt="Insegnanti e allieve di InBallet insieme in sala" width="640" height="480" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 420px" loading="lazy" decoding="async" />
-            </div>
+            <header class="fondamenti-intro">
+                <h2 class="titolo-sezione" id="fondamenti-titolo">InBallet, <em>in breve</em></h2>
+            </header>
             <ul class="fondamenti-lista">
                 {fondamenti.map((f) => (
                     <li class="fondamento">
                         <h3 class="fondamento-titolo titolo-card"><a href={f.href}>{f.titolo}</a></h3>
-                        <p class="fondamento-testo testo-piccolo">{f.testo}</p>
+                        <p class="fondamento-testo">{f.testo}</p>
                     </li>
                 ))}
             </ul>

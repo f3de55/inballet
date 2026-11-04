@@ -106,8 +106,10 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                                 <i class="fas fa-location-dot info-icona" aria-hidden="true"></i>
                                 <div>
                                     <p class="info-valore">{sede.citta}</p>
-                                    <address class="sede-indirizzo">{sede.via}<br>{sede.cap} {sede.citta} ({sede.provincia})</address>
-                                    <p><a href={sede.maps} target="_blank" rel="noopener noreferrer" aria-label={`Indicazioni per la sede di ${sede.citta} (si apre in una nuova scheda)`}>Indicazioni <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></p>
+                                    <address class="sede-indirizzo">
+                                        <p><a href={sede.maps} target="_blank" rel="noopener noreferrer" aria-label={`${sede.via}, ${sede.citta}: apri la mappa (si apre in una nuova scheda)`}>{sede.via} <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></p>
+                                        {sede.cap} {sede.citta} ({sede.provincia})
+                                    </address>
                                 </div>
                             </li>
                         ))}

@@ -342,15 +342,19 @@ davvero andando: niente riquadro nero mentre carica */
   text-align: center;
 }
 
-/* Tablet e desktop: figura intera dentro la card, sopra il testo e sotto l'introduzione. */
+/* Tablet e desktop: figure decorative oltre il bordo superiore.
+   Lo sfondo resta ritagliato, mentre la figura passa davanti alla cornice. */
 @media (min-width: 601px) {
+  .corsi-indice {
+    padding-top: 4rem;
+    row-gap: 5rem;
+  }
+
   .corsi-stile--grafica {
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 1.5rem;
     background: var(--bg-soft);
     color: var(--dark-navy);
-    padding-block: 1.5rem;
+    padding-block: 1.25rem;
+    overflow: visible;
   }
 
   .corsi-stile--grafica .corsi-stile-foto {
@@ -372,12 +376,26 @@ davvero andando: niente riquadro nero mentre carica */
     min-height: 2lh;
   }
 
+  .corsi-stile--grafica .corsi-stile-nome,
+  .corsi-stile--grafica .corsi-stile-desc,
+  .corsi-stile--grafica .corsi-stile-link {
+    position: relative;
+    z-index: 1;
+  }
+
   .corsi-stile-figura {
+    position: absolute;
+    top: -4rem;
+    left: 50%;
+    z-index: 0;
     display: block;
-    flex-shrink: 0;
     width: min(100%, 8rem);
     height: 11rem;
     object-fit: contain;
+    transform: translateX(-50%);
+    /* La sfumatura lascia leggibile il testo sotto la decorazione. */
+    -webkit-mask-image: linear-gradient(to bottom, rgb(var(--nero-rgb)) 0%, rgb(var(--nero-rgb)) 35%, rgb(var(--nero-rgb) / .28) 60%, rgb(var(--nero-rgb) / .06) 76%, rgb(var(--nero-rgb) / 0) 90%);
+    mask-image: linear-gradient(to bottom, rgb(var(--nero-rgb)) 0%, rgb(var(--nero-rgb)) 35%, rgb(var(--nero-rgb) / .28) 60%, rgb(var(--nero-rgb) / .06) 76%, rgb(var(--nero-rgb) / 0) 90%);
     pointer-events: none;
     user-select: none;
   }

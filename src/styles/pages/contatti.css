@@ -88,7 +88,7 @@
 .info-righe {
   list-style: none;
   display: grid;
-  gap: 1.5rem;
+  gap: 0;
   margin: 0;
   padding: 0;
 }
@@ -99,6 +99,20 @@
   align-items: center;
   gap: .5rem;
   min-width: 0;
+  padding: 1.25rem 0;
+}
+
+/* Ogni recapito e ogni sede ha il proprio spazio, separato da un filetto. */
+.info-riga + .info-riga {
+  border-top: 1px solid var(--linea);
+}
+
+.info-riga:first-child {
+  padding-top: 0;
+}
+
+.info-riga:last-child {
+  padding-bottom: 0;
 }
 
 /* Icona sopra e testo sotto: entrambi sullo stesso asse centrale del box. */
@@ -187,7 +201,11 @@ a.info-valore:hover {
   display: grid;
   grid-template-columns: 3.5rem 1fr;
   gap: 1rem;
-  padding: .4rem 0;
+  padding: .65rem 0;
+}
+
+.orario-item + .orario-item {
+  border-top: 1px solid var(--linea);
 }
 
 .orario-day,

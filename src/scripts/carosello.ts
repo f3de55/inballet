@@ -3,7 +3,8 @@
    Struttura: .carosello (contenitore che scorre, overflow-x) > .carosello-track (due metà
    identiche). Scorre da solo ovunque (PC, tablet, telefono) e si può spostare a mano:
    trascinando col mouse o col dito, con la rotella orizzontale o il trackpad. Si ferma
-   con il mouse sopra, al tocco e mentre una finestra è aperta; riparte 2 secondi dopo.
+   con il mouse sopra, al tocco e mentre una finestra è aperta. Dopo un gesto manuale
+   riparte dopo 2 secondi; alla chiusura della finestra riparte subito, senza un nuovo clic.
    È scorrimento vero (scrollLeft), con la parte decimale in una traslazione; non è un'animazione CSS: così le foto restano sempre
    disegnate anche dopo molto tempo e il giro è infinito in entrambi i versi.
    ======================================== */
@@ -43,6 +44,7 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
   let ultimo = 0;
   let fermo = false;
   let sopra = false;
+  let ignoraHover = false;
   let visibile = false;
   let ripresa = 0;
   let ultimoScroll = 0;
@@ -76,6 +78,22 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
       fermo = false;
     }, 2000);
   };
+
+  // `close` non risale il DOM: la cattura copre Esc, X e clic sullo sfondo per entrambe le modali.
+  document.addEventListener('close', (event) => {
+    if (!(event.target instanceof HTMLDialogElement) || document.querySelector('dialog[open]')) return;
+    clearTimeout(ripresa);
+    trascinando = false;
+    spostato = false;
+    fila.classList.remove('trascinando');
+    sopra = false;
+    // Il browser può emettere pointerenter quando sparisce la modale, anche a mouse fermo.
+    // La pausa al passaggio torna attiva dopo essere usciti dalla fila o un nuovo clic sulla fila.
+    ignoraHover = true;
+    pos = mod(fila.scrollLeft);
+    ultimo = performance.now();
+    fermo = false;
+  }, true);
 
   // Posizione iniziale: a metà del giro; si aggiorna al caricamento (le foto fissano le larghezze)
   const inizia = () => {
@@ -114,17 +132,20 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
 
   // Mouse: pausa al passaggio e trascinamento
   fila.addEventListener('pointerenter', (e) => {
-    if (e.pointerType !== 'mouse') return;
+    if (e.pointerType !== 'mouse' || ignoraHover) return;
     sopra = true;
   });
   fila.addEventListener('pointerleave', (e) => {
     if (e.pointerType !== 'mouse') return;
     sopra = false;
+    ignoraHover = false;
   });
   let xPrec = 0;
   let totale = 0;
   fila.addEventListener('pointerdown', (e) => {
     if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    ignoraHover = false;
+    sopra = true;
     ferma();
     trascinando = true;
     spostato = false;

@@ -138,8 +138,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
         </div>
     </section>
 
-    <!-- I fondamenti di InBallet: titolo centrato, poi sei punti (icona nel cerchio, titolo, una riga).
-         Desktop tre colonne con l'icona sopra il testo, tablet due e mobile una con l'icona a sinistra -->
+    <!-- Sei fondamenti in riquadri: icone circolari e testi centrati, tre colonne su desktop e due sotto. -->
     <section class="fondamenti sezione-scura" aria-labelledby="fondamenti-titolo">
         <div class="container fondamenti-layout">
             <div class="fondamenti-intro">
@@ -152,9 +151,10 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                         <a href={f.href} class="fondamento">
                             <div class="fondamento-icona" aria-hidden="true"><i class={`fas ${f.icona}`}></i></div>
                             <div class="fondamento-testi">
-                                <h3 class="fondamento-titolo">{f.titolo}</h3>
+                                <h3 class="fondamento-titolo titolo-card">{f.titolo}</h3>
                                 <p class="fondamento-testo testo-piccolo">{f.testo}</p>
                             </div>
+                            <span class="fondamento-freccia" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
                         </a>
                     </li>
                 ))}

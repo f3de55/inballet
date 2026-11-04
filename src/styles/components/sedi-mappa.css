@@ -198,19 +198,6 @@
     transform: translateX(-50%);
   }
 
-  .sedi-mappa-foto {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: center;
-    gap: .75rem;
-    width: 35%;
-  }
-
-  .sedi-mappa-didascalia {
-    gap: .5rem;
-    padding: .65rem .5rem .65rem 0;
-  }
-
   .sedi-mappa-foto--lainate {
     left: 14%;
   }

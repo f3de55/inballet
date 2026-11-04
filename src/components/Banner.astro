@@ -126,7 +126,9 @@ Astro.response.headers.set('Cache-Control', 'no-store');
         #updateHeight() {
             const banner = this.querySelector<HTMLElement>('.event-banner');
             if (!banner) return;
-            const altezza = `${banner.offsetHeight}px`;
+            // Altezza esatta, decimali compresi: offsetHeight arrotonda all'intero e lasciava
+            // una fessura sub-pixel tra banner e navbar (visibile sugli schermi ad alta densità)
+            const altezza = `${banner.getBoundingClientRect().height}px`;
             root.style.setProperty('--banner-height', altezza);
             // Spazio che sposta la pagina sotto il banner: solo l'altezza piena (in cima),
             // così quando il banner si riduce allo scroll il contenuto non salta

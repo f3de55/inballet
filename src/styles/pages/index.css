@@ -136,7 +136,7 @@ davvero andando: niente riquadro nero mentre carica */
   /* A blocco (non inline): niente spazio in più dalla riga di testo sopra e sotto */
   display: flex;
   width: fit-content;
-  margin-top: 1.85rem;
+  margin-top: .75rem;
 }
 
 .story-cta + .story-quote {

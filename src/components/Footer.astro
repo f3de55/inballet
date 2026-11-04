@@ -3,7 +3,7 @@
  * Footer: colonne generate dalla navigazione (src/data/navigazione.ts) e dai
  * dati ufficiali della scuola, così restano sempre allineate a navbar e contatti.
  */
-import { categorieCorsi, FONDAZIONE, scuola, sedi } from '../data/scuola';
+import { categorieCorsi, FONDAZIONE, scuola } from '../data/scuola';
 import { menu, type Voce } from '../data/navigazione';
 import Img from './Img.astro';
 import '../styles/components/footer.css';
@@ -52,17 +52,6 @@ const colonne: { titolo: string; href?: string; voci: Voce[] }[] = [
       <ul>
         <li class="footer-dato"><i class="fas fa-phone" aria-hidden="true"></i><a href={scuola.telefonoHref}>{scuola.telefono}</a></li>
         <li class="footer-dato"><i class="fas fa-envelope" aria-hidden="true"></i><a href={`mailto:${scuola.email}`}>{scuola.email}</a></li>
-      </ul>
-      <ul class="footer-sedi">
-        {sedi.map((s) => (
-          <li class="footer-dato">
-            <i class="fas fa-location-dot" aria-hidden="true"></i>
-            <div>
-              <p>{s.citta}</p>
-              <a href={s.maps} target="_blank" rel="noopener">{s.via}</a>
-            </div>
-          </li>
-        ))}
       </ul>
       <a href="/contatti" class="footer-link">Altre informazioni <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
     </details>

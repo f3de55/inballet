@@ -63,17 +63,17 @@
   margin-bottom: 4rem;
 }
 
-/* Due tappe per fascia, collegate in ordine cronologico da una serpentina.
-   Le righe alternate invertono il percorso; Oggi chiude al centro. */
+/* Una sola fascia cronologica, sempre da sinistra a destra.
+   La serpentina alterna la quota delle tappe senza riordinare le colonne. */
 .timeline {
-  --nodo: 18px;
+  --nodo: 14px;
   position: relative;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 3.75rem 5rem;
-  max-width: 64rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: start;
+  gap: 2rem;
   margin: 0 auto;
-  padding: 0 1.75rem;
+  padding: 0;
   list-style: none;
 }
 
@@ -86,22 +86,8 @@
   border: 0;
 }
 
-.timeline .voce:nth-of-type(3) {
-  grid-column: 2;
-  grid-row: 2;
-}
-
-.timeline .voce:nth-of-type(4) {
-  grid-column: 1;
-  grid-row: 2;
-}
-
-.timeline .voce:last-of-type {
-  grid-column: 1 / -1;
-  grid-row: 3;
-  justify-self: center;
-  width: 100%;
-  max-width: 30rem;
+.timeline .voce:nth-of-type(even) {
+  margin-top: 3rem;
 }
 
 .timeline .voce::before {
@@ -127,7 +113,7 @@
 }
 
 .timeline .voce-testo {
-  max-width: 36ch;
+  margin: 0;
 }
 
 .timeline-linea {
@@ -147,22 +133,26 @@
   stroke-linejoin: round;
 }
 
-/* Su telefono la cronologia rimane verticale e si legge dall'alto verso il basso. */
-@media (max-width: 700px) {
+/* Tablet e telefono: una colonna cronologica, senza righe da leggere al contrario. */
+@media (max-width: 1024px) {
   .timeline {
     display: block;
     padding: 0;
   }
 
-  .timeline .voce,
-  .timeline .voce:last-of-type {
+  .timeline .voce {
     width: auto;
     max-width: none;
+    margin-top: 0;
     padding: 0 0 2.5rem 2.5rem;
   }
 
   .timeline .voce:last-of-type {
     padding-bottom: 0;
+  }
+
+  .timeline .voce:nth-of-type(even) {
+    margin-top: 0;
   }
 
   .timeline .voce::before {

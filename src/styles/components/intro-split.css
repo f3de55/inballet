@@ -3,8 +3,8 @@
  * (classi integrate, collaborazioni, formazione insegnanti, NoiConVoi, sostenitori, sportello psicologico).
  *
  * intro-split: testo a sinistra e foto a destra; sotto i 900px titolo, foto, testo, citazione.
- * split-section (SezioneElenco): introduzione illustrata a sinistra ed elenco a destra;
- *   sotto i 900px una colonna. --soft: fondo azzurrino.
+ * split-section (SezioneElenco): introduzione sopra i contenuti aperti.
+ *   --soft mantiene il fondo azzurrino della sezione, senza pannelli sulle singole voci.
  */
 .intro-split {
   background: var(--white);
@@ -48,56 +48,33 @@
 }
 
 .split-section {
-  --riga-bg: var(--bg-soft);
-  --riga-icona-bg: var(--white);
   background: var(--white);
   padding: var(--section-y) 0;
 }
 
 .split-layout {
-  align-items: start;
-  display: grid;
-  gap: 4rem;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  display: block;
 }
 
-.split-header-testo {
-  padding-left: 1.5rem;
-  border-left: 3px solid var(--primary-blue);
+.split-header {
+  max-width: 52rem;
+  margin-bottom: 2.5rem;
 }
 
-.split-header-testo > .eyebrow {
+.split-header > .eyebrow {
   margin-bottom: 1rem;
 }
 
-.split-header-visual {
-  display: grid;
-  place-items: center;
-  width: min(100%, 20rem);
-  height: 16rem;
-  margin: 1.75rem auto 0;
-  background: radial-gradient(ellipse at center, rgb(var(--blu-rgb) / .2), transparent 70%);
-}
-
-.split-header-visual img {
-  display: block;
-  width: min(100%, 18rem);
-  height: 100%;
-  object-fit: contain;
+.split-header > p:last-child {
+  max-width: 48rem;
+  margin: 0;
 }
 
 .split-header .titolo-sezione {
   margin-bottom: 1.25rem;
 }
 
-.split-header--sticky {
-  position: sticky;
-  top: calc(var(--header-h) + var(--banner-height, 0px) + 2rem);
-}
-
 .split-section--soft {
-  --riga-bg: var(--white);
-  --riga-icona-bg: var(--bg-soft);
   background: var(--bg-soft);
   padding: var(--section-y) 0;
 }
@@ -140,30 +117,12 @@
     order: 5;
   }
 
-  .split-layout {
-    gap: 2.5rem;
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .split-header--sticky {
-    position: static;
+  .split-header {
+    margin-bottom: 2rem;
   }
 }
 
 @media (max-width: 600px) {
-  .split-header-testo {
-    padding-left: 1.25rem;
-  }
-
-  .split-header-visual {
-    height: 14rem;
-    margin-top: 1.25rem;
-  }
-
-  .split-header-visual img {
-    width: min(100%, 15rem);
-  }
-
   .intro-split-visual {
     margin: 0 0 3rem .75rem;
   }

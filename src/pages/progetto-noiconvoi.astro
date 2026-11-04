@@ -98,8 +98,8 @@ const info = [
             </div>
         </section>
 
-        <!-- Destinatari: intestazione a sinistra, elenco a destra -->
-        <SezioneElenco titoloId="target-titolo" illustrazione="progetto-noiconvoi" class="decoro-onde">
+        <!-- Destinatari: introduzione ed elenco aperto delle persone coinvolte. -->
+        <SezioneElenco titoloId="target-titolo">
             <Fragment slot="introduzione">
                 <p class="eyebrow">A chi è rivolto</p>
                 <h2 class="titolo-sezione" id="target-titolo">Un progetto <em>aperto a tutti</em></h2>
@@ -108,7 +108,6 @@ const info = [
             <ul class="righe">
                 {destinatari.map((d) => (
                     <li class="riga">
-                        <i class="riga-icona fas fa-check" aria-hidden="true"></i>
                         <p class="riga-nome" set:html={d} />
                     </li>
                 ))}

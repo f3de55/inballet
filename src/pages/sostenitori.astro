@@ -97,8 +97,8 @@ const destinazioni: { nome: string; href?: string }[] = [
             </div>
         </section>
 
-        <!-- Destinazioni: intestazione a sinistra, elenco a destra (con link ai progetti che hanno una pagina) -->
-        <SezioneElenco titoloId="utilizzo-titolo" illustrazione="sostenitori" class="split-section--soft">
+        <!-- Destinazioni: introduzione e collegamenti ai progetti sostenuti. -->
+        <SezioneElenco titoloId="utilizzo-titolo" class="split-section--soft">
             <Fragment slot="introduzione">
                 <p class="eyebrow">I progetti che sostieni</p>
                 <h2 class="titolo-sezione" id="utilizzo-titolo">Dove va <em>la tua donazione</em></h2>
@@ -109,13 +109,11 @@ const destinazioni: { nome: string; href?: string }[] = [
                     <li>
                         {d.href ? (
                             <a class="riga" href={d.href}>
-                                <i class="riga-icona fas fa-check" aria-hidden="true"></i>
                                 <p class="riga-nome" set:html={d.nome} />
                                 <i class="riga-freccia fas fa-arrow-right" aria-hidden="true"></i>
                             </a>
                         ) : (
                             <div class="riga">
-                                <i class="riga-icona fas fa-check" aria-hidden="true"></i>
                                 <p class="riga-nome" set:html={d.nome} />
                             </div>
                         )}

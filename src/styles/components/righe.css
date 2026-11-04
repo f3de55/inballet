@@ -1,84 +1,66 @@
-/*
- * Elenco a righe (colonna destra delle sezioni «intestazione + elenco»: classi integrate, progetti, aree di studio,
- * destinazioni, destinatari, servizi): ogni voce ha un fondo delicato, un accento azzurro e un'icona facoltativa,
- * nome, descrizione facoltativa e freccia facoltativa a destra (se la riga è un link).
- *
- *   <ul class="righe">
- *     <li><a class="riga" href="…"> <i class="riga-icona fas fa-check"></i> <p class="riga-nome">Nome</p> <i class="riga-freccia fas fa-arrow-right"></i></a></li>
- *     <li class="riga"> … <div class="riga-corpo"><p class="riga-nome">Nome</p><p>Descrizione</p></div> </li>
- *
- * .righe--colonne: le voci affiancate in colonne (su PC una colonna per voce, su tablet due), ognuna con il filetto
- * blu in alto come le voci; sotto i 600px torna l'elenco a righe.
- */
+/* Contenuti aperti in due colonne; collegamenti testuali con freccia, senza pannelli. */
 .righe {
   display: grid;
-  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 4rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .righe > li {
-  border: 1px solid var(--linea);
-  border-left: 3px solid var(--primary-blue);
-  border-radius: var(--radius-md);
-  background: var(--riga-bg, var(--bg-soft));
+  min-width: 0;
 }
 
 .riga {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.25rem;
+  align-items: baseline;
+  gap: .75rem;
   color: var(--heading-color);
   text-decoration: none;
 }
 
 .riga-icona {
-  /* Colonna dell'icona larga abbastanza per l'icona più larga, glifo centrato: tutti i testi partono dalla stessa x
-     e lo spazio fra icona e testo è lo stesso con qualunque icona */
-  display: grid;
-  place-items: center;
-  align-self: start;
-  flex: 0 0 2.75rem;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: var(--radius-sm);
-  background: var(--riga-icona-bg, var(--white));
-  font-size: var(--body-size);
+  flex: 0 0 1.25rem;
+  width: 1.25rem;
+  font-size: var(--icona-in-testo);
   text-align: center;
   color: var(--primary-blue-dark);
 }
 
 .riga-corpo,
 .riga > .riga-nome {
-  flex: 1;
   min-width: 0;
 }
 
-.riga-nome {
-  /* Nome della riga: testo normale della misura del paragrafo, con in grassetto (<strong>) solo le parole chiave */
-  transition: color .3s ease;
+.riga-corpo {
+  flex: 1;
 }
 
-/* Se sotto c'è una descrizione, il nome è il titolo della voce: tutto in grassetto */
 .riga-corpo > .riga-nome {
   margin-bottom: .35rem;
   font-weight: var(--font-bold);
 }
 
+a.riga {
+  width: fit-content;
+  max-width: 100%;
+  min-height: 44px;
+  padding-block: .25rem;
+}
+
+a.riga > .riga-nome {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+  transition: color var(--transition-base);
+}
+
 .riga-freccia {
-  display: grid;
-  place-items: center;
   flex-shrink: 0;
-  width: 2.25rem;
-  height: 2.25rem;
-  border: 1px solid var(--linea);
-  border-radius: var(--radius-full);
-  background: var(--riga-icona-bg, var(--white));
-  font-size: var(--text-sm);
   color: var(--primary-blue-dark);
-  transition: transform .3s ease;
+  font-size: var(--icona-in-testo);
+  transition: transform var(--transition-base);
 }
 
 a.riga:focus-visible {
@@ -86,71 +68,17 @@ a.riga:focus-visible {
   outline-offset: 4px;
 }
 
-.righe > li:has(> a.riga) {
-  transition: border-color var(--transition-base), background-color var(--transition-base);
+a.riga:hover .riga-nome {
+  color: var(--primary-blue-dark);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .righe > li:has(> a.riga:hover) {
-    border-color: var(--primary-blue-dark);
-    background: color-mix(in srgb, var(--riga-bg, var(--bg-soft)) 92%, var(--primary-blue));
-  }
-
-  a.riga:hover .riga-nome {
-    color: var(--primary-blue-dark);
-  }
-
-  a.riga:hover .riga-freccia {
-    transform: translateX(6px);
-  }
-}
-
-@media (min-width: 601px) {
-  .righe--colonne {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(0, 1fr);
-    gap: 2.5rem 2rem;
-  }
-
-  .righe--colonne > li,
-  .righe--colonne > li:last-child {
-    display: flex;
-    border-top: 2px solid var(--primary-blue);
-    border-bottom: none;
-    border-inline: none;
-    border-radius: 0;
-    background: none;
-  }
-
-  .righe--colonne .riga,
-  .righe--colonne > li:first-child > .riga {
-    flex: 1;
-    padding: 1.25rem 0 0;
-  }
-}
-
-@media (min-width: 601px) and (max-width: 900px) {
-  .righe--colonne {
-    grid-auto-flow: row;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+a.riga:hover .riga-freccia {
+  transform: translateX(4px);
 }
 
 @media (max-width: 600px) {
-  .riga {
-    gap: .75rem;
-    padding: 1.1rem 1rem;
-  }
-
-  .riga-icona {
-    flex-basis: 2.5rem;
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-
-  .riga-freccia {
-    width: 2rem;
-    height: 2rem;
+  .righe {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
   }
 }

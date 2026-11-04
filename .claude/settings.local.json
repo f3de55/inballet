@@ -40,7 +40,9 @@
       "Bash(sort -t: -k3)",
       "Bash(awk -F: '{print $3\":\"$4}')",
       "Bash(npm install *)",
-      "Bash(file src/assets/images/sponsors/*.png)"
+      "Bash(file src/assets/images/sponsors/*.png)",
+      "ClaudeInChromeDomain(localhost:3000)",
+      "ClaudeInChromeDomain(inballet-production.up.railway.app)"
     ]
   },
   "hooks": {

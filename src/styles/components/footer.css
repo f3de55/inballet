@@ -373,7 +373,7 @@
   .footer-main {
     grid-template-columns: 1fr;
     gap: 1.75rem;
-    padding: 0 1.5rem 2rem;
+    padding: 0 1.5rem .75rem;
   }
 
   .footer-brand {
@@ -436,11 +436,10 @@
   }
 
   .footer-col .footer-link {
-    margin-bottom: 1.25rem;
+    margin-bottom: .75rem;
   }
 
-  /* Voci cliccabili a tutta larghezza: l'intera riga (alta almeno 44px) è il link, non solo il testo.
-     Niente spazio tra le righe: l'altezza dell'area di tocco fa da distanza */
+  /* Voci e recapiti hanno la stessa altezza compatta, con il filetto fra le righe. */
   .footer-col ul {
     gap: 0;
   }
@@ -451,31 +450,30 @@
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    min-height: 38px;
-    padding-block: .2rem;
+    min-height: 34px;
+    padding-block: .25rem;
   }
 
   .footer-col .footer-link {
-    margin-top: 1.3rem;
+    margin-top: 0;
+  }
+
+  .footer-col .footer-link::before {
+    top: 0;
   }
 
   .footer-col > ul:last-child {
     padding-bottom: .75rem;
   }
 
-  /* Le voci di menu hanno una sola spaziatura: quella dell'area cliccabile. */
-  .footer-col:not(.footer-contatti) li + li {
+  /* Anche Contatti usa solo lo spazio dell'area cliccabile, senza margini aggiuntivi. */
+  .footer-col li + li {
     margin-top: 0;
     padding-top: 0;
   }
 
-  .footer-col:not(.footer-contatti) li + li::before {
-    content: none;
-  }
-
-  .footer-col:not(.footer-contatti) ul a {
-    min-height: 34px;
-    padding-block: .25rem;
+  .footer-col li + li::before {
+    content: '';
   }
 
   /* La fisarmonica chiude già con un filetto: niente secondo filetto */

@@ -7,7 +7,7 @@ import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import { scuola } from '../data/scuola';
 import '../styles/components/intro-split.css';
-import '../styles/components/righe.css';
+import SezioneElenco from '../components/SezioneElenco.astro';
 import '../styles/pages/collaborazioni-scuole.css';
 
 const bg = {
@@ -93,26 +93,24 @@ const progetti = [
         </section>
 
         <!-- Progetti: intestazione a sinistra (fissa su desktop), elenco numerato a destra -->
-        <section class="split-section decoro-onde" aria-labelledby="progetti-titolo">
-            <div class="container split-layout">
-                <div class="split-header split-header--sticky">
-                    <p class="eyebrow">I nostri progetti</p>
-                    <h2 class="titolo-sezione" id="progetti-titolo">Cosa possiamo offrire <em>alla tua scuola</em></h2>
-                    <p class="intro-sezione"><strong>Programmi flessibili</strong>, costruiti sulle richieste educative e didattiche di ogni scuola.</p>
-                </div>
-                <ol class="righe">
-                    {progetti.map((p) => (
-                        <li class="riga">
-                            <i class={`riga-icona fas ${p.icona}`} aria-hidden="true"></i>
-                            <div class="riga-corpo">
-                                <p class="riga-nome">{p.nome}</p>
-                                <p set:html={p.testo} />
-                            </div>
-                        </li>
-                    ))}
-                </ol>
-            </div>
-        </section>
+        <SezioneElenco titoloId="progetti-titolo" illustrazione="collaborazioni-scuole" class="decoro-onde" sticky>
+            <Fragment slot="introduzione">
+                <p class="eyebrow">I nostri progetti</p>
+                <h2 class="titolo-sezione" id="progetti-titolo">Cosa possiamo offrire <em>alla tua scuola</em></h2>
+                <p class="intro-sezione"><strong>Programmi flessibili</strong>, costruiti sulle richieste educative e didattiche di ogni scuola.</p>
+            </Fragment>
+            <ol class="righe">
+                {progetti.map((p) => (
+                    <li class="riga">
+                        <i class={`riga-icona fas ${p.icona}`} aria-hidden="true"></i>
+                        <div class="riga-corpo">
+                            <p class="riga-nome">{p.nome}</p>
+                            <p set:html={p.testo} />
+                        </div>
+                    </li>
+                ))}
+            </ol>
+        </SezioneElenco>
 
         <!-- CTA -->
         <section class="cta-contatto sezione-scura">

@@ -6,7 +6,7 @@ import { immaginiPagine } from '../data/immagini-pagine';
 import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import '../styles/components/intro-split.css';
-import '../styles/components/righe.css';
+import SezioneElenco from '../components/SezioneElenco.astro';
 import '../styles/pages/sportello-psicologico.css';
 
 const bg = {
@@ -91,23 +91,21 @@ const servizi = [
         </section>
 
         <!-- Accesso: intestazione a sinistra, elenco dei servizi a destra -->
-        <section class="split-section decoro-onde" aria-labelledby="accesso-titolo">
-            <div class="container split-layout">
-                <div class="split-header">
-                    <p class="eyebrow">Come accedere</p>
-                    <h2 class="titolo-sezione" id="accesso-titolo">Incontri con la dottoressa <em>psicoterapeuta</em></h2>
-                    <p class="intro-sezione">Lo sportello è <strong>attivo su richiesta</strong>: contatta la Direzione per fissare un <strong>primo colloquio</strong>.</p>
-                </div>
-                <ul class="righe">
-                    {servizi.map((s) => (
-                        <li class="riga">
-                            <i class="riga-icona fas fa-check" aria-hidden="true"></i>
-                            <p class="riga-nome" set:html={s} />
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </section>
+        <SezioneElenco titoloId="accesso-titolo" illustrazione="sportello-psicologico" class="decoro-onde">
+            <Fragment slot="introduzione">
+                <p class="eyebrow">Come accedere</p>
+                <h2 class="titolo-sezione" id="accesso-titolo">Incontri con la dottoressa <em>psicoterapeuta</em></h2>
+                <p class="intro-sezione">Lo sportello è <strong>attivo su richiesta</strong>: contatta la Direzione per fissare un <strong>primo colloquio</strong>.</p>
+            </Fragment>
+            <ul class="righe">
+                {servizi.map((s) => (
+                    <li class="riga">
+                        <i class="riga-icona fas fa-check" aria-hidden="true"></i>
+                        <p class="riga-nome" set:html={s} />
+                    </li>
+                ))}
+            </ul>
+        </SezioneElenco>
 
         <!-- CTA -->
         <section class="cta-contatto sezione-scura">

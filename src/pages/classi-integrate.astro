@@ -6,7 +6,7 @@ import { immaginiPagine } from '../data/immagini-pagine';
 import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import '../styles/components/intro-split.css';
-import '../styles/components/righe.css';
+import SezioneElenco from '../components/SezioneElenco.astro';
 import '../styles/pages/classi-integrate.css';
 
 const bg = {
@@ -93,25 +93,23 @@ const classi = [
         </section>
 
         <!-- Classi: intestazione a sinistra, elenco delle discipline (con link al corso) a destra -->
-        <section class="split-section decoro-onde decoro-onde--sinistra" aria-labelledby="classi-titolo">
-            <div class="container split-layout">
-                <div class="split-header">
-                    <p class="eyebrow">Le nostre discipline</p>
-                    <h2 class="titolo-sezione" id="classi-titolo">Classi disponibili <em>per l'inserimento</em></h2>
-                    <p class="intro-sezione">Alcuni dei corsi predisposti per l'inserimento: apri un corso per conoscerne <strong>età e livelli</strong>. Per i ragazzi con disabilità c'è anche il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, il <strong>lunedì sera</strong>.</p>
-                </div>
-                <ul class="righe">
-                    {classi.map((c) => (
-                        <li>
-                            <a class="riga" href={c.href}>
-                                <p class="riga-nome">{c.nome}</p>
-                                <i class="riga-freccia fas fa-arrow-right" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </section>
+        <SezioneElenco titoloId="classi-titolo" illustrazione="classi-integrate" class="decoro-onde decoro-onde--sinistra">
+            <Fragment slot="introduzione">
+                <p class="eyebrow">Le nostre discipline</p>
+                <h2 class="titolo-sezione" id="classi-titolo">Classi disponibili <em>per l'inserimento</em></h2>
+                <p class="intro-sezione">Alcuni dei corsi predisposti per l'inserimento: apri un corso per conoscerne <strong>età e livelli</strong>. Per i ragazzi con disabilità c'è anche il <a href="/progetto-noiconvoi">progetto NoiConVoi</a>, il <strong>lunedì sera</strong>.</p>
+            </Fragment>
+            <ul class="righe">
+                {classi.map((c) => (
+                    <li>
+                        <a class="riga" href={c.href}>
+                            <p class="riga-nome">{c.nome}</p>
+                            <i class="riga-freccia fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </SezioneElenco>
 
         <!-- CTA -->
         <section class="cta-contatto sezione-scura">

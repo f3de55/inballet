@@ -8,7 +8,7 @@ import { heroPagina } from '../lib/hero-pagine';
 import logoCsen from '../assets/images/csen-logo.svg';
 import logoConi from '../assets/images/logo_coni.svg';
 import '../styles/components/intro-split.css';
-import '../styles/components/righe.css';
+import SezioneElenco from '../components/SezioneElenco.astro';
 import '../styles/pages/formazione-insegnanti.css';
 
 const bg = {
@@ -69,23 +69,21 @@ const enti = [
         </section>
 
         <!-- Aree di studio: intestazione a sinistra (fissa su desktop), elenco numerato a destra -->
-        <section class="split-section split-section--soft" aria-labelledby="aree-titolo">
-            <div class="container split-layout">
-                <div class="split-header split-header--sticky">
-                    <p class="eyebrow">Il programma</p>
-                    <h2 class="titolo-sezione" id="aree-titolo">Aree <em>di studio</em></h2>
-                    <p class="intro-sezione">Per insegnare a <strong>ogni età e a ogni corpo</strong>.</p>
-                </div>
-                <ol class="righe">
-                    {aree.map((a) => (
-                        <li class="riga">
-                            <i class={`riga-icona fas ${a.icona}`} aria-hidden="true"></i>
-                            <p class="riga-nome" set:html={a.nome} />
-                        </li>
-                    ))}
-                </ol>
-            </div>
-        </section>
+        <SezioneElenco titoloId="aree-titolo" illustrazione="formazione-insegnanti" class="split-section--soft" sticky>
+            <Fragment slot="introduzione">
+                <p class="eyebrow">Il programma</p>
+                <h2 class="titolo-sezione" id="aree-titolo">Aree <em>di studio</em></h2>
+                <p class="intro-sezione">Per insegnare a <strong>ogni età e a ogni corpo</strong>.</p>
+            </Fragment>
+            <ol class="righe">
+                {aree.map((a) => (
+                    <li class="riga">
+                        <i class={`riga-icona fas ${a.icona}`} aria-hidden="true"></i>
+                        <p class="riga-nome" set:html={a.nome} />
+                    </li>
+                ))}
+            </ol>
+        </SezioneElenco>
 
         <!-- Diploma: intestazione editoriale, sotto gli enti che lo riconoscono -->
         <section class="form-cert-section" aria-labelledby="cert-titolo">

@@ -1,0 +1,29 @@
+---
+/** Introduzione illustrata ed elenco: struttura condivisa fra formazione, progetti e servizi. */
+import Img from './Img.astro';
+import '../styles/components/intro-split.css';
+import '../styles/components/righe.css';
+
+interface Props {
+  titoloId: string;
+  illustrazione: string;
+  sticky?: boolean;
+  class?: string;
+}
+
+const { titoloId, illustrazione, sticky = false, class: className } = Astro.props;
+---
+
+<section class:list={['split-section', className]} aria-labelledby={titoloId}>
+  <div class="container split-layout">
+    <div class:list={['split-header', { 'split-header--sticky': sticky }]}>
+      <div class="split-header-testo">
+        <slot name="introduzione" />
+      </div>
+      <div class="split-header-visual" aria-hidden="true">
+        <Img src={`grafica-oltre/${illustrazione}.png`} alt="" width="288" height="256" widths={[320, 480, 720]} sizes="(max-width: 600px) 240px, 288px" loading="lazy" decoding="async" />
+      </div>
+    </div>
+    <slot />
+  </div>
+</section>

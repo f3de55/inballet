@@ -8,7 +8,7 @@ import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import { scuola } from '../data/scuola';
 import '../styles/components/intro-split.css';
-import '../styles/components/righe.css';
+import SezioneElenco from '../components/SezioneElenco.astro';
 import '../styles/pages/sostenitori.css';
 
 const bg = {
@@ -98,33 +98,31 @@ const destinazioni: { nome: string; href?: string }[] = [
         </section>
 
         <!-- Destinazioni: intestazione a sinistra, elenco a destra (con link ai progetti che hanno una pagina) -->
-        <section class="split-section split-section--soft" aria-labelledby="utilizzo-titolo">
-            <div class="container split-layout">
-                <div class="split-header">
-                    <p class="eyebrow">I progetti che sostieni</p>
-                    <h2 class="titolo-sezione" id="utilizzo-titolo">Dove va <em>la tua donazione</em></h2>
-                    <p class="intro-sezione">Le donazioni sostengono i <strong>progetti sociali</strong> di InBallet.</p>
-                </div>
-                <ul class="righe">
-                    {destinazioni.map((d) => (
-                        <li>
-                            {d.href ? (
-                                <a class="riga" href={d.href}>
-                                    <i class="riga-icona fas fa-check" aria-hidden="true"></i>
-                                    <p class="riga-nome" set:html={d.nome} />
-                                    <i class="riga-freccia fas fa-arrow-right" aria-hidden="true"></i>
-                                </a>
-                            ) : (
-                                <div class="riga">
-                                    <i class="riga-icona fas fa-check" aria-hidden="true"></i>
-                                    <p class="riga-nome" set:html={d.nome} />
-                                </div>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </section>
+        <SezioneElenco titoloId="utilizzo-titolo" illustrazione="sostenitori" class="split-section--soft">
+            <Fragment slot="introduzione">
+                <p class="eyebrow">I progetti che sostieni</p>
+                <h2 class="titolo-sezione" id="utilizzo-titolo">Dove va <em>la tua donazione</em></h2>
+                <p class="intro-sezione">Le donazioni sostengono i <strong>progetti sociali</strong> di InBallet.</p>
+            </Fragment>
+            <ul class="righe">
+                {destinazioni.map((d) => (
+                    <li>
+                        {d.href ? (
+                            <a class="riga" href={d.href}>
+                                <i class="riga-icona fas fa-check" aria-hidden="true"></i>
+                                <p class="riga-nome" set:html={d.nome} />
+                                <i class="riga-freccia fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        ) : (
+                            <div class="riga">
+                                <i class="riga-icona fas fa-check" aria-hidden="true"></i>
+                                <p class="riga-nome" set:html={d.nome} />
+                            </div>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </SezioneElenco>
 
         <!-- Loghi dei sostenitori (stessa sezione della homepage, senza il link a questa pagina) -->
         <SostenitoriSection link={false} />

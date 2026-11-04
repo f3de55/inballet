@@ -7,7 +7,7 @@ import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import { scuola } from '../data/scuola';
 import '../styles/components/intro-split.css';
-import '../styles/components/righe.css';
+import SezioneElenco from '../components/SezioneElenco.astro';
 import '../styles/pages/progetto-noiconvoi.css';
 
 const bg = {
@@ -99,23 +99,21 @@ const info = [
         </section>
 
         <!-- Destinatari: intestazione a sinistra, elenco a destra -->
-        <section class="split-section decoro-onde" aria-labelledby="target-titolo">
-            <div class="container split-layout">
-                <div class="split-header">
-                    <p class="eyebrow">A chi è rivolto</p>
-                    <h2 class="titolo-sezione" id="target-titolo">Un progetto <em>aperto a tutti</em></h2>
-                    <p class="intro-sezione">NoiConVoi mette insieme ragazzi, famiglie e volontari. Dal 2024 accoglie anche <strong>volontari da aziende</strong> e realtà del territorio, grazie ai <a href="/sostenitori">sostenitori dei progetti sociali</a>.</p>
-                </div>
-                <ul class="righe">
-                    {destinatari.map((d) => (
-                        <li class="riga">
-                            <i class="riga-icona fas fa-check" aria-hidden="true"></i>
-                            <p class="riga-nome" set:html={d} />
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </section>
+        <SezioneElenco titoloId="target-titolo" illustrazione="progetto-noiconvoi" class="decoro-onde">
+            <Fragment slot="introduzione">
+                <p class="eyebrow">A chi è rivolto</p>
+                <h2 class="titolo-sezione" id="target-titolo">Un progetto <em>aperto a tutti</em></h2>
+                <p class="intro-sezione">NoiConVoi mette insieme ragazzi, famiglie e volontari. Dal 2024 accoglie anche <strong>volontari da aziende</strong> e realtà del territorio, grazie ai <a href="/sostenitori">sostenitori dei progetti sociali</a>.</p>
+            </Fragment>
+            <ul class="righe">
+                {destinatari.map((d) => (
+                    <li class="riga">
+                        <i class="riga-icona fas fa-check" aria-hidden="true"></i>
+                        <p class="riga-nome" set:html={d} />
+                    </li>
+                ))}
+            </ul>
+        </SezioneElenco>
 
         <!-- Informazioni pratiche: intestazione editoriale e quattro voci -->
         <section class="noi-info-section" aria-labelledby="info-titolo">

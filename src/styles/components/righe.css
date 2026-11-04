@@ -1,6 +1,6 @@
 /*
  * Elenco a righe (colonna destra delle sezioni «intestazione + elenco»: classi integrate, progetti, aree di studio,
- * destinazioni, destinatari, servizi): ogni voce è una riga con filetto sotto, icona facoltativa a sinistra,
+ * destinazioni, destinatari, servizi): ogni voce ha un fondo delicato, un accento azzurro e un'icona facoltativa,
  * nome, descrizione facoltativa e freccia facoltativa a destra (se la riga è un link).
  *
  *   <ul class="righe">
@@ -11,37 +11,40 @@
  * blu in alto come le voci; sotto i 600px torna l'elenco a righe.
  */
 .righe {
+  display: grid;
+  gap: 1rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .righe > li {
-  border-bottom: 1px solid var(--linea);
-}
-
-.righe > li:last-child {
-  border-bottom: none;
+  border: 1px solid var(--linea);
+  border-left: 3px solid var(--primary-blue);
+  border-radius: var(--radius-md);
+  background: var(--riga-bg, var(--bg-soft));
 }
 
 .riga {
   display: flex;
-  align-items: baseline;
-  gap: .75rem;
-  padding: 1.5rem 0;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
   color: var(--heading-color);
   text-decoration: none;
-}
-
-.righe > li:first-child > .riga,
-.righe > .riga:first-child {
-  padding-top: .5rem;
 }
 
 .riga-icona {
   /* Colonna dell'icona larga abbastanza per l'icona più larga, glifo centrato: tutti i testi partono dalla stessa x
      e lo spazio fra icona e testo è lo stesso con qualunque icona */
-  flex: 0 0 2rem;
+  display: grid;
+  place-items: center;
+  align-self: start;
+  flex: 0 0 2.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--riga-icona-bg, var(--white));
   font-size: var(--body-size);
   text-align: center;
   color: var(--primary-blue-dark);
@@ -65,7 +68,14 @@
 }
 
 .riga-freccia {
+  display: grid;
+  place-items: center;
   flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--linea);
+  border-radius: var(--radius-full);
+  background: var(--riga-icona-bg, var(--white));
   font-size: var(--text-sm);
   color: var(--primary-blue-dark);
   transition: transform .3s ease;
@@ -76,7 +86,16 @@ a.riga:focus-visible {
   outline-offset: 4px;
 }
 
+.righe > li:has(> a.riga) {
+  transition: border-color var(--transition-base), background-color var(--transition-base);
+}
+
 @media (hover: hover) and (pointer: fine) {
+  .righe > li:has(> a.riga:hover) {
+    border-color: var(--primary-blue-dark);
+    background: color-mix(in srgb, var(--riga-bg, var(--bg-soft)) 92%, var(--primary-blue));
+  }
+
   a.riga:hover .riga-nome {
     color: var(--primary-blue-dark);
   }
@@ -99,6 +118,9 @@ a.riga:focus-visible {
     display: flex;
     border-top: 2px solid var(--primary-blue);
     border-bottom: none;
+    border-inline: none;
+    border-radius: 0;
+    background: none;
   }
 
   .righe--colonne .riga,
@@ -117,6 +139,18 @@ a.riga:focus-visible {
 
 @media (max-width: 600px) {
   .riga {
-    padding: 1.15rem 0;
+    gap: .75rem;
+    padding: 1.1rem 1rem;
+  }
+
+  .riga-icona {
+    flex-basis: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .riga-freccia {
+    width: 2rem;
+    height: 2rem;
   }
 }

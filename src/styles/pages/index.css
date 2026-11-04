@@ -209,8 +209,7 @@ davvero andando: niente riquadro nero mentre carica */
   margin: 0 auto;
 }
 
-/* Quattro stili: composizioni illustrate su desktop e tablet.
-   Su mobile figure ampie e testi affiancati in un elenco aperto. */
+/* Quattro stili: immagini e testi occupano spazi distinti; su mobile la fila è sfogliabile. */
 .corsi-indice {
   list-style: none;
   display: grid;
@@ -343,18 +342,15 @@ davvero andando: niente riquadro nero mentre carica */
   text-align: center;
 }
 
-/* Tablet e desktop: la figura esce oltre il bordo alto, passa davanti
-   alla cornice e dietro al titolo. Solo lo sfondo viene ritagliato. */
+/* Tablet e desktop: figura intera dentro la card, sopra il testo e sotto l'introduzione. */
 @media (min-width: 601px) {
-  .corsi-indice {
-    row-gap: 5rem;
-  }
-
   .corsi-stile--grafica {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1.5rem;
     background: var(--bg-soft);
     color: var(--dark-navy);
-    padding-block: 1.25rem;
-    overflow: visible;
+    padding-block: 1.5rem;
   }
 
   .corsi-stile--grafica .corsi-stile-foto {
@@ -376,26 +372,12 @@ davvero andando: niente riquadro nero mentre carica */
     min-height: 2lh;
   }
 
-  .corsi-stile--grafica .corsi-stile-nome,
-  .corsi-stile--grafica .corsi-stile-desc,
-  .corsi-stile--grafica .corsi-stile-link {
-    position: relative;
-    z-index: 1;
-  }
-
   .corsi-stile-figura {
-    position: absolute;
-    top: -4rem;
-    left: 50%;
-    z-index: 0;
     display: block;
-    width: 9rem;
-    height: 11rem;
+    flex-shrink: 0;
+    width: min(100%, 14rem);
+    height: 18rem;
     object-fit: contain;
-    transform: translateX(-50%);
-    /* Sfumatura sull'immagine: nessun fondo bianco dietro al titolo. */
-    -webkit-mask-image: linear-gradient(to bottom, rgb(var(--nero-rgb)) 0%, rgb(var(--nero-rgb)) 35%, rgb(var(--nero-rgb) / .28) 60%, rgb(var(--nero-rgb) / .06) 76%, rgb(var(--nero-rgb) / 0) 90%);
-    mask-image: linear-gradient(to bottom, rgb(var(--nero-rgb)) 0%, rgb(var(--nero-rgb)) 35%, rgb(var(--nero-rgb) / .28) 60%, rgb(var(--nero-rgb) / .06) 76%, rgb(var(--nero-rgb) / 0) 90%);
     pointer-events: none;
     user-select: none;
   }
@@ -421,22 +403,35 @@ davvero andando: niente riquadro nero mentre carica */
 
 }
 
-/* Mobile: figura intera in una colonna dedicata; titolo, descrizione e link nell'altra. */
+/* Mobile: figure grandi sopra i testi, con un'anteprima della scheda successiva. */
 @media (max-width: 600px) {
   .corsi-indice {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 88%;
+    align-items: stretch;
+    gap: 1.5rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-blue) transparent;
+    padding-bottom: 1rem;
     border-block: 1px solid var(--linea);
   }
 
-  .corsi-indice li + li {
-    border-top: 1px solid var(--linea);
+  .corsi-indice li {
+    min-width: 0;
+    border-right: 1px solid var(--linea);
+    padding-right: 1rem;
+    scroll-snap-align: start;
   }
 
   .corsi-stile {
-    display: grid;
-    grid-template-columns: clamp(6.5rem, 30vw, 9rem) minmax(0, 1fr);
-    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1.5rem;
     min-height: 0;
     padding: 1.75rem 0;
     overflow: visible;
@@ -445,7 +440,7 @@ davvero andando: niente riquadro nero mentre carica */
     background: none;
     box-shadow: none;
     color: var(--heading-color);
-    text-align: left;
+    text-align: center;
   }
 
   .corsi-stile-foto {
@@ -454,8 +449,9 @@ davvero andando: niente riquadro nero mentre carica */
 
   .corsi-stile-figura {
     display: block;
-    width: 100%;
-    height: clamp(11rem, 44vw, 13.5rem);
+    flex-shrink: 0;
+    width: min(100%, 16rem);
+    height: 20rem;
     object-fit: contain;
     pointer-events: none;
     user-select: none;
@@ -467,6 +463,7 @@ davvero andando: niente riquadro nero mentre carica */
     gap: .75rem;
     min-width: 0;
     max-width: none;
+    justify-items: center;
     text-shadow: none;
   }
 
@@ -483,7 +480,7 @@ davvero andando: niente riquadro nero mentre carica */
   }
 
   .corsi-indice .corsi-stile .corsi-stile-link {
-    justify-self: start;
+    justify-self: center;
     gap: .5rem;
     margin: .25rem 0 0;
     padding: 0;
@@ -504,6 +501,11 @@ davvero andando: niente riquadro nero mentre carica */
     padding: 0 1.5rem;
   }
 
+}
+
+.corsi-indice:focus-visible {
+  outline: 2px solid var(--primary-blue-dark);
+  outline-offset: 4px;
 }
 
 /* ---------- Dicono di noi: intro e sintesi a sinistra, una recensione alla volta a destra ---------- */
@@ -754,8 +756,8 @@ davvero andando: niente riquadro nero mentre carica */
 
 }
 
-/* Formazione e progetti: griglia illustrata a filetti su desktop e tablet;
-   su mobile le card condivise con i singoli corsi di /corsi. */
+/* Formazione e progetti: stesse illustrazioni su tutte le larghezze,
+   con una fascia riservata alle figure e quattro righe allineate per ogni scheda. */
 .oltre-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
@@ -767,11 +769,7 @@ davvero andando: niente riquadro nero mentre carica */
   padding: 0 2rem;
 }
 
-.oltre-mobile {
-  display: none;
-}
-
-.oltre-lista {
+.oltre-layout .corsi-stile-elenco {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -784,7 +782,7 @@ davvero andando: niente riquadro nero mentre carica */
 
 /* Ogni box occupa 4 righe della griglia (illustrazione, nome, frase, «Scopri di più») e le eredita con
 subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della riga */
-.oltre-lista li {
+.oltre-elemento {
   display: grid;
   grid-row: span 4;
   grid-template-rows: subgrid;
@@ -793,11 +791,17 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
   background: var(--bg-soft);
 }
 
+.oltre-layout .corsi-scheda::before,
+.oltre-layout .corsi-scheda::after {
+  display: none;
+  content: none;
+}
+
 .oltre-illustrazione {
   display: block;
-  width: 5rem;
-  height: 5rem;
-  margin-bottom: .75rem;
+  width: min(100%, 14rem);
+  height: 14rem;
+  margin-bottom: 1.5rem;
   object-fit: contain;
   pointer-events: none;
   user-select: none;
@@ -805,7 +809,7 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
 /* Desktop: quattro voci per riga */
 @media (min-width: 1025px) {
-  .oltre-lista {
+  .oltre-layout .corsi-stile-elenco {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
@@ -847,7 +851,7 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
 /* Tablet: due colonne */
 @media (max-width: 1024px) {
-  .oltre-lista {
+  .oltre-layout .corsi-stile-elenco {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -860,15 +864,30 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
 }
 
-/* Mobile: immagine separata dal testo e fila sfogliabile come nella pagina corsi. */
+/* Mobile: una sola fila di illustrazioni grandi, intere e separate dai testi. */
 @media (max-width: 600px) {
-  .oltre-layout {
-    display: none;
+  .oltre-layout .corsi-stile-elenco {
+    display: grid;
+    grid-template-columns: none;
+    grid-template-rows: repeat(4, auto);
+    grid-auto-flow: column;
+    grid-auto-columns: 88%;
+    gap: 0 1.5rem;
+    background: none;
+    border-block: 1px solid var(--linea);
   }
 
-  .oltre-mobile {
-    display: block;
-    margin-top: var(--spazio-intestazione);
+  .oltre-voce {
+    padding-inline: .5rem;
+  }
+
+  .oltre-elemento {
+    border-right: 1px solid var(--linea);
+  }
+
+  .oltre-illustrazione {
+    width: min(100%, 15rem);
+    height: 15rem;
   }
 }
 

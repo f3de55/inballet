@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import ElencoPercorsi from '../components/ElencoPercorsi.astro';
-import SchedaPercorso from '../components/SchedaPercorso.astro';
 import SostenitoriSection from '../components/SostenitoriSection.astro';
 import Galleria from '../components/Galleria.astro';
 import { getImage } from 'astro:assets';
@@ -10,7 +9,6 @@ import { ANNI_ATTIVITA, categorieCorsi, faqHome, FONDAZIONE, scuola } from '../d
 import { getAsset, sfondo, webpSrcset } from '../lib/images';
 import { schemaHome } from '../lib/schema';
 import { enfatizza } from '../lib/text';
-import { immaginePagina } from '../data/immagini-pagine';
 import { PUBLIC_GOOGLE_PLACE_ID } from 'astro:env/client';
 
 // Video dell'hero (ricodificati da src/assets/video/hero-video-inballet.mp4, senza audio):
@@ -115,12 +113,12 @@ const schema = schemaHome(socialImage);
             <!-- Header -->
             <div class="corsi-header">
                 <p class="corsi-label eyebrow">Corsi di danza a Lainate e Rho</p>
-                <h2 class="corsi-title titolo-sezione">I nostri <em>corsi</em></h2>
+                <h2 class="corsi-title titolo-sezione" id="corsi-home-titolo">I nostri <em>corsi</em></h2>
                 <p class="corsi-intro intro-sezione"><strong>Dai 3 anni all'età adulta</strong>, dalla danza classica all'hip-hop fino a yoga e pilates: scegli <strong>lo stile che fa per te</strong>.</p>
             </div>
 
-            <!-- Quattro stili: composizioni su desktop, figure ampie accanto al testo su mobile. -->
-            <ol class="corsi-indice">
+            <!-- Figure intere sopra i testi; su mobile i quattro stili sono sfogliabili. -->
+            <ol class="corsi-indice" tabindex="0" aria-labelledby="corsi-home-titolo">
                 {stili.map((cat) => (
                     <li>
                         <a href={`/corsi#${cat.id}`} class:list={['corsi-stile', { 'corsi-stile--grafica': cat.immagineHome }]}>
@@ -133,7 +131,7 @@ const schema = schemaHome(socialImage);
                                     : <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[640, 960, 1200]} sizes="(max-width: 600px) 100vw, 600px" />}
                             </div>
                             {cat.immagineHome && (
-                                <Img class="corsi-stile-figura" src={`grafica-corsi/figure/${cat.id}.webp`} alt="" aria-hidden="true" width="144" height="176" loading="lazy" decoding="async" widths={[160, 288, 432]} sizes="(max-width: 600px) clamp(104px, 30vw, 144px), 144px" />
+                                <Img class="corsi-stile-figura" src={`grafica-corsi/figure/${cat.id}.webp`} alt="" aria-hidden="true" width="224" height="288" loading="lazy" decoding="async" widths={[240, 480]} sizes="(max-width: 600px) 256px, 224px" />
                             )}
                             <div class="corsi-stile-testo">
                                 <h3 class="corsi-stile-nome">{cat.nome}</h3>
@@ -192,8 +190,7 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Desktop e tablet: griglia a filetti con piccole illustrazioni sopra i titoli.
-         Mobile: le stesse card e lo stesso scorrimento dei singoli corsi di /corsi. -->
+    <!-- Illustrazioni ampie sopra i testi: griglia su desktop, fila sfogliabile su mobile. -->
     <section class="oltre-section" aria-labelledby="oltre-titolo">
         <div class="intro-editoriale">
             <p class="eyebrow">Formazione e progetti</p>
@@ -201,25 +198,17 @@ const schema = schemaHome(socialImage);
             <p><strong>Formazione</strong> per chi insegna e <strong>progetti</strong> con scuole, famiglie e territorio.</p>
         </div>
 
-        <div class="oltre-layout">
-            <ul class="oltre-lista">
+        <ElencoPercorsi class="oltre-layout" id="oltre-percorsi" titolo="oltre-titolo" nome="La danza oltre i corsi" tipo="Percorsi">
                 {vociOltre.map((v) => (
-                    <li>
+                    <li class="corsi-scheda oltre-elemento">
                         <a href={v.href} class="oltre-voce">
-                            <Img class="oltre-illustrazione" src={`grafica-oltre/${v.illustrazione}.png`} alt="" aria-hidden="true" width="80" height="80" widths={[80, 160]} sizes="80px" loading="lazy" decoding="async" />
+                            <Img class="oltre-illustrazione" src={`grafica-oltre/${v.illustrazione}.png`} alt="" aria-hidden="true" width="224" height="224" widths={[240, 480, 720]} sizes="(max-width: 600px) 240px, 224px" loading="lazy" decoding="async" />
                             <h3 class="oltre-nome">{v.nome}</h3>
                             <p class="oltre-desc testo-piccolo">{v.testo}</p>
                             <p class="link-cta oltre-cta">Scopri di più <i class="fas fa-arrow-right" aria-hidden="true"></i></p>
                         </a>
                     </li>
                 ))}
-            </ul>
-        </div>
-
-        <ElencoPercorsi class="container oltre-mobile" id="oltre-percorsi" titolo="oltre-titolo" nome="La danza oltre i corsi" tipo="Percorsi">
-            {vociOltre.map((v, indice) => (
-                <SchedaPercorso href={v.href} nome={v.nome} idTitolo={`oltre-${v.illustrazione}-nome`} etichetta={indice < formazione.voci.length ? 'Formazione' : 'Progetto'} dettaglio={v.testo} immagine={immaginePagina(v.href)} />
-            ))}
         </ElencoPercorsi>
     </section>
 

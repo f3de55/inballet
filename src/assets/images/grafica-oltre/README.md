@@ -2,11 +2,10 @@
 
 Otto illustrazioni originali ad acquerello azzurro, con fondo trasparente.
 Il riferimento visivo è la grafica di `grafica-contatti`: soggetti leggeri.
-Su desktop e tablet ogni illustrazione è una piccola vignetta di 80 × 80 px,
-centrata sopra il titolo, senza rotazioni, ritagli o sovrapposizioni al testo. Nel layout
-mobile le card scorrevoli usano invece le fotografie delle pagine collegate,
-definite in `src/data/immagini-pagine.ts`. Queste illustrazioni rimangono
-solo nella griglia a filetti di desktop e tablet.
+Ogni illustrazione occupa una fascia dedicata sopra il titolo, fino a 224 × 224 px
+su desktop e tablet e 240 × 240 px su mobile. Le figure restano intere, senza
+rotazioni, ritagli o sovrapposizioni ai testi. La stessa lista diventa sfogliabile
+orizzontalmente su mobile, con un'anteprima della voce successiva e pulsanti di navigazione.
 
 | File | Soggetto e significato |
 | --- | --- |
@@ -20,6 +19,6 @@ solo nella griglia a filetti di desktop e tablet.
 | `sostenitori.png` | Mani che sostengono un cuore: donazioni e volontariato a supporto dei progetti. |
 
 Sorgenti PNG trasparenti, convertite in WebP da `Img.astro` al build
-in varianti responsive da 80 e 160 px e caricate in modo differito. I file originali
+in varianti responsive da 240, 480 e 720 px e caricate in modo differito. I file originali
 non vengono serviti al browser. Le immagini sono decorative (`alt=""`)
 perché titoli e descrizioni forniscono già il contenuto della cella.

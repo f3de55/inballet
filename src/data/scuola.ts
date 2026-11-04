@@ -78,11 +78,11 @@ export const categorieCorsi = [
     nome: 'Danza Classica e Moderna',
     /** Nome corto della categoria */
     breve: 'Classica e Moderna',
-    sintesi: 'La base tecnica di ogni stile: si comincia a 3 anni e si arriva ai livelli avanzati.',
+    sintesi: 'La base di ogni stile: si comincia giocando a 3 anni e si arriva ai livelli avanzati.',
     immagine: { src: 'foto/tutu-classica.jpg', alt: 'Tutù rosa di danza classica', fuoco: { desktop: '60% 50%', mobile: '50% 45%' } },
     /** Fondo grafico della card in homepage, ispirato agli azzurri delle immagini del team. */
     immagineHome: { src: 'grafica-corsi/classica-moderna-unica.webp', fuoco: { desktop: '50% 50%' } },
-    descrizione: 'Si comincia a 3 anni con Avviamento alla Danza, a 4-5 anni con Educazione alla Danza; dai 6 anni Danza Classica e Modern, fino ai livelli avanzati.',
+    descrizione: 'Si comincia giocando: a 3 anni con Avviamento alla Danza, a 4-5 anni con Educazione alla Danza. Dai 6 anni arrivano Danza Classica e Modern, fino ai livelli avanzati.',
     evidenzia: ['3 anni', '4-5 anni', 'dai 6 anni'],
     corsi: [
       { nome: 'Avviamento alla Danza', url: '/avviamento-danza' },
@@ -96,10 +96,10 @@ export const categorieCorsi = [
     icona: 'fa-wind',
     nome: 'Danza Contemporanea',
     breve: 'Contemporanea',
-    sintesi: "L'arte più libera del movimento, dai 10 anni all'età adulta.",
+    sintesi: "L'arte più libera del movimento, dai 10 anni in su. Per gli adulti, anche da zero.",
     immagine: { src: 'foto/contact-improvisation-img2.jpg', alt: 'Due danzatori a terra durante una sequenza di contact improvisation', fuoco: { desktop: '50% 50%' } },
     immagineHome: { src: 'grafica-corsi/contemporanea-unica.webp', fuoco: { desktop: '50% 50%' } },
-    descrizione: "L'arte più libera del movimento: Danza Contemporanea dai 10 anni, Contemporanea Adulti dai 40 anni, Contact Improvisation e Movimento Creativo, aperto dai 18 anni anche a chi non ha mai danzato.",
+    descrizione: "L'arte più libera del movimento: Danza Contemporanea dai 10 anni, Contemporanea Adulti dai 40 anni, anche partendo da zero, Contact Improvisation e Movimento Creativo, aperto dai 18 anni anche a chi non ha mai danzato.",
     evidenzia: ['dai 10 anni', 'dai 40 anni', 'dai 18 anni'],
     corsi: [
       { nome: 'Danza Contemporanea', url: '/danza-contemporanea' },
@@ -131,10 +131,10 @@ export const categorieCorsi = [
     icona: 'fa-spa',
     nome: 'Benessere e Movimento',
     breve: 'Benessere',
-    sintesi: 'Per il benessere di corpo e mente, da soli o accanto a un corso di danza.',
+    sintesi: 'Tempo per il corpo e per la mente, da solo o accanto a un corso di danza.',
     immagine: { src: 'foto/yoga-img2.jpg', alt: 'Lezione di yoga in sala, con le mani giunte sopra la testa', fuoco: { desktop: '55% 50%', mobile: '50% 35%' } },
     immagineHome: { src: 'grafica-corsi/benessere-unica.webp', fuoco: { desktop: '50% 50%' } },
-    descrizione: "Hatha Yoga, Pilates per livelli e lezioni individuali: per il benessere di corpo e mente, da soli o accanto a un corso di danza.",
+    descrizione: "Hatha Yoga, Pilates per livelli e lezioni individuali: tempo per il corpo e per la mente, da solo o accanto a un corso di danza.",
     evidenzia: ['Hatha Yoga', 'Pilates', 'lezioni individuali'],
     corsi: [
       { nome: 'Yoga', url: '/yoga' },
@@ -150,7 +150,7 @@ export const categorieCorsi = [
     breve: 'Per età',
     sintesi: "Quali corsi scegliere in ogni fase della crescita, anche per chi inizia da grande.",
     immagine: { src: 'foto/bambini-gioco.jpg', alt: 'Bambine piccole giocano a danzare in sala', fuoco: { desktop: '50% 50%', mobile: '50% 35%' } },
-    descrizione: "Quali corsi scegliere in ogni fase della crescita, dai 3 anni all'età adulta: una guida per fascia d'età, anche per chi inizia da grande.",
+    descrizione: "Non sai da dove partire? Ecco quali corsi scegliere in ogni fase della crescita, dai 3 anni all'età adulta, anche per chi inizia da grande.",
     evidenzia: ["dai 3 anni all'età adulta", 'anche per chi inizia da grande'],
     corsi: [
       { nome: 'Prima Infanzia (3-5 anni)', url: '/prima-infanzia' },
@@ -178,18 +178,18 @@ export const faq = [
   {
     home: true,
     domanda: 'Da che età si può iniziare a danzare a InBallet?',
-    risposta: "Dai 3 anni compiuti con Avviamento alla Danza; a 4-5 anni c'è Educazione alla Danza e dai 6 anni danza classica, modern, hip-hop e breaking. Ragazzi e adulti trovano corsi anche per principianti assoluti: non c'è un limite di età.",
+    risposta: "Dai 3 anni compiuti, con Avviamento alla Danza. A 4-5 anni c'è Educazione alla Danza e dai 6 anni si può scegliere tra danza classica, modern, hip-hop e breaking. E non c'è un limite di età: ragazzi e adulti trovano corsi anche per principianti assoluti.",
     evidenzia: ['Dai 3 anni compiuti', '4-5 anni', 'dai 6 anni', "non c'è un limite di età"],
   },
   {
     home: true,
     domanda: 'Dove si trovano le sedi?',
-    risposta: `Due sedi a nord-ovest di Milano: la sede centrale in ${sedi[0].via} a ${sedi[0].citta} e la sede di ${sedi[1].via} a ${sedi[1].citta}.`,
+    risposta: `InBallet ha due sedi a nord-ovest di Milano: la sede centrale in ${sedi[0].via} a ${sedi[0].citta} e la sede di ${sedi[1].via} a ${sedi[1].citta}.`,
     evidenzia: ['nord-ovest di Milano', sedi[0].citta, sedi[1].citta],
   },
   {
     domanda: 'Come posso scegliere il corso giusto?',
-    risposta: `Chiamaci al ${scuola.telefono}, scrivici su WhatsApp o a ${scuola.email}: ti aiutiamo a scegliere il corso adatto a età e livello, con orari, sedi e iscrizione.`,
+    risposta: `Lo scegliamo insieme: chiamaci al ${scuola.telefono}, scrivici su WhatsApp o a ${scuola.email}. Ti aiutiamo a trovare il corso adatto a età e livello, con orari, sedi e iscrizione.`,
     evidenzia: [scuola.telefono, scuola.email, 'età e livello'],
   },
   {
@@ -206,24 +206,40 @@ export const faq = [
   {
     home: true,
     domanda: 'InBallet accoglie bambini e ragazzi con disabilità?',
-    risposta: "Sì. Quasi tutte le classi accolgono allievi con bisogni speciali, dopo un colloquio con la famiglia per scegliere il gruppo più adatto. Dal 2013, inoltre, il progetto NoiConVoi accoglie il lunedì sera ragazzi con disabilità, con supporto psicomotorio e un team di volontari.",
+    risposta: "Sì, la danza è per tutti. Quasi tutte le classi accolgono allievi con bisogni speciali: si parte da un colloquio con la famiglia, per scegliere insieme il gruppo più adatto. Dal 2013, inoltre, il progetto NoiConVoi accoglie il lunedì sera ragazzi con disabilità, con supporto psicomotorio e un team di volontari.",
     evidenzia: ['bisogni speciali', 'progetto NoiConVoi', 'il lunedì sera'],
   },
   {
     domanda: 'InBallet forma anche insegnanti di danza?',
-    risposta: "Sì. Dal 2023 InBallet è ente formativo riconosciuto CSEN e CONI: corso biennale per insegnanti di danza Modern con titolo a valenza nazionale e sei master, più formazioni su misura per educatori, terapeuti, scuole ed enti.",
+    risposta: "Sì. Dal 2023 InBallet è ente formativo riconosciuto per il titolo di Insegnante di Danza, valido CSEN e CONI a livello nazionale: un corso biennale con specializzazione Modern e sei master a seguire. Propone anche formazioni su misura per educatori, terapeuti, scuole ed enti.",
     evidenzia: ['Dal 2023', 'CSEN e CONI', 'corso biennale'],
   },
   {
     home: true,
     domanda: 'Come ci si iscrive e quanto costano i corsi?',
-    risposta: `Si consegna in segreteria il modulo di iscrizione (pagina Documenti) con il certificato medico non agonistico, obbligatorio dai 6 anni; sotto i 6 anni basta l'autocertificazione dei genitori. La quota associativa è di ${iscrizioni.quota} € l'anno; il costo dei corsi dipende da disciplina e frequenza: per un preventivo chiama il ${scuola.telefono} o scrivi a ${scuola.email}.`,
+    risposta: `Basta consegnare in segreteria il modulo di iscrizione (pagina Documenti) con il certificato medico non agonistico, obbligatorio dai 6 anni; sotto i 6 anni basta l'autocertificazione dei genitori. La quota associativa è di ${iscrizioni.quota} € l'anno; il costo dei corsi dipende da disciplina e frequenza: per un preventivo chiama il ${scuola.telefono} o scrivi a ${scuola.email}.`,
     evidenzia: ['certificato medico non agonistico', 'dai 6 anni', 'autocertificazione dei genitori', `${iscrizioni.quota} €`],
   },
   {
     domanda: 'Gli allievi si esibiscono in spettacoli?',
-    risposta: "Sì. Ogni anno la scuola porta in teatro uno spettacolo con gli allievi, nato dal lavoro dell'anno, e partecipa a eventi celebrativi e nelle scuole del territorio.",
+    risposta: "Sì. Ogni anno la scuola porta in teatro uno spettacolo con gli allievi, nato dal lavoro dell'anno e aperto ai ragazzi di NoiConVoi e delle classi integrate. Partecipa anche a eventi celebrativi e nelle scuole del territorio.",
     evidenzia: ['in teatro uno spettacolo'],
+  },
+  {
+    home: true,
+    domanda: 'La danza è anche per ragazzi e papà?',
+    risposta: "Certo, la danza è per tutti. A InBallet studiano anche i ragazzi, per esempio in hip-hop e breaking, che si possono iniziare dai 6 anni. E poi c'è Only for Dad, il gruppo di papà delle nostre allieve che propone coreografie.",
+    evidenzia: ['anche i ragazzi', 'Only for Dad'],
+  },
+  {
+    domanda: 'InBallet assegna borse di studio?',
+    risposta: "Sì. Ogni anno la scuola premia l'impegno degli allievi e le borse di studio tengono conto anche dell'andamento scolastico. Una di queste ha offerto a due allieve una settimana di lezioni in cinque scuole di New York, tra cui Alvin Ailey e Martha Graham.",
+    evidenzia: ['borse di studio', "andamento scolastico"],
+  },
+  {
+    domanda: 'Chi è Ilenia Nobile?',
+    risposta: `${scuola.fondatrice} è la fondatrice e Direttrice Artistica di InBallet: professoressa di danza, psicomotricista, formatrice, operatrice per l'educazione speciale e insegnante certificata ContaKids World. Nel ${FONDAZIONE} ha fondato la scuola e nel 2013 ha creato il progetto NoiConVoi.`,
+    evidenzia: [scuola.fondatrice, 'Direttrice Artistica'],
   },
 ];
 

@@ -25,16 +25,21 @@ export async function riepilogoScuola({ url, documenti = [] }: Opzioni): Promise
   };
   return `# InBallet - Scuola di danza a Lainate e Rho
 
-> ${scuola.nome} (anche "I.N. Ballet") è una scuola di danza multidisciplinare con sede a Lainate e Rho, in provincia di Milano. Fondata nel ${FONDAZIONE} da ${scuola.fondatrice}, da ${ANNI_ATTIVITA} anni propone corsi per bambini dai 3 anni, ragazzi e adulti ed è Ente Formativo riconosciuto CSEN e CONI per la formazione degli insegnanti di danza.
+> ${scuola.nome} (anche "I.N. Ballet") è una scuola di danza multidisciplinare con sede a Lainate e Rho, a nord-ovest di Milano. Fondata nel ${FONDAZIONE} da ${scuola.fondatrice}, da ${ANNI_ATTIVITA} anni propone corsi per bambini dai 3 anni, ragazzi e adulti ed è Ente Formativo riconosciuto CSEN e CONI per la formazione degli insegnanti di danza.
 
 L'inclusione è centrale per tutte le fasce d'età: dal 2013 il [progetto NoiConVoi](${url('/progetto-noiconvoi')}) accoglie ragazzi con disabilità in esperienze di danza con supporto psicomotorio, insieme a un team di volontari. La scuola propone anche formazioni per professionisti dell'ambito educativo e terapeutico.
 
+## Fondatrice
+
+${scuola.fondatrice} è la fondatrice e Direttrice Artistica della scuola: professoressa di danza, psicomotricista, formatrice, operatrice per l'educazione speciale e insegnante certificata ContaKids World.
+
 ## Storia
 
+- Gli inizi: né sede né nome, le prime lezioni allo skate park, poi Auditorium, oratori e palestre comunali
 - ${FONDAZIONE}: ${scuola.fondatrice} fonda la scuola a Lainate
 - 2013: nasce il progetto NoiConVoi per ragazzi con disabilità
 - 2023: riconoscimento come ente formativo per il titolo di Insegnante di Danza (CSEN e CONI)
-- 2024: avvio del volontariato d'impresa con aziende ed enti
+- 2024: avvio del volontariato d'impresa con aziende ed enti; una borsa di studio della scuola porta due allieve a lezione in cinque scuole di New York
 - Ogni anno: spettacolo di fine anno in teatro con gli allievi della scuola
 
 ## Contatti
@@ -61,11 +66,14 @@ ${categorieCorsi.map((c) => `### ${c.nome}\n\n${strip(c.descrizione)}\n\n${c.cor
 ## Inclusione e servizi
 
 - [Progetto NoiConVoi](${url('/progetto-noiconvoi')}): dal 2013, il lunedì sera, ragazzi con disabilità e volontari (anche non danzatori) in sala; ogni lezione unisce Pratica Psicomotoria Aucouturier (PPA) e didattica artistica
-- [Classi multidisciplinari integrate](${url('/classi-integrate')}): quasi tutti i corsi accolgono casi speciali, dopo un consulto con la Direzione e un colloquio con la famiglia
+- [Classi multidisciplinari integrate](${url('/classi-integrate')}): quasi tutti i corsi accolgono allievi con bisogni speciali, dopo un consulto con la Direzione e un colloquio con la famiglia
 - [Sportello psicologico](${url('/sportello-psicologico')}): incontri con una psicoterapeuta per singoli, coppie e soprattutto per la tutela del rapporto genitore-figlio, su richiesta alla Direzione
 - [Sostenitori dei progetti sociali](${url('/sostenitori')}): donazioni e, dal 2024, volontariato d'impresa per aziende ed enti
 - [Collaborazioni con le scuole](${url('/collaborazioni-scuole')}): progetti su misura con supporto psicomotorio per nidi, scuole dell'infanzia, primarie e secondarie di primo e secondo grado
 - [Spettacoli ed eventi](${url('/spettacoli-eventi')}): spettacolo annuale in teatro, eventi celebrativi, eventi nelle scuole, team building aziendali ed eventi formativi
+- Borse di studio: la scuola premia ogni anno l'impegno degli allievi; le borse tengono conto anche dell'andamento scolastico
+- Gruppo Pro: sezione pre-professionale della scuola, con accesso tramite audizione
+- Only for Dad: il gruppo di papà delle allieve che propone coreografie
 
 ## Formazione
 

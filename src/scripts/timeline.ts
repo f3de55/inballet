@@ -1,4 +1,4 @@
-/** Curva continua da sinistra a destra: ogni segmento rimane fra due tappe consecutive. */
+/** Una curva per riga, da sinistra a destra: il cambio riga non attraversa i testi. */
 export {};
 
 const timeline = document.querySelector<HTMLElement>('.timeline');
@@ -28,6 +28,10 @@ if (timeline) {
     for (let i = 1; i < punti.length; i++) {
       const a = punti[i - 1];
       const b = punti[i];
+      if (b.x <= a.x) {
+        d += ` M ${b.x} ${b.y}`;
+        continue;
+      }
       const centro = (a.x + b.x) / 2;
       d += ` C ${centro} ${a.y} ${centro} ${b.y} ${b.x} ${b.y}`;
     }

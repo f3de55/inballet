@@ -63,15 +63,15 @@
   margin-bottom: 4rem;
 }
 
-/* Una sola fascia cronologica, sempre da sinistra a destra.
-   La serpentina alterna la quota delle tappe senza riordinare le colonne. */
+/* Tre tappe per riga, sempre in ordine cronologico da sinistra a destra.
+   Ogni riga ripete la stessa curva senza invertire le colonne. */
 .timeline {
   --nodo: 14px;
   position: relative;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: start;
-  gap: 2rem;
+  gap: 3.5rem 3rem;
   margin: 0 auto;
   padding: 0;
   list-style: none;
@@ -86,7 +86,7 @@
   border: 0;
 }
 
-.timeline .voce:nth-of-type(even) {
+.timeline .voce:nth-of-type(3n + 2) {
   margin-top: 3rem;
 }
 
@@ -151,7 +151,7 @@
     padding-bottom: 0;
   }
 
-  .timeline .voce:nth-of-type(even) {
+  .timeline .voce:nth-of-type(3n + 2) {
     margin-top: 0;
   }
 

@@ -276,6 +276,17 @@
   color: rgb(var(--bianco-rgb) / .55);
 }
 
+.footer-credits a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+  transition: color var(--transition-base);
+}
+
+.footer-credits a:hover {
+  color: var(--white);
+}
+
 /* ---------- Responsive ---------- */
 /* Tablet e PC stretto: marchio in fascia orizzontale in alto, sotto una sola griglia con
    le quattro colonne della mappa del sito e Contatti come quinta colonna */

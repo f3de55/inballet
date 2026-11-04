@@ -101,11 +101,11 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                     <h3 class="info-titolo">Le nostre sedi</h3>
                     <div class="info-corpo">
                     <ul class="info-righe">
-                        {sedi.map((sede, i) => (
+                        {sedi.map((sede) => (
                             <li class="info-riga sede">
                                 <i class="fas fa-location-dot info-icona" aria-hidden="true"></i>
                                 <div>
-                                    <p class="info-valore">{sede.citta}{i === 0 && <span class="sede-tag">sede centrale</span>}</p>
+                                    <p class="info-valore">{sede.citta}</p>
                                     <address class="sede-indirizzo">{sede.via}<br>{sede.cap} {sede.citta} ({sede.provincia})</address>
                                     <a href={sede.maps} target="_blank" rel="noopener" class="link-cta">
                                         Indicazioni <i class="fas fa-arrow-right" aria-hidden="true"></i>

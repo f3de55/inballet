@@ -92,17 +92,17 @@
 }
 
 .corsi-scheda-corpo {
+  --scheda-label-height: calc(var(--label-size) * var(--label-lh));
   display: grid;
-  grid-template-rows:
-    calc(var(--label-size) * var(--label-lh))
-    calc(2 * var(--h4-size) * var(--h4-lh))
-    calc(2 * var(--small-size) * var(--small-lh));
+  grid-template-rows: var(--scheda-label-height) auto auto;
+  align-content: start;
   gap: .5rem;
+  /* L'altezza resta uniforme; lo spazio libero va sotto i testi, non fra titolo e frequenza. */
+  min-height: calc(var(--scheda-label-height) + 2 * var(--h4-size) * var(--h4-lh) + 2 * var(--small-size) * var(--small-lh) + 1rem);
   min-width: 0;
 }
 
 .corsi-scheda-corpo h3 {
-  align-self: center;
   margin: 0;
   text-wrap: balance;
 }
@@ -217,10 +217,7 @@
   }
 
   .corsi-scheda-corpo {
-    grid-template-rows:
-      calc(2 * var(--label-size) * var(--label-lh))
-      calc(2 * var(--h4-size) * var(--h4-lh))
-      calc(2 * var(--small-size) * var(--small-lh));
+    --scheda-label-height: calc(2 * var(--label-size) * var(--label-lh));
   }
 }
 

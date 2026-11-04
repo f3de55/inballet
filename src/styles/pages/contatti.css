@@ -172,14 +172,6 @@ a.info-valore:hover {
 }
 
 /* Sedi */
-.sede-tag {
-  display: block;
-  margin-top: .25rem;
-  font-size: var(--small-size);
-  font-weight: var(--font-normal);
-  color: var(--small-color);
-}
-
 .sede-indirizzo {
   margin: .35rem 0 .75rem;
   font-style: normal;

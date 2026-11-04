@@ -346,8 +346,8 @@ davvero andando: niente riquadro nero mentre carica */
    Lo sfondo resta ritagliato, mentre la figura passa davanti alla cornice. */
 @media (min-width: 601px) {
   .corsi-indice {
-    padding-top: 4rem;
-    row-gap: 5rem;
+    padding-top: 8rem;
+    row-gap: 9rem;
   }
 
   .corsi-stile--grafica {
@@ -385,12 +385,12 @@ davvero andando: niente riquadro nero mentre carica */
 
   .corsi-stile-figura {
     position: absolute;
-    top: -4rem;
+    top: -8rem;
     left: 50%;
     z-index: 0;
     display: block;
-    width: min(100%, 8rem);
-    height: 11rem;
+    width: min(100%, 14rem);
+    height: 18rem;
     object-fit: contain;
     transform: translateX(-50%);
     /* La sfumatura lascia leggibile il testo sotto la decorazione. */
@@ -421,7 +421,7 @@ davvero andando: niente riquadro nero mentre carica */
 
 }
 
-/* Mobile: figure compatte sopra i testi, con un'anteprima della scheda successiva. */
+/* Mobile: figure grandi e intere sopra i testi, con un'anteprima della scheda successiva. */
 @media (max-width: 600px) {
   .corsi-indice {
     grid-template-columns: none;
@@ -468,8 +468,8 @@ davvero andando: niente riquadro nero mentre carica */
   .corsi-stile-figura {
     display: block;
     flex-shrink: 0;
-    width: min(100%, 9rem);
-    height: 12rem;
+    width: min(100%, 16rem);
+    height: 20rem;
     object-fit: contain;
     pointer-events: none;
     user-select: none;
@@ -787,7 +787,7 @@ davvero andando: niente riquadro nero mentre carica */
   padding: 0 2rem;
 }
 
-.oltre-layout .corsi-stile-elenco {
+.oltre-lista {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -809,10 +809,8 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
   background: var(--bg-soft);
 }
 
-.oltre-layout .corsi-scheda::before,
-.oltre-layout .corsi-scheda::after {
+.oltre-mobile {
   display: none;
-  content: none;
 }
 
 .oltre-illustrazione {
@@ -827,7 +825,7 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
 /* Desktop: quattro voci per riga */
 @media (min-width: 1025px) {
-  .oltre-layout .corsi-stile-elenco {
+  .oltre-lista {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
@@ -869,7 +867,7 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
 /* Tablet: due colonne */
 @media (max-width: 1024px) {
-  .oltre-layout .corsi-stile-elenco {
+  .oltre-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -882,30 +880,15 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
 }
 
-/* Mobile: illustrazioni compatte, intere e separate dai testi. */
+/* Mobile: le stesse schede e lo stesso scorrimento di Corsi simili. */
 @media (max-width: 600px) {
-  .oltre-layout .corsi-stile-elenco {
-    display: grid;
-    grid-template-columns: none;
-    grid-template-rows: repeat(4, auto);
-    grid-auto-flow: column;
-    grid-auto-columns: 88%;
-    gap: 0 1.5rem;
-    background: none;
-    border-block: 1px solid var(--linea);
+  .oltre-layout {
+    display: none;
   }
 
-  .oltre-voce {
-    padding-inline: .5rem;
-  }
-
-  .oltre-elemento {
-    border-right: 1px solid var(--linea);
-  }
-
-  .oltre-illustrazione {
-    width: min(100%, 10rem);
-    height: 10rem;
+  .oltre-mobile {
+    display: block;
+    margin-top: var(--spazio-intestazione);
   }
 }
 

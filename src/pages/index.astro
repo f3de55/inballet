@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import ElencoPercorsi from '../components/ElencoPercorsi.astro';
+import SchedaPercorso from '../components/SchedaPercorso.astro';
+import { immaginePagina } from '../data/immagini-pagine';
 import SostenitoriSection from '../components/SostenitoriSection.astro';
 import Galleria from '../components/Galleria.astro';
 import { getImage } from 'astro:assets';
@@ -131,7 +133,7 @@ const schema = schemaHome(socialImage);
                                     : <Img src={cat.immagine.src} alt={cat.immagine.alt} fuoco={cat.immagine.fuoco} loading="lazy" decoding="async" widths={[640, 960, 1200]} sizes="(max-width: 600px) 100vw, 600px" />}
                             </div>
                             {cat.immagineHome && (
-                                <Img class="corsi-stile-figura" src={`grafica-corsi/figure/${cat.id}.webp`} alt="" aria-hidden="true" width="128" height="176" loading="lazy" decoding="async" widths={[160, 320]} sizes="(max-width: 600px) 144px, 128px" />
+                                <Img class="corsi-stile-figura" src={`grafica-corsi/figure/${cat.id}.webp`} alt="" aria-hidden="true" width="224" height="288" loading="lazy" decoding="async" widths={[240, 480, 640]} sizes="(max-width: 600px) 256px, 224px" />
                             )}
                             <div class="corsi-stile-testo">
                                 <h3 class="corsi-stile-nome">{cat.nome}</h3>
@@ -190,7 +192,7 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Illustrazioni ampie sopra i testi: griglia su desktop, fila sfogliabile su mobile. -->
+    <!-- Griglia illustrata su desktop; su mobile le stesse schede fotografiche dei corsi simili. -->
     <section class="oltre-section" aria-labelledby="oltre-titolo">
         <div class="intro-editoriale">
             <p class="eyebrow">Formazione e progetti</p>
@@ -198,9 +200,10 @@ const schema = schemaHome(socialImage);
             <p><strong>Formazione</strong> per chi insegna e <strong>progetti</strong> con scuole, famiglie e territorio.</p>
         </div>
 
-        <ElencoPercorsi class="oltre-layout" id="oltre-percorsi" titolo="oltre-titolo" nome="La danza oltre i corsi" tipo="Percorsi">
+        <div class="oltre-layout">
+            <ul class="oltre-lista">
                 {vociOltre.map((v) => (
-                    <li class="corsi-scheda oltre-elemento">
+                    <li class="oltre-elemento">
                         <a href={v.href} class="oltre-voce">
                             <Img class="oltre-illustrazione" src={`grafica-oltre/${v.illustrazione}.png`} alt="" aria-hidden="true" width="144" height="144" widths={[160, 320, 480]} sizes="(max-width: 600px) 160px, 144px" loading="lazy" decoding="async" />
                             <h3 class="oltre-nome">{v.nome}</h3>
@@ -209,6 +212,13 @@ const schema = schemaHome(socialImage);
                         </a>
                     </li>
                 ))}
+            </ul>
+        </div>
+
+        <ElencoPercorsi class="container oltre-mobile" id="oltre-percorsi" titolo="oltre-titolo" nome="La danza oltre i corsi" tipo="Percorsi">
+            {vociOltre.map((v, indice) => (
+                <SchedaPercorso href={v.href} nome={v.nome} idTitolo={`oltre-${v.illustrazione}-nome`} etichetta={indice < formazione.voci.length ? 'Formazione' : 'Progetto'} dettaglio={v.testo} immagine={immaginePagina(v.href)} />
+            ))}
         </ElencoPercorsi>
     </section>
 

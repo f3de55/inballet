@@ -19,12 +19,12 @@ const ABBR: Record<string, string> = { Monday: 'Lun', Tuesday: 'Mar', Wednesday:
 // Sportello Psicologico, Formazione Insegnanti)
 const totaleCorsi = categorieCorsi.reduce((n, c) => n + c.corsi.length, 0);
 const fondamenti = [
-  { icona: 'fa-child', titolo: 'Ogni età', testo: 'Dai 3 anni, senza limiti', href: '/corsi' },
-  { icona: 'fa-layer-group', titolo: 'Classi per livello', testo: `${totaleCorsi} corsi divisi per livello`, href: '/corsi' },
-  { icona: 'fa-universal-access', titolo: 'Inclusione', testo: 'Classi aperte ai bisogni speciali', href: '/classi-integrate' },
-  { icona: 'fa-house-user', titolo: 'Comunità educante', testo: 'In dialogo con le famiglie', href: '/sportello-psicologico' },
-  { icona: 'fa-masks-theater', titolo: 'In teatro ogni anno', testo: 'Lo spettacolo degli allievi', href: '/spettacoli-eventi' },
-  { icona: 'fa-graduation-cap', titolo: 'Ente formativo', testo: 'Titolo CSEN e CONI', href: '/formazione-insegnanti' },
+  { titolo: 'Dai 3 anni agli adulti', testo: 'Corsi per bambini, ragazzi e adulti, anche per chi si avvicina alla danza per la prima volta.', href: '/corsi' },
+  { titolo: 'Percorsi per livello', testo: `Classica, modern, contemporanea, urban, yoga e pilates: ${totaleCorsi} corsi da scegliere in base a età ed esperienza.`, href: '/corsi' },
+  { titolo: 'Classi integrate', testo: 'L’inserimento degli allievi con bisogni speciali si prepara insieme alla famiglia e alla Direzione.', href: '/classi-integrate' },
+  { titolo: 'Spazio alle famiglie', testo: 'Su richiesta alla Direzione, lo sportello psicologico offre incontri con una psicoterapeuta.', href: '/sportello-psicologico' },
+  { titolo: 'Dalla sala al teatro', testo: 'Spettacoli, saggi e workshop fanno parte del percorso degli allievi.', href: '/spettacoli-eventi' },
+  { titolo: 'Formazione insegnanti', testo: 'Un biennio dedicato alla danza Modern, con titolo CSEN e CONI e sei master successivi.', href: '/formazione-insegnanti' },
 ];
 
 const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno) => {
@@ -138,24 +138,19 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
         </div>
     </section>
 
-    <!-- Sei fondamenti in riquadri: icone circolari e testi centrati, tre colonne su desktop e due sotto. -->
-    <section class="fondamenti sezione-scura" aria-labelledby="fondamenti-titolo">
+    <!-- La scuola raccontata attraverso una foto e sei voci, senza riquadri. -->
+    <section id="fondamenti" class="fondamenti" aria-labelledby="fondamenti-titolo">
         <div class="container fondamenti-layout">
             <div class="fondamenti-intro">
                 <p class="eyebrow">I fondamenti di InBallet</p>
-                <h2 class="titolo-sezione" id="fondamenti-titolo">Perché scegliere <em>InBallet</em></h2>
+                <h2 class="titolo-sezione" id="fondamenti-titolo">Il nostro modo di <em>fare scuola</em></h2>
+                <Img class="fondamenti-foto" src="gallery-7.jpg" alt="Insegnanti e allieve di InBallet insieme in sala" width="640" height="480" widths={[480, 800, 1100]} sizes="(max-width: 900px) 100vw, 420px" loading="lazy" decoding="async" />
             </div>
             <ul class="fondamenti-lista">
                 {fondamenti.map((f) => (
-                    <li>
-                        <a href={f.href} class="fondamento">
-                            <div class="fondamento-icona" aria-hidden="true"><i class={`fas ${f.icona}`}></i></div>
-                            <div class="fondamento-testi">
-                                <h3 class="fondamento-titolo titolo-card">{f.titolo}</h3>
-                                <p class="fondamento-testo testo-piccolo">{f.testo}</p>
-                            </div>
-                            <span class="fondamento-freccia" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
-                        </a>
+                    <li class="fondamento">
+                        <h3 class="fondamento-titolo titolo-card"><a href={f.href}>{f.titolo}</a></h3>
+                        <p class="fondamento-testo testo-piccolo">{f.testo}</p>
                     </li>
                 ))}
             </ul>

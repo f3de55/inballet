@@ -372,7 +372,7 @@
 
   .footer-main {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 1.75rem;
     padding: 0 1.5rem 2rem;
   }
 
@@ -402,7 +402,7 @@
     justify-content: flex-start;
     margin-bottom: 0;
     align-items: center;
-    min-height: 52px;
+    min-height: 44px;
     cursor: pointer;
   }
 
@@ -460,7 +460,22 @@
   }
 
   .footer-col > ul:last-child {
-    padding-bottom: 1.25rem;
+    padding-bottom: .75rem;
+  }
+
+  /* Le voci di menu hanno una sola spaziatura: quella dell'area cliccabile. */
+  .footer-col:not(.footer-contatti) li + li {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .footer-col:not(.footer-contatti) li + li::before {
+    content: none;
+  }
+
+  .footer-col:not(.footer-contatti) ul a {
+    min-height: 34px;
+    padding-block: .25rem;
   }
 
   /* La fisarmonica chiude già con un filetto: niente secondo filetto */

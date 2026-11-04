@@ -41,18 +41,6 @@
   text-align: center;
 }
 
-.info-blocco + .info-blocco::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: -1rem;
-  z-index: 2;
-  width: 1px;
-  height: 4rem;
-  background: rgb(var(--blu-rgb) / .55);
-  transform: translateY(-50%);
-}
-
 /* Contatti e orari su fondo azzurrino, le sedi al centro restano bianche */
 .info-blocco:first-child,
 .info-blocco:last-child {
@@ -172,6 +160,12 @@ a.info-valore:hover {
 }
 
 /* Sedi */
+.sede a .fa-arrow-up-right-from-square {
+  margin-inline-start: .35em;
+  font-size: var(--icona-mini);
+  vertical-align: .08em;
+}
+
 .sede-indirizzo {
   margin: .35rem 0 .75rem;
   font-style: normal;
@@ -254,15 +248,6 @@ a.info-valore:hover {
     grid-column: 1 / -1;
   }
 
-  .info-blocco:nth-child(2)::before,
-  .info-blocco:nth-child(3)::before {
-    top: -3rem;
-    left: 50%;
-    width: 4rem;
-    height: 1px;
-    transform: translateX(-50%);
-  }
-
 }
 
 @media (max-width: 900px) {
@@ -272,7 +257,7 @@ a.info-valore:hover {
   }
 }
 
-/* Mobile: le tre celle una sotto l'altra, separate da un filetto */
+/* Mobile: le tre celle una sotto l'altra. I filetti restano fra i dati di ogni box. */
 @media (max-width: 700px) {
   .info {
     grid-template-columns: minmax(0, 1fr);
@@ -293,10 +278,6 @@ a.info-valore:hover {
   .info {
     margin-top: 0;
     row-gap: 1.5rem;
-  }
-
-  .info-blocco + .info-blocco::before {
-    top: 0;
   }
 
   .info-blocco {

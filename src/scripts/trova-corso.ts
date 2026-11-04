@@ -1,16 +1,14 @@
-/** Il selettore naviga alle sezioni esistenti: non filtra o nasconde i corsi. */
+/** Il pulsante apre i percorsi; i link del dialogo navigano alle sezioni esistenti. */
 export {};
 
 const apri = document.getElementById('trova-apri');
 const scelta = document.getElementById('trova-scelta');
-const percorso = document.getElementById('trova-percorso');
 const popup = document.getElementById('trova-popup') as HTMLDialogElement | null;
 
-if (apri && scelta && percorso && popup) {
+if (apri && scelta && popup) {
   const opzioni = [...popup.querySelectorAll<HTMLAnchorElement>('.trova-opzione')];
 
   const seleziona = (opzione?: HTMLAnchorElement) => {
-    percorso.textContent = opzione?.dataset.percorso || 'Scegli un percorso';
     for (const voce of opzioni) voce.removeAttribute('aria-current');
     opzione?.setAttribute('aria-current', 'location');
   };

@@ -1,4 +1,4 @@
-/* Pagina Corsi: selettore dei percorsi, sezioni dei corsi e invito al contatto. */
+/* Pagina Corsi: invito a esplorare i percorsi, sezioni dei corsi e contatto. */
 
 /* ---------- Trova il tuo corso ---------- */
 .trova-section {
@@ -29,43 +29,7 @@
 
 .trova-scelta {
   min-width: 0;
-  width: min(100%, 36rem);
-}
-
-.trova-selettore {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  width: 100%;
-  min-height: 64px;
-  padding: .85rem 1.1rem;
-  border: 1px solid var(--linea);
-  border-radius: var(--radius-sm);
-  background: var(--white);
-  color: var(--heading-color);
-  font: inherit;
-  font-weight: var(--font-medium);
-  line-height: 1.4;
-  text-align: left;
-  cursor: pointer;
-  transition: border-color var(--transition-base);
-}
-
-.trova-selettore i {
-  flex-shrink: 0;
-  color: var(--primary-blue-dark);
-  font-size: var(--icona-mini);
-  transition: transform var(--transition-base);
-}
-
-.trova-selettore[aria-expanded="true"] i {
-  transform: rotate(180deg);
-}
-
-.trova-selettore:hover,
-.trova-selettore[aria-expanded="true"] {
-  border-color: var(--primary-blue-dark);
+  text-align: center;
 }
 
 html:has(.trova-popup[open]) {
@@ -235,10 +199,6 @@ html:has(.trova-popup[open]) {
 }
 
 @media (max-width: 600px) {
-  .trova-selettore {
-    min-height: 60px;
-  }
-
   .trova-popup {
     width: calc(100% - 1.5rem);
     max-height: calc(100dvh - 1.5rem);

@@ -17,6 +17,7 @@ const adatta = () =>
 
 colonne.forEach((d) =>
   d.querySelector('summary')!.addEventListener('click', (e) => {
+      if ((e.target as Element).closest('a')) return;
     if (!mobile.matches) e.preventDefault();
   }),
 );

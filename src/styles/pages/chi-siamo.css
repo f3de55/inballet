@@ -63,155 +63,119 @@
   margin-bottom: 4rem;
 }
 
-/* Percorso cronologico: su desktop cinque tappe lungo un asse orizzontale;
-   su tablet resta il collegamento tra le righe, sul telefono la linea verticale a sinistra.
-   L'ultima tappa (Oggi) ha il nodo pieno. */
+/* Due tappe per fascia, collegate in ordine cronologico da una serpentina.
+   Le righe alternate invertono il percorso; Oggi chiude al centro. */
 .timeline {
-  --nodo: 20px;
-  --distanza: 3rem;
-  --riga: 4.25rem;
-  --sporgenza: 1.75rem;
-  --raggio: 1.75rem;
+  --nodo: 18px;
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--riga) var(--distanza);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3.75rem 5rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 1.75rem;
   list-style: none;
 }
 
 .timeline .voce {
+  display: block;
   position: relative;
-  padding-top: 3rem;
-  border-top: none;
+  grid-row: auto;
+  min-width: 0;
+  padding: 2.75rem 0 0;
+  border: 0;
 }
 
-/* Nodo */
+.timeline .voce:nth-of-type(3) {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.timeline .voce:nth-of-type(4) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.timeline .voce:last-of-type {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  justify-self: center;
+  width: 100%;
+  max-width: 30rem;
+}
+
 .timeline .voce::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
-  box-sizing: border-box;
   width: var(--nodo);
   height: var(--nodo);
-  border: 3px solid var(--primary-blue-dark);
+  border: 2px solid var(--primary-blue-dark);
   border-radius: var(--radius-full);
   background: var(--bg-soft);
 }
 
 .timeline .voce:last-child::before {
   background: var(--primary-blue-dark);
-}
-
-/* Linea verso destra, fino al nodo della tappa successiva */
-.timeline .voce::after {
-  content: '';
-  position: absolute;
-  top: calc(var(--nodo) / 2 - 1px);
-  left: var(--nodo);
-  right: calc(var(--distanza) * -1);
-  height: 2px;
-  background: var(--primary-blue);
-}
-
-.timeline .voce:last-child::after {
-  display: none;
+  box-shadow: 0 0 0 5px rgb(var(--blu-rgb) / .2);
 }
 
 .timeline .voce-anno::before {
   display: none;
 }
 
-/* Su tablet JavaScript collega le righe con un tracciato SVG; desktop e telefono usano solo il CSS.
-   Senza JavaScript restano le linee dritte per riga. */
-.timeline {
-  position: relative;
+.timeline .voce-testo {
+  max-width: 36ch;
 }
 
-.timeline .timeline-linea {
+.timeline-linea {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  width: 100%;
+  height: 100%;
   overflow: visible;
   pointer-events: none;
 }
 
-.timeline .timeline-linea path {
+.timeline-linea path {
   fill: none;
   stroke: var(--primary-blue);
-  stroke-width: 2;
+  stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.timeline.con-linea .voce::after {
-  display: none;
-}
-
-/* Desktop: tutte le tappe sulla stessa linea, con date e testi centrati sotto ciascun nodo. */
-@media (min-width: 1025px) {
+/* Su telefono la cronologia rimane verticale e si legge dall'alto verso il basso. */
+@media (max-width: 700px) {
   .timeline {
-    --nodo: 16px;
-    --distanza: 1.5rem;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    display: block;
+    padding: 0;
   }
 
-  .timeline .voce {
-    padding-top: 2.5rem;
-    text-align: center;
-    overflow-wrap: break-word;
+  .timeline .voce,
+  .timeline .voce:last-of-type {
+    width: auto;
+    max-width: none;
+    padding: 0 0 2.5rem 2.5rem;
   }
 
-  .timeline .voce::before {
-    left: calc(50% - var(--nodo) / 2);
-    border-width: 2px;
-  }
-
-  .timeline .voce::after {
-    top: calc(var(--nodo) / 2 - .5px);
-    left: calc(50% + var(--nodo) / 2);
-    right: calc(-50% - var(--distanza) + var(--nodo) / 2);
-    height: 1px;
-  }
-
-  .timeline .voce:last-child::before {
-    box-shadow: 0 0 0 6px rgb(var(--blu-rgb) / .2);
-  }
-}
-
-/* Tablet: due tappe per riga */
-@media (min-width: 601px) and (max-width: 860px) {
-  .timeline {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-/* Telefono: una tappa per riga, in verticale lungo una linea a sinistra */
-@media (max-width: 600px) {
-  .timeline {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-
-  .timeline .voce {
-    padding: 0 0 2.75rem 3.25rem;
-  }
-
-  .timeline .voce:last-child {
+  .timeline .voce:last-of-type {
     padding-bottom: 0;
   }
 
   .timeline .voce::before {
-    top: .35rem;
+    top: .5rem;
   }
 
-  .timeline .voce::after {
-    top: calc(.35rem + var(--nodo));
-    bottom: -.35rem;
-    right: auto;
-    left: calc(var(--nodo) / 2 - 1px);
-    width: 2px;
-    height: auto;
+  .timeline .voce:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: calc(.5rem + var(--nodo));
+    bottom: -.5rem;
+    left: calc(var(--nodo) / 2 - .75px);
+    width: 1.5px;
     background: var(--primary-blue);
   }
 }

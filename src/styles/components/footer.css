@@ -102,8 +102,16 @@
   gap: 1.5rem;
 }
 
+.footer-col {
+  text-align: center;
+}
+
 .footer-col summary {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  margin-bottom: .75rem;
   list-style: none;
   cursor: default;
 }
@@ -113,21 +121,21 @@
 }
 
 .footer-titolo {
-  font-size: var(--ui-size);
+  font-size: var(--label-size);
   color: var(--primary-blue);
-  margin-bottom: 1.1rem;
+  margin: 0;
 }
 
 .footer-main ul {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: .4rem;
+  gap: 0;
 }
 
 .footer-main ul a,
 .footer-link {
-  font-size: var(--small-size);
+  font-size: var(--text-xs);
   line-height: 1.4;
   color: var(--footer-testo);
   text-decoration: none;
@@ -142,22 +150,37 @@
   display: inline-block;
 }
 
-/* Menu: testo più compatto e un breve filetto tra le voci, allineato a sinistra. */
-.footer-col:not(.footer-contatti) ul {
-  gap: 0;
+/* Filetti corti e centrati in tutte le colonne, compresa Contatti. */
+.footer-col li + li {
+  position: relative;
+  margin-top: .65rem;
+  padding-top: .65rem;
 }
 
-.footer-col:not(.footer-contatti) ul a {
-  font-size: var(--text-xs);
-}
-
-.footer-col:not(.footer-contatti) li + li::before {
+.footer-col li + li::before,
+.footer-sedi::before,
+.footer-link::before {
   content: '';
-  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
   width: 1.5rem;
   height: 1px;
-  margin: .5rem 0;
-  background: var(--linea-su-scuro);
+  background: rgb(var(--blu-rgb) / .45);
+  transform: translateX(-50%);
+}
+
+.footer-titolo a {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-titolo a:hover {
+  color: var(--white);
 }
 
 /* Tablet e PC: le voci della mappa del sito sono larghe al massimo 8em, quindi quelle a più parole vanno a capo
@@ -188,19 +211,18 @@
 }
 
 /* ---------- Contatti ---------- */
-/* Telefono, e-mail e sedi: icona a sinistra in una colonna fissa (centrata nella colonna), testo a destra.
-   Telefono ed e-mail sono una sola riga: icona e testo centrati insieme sulla riga. Nelle sedi l'icona ha lo
-   stesso riquadro della riga del nome (stessa interlinea) così il glifo cade sulla riga del nome della città */
+/* Recapiti e sedi centrati sullo stesso asse dei titoli, con icone e dati separati. */
 .footer-dato {
   display: grid;
-  grid-template-columns: 1.1rem minmax(0, 1fr);
-  column-gap: .75rem;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  row-gap: .35rem;
   align-items: center;
 }
 
 .footer-dato > i {
   display: block;
-  width: 100%;
+  width: 1.1rem;
   font-size: var(--icona-in-testo);
   line-height: 1;
   text-align: center;
@@ -220,15 +242,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(var(--body-lh) * var(--text-xs));
+  height: auto;
 }
 
 .footer-sedi {
-  margin-top: 1.25rem;
+  position: relative;
+  margin-top: .65rem;
+  padding-top: .65rem;
 }
 
 .footer-sedi .footer-dato > div {
   display: flex;
+  align-items: center;
   flex-direction: column;
   gap: .15rem;
 }
@@ -249,12 +274,18 @@
 
 /* «Altre informazioni»: niente sottolineatura (si confonderebbe con i filetti delle altre voci), c'è la freccia */
 .footer-link {
+  position: relative;
   display: inline-flex;
+  justify-content: center;
   align-items: center;
   gap: .6rem;
   min-height: 24px;
   padding: .2rem 0;
-  margin-top: 1.25rem;
+  margin-top: 1.3rem;
+}
+
+.footer-link::before {
+  top: -.65rem;
 }
 
 .footer-link i {
@@ -384,8 +415,10 @@
   }
 
   .footer-col summary {
+    position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    margin-bottom: 0;
     align-items: center;
     min-height: 52px;
     cursor: pointer;
@@ -394,6 +427,10 @@
   /* "+" disegnato con due barre: centrato al pixel anche quando ruota in × */
   .footer-col summary::after {
     content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
     flex-shrink: 0;
     width: 14px;
     height: 14px;
@@ -405,7 +442,7 @@
   }
 
   .footer-col[open] summary::after {
-    transform: rotate(45deg);
+    transform: translateY(-50%) rotate(45deg);
   }
 
   .footer-col .footer-titolo {
@@ -418,8 +455,8 @@
 
   /* Contatti: i due elenchi e il link formano un solo blocco, con lo spazio finale della fisarmonica */
   .footer-col .footer-sedi {
-    margin-top: 0;
-    padding-top: 1.25rem;
+    margin-top: .65rem;
+    padding-top: .65rem;
   }
 
   .footer-col .footer-link {
@@ -432,21 +469,18 @@
     gap: 0;
   }
 
-  .footer-col:not(.footer-contatti) li + li::before {
-    margin-block: .15rem;
-  }
-
   .footer-col ul a,
   .footer-col .footer-link {
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 100%;
     min-height: 38px;
     padding-block: .2rem;
   }
 
   .footer-col .footer-link {
-    margin-top: .25rem;
+    margin-top: 1.3rem;
   }
 
   /* Contatti: nome della sede sopra, indirizzo a tutta larghezza sotto */

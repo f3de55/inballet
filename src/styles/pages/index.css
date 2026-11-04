@@ -375,8 +375,8 @@ davvero andando: niente riquadro nero mentre carica */
   .corsi-stile-figura {
     display: block;
     flex-shrink: 0;
-    width: min(100%, 14rem);
-    height: 18rem;
+    width: min(100%, 8rem);
+    height: 11rem;
     object-fit: contain;
     pointer-events: none;
     user-select: none;
@@ -403,7 +403,7 @@ davvero andando: niente riquadro nero mentre carica */
 
 }
 
-/* Mobile: figure grandi sopra i testi, con un'anteprima della scheda successiva. */
+/* Mobile: figure compatte sopra i testi, con un'anteprima della scheda successiva. */
 @media (max-width: 600px) {
   .corsi-indice {
     grid-template-columns: none;
@@ -450,8 +450,8 @@ davvero andando: niente riquadro nero mentre carica */
   .corsi-stile-figura {
     display: block;
     flex-shrink: 0;
-    width: min(100%, 16rem);
-    height: 20rem;
+    width: min(100%, 9rem);
+    height: 12rem;
     object-fit: contain;
     pointer-events: none;
     user-select: none;
@@ -799,9 +799,9 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
 .oltre-illustrazione {
   display: block;
-  width: min(100%, 14rem);
-  height: 14rem;
-  margin-bottom: 1.5rem;
+  width: min(100%, 9rem);
+  height: 9rem;
+  margin-bottom: 1rem;
   object-fit: contain;
   pointer-events: none;
   user-select: none;
@@ -864,7 +864,7 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
 
 }
 
-/* Mobile: una sola fila di illustrazioni grandi, intere e separate dai testi. */
+/* Mobile: illustrazioni compatte, intere e separate dai testi. */
 @media (max-width: 600px) {
   .oltre-layout .corsi-stile-elenco {
     display: grid;
@@ -886,8 +886,8 @@ subgrid: nomi, frasi e link stanno alla stessa altezza in tutte le celle della r
   }
 
   .oltre-illustrazione {
-    width: min(100%, 15rem);
-    height: 15rem;
+    width: min(100%, 10rem);
+    height: 10rem;
   }
 }
 

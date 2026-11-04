@@ -10,15 +10,16 @@ import '../styles/components/footer.css';
 
 const anno = new Date().getFullYear();
 
-// Corsi: i cinque percorsi della pagina /corsi; le altre colonne dalle voci del menu
-const colonne = [
+// Il titolo Corsi porta alla pagina; sotto restano le cinque macrocategorie.
+const colonne: { titolo: string; href?: string; voci: Voce[] }[] = [
   {
     titolo: 'Corsi',
-    voci: [{ nome: 'Tutti i corsi', href: '/corsi' }, ...categorieCorsi.map((c) => ({ nome: c.nome, href: `/corsi#${c.id}` }))] as Voce[],
+    href: '/corsi',
+    voci: categorieCorsi.map((c) => ({ nome: c.nome, href: `/corsi#${c.id}` })),
   },
   ...menu
     .filter((m) => m.id !== 'corsi')
-    .map((m) => ({ titolo: m.label, voci: m.sezioni.flatMap((s) => s.voci) })),
+    .map((m) => ({ titolo: m.label, href: undefined, voci: m.sezioni.flatMap((s) => s.voci) })),
 ];
 ---
 
@@ -39,7 +40,7 @@ const colonne = [
     {/* Colonne sempre aperte; su mobile footer.ts le chiude e diventano a fisarmonica */}
     {colonne.map((c) => (
       <details class="footer-col" open>
-        <summary><h2 class="footer-titolo titoletto">{c.titolo}</h2></summary>
+        <summary><h2 class="footer-titolo titoletto">{c.href ? <a href={c.href}>{c.titolo}</a> : c.titolo}</h2></summary>
         <ul>
           {c.voci.map((v) => <li><a href={v.href}>{v.breve ?? v.nome}</a></li>)}
         </ul>

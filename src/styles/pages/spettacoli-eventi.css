@@ -101,7 +101,10 @@
 .eventi-vuoto {
   max-width: 40rem;
   margin-inline: auto;
-  padding: 2.5rem 0 1rem;
+  padding: 2rem 1.5rem;
+  border: 1px solid rgb(var(--blu-rgb) / .4);
+  border-radius: var(--radius-card);
+  background: var(--bg-soft);
   text-align: center;
 }
 
@@ -113,7 +116,7 @@
   margin: 0 auto 1.5rem;
   border: 1px solid rgb(var(--blu-rgb) / .4);
   border-radius: var(--radius-full);
-  background: var(--bg-soft);
+  background: var(--white);
   color: var(--primary-blue-dark);
 }
 

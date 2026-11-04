@@ -193,6 +193,7 @@
   .sedi-mappa-cartografia {
     left: 50%;
     width: auto;
+    height: calc(110% - 2rem);
     aspect-ratio: 1111 / 852;
     transform: translateX(-50%);
   }

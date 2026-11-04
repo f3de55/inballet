@@ -142,6 +142,24 @@
   display: inline-block;
 }
 
+/* Menu: testo più compatto e un breve filetto tra le voci, allineato a sinistra. */
+.footer-col:not(.footer-contatti) ul {
+  gap: 0;
+}
+
+.footer-col:not(.footer-contatti) ul a {
+  font-size: var(--text-xs);
+}
+
+.footer-col:not(.footer-contatti) li + li::before {
+  content: '';
+  display: block;
+  width: 1.5rem;
+  height: 1px;
+  margin: .5rem 0;
+  background: var(--linea-su-scuro);
+}
+
 /* Tablet e PC: le voci della mappa del sito sono larghe al massimo 8em, quindi quelle a più parole vanno a capo
    su due righe bilanciate (Spettacoli / ed Eventi, Classi / Integrate…) e le colonne risultano della stessa larghezza */
 @media (min-width: 701px) {
@@ -412,6 +430,10 @@
      Niente spazio tra le righe: l'altezza dell'area di tocco fa da distanza */
   .footer-col ul {
     gap: 0;
+  }
+
+  .footer-col:not(.footer-contatti) li + li::before {
+    margin-block: .15rem;
   }
 
   .footer-col ul a,

@@ -1,13 +1,12 @@
 # La danza oltre i corsi
 
 Otto illustrazioni originali ad acquerello azzurro, con fondo trasparente.
-Il riferimento visivo è la grafica di `grafica-contatti`: soggetti leggeri,
-inclinati nell'angolo inferiore destro e attenuati da un velo dello stesso
-colore del riquadro. Le illustrazioni sono visibili su desktop e tablet,
-con maggiore evidenza nell'angolo e protezione dietro ai testi. Nel layout
+Il riferimento visivo è la grafica di `grafica-contatti`: soggetti leggeri.
+Su desktop e tablet ogni illustrazione è una piccola vignetta di 80 × 80 px,
+centrata sopra il titolo, senza rotazioni, ritagli o sovrapposizioni al testo. Nel layout
 mobile le card scorrevoli usano invece le fotografie delle pagine collegate,
 definite in `src/data/immagini-pagine.ts`. Queste illustrazioni rimangono
-solo come sfondi nella griglia a filetti di desktop e tablet.
+solo nella griglia a filetti di desktop e tablet.
 
 | File | Soggetto e significato |
 | --- | --- |
@@ -21,6 +20,6 @@ solo come sfondi nella griglia a filetti di desktop e tablet.
 | `sostenitori.png` | Mani che sostengono un cuore: donazioni e volontariato a supporto dei progetti. |
 
 Sorgenti PNG trasparenti, convertite in WebP da `Img.astro` al build
-in varianti responsive da 240 a 800 px e caricate in modo differito. I file originali
+in varianti responsive da 80 e 160 px e caricate in modo differito. I file originali
 non vengono serviti al browser. Le immagini sono decorative (`alt=""`)
 perché titoli e descrizioni forniscono già il contenuto della cella.

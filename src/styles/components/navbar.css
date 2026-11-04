@@ -166,12 +166,14 @@ html.menu-aperto {
   position: relative;
 }
 
-/* Dopo lo scroll la navbar si restringe e il pulsante Contattaci si fa molto più piccolo */
+/* Pulsante compatto già nella navbar iniziale, ulteriormente ridotto dopo lo scroll. */
 .nav-container > .btn-primary {
   transition: background-color .3s ease, color .3s ease, border-color .3s ease, padding .3s ease;
 }
 
 .main-header .nav-container > .btn-primary {
+  --btn-pad: .6rem;
+  padding-inline: 1.2rem;
   transition: background-color .3s ease, color .3s ease, border-color .3s ease, padding .3s ease, font-size .3s ease;
 }
 

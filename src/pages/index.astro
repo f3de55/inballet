@@ -192,7 +192,7 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Desktop e tablet: griglia a filetti con illustrazioni di sfondo.
+    <!-- Desktop e tablet: griglia a filetti con piccole illustrazioni sopra i titoli.
          Mobile: le stesse card e lo stesso scorrimento dei singoli corsi di /corsi. -->
     <section class="oltre-section" aria-labelledby="oltre-titolo">
         <div class="intro-editoriale">
@@ -205,8 +205,8 @@ const schema = schemaHome(socialImage);
             <ul class="oltre-lista">
                 {vociOltre.map((v) => (
                     <li>
-                        <Img class="oltre-sfondo" src={`grafica-oltre/${v.illustrazione}.png`} alt="" aria-hidden="true" width="240" height="240" widths={[240, 480]} sizes="240px" loading="lazy" decoding="async" />
                         <a href={v.href} class="oltre-voce">
+                            <Img class="oltre-illustrazione" src={`grafica-oltre/${v.illustrazione}.png`} alt="" aria-hidden="true" width="80" height="80" widths={[80, 160]} sizes="80px" loading="lazy" decoding="async" />
                             <h3 class="oltre-nome">{v.nome}</h3>
                             <p class="oltre-desc testo-piccolo">{v.testo}</p>
                             <p class="link-cta oltre-cta">Scopri di più <i class="fas fa-arrow-right" aria-hidden="true"></i></p>

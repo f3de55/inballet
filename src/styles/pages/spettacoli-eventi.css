@@ -36,17 +36,22 @@
   display: none !important;
 }
 
-/* ---------- Intestazione: testo a sinistra, scelta della vista a destra ---------- */
+/* ---------- Intestazione e scelta della vista centrate ---------- */
 .eventi-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 2rem 4rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
   margin-bottom: var(--spazio-intestazione);
+  text-align: center;
 }
 
 .eventi-intro {
   max-width: 40rem;
+}
+
+.eventi-intro > .eyebrow {
+  margin-bottom: 1rem;
 }
 
 .eventi-intro .titolo-sezione {
@@ -95,7 +100,26 @@
 /* ---------- Nessun evento futuro ---------- */
 .eventi-vuoto {
   max-width: 40rem;
+  margin-inline: auto;
   padding: 2.5rem 0 1rem;
+  text-align: center;
+}
+
+.eventi-vuoto-icona {
+  display: grid;
+  place-items: center;
+  width: 6rem;
+  height: 6rem;
+  margin: 0 auto 1.5rem;
+  border: 1px solid rgb(var(--blu-rgb) / .4);
+  border-radius: var(--radius-full);
+  background: var(--bg-soft);
+  color: var(--primary-blue-dark);
+}
+
+.eventi-vuoto-icona i {
+  font-size: var(--text-4xl);
+  line-height: 1;
 }
 
 .eventi-vuoto h3 {
@@ -870,11 +894,6 @@ html:has(dialog[open]) {
 
 /* ---------- Tablet ---------- */
 @media (max-width: 900px) {
-  .eventi-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
   /* Calendario: niente titoli nelle celle, solo un punto; il tocco apre il primo evento del giorno */
   .calendario-grid .cal-giorno {
     align-items: center;
@@ -905,10 +924,6 @@ html:has(dialog[open]) {
 
 /* ---------- Mobile ---------- */
 @media (max-width: 600px) {
-  .eventi-header {
-    gap: 1.75rem;
-  }
-
   .vista-switch {
     display: flex;
     width: 100%;

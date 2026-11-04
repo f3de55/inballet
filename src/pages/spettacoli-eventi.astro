@@ -188,6 +188,9 @@ const og = aperto
                 <!-- Nessun appuntamento futuro (gli eventi passati restano consultabili sotto) -->
                 {prossimi.length === 0 && (
                     <div class="eventi-vuoto">
+                        <span class="eventi-vuoto-icona" aria-hidden="true">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
                         <h3>Nessun appuntamento in programma</h3>
                         <p>Stiamo preparando le <strong>prossime date</strong>: le pubblichiamo qui appena confermate.</p>
                         <a href="/contatti" class="link-cta">

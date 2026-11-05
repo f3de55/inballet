@@ -175,40 +175,38 @@
   text-wrap: balance;
 }
 
-/* Obiettivi centrati e in evidenza, direttamente sul fondo della sezione. */
+/* Un elenco centrato, con righe continue e una sola direzione di lettura. */
 .corso-impara-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.5rem 4rem;
-  max-width: 60rem;
+  max-width: 46rem;
   list-style: none;
   padding: 0;
   margin: 0 auto;
+  border-top: 1px solid var(--linea);
 }
 
 .corso-impara-list li {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: center;
-  align-content: start;
-  row-gap: .75rem;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: 1.1rem 0;
   min-width: 0;
-  text-align: center;
+  border-bottom: 1px solid var(--linea);
+  text-align: left;
 }
 
-.impara-segno {
+.impara-indice {
   display: block;
-  font-size: var(--icona-in-testo);
-  line-height: 1;
   color: var(--primary-blue-dark);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
 }
 
-/* Il ruolo lead del sito dà risalto alle competenze e alle parole chiave. */
+/* Il testo corrente lascia risaltare le parole chiave originali del corso. */
 .impara-testo {
-  max-width: 28ch;
-  margin: 0 auto;
-  font-size: var(--lead-size);
-  line-height: var(--lead-lh);
+  margin: 0;
+  font-size: var(--body-size);
+  line-height: var(--body-lh);
   color: var(--text-body);
   text-wrap: pretty;
 }
@@ -263,9 +261,6 @@
     gap: 2rem;
   }
 
-  .corso-impara-list {
-    column-gap: 2rem;
-  }
 }
 
 @media (max-width: 768px) {
@@ -290,9 +285,9 @@
     gap: 1rem;
   }
 
-  /* Mobile: una colonna continua, con lo stesso ordine di lettura. */
-  .corso-impara-list {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
+  .corso-impara-list li {
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    gap: .75rem;
+    padding-block: 1rem;
   }
 }

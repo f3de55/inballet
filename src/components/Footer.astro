@@ -3,7 +3,7 @@
  * Footer: colonne generate dalla navigazione (src/data/navigazione.ts) e dai
  * dati ufficiali della scuola, così restano sempre allineate a navbar e contatti.
  */
-import { categorieCorsi, FONDAZIONE, scuola } from '../data/scuola';
+import { categorieCorsi, scuola } from '../data/scuola';
 import { menu, type Voce } from '../data/navigazione';
 import Img from './Img.astro';
 import '../styles/components/footer.css';
@@ -28,7 +28,6 @@ const colonne: { titolo: string; href?: string; voci: Voce[] }[] = [
     <a href="/" class="footer-logo" aria-label="InBallet - Torna alla homepage">
       <Img src="logo.png" alt="InBallet" width="376" height="133" widths={[120, 240, 376]} sizes="120px" loading="lazy" decoding="async" />
     </a>
-    <p>Scuola di danza a Lainate e Rho dal {FONDAZIONE}, per bambini dai 3 anni, ragazzi e adulti.</p>
     <p class="footer-ente titoletto">Ente Formativo<br>CSEN · CONI</p>
     <div class="footer-social">
       <a href={scuola.social.instagram} target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>

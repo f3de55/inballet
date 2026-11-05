@@ -86,6 +86,8 @@
 
 .info-titolo,
 .info-corpo {
+  --small-size: var(--body-size);
+  --small-lh: var(--body-lh);
   position: relative;
   z-index: 1;
 }
@@ -142,9 +144,9 @@
 /* Icona sopra e testo sotto: entrambi sullo stesso asse centrale del box. */
 .info-icona {
   display: block;
-  width: 1.75rem;
+  width: 1em;
   flex-shrink: 0;
-  font-size: var(--text-xl);
+  font-size: var(--icona-in-testo);
   line-height: 1;
   text-align: center;
   color: var(--primary-blue-dark);
@@ -170,6 +172,17 @@
 a.info-valore {
   max-width: 100%;
   width: fit-content;
+}
+
+.info a.info-email {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: .45em;
+}
+
+.info-email .info-link-testo {
+  min-width: 0;
 }
 
 /* Sedi */
@@ -199,7 +212,7 @@ a.info-valore {
   justify-content: center;
   gap: .45rem;
   margin: -.5rem 0 .75rem;
-  font-size: var(--small-size);
+  font-size: var(--body-size);
   color: var(--dark-navy);
 }
 
@@ -271,7 +284,7 @@ a.info-valore {
   min-height: 44px;
   max-width: 100%;
   color: var(--primary-blue-dark);
-  font-size: var(--small-size);
+  font-size: inherit;
   font-weight: var(--font-medium);
   text-decoration: none;
 }
@@ -308,10 +321,11 @@ a.info-valore {
 }
 
 .info-social-link i,
-.info-whatsapp > i {
-  width: 1.75rem;
+.info-whatsapp > i,
+.info-email > i {
+  width: 1em;
   flex-shrink: 0;
-  font-size: var(--text-xl);
+  font-size: var(--icona-in-testo);
   line-height: 1;
   text-align: center;
 }

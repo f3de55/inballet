@@ -1,6 +1,6 @@
 /** Su mobile la griglia diventa una fila sfogliabile; su desktop tutti i corsi sono visibili. */
-document.querySelectorAll<HTMLElement>('.corsi-stile-contenuto').forEach((contenuto) => {
-  const fila = contenuto.querySelector<HTMLElement>('.corsi-stile-elenco');
+document.querySelectorAll<HTMLElement>('.corsi-stile-contenuto, .corsi-wrapper').forEach((contenuto) => {
+  const fila = contenuto.querySelector<HTMLElement>('.corsi-stile-elenco, .corsi-indice');
   const comandi = contenuto.querySelector<HTMLElement>('.corsi-stile-comandi');
   const indietro = contenuto.querySelector<HTMLButtonElement>('[data-corsi-direzione="-1"]');
   const avanti = contenuto.querySelector<HTMLButtonElement>('[data-corsi-direzione="1"]');
@@ -18,7 +18,7 @@ document.querySelectorAll<HTMLElement>('.corsi-stile-contenuto').forEach((conten
 
   [indietro, avanti].forEach((pulsante) => {
     pulsante.addEventListener('click', () => {
-      const corso = fila.querySelector<HTMLElement>('.corsi-scheda');
+      const corso = fila.firstElementChild;
       if (!corso) return;
       const spazio = parseFloat(getComputedStyle(fila).columnGap) || 0;
       fila.scrollBy({

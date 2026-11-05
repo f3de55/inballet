@@ -117,10 +117,14 @@ const schema = schemaHome(socialImage);
                 <p class="corsi-label eyebrow">Corsi di danza a Lainate e Rho</p>
                 <h2 class="corsi-title titolo-sezione" id="corsi-home-titolo">Un corso <em>per ogni età</em></h2>
                 <p class="corsi-intro intro-sezione">Dalla danza classica all'hip-hop, fino a yoga e pilates: scegli <strong>lo stile che fa per te</strong>, a qualsiasi età e livello.</p>
+                <div class="corsi-stile-comandi corsi-home-comandi" hidden>
+                    <button type="button" class="btn-icon btn-icon--contorno" data-corsi-direzione="-1" aria-label="Corsi precedenti" aria-controls="corsi-home-elenco"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+                    <button type="button" class="btn-icon btn-icon--contorno" data-corsi-direzione="1" aria-label="Corsi successivi" aria-controls="corsi-home-elenco"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                </div>
             </div>
 
             <!-- Figure sporgenti in alto su desktop e ritagliate in basso su mobile; fila sfogliabile su telefono. -->
-            <ol class="corsi-indice" tabindex="0" aria-labelledby="corsi-home-titolo">
+            <ol class="corsi-indice" id="corsi-home-elenco" tabindex="0" aria-labelledby="corsi-home-titolo">
                 {stili.map((cat) => (
                     <li>
                         <a href={`/corsi#${cat.id}`} class:list={['corsi-stile', { 'corsi-stile--grafica': cat.immagineHome }]}>

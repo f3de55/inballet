@@ -209,6 +209,11 @@ davvero andando: niente riquadro nero mentre carica */
   margin: 0 auto;
 }
 
+.corsi-header .corsi-home-comandi:not([hidden]) {
+  justify-content: center;
+  margin: 1.5rem 0 0;
+}
+
 /* Quattro stili: immagini e testi occupano spazi distinti; su mobile la fila è sfogliabile. */
 .corsi-indice {
   list-style: none;
@@ -451,8 +456,8 @@ davvero andando: niente riquadro nero mentre carica */
     justify-content: flex-start;
     gap: 0;
     min-height: 0;
-    /* 8rem di decorazione visibile e 1rem di distanza dal link. */
-    padding: 1.5rem 1.25rem 9rem;
+    /* 7rem di decorazione visibile e 1rem di distanza dal link. */
+    padding: 1.5rem 1.25rem 8rem;
     overflow: hidden;
     border: 2px solid var(--primary-blue);
     border-radius: var(--radius-card);
@@ -479,7 +484,7 @@ davvero andando: niente riquadro nero mentre carica */
 
   .corsi-stile-figura {
     position: absolute;
-    bottom: -8rem;
+    bottom: -9rem;
     left: 50%;
     z-index: 0;
     display: block;
@@ -505,9 +510,9 @@ davvero andando: niente riquadro nero mentre carica */
 
   .corsi-stile-nome {
     display: block;
-    font-size: var(--h4-size);
-    line-height: var(--h4-lh);
-    letter-spacing: var(--h4-ls);
+    font-size: clamp(1.625rem, 1.25rem + 1.67vw, 1.875rem);
+    line-height: 1.2;
+    letter-spacing: var(--h3-ls);
   }
 
   .corsi-indice .corsi-stile-desc {

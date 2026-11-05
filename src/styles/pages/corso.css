@@ -160,7 +160,8 @@
 }
 
 .corso-impara-header {
-  margin-bottom: var(--spazio-intestazione);
+  max-width: 44rem;
+  margin: 0 auto var(--spazio-intestazione);
   text-align: center;
 }
 
@@ -171,13 +172,14 @@
 
 .corso-impara-header h2 {
   margin: 0;
+  text-wrap: balance;
 }
 
-/* Obiettivi direttamente sul fondo della sezione, con una misura di lettura raccolta. */
+/* Obiettivi centrati e in evidenza, direttamente sul fondo della sezione. */
 .corso-impara-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem 4rem;
+  gap: 2.5rem 4rem;
   max-width: 60rem;
   list-style: none;
   padding: 0;
@@ -186,22 +188,27 @@
 
 .corso-impara-list li {
   display: grid;
-  grid-template-columns: 1rem minmax(0, 1fr);
-  align-items: baseline;
-  column-gap: .75rem;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  align-content: start;
+  row-gap: .75rem;
   min-width: 0;
+  text-align: center;
 }
 
 .impara-segno {
+  display: block;
   font-size: var(--icona-in-testo);
   line-height: 1;
   color: var(--primary-blue-dark);
 }
 
-/* Stesso testo corrente del sito e parole chiave originali dei corsi. */
+/* Il ruolo lead del sito dà risalto alle competenze e alle parole chiave. */
 .impara-testo {
-  max-width: 36ch;
-  margin: 0;
+  max-width: 28ch;
+  margin: 0 auto;
+  font-size: var(--lead-size);
+  line-height: var(--lead-lh);
   color: var(--text-body);
   text-wrap: pretty;
 }
@@ -247,8 +254,7 @@
   }
 
   /* Intestazioni a sinistra, allineate ai contenuti sotto */
-  .corso-metodo-header,
-  .corso-impara-header {
+  .corso-metodo-header {
     text-align: left;
   }
 
@@ -287,6 +293,6 @@
   /* Mobile: una colonna continua, con lo stesso ordine di lettura. */
   .corso-impara-list {
     grid-template-columns: minmax(0, 1fr);
-    gap: 1.25rem;
+    gap: 2rem;
   }
 }

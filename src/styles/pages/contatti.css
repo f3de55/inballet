@@ -6,11 +6,12 @@
 
 .contatti-intro {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
-  gap: 3rem;
-  margin: 0 0 4.5rem;
-  text-align: left;
+  gap: 1.25rem;
+  max-width: 48rem;
+  margin: 0 auto 4.5rem;
+  text-align: center;
 }
 
 .contatti-intro .eyebrow {
@@ -89,6 +90,9 @@
 .info-titolo {
   margin: 0 0 1.25rem;
   text-align: center;
+  font-size: var(--h4-size);
+  line-height: var(--h4-lh);
+  letter-spacing: var(--h4-ls);
 }
 
 .info-righe {
@@ -158,6 +162,7 @@ a.info-valore:hover {
 
 /* Sedi */
 .sede a .fa-arrow-up-right-from-square {
+  margin-inline-start: .4em;
   font-size: var(--icona-mini);
   vertical-align: .08em;
 }
@@ -168,7 +173,13 @@ a.info-valore:hover {
 }
 
 .sede-indirizzo .sede-mappa {
+  display: block;
+  width: 100%;
   font-size: inherit;
+}
+
+.sede-localita {
+  display: block;
 }
 
 /* Orari: stato e giorno corrente da src/scripts/contatti.ts */
@@ -204,6 +215,8 @@ a.info-valore:hover {
   max-width: 100%;
   margin: 0 auto;
   padding: 0;
+  font-size: var(--small-size);
+  line-height: 1.5;
 }
 
 .orario-item {
@@ -237,7 +250,7 @@ a.info-valore:hover {
 }
 
 /* I canali diretti restano distinti dai social; ogni link ha un'area comoda da toccare. */
-.info-azione,
+.info-whatsapp,
 .info-social-link a,
 .sede-mappa {
   display: inline-flex;
@@ -252,21 +265,15 @@ a.info-valore:hover {
   text-decoration: none;
 }
 
-.info-azioni {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: .25rem 1.25rem;
-}
-
 /* La sottolineatura appartiene al testo del link, mai alle icone. */
-.info-azione span,
-.sede-mappa span {
+.info-whatsapp span,
+.sede-via,
+.sede-localita {
   text-decoration: underline;
   text-underline-offset: .2em;
 }
 
-.info-azione:hover span,
+.info-whatsapp:hover span,
 .sede-mappa:hover span {
   text-decoration-thickness: 2px;
 }
@@ -298,10 +305,6 @@ a.info-valore:hover {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1000px) {
-  .contatti-intro {
-    gap: 2rem;
-  }
-
   .info {
     column-gap: .75rem;
   }

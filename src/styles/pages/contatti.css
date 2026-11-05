@@ -44,7 +44,9 @@
   row-gap: 0;
   align-content: start;
   padding: 2rem 1.25rem 1.5rem;
-  border-radius: var(--radius-card);
+  border: 1px solid rgb(var(--blu-rgb) / .4);
+  border-radius: 0;
+  background: var(--white);
   text-align: center;
 }
 
@@ -106,22 +108,11 @@
   padding: 0;
 }
 
-/* Piccoli accenti azzurri centrati: nessun divisore a tutta larghezza. */
+/* Spaziatura fra i dati, senza filetti decorativi sopra alle icone. */
 .info-riga + .info-riga {
   position: relative;
   margin-top: 1rem;
   padding-top: 1rem;
-}
-
-.info-riga + .info-riga::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 3rem;
-  height: 1px;
-  background: rgb(var(--blu-rgb) / .6);
-  transform: translateX(-50%);
 }
 
 .info-riga:first-child {
@@ -166,12 +157,7 @@ a.info-valore:hover {
 }
 
 /* Sedi */
-.sede-localita {
-  white-space: nowrap;
-}
-
 .sede a .fa-arrow-up-right-from-square {
-  margin-inline-start: .35em;
   font-size: var(--icona-mini);
   vertical-align: .08em;
 }
@@ -179,6 +165,10 @@ a.info-valore:hover {
 .sede-indirizzo {
   margin: .2rem 0 0;
   font-style: normal;
+}
+
+.sede-indirizzo .sede-mappa {
+  font-size: inherit;
 }
 
 /* Orari: stato e giorno corrente da src/scripts/contatti.ts */
@@ -247,7 +237,7 @@ a.info-valore:hover {
 }
 
 /* I canali diretti restano distinti dai social; ogni link ha un'area comoda da toccare. */
-.info-whatsapp,
+.info-azione,
 .info-social-link a,
 .sede-mappa {
   display: inline-flex;
@@ -259,7 +249,26 @@ a.info-valore:hover {
   color: var(--primary-blue-dark);
   font-size: var(--small-size);
   font-weight: var(--font-medium);
+  text-decoration: none;
+}
+
+.info-azioni {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .25rem 1.25rem;
+}
+
+/* La sottolineatura appartiene al testo del link, mai alle icone. */
+.info-azione span,
+.sede-mappa span {
+  text-decoration: underline;
   text-underline-offset: .2em;
+}
+
+.info-azione:hover span,
+.sede-mappa:hover span {
+  text-decoration-thickness: 2px;
 }
 
 .info-social {
@@ -279,7 +288,7 @@ a.info-valore:hover {
   text-decoration: none;
 }
 
-.info-social-link a:hover {
+.info-social-link a:hover span {
   text-decoration: underline;
 }
 

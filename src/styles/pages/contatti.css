@@ -29,6 +29,11 @@
 
 /* ---------- Tre box con accenti azzurri brevi e centrati ---------- */
 .info {
+  --info-testo-size: clamp(1.25rem, 1.125rem + .5vw, 1.375rem);
+  --small-size: clamp(1.125rem, 1.025rem + .4vw, 1.25rem);
+  --small-color: var(--text-body);
+  font-size: var(--info-testo-size);
+  line-height: 1.55;
   margin-top: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -90,9 +95,9 @@
 .info-titolo {
   margin: 0 0 1.25rem;
   text-align: center;
-  font-size: var(--h4-size);
-  line-height: var(--h4-lh);
-  letter-spacing: var(--h4-ls);
+  font-size: clamp(1.625rem, 1.375rem + .75vw, 1.875rem);
+  line-height: 1.2;
+  letter-spacing: var(--h3-ls);
 }
 
 .info-righe {
@@ -141,6 +146,8 @@
 /* I dati dei box (numero, e-mail, WhatsApp, social, nomi delle sedi) in grassetto */
 .info-valore {
   margin: 0;
+  font-size: clamp(1.375rem, 1.25rem + .5vw, 1.625rem);
+  line-height: 1.4;
   font-weight: var(--font-semibold);
   color: var(--dark-navy);
   overflow-wrap: anywhere;
@@ -215,7 +222,7 @@ a.info-valore:hover {
   max-width: 100%;
   margin: 0 auto;
   padding: 0;
-  font-size: var(--small-size);
+  font-size: var(--info-testo-size);
   line-height: 1.5;
 }
 
@@ -237,7 +244,7 @@ a.info-valore:hover {
 
 .orario-time {
   font-variant-numeric: tabular-nums;
-  color: var(--text-muted);
+  color: var(--text-body);
 }
 
 .orario-time.chiuso {

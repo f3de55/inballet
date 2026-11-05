@@ -30,7 +30,8 @@
 /* ---------- Tre box con accenti azzurri brevi e centrati ---------- */
 .info {
   --info-testo-size: clamp(1.25rem, 1.125rem + .5vw, 1.375rem);
-  --small-size: clamp(1.125rem, 1.025rem + .4vw, 1.25rem);
+  --info-icona-size: clamp(1.5rem, 1.375rem + .5vw, 1.75rem);
+  --small-size: var(--info-testo-size);
   --small-color: var(--text-body);
   font-size: var(--info-testo-size);
   line-height: 1.55;
@@ -66,12 +67,12 @@
    La parte inferiore sfuma sull'immagine stessa, senza aggiungere veli bianchi. */
 .info-illustrazione {
   position: absolute;
-  top: -3rem;
+  top: -4.25rem;
   left: 50%;
   z-index: 0;
   display: block;
-  width: 7rem;
-  height: 7rem;
+  width: 10.5rem;
+  height: 10.5rem;
   object-fit: contain;
   transform: translateX(-50%);
   -webkit-mask-image: linear-gradient(to bottom, rgb(var(--nero-rgb)) 0%, rgb(var(--nero-rgb)) 35%, rgb(var(--nero-rgb) / .28) 60%, rgb(var(--nero-rgb) / .06) 76%, rgb(var(--nero-rgb) / 0) 90%);
@@ -81,9 +82,9 @@
 }
 
 .info-illustrazione--digitale {
-  top: -2.5rem;
-  width: 9rem;
-  height: 5.5rem;
+  top: -3.5rem;
+  width: 13rem;
+  height: 8rem;
 }
 
 .info-titolo,
@@ -95,7 +96,7 @@
 .info-titolo {
   margin: 0 0 1.25rem;
   text-align: center;
-  font-size: clamp(1.625rem, 1.375rem + .75vw, 1.875rem);
+  font-size: clamp(1.875rem, 1.625rem + .75vw, 2.125rem);
   line-height: 1.2;
   letter-spacing: var(--h3-ls);
 }
@@ -137,7 +138,7 @@
   display: block;
   width: 1.75rem;
   flex-shrink: 0;
-  font-size: var(--text-xl);
+  font-size: var(--info-icona-size);
   line-height: 1;
   text-align: center;
   color: var(--primary-blue-dark);
@@ -146,25 +147,23 @@
 /* I dati dei box (numero, e-mail, WhatsApp, social, nomi delle sedi) in grassetto */
 .info-valore {
   margin: 0;
-  font-size: clamp(1.375rem, 1.25rem + .5vw, 1.625rem);
+  font-size: inherit;
   line-height: 1.4;
   font-weight: var(--font-semibold);
   color: var(--dark-navy);
   overflow-wrap: anywhere;
 }
 
-/* La linea in hover segue la sola parola: il link non si allarga alla colonna della griglia */
+/* Tutti i collegamenti dei box condividono colore e sottolineatura del testo. */
+.info a {
+  color: var(--primary-blue-dark);
+  text-decoration: none;
+  background: none;
+}
+
 a.info-valore {
   max-width: 100%;
   width: fit-content;
-  text-decoration: none;
-  background: linear-gradient(var(--primary-blue), var(--primary-blue)) 0 100% / 0 2px no-repeat;
-  transition: background-size .3s ease, color .3s ease;
-}
-
-a.info-valore:hover {
-  color: var(--primary-blue-dark);
-  background-size: 100% 2px;
 }
 
 /* Sedi */
@@ -183,10 +182,6 @@ a.info-valore:hover {
   display: block;
   width: 100%;
   font-size: inherit;
-}
-
-.sede-localita {
-  display: block;
 }
 
 /* Orari: stato e giorno corrente da src/scripts/contatti.ts */
@@ -272,16 +267,17 @@ a.info-valore:hover {
   text-decoration: none;
 }
 
-/* La sottolineatura appartiene al testo del link, mai alle icone. */
-.info-whatsapp span,
-.sede-via,
-.sede-localita {
+/* Una linea sotto ogni riga del testo, senza decorazioni sulle icone. */
+.info .info-link-testo {
   text-decoration: underline;
-  text-underline-offset: .2em;
+  text-decoration-color: var(--primary-blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: .22em;
+  text-decoration-skip-ink: auto;
 }
 
-.info-whatsapp:hover span,
-.sede-mappa:hover span {
+.info a:hover .info-link-testo,
+.info a:focus-visible .info-link-testo {
   text-decoration-thickness: 2px;
 }
 
@@ -302,12 +298,13 @@ a.info-valore:hover {
   text-decoration: none;
 }
 
-.info-social-link a:hover span {
-  text-decoration: underline;
-}
-
-.info-social-link i {
-  font-size: var(--icona-in-testo);
+.info-social-link i,
+.info-whatsapp > i {
+  width: 1.75rem;
+  flex-shrink: 0;
+  font-size: var(--info-icona-size);
+  line-height: 1;
+  text-align: center;
 }
 
 /* ---------- Responsive ---------- */
@@ -362,11 +359,11 @@ a.info-valore:hover {
 
   .info-illustrazione {
     top: auto;
-    right: -1.5rem;
+    right: -2rem;
     bottom: -2rem;
     left: auto;
-    width: 13rem;
-    height: 15rem;
+    width: 16.5rem;
+    height: 18rem;
     object-position: right bottom;
     transform: rotate(-14deg);
     -webkit-mask-image: none;

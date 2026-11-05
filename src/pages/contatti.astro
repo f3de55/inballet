@@ -65,31 +65,31 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
 
             <div class="info">
                 <div class="info-blocco">
-                    <Img class="info-illustrazione" src="grafica-contatti/recapiti-moderno.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480]} sizes="176px" />
+                    <Img class="info-illustrazione" src="grafica-contatti/recapiti-moderno.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480, 640]} sizes="(max-width: 600px) 264px, 168px" />
                     <h3 class="info-titolo">Recapiti</h3>
                     <div class="info-corpo">
                     <ul class="info-righe">
                         <li class="info-riga">
-                            <a class="info-valore" href={TEL_HREF}>{TEL}</a>
-                            <a class="info-whatsapp" href={scuola.whatsapp} target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a>
+                            <a class="info-valore" href={TEL_HREF}><span class="info-link-testo">{TEL}</span></a>
+                            <a class="info-whatsapp" href={scuola.whatsapp} target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i><span class="info-link-testo">WhatsApp</span></a>
                         </li>
                         <li class="info-riga">
                             <i class="fas fa-envelope info-icona" aria-hidden="true"></i>
-                            <a class="info-valore" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+                            <a class="info-valore" href={`mailto:${EMAIL}`}><span class="info-link-testo">{EMAIL}</span></a>
                         </li>
                     </ul>
                     <div class="info-social">
                         <p class="testo-piccolo">Seguici sui social</p>
                         <div class="info-social-link">
-                            <a href={scuola.social.instagram} target="_blank" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i><span>Instagram</span></a>
-                            <a href={scuola.social.facebook} target="_blank" rel="noopener"><i class="fab fa-facebook" aria-hidden="true"></i><span>Facebook</span></a>
+                            <a href={scuola.social.instagram} target="_blank" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i><span class="info-link-testo">Instagram</span></a>
+                            <a href={scuola.social.facebook} target="_blank" rel="noopener"><i class="fab fa-facebook" aria-hidden="true"></i><span class="info-link-testo">Facebook</span></a>
                         </div>
                     </div>
                     </div>
                 </div>
 
                 <div class="info-blocco">
-                    <Img class="info-illustrazione" src="grafica-contatti/sedi.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480]} sizes="176px" />
+                    <Img class="info-illustrazione" src="grafica-contatti/sedi.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480, 640]} sizes="(max-width: 600px) 264px, 168px" />
                     <h3 class="info-titolo">Le nostre sedi</h3>
                     <div class="info-corpo">
                     <ul class="info-righe">
@@ -100,8 +100,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                                     <p class="info-valore">{sede.citta}</p>
                                     <address class="sede-indirizzo">
                                         <a class="sede-mappa" href={sede.maps} target="_blank" rel="noopener noreferrer" aria-label={`${sede.via}, ${sede.cap} ${sede.citta} (${sede.provincia}): apri la mappa (si apre in una nuova scheda)`}>
-                                            <span class="sede-via">{sede.via}</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                                            <span class="sede-localita testo-piccolo">{sede.cap} {sede.citta} ({sede.provincia})</span>
+                                            <span class="info-link-testo">{sede.via}, {sede.cap} {sede.citta} ({sede.provincia})</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
                                         </a>
                                     </address>
                                 </div>
@@ -112,7 +111,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                 </div>
 
                 <div class="info-blocco">
-                    <Img class="info-illustrazione info-illustrazione--digitale" src="grafica-contatti/orari-digitale.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480]} sizes="176px" />
+                    <Img class="info-illustrazione info-illustrazione--digitale" src="grafica-contatti/orari-digitale.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480, 640]} sizes="(max-width: 600px) 264px, 208px" />
                     <h3 class="info-titolo">Orari segreteria</h3>
                     <div class="info-corpo">
                     <p id="open-status" class="orari-status" aria-live="polite"></p>

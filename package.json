@@ -16,6 +16,7 @@
     "start": "node --env-file-if-exists=.env ./dist/server/entry.mjs",
     "precheck": "npm run icons",
     "check": "astro check",
+    "test:demo": "node --test tests/locandine-demo.test.mjs",
     "verifica:stile": "node scripts/verifica-stile.mjs"
   },
   "dependencies": {

@@ -5,13 +5,13 @@
  */
 import { randomBytes } from 'node:crypto';
 import { existsSync } from 'node:fs';
-import { readdir, unlink, writeFile } from 'node:fs/promises';
+import { readdir, rename, stat, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { LogEntry } from './chatbot';
-import { baseSlug, leggiEventi, leggiTipi, slugUnico, type Evento } from './eventi';
+import { baseSlug, leggiEventi, leggiTipi, slugUnico, srcImmagine, type Evento } from './eventi';
 import { ensureDir, paths, readJson, serialized, writeJson } from './storage';
 import { romeDate, romeHour, romeIso, romeTimestamp } from './time';
-import { creaMini, filePath, nomeMini, PUBLIC_PREFIX } from './uploads';
+import { creaMini, filePath, nomeMini, originaleDemo, PUBLIC_PREFIX } from './uploads';
 import { aggiungiInsegnanti, leggiInsegnanti, MAX_INSEGNANTI, nuovoIdInsegnante, percorsoFoto, PUBLIC_PREFIX as PREFISSO_FOTO } from './insegnanti';
 import type { Insegnante } from '../data/insegnanti';
 
@@ -126,17 +126,17 @@ async function creaLocandina(m: Modello, data: string, verticale: boolean): Prom
   const font = path.join(DIR_FONT, 'Rubik.ttf');
   const corsivo = path.join(DIR_FONT, 'Rubik-Italic.ttf');
 
-  const testo = async (markup: string, fontfile: string, famiglia: string) => {
-    const { data: buf, info } = await sharp({ text: { text: markup, font: famiglia, fontfile, rgba: true, dpi: 72, width: W - pad * 2, wrap: 'word' } })
-      .png()
-      .toBuffer({ resolveWithObject: true });
+  const testo = async (markup: string, fontfile: string, famiglia: string, altezzaMassima?: number) => {
+    const immagine = sharp({ text: { text: markup, font: famiglia, fontfile, rgba: true, dpi: 72, width: W - pad * 2, wrap: 'word' } });
+    if (altezzaMassima) immagine.resize({ height: altezzaMassima, withoutEnlargement: true });
+    const { data: buf, info } = await immagine.png().toBuffer({ resolveWithObject: true });
     return { buf, w: info.width, h: info.height };
   };
 
   const [y, mm, d] = data.split('-').map(Number);
   const tipo = await testo(`<span foreground="#87CEEB" font_weight="600" letter_spacing="${5 * 1024}">${escapeMarkup(m.tipo.toUpperCase())}</span>`, font, `Rubik ${verticale ? 26 : 24}`);
-  const titolo = await testo(`<span foreground="#ffffff" font_weight="700">${escapeMarkup(m.locandina)}</span>`, font, `Rubik ${verticale ? 104 : 92}`);
-  const info = await testo(`<span foreground="#ffffffdd">${d} ${MESI[mm - 1]} ${y}  ·  ${escapeMarkup(m.sede)}</span>`, font, `Rubik ${verticale ? 30 : 28}`);
+  const titolo = await testo(`<span foreground="#ffffff" font_weight="700">${escapeMarkup(m.locandina)}</span>`, font, `Rubik ${verticale ? 104 : 92}`, Math.floor(H * .5));
+  const info = await testo(`<span foreground="#ffffffdd">${d} ${MESI[mm - 1]} ${y}  ·  ${escapeMarkup(m.sede)}</span>`, font, `Rubik ${verticale ? 30 : 28}`, Math.floor(H * .15));
   const firma = await testo('<span foreground="#ffffff">InBallet</span>', corsivo, `Rubik Italic ${verticale ? 34 : 32}`);
 
   const sfumatura = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
@@ -165,6 +165,45 @@ async function creaLocandina(m: Modello, data: string, verticale: boolean): Prom
 }
 
 // === EVENTI ===
+
+const ripristini = new Map<string, Promise<boolean>>();
+
+/** Recupera solo file demo ancora associati a un evento demo, senza cambiare i dati. */
+export function ripristinaLocandinaDemo(richiesto: string): Promise<boolean> {
+  const nome = originaleDemo(richiesto);
+  if (!nome) return Promise.resolve(false);
+  const inCorso = ripristini.get(nome);
+  if (inCorso) return inCorso;
+
+  const lavoro = (async () => {
+    const evento = (await leggiEventi()).find((e) => e.demo && srcImmagine(e.immagine) === `/${PUBLIC_PREFIX}${nome}`);
+    if (!evento) return false;
+    await ensureDir(paths.immaginiEventi);
+    try {
+      await stat(filePath(nome));
+    } catch (e) {
+      if ((e as NodeJS.ErrnoException).code !== 'ENOENT') throw e;
+      const modello = MODELLI.find((m) => m.titolo === evento.titolo) ?? MODELLI.find((m) => m.tipo === evento.tipo) ?? MODELLI[0];
+      const locandina = await creaLocandina({ ...modello, tipo: evento.tipo || modello.tipo, locandina: evento.titolo, sede: evento.luogo || modello.sede }, evento.data, true);
+      const temporaneo = `${filePath(nome)}.${hex(6)}.tmp`;
+      try {
+        await writeFile(temporaneo, locandina);
+        await rename(temporaneo, filePath(nome));
+      } finally {
+        await unlink(temporaneo).catch(() => {});
+      }
+    }
+    try {
+      await stat(filePath(nomeMini(nome)));
+    } catch (e) {
+      if ((e as NodeJS.ErrnoException).code !== 'ENOENT') throw e;
+      await creaMini(nome);
+    }
+    return true;
+  })().finally(() => ripristini.delete(nome));
+  ripristini.set(nome, lavoro);
+  return lavoro;
+}
 
 /**
  * Genera `quanti` eventi completi (con locandina): due o tre oggi, circa un terzo del resto

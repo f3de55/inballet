@@ -8,9 +8,9 @@
  * `<nome>.mini.webp` per la libreria della dashboard.
  */
 import { randomBytes } from 'node:crypto';
-import { readdir, stat, unlink, writeFile } from 'node:fs/promises';
+import { readdir, rename, stat, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { togliImmagine } from './eventi';
+import { leggiEventi, srcImmagine, togliImmagine } from './eventi';
 import { ensureDir, paths } from './storage';
 import { romeIso } from './time';
 
@@ -60,6 +60,12 @@ export const filePath = (name: string) => path.join(paths.immaginiEventi, name);
 export const isMini = (nome: string) => nome.endsWith('.mini.webp');
 export const nomeMini = (nome: string) => nome.replace(/\.[^.]+$/, '') + '.mini.webp';
 
+/** Originale associato a una locandina demo o alla sua miniatura. */
+export function originaleDemo(nome: string): string | null {
+  const m = /^(demo-\d{4}-\d{2}-\d{2}-[a-f0-9]{6})(?:\.jpg|\.mini\.webp)$/.exec(nome);
+  return m ? `${m[1]}.jpg` : null;
+}
+
 const sharp = async () => (await import('sharp')).default;
 
 /** Locandina pubblicata: orientamento corretto, lato lungo 1600px, WebP (GIF animate comprese). */
@@ -74,7 +80,14 @@ async function ottimizza(buf: Uint8Array, mime: string): Promise<Buffer> {
 export async function creaMini(nome: string): Promise<void> {
   const s = await sharp();
   const buf = await s(filePath(nome)).rotate().resize(LATO_MINI, LATO_MINI, { fit: 'inside', withoutEnlargement: true }).webp({ quality: 75 }).toBuffer();
-  await writeFile(filePath(nomeMini(nome)), buf);
+  const destinazione = filePath(nomeMini(nome));
+  const temporaneo = `${destinazione}.${randomBytes(6).toString('hex')}.tmp`;
+  try {
+    await writeFile(temporaneo, buf);
+    await rename(temporaneo, destinazione);
+  } finally {
+    await unlink(temporaneo).catch(() => {});
+  }
 }
 
 /**
@@ -126,6 +139,17 @@ export async function elencaImmagini(): Promise<(Immagine & { size: number; data
         return { nome, path: PUBLIC_PREFIX + nome, mini: PUBLIC_PREFIX + (mini.has(m) ? m : nome), size: st.size, data: romeIso(st.mtimeMs), mtime: st.mtimeMs };
       }),
   );
+  // Se il volume ha perso una locandina demo, resta selezionabile: il suo URL
+  // la ricostruisce al primo caricamento, senza bloccare tutta la libreria.
+  const presenti = new Set(list.map((img) => img.nome));
+  for (const evento of await leggiEventi()) {
+    if (!evento.demo) continue;
+    const nome = originaleDemo(path.basename(evento.immagine));
+    if (!nome || presenti.has(nome) || srcImmagine(evento.immagine) !== `/${PUBLIC_PREFIX}${nome}`) continue;
+    const data = evento.modificato || evento.creato;
+    list.push({ nome, path: PUBLIC_PREFIX + nome, mini: PUBLIC_PREFIX + nomeMini(nome), size: 0, data, mtime: Date.parse(data) || 0 });
+    presenti.add(nome);
+  }
   return list.sort((a, b) => b.mtime - a.mtime).map(({ mtime: _, ...img }) => img);
 }
 
@@ -166,7 +190,8 @@ export async function eliminaImmagine(nome: string): Promise<string | null> {
   try {
     await unlink(filePath(safe));
   } catch (e) {
-    return (e as NodeJS.ErrnoException).code === 'ENOENT' ? 'File non trovato' : 'Errore durante eliminazione';
+    // Anche un riferimento demo recuperabile ma non ancora rigenerato può essere rimosso.
+    if ((e as NodeJS.ErrnoException).code !== 'ENOENT') return 'Errore durante eliminazione';
   }
   await unlink(filePath(nomeMini(safe))).catch(() => {});
   await togliImmagine(safe);

@@ -12,7 +12,15 @@ export const GET: APIRoute = async ({ params, request }) => {
   const nome = safeName(params.file ?? '');
   if (!nome) return new Response('Not found', { status: 404 });
   try {
-    const st = await stat(filePath(nome));
+    let st;
+    try {
+      st = await stat(filePath(nome));
+    } catch (e) {
+      if ((e as NodeJS.ErrnoException).code !== 'ENOENT' || !nome.startsWith('demo-')) throw e;
+      const { ripristinaLocandinaDemo } = await import('../../../../lib/demo');
+      if (!(await ripristinaLocandinaDemo(nome))) return new Response('Not found', { status: 404 });
+      st = await stat(filePath(nome));
+    }
     const etag = `"${st.size.toString(16)}-${Math.floor(st.mtimeMs).toString(16)}"`;
     const headers = {
       'Content-Type': MIME[nome.split('.').pop()!.toLowerCase()],
@@ -22,7 +30,9 @@ export const GET: APIRoute = async ({ params, request }) => {
     };
     if (request.headers.get('if-none-match') === etag) return new Response(null, { status: 304, headers });
     return new Response(await readFile(filePath(nome)), { headers });
-  } catch {
-    return new Response('Not found', { status: 404 });
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code === 'ENOENT') return new Response('Not found', { status: 404 });
+    console.error('Errore caricamento locandina', nome, e);
+    return new Response('Image unavailable', { status: 500, headers: { 'Cache-Control': 'no-store' } });
   }
 };

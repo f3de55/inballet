@@ -456,7 +456,7 @@ davvero andando: niente riquadro nero mentre carica */
     justify-content: flex-start;
     gap: 0;
     min-height: 0;
-    /* 7rem di decorazione visibile e 1rem di distanza dal link. */
+    /* 8rem riservati alla figura decorativa sotto al testo. */
     padding: 1.5rem 1.25rem 8rem;
     overflow: hidden;
     border: 2px solid var(--primary-blue);
@@ -484,7 +484,7 @@ davvero andando: niente riquadro nero mentre carica */
 
   .corsi-stile-figura {
     position: absolute;
-    bottom: -9rem;
+    bottom: -8rem;
     left: 50%;
     z-index: 0;
     display: block;

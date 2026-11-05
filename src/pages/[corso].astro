@@ -120,21 +120,21 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         </div>
     </section>
 
-    <!-- Obiettivi: sei punti in una griglia aperta, con gerarchia comune a tutti i corsi. -->
+    <!-- Obiettivi: un unico elenco di competenze, distinto dai tre blocchi del metodo. -->
     <section class="corso-impara-section" aria-labelledby="corsoImparaTitolo">
         <div class="corso-impara-wrapper">
             <header class="corso-impara-header">
                 <p class="corso-impara-label eyebrow">Gli obiettivi</p>
                 <h2 id="corsoImparaTitolo" class="titolo-sezione" set:html={accento(data.imparaTitolo)} />
             </header>
-            <ol class="corso-impara-list" id="corsoImparaGrid">
-                {data.impara.map((item, i) => (
+            <ul class="corso-impara-list" id="corsoImparaGrid" role="list">
+                {data.impara.map((item) => (
                     <li>
-                        <p class="impara-num titoletto" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
-                        <p class="impara-testo testo-evidenza" set:html={item} />
+                        <i class="fas fa-check impara-segno" aria-hidden="true"></i>
+                        <p class="impara-testo" set:html={item} />
                     </li>
                 ))}
-            </ol>
+            </ul>
         </div>
     </section>
 

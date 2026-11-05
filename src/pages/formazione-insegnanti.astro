@@ -24,8 +24,8 @@ const aree = [
 ];
 
 const enti = [
-  { sigla: 'CSEN', nome: 'Centro Sportivo Educativo Nazionale', logo: logoCsen },
-  { sigla: 'CONI', nome: 'Comitato Olimpico Nazionale Italiano', logo: logoConi },
+  { sigla: 'CSEN', nome: 'Centro Sportivo Educativo Nazionale', logo: logoCsen, href: 'https://www.csen.it/' },
+  { sigla: 'CONI', nome: 'Comitato Olimpico Nazionale Italiano', logo: logoConi, href: 'https://www.coni.it/it/' },
 ];
 ---
 
@@ -99,9 +99,9 @@ const enti = [
                 <ul class="enti-lista">
                     {enti.map((e) => (
                         <li class="ente">
-                            <div class="ente-logo">
+                            <a class="ente-logo" href={e.href} target="_blank" rel="noopener noreferrer" aria-label={`Visita il sito ufficiale ${e.sigla} (si apre in una nuova scheda)`}>
                                 <img src={e.logo.src} width={e.logo.width} height={e.logo.height} alt={`Logo ${e.sigla}`} data-sigla={e.sigla} loading="lazy" decoding="async">
-                            </div>
+                            </a>
                             <p class="ente-nome">{e.nome}</p>
                         </li>
                     ))}

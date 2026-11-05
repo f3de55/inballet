@@ -53,8 +53,10 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     <section id="contatti" class="contatti decoro-onde">
         <div class="container">
             <header class="contatti-intro">
+                <div>
                 <p class="eyebrow">Scuola di danza a Lainate e Rho</p>
                 <h2 class="titolo-sezione">Il primo passo è un <em>passo di danza</em></h2>
+                </div>
                 <p class="intro-sezione">
                     Raccontaci chi sei e cosa ti piacerebbe imparare: ti aiutiamo a scegliere
                     il corso giusto per <strong>età e livello</strong>, con orari e iscrizione.
@@ -70,24 +72,20 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                         <li class="info-riga">
                             <i class="fas fa-phone info-icona" aria-hidden="true"></i>
                             <a class="info-valore" href={TEL_HREF}>{TEL}</a>
+                            <a class="info-whatsapp" href={scuola.whatsapp} target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i> Scrivici su WhatsApp</a>
                         </li>
                         <li class="info-riga">
                             <i class="fas fa-envelope info-icona" aria-hidden="true"></i>
                             <a class="info-valore" href={`mailto:${EMAIL}`}>{EMAIL}</a>
                         </li>
-                        <li class="info-riga">
-                            <i class="fab fa-whatsapp info-icona" aria-hidden="true"></i>
-                            <a class="info-valore" href={scuola.whatsapp} target="_blank" rel="noopener">WhatsApp</a>
-                        </li>
-                        <li class="info-riga">
-                            <i class="fab fa-instagram info-icona" aria-hidden="true"></i>
-                            <a class="info-valore" href={scuola.social.instagram} target="_blank" rel="noopener">Instagram</a>
-                        </li>
-                        <li class="info-riga">
-                            <i class="fab fa-facebook info-icona" aria-hidden="true"></i>
-                            <a class="info-valore" href={scuola.social.facebook} target="_blank" rel="noopener">Facebook</a>
-                        </li>
                     </ul>
+                    <div class="info-social">
+                        <p class="testo-piccolo">Seguici sui social</p>
+                        <div class="info-social-link">
+                            <a href={scuola.social.instagram} target="_blank" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i> Instagram</a>
+                            <a href={scuola.social.facebook} target="_blank" rel="noopener"><i class="fab fa-facebook" aria-hidden="true"></i> Facebook</a>
+                        </div>
+                    </div>
                     </div>
                 </div>
 
@@ -102,7 +100,9 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                                 <div>
                                     <p class="info-valore">{sede.citta}</p>
                                     <address class="sede-indirizzo">
-                                        <p><a href={sede.maps} target="_blank" rel="noopener noreferrer" aria-label={`${sede.via}, ${sede.cap} ${sede.citta} (${sede.provincia}): apri la mappa (si apre in una nuova scheda)`}>{sede.via}, <span class="sede-localita">{sede.cap} {sede.citta} ({sede.provincia}) <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span></a></p>
+                                        <p>{sede.via}</p>
+                                        <p class="testo-piccolo">{sede.cap} {sede.citta} ({sede.provincia})</p>
+                                        <a class="sede-mappa" href={sede.maps} target="_blank" rel="noopener noreferrer" aria-label={`Apri la mappa: ${sede.via}, ${sede.citta} (si apre in una nuova scheda)`}>Apri la mappa <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
                                     </address>
                                 </div>
                             </li>

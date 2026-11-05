@@ -5,9 +5,12 @@
 }
 
 .contatti-intro {
-  max-width: 48rem;
-  margin: 0 auto 3.5rem;
-  text-align: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 3rem;
+  margin: 0 0 4.5rem;
+  text-align: left;
 }
 
 .contatti-intro .eyebrow {
@@ -16,15 +19,19 @@
 }
 
 .contatti-intro .titolo-sezione {
-  margin-bottom: 1.5rem;
+  margin: 0;
+}
+
+.contatti-intro .intro-sezione {
+  margin: 0;
 }
 
 /* ---------- Tre box con accenti azzurri brevi e centrati ---------- */
 .info {
-  margin-top: 6rem;
+  margin-top: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: 2rem;
+  column-gap: 1.25rem;
 }
 
 /* Ogni blocco occupa 2 righe (titolo, dati): i titoli stanno alla stessa quota anche se uno va a capo */
@@ -36,7 +43,7 @@
   grid-template-rows: subgrid;
   row-gap: 0;
   align-content: start;
-  padding: 2.5rem 1.5rem;
+  padding: 2rem 1.25rem 1.5rem;
   border-radius: var(--radius-card);
   text-align: center;
 }
@@ -51,12 +58,12 @@
    La parte inferiore sfuma sull'immagine stessa, senza aggiungere veli bianchi. */
 .info-illustrazione {
   position: absolute;
-  top: -5rem;
+  top: -3rem;
   left: 50%;
   z-index: 0;
   display: block;
-  width: 11rem;
-  height: 11rem;
+  width: 7rem;
+  height: 7rem;
   object-fit: contain;
   transform: translateX(-50%);
   -webkit-mask-image: linear-gradient(to bottom, rgb(var(--nero-rgb)) 0%, rgb(var(--nero-rgb)) 35%, rgb(var(--nero-rgb) / .28) 60%, rgb(var(--nero-rgb) / .06) 76%, rgb(var(--nero-rgb) / 0) 90%);
@@ -66,9 +73,9 @@
 }
 
 .info-illustrazione--digitale {
-  top: -4rem;
-  width: 13rem;
-  height: 8rem;
+  top: -2.5rem;
+  width: 9rem;
+  height: 5.5rem;
 }
 
 .info-titolo,
@@ -78,7 +85,7 @@
 }
 
 .info-titolo {
-  margin: 0 0 1.75rem;
+  margin: 0 0 1.25rem;
   text-align: center;
 }
 
@@ -94,7 +101,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: .5rem;
+  gap: .35rem;
   min-width: 0;
   padding: 0;
 }
@@ -102,12 +109,11 @@
 /* Piccoli accenti azzurri centrati: nessun divisore a tutta larghezza. */
 .info-riga + .info-riga {
   position: relative;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
 }
 
-.info-riga + .info-riga::before,
-.orario-item + .orario-item::before {
+.info-riga + .info-riga::before {
   content: '';
   position: absolute;
   top: 0;
@@ -171,7 +177,7 @@ a.info-valore:hover {
 }
 
 .sede-indirizzo {
-  margin: .35rem 0 .75rem;
+  margin: .2rem 0 0;
   font-style: normal;
 }
 
@@ -214,11 +220,11 @@ a.info-valore:hover {
   display: grid;
   grid-template-columns: 3.5rem 1fr;
   gap: 1rem;
-  padding: .65rem 0;
+  padding: .3rem 0;
 }
 
 .orario-item + .orario-item {
-  position: relative;
+  border-top: 1px solid var(--linea);
 }
 
 .orario-day,
@@ -240,48 +246,89 @@ a.info-valore:hover {
   color: var(--primary-blue-dark);
 }
 
+/* I canali diretti restano distinti dai social; ogni link ha un'area comoda da toccare. */
+.info-whatsapp,
+.info-social-link a,
+.sede-mappa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-height: 44px;
+  max-width: 100%;
+  color: var(--primary-blue-dark);
+  font-size: var(--small-size);
+  font-weight: var(--font-medium);
+  text-underline-offset: .2em;
+}
+
+.info-social {
+  margin-top: 1rem;
+  padding-top: .75rem;
+  border-top: 1px solid var(--linea);
+}
+
+.info-social-link {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 1rem;
+}
+
+.info-social-link a {
+  text-decoration: none;
+}
+
+.info-social-link a:hover {
+  text-decoration: underline;
+}
+
+.info-social-link i {
+  font-size: var(--icona-in-testo);
+}
+
 /* ---------- Responsive ---------- */
-/* Tablet: contatti a tutta larghezza sopra, sedi e orari affiancati sotto */
 @media (max-width: 1000px) {
-  .info {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 6rem;
-  }
-
-  .info-blocco:first-child {
-    grid-column: 1 / -1;
-  }
-
-}
-
-@media (max-width: 900px) {
   .contatti-intro {
-    margin: 0 0 2.5rem;
-    text-align: left;
+    gap: 2rem;
+  }
+
+  .info {
+    column-gap: .75rem;
+  }
+
+  .info-blocco {
+    padding-inline: .75rem;
   }
 }
 
-/* Mobile: le tre celle una sotto l'altra. I filetti restano fra i dati di ogni box. */
-@media (max-width: 700px) {
+@media (max-width: 800px) {
+  .contatti-intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+
   .info {
     grid-template-columns: minmax(0, 1fr);
+    row-gap: 4rem;
   }
 
-  .info-blocco,
-  .info-blocco:nth-child(2),
-  .info-blocco:nth-child(3) {
-    padding: 2rem 1.5rem;
+  .info-blocco {
+    padding: 2rem 1.5rem 1.5rem;
   }
-
-
 }
 
 /* Mobile: illustrazioni oblique che emergono dall'angolo in basso a destra;
    il velo sfumato riprende il colore del box fra le immagini e i testi. */
 @media (max-width: 600px) {
+  .contatti-intro {
+    margin-bottom: 2rem;
+  }
+
   .info {
     margin-top: 0;
-    row-gap: 1.5rem;
+    row-gap: 1rem;
   }
 
   .info-blocco {
@@ -322,7 +369,7 @@ a.info-valore:hover {
   }
 
   .info-titolo {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.25rem;
   }
 }
 

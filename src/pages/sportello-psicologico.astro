@@ -90,12 +90,12 @@ const servizi = [
             </div>
         </section>
 
-        <!-- Accesso: introduzione e servizi, senza riquadri decorativi. -->
-        <SezioneElenco titoloId="accesso-titolo">
+        <!-- Accesso: intestazione illustrata e servizi a filetti. -->
+        <SezioneElenco titoloId="accesso-titolo" illustrazione="sportello-psicologico">
             <Fragment slot="introduzione">
                 <p class="eyebrow">Come accedere</p>
                 <h2 class="titolo-sezione" id="accesso-titolo">Incontri con la dottoressa <em>psicoterapeuta</em></h2>
-                <p class="intro-sezione">Lo sportello è <strong>attivo su richiesta</strong>: contatta la Direzione per fissare un <strong>primo colloquio</strong>.</p>
+                <p class="intro-sezione">Lo sportello è <strong>attivo su richiesta</strong>: <a href="/contatti#contatti">contatta la Direzione</a> per fissare un <strong>primo colloquio</strong>.</p>
             </Fragment>
             <ul class="righe">
                 {servizi.map((s) => (

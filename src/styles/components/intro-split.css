@@ -3,7 +3,7 @@
  * (classi integrate, collaborazioni, formazione insegnanti, NoiConVoi, sostenitori, sportello psicologico).
  *
  * intro-split: testo a sinistra e foto a destra; sotto i 900px titolo, foto, testo, citazione.
- * split-section (SezioneElenco): introduzione sopra i contenuti aperti.
+ * split-section (SezioneElenco): intestazione illustrata accanto a un elenco a filetti.
  *   --soft mantiene il fondo azzurrino della sezione, senza pannelli sulle singole voci.
  */
 .intro-split {
@@ -53,25 +53,44 @@
 }
 
 .split-layout {
-  display: block;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 4.5rem;
 }
 
 .split-header {
-  max-width: 52rem;
-  margin-bottom: 2.5rem;
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  align-items: center;
+  column-gap: 1.25rem;
+  min-width: 0;
+}
+
+.split-illustrazione {
+  display: block;
+  width: 6rem;
+  height: 6rem;
+  object-fit: contain;
+  pointer-events: none;
 }
 
 .split-header > .eyebrow {
-  margin-bottom: 1rem;
+  margin: 0;
 }
 
 .split-header > p:last-child {
-  max-width: 48rem;
+  grid-column: 1 / -1;
   margin: 0;
 }
 
 .split-header .titolo-sezione {
-  margin-bottom: 1.25rem;
+  grid-column: 1 / -1;
+  margin: 1.25rem 0;
+}
+
+.split-contenuto {
+  min-width: 0;
 }
 
 .split-section--soft {
@@ -117,12 +136,27 @@
     order: 5;
   }
 
+  .split-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
   .split-header {
-    margin-bottom: 2rem;
+    max-width: 42rem;
   }
 }
 
 @media (max-width: 600px) {
+  .split-header {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    column-gap: 1rem;
+  }
+
+  .split-illustrazione {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
   .intro-split-visual {
     margin: 0 0 3rem .75rem;
   }

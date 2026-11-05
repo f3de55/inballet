@@ -1,28 +1,30 @@
-/* Contenuti aperti in due colonne; collegamenti testuali con freccia, senza pannelli. */
+/* Un elenco editoriale con filetti: righe intere cliccabili e nessun pannello. */
 .righe {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem 4rem;
+  display: block;
   list-style: none;
   margin: 0;
   padding: 0;
+  border-top: 1px solid var(--linea);
 }
 
 .righe > li {
   min-width: 0;
+  border-bottom: 1px solid var(--linea);
 }
 
 .riga {
   display: flex;
   align-items: baseline;
-  gap: .75rem;
+  gap: 1rem;
+  min-height: 4.25rem;
+  padding: 1.25rem 0;
   color: var(--heading-color);
   text-decoration: none;
 }
 
 .riga-icona {
-  flex: 0 0 1.25rem;
-  width: 1.25rem;
+  flex: 0 0 1.5rem;
+  width: 1.5rem;
   font-size: var(--icona-in-testo);
   text-align: center;
   color: var(--primary-blue-dark);
@@ -43,10 +45,8 @@
 }
 
 a.riga {
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
-  min-height: 44px;
-  padding-block: .25rem;
 }
 
 a.riga > .riga-nome {
@@ -57,7 +57,9 @@ a.riga > .riga-nome {
 }
 
 .riga-freccia {
+  align-self: center;
   flex-shrink: 0;
+  margin-left: auto;
   color: var(--primary-blue-dark);
   font-size: var(--icona-in-testo);
   transition: transform var(--transition-base);
@@ -77,8 +79,7 @@ a.riga:hover .riga-freccia {
 }
 
 @media (max-width: 600px) {
-  .righe {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.25rem;
+  .riga {
+    padding-block: 1rem;
   }
 }

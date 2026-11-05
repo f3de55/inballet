@@ -1,21 +1,26 @@
 ---
-/** Introduzione seguita da contenuti aperti, condivisa fra formazione, progetti e servizi. */
+/** Intestazione illustrata e contenuti a filetti, condivisi fra formazione, progetti e servizi. */
+import Img from './Img.astro';
 import '../styles/components/intro-split.css';
 import '../styles/components/righe.css';
 
 interface Props {
   titoloId: string;
+  illustrazione: string;
   class?: string;
 }
 
-const { titoloId, class: className } = Astro.props;
+const { titoloId, illustrazione, class: className } = Astro.props;
 ---
 
 <section class:list={['split-section', className]} aria-labelledby={titoloId}>
   <div class="container split-layout">
     <header class="split-header">
+      <Img class="split-illustrazione" src={`grafica-oltre/${illustrazione}.png`} alt="" aria-hidden="true" width="96" height="96" widths={[160, 320]} sizes="(max-width: 600px) 72px, 96px" loading="lazy" decoding="async" />
       <slot name="introduzione" />
     </header>
-    <slot />
+    <div class="split-contenuto">
+      <slot />
+    </div>
   </div>
 </section>

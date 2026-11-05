@@ -3,7 +3,8 @@
 /* ---------- Trova il tuo corso ---------- */
 .trova-section {
   padding: calc(var(--section-y) * .75) 0;
-  background: var(--bg-soft);
+  background: var(--black);
+  color: var(--body-color-su-scuro);
 }
 
 .trova-layout {
@@ -19,6 +20,15 @@
 
 .trova-intro .titolo-sezione {
   margin: 0 0 .75rem;
+  color: var(--heading-color-su-scuro);
+}
+
+.trova-intro .titolo-sezione em {
+  color: var(--primary-blue);
+}
+
+.trova-intro strong {
+  color: var(--heading-color-su-scuro);
 }
 
 .trova-intro > p {
@@ -124,7 +134,7 @@ html:has(.trova-popup[open]) {
 }
 
 .trova-alternative a {
-  color: var(--primary-blue-dark);
+  color: var(--primary-blue);
   text-decoration: underline;
   text-underline-offset: .2em;
 }

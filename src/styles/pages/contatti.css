@@ -126,11 +126,16 @@
   padding: 0;
 }
 
-/* Spaziatura fra i dati, senza filetti decorativi sopra alle icone. */
+/* Stesso intervallo tra telefono, WhatsApp ed email. */
 .info-riga + .info-riga {
-  position: relative;
-  margin-top: 1rem;
-  padding-top: 1rem;
+  margin-top: .35rem;
+}
+
+/* Le due sedi sono gruppi distinti, separati da un filetto con spazio sui due lati. */
+.info-riga.sede + .info-riga.sede {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgb(var(--blu-rgb) / .4);
 }
 
 .info-riga:first-child {
@@ -170,13 +175,17 @@
 }
 
 a.info-valore {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
   max-width: 100%;
   width: fit-content;
 }
 
 .info a.info-email {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
   gap: .45em;
 }

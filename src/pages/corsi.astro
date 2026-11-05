@@ -49,19 +49,9 @@ const hero = await heroPagina('corsi');
             <Breadcrumb />
             <h1 class="chisiamo-hero-title">I nostri corsi di danza</h1>
             <p class="hero-lead"><strong>Dai 3 anni all'età adulta</strong>, dalla classica agli stili urbani: c'è un corso anche per te, a <strong>ogni livello</strong>.</p>
-        </div>
-    </section>
-
-    <!-- Trova il tuo corso: introduzione e scelta del percorso nello stesso blocco. -->
-    <section class="trova-section decoro-scuro" aria-labelledby="trova-titolo">
-        <div class="container trova-layout">
-            <div class="trova-intro">
-                <h2 class="titolo-sezione" id="trova-titolo">Trova il tuo <em>corso</em></h2>
-                <p>{totale} corsi a Lainate e Rho, <strong>dai 3 anni all'età adulta</strong>, anche se parti da zero.</p>
-            </div>
             <div class="trova-scelta" id="trova-scelta" hidden>
                 <button type="button" class="btn-primary" id="trova-apri" aria-haspopup="dialog" aria-controls="trova-popup" aria-expanded="false">
-                    Esplora i percorsi
+                    Trova il tuo corso
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </button>
             </div>
@@ -71,29 +61,6 @@ const hero = await heroPagina('corsi');
                 </ul>
             </noscript>
         </div>
-
-        <dialog class="trova-popup" id="trova-popup" aria-labelledby="trova-popup-titolo" aria-describedby="trova-popup-intro">
-            <form method="dialog" class="trova-popup-chiudi">
-                <button type="submit" class="btn-icon btn-icon--contorno" aria-label="Chiudi la scelta del percorso">
-                    <i class="fas fa-times" aria-hidden="true"></i>
-                </button>
-            </form>
-            <h2 id="trova-popup-titolo">Da dove iniziamo?</h2>
-            <p id="trova-popup-intro" class="trova-popup-intro testo-piccolo">Scegli un percorso e scopri i suoi corsi.</p>
-            <ul class="trova-opzioni">
-                {percorsi.map((cat) => (
-                    <li>
-                        <a href={`#${cat.id}`} class="trova-opzione" data-percorso={cat.nome}>
-                            <span class="trova-opzione-testo">
-                                <span class="trova-opzione-nome valore">{cat.nome}</span>
-                                <span class="testo-piccolo">{cat.corsi.length} corsi</span>
-                            </span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                ))}
-            </ul>
-        </dialog>
     </section>
 
     <!-- Tre sottocorsi per riga su desktop, con lo stesso formato in tutte le categorie. -->
@@ -127,6 +94,31 @@ const hero = await heroPagina('corsi');
             </aside>
         </div>
     </section>
+
+    <Fragment slot="after-main">
+        <dialog class="trova-popup" id="trova-popup" aria-labelledby="trova-popup-titolo" aria-describedby="trova-popup-intro">
+            <form method="dialog" class="trova-popup-chiudi">
+                <button type="submit" class="btn-icon btn-icon--contorno" aria-label="Chiudi la scelta del percorso">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </form>
+            <h2 id="trova-popup-titolo">Da dove iniziamo?</h2>
+            <p id="trova-popup-intro" class="trova-popup-intro testo-piccolo">Scegli un percorso e scopri i suoi corsi.</p>
+            <ul class="trova-opzioni">
+                {percorsi.map((cat) => (
+                    <li>
+                        <a href={`#${cat.id}`} class="trova-opzione" data-percorso={cat.nome}>
+                            <span class="trova-opzione-testo">
+                                <span class="trova-opzione-nome valore">{cat.nome}</span>
+                                <span class="testo-piccolo">{cat.corsi.length} corsi</span>
+                            </span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </dialog>
+    </Fragment>
 
     <Fragment slot="scripts">
         <script>

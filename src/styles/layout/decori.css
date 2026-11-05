@@ -6,7 +6,7 @@
  * .decoro-fascia / .decoro-fascia--sinistra: le stesse onde dentro una fascia bianca con doppia onda (.fascia-onda),
  * sopra il suo bianco: le parti azzurrine tra una fascia e l'altra restano senza decorazione.
  * "section." vince sul "background" delle pagine senza toccarne il colore.
- * .decoro-scuro e le sezioni scure con fondo nero uniforme ricevono curve azzurre sottili e trasparenti.
+ * Le sezioni scure con fondo nero uniforme ricevono curve azzurre sottili e trasparenti.
  */
 @media (min-width: 1025px) {
   section.decoro-onde {
@@ -30,8 +30,7 @@
   }
 
   /* Le sezioni scure con foto hanno un elemento -bg e conservano il loro sfondo. */
-  section.sezione-scura:not(:has(> [class$="-bg"])),
-  section.decoro-scuro {
+  section.sezione-scura:not(:has(> [class$="-bg"])) {
     background-image: var(--decoro-curve-scuro);
     background-position: center;
     background-size: 100% 100%;

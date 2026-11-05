@@ -1,45 +1,8 @@
 /* Pagina Corsi: invito a esplorare i percorsi, sezioni dei corsi e contatto. */
 
-/* ---------- Trova il tuo corso ---------- */
-.trova-section {
-  padding: calc(var(--section-y) * .75) 0;
-  background: var(--black);
-  color: var(--body-color-su-scuro);
-}
-
-.trova-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: center;
-  gap: 1.5rem;
-}
-
-.trova-intro {
-  text-align: center;
-}
-
-.trova-intro .titolo-sezione {
-  margin: 0 0 .75rem;
-  color: var(--heading-color-su-scuro);
-}
-
-.trova-intro .titolo-sezione em {
-  color: var(--primary-blue);
-}
-
-.trova-intro strong {
-  color: var(--heading-color-su-scuro);
-}
-
-.trova-intro > p {
-  max-width: 38rem;
-  margin: 0 auto;
-  text-wrap: balance;
-}
-
+/* ---------- Trova il tuo corso: pulsante nell'hero e dialogo dei percorsi ---------- */
 .trova-scelta {
-  min-width: 0;
-  text-align: center;
+  margin-top: 1.5rem;
 }
 
 html:has(.trova-popup[open]) {
@@ -127,20 +90,15 @@ html:has(.trova-popup[open]) {
 .trova-alternative {
   display: flex;
   flex-wrap: wrap;
-  grid-column: 1 / -1;
-  justify-content: center;
+  justify-content: flex-start;
   gap: .75rem 1.5rem;
-  margin-top: 0;
+  margin-top: 1.5rem;
 }
 
 .trova-alternative a {
   color: var(--primary-blue);
   text-decoration: underline;
   text-underline-offset: .2em;
-}
-
-.trova-layout > noscript {
-  grid-column: 1 / -1;
 }
 
 @media (prefers-reduced-motion: no-preference) {

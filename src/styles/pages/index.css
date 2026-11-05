@@ -210,7 +210,7 @@ davvero andando: niente riquadro nero mentre carica */
 }
 
 .corsi-header .corsi-home-comandi:not([hidden]) {
-  justify-content: center;
+  justify-content: flex-end;
   margin: 1.5rem 0 0;
 }
 

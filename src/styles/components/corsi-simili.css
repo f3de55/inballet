@@ -30,7 +30,7 @@
   border-block: 1px solid rgb(var(--blu-rgb) / .65);
 }
 
-/* Ogni cella occupa 5 righe della griglia (icona, titolo, età, frequenza, «Scopri il corso») e le
+/* Ogni cella occupa 5 righe della griglia (foto, titolo, età, frequenza, «Scopri il corso») e le
    eredita con subgrid: titoli, testi e link stanno alla stessa altezza in tutte le celle della riga */
 /* Numero di voci (--n): una colonna per voce, fino a 6 */
 .simili-lista { --n: 1; }
@@ -66,10 +66,14 @@
   text-decoration: none;
 }
 
-.simili-icona {
-  font-size: var(--text-3xl);
-  line-height: 1;
-  color: var(--primary-blue-dark);
+.simili-immagine {
+  display: block;
+  width: 100%;
+  max-width: 14rem;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-img);
 }
 
 /* Il contenitore non genera un box: titolo, età e frequenza sono righe della griglia della cella */

@@ -46,6 +46,7 @@
   grid-template-rows: subgrid;
   row-gap: 0;
   align-content: start;
+  min-width: 0;
   padding: 2rem 1.25rem 1.5rem;
   border: 1px solid rgb(var(--blu-rgb) / .4);
   border-radius: 0;
@@ -89,9 +90,21 @@
   z-index: 1;
 }
 
+/* Una misura di lettura comune mantiene i dati centrati e consente il ritorno a capo. */
+.info-corpo {
+  width: 100%;
+  max-width: 24ch;
+  min-width: 0;
+  justify-self: center;
+  overflow-wrap: anywhere;
+}
+
 .info-titolo {
   margin: 0 0 1.25rem;
+  max-width: 18ch;
+  margin-inline: auto;
   text-align: center;
+  text-wrap: balance;
 }
 
 .info-righe {
@@ -167,8 +180,10 @@ a.info-valore {
 }
 
 .sede-indirizzo {
-  margin: .2rem 0 0;
+  max-width: 22ch;
+  margin: .2rem auto 0;
   font-style: normal;
+  text-wrap: pretty;
 }
 
 .sede-indirizzo .sede-mappa {
@@ -233,6 +248,7 @@ a.info-valore {
 .orario-time {
   font-variant-numeric: tabular-nums;
   color: var(--text-body);
+  white-space: nowrap;
 }
 
 .orario-time.chiuso {

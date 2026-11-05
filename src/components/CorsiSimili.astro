@@ -1,12 +1,13 @@
 ---
 /**
  * «Corsi simili»: gli altri corsi della stessa categoria (scuola.ts → categorieCorsi), escluso
- * quello della pagina. Desktop e tablet mantengono le celle a filetti; su mobile
+ * quello della pagina. Desktop e tablet mantengono le celle a filetti con le foto dei corsi; su mobile
  * si usano le stesse card fotografiche e lo scorrimento della pagina /corsi.
  */
 import { getCollection } from 'astro:content';
 import { categorieCorsi } from '../data/scuola';
 import { immaginiSottocorsi } from '../data/immagini-sottocorsi';
+import Img from './Img.astro';
 import ElencoPercorsi from './ElencoPercorsi.astro';
 import SchedaPercorso from './SchedaPercorso.astro';
 import '../styles/components/corsi-simili.css';
@@ -49,7 +50,7 @@ const altri = (categoria?.corsi ?? [])
         {altri.map((c) => (
           <li>
             <a href={c.href} class="simili-voce">
-              <i class={`fas ${categoria.icona} simili-icona`} aria-hidden="true"></i>
+              <Img class="simili-immagine" src={c.immagine.src} alt={c.immagine.alt} width={1536} height={1024} loading="lazy" decoding="async" widths={[320, 480, 800]} sizes="224px" />
               <div class="simili-testo">
                 <h3 class="simili-nome">{c.nome}</h3>
                 <p class="simili-eta">{c.eta}</p>

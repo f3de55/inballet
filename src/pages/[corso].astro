@@ -120,19 +120,18 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         </div>
     </section>
 
-    <!-- Cosa Imparera -->
+    <!-- Obiettivi: sei punti in una griglia aperta, con gerarchia comune a tutti i corsi. -->
     <section class="corso-impara-section" aria-labelledby="corsoImparaTitolo">
         <div class="corso-impara-wrapper">
-            <div class="corso-impara-header">
+            <header class="corso-impara-header">
                 <p class="corso-impara-label eyebrow">Gli obiettivi</p>
                 <h2 id="corsoImparaTitolo" class="titolo-sezione" set:html={accento(data.imparaTitolo)} />
-            </div>
-            <!-- Elenco aperto: numeri discreti e testo corrente, distinto dalle schede dei corsi simili. -->
+            </header>
             <ol class="corso-impara-list" id="corsoImparaGrid">
                 {data.impara.map((item, i) => (
                     <li>
                         <p class="impara-num titoletto" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
-                        <p class="impara-testo" set:html={item} />
+                        <p class="impara-testo testo-evidenza" set:html={item} />
                     </li>
                 ))}
             </ol>

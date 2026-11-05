@@ -154,21 +154,18 @@
 }
 
 .corso-impara-wrapper {
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-  align-items: start;
-  gap: 4rem;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
 .corso-impara-header {
-  text-align: left;
+  margin-bottom: var(--spazio-intestazione);
+  text-align: center;
 }
 
 .corso-impara-label {
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
   display: block;
 }
 
@@ -176,33 +173,47 @@
   margin: 0;
 }
 
-/* Una lista di contenuti, senza celle o cornici. */
+/* Sei obiettivi aperti: tre colonne, due righe, senza pannelli o ombre. */
 .corso-impara-list {
   display: grid;
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5rem 3rem;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
 .corso-impara-list li {
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
-  column-gap: 1rem;
-  align-items: baseline;
+  position: relative;
+  min-width: 0;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid var(--linea);
 }
 
-/* Numeri piccoli allineati alla prima riga del paragrafo. */
+/* Accento azzurro sul filetto: stesso colore di numeri e titoli in corsivo. */
+.corso-impara-list li::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 2rem;
+  height: 2px;
+  background: var(--primary-blue);
+}
+
 .impara-num {
-  margin: 0;
+  display: block;
+  margin: 0 0 .75rem;
   color: var(--primary-blue-dark);
   font-variant-numeric: tabular-nums;
 }
 
-/* Testo normale, grassetto solo sulle parole chiave (<strong> in corsi.json) */
+/* Testi in evidenza, con le parole chiave originali dei singoli corsi. */
 .impara-testo {
+  max-width: 28ch;
   margin: 0;
   color: var(--text-body);
+  text-wrap: pretty;
 }
 
 /* Tablet e mobile: una colonna con titolo, foto, testo e dati del corso;
@@ -256,8 +267,8 @@
     gap: 2rem;
   }
 
-  .corso-impara-wrapper {
-    grid-template-columns: minmax(0, 1fr);
+  .corso-impara-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2rem;
   }
 }
@@ -284,12 +295,25 @@
     gap: 1rem;
   }
 
-  /* Una riga per obiettivo, numero accanto al testo */
+  /* Mobile: numeri e testo sullo stesso asse, una riga leggibile per obiettivo. */
   .corso-impara-list {
-    gap: 1.25rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
   }
 
   .corso-impara-list li {
-    column-gap: .75rem;
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: 1rem;
+    padding-top: 1rem;
+  }
+
+  .impara-num {
+    margin: 0;
+  }
+
+  .impara-testo {
+    max-width: none;
   }
 }

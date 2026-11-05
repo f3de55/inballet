@@ -55,6 +55,60 @@
   white-space: nowrap;
 }
 
+/* Lo statuto ha una destinazione propria, distinta dai moduli. */
+.statuto-section {
+  padding: var(--section-y) 0;
+  background: var(--bg-soft);
+}
+
+.statuto-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: 4.5rem;
+}
+
+.statuto-intro .eyebrow {
+  margin-bottom: 1rem;
+}
+
+.statuto-intro .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
+.statuto-intro > p:last-child {
+  margin: 0;
+}
+
+.statuto-documento,
+.statuto-disponibilita {
+  border-block: 1px solid var(--linea);
+}
+
+.statuto-documento {
+  grid-template-columns: 3rem minmax(0, 1fr);
+}
+
+.statuto-documento .documento-azione {
+  grid-column: 2;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .75rem 1.5rem;
+}
+
+.statuto-disponibilita {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: start;
+  gap: 1.5rem;
+  padding: 2rem 0;
+}
+
+.statuto-contatto {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .documento:hover .documento-nome,
   .documento:hover .documento-scarica {
@@ -72,6 +126,13 @@
 }
 
 /* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .statuto-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+}
+
 /* ---------- Mobile ---------- */
 @media (max-width: 600px) {
   /* Documento: icona e testo, sotto peso e "Scarica" */
@@ -90,5 +151,11 @@
     grid-column: 2;
     justify-content: space-between;
     margin-top: .75rem;
+  }
+
+  .statuto-disponibilita {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1.5rem 0;
   }
 }

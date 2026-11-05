@@ -14,6 +14,15 @@
                 <input type="hidden" id="documentoId">
 
                 <div class="campo">
+                    <label for="docCategoria">Destinazione nella pagina Documenti</label>
+                    <select id="docCategoria">
+                        <option value="modulo">Moduli e documenti</option>
+                        <option value="statuto">Statuto dell'associazione</option>
+                    </select>
+                    <small class="nota">Lo statuto compare nella sezione dedicata, separata dai moduli di iscrizione.</small>
+                </div>
+
+                <div class="campo">
                     <label for="docTitolo">Titolo <span class="nota">obbligatorio</span></label>
                     <input type="text" id="docTitolo" required placeholder="Es. Modulo di iscrizione 2026/2027" maxlength="100" data-counter="100" autocomplete="off">
                     <small class="contatore" id="docTitolo-counter"></small>

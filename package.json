@@ -17,6 +17,7 @@
     "precheck": "npm run icons",
     "check": "astro check",
     "test:demo": "node --test tests/locandine-demo.test.mjs",
+    "test:statuto": "node --test tests/statuto.test.mjs",
     "verifica:stile": "node scripts/verifica-stile.mjs"
   },
   "dependencies": {

@@ -7,6 +7,7 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import { leggiDocumenti } from '../lib/documenti';
+import { scuola } from '../data/scuola';
 import { grassettoDaTesto, senzaGrassetto } from '../lib/text';
 import '../styles/pages/documenti.css';
 
@@ -16,6 +17,8 @@ const bg = {
   hero: await heroPagina('documenti'),
 };
 const { hero, sezione, documenti } = await leggiDocumenti();
+const moduli = documenti.filter((d) => d.categoria !== 'statuto');
+const statuto = documenti.find((d) => d.categoria === 'statuto');
 // Testo dell'hero (scritto dalla dashboard) completato con scuola e luogo, se c'è spazio
 const base = senzaGrassetto(hero.testo || sezione.intro);
 const luogo = ' InBallet, scuola di danza a Lainate e Rho (MI).';
@@ -51,9 +54,9 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
             {sezione.intro && <p set:html={grassettoDaTesto(sezione.intro)} />}
         </div>
         <div class="container">
-            {documenti.length > 0 && (
+            {moduli.length > 0 && (
             <ul class="documenti-lista">
-                {documenti.map((d) => (
+                {moduli.map((d) => (
                     <li>
                         <a class="documento" href={d.file} target="_blank" rel="noopener">
                             <i class="fas fa-file-pdf documento-icona" aria-hidden="true"></i>
@@ -71,6 +74,40 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
                     </li>
                 ))}
             </ul>
+            )}
+        </div>
+    </section>
+
+    <section id="statuto" class="statuto-section" aria-labelledby="statuto-titolo">
+        <div class="container statuto-layout">
+            <header class="statuto-intro">
+                <p class="eyebrow">L'associazione</p>
+                <h2 class="titolo-sezione" id="statuto-titolo">Lo <em>statuto</em></h2>
+                <p>Il documento che definisce finalità, organizzazione e regole di partecipazione dell'<strong>{scuola.ragioneSociale}</strong>.</p>
+            </header>
+            {statuto ? (
+                <a class="documento statuto-documento" href={statuto.file} download aria-label="Scarica lo statuto di InBallet in PDF">
+                    <i class="fas fa-file-pdf documento-icona" aria-hidden="true"></i>
+                    <div class="documento-testo">
+                        <h3 class="documento-nome">{statuto.titolo}</h3>
+                        {statuto.nota && <p class="documento-nota">{statuto.nota}</p>}
+                    </div>
+                    <div class="documento-azione">
+                        <p class="documento-peso testo-piccolo">{statuto.peso}</p>
+                        <p class="link-cta documento-scarica">Scarica PDF <i class="fas fa-download" aria-hidden="true"></i></p>
+                    </div>
+                </a>
+            ) : (
+                <div class="statuto-disponibilita">
+                    <i class="fas fa-file-pdf documento-icona" aria-hidden="true"></i>
+                    <div class="documento-testo">
+                        <h3 class="documento-nome">Statuto dell'associazione</h3>
+                        <p class="documento-nota">Per consultare lo statuto, contatta la segreteria.</p>
+                        <a class="link-cta statuto-contatto" href={`mailto:${scuola.email}?subject=${encodeURIComponent('Richiesta statuto I.N. Ballet')}`}>
+                            Richiedi lo statuto <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
             )}
         </div>
     </section>

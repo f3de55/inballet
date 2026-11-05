@@ -13,6 +13,8 @@ export interface Documento {
   file: string;
   /** Peso già formattato (es. «PDF, 730 KB») */
   peso: string;
+  /** I documenti preesistenti senza categoria restano nella modulistica. */
+  categoria?: 'modulo' | 'statuto';
 }
 
 export interface PaginaDocumenti {

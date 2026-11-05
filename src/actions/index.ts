@@ -168,6 +168,7 @@ export const server = {
         id: z.string().max(40).optional(),
         titolo: campo,
         nota: campo,
+        categoria: z.enum(['modulo', 'statuto']).optional(),
         file: z.instanceof(File).optional(),
       }),
       handler: async (input, context) => {

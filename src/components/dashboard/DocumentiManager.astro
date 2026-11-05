@@ -83,7 +83,7 @@ const n = documenti.length;
                     <span class="doc-icona" aria-hidden="true"><i class="fas fa-file-pdf"></i></span>
                     <span class="ev-testo">
                         <span class="ev-titolo">{d.titolo}</span>
-                        <span class="ev-meta">{[d.nota, d.peso].filter(Boolean).join(' · ')}</span>
+                        <span class="ev-meta">{[d.categoria === 'statuto' ? 'Statuto' : '', d.nota, d.peso].filter(Boolean).join(' · ')}</span>
                     </span>
                 </button>
                 <div class="ev-azioni">

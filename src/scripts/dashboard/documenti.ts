@@ -6,14 +6,7 @@
 import { actions } from 'astro:actions';
 import { conferma } from './conferma';
 import { toast } from './toast';
-
-interface Documento {
-  id: string;
-  titolo: string;
-  nota: string;
-  file: string;
-  peso: string;
-}
+import type { Documento } from '../../data/documenti';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const MAX_SIZE = 20 * 1024 * 1024; // 20MB
@@ -81,6 +74,7 @@ const campi = {
   id: $<HTMLInputElement>('documentoId'),
   titolo: $<HTMLInputElement>('docTitolo'),
   nota: $<HTMLInputElement>('docNota'),
+  categoria: $<HTMLSelectElement>('docCategoria'),
   file: $<HTMLInputElement>('docFile'),
 };
 const zona = modal.querySelector<HTMLElement>('[data-upload-pdf]')!;
@@ -92,6 +86,12 @@ let inCorso = false;
 form.addEventListener('input', () => (modificato = true));
 campi.titolo.addEventListener('input', () => aggiornaContatore(campi.titolo));
 campi.nota.addEventListener('input', () => aggiornaContatore(campi.nota));
+campi.categoria.addEventListener('change', () => {
+  if (campi.categoria.value === 'statuto' && !campi.titolo.value.trim()) {
+    campi.titolo.value = "Statuto dell'associazione";
+    aggiornaContatore(campi.titolo);
+  }
+});
 
 function mostraFile(doc?: Documento) {
   const nome = nuovoFile?.name;
@@ -115,6 +115,7 @@ function apriModal(doc?: Documento) {
   campi.id.value = doc?.id ?? '';
   campi.titolo.value = doc?.titolo ?? '';
   campi.nota.value = doc?.nota ?? '';
+  campi.categoria.value = doc?.categoria ?? 'modulo';
   aggiornaContatore(campi.titolo);
   aggiornaContatore(campi.nota);
   mostraFile(doc);
@@ -182,6 +183,7 @@ form.addEventListener('submit', async (e) => {
   if (campi.id.value) dati.append('id', campi.id.value);
   dati.append('titolo', titolo);
   dati.append('nota', campi.nota.value.trim());
+  dati.append('categoria', campi.categoria.value);
   if (nuovoFile) dati.append('file', nuovoFile);
 
   const salva = $<HTMLButtonElement>('btnSalvaDocumento');

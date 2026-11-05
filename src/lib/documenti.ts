@@ -133,6 +133,7 @@ export interface DocumentoInput {
   id?: string;
   titolo?: string;
   nota?: string;
+  categoria?: 'modulo' | 'statuto';
   /** Nuovo PDF (obbligatorio per un documento nuovo) */
   file?: File;
 }
@@ -156,9 +157,13 @@ export async function salvaDocumento(input: DocumentoInput): Promise<Documento> 
     const esistente = id ? pagina.documenti.find((d) => d.id === id) : undefined;
     if (id && !esistente) throw new ErroreDocumenti('Documento non trovato');
     if (!id && pagina.documenti.length >= MAX_DOCUMENTI) throw new ErroreDocumenti(`Puoi avere al massimo ${MAX_DOCUMENTI} documenti`);
+    const categoria = input.categoria ?? esistente?.categoria ?? 'modulo';
+    if (categoria === 'statuto' && pagina.documenti.some((d) => d.categoria === 'statuto' && d.id !== id)) {
+      throw new ErroreDocumenti('Uno statuto è già presente: modifica quel documento per sostituire il PDF.');
+    }
 
     const pdf = file ? await salvaPdf(file) : { file: esistente!.file, peso: esistente!.peso };
-    const documento: Documento = { id: esistente?.id ?? nuovoId(), titolo, nota, ...pdf };
+    const documento: Documento = { id: esistente?.id ?? nuovoId(), titolo, nota, categoria, ...pdf };
 
     if (esistente) {
       pagina.documenti = pagina.documenti.map((d) => (d.id === documento.id ? documento : d));

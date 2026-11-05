@@ -29,21 +29,19 @@ if (timeline) {
       const a = punti[i - 1];
       const b = punti[i];
       if (b.x <= a.x) {
-        // La linea torna a sinistra nel corridoio libero fra le due righe.
+        // Due anse morbide e un'onda di ritorno, senza tratti rettilinei o angoli.
         const fondoRiga = Math.max(...punti.slice(Math.max(0, i - 3), i).map((p) => p.bottom));
         const mezzo = (fondoRiga + b.top) / 2;
-        const raggio = Math.min(16, (b.y - mezzo) / 2, (b.top - fondoRiga) / 3);
-        const destra = area.width + 20;
-        const sinistra = -20;
-        d += ` L ${destra - raggio} ${a.y}`;
-        d += ` Q ${destra} ${a.y} ${destra} ${a.y + raggio}`;
-        d += ` L ${destra} ${mezzo - raggio}`;
-        d += ` Q ${destra} ${mezzo} ${destra - raggio} ${mezzo}`;
-        d += ` L ${sinistra + raggio} ${mezzo}`;
-        d += ` Q ${sinistra} ${mezzo} ${sinistra} ${mezzo + raggio}`;
-        d += ` L ${sinistra} ${b.y - raggio}`;
-        d += ` Q ${sinistra} ${b.y} ${sinistra + raggio} ${b.y}`;
-        d += ` L ${b.x} ${b.y}`;
+        const onda = Math.min(12, (b.top - fondoRiga) / 4);
+        const centro = (a.x + b.x) / 2;
+        const passo = (a.x - b.x) / 4;
+        // Le maniglie sono esterne, ma le anse restano entro 20px dai margini.
+        const destra = a.x + (area.width + 20 - a.x) * 4 / 3;
+        const sinistra = b.x - (b.x + 20) * 4 / 3;
+        d += ` C ${destra} ${a.y} ${destra} ${mezzo} ${a.x} ${mezzo}`;
+        d += ` C ${a.x - passo} ${mezzo} ${centro + passo} ${mezzo + onda} ${centro} ${mezzo + onda}`;
+        d += ` C ${centro - passo} ${mezzo + onda} ${b.x + passo} ${mezzo} ${b.x} ${mezzo}`;
+        d += ` C ${sinistra} ${mezzo} ${sinistra} ${b.y} ${b.x} ${b.y}`;
         continue;
       }
       const centro = (a.x + b.x) / 2;

@@ -185,8 +185,28 @@
 }
 
 .impara-competenza {
+  position: relative;
   min-width: 0;
   text-align: center;
+}
+
+/* Separatori interni alla griglia, senza bordi esterni o filetti sopra la prima riga. */
+.impara-competenza:not(:nth-child(3n + 1))::before {
+  content: '';
+  position: absolute;
+  top: .5rem;
+  bottom: .5rem;
+  left: -1.5rem;
+  border-left: 1px solid var(--linea);
+}
+
+.impara-competenza:nth-child(n + 4)::after {
+  content: '';
+  position: absolute;
+  top: -1.5rem;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--linea);
 }
 
 .impara-simbolo {
@@ -287,6 +307,19 @@
   .corso-impara-list {
     grid-template-columns: minmax(0, 1fr);
     gap: 2.5rem;
+  }
+
+  .impara-competenza:not(:nth-child(3n + 1))::before {
+    content: none;
+  }
+
+  .impara-competenza + .impara-competenza::after {
+    content: '';
+    position: absolute;
+    top: -1.25rem;
+    left: 10%;
+    right: 10%;
+    border-top: 1px solid var(--linea);
   }
 
   .impara-simbolo {

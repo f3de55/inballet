@@ -9,6 +9,7 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import CorsiSimili from '../components/CorsiSimili.astro';
+import { iconeCompetenze } from '../data/icone-competenze';
 import { getImage } from 'astro:assets';
 import { getAsset, sfondo, sfondoCta } from '../lib/images';
 import { schemaCorso } from '../lib/schema';
@@ -24,7 +25,8 @@ interface Props {
 }
 
 const { data } = Astro.props;
-if (data.imparaTitoli.length !== data.impara.length) {
+const icone = iconeCompetenze[Astro.params.corso ?? ''];
+if (data.imparaTitoli.length !== data.impara.length || icone?.length !== data.impara.length) {
     throw new Error(`Competenze del corso incomplete: ${Astro.params.corso}`);
 }
 const hero = await sfondo(data.heroImage, data.heroFuoco);
@@ -133,7 +135,12 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
             <dl class="corso-impara-list" id="corsoImparaGrid">
                 {data.impara.map((item, indice) => (
                     <div class="impara-competenza">
-                        <dt class="impara-titolo">{data.imparaTitoli[indice]}</dt>
+                        <dt class="impara-titolo">
+                            <span class="impara-simbolo" aria-hidden="true">
+                                <i class={`fas ${icone[indice]}`}></i>
+                            </span>
+                            {data.imparaTitoli[indice]}
+                        </dt>
                         <dd class="impara-testo" set:html={item} />
                     </div>
                 ))}

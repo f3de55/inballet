@@ -43,6 +43,14 @@
       }
     ],
     "imparaTitolo": "Cosa troverai",
+    "imparaTitoli": [
+      "Primi passi",
+      "Riprendere a danzare",
+      "Struttura della lezione",
+      "Corpo e mente",
+      "Danzare in gruppo",
+      "Allenamento complementare"
+    ],
     "impara": [
       "Corsi anche per <strong>principianti assoluti</strong>",
       "Classi pensate per chi <strong>ricomincia</strong> dopo anni di stop",
@@ -94,6 +102,14 @@
       }
     ],
     "imparaTitolo": "Cosa impareranno",
+    "imparaTitoli": [
+      "Orientamento",
+      "Senso del ritmo",
+      "Primi movimenti",
+      "Stare in gruppo",
+      "Espressività",
+      "Attenzione"
+    ],
     "impara": [
       "Orientarsi nello <strong>spazio</strong> della sala",
       "Seguire il <strong>ritmo</strong> della musica",
@@ -146,6 +162,14 @@
       }
     ],
     "imparaTitolo": "Cosa impareranno",
+    "imparaTitoli": [
+      "Tecnica",
+      "Coreografie",
+      "Interpretazione",
+      "Preparazione fisica",
+      "Lavoro in scena",
+      "Autonomia"
+    ],
     "impara": [
       "La <strong>tecnica</strong> della disciplina scelta",
       "<strong>Coreografie</strong> più articolate",
@@ -198,6 +222,14 @@
       }
     ],
     "imparaTitolo": "Cosa imparerai",
+    "imparaTitoli": [
+      "Passi in piedi",
+      "Movimento a terra",
+      "Freeze",
+      "Variazioni",
+      "Il cerchio",
+      "Ritmo e beat"
+    ],
     "impara": [
       "Passi <strong>in piedi</strong>",
       "Movimenti <strong>a terra</strong>",
@@ -251,6 +283,14 @@
       }
     ],
     "imparaTitolo": "Cosa troverai",
+    "imparaTitoli": [
+      "Hatha Yoga",
+      "Pilates",
+      "Respiro e concentrazione",
+      "Postura",
+      "Forza e flessibilità",
+      "Percorso personale"
+    ],
     "impara": [
       "<strong>Hatha Yoga</strong>, lezioni di un'ora e mezza",
       "<strong>Pilates</strong> per livelli, 1-2 volte a settimana",
@@ -303,6 +343,14 @@
       }
     ],
     "imparaTitolo": "Cosa imparerai",
+    "imparaTitoli": [
+      "Improvvisazione",
+      "Spazio condiviso",
+      "Contatto e peso",
+      "Leve e appoggi",
+      "Qualità del movimento",
+      "Ascolto del partner"
+    ],
     "impara": [
       "<strong>Improvvisazione</strong> e ascolto di sé",
       "Gestione dello <strong>spazio</strong> tra più persone",
@@ -356,6 +404,14 @@
       }
     ],
     "imparaTitolo": "Cosa imparerai",
+    "imparaTitoli": [
+      "Tecniche a confronto",
+      "Percorso personale",
+      "La tua attitudine",
+      "Crescita tecnica",
+      "Coreografia",
+      "Qualità del gesto"
+    ],
     "impara": [
       "Fondere tecniche <strong>liriche</strong> e <strong>urbane</strong>",
       "Un piano di lavoro <strong>personalizzato</strong>",
@@ -410,6 +466,14 @@
       }
     ],
     "imparaTitolo": "Cosa imparerai",
+    "imparaTitoli": [
+      "Preparazione del corpo",
+      "Floor barre",
+      "Lavoro alla sbarra",
+      "Elasticità",
+      "Sequenze danzate",
+      "Memoria e coordinazione"
+    ],
     "impara": [
       "Preparare il corpo con il <strong>warm-up</strong>",
       "Il metodo <strong>floor barre</strong>",
@@ -464,6 +528,14 @@
       }
     ],
     "imparaTitolo": "Cosa imparerai",
+    "imparaTitoli": [
+      "Forza e resistenza",
+      "Elementi acrobatici",
+      "Controllo del corpo",
+      "Precisione",
+      "Acrobatica in scena",
+      "Fiducia"
+    ],
     "impara": [
       "Allenamento <strong>aerobico</strong> e forza muscolare",
       "Elementi <strong>acrobatici</strong> a terra e in aria",
@@ -515,6 +587,14 @@
       }
     ],
     "imparaTitolo": "Cosa imparerai",
+    "imparaTitoli": [
+      "Posizioni fondamentali",
+      "Allineamento",
+      "Sbarra e centro",
+      "Uso delle braccia",
+      "Salti e giri",
+      "Musicalità"
+    ],
     "impara": [
       "Le <strong>cinque posizioni</strong> fondamentali",
       "<strong>Postura</strong> e allineamento del corpo",
@@ -568,13 +648,21 @@
       }
     ],
     "imparaTitolo": "Cosa imparerai",
+    "imparaTitoli": [
+      "Basi tecniche",
+      "Corpo e spazio",
+      "Equilibrio e sospensione",
+      "Transizioni",
+      "Ricerca personale",
+      "Composizione"
+    ],
     "impara": [
-      "Le basi tecniche ereditate dal <strong>Modern</strong>",
-      "Lo spazio intorno al corpo: <strong>icosaedro</strong> e <strong>sfera</strong>",
-      "<strong>Squilibrio</strong> e sospensione del movimento",
-      "Passaggi <strong>inconsueti</strong> da una forma all'altra",
-      "<strong>Improvvisazione</strong> e ricerca personale",
-      "<strong>Composizione</strong> coreografica"
+      "Costruire una base tecnica a partire dai principi del <strong>Modern</strong>.",
+      "Usare lo <strong>spazio intorno al corpo</strong>, esplorando icosaedro e sfera.",
+      "Gestire lo <strong>squilibrio</strong> e la sospensione del movimento.",
+      "Collegare forme diverse con <strong>passaggi inconsueti</strong>.",
+      "Esplorare il movimento attraverso <strong>improvvisazione e ricerca personale</strong>.",
+      "Dare forma alle idee con la <strong>composizione coreografica</strong>."
     ],
     "ctaTema": "danza"
   },
@@ -620,6 +708,14 @@
       }
     ],
     "imparaTitolo": "Cosa impareranno",
+    "imparaTitoli": [
+      "Senso del ritmo",
+      "Posizioni",
+      "Coordinazione",
+      "Sequenze",
+      "Autonomia",
+      "Ascolto del gruppo"
+    ],
     "impara": [
       "Ascoltare e accogliere il <strong>ritmo</strong>",
       "Distinguere le diverse <strong>posizioni</strong>",
@@ -673,6 +769,14 @@
       }
     ],
     "imparaTitolo": "Cosa imparerai",
+    "imparaTitoli": [
+      "Portamento",
+      "Controllo delle linee",
+      "Aperture e slanci",
+      "Fluidità nei passaggi",
+      "Linguaggi diversi",
+      "Presenza scenica"
+    ],
     "impara": [
       "<strong>Camminata</strong> e <strong>portamento</strong> sui tacchi",
       "<strong>Linee</strong> e tenute del corpo",
@@ -727,6 +831,14 @@
       }
     ],
     "imparaTitolo": "Cosa imparerai",
+    "imparaTitoli": [
+      "Stili fondamentali",
+      "Popping e Locking",
+      "Linguaggi espressivi",
+      "Krump",
+      "Groove",
+      "Cultura Hip-Hop"
+    ],
     "impara": [
       "<strong>Old School</strong>, <strong>New Style</strong> e <strong>House</strong>",
       "<strong>Popping</strong> e <strong>Locking</strong>",
@@ -781,6 +893,14 @@
       }
     ],
     "imparaTitolo": "Cosa offriamo",
+    "imparaTitoli": [
+      "Obiettivi personali",
+      "Precisione tecnica",
+      "Approfondimento",
+      "Coreografie personali",
+      "Organizzazione del percorso",
+      "Borse di studio"
+    ],
     "impara": [
       "Lavoro <strong>mirato</strong> su un'esigenza specifica",
       "<strong>Correzioni</strong> tecniche personalizzate",
@@ -833,6 +953,14 @@
       }
     ],
     "imparaTitolo": "Cosa imparerai",
+    "imparaTitoli": [
+      "Contrazione e rilascio",
+      "Metodi del Modern",
+      "Analisi del movimento",
+      "Danza libera",
+      "Impulso",
+      "Interpretazione"
+    ],
     "impara": [
       "I principi di <strong>contrazione</strong> e <strong>rilascio</strong>",
       "I metodi di <strong>Martha Graham</strong> e <strong>Merce Cunningham</strong>",
@@ -886,6 +1014,14 @@
       }
     ],
     "imparaTitolo": "Cosa vivrai",
+    "imparaTitoli": [
+      "Ascolto del corpo",
+      "Corpo e mente",
+      "Espressione emotiva",
+      "Stimoli creativi",
+      "Conoscenza di sé",
+      "Libertà di movimento"
+    ],
     "impara": [
       "Ascoltare il proprio <strong>respiro</strong> e il proprio <strong>ritmo</strong>",
       "<strong>Dialogare</strong> con il corpo partendo dalla mente",
@@ -940,6 +1076,14 @@
       }
     ],
     "imparaTitolo": "Cosa imparerai",
+    "imparaTitoli": [
+      "Principi del metodo",
+      "Power House",
+      "Baricentro",
+      "Respirazione",
+      "Muscoli posturali",
+      "Equilibrio"
+    ],
     "impara": [
       "I <strong>cinque principi</strong> del metodo Pilates",
       "Attivare la <strong>Power House</strong>",
@@ -993,6 +1137,14 @@
       }
     ],
     "imparaTitolo": "Cosa impareranno",
+    "imparaTitoli": [
+      "Orientamento",
+      "Ritmo",
+      "Coordinazione",
+      "Prime posizioni",
+      "Relazione con il gruppo",
+      "Gioco espressivo"
+    ],
     "impara": [
       "Orientarsi nello <strong>spazio</strong> della sala",
       "Ascoltare e seguire il <strong>ritmo</strong>",
@@ -1046,6 +1198,14 @@
       }
     ],
     "imparaTitolo": "Cosa impareranno",
+    "imparaTitoli": [
+      "Tecnica avanzata",
+      "Coreografie",
+      "Presenza scenica",
+      "Linguaggio personale",
+      "Lavoro di gruppo",
+      "Stili diversi"
+    ],
     "impara": [
       "<strong>Tecnica avanzata</strong> nella disciplina scelta",
       "Coreografie <strong>complesse</strong>",
@@ -1099,6 +1259,14 @@
       }
     ],
     "imparaTitolo": "Cosa impareranno",
+    "imparaTitoli": [
+      "Postura",
+      "Coordinazione",
+      "Musicalità",
+      "Sequenze",
+      "Disciplina",
+      "Collaborazione"
+    ],
     "impara": [
       "<strong>Postura corretta</strong> e allineamento",
       "Coordinazione <strong>braccia-gambe</strong>",
@@ -1151,6 +1319,14 @@
       }
     ],
     "imparaTitolo": "Cosa imparerai",
+    "imparaTitoli": [
+      "Asana",
+      "Pranayama",
+      "Concentrazione",
+      "Forza e flessibilità",
+      "Mobilità della schiena",
+      "Benessere quotidiano"
+    ],
     "impara": [
       "Le <strong>asana</strong> dell'Hatha Yoga",
       "Il <strong>pranayama</strong>, la respirazione yogica",

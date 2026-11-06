@@ -42,6 +42,7 @@ const corsi = defineCollection({
     metodoTitolo: z.string(),
     metodo: z.array(z.object({ titolo: z.string(), testo: z.string() })),
     imparaTitolo: z.string(),
+    imparaTitoli: z.array(z.string().min(1)),
     impara: z.array(z.string()),
     /** Tema fotografico della CTA: tagli dedicati per desktop, tablet e mobile. */
     ctaTema: z.enum(['danza', 'urban', 'bambini', 'benessere', 'formazione', 'comunita', 'ascolto']).default('danza'),

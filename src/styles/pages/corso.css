@@ -175,34 +175,50 @@
   text-wrap: balance;
 }
 
-/* Un elenco centrato, con righe continue e una sola direzione di lettura. */
-.corso-impara-list {
-  max-width: 46rem;
-  list-style: none;
-  padding: 0;
-  margin: 0 auto;
-  border-top: 1px solid var(--linea);
-}
-
-.corso-impara-list li {
+/* La foto mostra la pratica; il glossario rende riconoscibili le competenze. */
+.corso-impara-layout {
   display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
-  align-items: baseline;
-  gap: 1.5rem;
-  padding: 1.1rem 0;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: 4rem;
+}
+
+.corso-impara-foto {
   min-width: 0;
-  border-bottom: 1px solid var(--linea);
-  text-align: left;
+  overflow: hidden;
+  border-radius: var(--radius-img);
 }
 
-.impara-indice {
+.corso-impara-foto img {
   display: block;
-  color: var(--primary-blue-dark);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
 }
 
-/* Il testo corrente lascia risaltare le parole chiave originali del corso. */
+.corso-impara-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 2.5rem;
+  min-width: 0;
+  margin: 0;
+}
+
+.impara-competenza {
+  min-width: 0;
+}
+
+.impara-titolo {
+  margin: 0 0 .5rem;
+  font-size: var(--h4-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--h4-lh);
+  letter-spacing: var(--h4-ls);
+  color: var(--heading-color);
+  text-wrap: balance;
+}
+
 .impara-testo {
   margin: 0;
   font-size: var(--body-size);
@@ -261,6 +277,17 @@
     gap: 2rem;
   }
 
+  .corso-impara-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  .corso-impara-foto {
+    width: 100%;
+    max-width: 36rem;
+    margin: 0 auto;
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -285,9 +312,13 @@
     gap: 1rem;
   }
 
-  .corso-impara-list li {
-    grid-template-columns: 1.5rem minmax(0, 1fr);
-    gap: .75rem;
-    padding-block: 1rem;
+  .corso-impara-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .impara-competenza + .impara-competenza {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--linea);
   }
 }

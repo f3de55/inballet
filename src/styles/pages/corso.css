@@ -211,17 +211,6 @@
   transform: rotate(-12deg);
 }
 
-.impara-simbolo::after {
-  content: '';
-  position: absolute;
-  right: -.1rem;
-  bottom: .25rem;
-  width: .75rem;
-  height: .75rem;
-  border-radius: var(--radius-full);
-  background: var(--primary-blue);
-}
-
 .impara-competenza:nth-child(even) .impara-simbolo::before {
   transform: rotate(36deg);
 }

@@ -175,38 +175,20 @@
   text-wrap: balance;
 }
 
-/* La foto mostra la pratica; il glossario rende riconoscibili le competenze. */
-.corso-impara-layout {
-  display: grid;
-  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
-  align-items: center;
-  gap: 4rem;
-}
-
-.corso-impara-foto {
-  min-width: 0;
-  overflow: hidden;
-  border-radius: var(--radius-img);
-}
-
-.corso-impara-foto img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-}
-
+/* Sei competenze a tutta larghezza, con filetti leggeri e nessun pannello. */
 .corso-impara-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2rem 2.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5rem 3rem;
   min-width: 0;
   margin: 0;
 }
 
 .impara-competenza {
   min-width: 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--linea);
+  text-align: center;
 }
 
 .impara-titolo {
@@ -220,7 +202,8 @@
 }
 
 .impara-testo {
-  margin: 0;
+  max-width: 32ch;
+  margin: 0 auto;
   font-size: var(--body-size);
   line-height: var(--body-lh);
   color: var(--text-body);
@@ -277,15 +260,9 @@
     gap: 2rem;
   }
 
-  .corso-impara-layout {
+  .corso-impara-list {
     grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
-  }
-
-  .corso-impara-foto {
-    width: 100%;
-    max-width: 36rem;
-    margin: 0 auto;
+    gap: 1.5rem;
   }
 
 }
@@ -312,13 +289,4 @@
     gap: 1rem;
   }
 
-  .corso-impara-list {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.5rem;
-  }
-
-  .impara-competenza + .impara-competenza {
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--linea);
-  }
 }

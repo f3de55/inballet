@@ -9,7 +9,6 @@ import Base from '../layouts/Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import CorsiSimili from '../components/CorsiSimili.astro';
-import { immaginiSottocorsi } from '../data/immagini-sottocorsi';
 import { getImage } from 'astro:assets';
 import { getAsset, sfondo, sfondoCta } from '../lib/images';
 import { schemaCorso } from '../lib/schema';
@@ -25,9 +24,8 @@ interface Props {
 }
 
 const { data } = Astro.props;
-const fotoCompetenze = immaginiSottocorsi[Astro.params.corso ?? ''];
-if (!fotoCompetenze || data.imparaTitoli.length !== data.impara.length) {
-    throw new Error(`Competenze o immagine del corso incomplete: ${Astro.params.corso}`);
+if (data.imparaTitoli.length !== data.impara.length) {
+    throw new Error(`Competenze del corso incomplete: ${Astro.params.corso}`);
 }
 const hero = await sfondo(data.heroImage, data.heroFuoco);
 const contatto = await sfondoCta(data.ctaTema);
@@ -125,26 +123,21 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         </div>
     </section>
 
-    <!-- Competenze: la pratica in sala accanto alle capacità sviluppate nel corso. -->
+    <!-- Le competenze occupano tutta la sezione, senza colonne fotografiche. -->
     <section class="corso-impara-section" aria-labelledby="corsoImparaTitolo">
         <div class="corso-impara-wrapper">
             <header class="corso-impara-header">
                 <p class="corso-impara-label eyebrow">Gli obiettivi del percorso</p>
                 <h2 id="corsoImparaTitolo" class="titolo-sezione" set:html={accento(data.imparaTitolo)} />
             </header>
-            <div class="corso-impara-layout">
-                <div class="corso-impara-foto">
-                    <Img src={fotoCompetenze.src} alt={fotoCompetenze.alt} width={1536} height={1024} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 440px" />
-                </div>
-                <dl class="corso-impara-list" id="corsoImparaGrid">
-                    {data.impara.map((item, indice) => (
-                        <div class="impara-competenza">
-                            <dt class="impara-titolo">{data.imparaTitoli[indice]}</dt>
-                            <dd class="impara-testo" set:html={item} />
-                        </div>
-                    ))}
-                </dl>
-            </div>
+            <dl class="corso-impara-list" id="corsoImparaGrid">
+                {data.impara.map((item, indice) => (
+                    <div class="impara-competenza">
+                        <dt class="impara-titolo">{data.imparaTitoli[indice]}</dt>
+                        <dd class="impara-testo" set:html={item} />
+                    </div>
+                ))}
+            </dl>
         </div>
     </section>
 

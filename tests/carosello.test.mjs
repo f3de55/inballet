@@ -44,12 +44,17 @@ function setup({ reducedMotion = false } = {}) {
       dataset: { giro: '40' }, scrollLeft: 0,
       classList: { add: (value) => classes.add(value), remove: (value) => classes.delete(value), contains: (value) => classes.has(value) },
       querySelector: () => track,
+      contains: (target) => target === row,
     });
     return row;
   });
   document.hidden = false;
   document.querySelectorAll = () => rows;
   document.querySelector = () => dialogs.find((dialog) => dialog.open) ?? null;
+  document.elementFromPoint = (x, y) => {
+    if (x < 0 || x >= 400) return null;
+    return rows.find((_, index) => y >= 100 + index * 200 && y < 200 + index * 200) ?? null;
+  };
   window.matchMedia = () => ({ matches: reducedMotion });
   let now = 1000;
   let nextTimer = 0;
@@ -85,7 +90,7 @@ function setup({ reducedMotion = false } = {}) {
   return { rows, window, Dialog, frame, timers };
 }
 
-const mouse = { pointerType: 'mouse', button: 0, clientX: 200 };
+const mouse = { pointerType: 'mouse', button: 0, clientX: 200, clientY: 150 };
 const positions = (rows) => rows.map((row) => row.scrollLeft);
 const assertMoving = (rows, before) => rows.forEach((row, index) => assert.ok(row.scrollLeft > before[index]));
 
@@ -98,28 +103,65 @@ test('entrambe le file partono senza clic e la pausa al passaggio continua a fun
   assert.deepEqual(positions(rows), before);
 });
 
-test('la chiusura nativa riparte al primo frame, annulla i timer e ignora il rientro sintetico del mouse', () => {
+test('chiudendo con il mouse già sulle card la fila resta ferma senza uscire e rientrare', () => {
   const { rows, window, Dialog, frame, timers } = setup();
-  rows.forEach((row) => {
-    row.emit('pointerenter', mouse);
-    row.emit('pointerdown', mouse);
-  });
+  rows[0].emit('pointerenter', mouse);
+  rows[0].emit('pointerdown', mouse);
   window.emit('pointerup');
-  assert.equal(timers.size, 2);
+  assert.equal(timers.size, 1);
   const dialog = new Dialog();
+  // La modale riceve il mouse, la fila sottostante non riceve un nuovo ingresso.
+  rows[0].emit('pointerleave', mouse);
+  window.emit('pointermove', mouse);
   const before = positions(rows);
   frame();
   assert.deepEqual(positions(rows), before);
   dialog.close();
   assert.equal(timers.size, 0);
-  rows.forEach((row) => row.emit('pointerenter', mouse));
+  frame();
+  assert.equal(rows[0].scrollLeft, before[0]);
+  assert.ok(rows[1].scrollLeft > before[1]);
+  frame(2200);
+  assert.equal(rows[0].scrollLeft, before[0]);
+  rows[0].emit('pointerleave', mouse);
+  window.emit('pointermove', { ...mouse, clientY: 700 });
+  const outside = positions(rows);
+  frame();
+  assertMoving(rows, outside);
+});
+
+test('chiudendo fuori dalle card entrambe le file ripartono al primo frame', () => {
+  const { rows, window, Dialog, frame } = setup();
+  rows[0].emit('pointerenter', mouse);
+  const dialog = new Dialog();
+  window.emit('pointermove', { ...mouse, clientY: 700 });
+  const before = positions(rows);
+  dialog.close();
   frame();
   assertMoving(rows, before);
-  // Dopo un'uscita e un nuovo ingresso, l'hover torna a fermare la fila.
-  rows.forEach((row) => { row.emit('pointerleave', mouse); row.emit('pointerenter', mouse); });
-  const after = positions(rows);
+});
+
+test('il puntatore sulla seconda fila ferma quella fila anche se la modale è partita dalla prima', () => {
+  const { rows, window, Dialog, frame } = setup();
+  rows[0].emit('pointerenter', mouse);
+  const dialog = new Dialog();
+  window.emit('pointermove', { ...mouse, clientY: 350 });
+  const before = positions(rows);
+  dialog.close();
   frame();
-  assert.deepEqual(positions(rows), after);
+  assert.ok(rows[0].scrollLeft > before[0]);
+  assert.equal(rows[1].scrollLeft, before[1]);
+});
+
+test('una chiusura touch non eredita la pausa del mouse usato prima', () => {
+  const { rows, window, Dialog, frame } = setup();
+  rows[0].emit('pointerenter', mouse);
+  const dialog = new Dialog();
+  window.emit('pointerdown', { ...mouse, pointerType: 'touch' });
+  const before = positions(rows);
+  dialog.close();
+  frame();
+  assertMoving(rows, before);
 });
 
 test('un trascinamento interrotto non resta attivo dopo la chiusura', () => {
@@ -133,6 +175,7 @@ test('un trascinamento interrotto non resta attivo dopo la chiusura', () => {
   window.emit('pointermove', { ...mouse, clientX: 900 });
   assert.deepEqual(positions(rows), before);
   assert.ok(rows.every((row) => !row.classList.contains('trascinando')));
+  window.emit('pointermove', { ...mouse, clientY: 700 });
   frame();
   assertMoving(rows, before);
 });

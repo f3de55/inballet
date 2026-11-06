@@ -4,13 +4,24 @@
    identiche). Scorre da solo ovunque (PC, tablet, telefono) e si può spostare a mano:
    trascinando col mouse o col dito, con la rotella orizzontale o il trackpad. Si ferma
    con il mouse sopra, al tocco e mentre una finestra è aperta. Dopo un gesto manuale
-   riparte dopo 2 secondi; alla chiusura della finestra riparte subito, senza un nuovo clic.
+   riparte dopo 2 secondi; alla chiusura della finestra riparte subito solo se il mouse è fuori.
    È scorrimento vero (scrollLeft), con la parte decimale in una traslazione; non è un'animazione CSS: così le foto restano sempre
    disegnate anche dopo molto tempo e il giro è infinito in entrambi i versi.
    ======================================== */
 
 const ridotto = window.matchMedia('(prefers-reduced-motion: reduce)');
 const SOGLIA_TRASCINAMENTO = 6; // px oltre i quali un clic diventa trascinamento
+
+// Le coordinate restano aggiornate anche quando una modale copre le card.
+let puntatoreMouse: { x: number; y: number } | null = null;
+const aggiornaPuntatore = (event: PointerEvent) => {
+  puntatoreMouse = event.pointerType === 'mouse' ? { x: event.clientX, y: event.clientY } : null;
+};
+window.addEventListener('pointermove', aggiornaPuntatore, { capture: true, passive: true });
+window.addEventListener('pointerdown', aggiornaPuntatore, { capture: true, passive: true });
+window.addEventListener('pointerout', (event) => {
+  if (event.pointerType === 'mouse' && !event.relatedTarget) puntatoreMouse = null;
+});
 
 document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
   const track = fila.querySelector<HTMLElement>('.carosello-track');
@@ -44,7 +55,7 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
   let ultimo = 0;
   let fermo = false;
   let sopra = false;
-  let ignoraHover = false;
+  let ricalcolaHover = false;
   let visibile = false;
   let ripresa = 0;
   let ultimoScroll = 0;
@@ -86,10 +97,9 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
     trascinando = false;
     spostato = false;
     fila.classList.remove('trascinando');
-    sopra = false;
-    // Il browser può emettere pointerenter quando sparisce la modale, anche a mouse fermo.
-    // La pausa al passaggio torna attiva dopo essere usciti dalla fila o un nuovo clic sulla fila.
-    ignoraHover = true;
+    // Al prossimo frame tutte le modali avranno restituito focus e sbloccato lo scroll.
+    // Si verifica la card sotto il puntatore senza aspettare un nuovo pointerenter.
+    ricalcolaHover = true;
     pos = mod(fila.scrollLeft);
     ultimo = performance.now();
     fermo = false;
@@ -105,7 +115,12 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
   window.addEventListener('load', inizia, { once: true });
 
   const passo = (t: number) => {
-    if (ultimo && !fermo && !sopra && visibile && !document.querySelector('dialog[open]') && !document.hidden) {
+    const modaleAperta = !!document.querySelector('dialog[open]');
+    if (ricalcolaHover && !modaleAperta) {
+      sopra = puntatoreMouse !== null && fila.contains(document.elementFromPoint(puntatoreMouse.x, puntatoreMouse.y));
+      ricalcolaHover = false;
+    }
+    if (ultimo && !fermo && !sopra && visibile && !modaleAperta && !document.hidden) {
       pos = mod(pos + (giro() / secondi) * ((t - ultimo) / 1000));
       mostra();
     }
@@ -132,19 +147,18 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
 
   // Mouse: pausa al passaggio e trascinamento
   fila.addEventListener('pointerenter', (e) => {
-    if (e.pointerType !== 'mouse' || ignoraHover) return;
+    if (e.pointerType !== 'mouse') return;
+    aggiornaPuntatore(e);
     sopra = true;
   });
   fila.addEventListener('pointerleave', (e) => {
     if (e.pointerType !== 'mouse') return;
     sopra = false;
-    ignoraHover = false;
   });
   let xPrec = 0;
   let totale = 0;
   fila.addEventListener('pointerdown', (e) => {
     if (e.pointerType !== 'mouse' || e.button !== 0) return;
-    ignoraHover = false;
     sopra = true;
     ferma();
     trascinando = true;

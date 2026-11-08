@@ -515,8 +515,24 @@ html:has(dialog[open]) {
   height: 0;
 }
 
+/* X un gradino più piccola del pulsante tondo standard e azzurra con bordo, così si vede sul fondo bianco */
+.evento-chiudi,
+.locandina-chiudi {
+  width: 40px;
+  height: 40px;
+  font-size: var(--text-sm);
+}
+
 .evento-chiudi {
   margin: 1rem 1rem 0 0;
+  border: 2px solid var(--primary-blue-dark);
+  background: var(--primary-blue);
+  box-shadow: var(--shadow-blue);
+}
+
+.evento-chiudi:hover {
+  background: var(--primary-blue-dark);
+  color: var(--white);
 }
 
 .evento-dialog-corpo {

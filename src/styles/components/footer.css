@@ -80,7 +80,7 @@
 }
 
 .footer-brand .footer-ente {
-  margin-top: .9rem;
+  margin: var(--footer-brand-gap) 0 0;
   font-size: var(--footer-note-size);
   color: var(--footer-testo);
 }
@@ -88,7 +88,7 @@
 .footer-social {
   display: flex;
   gap: .6rem;
-  margin-top: 1.5rem;
+  margin-top: var(--footer-brand-gap);
 }
 
 .footer-social a {

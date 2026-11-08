@@ -104,6 +104,8 @@ dialog h2 {
   color: rgb(var(--bianco-rgb) / .88);
   max-width: 38rem;
   margin: 1rem 0 0;
+  /* Righe di lunghezza simile: niente parola sola in coda */
+  text-wrap: balance;
 }
 
 /* Numeri e anni in evidenza */

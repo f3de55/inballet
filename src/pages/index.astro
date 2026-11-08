@@ -219,7 +219,7 @@ const schema = schemaHome(socialImage);
                         <a href={v.href} class="oltre-voce">
                             <Img class="oltre-illustrazione" src={`grafica-oltre/${v.illustrazione}.png`} alt="" aria-hidden="true" width="88" height="88" widths={[160, 320]} sizes="88px" loading="lazy" decoding="async" />
                             <h3 class="oltre-nome">{v.nome}</h3>
-                            <p class="oltre-desc testo-piccolo">{v.testo}</p>
+                            <p class="oltre-desc testo-piccolo" set:html={v.testo} />
                             <p class="link-cta oltre-cta">Scopri di più <i class="fas fa-arrow-right" aria-hidden="true"></i></p>
                         </a>
                     </li>

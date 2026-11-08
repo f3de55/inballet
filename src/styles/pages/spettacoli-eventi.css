@@ -852,6 +852,12 @@ html:has(dialog[open]) {
     margin: .75rem .75rem 0 0;
   }
 
+  .evento-chiudi,
+  .locandina-chiudi {
+    width: 36px;
+    height: 36px;
+  }
+
   .evento-dialog-corpo,
   .evento-dialog-corpo.con-locandina {
     grid-template-columns: minmax(0, 1fr);

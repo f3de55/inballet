@@ -104,6 +104,44 @@
   color: var(--text-muted);
 }
 
+/* PC: età e frequenza in una scheda unica a due righe, con icone e testi sugli stessi allineamenti,
+   invece di due colonne strette dove i valori lunghi andavano a capo a metà */
+@media (min-width: 901px) {
+  .corso-intro-meta {
+    flex-direction: column;
+    gap: 0;
+    max-width: 550px;
+    margin-top: 2.25rem;
+    padding: .5rem 1.75rem;
+    border: 1px solid var(--linea);
+    border-radius: var(--radius-card);
+    background: var(--bg-soft);
+  }
+
+  .corso-meta-card {
+    flex: none;
+    align-items: center;
+    gap: 1.25rem;
+    min-width: 0;
+    padding: 1.1rem 0;
+    background: none;
+  }
+
+  .corso-meta-card + .corso-meta-card {
+    background: var(--linea-alto);
+  }
+
+  .corso-meta-icon {
+    justify-content: center;
+    width: 2rem;
+    padding-top: 0;
+  }
+
+  .corso-meta-info {
+    gap: .2rem;
+  }
+}
+
 .corso-story-image {
   width: 100%;
   max-width: 400px;

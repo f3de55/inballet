@@ -332,8 +332,10 @@ a.info-valore {
 
 .info-social {
   margin-top: 1rem;
-  padding-top: .75rem;
-  border-top: 1px solid var(--linea);
+}
+
+.info-social::before {
+  margin-bottom: .75rem;
 }
 
 .info-social-link {

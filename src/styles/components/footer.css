@@ -512,6 +512,6 @@
   .footer-bottom {
     width: auto;
     padding: 0 1.5rem var(--footer-y);
-    border-top: none;
+    background: none;
   }
 }

@@ -149,7 +149,7 @@ const schema = schemaHome(socialImage);
                             )}
                             <div class="corsi-stile-testo">
                                 <h3 class="corsi-stile-nome">{cat.nome}</h3>
-                                <p class="corsi-stile-desc testo-piccolo">{cat.sintesi}</p>
+                                <p class="corsi-stile-desc testo-piccolo" set:html={enfatizza(cat.sintesi, grassettoStili[cat.id] ?? [])} />
                                 <p class="link-cta corsi-stile-link"><span class="corsi-stile-link-label">Vedi di più</span> <i class="fas fa-arrow-right" aria-hidden="true"></i></p>
                             </div>
                         </a>

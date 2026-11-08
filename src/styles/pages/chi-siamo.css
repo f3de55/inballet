@@ -85,10 +85,6 @@
   border: 0;
 }
 
-.timeline .voce:nth-of-type(3n + 2) {
-  margin-top: 3rem;
-}
-
 .timeline .voce::before {
   content: '';
   position: absolute;

@@ -1,12 +1,7 @@
 ---
-/**
- * Scheda completa di ogni insegnante (foto, nome, ruolo, presentazione, competenze), in una
- * finestra con lo stesso stile del dettaglio evento di Spettacoli ed Eventi. Va messa
- * nello slot `after-main` della pagina, fuori dalle sezioni. Si apre dai pulsanti
- * `[data-apri-insegnante]` di InsegnantiSection.
- */
 import type { SezioneInsegnanti } from '../lib/insegnanti';
 import { grassettoDaTesto } from '../lib/text';
+import '../styles/components/dialogo.css';
 import '../styles/components/insegnanti-dialoghi.css';
 
 interface Props {
@@ -17,11 +12,11 @@ const { insegnanti } = Astro.props.dati;
 ---
 
 {insegnanti.map((p) => (
-  <dialog class="ins-dialog" id={`insegnante-${p.id}`} aria-labelledby={`insegnante-${p.id}-nome`}>
-    <div class="ins-dialog-barra">
+  <dialog class="dialogo ins-dialog" id={`insegnante-${p.id}`} aria-labelledby={`insegnante-${p.id}-nome`}>
+    <div class="dialogo-barra">
       <button type="button" class="btn-icon ins-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
     </div>
-    <div class:list={['ins-dialog-corpo', { 'con-foto': p.foto }]}>
+    <div class:list={['dialogo-corpo', 'ins-dialog-corpo', { 'con-foto': p.foto }]}>
       {p.foto && <img class="ins-dialog-foto" src={p.foto} alt={p.nome} width="800" height="1000" loading="lazy" decoding="async" />}
       <div class="ins-dialog-testo">
         <h2 class="ins-dialog-nome" id={`insegnante-${p.id}-nome`}>{p.nome}</h2>
@@ -41,7 +36,6 @@ const { insegnanti } = Astro.props.dati;
 ))}
 
 <script>
-  // Apertura dalla card o dal pulsante; chiusura con la X, Esc o clic sullo sfondo
   document.addEventListener('click', (e) => {
     const t = e.target as Element;
     const apri = t.closest<HTMLElement>('[data-apri-insegnante]');

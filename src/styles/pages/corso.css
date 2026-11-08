@@ -1,12 +1,7 @@
-/* Stesse proporzioni dei banner preparati: il browser non ritaglia di nuovo
-   volti, mani e piedi. Se il testo richiede più spazio la sezione può crescere. */
 @media (min-width: 769px) {
   .chisiamo-hero.corso-hero {
     min-height: var(--hero-altezza-min);
     aspect-ratio: var(--hero-rapporto);
-    /* Larghezza esplicita: con solo aspect-ratio e min-height, sotto i 1440px Chrome ricava la larghezza
-       dall'altezza minima (22.5rem x 4 = 1440px), il banner esce dallo schermo e la pagina scorre in
-       orizzontale. Così resta largo quanto lo schermo e, se serve, diventa più alto del rapporto */
     width: 100%;
   }
 }
@@ -16,7 +11,7 @@
     aspect-ratio: 8 / 5;
   }
 
-  .corso-hero > .corso-hero-image[style*="--sfondo-lg"][style*="--fuoco-lg"] {
+  .corso-hero > .corso-hero-image[style*='--sfondo-lg'][style*='--fuoco-lg'] {
     background-image: var(--sfondo-md);
     background-position: var(--fuoco-md);
   }
@@ -84,7 +79,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  padding-top: .15rem;
+  padding-top: 0.15rem;
   color: var(--primary-blue-dark);
   font-size: var(--text-xl);
   flex-shrink: 0;
@@ -104,8 +99,6 @@
   color: var(--text-muted);
 }
 
-/* PC: età e frequenza come due righe minimali, senza riquadro: filetto tondo sopra, icona piccola, etichetta
-   a larghezza fissa e valore sulla stessa riga, così le due righe restano sugli stessi allineamenti */
 @media (min-width: 901px) {
   .corso-intro-meta {
     flex-direction: column;
@@ -119,7 +112,7 @@
     align-items: center;
     gap: 1rem;
     min-width: 0;
-    padding: .9rem 0;
+    padding: 0.9rem 0;
   }
 
   .corso-meta-icon {
@@ -211,7 +204,6 @@
   text-wrap: balance;
 }
 
-/* Pittogrammi su forme morbide: un linguaggio distinto dai filetti del metodo. */
 .corso-impara-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -226,12 +218,11 @@
   text-align: center;
 }
 
-/* Separatori interni alla griglia, senza bordi esterni o filetti sopra la prima riga. */
 .impara-competenza:not(:nth-child(3n + 1))::before {
   content: '';
   position: absolute;
-  top: .5rem;
-  bottom: .5rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
   left: -1.5rem;
   width: var(--ls);
   background: var(--linea-sx);
@@ -265,7 +256,7 @@
   inset: 0;
   z-index: -1;
   border-radius: 58% 42% 62% 38% / 45% 57% 43% 55%;
-  background: rgb(var(--blu-rgb) / .28);
+  background: rgb(var(--blu-rgb) / 0.28);
   transform: rotate(-12deg);
 }
 
@@ -274,7 +265,7 @@
 }
 
 .impara-titolo {
-  margin: 0 0 .5rem;
+  margin: 0 0 0.5rem;
   font-size: var(--h4-size);
   font-weight: var(--heading-weight);
   line-height: var(--h4-lh);
@@ -292,8 +283,6 @@
   text-wrap: pretty;
 }
 
-/* Tablet e mobile: una colonna con titolo, foto, testo e dati del corso;
-   tutto allineato a sinistra come nel resto del sito */
 @media (max-width: 900px) {
   .corso-story-layout {
     display: flex;
@@ -310,7 +299,6 @@
     order: 1;
   }
 
-  /* Spazio a sinistra e in basso per la cornice sfalsata, dentro i margini */
   .corso-story-image {
     order: 2;
     width: auto;
@@ -332,7 +320,6 @@
     order: 4;
   }
 
-  /* Intestazioni a sinistra, allineate ai contenuti sotto */
   .corso-metodo-header {
     text-align: left;
   }
@@ -366,7 +353,6 @@
     height: 4.25rem;
     margin-bottom: 1rem;
   }
-
 }
 
 @media (max-width: 768px) {
@@ -374,12 +360,11 @@
   .corso-impara-wrapper {
     padding: 0 1.5rem;
   }
-
 }
 
 @media (max-width: 600px) {
   .corso-story-image {
-    margin: 0 0 2.75rem .75rem;
+    margin: 0 0 2.75rem 0.75rem;
   }
 
   .corso-story-image img {
@@ -390,5 +375,4 @@
     flex-direction: column;
     gap: 1rem;
   }
-
 }

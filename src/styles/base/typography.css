@@ -1,14 +1,3 @@
-/*
- * Tipografia: ogni ruolo (titoli, testo, testo piccolo, etichette, lead, numeri) ha un solo stile,
- * valido in tutte le pagine. Dimensioni, pesi, interlinee e colori stanno in base/variables.css
- * ("Ruoli tipografici"): qui si applicano ai tag e alle classi di ruolo.
- *
- * I componenti e le pagine NON ridefiniscono dimensione, peso, interlinea o colore del testo: scelgono
- * il tag giusto (h1 titolo della pagina, h2 sezione, h3 card/voce, h4 dettaglio, p testo) o una
- * classe di ruolo (.testo-piccolo, .titoletto, .testo-evidenza, .numero-*). Mai uno <span> al posto di p o h3.
- */
-
-/* ---------- Testo corrente ---------- */
 body {
   font-family: var(--font-rubik);
   font-size: var(--body-size);
@@ -17,7 +6,6 @@ body {
   color: var(--body-color);
 }
 
-/* ---------- Titoli ---------- */
 h1,
 h2,
 h3,
@@ -46,7 +34,6 @@ h3 {
   letter-spacing: var(--h3-ls);
 }
 
-/* .titolo-card: titolo di una card piccola (più card per riga, es. i corsi di /corsi), h3 nel documento con la misura da h4 */
 h4,
 .valore,
 .titolo-card {
@@ -55,12 +42,10 @@ h4,
   letter-spacing: var(--h4-ls);
 }
 
-/* Valore in evidenza che non è un titolo (telefono, email, indirizzo): stile h4 */
 .valore {
   font-weight: var(--heading-weight);
 }
 
-/* Titolo di sezione: l'accento in corsivo leggero */
 .titolo-sezione {
   font-weight: var(--heading-weight);
   color: var(--heading-color);
@@ -72,43 +57,28 @@ h4,
   color: var(--primary-blue-dark);
 }
 
-/* Titolo delle finestre modali (evento, insegnante): stesso stile di un h3 */
 dialog h2 {
   font-size: var(--h3-size);
   line-height: var(--h3-lh);
   letter-spacing: var(--h3-ls);
 }
 
-/* ---------- Testo ---------- */
-
-/* Testo piccolo: note, metadati, didascalie, età e frequenze nelle card */
 .testo-piccolo {
   font-size: var(--small-size);
   line-height: var(--small-lh);
   color: var(--small-color);
 }
 
-/* Testo in evidenza (frasi brevi di una lista): stesso corpo del lead, peso normale,
-   grassetto solo sulle parole chiave */
-.testo-evidenza {
-  font-size: var(--lead-size);
-  font-weight: var(--body-weight);
-  line-height: var(--lead-lh);
-}
-
-/* Testo di apertura sotto il titolo delle hero (home e pagine interne) */
 .hero-lead {
   font-size: var(--hero-lead-size);
   font-weight: var(--lead-weight);
   line-height: var(--lead-lh);
-  color: rgb(var(--bianco-rgb) / .88);
+  color: rgb(var(--bianco-rgb) / 0.88);
   max-width: 38rem;
   margin: 1rem 0 0;
-  /* Righe di lunghezza simile: niente parola sola in coda */
   text-wrap: balance;
 }
 
-/* Numeri e anni in evidenza */
 .numero-grande {
   font-size: var(--numero-grande-size);
   font-weight: var(--font-bold);
@@ -121,32 +91,24 @@ dialog h2 {
   line-height: 1;
 }
 
-/* Grassetto nei testi: parole chiave (età, qualifiche, nomi dei corsi), mai frasi intere.
-   Vale solo dentro <main>, così non tocca navbar, footer e chat. */
 main strong,
 main b {
   font-weight: var(--font-semibold);
   color: var(--heading-color);
 }
 
-/* Link dentro il testo corrente (collegamenti tra corsi e pagine): link senza
-   classe propria, al massimo con quella di scoping di Astro (astro-xxxx) */
-main p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
+main p a:is(:not([class]), [class^='astro-']:not([class*=' '])) {
   color: var(--primary-blue-dark);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: .2em;
+  text-underline-offset: 0.2em;
   transition: color var(--transition-base);
 }
 
-main p a:is(:not([class]), [class^="astro-"]:not([class*=" "])):hover {
+main p a:is(:not([class]), [class^='astro-']:not([class*=' '])):hover {
   color: var(--heading-color);
 }
 
-/* ---------- Etichette ---------- */
-
-/* Titoletto: l'etichetta maiuscola del sito (eyebrow sopra i titoli, categorie, date, voci di menu,
-   intestazioni delle tabelle, anche su h2/h3 nel footer e nei box). Un solo stile ovunque. */
 .titoletto,
 .eyebrow {
   font-size: var(--label-size);
@@ -162,7 +124,6 @@ main p a:is(:not([class]), [class^="astro-"]:not([class*=" "])):hover {
   margin-bottom: 1rem;
 }
 
-/* ---------- Su fondo scuro o foto ---------- */
 :where(.hero, .chisiamo-hero, .sezione-scura) :is(h1, h2, h3, h4) {
   color: var(--heading-color-su-scuro);
 }
@@ -185,20 +146,18 @@ main p a:is(:not([class]), [class^="astro-"]:not([class*=" "])):hover {
   color: var(--small-color-su-scuro);
 }
 
-/* Il grassetto è bianco; i link nel testo pure */
 main .sezione-scura strong,
 main .sezione-scura b,
 main .chisiamo-hero strong,
 main .hero strong,
-main .sezione-scura p a:is(:not([class]), [class^="astro-"]:not([class*=" "])) {
+main .sezione-scura p a:is(:not([class]), [class^='astro-']:not([class*=' '])) {
   color: var(--heading-color-su-scuro);
 }
 
-/* Telefono: sul lead delle hero il peso 300 si legge male, qui è più pieno e a tutta larghezza */
 @media (max-width: 768px) {
   .hero-lead {
     font-weight: var(--font-normal);
-    color: rgb(var(--bianco-rgb) / .95);
+    color: rgb(var(--bianco-rgb) / 0.95);
     max-width: none;
     text-wrap: wrap;
   }

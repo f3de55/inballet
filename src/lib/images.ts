@@ -5,7 +5,6 @@ const modules = import.meta.glob<{ default: ImageMetadata }>('../assets/images/*
   eager: true,
 });
 
-/** Risolve "gallery-1.jpg" o "assets/images/gallery-1.jpg" nell'immagine importata. */
 export function getAsset(name: string): ImageMetadata {
   const clean = name.replace(/^\.?\/?(assets\/images\/)?/, '');
   const mod = modules[`../assets/images/${clean}`];
@@ -13,25 +12,18 @@ export function getAsset(name: string): ImageMetadata {
   return mod.default;
 }
 
-/** URL WebP ottimizzato (larghezza massima `width`, mai oltre l'originale). */
 export async function webp(name: string, width = 1280): Promise<string> {
   const src = getAsset(name);
   const img = await getImage({ src, width: Math.min(width, src.width), format: 'webp' });
   return img.src;
 }
 
-/**
- * Punto focale (CSS position, es. "50% 30%") per desktop (>900px), tablet
- * (601-900px) e mobile (<=600px): decide quale parte della foto resta visibile
- * quando viene ritagliata dal riquadro. Se manca, vale quello del formato più grande.
- */
 export interface Fuoco {
   desktop?: string;
   tablet?: string;
   mobile?: string;
 }
 
-/** Variabili CSS del punto focale (lette dalle regole responsive in styles/components/sfondo.css). */
 export function varFuoco(fuoco: Fuoco = {}): string {
   const lg = fuoco.desktop ?? '50% 50%';
   const md = fuoco.tablet ?? lg;
@@ -39,19 +31,12 @@ export function varFuoco(fuoco: Fuoco = {}): string {
   return `--fuoco-lg:${lg};--fuoco-md:${md};--fuoco-sm:${sm};`;
 }
 
-/** Foto diverse per formato (es. un banner largo solo su desktop). */
 type Sorgenti = string | { desktop: string; tablet?: string; mobile?: string };
 
-/**
- * Sfondo responsive: WebP della giusta larghezza per desktop, tablet e mobile
- * con il suo punto focale. `style` va sull'elemento con l'immagine di sfondo;
- * `preload` serve per l'immagine principale della pagina (hero).
- */
 export async function sfondo(sorgenti: Sorgenti, fuoco: Fuoco = {}) {
   const s = typeof sorgenti === 'string' ? { desktop: sorgenti } : sorgenti;
   const tablet = s.tablet ?? s.desktop;
   const mobile = s.mobile ?? tablet;
-  // Mobile e tablet ritagliano in altezza: servono comunque ~1400-1600px per gli schermi retina
   const [lg, md, sm] = await Promise.all([webp(s.desktop, 2560), webp(tablet, 1600), webp(mobile, 1400)]);
   return {
     style: `--sfondo-lg:url('${lg}');--sfondo-md:url('${md}');--sfondo-sm:url('${sm}');${varFuoco(fuoco)}`,
@@ -63,24 +48,20 @@ export async function sfondo(sorgenti: Sorgenti, fuoco: Fuoco = {}) {
   };
 }
 
-/** Fotografie CTA dedicate, con tre tagli e inquadrature per tema. */
 const TEMI_CTA = ['danza', 'urban', 'bambini', 'benessere', 'formazione', 'comunita', 'ascolto'] as const;
 type TemaCta = (typeof TEMI_CTA)[number];
 
-/** I formati si scelgono con gli stessi breakpoint delle CTA (900 e 600px). */
 export function sfondoCta(tema: TemaCta = 'danza') {
-  return sfondo({
-    desktop: `cta/${tema}-desktop.webp`,
-    tablet: `cta/${tema}-tablet.webp`,
-    mobile: `cta/${tema}-mobile.webp`,
-  }, { desktop: tema === 'danza' ? '50% 100%' : '50% 50%', tablet: '50% 50%', mobile: '50% 100%' });
+  return sfondo(
+    {
+      desktop: `cta/${tema}-desktop.webp`,
+      tablet: `cta/${tema}-tablet.webp`,
+      mobile: `cta/${tema}-mobile.webp`,
+    },
+    { desktop: tema === 'danza' ? '50% 100%' : '50% 50%', tablet: '50% 50%', mobile: '50% 100%' },
+  );
 }
 
-/**
- * srcset WebP per le larghezze richieste (limitate all'originale). `rapporto` (altezza /
- * larghezza) ritaglia al centro in quel formato: una foto orizzontale in un riquadro
- * verticale arriva già della forma giusta, invece di essere ingrandita (e sgranata) dal browser.
- */
 export async function webpSrcset(name: string, widths: number[], rapporto?: number) {
   const src = getAsset(name);
   const max = rapporto ? Math.min(src.width, Math.floor(src.height / rapporto)) : src.width;

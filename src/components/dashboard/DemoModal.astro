@@ -1,15 +1,9 @@
 ---
-/**
- * Generatore di dati demo (eventi, messaggi del chatbot o insegnanti) con rimozione.
- * Logica in src/scripts/dashboard/demo.ts, backend in src/lib/demo.ts.
- */
 import { MAX_EVENTI, MAX_INSEGNANTI_DEMO, MAX_MESSAGGI } from '../../lib/demo';
 
 interface Props {
   tipo: 'eventi' | 'chatbot' | 'insegnanti';
-  /** Elementi demo già presenti */
   presenti: number;
-  /** Chatbot: posti liberi nel registro (max 10.000 righe); insegnanti: posti liberi nell'elenco */
   liberi?: number;
 }
 

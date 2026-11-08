@@ -13,23 +13,18 @@ import { schemaHome } from '../lib/schema';
 import { enfatizza } from '../lib/text';
 import { PUBLIC_GOOGLE_PLACE_ID } from 'astro:env/client';
 
-// Video dell'hero (senza audio):
-// AV1 per i browser che lo supportano, H.264 per gli altri; 1080p solo sugli schermi larghi
 import heroAv1Lg from '../assets/video/hero-1080.webm?url';
 import heroMp4Lg from '../assets/video/hero-1080.mp4?url';
 import heroAv1 from '../assets/video/hero-720.webm?url';
 import heroMp4 from '../assets/video/hero-720.mp4?url';
 import '../styles/pages/index.css';
 
-// Corsi: i quattro stili come indice (il dettaglio dei corsi, anche per età, è su /corsi)
 const stili = categorieCorsi.filter((c) => c.id !== 'eta');
 const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
-// Desktop/tablet: sfondi originali; su mobile resta la composizione attuale.
 const fondiDesktop = Object.fromEntries(await Promise.all(stili.map(async (cat) => [
   cat.id, await webpSrcset(`grafica-corsi/${cat.id}.webp`, [640, 960, 1200]),
 ])));
 
-// Parole chiave in grassetto nelle card dei quattro stili (le sintesi restano testo semplice nei dati)
 const grassettoStili: Record<string, string[]> = {
   'classica-moderna': ['3 anni', 'livelli avanzati'],
   contemporanea: ['dai 10 anni in su', 'anche da zero'],
@@ -37,7 +32,6 @@ const grassettoStili: Record<string, string[]> = {
   benessere: ['per il corpo e per la mente'],
 };
 
-// Formazione e progetti, come nel menu del sito: due gruppi con titolo, frase e voci
 const formazione = {
   voci: [
     { nome: 'Formazione Insegnanti di Danza', testo: 'Biennio con <strong>titolo nazionale CSEN e CONI</strong>', href: '/formazione-insegnanti', illustrazione: 'formazione-insegnanti' },
@@ -54,18 +48,12 @@ const progetti = {
     { nome: 'Sostenitori', testo: "Donazioni e <strong>volontariato d'impresa</strong>", href: '/sostenitori', illustrazione: 'sostenitori' },
   ],
 };
-// Le voci di entrambi i gruppi (come nel menu) in un'unica griglia regolare: 8 celle, 4 per riga
 const vociOltre = [...formazione.voci, ...progetti.voci];
 
-// Sfondi responsive: foto e punto focale per desktop, tablet e mobile.
-// Nell'hero è il primo fotogramma del video: si vede finché il video non parte
-// (e resta da sola con "riduci movimento" o risparmio dati)
 const hero = await sfondo('hero-video-poster.jpg');
 
-// Dati strutturati (immagine social 1200x630)
 const socialImage = new URL((await getImage({ src: getAsset('gallery-3.jpg'), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
 const schema = schemaHome(socialImage);
-
 ---
 
 <Base
@@ -82,11 +70,9 @@ const schema = schemaHome(socialImage);
     </Fragment>
 
 
-    <!-- Hero Section Personalizzata -->
     <section class="hero">
         <div class="hero-image" style={hero.style}></div>
 
-        <!-- Decorativo: parte da hero-video.ts (mai con "riduci movimento" o risparmio dati) -->
         <video class="hero-video" muted loop playsinline preload="none" disablepictureinpicture disableRemotePlayback aria-hidden="true" tabindex="-1">
             <source src={heroAv1Lg} type='video/webm; codecs="av01.0.08M.08"' media="(min-width: 1281px)">
             <source src={heroMp4Lg} type='video/mp4; codecs="avc1.640032"' media="(min-width: 1281px)">
@@ -117,10 +103,8 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Sezione Corsi -->
     <section id="corsi" class="corsi-section">
         <div class="corsi-wrapper">
-            <!-- Header -->
             <div class="corsi-header">
                 <p class="corsi-label eyebrow">Corsi di danza a Lainate e Rho</p>
                 <h2 class="corsi-title titolo-sezione" id="corsi-home-titolo">Un corso <em>per ogni età</em></h2>
@@ -131,7 +115,6 @@ const schema = schemaHome(socialImage);
                 </div>
             </div>
 
-            <!-- Figure sporgenti in alto su desktop e ritagliate in basso su mobile; fila sfogliabile su telefono. -->
             <ol class="corsi-indice" id="corsi-home-elenco" tabindex="0" aria-labelledby="corsi-home-titolo">
                 {stili.map((cat) => (
                     <li>
@@ -157,7 +140,6 @@ const schema = schemaHome(socialImage);
                 ))}
             </ol>
 
-            <!-- Chiusura: l'elenco completo dei corsi -->
             <div class="corsi-cta">
                 <a href="/corsi" class="btn-primary">
                     Vedi tutti i {totaleCorsi} corsi
@@ -167,7 +149,6 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Chi Siamo Section -->
     <section id="chi-siamo" class="chi-siamo-section decoro-onde decoro-onde--sinistra">
         <div class="container">
             <div class="story-layout">
@@ -194,7 +175,6 @@ const schema = schemaHome(socialImage);
                     </blockquote>
                 </div>
 
-                <!-- Foto verticale, alta quanto il testo accanto (su mobile torna orizzontale) -->
                 <div class="story-image">
                     <div class="foto-cornice">
                         <Img src="gallery-7.jpg" alt="Insegnanti e allieve di InBallet insieme in sala" width="640" height="800" fuoco={{ desktop: '50% 50%', tablet: '50% 55%' }} loading="lazy" decoding="async" widths={[640, 960, 1280]} sizes="(max-width: 900px) 100vw, 480px" />
@@ -204,7 +184,6 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Griglia illustrata su desktop; su mobile le stesse schede fotografiche dei corsi simili. -->
     <section class="oltre-section" aria-labelledby="oltre-titolo">
         <div class="intro-editoriale">
             <p class="eyebrow">Formazione e progetti</p>
@@ -242,7 +221,6 @@ const schema = schemaHome(socialImage);
                 <p class="intro-sezione">Allievi e famiglie raccontano com'è stare con noi, nelle <strong>recensioni su Google</strong>.</p>
             </div>
 
-            <!-- Valutazione media (compilata da home.ts) e link a tutte le recensioni -->
             <div class="recensioni-sintesi">
                 <div class="sintesi-google" id="googleStatsCard" hidden></div>
                 <a href={`https://search.google.com/local/reviews?placeid=${PUBLIC_GOOGLE_PLACE_ID}`}
@@ -255,7 +233,6 @@ const schema = schemaHome(socialImage);
                 </a>
             </div>
 
-            <!-- Recensioni: una alla volta, frecce e indicatori sotto -->
             <div class="recensioni-carousel testimonials-carousel">
                 <div class="testimonials-track" id="reviewsContainer" aria-live="polite">
                     <div class="testimonials-slide active">
@@ -276,13 +253,10 @@ const schema = schemaHome(socialImage);
         </div>
     </section>
 
-    <!-- Galleria fotografica a scorrimento, con lightbox -->
     <Galleria />
 
-    <!-- Sezione Sostenitori -->
     <SostenitoriSection />
 
-    <!-- Domande frequenti -->
     <section class="faq-section" aria-labelledby="faq-titolo">
         <div class="container faq-layout">
             <div class="faq-intro">

@@ -1,16 +1,3 @@
-/*
- * Linee con le estremità tonde: separatori, filetti e barre colorate. Un bordo CSS ha sempre gli angoli
- * quadri, quindi la linea si disegna con il fondo dell'elemento: due semicerchi per i capi e un tratto
- * in mezzo, senza toccare l'HTML e senza pseudo-elementi.
- *
- * Uso: sull'elemento (o sul suo ::before/::after) si toglie il bordo e si scrive
- *   --lc: <colore>;                       (facoltativo: di base --linea)
- *   --ls: <spessore>;                     (facoltativo: di base --linea-sp, 2px)
- *   background: var(--linea-basso);       (o --linea-alto, --linea-sx, --linea-dx; più linee: separate da virgola)
- * La linea sta dentro il padding box, sul lato scelto. I token sono definiti su ogni elemento perché
- * leggono --lc e --ls dell'elemento che li usa (le custom property con var() si risolvono dove sono dichiarate).
- * La linea è semitrasparente come il colore: i capi non si sovrappongono al tratto, quindi niente macchie.
- */
 *,
 *::before,
 *::after {
@@ -18,32 +5,35 @@
   --ls: var(--linea-sp);
 
   --linea-basso:
-    radial-gradient(circle calc(var(--ls) / 2) at 100% 50%, var(--lc) calc(100% - .5px), transparent) left bottom / calc(var(--ls) / 2) var(--ls) no-repeat,
-    radial-gradient(circle calc(var(--ls) / 2) at 0 50%, var(--lc) calc(100% - .5px), transparent) right bottom / calc(var(--ls) / 2) var(--ls) no-repeat,
+    radial-gradient(circle calc(var(--ls) / 2) at 100% 50%, var(--lc) calc(100% - 0.5px), transparent) left bottom / calc(var(--ls) / 2) var(--ls) no-repeat,
+    radial-gradient(circle calc(var(--ls) / 2) at 0 50%, var(--lc) calc(100% - 0.5px), transparent) right bottom / calc(var(--ls) / 2) var(--ls) no-repeat,
     linear-gradient(var(--lc), var(--lc)) calc(var(--ls) / 2) bottom / calc(100% - var(--ls)) var(--ls) no-repeat;
 
   --linea-alto:
-    radial-gradient(circle calc(var(--ls) / 2) at 100% 50%, var(--lc) calc(100% - .5px), transparent) left top / calc(var(--ls) / 2) var(--ls) no-repeat,
-    radial-gradient(circle calc(var(--ls) / 2) at 0 50%, var(--lc) calc(100% - .5px), transparent) right top / calc(var(--ls) / 2) var(--ls) no-repeat,
+    radial-gradient(circle calc(var(--ls) / 2) at 100% 50%, var(--lc) calc(100% - 0.5px), transparent) left top / calc(var(--ls) / 2) var(--ls) no-repeat,
+    radial-gradient(circle calc(var(--ls) / 2) at 0 50%, var(--lc) calc(100% - 0.5px), transparent) right top / calc(var(--ls) / 2) var(--ls) no-repeat,
     linear-gradient(var(--lc), var(--lc)) calc(var(--ls) / 2) top / calc(100% - var(--ls)) var(--ls) no-repeat;
 
   --linea-sx:
-    radial-gradient(circle calc(var(--ls) / 2) at 50% 100%, var(--lc) calc(100% - .5px), transparent) left top / var(--ls) calc(var(--ls) / 2) no-repeat,
-    radial-gradient(circle calc(var(--ls) / 2) at 50% 0, var(--lc) calc(100% - .5px), transparent) left bottom / var(--ls) calc(var(--ls) / 2) no-repeat,
+    radial-gradient(circle calc(var(--ls) / 2) at 50% 100%, var(--lc) calc(100% - 0.5px), transparent) left top / var(--ls) calc(var(--ls) / 2) no-repeat,
+    radial-gradient(circle calc(var(--ls) / 2) at 50% 0, var(--lc) calc(100% - 0.5px), transparent) left bottom / var(--ls) calc(var(--ls) / 2) no-repeat,
     linear-gradient(var(--lc), var(--lc)) left calc(var(--ls) / 2) / var(--ls) calc(100% - var(--ls)) no-repeat;
 
   --linea-dx:
-    radial-gradient(circle calc(var(--ls) / 2) at 50% 100%, var(--lc) calc(100% - .5px), transparent) right top / var(--ls) calc(var(--ls) / 2) no-repeat,
-    radial-gradient(circle calc(var(--ls) / 2) at 50% 0, var(--lc) calc(100% - .5px), transparent) right bottom / var(--ls) calc(var(--ls) / 2) no-repeat,
+    radial-gradient(circle calc(var(--ls) / 2) at 50% 100%, var(--lc) calc(100% - 0.5px), transparent) right top / var(--ls) calc(var(--ls) / 2) no-repeat,
+    radial-gradient(circle calc(var(--ls) / 2) at 50% 0, var(--lc) calc(100% - 0.5px), transparent) right bottom / var(--ls) calc(var(--ls) / 2) no-repeat,
     linear-gradient(var(--lc), var(--lc)) right calc(var(--ls) / 2) / var(--ls) calc(100% - var(--ls)) no-repeat;
 
-  /* Segno «+» con i capi tondi (fisarmoniche): due barre incrociate di lunghezza --ps, spessore --linea-sp, colore del testo */
   --ps: 12px;
   --piu:
-    radial-gradient(circle calc(var(--linea-sp) / 2) at 100% 50%, currentColor calc(100% - .5px), transparent) calc(50% - var(--ps) / 2 + var(--linea-sp) / 4) 50% / calc(var(--linea-sp) / 2) var(--linea-sp) no-repeat,
-    radial-gradient(circle calc(var(--linea-sp) / 2) at 0 50%, currentColor calc(100% - .5px), transparent) calc(50% + var(--ps) / 2 - var(--linea-sp) / 4) 50% / calc(var(--linea-sp) / 2) var(--linea-sp) no-repeat,
+    radial-gradient(circle calc(var(--linea-sp) / 2) at 100% 50%, currentColor calc(100% - 0.5px), transparent) calc(50% - var(--ps) / 2 + var(--linea-sp) / 4)
+      50% / calc(var(--linea-sp) / 2) var(--linea-sp) no-repeat,
+    radial-gradient(circle calc(var(--linea-sp) / 2) at 0 50%, currentColor calc(100% - 0.5px), transparent) calc(50% + var(--ps) / 2 - var(--linea-sp) / 4)
+      50% / calc(var(--linea-sp) / 2) var(--linea-sp) no-repeat,
     linear-gradient(currentColor, currentColor) center / calc(var(--ps) - var(--linea-sp)) var(--linea-sp) no-repeat,
-    radial-gradient(circle calc(var(--linea-sp) / 2) at 50% 100%, currentColor calc(100% - .5px), transparent) 50% calc(50% - var(--ps) / 2 + var(--linea-sp) / 4) / var(--linea-sp) calc(var(--linea-sp) / 2) no-repeat,
-    radial-gradient(circle calc(var(--linea-sp) / 2) at 50% 0, currentColor calc(100% - .5px), transparent) 50% calc(50% + var(--ps) / 2 - var(--linea-sp) / 4) / var(--linea-sp) calc(var(--linea-sp) / 2) no-repeat,
+    radial-gradient(circle calc(var(--linea-sp) / 2) at 50% 100%, currentColor calc(100% - 0.5px), transparent) 50%
+      calc(50% - var(--ps) / 2 + var(--linea-sp) / 4) / var(--linea-sp) calc(var(--linea-sp) / 2) no-repeat,
+    radial-gradient(circle calc(var(--linea-sp) / 2) at 50% 0, currentColor calc(100% - 0.5px), transparent) 50%
+      calc(50% + var(--ps) / 2 - var(--linea-sp) / 4) / var(--linea-sp) calc(var(--linea-sp) / 2) no-repeat,
     linear-gradient(currentColor, currentColor) center / var(--linea-sp) calc(var(--ps) - var(--linea-sp)) no-repeat;
 }

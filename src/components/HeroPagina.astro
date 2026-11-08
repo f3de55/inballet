@@ -1,0 +1,22 @@
+---
+import Breadcrumb from './Breadcrumb.astro';
+
+interface Props {
+  titolo: string;
+  stile: string;
+  corso?: boolean;
+}
+
+const { titolo, stile, corso = false } = Astro.props;
+const tipo = corso ? 'corso-hero' : 'hero-banner';
+---
+
+<section class:list={['chisiamo-hero', tipo]}>
+    <div class:list={['chisiamo-hero-image', `${tipo}-image`]} style={stile}></div>
+    <div class="chisiamo-hero-overlay"></div>
+    <div class="chisiamo-hero-glass">
+        <Breadcrumb />
+        <h1 class="chisiamo-hero-title">{titolo}</h1>
+        <slot />
+    </div>
+</section>

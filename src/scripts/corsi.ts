@@ -1,4 +1,3 @@
-/** Su mobile la griglia diventa una fila sfogliabile; su desktop tutti i corsi sono visibili. */
 document.querySelectorAll<HTMLElement>('.corsi-stile-contenuto, .corsi-wrapper').forEach((contenuto) => {
   const fila = contenuto.querySelector<HTMLElement>('.corsi-stile-elenco, .corsi-indice');
   const comandi = contenuto.querySelector<HTMLElement>('.corsi-stile-comandi');
@@ -10,7 +9,6 @@ document.querySelectorAll<HTMLElement>('.corsi-stile-contenuto, .corsi-wrapper')
     const fine = fila.scrollWidth - fila.clientWidth;
     comandi.hidden = fine <= 1;
     fila.tabIndex = fine <= 1 ? -1 : 0;
-    // Il primo punto di snap comprende il padding interno della fila.
     const inizio = parseFloat(getComputedStyle(fila).paddingLeft) || 0;
     indietro.disabled = fila.scrollLeft <= inizio + 1;
     avanti.disabled = fila.scrollLeft >= fine - 1;

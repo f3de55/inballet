@@ -1,4 +1,3 @@
-/** Fotografie editoriali generate per le schede della pagina /corsi. */
 export const immaginiSottocorsi: Record<string, { src: string; alt: string }> = {
   'avviamento-danza': { src: 'sottocorsi/avviamento-danza.webp', alt: 'Bambini di tre anni scoprono il movimento giocando con una maestra' },
   'educazione-danza': { src: 'sottocorsi/educazione-danza.webp', alt: 'Bambini di quattro e cinque anni imparano equilibrio e coordinazione in sala' },

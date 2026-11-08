@@ -1,8 +1,4 @@
 ---
-/**
- * Layout comune a tutte le pagine pubbliche: <head> (meta, font, CSS),
- * skip link, banner evento (Server Island), header/navbar, <main> e footer.
- */
 import '../styles/icons.css';
 import '../styles/global.css';
 import { Font, getImage } from 'astro:assets';
@@ -17,11 +13,8 @@ interface Props {
   description: string;
   ogTitle?: string;
   ogDescription?: string;
-  /** Immagine Open Graph / social (default: foto 1200x630 generata) */
   ogImage?: string;
-  /** id dello skip link (la homepage usa "skip-link") */
   skipLinkId?: string;
-  /** tabindex="-1" su <main> (tutte le pagine tranne il calendario eventi) */
   mainFocusable?: boolean;
 }
 
@@ -35,10 +28,8 @@ const {
   mainFocusable = true,
 } = Astro.props;
 
-// URL canonico pulito (come nella sitemap): /chi-siamo, / per la home
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(^|\/)index$/, '/').replace(/(.)\/$/, '$1');
 const canonical = new URL(path, Astro.site).href;
-// Immagine social predefinita 1200x630 (le pagine possono passarne una propria)
 const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
 ---
 
@@ -52,7 +43,6 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
     <meta name="theme-color" content="#87CEEB">
     <link rel="canonical" href={canonical}>
 
-    <!-- Open Graph / social -->
     <meta property="og:type" content="website">
     <meta property="og:locale" content="it_IT">
     <meta property="og:site_name" content="InBallet">
@@ -60,7 +50,6 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
     <meta property="og:title" content={ogTitle ?? title}>
     <meta property="og:description" content={ogDescription ?? description}>
     <meta property="og:image" content={image}>
-    {/* Dimensioni note solo per l'immagine predefinita (le locandine hanno formati diversi) */}
     {!ogImage && <meta property="og:image:width" content="1200">}
     {!ogImage && <meta property="og:image:height" content="630">}
     <meta name="twitter:card" content="summary_large_image">
@@ -78,7 +67,6 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
 <body>
     <a href="#main-content" class="skip-link" id={skipLinkId}>Salta al contenuto principale</a>
 
-    <!-- Banner Evento Prossimo -->
     <Banner server:defer />
 
     <header class="main-header" role="banner">
@@ -95,7 +83,6 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
         <Footer />
     </footer>
 
-    <!-- Fuori dal footer: il suo z-index terrebbe la chat sotto la barra del sito -->
     <Chatbot />
 
     <script>

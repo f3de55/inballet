@@ -1,23 +1,12 @@
-/*
- * Pulsanti e link d'azione: ogni pagina usa queste classi, le pagine definiscono solo il layout.
- * .btn-primary pieno azzurro (principale) · .btn-secondary contorno bianco (su foto/scuro) ·
- * .btn-icon tondo con sola icona (+ varianti) · .link-cta link testuale sottolineato.
- */
-
 .btn-primary,
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .6rem;
-  /* Centratura ottica del testo. Il browser arrotonda a pixel interi ascendente (.935em) e discendente
-     (.25em) di Rubik, quindi con un'altezza di riga fissa le maiuscole (alte .7em) finivano più in alto o più
-     in basso del centro, di un valore diverso a ogni dimensione. Con line-height: normal la riga è
-     ascendente + discendente: si sposta il padding dal basso all'alto della metà della differenza
-     (--btn-sposta), a pixel interi. Verificato misurando i pixel del testo a più larghezze. */
-  --btn-pad: .8rem;
-  --btn-sposta-base: calc((round(nearest, .25em, 1px) - round(nearest, .935em, 1px) + .7em) / 2);
-  --btn-sposta: round(nearest, calc(var(--btn-sposta-base) - max(0px, calc(.25em - round(nearest, .25em, 1px)))), 1px);
+  gap: 0.6rem;
+  --btn-pad: 0.8rem;
+  --btn-sposta-base: calc((round(nearest, 0.25em, 1px) - round(nearest, 0.935em, 1px) + 0.7em) / 2);
+  --btn-sposta: round(nearest, calc(var(--btn-sposta-base) - max(0px, calc(0.25em - round(nearest, 0.25em, 1px)))), 1px);
   padding: calc(round(nearest, var(--btn-pad), 1px) + var(--btn-sposta)) 1.75rem calc(round(nearest, var(--btn-pad), 1px) - var(--btn-sposta));
   border-radius: var(--radius-pill);
   font-size: var(--ui-size);
@@ -27,7 +16,10 @@
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .btn-primary {
@@ -43,17 +35,16 @@
   color: var(--white);
 }
 
-/* Pagina corrente (Contattaci nella navbar quando si è in Contatti) */
-.btn-primary[aria-current="page"] {
+.btn-primary[aria-current='page'] {
   background: var(--white);
   border-color: var(--white);
   color: var(--dark-navy);
 }
 
 .btn-secondary {
-  background: rgb(var(--nero-rgb) / .15);
+  background: rgb(var(--nero-rgb) / 0.15);
   color: var(--white);
-  border: 2px solid rgb(var(--bianco-rgb) / .85);
+  border: 2px solid rgb(var(--bianco-rgb) / 0.85);
   backdrop-filter: blur(10px);
 }
 
@@ -65,7 +56,6 @@
 
 .btn-primary i,
 .btn-secondary i {
-  /* Icona alla stessa scala del testo, centrata sulla riga */
   font-size: var(--icona-in-testo);
   line-height: 1;
   flex-shrink: 0;
@@ -74,9 +64,9 @@
 @media (max-width: 768px) {
   .btn-primary,
   .btn-secondary {
-    --btn-pad: .75rem;
+    --btn-pad: 0.75rem;
     padding: calc(round(nearest, var(--btn-pad), 1px) + var(--btn-sposta)) 1.5rem calc(round(nearest, var(--btn-pad), 1px) - var(--btn-sposta));
-    gap: .4rem;
+    gap: 0.4rem;
     text-align: center;
   }
 }
@@ -84,24 +74,19 @@
 @media (max-width: 480px) {
   .btn-primary,
   .btn-secondary {
-    --btn-pad: .7rem;
+    --btn-pad: 0.7rem;
     padding: calc(round(nearest, var(--btn-pad), 1px) + var(--btn-sposta)) 1.3rem calc(round(nearest, var(--btn-pad), 1px) - var(--btn-sposta));
   }
 }
 
-/* Variante compatta (es. «Trova il tuo corso» nell'hero): testo un gradino più piccolo, meno padding.
-   Specificità maggiore delle media query sopra, così vale a ogni larghezza. */
 .btn-primary.btn-piccolo,
 .btn-secondary.btn-piccolo {
-  --btn-pad: .55rem;
+  --btn-pad: 0.55rem;
   padding: calc(round(nearest, var(--btn-pad), 1px) + var(--btn-sposta)) 1.25rem calc(round(nearest, var(--btn-pad), 1px) - var(--btn-sposta));
-  gap: .45rem;
+  gap: 0.45rem;
   font-size: var(--text-xs);
 }
 
-/* ---------- Pulsanti tondi con sola icona ----------
-   (chiudi, frecce, menu): stessa misura (44px, area di tocco minima), stessa icona;
-   la variante dipende dallo sfondo su cui stanno */
 .btn-icon {
   display: grid;
   place-items: center;
@@ -111,23 +96,25 @@
   padding: 0;
   border: 1px solid transparent;
   border-radius: var(--radius-full);
-  background: rgb(var(--bianco-rgb) / .92);
+  background: rgb(var(--bianco-rgb) / 0.92);
   box-shadow: var(--shadow-sm);
   color: var(--dark-navy);
   font-size: var(--text-base);
   line-height: 1;
   cursor: pointer;
-  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .btn-icon:hover {
   background: var(--primary-blue);
 }
 
-/* Su foto e sfondi scuri */
 .btn-icon--scuro {
-  background: rgb(var(--bianco-rgb) / .15);
-  border-color: rgb(var(--bianco-rgb) / .3);
+  background: rgb(var(--bianco-rgb) / 0.15);
+  border-color: rgb(var(--bianco-rgb) / 0.3);
   box-shadow: none;
   color: var(--white);
 }
@@ -138,10 +125,9 @@
   color: var(--dark-navy);
 }
 
-/* Su fondo chiaro, solo contorno (frecce dei caroselli) */
 .btn-icon--contorno {
   background: transparent;
-  border-color: rgb(var(--navy-rgb) / .2);
+  border-color: rgb(var(--navy-rgb) / 0.2);
   box-shadow: none;
   color: var(--primary-blue-dark);
 }
@@ -152,7 +138,6 @@
   color: var(--dark-navy);
 }
 
-/* Solo icona bianca, senza cerchio (apri e chiudi del menu mobile) */
 .btn-icon--nudo {
   border: none;
   background: none;
@@ -166,12 +151,11 @@
   color: var(--primary-blue);
 }
 
-/* ---------- Link d'azione testuale, sottolineato ---------- */
 .link-cta {
   display: inline-flex;
   align-items: center;
-  gap: .75rem;
-  padding-bottom: .4rem;
+  gap: 0.75rem;
+  padding-bottom: 0.4rem;
   --lc: currentColor;
   background: var(--linea-basso);
   color: var(--dark-navy);
@@ -180,12 +164,16 @@
   letter-spacing: var(--ui-ls);
   text-transform: uppercase;
   text-decoration: none;
-  transition: color .3s ease, border-color .3s ease;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .link-cta i {
   color: var(--black);
-  transition: transform .3s ease, color .3s ease;
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
 }
 
 .link-cta:hover,

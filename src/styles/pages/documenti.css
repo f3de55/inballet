@@ -1,4 +1,3 @@
-/* ---------- Documenti ---------- */
 .documenti-section {
   padding: var(--section-y) 0;
   background: var(--white);
@@ -33,12 +32,12 @@
 .documento-testo {
   display: flex;
   flex-direction: column;
-  gap: .35rem;
+  gap: 0.35rem;
 }
 
 .documento-nome {
   color: var(--dark-navy);
-  transition: color .3s ease;
+  transition: color 0.3s ease;
 }
 
 .documento-azione {
@@ -55,7 +54,6 @@
   white-space: nowrap;
 }
 
-/* Lo statuto ha una destinazione propria, distinta dai moduli. */
 .statuto-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
@@ -93,7 +91,7 @@
   grid-column: 2;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: .75rem 1.5rem;
+  gap: 0.75rem 1.5rem;
 }
 
 .statuto-disponibilita {
@@ -125,7 +123,6 @@
   }
 }
 
-/* ---------- Tablet ---------- */
 @media (max-width: 900px) {
   .statuto-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -133,24 +130,22 @@
   }
 }
 
-/* ---------- Mobile ---------- */
 @media (max-width: 600px) {
-  /* Documento: icona e testo, sotto peso e "Scarica" */
   .documento {
     grid-template-columns: 2rem minmax(0, 1fr);
     align-items: start;
-    gap: .5rem 1rem;
+    gap: 0.5rem 1rem;
     padding: 1.5rem 0;
   }
 
   .documento-icona {
-    padding-top: .15rem;
+    padding-top: 0.15rem;
   }
 
   .documento-azione {
     grid-column: 2;
     justify-content: space-between;
-    margin-top: .75rem;
+    margin-top: 0.75rem;
   }
 
   .statuto-disponibilita {

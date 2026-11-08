@@ -1,8 +1,4 @@
 ---
-/**
- * InBallet Dashboard: gestione eventi, pagina documenti, insegnanti e statistiche del chatbot.
- * Renderizzata on-demand e protetta dalla sessione di login.
- */
 import '../styles/admin/dashboard.css';
 import Admin from '../layouts/Admin.astro';
 import Topbar from '../components/dashboard/Topbar.astro';
@@ -23,7 +19,6 @@ if (Astro.url.searchParams.has('logout')) {
   return Astro.redirect('/login');
 }
 
-// Gli eventi sono il lavoro di tutti i giorni: sezione predefinita
 const s = Astro.url.searchParams.get('s');
 const sezione = s === 'bot' || s === 'documenti' || s === 'insegnanti' ? s : 'eventi';
 const titoli = { eventi: 'Eventi', documenti: 'Documenti', insegnanti: 'Insegnanti', bot: 'Chatbot' };

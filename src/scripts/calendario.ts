@@ -1,15 +1,8 @@
-/**
- * Calendario /spettacoli-eventi: l'elenco arriva già nell'HTML dal server; qui
- * la vista "Calendario" (griglia del mese) e il modale con i dettagli
- * dell'evento, entrambi dai dati di #datiEventi (già pronti da mostrare).
- * Il modale aggiorna l'indirizzo in ?evento=<slug>: il link si può condividere.
- */
-
 interface EventoSito {
   id: string;
   slug: string;
   titolo: string;
-  data: string; // YYYY-MM-DD
+  data: string;
   dataFine: string;
   passato: boolean;
   stato: 'pubblicato' | 'annullato' | 'esaurito';
@@ -17,13 +10,11 @@ interface EventoSito {
   tipo: string;
   quando: string;
   luogo: string;
-  /** Link Google Maps se il luogo è una sede della scuola */
   mappa: string;
   destinatari: string;
   costo: string;
-  descrizione: string; // HTML sanificato dal server (b, i, ul, li, br)
+  descrizione: string;
   immagine: string;
-  /** Vuoti quando non servono (evento concluso, annullato…) */
   prenotazione: string;
   google: string;
   ics: string;
@@ -37,10 +28,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 const escapeHtml = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
 const linkEvento = (e: EventoSito) => `?evento=${encodeURIComponent(e.slug)}`;
 
-// "Oggi" dal server (fuso di Roma), non dall'orologio del visitatore
 const { oggi, aperto, eventi } = JSON.parse($('datiEventi').textContent || '{}') as { oggi: string; aperto: string | null; eventi: EventoSito[] };
-
-// === DIALOG EVENTO ===
 
 const dialog = $<HTMLDialogElement>('eventoDialog');
 const dialogLocandina = $<HTMLDialogElement>('locandinaDialog');
@@ -60,7 +48,9 @@ function apriEvento(slug: string) {
   $('dialogTitolo').textContent = e.titolo;
 
   const luogo = escapeHtml(e.luogo);
-  const dove = e.mappa ? `<a class="evento-mappa" href="${escapeHtml(e.mappa)}" target="_blank" rel="noopener noreferrer" aria-label="${luogo}, indicazioni (si apre in una nuova scheda)">${luogo}&nbsp;<i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>` : luogo;
+  const dove = e.mappa
+    ? `<a class="evento-mappa" href="${escapeHtml(e.mappa)}" target="_blank" rel="noopener noreferrer" aria-label="${luogo}, indicazioni (si apre in una nuova scheda)">${luogo}&nbsp;<i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>`
+    : luogo;
   $('dialogDettagli').innerHTML =
     riga('Quando', escapeHtml(e.quando)) +
     (e.luogo ? riga('Dove', dove) : '') +
@@ -72,8 +62,6 @@ function apriEvento(slug: string) {
   const img = $<HTMLImageElement>('dialogLocandina');
   btnLocandina.hidden = !e.immagine;
   $('dialogCorpo').classList.toggle('con-locandina', !!e.immagine);
-  // Stessa immagine, sfocata, come fondo del riquadro (riempie lo spazio attorno alla locandina).
-  // URL assoluto: in una custom property sarebbe risolto rispetto al foglio di stile.
   btnLocandina.style.setProperty('--locandina', e.immagine ? `url("${new URL(e.immagine, location.href).href}")` : 'none');
   img.src = e.immagine || 'data:,';
   img.alt = e.immagine ? `Locandina: ${e.titolo}` : '';
@@ -81,7 +69,6 @@ function apriEvento(slug: string) {
   const prenota = $<HTMLAnchorElement>('dialogPrenota');
   prenota.hidden = !e.prenotazione;
   prenota.href = e.prenotazione || '#';
-  // Calendari solo per eventi ancora da fare e non annullati
   $('dialogCalendario').hidden = !e.google;
   $<HTMLAnchorElement>('btnGoogle').href = e.google || '#';
   $<HTMLAnchorElement>('btnApple').href = e.ics || '#';
@@ -97,7 +84,6 @@ dialog.addEventListener('close', () => {
   history.replaceState(null, '', location.pathname);
 });
 
-// Chiusura: X o clic sullo sfondo (il dialog stesso, fuori dal contenuto)
 for (const dlg of [dialog, dialogLocandina]) {
   dlg.addEventListener('click', (ev) => {
     const t = ev.target as Element;
@@ -131,7 +117,6 @@ async function condividi() {
 }
 $('btnCondividi').addEventListener('click', () => void condividi());
 
-// Clic su un evento (elenco o griglia): modale invece di ricaricare la pagina
 $('calendario').addEventListener('click', (ev) => {
   const t = ev.target as Element;
   const evento = t.closest<HTMLElement>('[data-evento]');
@@ -139,22 +124,16 @@ $('calendario').addEventListener('click', (ev) => {
     ev.preventDefault();
     return apriEvento(evento.dataset.evento!);
   }
-  // Schermi stretti: le celle mostrano solo un punto, il tocco apre il primo evento del giorno
   const giorno = t.closest<HTMLElement>('.cal-giorno.ha-eventi');
   if (giorno?.dataset.primo) apriEvento(giorno.dataset.primo);
 });
 
-// Link diretto (banner, condivisioni): ?evento=<slug>, già riconosciuto dal server
 if (aperto) apriEvento(aperto);
 
-// === CALENDARIO DEL MESE ===
-
 if (eventi.length) {
-  /** Eventi in corso in un giorno (anche quelli su più giorni). */
   const eventiDel = (data: string) => eventi.filter((e) => e.data <= data && data <= (e.dataFine || e.data));
   const meseOggi = oggi.slice(0, 7);
 
-  /** Mesi "YYYY-MM" consecutivi, dal primo all'ultimo con eventi. */
   function elencoMesi(): string[] {
     const da = eventi[0].data.slice(0, 7);
     const a = eventi.reduce((max, e) => ((e.dataFine || e.data) > max ? e.dataFine || e.data : max), '').slice(0, 7);
@@ -168,7 +147,6 @@ if (eventi.length) {
   }
 
   const mesi = elencoMesi();
-  // Mese corrente se ha senso, altrimenti il primo con eventi futuri, altrimenti l'ultimo
   const corrente = mesi.indexOf(meseOggi);
   const futuro = mesi.findIndex((m) => m >= meseOggi);
   let meseIndex = corrente >= 0 ? corrente : futuro >= 0 ? futuro : mesi.length - 1;
@@ -198,7 +176,6 @@ if (eventi.length) {
         ${evG.length ? '<span class="cal-punti" aria-hidden="true"></span>' : ''}
       </div>`;
     }
-    // Completa l'ultima riga
     const resto = (7 - ((inizio + giorni) % 7)) % 7;
     html += '<div class="cal-giorno vuoto" aria-hidden="true"></div>'.repeat(resto);
     $('calendarioGrid').innerHTML = html;

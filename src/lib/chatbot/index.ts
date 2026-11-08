@@ -1,14 +1,3 @@
-/**
- * Étoile, l'assistente virtuale di InBallet. Percorso di ogni messaggio:
- *
- * 1. pulizia del testo, filtro insulti/spam, limiti per visitatore
- * 2. memoria: ultimi scambi della conversazione (conversazioni.ts)
- * 3. cache: la prima domanda di una chat, se già fatta da altri, ha risposta immediata
- * 4. tetto di spesa giornaliero: superato, si risponde dalle FAQ
- * 5. catena di fornitori AI: se uno è lento parte in parallelo il successivo (fornitori.ts)
- * 6. se nessuno risponde: risposta dalle FAQ, senza AI (offline.ts)
- * 7. registro per la dashboard (registro.ts) e salvataggio dello scambio
- */
 import { sistema } from './conoscenza';
 import { aggiungiScambio, eliminaConversazioniVecchie, leggiConversazione, MAX_SCAMBI, MEMORIA, nuovoId } from './conversazioni';
 import { formatta } from './formato';
@@ -22,30 +11,25 @@ export type { LogEntry } from './registro';
 
 interface Messaggio {
   testo: string;
-  /** ID della conversazione restituito alla risposta precedente */
   conversazione?: string;
   ip: string;
   userAgent: string;
-  /** Indirizzo del sito (da cui il server legge i testi delle pagine) */
   origine: string;
 }
 
 interface Risposta {
-  /** HTML sicuro da mostrare nel fumetto */
   html: string;
   conversazione: string;
 }
 
-// === CACHE DELLE PRIME DOMANDE ===
-
-/**
- * Le domande suggerite e quelle più comuni arrivano identiche da molte persone.
- * La chiave contiene la versione dei contenuti: se il sito cambia, la risposta vecchia non vale più.
- */
 const cache = new Map<string, { testo: string; scade: number }>();
 const CACHE_DURATA = 24 * 3600_000;
 const CACHE_MAX = 300;
-const chiaveCache = (versione: string, msg: string) => `${versione}|${msg.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()}`;
+const chiaveCache = (versione: string, msg: string) =>
+  `${versione}|${msg
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .trim()}`;
 
 function leggiCache(k: string): string | null {
   const c = cache.get(k);
@@ -57,11 +41,8 @@ function salvaCache(k: string, testo: string) {
   cache.set(k, { testo, scade: Date.now() + CACHE_DURATA });
 }
 
-// === MANUTENZIONE ===
-
 let manutenzioneAvviata = false;
 
-/** Ogni 6 ore: conversazioni scadute, visitatori inattivi, cache scaduta. */
 function avviaManutenzione() {
   if (manutenzioneAvviata) return;
   manutenzioneAvviata = true;
@@ -74,9 +55,6 @@ function avviaManutenzione() {
   setInterval(esegui, 6 * 3600_000).unref();
 }
 
-// === RISPOSTA ===
-
-/** All'apertura della chat: legge il sito e prepara il prompt, così la prima domanda non aspetta. */
 export async function prepara(origine: string): Promise<void> {
   avviaManutenzione();
   await sistema(origine);
@@ -92,7 +70,6 @@ export async function rispondi({ testo, conversazione, ip, userAgent, origine }:
   const msg = sanitizza(testo);
   if (!msg) return { html: 'Scrivi la tua domanda.', conversazione: id };
 
-  // Risposta di servizio: registrata ma non salvata nella conversazione
   const rifiuta = (risposta: string, type: 'filtered' | 'blocked') => {
     registra({ ...base, message: msg, risposta, type });
     return { html: formatta(risposta), conversazione: id };
@@ -105,7 +82,6 @@ export async function rispondi({ testo, conversazione, ip, userAgent, origine }:
     return rifiuta(`Questa conversazione è diventata lunga: tocca ↻ in alto per iniziarne una nuova, oppure chiamaci al ${scuola.telefono}.`, 'blocked');
   }
 
-  // Memoria: solo gli scambi con una risposta vera (AI, cache o FAQ)
   const storia = (conv?.scambi ?? []).slice(-MEMORIA).map((s) => ({ domanda: s.domanda, risposta: s.risposta }));
   const salva = (risposta: string, tipo: 'success' | 'cached' | 'offline', modello?: { fornitore: string; modello: string }) =>
     aggiungiScambio(id, ipHash, { domanda: msg, risposta, tipo, ...modello }).catch((e) => console.error('Salvataggio conversazione:', e));

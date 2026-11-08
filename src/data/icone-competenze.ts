@@ -1,4 +1,3 @@
-/** Simboli legati alle sei competenze di ogni corso, nello stesso ordine dei testi. */
 export const iconeCompetenze: Record<string, readonly string[]> = {
   adulti: ['fa-shoe-prints', 'fa-rotate-left', 'fa-list-check', 'fa-spa', 'fa-users', 'fa-dumbbell'],
   'avviamento-danza': ['fa-compass', 'fa-music', 'fa-child', 'fa-users', 'fa-masks-theater', 'fa-eye'],

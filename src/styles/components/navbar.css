@@ -1,6 +1,3 @@
-/* ---------- Header fisso ----------
-   Navbar ridotta dopo lo scroll (classe is-scrolled da navbar.ts). Il layout della pagina continua
-   a usare --header-h: l'header è fisso, quindi nulla si sposta */
 .main-header {
   --nav-h: var(--header-h);
   position: fixed;
@@ -9,17 +6,16 @@
   background: var(--header-dark);
   z-index: 1000;
   transition: background var(--transition-base);
-  box-shadow: 0 2px 20px rgb(var(--nero-rgb) / .3);
+  box-shadow: 0 2px 20px rgb(var(--nero-rgb) / 0.3);
   min-height: var(--nav-h);
 }
 
 .main-header.is-scrolled {
   --nav-h: var(--header-h-scrolled);
-  background: rgb(var(--header-rgb) / .98);
-  box-shadow: 0 4px 20px rgb(var(--nero-rgb) / .4);
+  background: rgb(var(--header-rgb) / 0.98);
+  box-shadow: 0 4px 20px rgb(var(--nero-rgb) / 0.4);
 }
 
-/* Menu mobile aperto: la pagina sotto non scorre */
 html.menu-aperto {
   overflow: hidden;
 }
@@ -31,13 +27,13 @@ html.menu-aperto {
 .nav-link:focus-visible {
   outline: 3px solid var(--primary-blue);
   outline-offset: 2px;
-  background: rgb(var(--blu-rgb) / .15);
+  background: rgb(var(--blu-rgb) / 0.15);
 }
 
 .mega-menu-section a:focus-visible {
   outline: 2px solid var(--primary-blue);
   outline-offset: 0;
-  background: rgb(var(--blu-rgb) / .1);
+  background: rgb(var(--blu-rgb) / 0.1);
 }
 
 .nav-container {
@@ -49,7 +45,9 @@ html.menu-aperto {
   align-items: center;
   height: var(--nav-h);
   min-height: var(--nav-h);
-  transition: height .3s ease, min-height .3s ease;
+  transition:
+    height 0.3s ease,
+    min-height 0.3s ease;
 }
 
 .logo-section {
@@ -62,7 +60,9 @@ html.menu-aperto {
   width: 150px;
   height: auto;
   filter: brightness(1.1);
-  transition: width .3s ease, filter var(--transition-base);
+  transition:
+    width 0.3s ease,
+    filter var(--transition-base);
 }
 
 .main-header.is-scrolled .logo-section img {
@@ -70,26 +70,31 @@ html.menu-aperto {
 }
 
 .nav-menu {
+  position: relative;
   display: flex;
   list-style: none;
   gap: 0;
 }
 
 .nav-link {
+  position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
   text-decoration: none;
   color: var(--white);
   font-weight: var(--font-semibold);
   padding: 1rem 2rem;
-  transition: color var(--transition-base),font-size .3s ease;
+  transition:
+    color var(--transition-base),
+    font-size 0.3s ease;
   cursor: pointer;
   text-transform: uppercase;
   font-size: var(--nav-size);
   line-height: normal;
   letter-spacing: var(--ui-ls);
   border-radius: var(--radius-sm);
-  margin: 0 .2rem;
+  margin: 0 0.2rem;
   border: none;
   background: transparent;
 }
@@ -99,22 +104,15 @@ html.menu-aperto {
   color: var(--white);
 }
 
-/* Voce sotto il mouse (o con il sottomenu aperto): pillola compatta azzurro scuro dietro
-   il testo, più piccola dell'area cliccabile (bianco su #3B72A0: contrasto 5.1:1) */
-.nav-link {
-  position: relative;
-  isolation: isolate;
-}
-
 .nav-link::before {
   content: '';
   position: absolute;
-  inset: .55rem 1.1rem;
+  inset: 0.55rem 1.1rem;
   z-index: -1;
   border-radius: var(--radius-pill);
   background: var(--primary-blue-dark);
   opacity: 0;
-  transition: opacity .2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .nav-item:hover .nav-link::before,
@@ -123,7 +121,6 @@ html.menu-aperto {
   opacity: 1;
 }
 
-/* Sulla pillola anche la voce della sezione attiva torna bianca, per restare leggibile */
 .nav-item:hover .nav-link.attiva,
 .nav-item[data-menu]:hover .nav-link.attiva::after,
 .nav-item:has(.mega-menu.active) .nav-link.attiva,
@@ -137,10 +134,9 @@ html.menu-aperto {
   }
 }
 
-
 .nav-item[data-menu] .nav-link::after {
-  content: "▼";
-  margin-left: .5rem;
+  content: '▼';
+  margin-left: 0.5rem;
   font-size: var(--icona-mini);
   transition: transform var(--transition-base);
   color: var(--white);
@@ -162,24 +158,28 @@ html.menu-aperto {
   transform: rotate(180deg);
 }
 
-.nav-menu {
-  position: relative;
-}
-
-/* Pulsante compatto già nella navbar iniziale, ulteriormente ridotto dopo lo scroll. */
 .nav-container > .btn-primary {
-  transition: background-color .3s ease, color .3s ease, border-color .3s ease, padding .3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    padding 0.3s ease;
 }
 
 .main-header .nav-container > .btn-primary {
-  --btn-pad: .6rem;
+  --btn-pad: 0.6rem;
   padding-inline: 1.2rem;
-  transition: background-color .3s ease, color .3s ease, border-color .3s ease, padding .3s ease, font-size .3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    padding 0.3s ease,
+    font-size 0.3s ease;
 }
 
 .main-header.is-scrolled .nav-container > .btn-primary {
-  --btn-pad: .45rem;
-  padding: calc(round(nearest, var(--btn-pad), 1px) + var(--btn-sposta)) .85rem calc(round(nearest, var(--btn-pad), 1px) - var(--btn-sposta));
+  --btn-pad: 0.45rem;
+  padding: calc(round(nearest, var(--btn-pad), 1px) + var(--btn-sposta)) 0.85rem calc(round(nearest, var(--btn-pad), 1px) - var(--btn-sposta));
   font-size: var(--ui-size-scrolled);
 }
 
@@ -187,54 +187,46 @@ html.menu-aperto {
   font-size: var(--nav-size-scrolled);
 }
 
-/* Corsi: pannello largo centrato, stessa posizione verticale delle tendine compatte */
 .nav-item:not(.nav-item--compatto) {
   position: static;
 }
 
 .mega-menu {
-  /* Distanza dalla pillola della voce padre (la pillola finisce .55rem sopra il bordo basso della voce).
-     Il pannello è ancorato alla voce, non all'header: restringendosi allo scroll la voce e il pannello
-     si muovono insieme e la distanza resta identica */
   --popup-gap: 14px;
   --freccia: 10px;
   position: absolute;
-  top: calc(100% - .55rem + var(--popup-gap));
+  top: calc(100% - 0.55rem + var(--popup-gap));
   left: 50%;
   width: min(1240px, calc(100vw - 3rem));
-  /* Bordo e alone azzurri: il pannello scuro non si confonde con le sezioni scure sotto */
-  border: 1px solid rgb(var(--blu-rgb) / .35);
+  border: 1px solid rgb(var(--blu-rgb) / 0.35);
   border-radius: var(--radius-md);
   height: auto;
   max-height: calc(100vh - var(--nav-h));
   background: var(--header-dark);
-  box-shadow: 0 0 0 1px rgb(var(--blu-rgb) / .08), 0 14px 36px rgb(var(--blu-rgb) / .22);
+  box-shadow:
+    0 0 0 1px rgb(var(--blu-rgb) / 0.08),
+    0 14px 36px rgb(var(--blu-rgb) / 0.22);
   padding: 0;
-  /* Chiusa: invisibile e leggermente più in basso; aperta: dissolvenza verso l'alto */
   visibility: hidden;
   opacity: 0;
-  /* Niente proprietà translate: il minificatore la fonde in transform e da aperto restava 8px più in basso */
   transform: translate(-50%, 8px);
-  transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0s linear 0.2s;
   overflow: visible;
   z-index: 999;
 }
 
-/* Ponte invisibile: il passaggio dalla voce al pannello non lo chiude */
 .mega-menu::before {
   content: '';
   position: absolute;
   left: 0;
   right: 0;
   bottom: 100%;
-  /* Solo lo spazio tra il bordo basso della voce e il pannello: più alto coprirebbe la pillola e ne
-     intercetterebbe i clic */
-  height: calc(var(--popup-gap) - .55rem + 2px);
+  height: calc(var(--popup-gap) - 0.55rem + 2px);
 }
 
-/* Freccetta che punta alla voce padre, dello stesso azzurro della pillola (la posizione orizzontale
-   la imposta navbar.ts con --freccia-x). Sta tutta fuori dal pannello, poggiata sul suo bordo alto: il bordo
-   corre intero sotto la base e la freccetta sembra uscire da dietro il popup, senza scalini */
 .mega-menu::after {
   content: '';
   position: absolute;
@@ -267,26 +259,24 @@ html.menu-aperto {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0;
-  padding: 1.1rem .75rem;
+  padding: 1.1rem 0.75rem;
 }
 
-/* Menu a una sola colonna (La Scuola, Progetti, Formazione): tendina compatta
-   sotto la voce, uguale per tutti; il mega menu a tutta larghezza resta per Corsi */
 .mega-menu--compatto {
   position: absolute;
-  top: calc(100% - .55rem + var(--popup-gap));
+  top: calc(100% - 0.55rem + var(--popup-gap));
   left: 50%;
   width: 340px;
   max-height: none;
   overflow: visible;
-  border: 1px solid rgb(var(--bianco-rgb) / .08);
+  border: 1px solid rgb(var(--bianco-rgb) / 0.08);
   border-radius: var(--radius-md);
 }
 
 .mega-menu--compatto .mega-menu-content {
   display: block;
   max-width: none;
-  padding: 1.1rem 1.5rem .9rem;
+  padding: 1.1rem 1.5rem 0.9rem;
 }
 
 .mega-menu--compatto .mega-menu-section {
@@ -295,8 +285,8 @@ html.menu-aperto {
 }
 
 .mega-menu-section {
-  padding: .75rem 1rem;
-  --lc: rgb(var(--blu-rgb) / .2);
+  padding: 0.75rem 1rem;
+  --lc: rgb(var(--blu-rgb) / 0.2);
   background: var(--linea-dx);
   height: auto;
 }
@@ -308,9 +298,9 @@ html.menu-aperto {
 .mega-menu-section .mega-titolo {
   align-self: end;
   color: var(--primary-blue);
-  margin-bottom: .8rem;
-  padding-bottom: .4rem;
-  --lc: rgb(var(--blu-rgb) / .3);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.4rem;
+  --lc: rgb(var(--blu-rgb) / 0.3);
   background: var(--linea-basso);
 }
 
@@ -319,11 +309,9 @@ html.menu-aperto {
 }
 
 .mega-menu-section li {
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Mega menu Corsi: le colonne condividono solo la riga dei titoli (subgrid), così
-   i filetti restano allineati; le voci scorrono in ogni colonna con passo regolare */
 .mega-menu:not(.mega-menu--compatto) .mega-menu-content {
   grid-template-rows: auto auto;
 }
@@ -338,19 +326,14 @@ html.menu-aperto {
   color: var(--grigio-300);
   text-decoration: none;
   transition: color var(--transition-base);
-  padding: .5rem 0 .5rem 1.2rem;
+  padding: 0.5rem 0 0.5rem 1.2rem;
   display: block;
   font-weight: var(--font-medium);
   font-size: var(--text-xs);
-  /* Altezza di riga a pixel interi: le voci cadono tutte sulla stessa frazione di pixel, così testo e
-     pallino hanno lo stesso allineamento in ogni voce */
   line-height: 1.3;
   line-height: round(up, 1.3em, 1px);
 }
 
-/* Pallino di 5px, dello stesso colore della voce (segue hover e voce attiva). È sulla stessa riga del
-   testo (inline), quindi segue la linea di base delle lettere: sta sempre a metà dell'altezza delle
-   minuscole, identico in ogni voce, e sulla prima riga se la voce va a capo */
 .mega-menu-section a::before {
   content: '';
   display: inline-block;
@@ -359,14 +342,13 @@ html.menu-aperto {
   margin: 0 calc(1.2rem - 5px) 0 -1.2rem;
   border-radius: var(--radius-full);
   background: currentColor;
-  vertical-align: calc(.25em - 1.75px);
+  vertical-align: calc(0.25em - 1.75px);
 }
 
 .mega-menu-section a:hover {
   color: var(--white);
 }
 
-/* Solo desktop: titoli e sottovoci centrati nel popup (senza pallino, che da centrato sbilancerebbe il testo) */
 @media (min-width: 1201px) {
   .mega-menu-section {
     text-align: center;
@@ -380,7 +362,6 @@ html.menu-aperto {
     display: none;
   }
 
-  /* Lineetta leggera e centrata tra una sottovoce e l'altra */
   .mega-menu-section li {
     margin-bottom: 0;
   }
@@ -390,13 +371,12 @@ html.menu-aperto {
     display: block;
     width: 1.75rem;
     height: var(--linea-sp);
-    margin: .15rem auto;
+    margin: 0.15rem auto;
     border-radius: var(--radius-pill);
-    background: rgb(var(--blu-rgb) / .3);
+    background: rgb(var(--blu-rgb) / 0.3);
   }
 }
 
-/* Titolo di gruppo cliccabile (porta alla sua sezione in /corsi): stesso aspetto del titolo semplice */
 .mega-menu-section .mega-titolo a,
 .mobile-gruppo .mobile-gruppo-titolo a {
   display: block;
@@ -412,17 +392,13 @@ html.menu-aperto {
   content: none;
 }
 
-/* Area di tocco 44px, icona a filo destro come la X del menu */
 .mobile-menu-btn {
   display: none;
   margin-right: -2px;
   place-items: center end;
-  /* Nessuno z-index: resta sotto il pannello del menu, che lo copre mentre entra ed esce.
-     Transizione solo sul colore: con "all" anche la scomparsa veniva ritardata */
-  transition: color .3s ease;
+  transition: color 0.3s ease;
 }
 
-/* Menu mobile/tablet: pannello scuro editoriale da destra, sotto l'eventuale banner */
 .mobile-menu {
   position: fixed;
   top: var(--banner-height, 0px);
@@ -433,7 +409,7 @@ html.menu-aperto {
   flex-direction: column;
   padding: 0 2rem 2.5rem;
   background: var(--dark-navy);
-  box-shadow: -20px 0 60px rgb(var(--nero-rgb) / .35);
+  box-shadow: -20px 0 60px rgb(var(--nero-rgb) / 0.35);
   z-index: 1000;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -441,7 +417,9 @@ html.menu-aperto {
   scrollbar-color: var(--linea-su-scuro) transparent;
   transform: translateX(100%);
   visibility: hidden;
-  transition: transform .4s cubic-bezier(.4,0,.2,1), visibility 0s linear .4s;
+  transition:
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s linear 0.4s;
 }
 
 .mobile-menu.active {
@@ -456,11 +434,13 @@ html.menu-aperto {
   left: 0;
   width: 100%;
   height: calc(100dvh - var(--banner-height, 0px));
-  background: rgb(var(--nero-rgb) / .6);
+  background: rgb(var(--nero-rgb) / 0.6);
   z-index: 999;
   opacity: 0;
   visibility: hidden;
-  transition: opacity .4s ease, visibility 0s linear .4s;
+  transition:
+    opacity 0.4s ease,
+    visibility 0s linear 0.4s;
 }
 
 .mobile-overlay.active {
@@ -483,7 +463,6 @@ html.menu-aperto {
   margin: 0;
 }
 
-/* Icona a filo destro, in colonna con le frecce delle voci; area di tocco 44px */
 .mobile-menu-close {
   display: flex;
   align-items: center;
@@ -510,26 +489,25 @@ html.menu-aperto {
   letter-spacing: -0.01em;
   text-align: left;
   cursor: pointer;
-  transition: color .3s ease;
+  transition: color 0.3s ease;
 }
 
-/* Azzurro solo sulla voce padre della pagina corrente: né hover né voce aperta */
 .mobile-nav-toggle.attiva {
   color: var(--primary-blue);
 }
 
-/* Stessa freccia della navbar desktop: triangolo bianco, azzurro solo sulla sezione attiva */
 .mobile-nav-freccia {
   font-size: var(--icona-mini);
   color: var(--white);
-  transition: transform .3s ease, color .3s ease;
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
 }
 
 .mobile-nav-toggle.attiva .mobile-nav-freccia {
   color: var(--primary-blue);
 }
 
-/* Voce aperta: la freccia si gira, i colori non cambiano */
 .mobile-nav-toggle.active .mobile-nav-freccia {
   transform: rotate(180deg);
 }
@@ -537,7 +515,7 @@ html.menu-aperto {
 .mobile-submenu {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows .35s ease;
+  transition: grid-template-rows 0.35s ease;
 }
 
 .mobile-submenu.active {
@@ -554,15 +532,14 @@ html.menu-aperto {
 }
 
 .mobile-gruppo + .mobile-gruppo {
-  padding-top: .75rem;
+  padding-top: 0.75rem;
 }
 
-/* Intestazione del gruppo, non cliccabile: il filetto sotto la separa dalle voci (che sono link) */
 .mobile-gruppo-titolo {
   display: block;
-  margin-bottom: .5rem;
-  padding-bottom: .5rem;
-  --lc: rgb(var(--blu-rgb) / .35);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  --lc: rgb(var(--blu-rgb) / 0.35);
   background: var(--linea-basso);
   color: var(--primary-blue);
 }
@@ -573,12 +550,12 @@ html.menu-aperto {
 
 .mobile-gruppo a {
   display: block;
-  padding: .45rem 0;
+  padding: 0.45rem 0;
   color: var(--testo-su-scuro-debole);
   font-size: var(--text-sm);
   line-height: 1.35;
   text-decoration: none;
-  transition: color .3s ease;
+  transition: color 0.3s ease;
 }
 
 .mobile-gruppo a:hover {
@@ -595,8 +572,6 @@ html.menu-aperto {
   color: inherit;
 }
 
-/* Centrato, larghezza del contenuto (non tutto il pannello) */
-/* Nel pannello mobile le maiuscole risultano più alte del centro: lo spostamento si arrotonda per eccesso */
 .mobile-cta.btn-primary {
   --btn-sposta: round(up, var(--btn-sposta-base), 1px);
 }
@@ -622,7 +597,7 @@ html.menu-aperto {
   }
 }
 
-@media (max-width:1200px) {
+@media (max-width: 1200px) {
   .nav-menu,
   .nav-container > .btn-primary {
     display: none;
@@ -641,18 +616,17 @@ html.menu-aperto {
   }
 }
 
-/* Con il menu mobile aperto il pulsante hamburger lascia il posto alla X */
 html.menu-aperto .mobile-menu-btn {
   visibility: hidden;
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
   .nav-container {
     padding: 0 1.5rem;
   }
 }
 
-@media (max-width:480px) {
+@media (max-width: 480px) {
   .mega-menu {
     width: 100vw;
     left: 0;
@@ -664,12 +638,11 @@ html.menu-aperto .mobile-menu-btn {
     grid-template-columns: 1fr;
   }
 
-
   .mega-menu-section {
     --lc: var(--primary-blue);
     background: var(--linea-basso);
     height: auto;
-    padding: .8rem 1.2rem;
+    padding: 0.8rem 1.2rem;
   }
 
   .mega-menu-section:last-child {
@@ -677,16 +650,15 @@ html.menu-aperto .mobile-menu-btn {
   }
 
   .mega-menu-section .mega-titolo {
-    margin-bottom: .6rem;
-    padding-bottom: .3rem;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.3rem;
   }
 
   .mega-menu-section li {
-    margin-bottom: .4rem;
+    margin-bottom: 0.4rem;
   }
 
   .mega-menu-section a {
-    padding: .4rem 0;
+    padding: 0.4rem 0;
   }
-
 }

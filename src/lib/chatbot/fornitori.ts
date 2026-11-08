@@ -1,13 +1,3 @@
-/**
- * Catena di fornitori AI con fallback. CHATBOT_MODELLI elenca i modelli in
- * ordine di priorità ("fornitore:modello,..."): si prova il primo e, se non
- * risponde (errore, limite, lentezza), il successivo. Un fornitore che
- * fallisce di continuo viene sospeso per qualche minuto (circuit breaker),
- * così chi scrive non aspetta un servizio fuori uso.
- *
- * Due adattatori coprono tutti i fornitori: l'SDK ufficiale per Claude
- * (Anthropic) e l'API "chat completions" compatibile OpenAI per gli altri.
- */
 import Anthropic from '@anthropic-ai/sdk';
 import { CHATBOT_MODELLI, getSecret } from 'astro:env/server';
 import type { Sistema } from './conoscenza';
@@ -15,14 +5,10 @@ import type { Token } from './registro';
 
 interface Fornitore {
   nome: string;
-  /** Variabile d'ambiente con la chiave API */
   chiave: string;
   tipo: 'anthropic' | 'openai';
-  /** Base URL dell'API compatibile OpenAI (o variabile d'ambiente che la contiene) */
   url?: string | { variabile: string };
-  /** Nome del campo per il limite di token in uscita */
   campoMax?: 'max_tokens' | 'max_completion_tokens';
-  /** Parametri aggiuntivi (ragionamento breve per i modelli "reasoning") */
   extra?: (modello: string) => Record<string, unknown>;
 }
 
@@ -65,7 +51,6 @@ const FORNITORI: Record<string, Fornitore> = {
     url: 'https://api.cerebras.ai/v1',
     extra: (m) => (m.startsWith('gpt-oss') ? { reasoning_effort: 'low' } : {}),
   },
-  /** Qualsiasi altra API compatibile OpenAI (Ollama in locale, DeepSeek, Together…) */
   compatibile: { nome: 'API compatibile', chiave: 'CHATBOT_COMPATIBILE_KEY', tipo: 'openai', url: { variabile: 'CHATBOT_COMPATIBILE_URL' } },
 };
 
@@ -73,16 +58,11 @@ const baseUrl = (f: Fornitore) => (typeof f.url === 'string' ? f.url : f.url && 
 const configurato = (f: Fornitore) => !!getSecret(f.chiave) && (f.tipo === 'anthropic' || !!baseUrl(f));
 
 const CONFIG = {
-  /** Token in uscita: risposte brevi, ma i modelli "reasoning" contano anche il ragionamento */
   maxToken: 1200,
-  /** Attesa massima per un fornitore */
   timeout: 12_000,
-  /** Se il fornitore in corso non ha ancora risposto, dopo questo tempo parte in parallelo il successivo */
   riserva: 5_000,
-  /** Errori (o risposte troppo lente) di fila prima della sospensione */
   erroriMax: 3,
   sospensione: 5 * 60_000,
-  /** Sospensione per chiave o modello non validi: va corretta la configurazione */
   sospensioneConfig: 30 * 60_000,
 };
 
@@ -91,7 +71,6 @@ export interface Anello {
   modello: string;
 }
 
-/** Catena configurata, compresi i fornitori senza chiave (mostrati in dashboard). */
 function catena(): (Anello & { nome: string; attivo: boolean })[] {
   return CHATBOT_MODELLI.split(',')
     .map((voce) => voce.trim())
@@ -108,8 +87,6 @@ function catena(): (Anello & { nome: string; attivo: boolean })[] {
     .map((a) => ({ ...a, nome: FORNITORI[a.fornitore].nome, attivo: configurato(FORNITORI[a.fornitore]) }));
 }
 
-// === CIRCUIT BREAKER ===
-
 interface Stato {
   errori: number;
   sospesoFino: number;
@@ -121,7 +98,6 @@ const stati = new Map<string, Stato>();
 const chiave = (a: Anello) => `${a.fornitore}:${a.modello}`;
 const statoDi = (a: Anello) => stati.get(chiave(a)) ?? stati.set(chiave(a), { errori: 0, sospesoFino: 0 }).get(chiave(a))!;
 
-/** Stato di ogni anello della catena, per la dashboard. */
 export function statoCatena() {
   return catena().map((a) => {
     const s = stati.get(chiave(a));
@@ -133,7 +109,6 @@ class ErroreFornitore extends Error {
   constructor(
     message: string,
     readonly status = 0,
-    /** Secondi indicati dal fornitore prima di riprovare */
     readonly riprovaTra?: number,
   ) {
     super(message);
@@ -146,7 +121,6 @@ function registraErrore(a: Anello, e: ErroreFornitore) {
   s.quando = Date.now();
   s.errori++;
   if (e.status === 429) {
-    // Limite del fornitore: si rispetta l'attesa indicata (tra 20 secondi e 15 minuti)
     s.sospesoFino = Date.now() + Math.min(Math.max(e.riprovaTra ?? 60, 20), 900) * 1000;
   } else if ([400, 401, 403, 404, 422].includes(e.status)) {
     s.sospesoFino = Date.now() + CONFIG.sospensioneConfig;
@@ -154,8 +128,6 @@ function registraErrore(a: Anello, e: ErroreFornitore) {
     s.sospesoFino = Date.now() + CONFIG.sospensione;
   }
 }
-
-// === CHIAMATE ===
 
 interface Scambio {
   domanda: string;
@@ -219,7 +191,6 @@ async function chiamaOpenAI(f: Fornitore, modello: string, chiaveApi: string, r:
       ingresso,
       cache: u.prompt_tokens_details?.cached_tokens ?? 0,
       scritturaCache: 0,
-      // Alcuni fornitori non contano il ragionamento in completion_tokens ma sì nel totale
       uscita: Math.max(u.completion_tokens ?? 0, (u.total_tokens ?? 0) - ingresso),
     },
   };
@@ -227,7 +198,6 @@ async function chiamaOpenAI(f: Fornitore, modello: string, chiaveApi: string, r:
 
 async function chiamaAnthropic(modello: string, chiaveApi: string, r: Richiesta): Promise<RispostaModello> {
   const client = new Anthropic({ apiKey: chiaveApi, maxRetries: 0, timeout: CONFIG.timeout });
-  // L'effort non esiste sui modelli 4.5 e precedenti
   const effort = /claude-(3|haiku-4-5|sonnet-4-5|opus-4-1)/.test(modello) ? {} : { output_config: { effort: 'low' as const } };
   let msg: Anthropic.Message;
   try {
@@ -235,8 +205,6 @@ async function chiamaAnthropic(modello: string, chiaveApi: string, r: Richiesta)
       {
         model: modello,
         max_tokens: CONFIG.maxToken,
-        // Due punti di cache: la parte fissa resta valida anche quando cambia la variabile.
-        // Cache di 1 ora sulla parte fissa: con poco traffico quella di 5 minuti scadrebbe tra una domanda e l'altra
         system: [
           { type: 'text', text: r.sistema.fisso, cache_control: { type: 'ephemeral', ttl: '1h' } },
           { type: 'text', text: r.sistema.variabile, cache_control: { type: 'ephemeral' } },
@@ -277,33 +245,22 @@ interface Tentativo extends Anello {
   errore: string;
 }
 
-type Esito =
-  | ({ ok: true; testo: string; token: Token; ms: number; tentativi: Tentativo[] } & Anello)
-  | { ok: false; tentativi: Tentativo[] };
+type Esito = ({ ok: true; testo: string; token: Token; ms: number; tentativi: Tentativo[] } & Anello) | { ok: false; tentativi: Tentativo[] };
 
 const SOVRACCARICO = [502, 503, 529];
 
-/**
- * Prova la catena senza mai restare in fila dietro a un fornitore lento:
- * parte il primo; se sbaglia si passa subito al successivo, se dopo
- * CONFIG.riserva non ha ancora risposto il successivo parte in parallelo.
- * Vince la prima risposta valida, le altre richieste vengono annullate e il
- * fornitore battuto conta un errore (così uno lento di continuo va in pausa).
- * Un fornitore sovraccarico (503) viene riprovato una volta, in fondo alla coda.
- * Con `solo` prova un unico anello, anche se sospeso (verifica dalla dashboard).
- */
 export function chiediAlModello(d: Domanda, solo?: Anello): Promise<Esito> {
   const inizio = Date.now();
   const coda: (Anello & { riprova?: boolean })[] = solo
-    ? FORNITORI[solo.fornitore] && configurato(FORNITORI[solo.fornitore]) ? [solo] : []
+    ? FORNITORI[solo.fornitore] && configurato(FORNITORI[solo.fornitore])
+      ? [solo]
+      : []
     : catena().filter((a) => a.attivo && statoDi(a).sospesoFino <= Date.now());
   const tentativi: Tentativo[] = [];
-  /** Richieste in corso con l'ora di partenza */
   const inCorso = new Map<AbortController, Anello & { t0: number }>();
 
   return new Promise((risolvi) => {
     let chiuso = false;
-    /** `partenza`: quando era partito il vincitore; chi era partito prima ed è stato battuto conta un errore */
     const fine = (esito: Esito, partenza = 0) => {
       if (chiuso) return;
       chiuso = true;
@@ -340,7 +297,7 @@ export function chiediAlModello(d: Domanda, solo?: Anello): Promise<Esito> {
         })
         .catch((e) => {
           inCorso.delete(ac);
-          if (chiuso) return; // annullato perché un altro ha già risposto: non è un errore
+          if (chiuso) return;
           const errore = e instanceof ErroreFornitore ? e : new ErroreFornitore((e as Error).message);
           registraErrore(a, errore);
           tentativi.push({ fornitore: a.fornitore, modello: a.modello, errore: errore.message.slice(0, 200) });

@@ -1,8 +1,3 @@
-/**
- * Dati demo per la dashboard: eventi completi (con locandina generata) e
- * messaggi del chatbot. Tutto ciò che nasce qui ha `demo: true`, così può
- * essere rimosso senza toccare i dati veri.
- */
 import { randomBytes } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { readdir, rename, stat, unlink, writeFile } from 'node:fs/promises';
@@ -19,34 +14,24 @@ export const MAX_EVENTI = 60;
 export const MAX_MESSAGGI = 2000;
 const MAX_LOG = 10000;
 
-// === RISORSE (foto e font) ===
-
-/** Prima cartella esistente: nel container (demo/foto) o nel progetto (src/assets/images). */
 const cartella = (...candidati: string[]) => candidati.map((c) => path.resolve(c)).find((c) => existsSync(c)) ?? path.resolve(candidati[0]);
 const DIR_FOTO = cartella('demo/foto', 'src/assets/images');
 const DIR_FONT = cartella('demo/fonts');
 
-// === MODELLI DI EVENTO ===
-
 interface Modello {
   tipo: string;
   titolo: string;
-  /** Titolo breve della locandina, a capo con \n */
   locandina: string;
   luogo: string;
   sede: string;
   ora: string;
-  /** Ora di fine, se nota */
   oraFine?: string;
-  /** Si svolge anche il giorno dopo (stage del weekend: inizia di sabato) */
   dueGiorni?: boolean;
   descrizione: string;
   destinatari: string;
   costo: string;
   foto: string;
-  /** Solo sabato e domenica */
   weekend?: boolean;
-  /** Solo il lunedì (NoiConVoi) */
   lunedi?: boolean;
 }
 
@@ -54,46 +39,262 @@ const LAINATE = 'Sede di Lainate, Via Puccini 14';
 const RHO = 'Sede di Rho, Via Tevere 19';
 
 const MODELLI: Modello[] = [
-  { tipo: 'Spettacolo', titolo: 'Spettacolo di fine anno', locandina: 'Spettacolo\ndi fine anno', luogo: 'Teatro Comunale di Lainate', sede: 'Teatro di Lainate', ora: '20:30', oraFine: '22:30', weekend: true, foto: 'gallery-6',
-    descrizione: 'Tutti i corsi della scuola sul palco per chiudere l\'anno accademico.<ul><li>Durata: circa due ore con intervallo</li><li>Biglietti in segreteria</li></ul>', destinatari: 'Famiglie e amici degli allievi', costo: '10 €' },
-  { tipo: 'Spettacolo', titolo: 'Galà di Natale', locandina: 'Galà\ndi Natale', luogo: 'Teatro Civico di Rho', sede: 'Teatro di Rho', ora: '20:45', weekend: true, foto: 'gallery-10',
-    descrizione: 'Coreografie di <b>classica, modern e urban</b> per festeggiare insieme le feste.', destinatari: 'Aperto a tutti', costo: '12 €' },
-  { tipo: 'Saggio', titolo: 'Saggio dei corsi bambini', locandina: 'Saggio\ndei piccoli', luogo: 'Teatro Comunale di Lainate', sede: 'Teatro di Lainate', ora: '16:00', weekend: true, foto: 'hero-bg',
-    descrizione: 'Avviamento ed Educazione alla Danza portano in scena il lavoro dell\'anno.<ul><li>Ingresso dalle 15:30</li><li>Posti non numerati</li></ul>', destinatari: 'Famiglie degli allievi', costo: '8 €' },
-  { tipo: 'Workshop', titolo: 'Workshop di danza contemporanea', locandina: 'Corpo\nin ascolto', luogo: RHO, sede: 'Sede di Rho', ora: '10:30', foto: 'gallery-2',
-    descrizione: 'Tre ore di lavoro su <b>improvvisazione</b> e composizione con una coreografa ospite.<ul><li>Livello intermedio/avanzato</li><li>Abbigliamento comodo, piedi nudi</li></ul>', destinatari: 'Allievi intermedi e avanzati, dai 14 anni', costo: '35 €' },
-  { tipo: 'Workshop', titolo: 'Workshop di Hip-Hop e Krumping', locandina: 'Energia\nurban', luogo: RHO, sede: 'Sede di Rho', ora: '15:00', foto: 'gallery-5',
-    descrizione: 'Un pomeriggio dedicato alla cultura Hip-Hop: <b>Old School</b>, Popping e Krumping con un insegnante ospite.', destinatari: 'Ragazzi dai 10 anni', costo: '25 €' },
-  { tipo: 'Workshop', titolo: 'Workshop di Heels', locandina: 'Heels\nworkshop', luogo: LAINATE, sede: 'Sede di Lainate', ora: '18:30', foto: 'gallery-3',
-    descrizione: 'Portamento, linee e musicalità sui tacchi. Si consiglia una base di tecnica.<ul><li>Portare scarpe con tacco stabile</li></ul>', destinatari: 'Dai 16 anni', costo: '25 €' },
-  { tipo: 'Workshop', titolo: 'Workshop di Pilates per danzatori', locandina: 'Pilates\nper danzatori', luogo: LAINATE, sede: 'Sede di Lainate', ora: '10:00', foto: 'gallery-9',
-    descrizione: 'Il lavoro sulla <b>Power House</b> applicato alla danza: controllo, respiro e stabilità.', destinatari: 'Allievi e adulti di tutti i livelli', costo: '20 €' },
-  { tipo: 'Lezione aperta', titolo: 'Lezione aperta di danza classica', locandina: 'Classica\na porte aperte', luogo: LAINATE, sede: 'Sede di Lainate', ora: '18:30', foto: 'ballerina',
-    descrizione: 'Le famiglie assistono alla lezione: sbarra, centro e diagonali come in un giorno normale.', destinatari: 'Famiglie degli allievi', costo: 'Gratuito' },
-  { tipo: 'Lezione aperta', titolo: 'Lezione aperta di Avviamento alla Danza', locandina: 'I primi\npassi', luogo: LAINATE, sede: 'Sede di Lainate', ora: '17:00', foto: 'gallery-8',
-    descrizione: 'Le famiglie assistono alla lezione dei bimbi che hanno compiuto <b>3 anni</b>: gioco, musica e movimento.', destinatari: 'Bambini dai 3 ai 4 anni con un genitore', costo: 'Gratuito' },
-  { tipo: 'Lezione aperta', titolo: 'Lezione aperta di Breaking', locandina: 'Breaking\nday', luogo: RHO, sede: 'Sede di Rho', ora: '17:30', foto: 'gallery-5',
-    descrizione: 'Passi in piedi, lavoro al pavimento e il primo <b>freeze</b>. Classi a numero chiuso.', destinatari: 'Bambini e ragazzi dai 6 anni', costo: 'Gratuito' },
-  { tipo: 'Open Day', titolo: 'Open Day: porte aperte a Lainate', locandina: 'Porte\naperte', luogo: LAINATE, sede: 'Sede di Lainate', ora: '15:00', weekend: true, foto: 'gallery-7',
-    descrizione: 'Un pomeriggio per conoscere la scuola e incontrare le insegnanti. <b>Prenotazione consigliata.</b>', destinatari: 'Bambini dai 3 anni, ragazzi e adulti', costo: 'Gratuito' },
-  { tipo: 'Open Day', titolo: 'Open Day: porte aperte a Rho', locandina: 'Vieni\na trovarci', luogo: RHO, sede: 'Sede di Rho', ora: '15:00', weekend: true, foto: 'gallery-4',
-    descrizione: 'Un pomeriggio per conoscere la scuola, vedere le sale e chiedere informazioni sulle iscrizioni.', destinatari: 'Aperto a tutti', costo: 'Gratuito' },
-  { tipo: 'Stage', titolo: 'Stage intensivo di danza classica', locandina: 'Stage\nclassico', luogo: RHO, sede: 'Sede di Rho', ora: '10:00', oraFine: '17:00', dueGiorni: true, foto: 'hero-bg',
-    descrizione: 'Due lezioni di tecnica e una di <b>repertorio</b> con maître ospite.<ul><li>Livello avanzato</li><li>Iscrizione obbligatoria</li></ul>', destinatari: 'Allievi avanzati, dai 12 anni', costo: '45 €' },
-  { tipo: 'Stage', titolo: 'Stage di danza moderna', locandina: 'Modern\nstage', luogo: RHO, sede: 'Sede di Rho', ora: '14:00', weekend: true, foto: 'hero-danza-contemporanea',
-    descrizione: 'Contrazione e rilascio, linee e dinamiche dello stile <b>Modern</b> in un pomeriggio di studio.', destinatari: 'Dai 10 anni', costo: '30 €' },
-  { tipo: 'Rassegna', titolo: 'Rassegna "Danza in città"', locandina: 'Danza\nin città', luogo: 'Villa Litta, Lainate', sede: 'Villa Litta', ora: '18:00', weekend: true, foto: 'gallery-1',
-    descrizione: 'Scuole del territorio e allievi InBallet insieme in una serata all\'aperto.', destinatari: 'Aperto a tutti', costo: 'Gratuito' },
-  { tipo: 'Concorso', titolo: 'Concorso coreografico regionale', locandina: 'Giovani\ntalenti', luogo: 'Teatro Nuovo, Milano', sede: 'Milano', ora: '09:30', weekend: true, foto: 'gallery-3',
-    descrizione: 'I gruppi di Modern e Contemporanea partecipano con le coreografie dell\'anno.', destinatari: 'Allievi selezionati e famiglie', costo: 'Ingresso 10 €' },
-  { tipo: 'Festa', titolo: 'Festa di Carnevale in danza', locandina: 'Carnevale\nin danza', luogo: LAINATE, sede: 'Sede di Lainate', ora: '15:30', weekend: true, foto: 'gallery-1',
-    descrizione: 'Pomeriggio in maschera con giochi musicali e balli di gruppo.', destinatari: 'Bambini e famiglie', costo: 'Gratuito' },
-  { tipo: 'Festa', titolo: 'Festa di fine estate', locandina: 'Fine\nestate', luogo: 'Piazza Vittorio Emanuele, Lainate', sede: 'Lainate', ora: '18:00', weekend: true, foto: 'gallery-6',
-    descrizione: 'Esibizioni in piazza e presentazione dei corsi del nuovo anno.', destinatari: 'Aperto a tutti', costo: 'Gratuito' },
-  { tipo: 'Workshop', titolo: 'Movimento Creativo: incontro di ricerca', locandina: 'Movimento\ncreativo', luogo: LAINATE, sede: 'Sede di Lainate', ora: '20:00', foto: 'gallery-9',
-    descrizione: 'Una sessione per adulti, anche non danzatori: respiro, ascolto e <i>atto creativo</i>.', destinatari: 'Adulti dai 18 anni', costo: '15 €' },
-  { tipo: 'Lezione aperta', titolo: 'NoiConVoi: lezione aperta ai volontari', locandina: 'Noi\ncon voi', luogo: LAINATE, sede: 'Sede di Lainate', ora: '20:00', lunedi: true, foto: 'gallery-8',
-    descrizione: 'Chi vuole diventare volontario del progetto può partecipare a una lezione del lunedì sera.', destinatari: 'Volontari, anche non danzatori', costo: 'Gratuito' },
+  {
+    tipo: 'Spettacolo',
+    titolo: 'Spettacolo di fine anno',
+    locandina: 'Spettacolo\ndi fine anno',
+    luogo: 'Teatro Comunale di Lainate',
+    sede: 'Teatro di Lainate',
+    ora: '20:30',
+    oraFine: '22:30',
+    weekend: true,
+    foto: 'gallery-6',
+    descrizione:
+      "Tutti i corsi della scuola sul palco per chiudere l'anno accademico.<ul><li>Durata: circa due ore con intervallo</li><li>Biglietti in segreteria</li></ul>",
+    destinatari: 'Famiglie e amici degli allievi',
+    costo: '10 €',
+  },
+  {
+    tipo: 'Spettacolo',
+    titolo: 'Galà di Natale',
+    locandina: 'Galà\ndi Natale',
+    luogo: 'Teatro Civico di Rho',
+    sede: 'Teatro di Rho',
+    ora: '20:45',
+    weekend: true,
+    foto: 'gallery-10',
+    descrizione: 'Coreografie di <b>classica, modern e urban</b> per festeggiare insieme le feste.',
+    destinatari: 'Aperto a tutti',
+    costo: '12 €',
+  },
+  {
+    tipo: 'Saggio',
+    titolo: 'Saggio dei corsi bambini',
+    locandina: 'Saggio\ndei piccoli',
+    luogo: 'Teatro Comunale di Lainate',
+    sede: 'Teatro di Lainate',
+    ora: '16:00',
+    weekend: true,
+    foto: 'hero-bg',
+    descrizione: "Avviamento ed Educazione alla Danza portano in scena il lavoro dell'anno.<ul><li>Ingresso dalle 15:30</li><li>Posti non numerati</li></ul>",
+    destinatari: 'Famiglie degli allievi',
+    costo: '8 €',
+  },
+  {
+    tipo: 'Workshop',
+    titolo: 'Workshop di danza contemporanea',
+    locandina: 'Corpo\nin ascolto',
+    luogo: RHO,
+    sede: 'Sede di Rho',
+    ora: '10:30',
+    foto: 'gallery-2',
+    descrizione:
+      'Tre ore di lavoro su <b>improvvisazione</b> e composizione con una coreografa ospite.<ul><li>Livello intermedio/avanzato</li><li>Abbigliamento comodo, piedi nudi</li></ul>',
+    destinatari: 'Allievi intermedi e avanzati, dai 14 anni',
+    costo: '35 €',
+  },
+  {
+    tipo: 'Workshop',
+    titolo: 'Workshop di Hip-Hop e Krumping',
+    locandina: 'Energia\nurban',
+    luogo: RHO,
+    sede: 'Sede di Rho',
+    ora: '15:00',
+    foto: 'gallery-5',
+    descrizione: 'Un pomeriggio dedicato alla cultura Hip-Hop: <b>Old School</b>, Popping e Krumping con un insegnante ospite.',
+    destinatari: 'Ragazzi dai 10 anni',
+    costo: '25 €',
+  },
+  {
+    tipo: 'Workshop',
+    titolo: 'Workshop di Heels',
+    locandina: 'Heels\nworkshop',
+    luogo: LAINATE,
+    sede: 'Sede di Lainate',
+    ora: '18:30',
+    foto: 'gallery-3',
+    descrizione: 'Portamento, linee e musicalità sui tacchi. Si consiglia una base di tecnica.<ul><li>Portare scarpe con tacco stabile</li></ul>',
+    destinatari: 'Dai 16 anni',
+    costo: '25 €',
+  },
+  {
+    tipo: 'Workshop',
+    titolo: 'Workshop di Pilates per danzatori',
+    locandina: 'Pilates\nper danzatori',
+    luogo: LAINATE,
+    sede: 'Sede di Lainate',
+    ora: '10:00',
+    foto: 'gallery-9',
+    descrizione: 'Il lavoro sulla <b>Power House</b> applicato alla danza: controllo, respiro e stabilità.',
+    destinatari: 'Allievi e adulti di tutti i livelli',
+    costo: '20 €',
+  },
+  {
+    tipo: 'Lezione aperta',
+    titolo: 'Lezione aperta di danza classica',
+    locandina: 'Classica\na porte aperte',
+    luogo: LAINATE,
+    sede: 'Sede di Lainate',
+    ora: '18:30',
+    foto: 'ballerina',
+    descrizione: 'Le famiglie assistono alla lezione: sbarra, centro e diagonali come in un giorno normale.',
+    destinatari: 'Famiglie degli allievi',
+    costo: 'Gratuito',
+  },
+  {
+    tipo: 'Lezione aperta',
+    titolo: 'Lezione aperta di Avviamento alla Danza',
+    locandina: 'I primi\npassi',
+    luogo: LAINATE,
+    sede: 'Sede di Lainate',
+    ora: '17:00',
+    foto: 'gallery-8',
+    descrizione: 'Le famiglie assistono alla lezione dei bimbi che hanno compiuto <b>3 anni</b>: gioco, musica e movimento.',
+    destinatari: 'Bambini dai 3 ai 4 anni con un genitore',
+    costo: 'Gratuito',
+  },
+  {
+    tipo: 'Lezione aperta',
+    titolo: 'Lezione aperta di Breaking',
+    locandina: 'Breaking\nday',
+    luogo: RHO,
+    sede: 'Sede di Rho',
+    ora: '17:30',
+    foto: 'gallery-5',
+    descrizione: 'Passi in piedi, lavoro al pavimento e il primo <b>freeze</b>. Classi a numero chiuso.',
+    destinatari: 'Bambini e ragazzi dai 6 anni',
+    costo: 'Gratuito',
+  },
+  {
+    tipo: 'Open Day',
+    titolo: 'Open Day: porte aperte a Lainate',
+    locandina: 'Porte\naperte',
+    luogo: LAINATE,
+    sede: 'Sede di Lainate',
+    ora: '15:00',
+    weekend: true,
+    foto: 'gallery-7',
+    descrizione: 'Un pomeriggio per conoscere la scuola e incontrare le insegnanti. <b>Prenotazione consigliata.</b>',
+    destinatari: 'Bambini dai 3 anni, ragazzi e adulti',
+    costo: 'Gratuito',
+  },
+  {
+    tipo: 'Open Day',
+    titolo: 'Open Day: porte aperte a Rho',
+    locandina: 'Vieni\na trovarci',
+    luogo: RHO,
+    sede: 'Sede di Rho',
+    ora: '15:00',
+    weekend: true,
+    foto: 'gallery-4',
+    descrizione: 'Un pomeriggio per conoscere la scuola, vedere le sale e chiedere informazioni sulle iscrizioni.',
+    destinatari: 'Aperto a tutti',
+    costo: 'Gratuito',
+  },
+  {
+    tipo: 'Stage',
+    titolo: 'Stage intensivo di danza classica',
+    locandina: 'Stage\nclassico',
+    luogo: RHO,
+    sede: 'Sede di Rho',
+    ora: '10:00',
+    oraFine: '17:00',
+    dueGiorni: true,
+    foto: 'hero-bg',
+    descrizione: 'Due lezioni di tecnica e una di <b>repertorio</b> con maître ospite.<ul><li>Livello avanzato</li><li>Iscrizione obbligatoria</li></ul>',
+    destinatari: 'Allievi avanzati, dai 12 anni',
+    costo: '45 €',
+  },
+  {
+    tipo: 'Stage',
+    titolo: 'Stage di danza moderna',
+    locandina: 'Modern\nstage',
+    luogo: RHO,
+    sede: 'Sede di Rho',
+    ora: '14:00',
+    weekend: true,
+    foto: 'hero-danza-contemporanea',
+    descrizione: 'Contrazione e rilascio, linee e dinamiche dello stile <b>Modern</b> in un pomeriggio di studio.',
+    destinatari: 'Dai 10 anni',
+    costo: '30 €',
+  },
+  {
+    tipo: 'Rassegna',
+    titolo: 'Rassegna "Danza in città"',
+    locandina: 'Danza\nin città',
+    luogo: 'Villa Litta, Lainate',
+    sede: 'Villa Litta',
+    ora: '18:00',
+    weekend: true,
+    foto: 'gallery-1',
+    descrizione: "Scuole del territorio e allievi InBallet insieme in una serata all'aperto.",
+    destinatari: 'Aperto a tutti',
+    costo: 'Gratuito',
+  },
+  {
+    tipo: 'Concorso',
+    titolo: 'Concorso coreografico regionale',
+    locandina: 'Giovani\ntalenti',
+    luogo: 'Teatro Nuovo, Milano',
+    sede: 'Milano',
+    ora: '09:30',
+    weekend: true,
+    foto: 'gallery-3',
+    descrizione: "I gruppi di Modern e Contemporanea partecipano con le coreografie dell'anno.",
+    destinatari: 'Allievi selezionati e famiglie',
+    costo: 'Ingresso 10 €',
+  },
+  {
+    tipo: 'Festa',
+    titolo: 'Festa di Carnevale in danza',
+    locandina: 'Carnevale\nin danza',
+    luogo: LAINATE,
+    sede: 'Sede di Lainate',
+    ora: '15:30',
+    weekend: true,
+    foto: 'gallery-1',
+    descrizione: 'Pomeriggio in maschera con giochi musicali e balli di gruppo.',
+    destinatari: 'Bambini e famiglie',
+    costo: 'Gratuito',
+  },
+  {
+    tipo: 'Festa',
+    titolo: 'Festa di fine estate',
+    locandina: 'Fine\nestate',
+    luogo: 'Piazza Vittorio Emanuele, Lainate',
+    sede: 'Lainate',
+    ora: '18:00',
+    weekend: true,
+    foto: 'gallery-6',
+    descrizione: 'Esibizioni in piazza e presentazione dei corsi del nuovo anno.',
+    destinatari: 'Aperto a tutti',
+    costo: 'Gratuito',
+  },
+  {
+    tipo: 'Workshop',
+    titolo: 'Movimento Creativo: incontro di ricerca',
+    locandina: 'Movimento\ncreativo',
+    luogo: LAINATE,
+    sede: 'Sede di Lainate',
+    ora: '20:00',
+    foto: 'gallery-9',
+    descrizione: 'Una sessione per adulti, anche non danzatori: respiro, ascolto e <i>atto creativo</i>.',
+    destinatari: 'Adulti dai 18 anni',
+    costo: '15 €',
+  },
+  {
+    tipo: 'Lezione aperta',
+    titolo: 'NoiConVoi: lezione aperta ai volontari',
+    locandina: 'Noi\ncon voi',
+    luogo: LAINATE,
+    sede: 'Sede di Lainate',
+    ora: '20:00',
+    lunedi: true,
+    foto: 'gallery-8',
+    descrizione: 'Chi vuole diventare volontario del progetto può partecipare a una lezione del lunedì sera.',
+    destinatari: 'Volontari, anche non danzatori',
+    costo: 'Gratuito',
+  },
 ];
 
 const MESI = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
@@ -101,10 +302,6 @@ const casuale = <T>(lista: readonly T[]) => lista[Math.floor(Math.random() * lis
 const tra = (min: number, max: number) => min + Math.floor(Math.random() * (max - min + 1));
 const hex = (n: number) => randomBytes(n).toString('hex');
 
-/**
- * Data YYYY-MM-DD a `giorni` da oggi; se serve, spostata al primo giorno ammesso (weekend o lunedì),
- * in avanti per le date future e all'indietro per quelle passate, così non cambia mai lato rispetto a oggi.
- */
 function dataDa(giorni: number, m: Pick<Modello, 'weekend' | 'lunedi' | 'dueGiorni'>) {
   const d = new Date(`${romeDate()}T12:00:00Z`);
   d.setUTCDate(d.getUTCDate() + giorni);
@@ -115,9 +312,6 @@ function dataDa(giorni: number, m: Pick<Modello, 'weekend' | 'lunedi' | 'dueGior
 
 const escapeMarkup = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-// === LOCANDINA ===
-
-/** Locandina come quelle della scuola: foto, sfumatura scura, tipo, titolo, data e sede, firma. */
 async function creaLocandina(m: Modello, data: string, verticale: boolean): Promise<Buffer> {
   const { default: sharp } = await import('sharp');
   const W = verticale ? 1080 : 1600;
@@ -134,9 +328,23 @@ async function creaLocandina(m: Modello, data: string, verticale: boolean): Prom
   };
 
   const [y, mm, d] = data.split('-').map(Number);
-  const tipo = await testo(`<span foreground="#87CEEB" font_weight="600" letter_spacing="${5 * 1024}">${escapeMarkup(m.tipo.toUpperCase())}</span>`, font, `Rubik ${verticale ? 26 : 24}`);
-  const titolo = await testo(`<span foreground="#ffffff" font_weight="700">${escapeMarkup(m.locandina)}</span>`, font, `Rubik ${verticale ? 104 : 92}`, Math.floor(H * .5));
-  const info = await testo(`<span foreground="#ffffffdd">${d} ${MESI[mm - 1]} ${y}  ·  ${escapeMarkup(m.sede)}</span>`, font, `Rubik ${verticale ? 30 : 28}`, Math.floor(H * .15));
+  const tipo = await testo(
+    `<span foreground="#87CEEB" font_weight="600" letter_spacing="${5 * 1024}">${escapeMarkup(m.tipo.toUpperCase())}</span>`,
+    font,
+    `Rubik ${verticale ? 26 : 24}`,
+  );
+  const titolo = await testo(
+    `<span foreground="#ffffff" font_weight="700">${escapeMarkup(m.locandina)}</span>`,
+    font,
+    `Rubik ${verticale ? 104 : 92}`,
+    Math.floor(H * 0.5),
+  );
+  const info = await testo(
+    `<span foreground="#ffffffdd">${d} ${MESI[mm - 1]} ${y}  ·  ${escapeMarkup(m.sede)}</span>`,
+    font,
+    `Rubik ${verticale ? 30 : 28}`,
+    Math.floor(H * 0.15),
+  );
   const firma = await testo('<span foreground="#ffffff">InBallet</span>', corsivo, `Rubik Italic ${verticale ? 34 : 32}`);
 
   const sfumatura = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
@@ -164,11 +372,8 @@ async function creaLocandina(m: Modello, data: string, verticale: boolean): Prom
     .toBuffer();
 }
 
-// === EVENTI ===
-
 const ripristini = new Map<string, Promise<boolean>>();
 
-/** Recupera solo file demo ancora associati a un evento demo, senza cambiare i dati. */
 export function ripristinaLocandinaDemo(richiesto: string): Promise<boolean> {
   const nome = originaleDemo(richiesto);
   if (!nome) return Promise.resolve(false);
@@ -184,7 +389,11 @@ export function ripristinaLocandinaDemo(richiesto: string): Promise<boolean> {
     } catch (e) {
       if ((e as NodeJS.ErrnoException).code !== 'ENOENT') throw e;
       const modello = MODELLI.find((m) => m.titolo === evento.titolo) ?? MODELLI.find((m) => m.tipo === evento.tipo) ?? MODELLI[0];
-      const locandina = await creaLocandina({ ...modello, tipo: evento.tipo || modello.tipo, locandina: evento.titolo, sede: evento.luogo || modello.sede }, evento.data, true);
+      const locandina = await creaLocandina(
+        { ...modello, tipo: evento.tipo || modello.tipo, locandina: evento.titolo, sede: evento.luogo || modello.sede },
+        evento.data,
+        true,
+      );
       const temporaneo = `${filePath(nome)}.${hex(6)}.tmp`;
       try {
         await writeFile(temporaneo, locandina);
@@ -205,21 +414,15 @@ export function ripristinaLocandinaDemo(richiesto: string): Promise<boolean> {
   return lavoro;
 }
 
-/**
- * Genera `quanti` eventi completi (con locandina): due o tre oggi, circa un terzo del resto
- * già passato (ultimi 3 mesi) e gli altri nei mesi a venire.
- */
 export async function generaEventi(quanti: number): Promise<number> {
   const n = Math.max(1, Math.min(MAX_EVENTI, Math.floor(quanti)));
   const tipi = await leggiTipi();
   await ensureDir(paths.immaginiEventi);
   const slugUsati = new Set((await leggiEventi()).flatMap((e) => [e.slug, ...(e.alias ?? [])]));
 
-  // Modelli mescolati e ripetuti finché servono
   const scelti: Modello[] = [];
   while (scelti.length < n) scelti.push(...[...MODELLI].sort(() => Math.random() - 0.5));
 
-  // Con pochi eventi niente "oggi" esagerato: al massimo metà
   const oggi = Math.min(tra(2, 3), Math.floor(n / 2));
   const resto = n - oggi;
   const passati = resto >= 2 ? Math.max(1, Math.round(resto * 0.35)) : 0;
@@ -250,7 +453,6 @@ export async function generaEventi(quanti: number): Promise<number> {
       dataFine,
       oraFine: m.oraFine ?? '',
       stato: 'pubblicato',
-      // Solo tipi esistenti: se è stato rimosso dalla dashboard, l'evento resta senza tipo
       tipo: tipi.find((t) => t.toLowerCase() === m.tipo.toLowerCase()) ?? '',
       luogo: m.luogo,
       descrizione: m.descrizione,
@@ -273,43 +475,41 @@ export async function generaEventi(quanti: number): Promise<number> {
   return nuovi.length;
 }
 
-/** Rimuove gli eventi demo e le loro locandine generate. */
 export async function rimuoviEventiDemo(): Promise<number> {
   const rimossi = await serialized(async () => {
     const eventi = await leggiEventi();
-    await writeJson(paths.eventi, eventi.filter((e) => !e.demo));
+    await writeJson(
+      paths.eventi,
+      eventi.filter((e) => !e.demo),
+    );
     return eventi.filter((e) => e.demo);
   });
-  // Solo i file creati dal generatore (demo-*), mai le locandine caricate
   const inUso = new Set((await leggiEventi()).flatMap((e) => (e.immagine ? [path.basename(e.immagine), nomeMini(path.basename(e.immagine))] : [])));
   const files = await readdir(paths.immaginiEventi).catch(() => [] as string[]);
   await Promise.all(files.filter((f) => f.startsWith('demo-') && !inUso.has(f)).map((f) => unlink(filePath(f)).catch(() => {})));
   return rimossi.length;
 }
 
-// === CHATBOT ===
-
-/** Domande tipiche con l'inizio della risposta (come nel registro reale). */
 const DOMANDE: [string, string][] = [
   ['Da che età si può iniziare danza?', 'Si comincia dai 3 anni con Avviamento alla Danza, un percorso di gioco, musica e movimento.'],
   ['quanto costa iscriversi', 'La quota associativa annuale è di 30 €; il costo dei corsi dipende da disciplina e frequenza.'],
   ['Dove siete a Lainate?', 'La sede centrale è in Via Puccini 14 a Lainate. A Rho siamo in Via Tevere 19.'],
   ['Come scelgo il corso giusto?', 'Contatta la segreteria: ti aiutiamo a scegliere il corso adatto per età e livello.'],
   ['Che orari ha la segreteria?', 'Lun, Mar e Ven 15:00-23:00, Mer 16:00-23:30, Gio 15:00-23:30, Sab 10:30-19:00.'],
-  ['avete hip hop per bambini di 7 anni?', 'Sì, l\'Hip-Hop si può iniziare dai 6 anni con classi divise per età e livello.'],
+  ['avete hip hop per bambini di 7 anni?', "Sì, l'Hip-Hop si può iniziare dai 6 anni con classi divise per età e livello."],
   ['Corsi per bambini', 'Per i più piccoli ci sono Avviamento alla Danza (dai 3 anni) ed Educazione alla Danza (4-5 anni).'],
   ['Sedi e orari', 'Siamo a Lainate (Via Puccini 14) e a Rho (Via Tevere 19). La segreteria è aperta dal lunedì al sabato.'],
   ['Come contattarvi', 'Puoi chiamare il +39 393 780 2996, scrivere su WhatsApp o a info@inballet.it.'],
   ['Come iscriversi', 'Scarica il modulo dalla pagina Documenti, compilalo e consegnalo in segreteria con il certificato medico.'],
-  ['serve il certificato medico?', 'Dai 6 anni serve il certificato per attività sportiva non agonistica; sotto i 6 basta l\'autocertificazione.'],
-  ['C\'è un corso di danza per adulti principianti?', 'Sì: Contemporanea Adulti dai 40 anni e Movimento Creativo dai 18, anche senza esperienza.'],
+  ['serve il certificato medico?', "Dai 6 anni serve il certificato per attività sportiva non agonistica; sotto i 6 basta l'autocertificazione."],
+  ["C'è un corso di danza per adulti principianti?", 'Sì: Contemporanea Adulti dai 40 anni e Movimento Creativo dai 18, anche senza esperienza.'],
   ['fate pilates la mattina?', 'Per gli orari precisi di Pilates ti consiglio di contattare la segreteria.'],
-  ['Cos\'è il progetto NoiConVoi?', 'È il progetto di volontariato nato nel 2013 che accoglie ragazzi con disabilità, il lunedì sera.'],
+  ["Cos'è il progetto NoiConVoi?", 'È il progetto di volontariato nato nel 2013 che accoglie ragazzi con disabilità, il lunedì sera.'],
   ['Come divento insegnante di danza?', 'Il corso biennale per Insegnanti di Danza (Modern) rilascia un titolo riconosciuto CSEN e CONI.'],
   ['quando è il saggio di fine anno', 'Le date degli spettacoli sono nel calendario della pagina Spettacoli ed Eventi.'],
   ['Avete danza classica per ragazze di 12 anni?', 'Certo, ci sono corsi di Danza Classica divisi per livello: in segreteria ti indicano la classe giusta.'],
   ['Si può pagare a rate?', 'Sì, il corso si paga in tre rate: settembre, dicembre e marzo.'],
-  ['C\'è il parcheggio a Rho?', 'Per informazioni su come raggiungerci chiama la segreteria al +39 393 780 2996.'],
+  ["C'è il parcheggio a Rho?", 'Per informazioni su come raggiungerci chiama la segreteria al +39 393 780 2996.'],
   ['lo sportello psicologico come funziona', 'Si possono fissare incontri con la dottoressa psicoterapeuta su richiesta alla Direzione.'],
   ['heels da che età', 'Heels è pensato per ragazze e adulti con una base di tecnica: chiedi in segreteria per il livello.'],
   ['ciao', 'Ciao! Posso aiutarti con corsi, sedi, orari o iscrizioni?'],
@@ -322,13 +522,8 @@ const BROWSER = [
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140.0 Safari/537.36',
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_6) AppleWebKit/605.1.15 Version/18.5 Safari/605.1.15',
 ];
-/** Peso per ora del giorno: poco di notte, picco nel tardo pomeriggio e sera. */
 const PESI_ORA = [1, 0, 0, 0, 0, 0, 1, 2, 4, 6, 6, 6, 5, 6, 6, 7, 9, 11, 12, 12, 11, 9, 6, 3];
 
-/**
- * Genera `quanti` messaggi negli ultimi `giorni` giorni. Il registro tiene al massimo
- * 10.000 righe: se non c'è posto ne genera meno, senza mai cancellare quelle vere.
- */
 export async function generaChat(quanti: number, giorni: number): Promise<number> {
   const g = Math.max(1, Math.min(365, Math.floor(giorni)));
   return serialized(async () => {
@@ -345,7 +540,6 @@ export async function generaChat(quanti: number, giorni: number): Promise<number
 
     const nuovi: LogEntry[] = [];
     for (let i = 0; i < n; i++) {
-      // Giorno a caso nel periodo (oggi compreso), ora del giorno pesata, mai nel futuro
       const giorno = romeDate(Date.now() - tra(0, g - 1) * 86400000);
       const pad = (x: number) => String(x).padStart(2, '0');
       const quando = Math.min(romeTimestamp(giorno, `${pad(oraCasuale())}:${pad(tra(0, 59))}`), Date.now());
@@ -361,15 +555,26 @@ export async function generaChat(quanti: number, giorni: number): Promise<number
         [message, risposta] = casuale(DOMANDE);
         type = Math.random() < 0.3 ? 'cached' : 'success';
       }
-      // Risposte del modello: fornitore principale, a volte quello di riserva
       const riserva = Math.random() < 0.08;
       const token_in = tra(9500, 11500);
       const token_cache = Math.random() < 0.7 ? token_in - tra(150, 600) : 0;
       const token_out = tra(60, 260);
-      const modello = type === 'success' ? (riserva ? { fornitore: 'mistral', modello: 'mistral-small-latest' } : { fornitore: 'anthropic', modello: 'claude-haiku-5-5' }) : {};
+      const modello =
+        type === 'success'
+          ? riserva
+            ? { fornitore: 'mistral', modello: 'mistral-small-latest' }
+            : { fornitore: 'anthropic', modello: 'claude-haiku-5-5' }
+          : {};
       const consumo =
         type === 'success'
-          ? { token_in, token_cache, token_out, costo: ((token_in - token_cache) * 0.1 + token_cache * 0.01 + token_out * 0.5) / 1e6, ms: tra(700, 2600), fallback: riserva ? 1 : 0 }
+          ? {
+              token_in,
+              token_cache,
+              token_out,
+              costo: ((token_in - token_cache) * 0.1 + token_cache * 0.01 + token_out * 0.5) / 1e6,
+              ms: tra(700, 2600),
+              fallback: riserva ? 1 : 0,
+            }
           : {};
       nuovi.push({
         timestamp: romeIso(quando),
@@ -401,35 +606,80 @@ export async function rimuoviChatDemo(): Promise<number> {
   });
 }
 
-// === INSEGNANTI DEMO ===
-
 export const MAX_INSEGNANTI_DEMO = 20;
 
 const NOMI_DONNA = ['Giulia', 'Martina', 'Chiara', 'Sara', 'Francesca', 'Elena', 'Alessia', 'Valentina', 'Federica', 'Silvia'];
 const NOMI_UOMO = ['Marco', 'Luca', 'Andrea', 'Davide', 'Simone', 'Matteo', 'Paolo', 'Stefano', 'Fabio', 'Daniele'];
-const COGNOMI = ['Rossi', 'Bianchi', 'Colombo', 'Ferrari', 'Russo', 'Galli', 'Conti', 'Fontana', 'Mariani', 'Rinaldi', 'Moretti', 'Barbieri', 'Lombardi', 'Testa', 'Villa'];
-
-/** Profili di prova sulle discipline della scuola: ruolo, presentazione (senza genere: i nomi sono casuali) e competenze. */
-const PROFILI: Pick<Insegnante, 'ruolo' | 'bio' | 'competenze'>[] = [
-  { ruolo: 'Danza Classica e Modern', bio: 'Diploma in danza classica; segue i corsi **dai 6 anni** con attenzione alla tecnica e alla musicalità.', competenze: ['Danza classica', 'Modern', 'Floor barre', 'Insegnante CSEN'] },
-  { ruolo: 'Avviamento alla Danza', bio: 'Accompagna i più piccoli **dai 3 anni** nel primo incontro con musica e movimento, attraverso il gioco.', competenze: ['Avviamento alla danza', 'Educazione alla danza', 'Propedeutica musicale'] },
-  { ruolo: 'Danza Contemporanea', bio: 'Guida i corsi di contemporanea tra **tecnica e improvvisazione**, con un lavoro di ricerca coreografica.', competenze: ['Danza contemporanea', 'Improvvisazione', 'Composizione coreografica'] },
-  { ruolo: 'Hip-Hop e Breaking', bio: 'Dal mondo urban, insegna **Hip-Hop e Breaking** a bambini e ragazzi, dai passi in piedi ai freeze.', competenze: ['Hip-Hop', 'Breaking', 'Popping', 'Old School'] },
-  { ruolo: 'Heels', bio: 'Porta in sala **portamento, linee e presenza scenica** sui tacchi, per ragazze e adulte.', competenze: ['Heels', 'Jazz Funk', 'Coreografia'] },
-  { ruolo: 'Danza Acrobatica', bio: 'Insegna gli **elementi acrobatici** a terra e in aria, con progressioni sicure per ogni livello.', competenze: ['Danza acrobatica', 'Ginnastica artistica', 'Preparazione atletica'] },
-  { ruolo: 'Yoga e Pilates', bio: 'Insegna **Hatha Yoga** e Pilates agli adulti, con attenzione al respiro e alla postura.', competenze: ['Hatha Yoga', 'Pilates', 'Ginnastica posturale'] },
-  { ruolo: 'Contact Improvisation', bio: 'Conduce il lavoro sul **contatto e lo scambio di peso**, in ascolto del partner e dello spazio.', competenze: ['Contact Improvisation', 'Danza contemporanea', 'Release technique'] },
-  { ruolo: 'Movimento Creativo', bio: 'Guida adulti, anche non danzatori, in un percorso di **ascolto ed espressione** attraverso il movimento.', competenze: ['Movimento creativo', 'Danzamovimentoterapia', 'Improvvisazione'] },
+const COGNOMI = [
+  'Rossi',
+  'Bianchi',
+  'Colombo',
+  'Ferrari',
+  'Russo',
+  'Galli',
+  'Conti',
+  'Fontana',
+  'Mariani',
+  'Rinaldi',
+  'Moretti',
+  'Barbieri',
+  'Lombardi',
+  'Testa',
+  'Villa',
 ];
 
-/** Ritratti di prova: foto di singole persone in demo/insegnanti (JPG, PNG o WebP). Il nome del file
- *  comincia con «donna» o «uomo»: il nome dell'insegnante demo è scelto di conseguenza. Se la cartella
- *  è vuota gli insegnanti demo restano senza foto (si vedono le iniziali): mai le foto del sito. */
+const PROFILI: Pick<Insegnante, 'ruolo' | 'bio' | 'competenze'>[] = [
+  {
+    ruolo: 'Danza Classica e Modern',
+    bio: 'Diploma in danza classica; segue i corsi **dai 6 anni** con attenzione alla tecnica e alla musicalità.',
+    competenze: ['Danza classica', 'Modern', 'Floor barre', 'Insegnante CSEN'],
+  },
+  {
+    ruolo: 'Avviamento alla Danza',
+    bio: 'Accompagna i più piccoli **dai 3 anni** nel primo incontro con musica e movimento, attraverso il gioco.',
+    competenze: ['Avviamento alla danza', 'Educazione alla danza', 'Propedeutica musicale'],
+  },
+  {
+    ruolo: 'Danza Contemporanea',
+    bio: 'Guida i corsi di contemporanea tra **tecnica e improvvisazione**, con un lavoro di ricerca coreografica.',
+    competenze: ['Danza contemporanea', 'Improvvisazione', 'Composizione coreografica'],
+  },
+  {
+    ruolo: 'Hip-Hop e Breaking',
+    bio: 'Dal mondo urban, insegna **Hip-Hop e Breaking** a bambini e ragazzi, dai passi in piedi ai freeze.',
+    competenze: ['Hip-Hop', 'Breaking', 'Popping', 'Old School'],
+  },
+  {
+    ruolo: 'Heels',
+    bio: 'Porta in sala **portamento, linee e presenza scenica** sui tacchi, per ragazze e adulte.',
+    competenze: ['Heels', 'Jazz Funk', 'Coreografia'],
+  },
+  {
+    ruolo: 'Danza Acrobatica',
+    bio: 'Insegna gli **elementi acrobatici** a terra e in aria, con progressioni sicure per ogni livello.',
+    competenze: ['Danza acrobatica', 'Ginnastica artistica', 'Preparazione atletica'],
+  },
+  {
+    ruolo: 'Yoga e Pilates',
+    bio: 'Insegna **Hatha Yoga** e Pilates agli adulti, con attenzione al respiro e alla postura.',
+    competenze: ['Hatha Yoga', 'Pilates', 'Ginnastica posturale'],
+  },
+  {
+    ruolo: 'Contact Improvisation',
+    bio: 'Conduce il lavoro sul **contatto e lo scambio di peso**, in ascolto del partner e dello spazio.',
+    competenze: ['Contact Improvisation', 'Danza contemporanea', 'Release technique'],
+  },
+  {
+    ruolo: 'Movimento Creativo',
+    bio: 'Guida adulti, anche non danzatori, in un percorso di **ascolto ed espressione** attraverso il movimento.',
+    competenze: ['Movimento creativo', 'Danzamovimentoterapia', 'Improvvisazione'],
+  },
+];
+
 const DIR_RITRATTI = cartella('demo/insegnanti');
 const elencaRitratti = async () =>
   (await readdir(DIR_RITRATTI).catch(() => [] as string[])).filter((f) => /\.(jpe?g|png|webp)$/i.test(f)).map((f) => path.join(DIR_RITRATTI, f));
 
-/** Crea `quanti` insegnanti demo (nome, ruolo, presentazione, competenze e foto), entro il limite totale. */
 export async function generaInsegnanti(quanti: number): Promise<number> {
   const presenti = (await leggiInsegnanti()).insegnanti.length;
   const n = Math.max(0, Math.min(MAX_INSEGNANTI_DEMO, Math.floor(quanti), MAX_INSEGNANTI - presenti));
@@ -442,7 +692,6 @@ export async function generaInsegnanti(quanti: number): Promise<number> {
   const foto = (await elencaRitratti()).sort(() => Math.random() - 0.5);
   const nuovi: Insegnante[] = [];
   for (let i = 0; i < n; i++) {
-    // Tutti con foto: i ritratti si usano a rotazione (senza ritratti in cartella restano le iniziali)
     const sorgente = foto.length ? foto[i % foto.length] : '';
     const conFoto = !!sorgente;
     const donna = sorgente ? !/uomo/i.test(path.basename(sorgente)) : Math.random() < 0.5;
@@ -461,4 +710,3 @@ export async function generaInsegnanti(quanti: number): Promise<number> {
   await aggiungiInsegnanti(nuovi);
   return nuovi.length;
 }
-

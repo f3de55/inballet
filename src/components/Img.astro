@@ -1,11 +1,4 @@
 ---
-/**
- * <img> con immagine locale convertita in WebP + srcset responsive.
- * Tutti gli altri attributi (alt, width, height, loading, class…) vengono
- * passati invariati, così il markup resta identico all'originale.
- * `fuoco`: punto focale per desktop/tablet/mobile quando la foto è ritagliata (object-fit: cover).
- * `rapporto`: altezza/larghezza del riquadro, per generare la foto già ritagliata in quel formato.
- */
 import type { HTMLAttributes } from 'astro/types';
 import { varFuoco, webpSrcset, type Fuoco } from '../lib/images';
 

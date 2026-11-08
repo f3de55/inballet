@@ -1,23 +1,16 @@
-/* Diploma: enti in una colonna centrata sotto l'intestazione */
 .enti-lista {
   list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
   max-width: 48rem;
   margin: var(--spazio-intestazione) auto 0;
   padding: 0;
 }
 
-/* Icona dell'area accanto al nome */
-/* ---------- Diploma ---------- */
 .form-cert-section {
   padding: var(--section-y) 0;
   background: var(--white);
-}
-
-/* Loghi in riquadri della stessa misura: altezza uguale, larghezza libera (CONI è più largo) */
-.enti-lista {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
 }
 
 .ente {
@@ -46,21 +39,16 @@
   object-fit: contain;
 }
 
-/* Equilibrio ottico: il logo CONI è più largo, a parità di altezza sembrerebbe più grande */
-.ente-logo img[data-sigla="CONI"] {
+.ente-logo img[data-sigla='CONI'] {
   height: 84%;
 }
 
-/* ---------- Tablet ---------- */
 @media (max-width: 900px) {
-  /* Diploma: enti a tutta larghezza, allineati all'intestazione */
   .enti-lista {
     max-width: none;
   }
-
 }
 
-/* ---------- Mobile ---------- */
 @media (max-width: 600px) {
   .ente {
     padding: 1.75rem 1rem;
@@ -69,5 +57,4 @@
   .ente-logo {
     height: 6rem;
   }
-
 }

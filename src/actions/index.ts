@@ -1,8 +1,3 @@
-/**
- * Astro Actions: tutto il backend del sito (chatbot, gestione eventi,
- * login e gestione dalla dashboard). Chiamate dal browser con
- * `import { actions } from 'astro:actions'` o come action di un <form>.
- */
 import { ActionError, defineAction, type ActionAPIContext } from 'astro:actions';
 import { z } from 'astro/zod';
 import { isLoggedIn, login, logout, passwordValida } from '../lib/auth';
@@ -16,10 +11,6 @@ import { eliminaTutto, PAROLA_CONFERMA } from '../lib/pulizia';
 import { eliminaDocumento, ErroreDocumenti, ordinaDocumenti, salvaDocumento, salvaTesti } from '../lib/documenti';
 import * as insegnanti from '../lib/insegnanti';
 
-/**
- * Azione della dashboard: senza sessione valida risponde UNAUTHORIZED, gli errori
- * di validazione (con messaggio per l'utente) diventano BAD_REQUEST.
- */
 function admin<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O>) {
   return async (input: I, context: ActionAPIContext): Promise<O> => {
     if (!(await isLoggedIn(context.session))) {
@@ -57,23 +48,19 @@ export const server = {
       },
     }),
 
-    /** Chat aperta: il server prepara la conoscenza mentre il visitatore scrive. */
     prepara: defineAction({
       handler: async (_, context) => {
         await prepara(context.url.origin);
       },
     }),
 
-    /** Verifica di qualità: una domanda di prova a un fornitore della catena (dashboard). */
     verifica: defineAction({
       input: z.object({ fornitore: z.string().max(40), modello: z.string().max(120), indice: z.number().int().min(0).max(100) }),
       handler: admin(({ fornitore, modello, indice }, context) => verifica({ fornitore, modello }, indice, context.url.origin)),
     }),
   },
 
-  /** Calendario: le pagine pubbliche leggono gli eventi dal server, qui solo la gestione. */
   eventi: {
-    /** Regole di validazione in `inputEvento` (src/lib/eventi.ts): errori per campo nel modulo. */
     salva: defineAction({
       input: inputEvento,
       handler: admin((input) => salvaEvento(input)),
@@ -127,7 +114,6 @@ export const server = {
     }),
   },
 
-  /** Pagina /documenti: testi e PDF da scaricare, modificabili dalla dashboard. */
   documenti: {
     salvaTesti: defineAction({
       input: z.object({ heroTitolo: campo, heroTesto: campo, eyebrow: campo, titolo: campo, accento: campo, intro: campo }),
@@ -136,7 +122,6 @@ export const server = {
       }),
     }),
 
-    /** Crea o modifica un documento; con `file` carica (o sostituisce) il PDF. */
     salva: defineAction({
       accept: 'form',
       input: z.object({
@@ -160,7 +145,6 @@ export const server = {
     }),
   },
 
-  /** Sezione Insegnanti di Chi siamo: testi e schede, modificabili dalla dashboard. */
   insegnanti: {
     salvaTesti: defineAction({
       input: z.object({ eyebrow: campo, titolo: campo, accento: campo, intro: campo }),
@@ -169,7 +153,6 @@ export const server = {
       }),
     }),
 
-    /** Crea o modifica un insegnante; con `foto` carica (o sostituisce) la foto. */
     salva: defineAction({
       accept: 'form',
       input: z.object({
@@ -195,7 +178,6 @@ export const server = {
     }),
   },
 
-  /** Dati demo della dashboard (sempre marcati `demo`, rimovibili senza toccare i dati veri). */
   demo: {
     eventi: defineAction({
       input: z.object({ quanti: z.number().int().min(1).max(MAX_EVENTI) }),
@@ -224,7 +206,6 @@ export const server = {
       handler: admin(async () => ({ rimossi: await insegnanti.rimuoviInsegnantiDemo() })),
     }),
 
-    /** Elimina TUTTI i dati scelti (anche quelli veri). Serve la parola di conferma. */
     eliminaTutto: defineAction({
       input: z.object({ eventi: z.boolean(), chatbot: z.boolean(), conferma: z.string() }),
       handler: admin(async ({ eventi, chatbot, conferma }) => {
@@ -236,7 +217,6 @@ export const server = {
   },
 
   auth: {
-    /** Form di /login (funziona anche senza JavaScript). */
     login: defineAction({
       accept: 'form',
       input: z.object({ password: z.string().max(200) }),

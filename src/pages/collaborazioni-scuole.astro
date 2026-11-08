@@ -1,12 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { immaginiPagine } from '../data/immagini-pagine';
 import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
+import HeroPagina from '../components/HeroPagina.astro';
 import '../styles/pages/collaborazioni-scuole.css';
 
 const bg = {
@@ -40,18 +40,10 @@ const progetti = [
         {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
     </Fragment>
 
-        <!-- Hero Section -->
-        <section class="chisiamo-hero hero-banner">
-            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
-            <div class="chisiamo-hero-overlay"></div>
-            <div class="chisiamo-hero-glass">
-                <Breadcrumb />
-                <h1 class="chisiamo-hero-title">Collaborazioni con le scuole</h1>
-                <p class="hero-lead">Progetti di <strong>danza e movimento</strong> per le scuole, <strong>dal nido alle secondarie di secondo grado</strong>.</p>
-            </div>
-        </section>
+        <HeroPagina titolo="Collaborazioni con le scuole" stile={bg.hero.style}>
+            <p class="hero-lead">Progetti di <strong>danza e movimento</strong> per le scuole, <strong>dal nido alle secondarie di secondo grado</strong>.</p>
+        </HeroPagina>
 
-        <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo) -->
         <section id="intro" class="intro-split decoro-onde">
             <div class="container intro-split-layout">
                 <div class="intro-split-content">
@@ -71,7 +63,6 @@ const progetti = [
             </div>
         </section>
 
-        <!-- Fasce d'età: intestazione editoriale e quattro numeri -->
         <section class="collab-fasce-section" aria-labelledby="fasce-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">A chi ci rivolgiamo</p>
@@ -91,7 +82,6 @@ const progetti = [
             </div>
         </section>
 
-        <!-- Progetti: introduzione seguita dalle descrizioni delle attività. -->
         <SezioneElenco titoloId="progetti-titolo" illustrazione="collaborazioni-scuole">
             <Fragment slot="introduzione">
                 <p class="eyebrow">I nostri progetti</p>
@@ -111,7 +101,6 @@ const progetti = [
             </ol>
         </SezioneElenco>
 
-        <!-- CTA -->
         <section class="cta-contatto sezione-scura">
             <div class="cta-bg" style={bg.cta.style}></div>
             <div class="cta-overlay"></div>

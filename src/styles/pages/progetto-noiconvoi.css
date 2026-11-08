@@ -1,4 +1,3 @@
-/* ---------- Metodo e informazioni: voci in colonne ---------- */
 .noi-metodo-section,
 .noi-info-section {
   padding: var(--section-y) 0;
@@ -24,8 +23,6 @@
   gap: var(--gap-colonne);
 }
 
-/* Separatori tra le voci: linea tonda verticale a metà dello spazio tra due colonne (PC e tablet) e
-   linea tonda in cima alla voce quando le voci vanno su più righe (tablet e telefono) */
 .info-lista .voce::after {
   content: '';
   display: none;
@@ -45,9 +42,7 @@
   }
 }
 
-/* ---------- Tablet ---------- */
 @media (max-width: 1024px) {
-  /* Informazioni: griglia 2x2 */
   .info-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     row-gap: 2rem;
@@ -63,7 +58,6 @@
   }
 }
 
-/* ---------- Mobile ---------- */
 @media (max-width: 600px) {
   .fasi-lista {
     grid-template-columns: minmax(0, 1fr);

@@ -1,8 +1,3 @@
-/**
- * Editor descrizione minimale (grassetto, corsivo, elenco puntato) basato su
- * Selection/Range, senza document.execCommand (deprecato).
- * Produce solo i tag ammessi dal server: <b>, <i>, <ul>, <li>.
- */
 type Formato = 'bold' | 'italic' | 'list';
 
 const TAGS: Record<Formato, string[]> = {
@@ -12,7 +7,6 @@ const TAGS: Record<Formato, string[]> = {
 };
 
 export function createEditor(editor: HTMLElement, toolbar: HTMLElement, onChange: () => void) {
-  /** Antenato (dentro l'editor) con uno dei tag indicati. */
   function closest(node: Node | null, tags: string[]): HTMLElement | null {
     for (let n = node; n && n !== editor; n = n.parentNode) {
       if (n instanceof HTMLElement && tags.includes(n.tagName)) return n;
@@ -35,7 +29,6 @@ export function createEditor(editor: HTMLElement, toolbar: HTMLElement, onChange
     sel.addRange(range);
   }
 
-  /** Sostituisce l'elemento con i suoi figli. */
   function unwrap(el: HTMLElement) {
     const parent = el.parentNode!;
     const first = el.firstChild;
@@ -62,7 +55,6 @@ export function createEditor(editor: HTMLElement, toolbar: HTMLElement, onChange
     selectContents(el);
   }
 
-  /** Suddivide un frammento in righe (separate da <br> o blocchi). */
   function lines(fragment: DocumentFragment): Node[][] {
     const out: Node[][] = [[]];
     const walk = (nodes: NodeListOf<ChildNode> | ChildNode[]) => {
@@ -82,7 +74,6 @@ export function createEditor(editor: HTMLElement, toolbar: HTMLElement, onChange
   function toggleList(range: Range) {
     const li = closest(range.commonAncestorContainer, TAGS.list);
     if (li?.parentElement) {
-      // Rimuovi l'elenco: ogni voce diventa una riga
       const ul = li.parentElement;
       const frag = document.createDocumentFragment();
       [...ul.children].forEach((item, i) => {
@@ -92,7 +83,6 @@ export function createEditor(editor: HTMLElement, toolbar: HTMLElement, onChange
       ul.replaceWith(frag);
       return;
     }
-    // Riga (figlio diretto dell'editor) in cui si trova il cursore
     let riga: Node = range.startContainer;
     while (riga.parentNode && riga.parentNode !== editor) riga = riga.parentNode;
 
@@ -103,7 +93,6 @@ export function createEditor(editor: HTMLElement, toolbar: HTMLElement, onChange
       item.append(...contenuto);
       ul.append(item);
     }
-    // L'elenco è un blocco: mai dentro <b>/<i>; sostituisce una riga vuota
     if (riga === editor) editor.append(ul);
     else if (!riga.textContent?.trim()) (riga as ChildNode).replaceWith(ul);
     else (riga as ChildNode).after(ul);
@@ -131,7 +120,7 @@ export function createEditor(editor: HTMLElement, toolbar: HTMLElement, onChange
     }
   }
 
-  toolbar.addEventListener('mousedown', (e) => e.preventDefault()); // mantieni la selezione
+  toolbar.addEventListener('mousedown', (e) => e.preventDefault());
   toolbar.addEventListener('click', (e) => {
     const btn = (e.target as Element).closest<HTMLButtonElement>('[data-format]');
     if (btn) format(btn.dataset.format as Formato);
@@ -148,7 +137,6 @@ export function createEditor(editor: HTMLElement, toolbar: HTMLElement, onChange
     }
   });
   editor.addEventListener('input', () => {
-    // Un editor svuotato deve tornare vuoto per mostrare il placeholder
     if (!editor.textContent?.trim() && !editor.querySelector('li')) editor.innerHTML = '';
     onChange();
   });

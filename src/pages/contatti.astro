@@ -1,10 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import Galleria from '../components/Galleria.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import { scuola, sedi, orari } from '../data/scuola';
+import HeroPagina from '../components/HeroPagina.astro';
 import '../styles/pages/contatti.css';
 
 const { telefono: TEL, telefonoHref: TEL_HREF, email: EMAIL } = scuola;
@@ -13,9 +13,7 @@ const bg = {
   hero: await heroPagina('contatti'),
 };
 
-/** Settimana da lunedì con gli orari di scuola.ts (aggiornati poi da Google, se disponibile). */
 const ABBR: Record<string, string> = { Monday: 'Lun', Tuesday: 'Mar', Wednesday: 'Mer', Thursday: 'Gio', Friday: 'Ven', Saturday: 'Sab', Sunday: 'Dom' };
-// Tre punti di accesso alla scuola, con una sola frase per ciascuno.
 const fondamenti = [
   { titolo: 'Corsi', testo: 'Per bambini dai 3 anni, ragazzi e adulti.', href: '/corsi', icona: 'fa-shoe-prints' },
   { titolo: 'Inclusione', testo: 'Classi integrate e ascolto per le famiglie.', href: '/classi-integrate', icona: 'fa-users' },
@@ -38,18 +36,10 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     <Fragment slot="head">
         {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
     </Fragment>
-    <!-- Hero -->
-    <section class="chisiamo-hero hero-banner">
-        <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
-        <div class="chisiamo-hero-overlay"></div>
-        <div class="chisiamo-hero-glass">
-            <Breadcrumb />
-            <h1 class="chisiamo-hero-title">Contatti e sedi</h1>
-            <p class="hero-lead"><strong>Due sedi</strong> a Lainate e Rho, a nord-ovest di Milano: chiamaci, scrivici o passa in segreteria.</p>
-        </div>
-    </section>
+    <HeroPagina titolo="Contatti e sedi" stile={bg.hero.style}>
+        <p class="hero-lead"><strong>Due sedi</strong> a Lainate e Rho, a nord-ovest di Milano: chiamaci, scrivici o passa in segreteria.</p>
+    </HeroPagina>
 
-    <!-- Contatti: intro, poi tre blocchi distinti (scrivici, sedi, orari) -->
     <section id="contatti" class="contatti decoro-onde">
         <div class="container">
             <header class="contatti-intro">
@@ -130,7 +120,6 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
         </div>
     </section>
 
-    <!-- Una sintesi della scuola: tre argomenti e tre collegamenti. -->
     <section id="fondamenti" class="fondamenti decoro-onde decoro-onde--sinistra" aria-labelledby="fondamenti-titolo">
         <div class="container fondamenti-layout">
             <header class="fondamenti-intro">
@@ -150,7 +139,6 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
         </div>
     </section>
 
-    <!-- Galleria: la scuola dal vivo, subito dopo i contatti -->
     <Galleria
         eyebrow="Vieni a trovarci"
         titolo="Le nostre sale, <em>la nostra danza</em>"

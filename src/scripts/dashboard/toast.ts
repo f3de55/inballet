@@ -1,4 +1,3 @@
-/** Notifiche a comparsa della dashboard. */
 type ToastTipo = 'success' | 'error' | 'warning';
 
 const ICONS: Record<ToastTipo, string> = {

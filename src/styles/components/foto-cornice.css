@@ -1,5 +1,3 @@
-/* Foto accanto al testo: cornice azzurra sfalsata che sporge verso il testo.
-   Default: foto a destra (cornice in basso a sinistra); --sinistra: foto a sinistra. */
 .foto-cornice {
   position: relative;
   isolation: isolate;
@@ -22,12 +20,12 @@
 .foto-cornice img {
   display: block;
   border-radius: var(--radius-img);
-  box-shadow: 0 24px 60px rgb(var(--nero-rgb) / .14);
+  box-shadow: 0 24px 60px rgb(var(--nero-rgb) / 0.14);
 }
 
 @media (max-width: 600px) {
   .foto-cornice::before,
   .foto-cornice--sinistra::before {
-    inset: 1.5rem 1.5rem -.75rem -.75rem;
+    inset: 1.5rem 1.5rem -0.75rem -0.75rem;
   }
 }

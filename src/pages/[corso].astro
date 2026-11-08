@@ -1,18 +1,14 @@
 ---
-/**
- * Pagine corso (22): stesso template, dati nella collection `corsi`
- * (src/content.config.ts → src/data/corsi.json). L'HTML è generato al build.
- */
 import type { GetStaticPaths } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import CorsiSimili from '../components/CorsiSimili.astro';
 import { iconeCompetenze } from '../data/icone-competenze';
 import { getImage } from 'astro:assets';
 import { getAsset, sfondo, sfondoCta } from '../lib/images';
 import { schemaCorso } from '../lib/schema';
+import HeroPagina from '../components/HeroPagina.astro';
 import '../styles/pages/corso.css';
 
 export const getStaticPaths = (async () => {
@@ -31,12 +27,9 @@ if (data.imparaTitoli.length !== data.impara.length || icone?.length !== data.im
 }
 const hero = await sfondo(data.heroImage, data.heroFuoco);
 const contatto = await sfondoCta(data.ctaTema);
-// Anteprima social 1200x630 dalla foto del corso
 const ogImage = new URL((await getImage({ src: getAsset(typeof data.heroImage === 'string' ? data.heroImage : data.heroImage.desktop), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
-// Stesso URL del canonical (senza .html)
 const schema = schemaCorso(data, new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1'), Astro.site).href);
 
-/** Titolo con l'ultima parola in corsivo azzurro (stile dei titoli di sezione). */
 const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</em>');
 ---
 
@@ -48,25 +41,16 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
     ogImage={ogImage}
 >
     <Fragment slot="head">
-        {/* Fino a 768px le hero interne usano lo sfondo illustrato comune (styles/components/hero.css): si precarica quello */}
         <link rel="preload" as="image" href={hero.preload[0].href} media="(min-width: 1025px)" fetchpriority="high">
         <link rel="preload" as="image" href={hero.preload[1].href} media="(min-width: 769px) and (max-width: 1024px)" fetchpriority="high">
         <link rel="preload" as="image" href="/assets/images/hero-mobile.webp" media="(max-width: 768px)" fetchpriority="high">
         <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     </Fragment>
 
-    <!-- Hero Corso -->
-    <section class="chisiamo-hero corso-hero">
-        <div class="chisiamo-hero-image corso-hero-image" style={hero.style}></div>
-        <div class="chisiamo-hero-overlay"></div>
-        <div class="chisiamo-hero-glass">
-            <Breadcrumb />
-            <h1 class="chisiamo-hero-title">{data.titolo}</h1>
-            <p class="hero-lead" set:html={data.tagline} />
-        </div>
-    </section>
+    <HeroPagina titolo={data.titolo} stile={hero.style} corso>
+        <p class="hero-lead" set:html={data.tagline} />
+    </HeroPagina>
 
-    <!-- Intro -->
     <section id="corso-intro" class="corso-intro-section decoro-onde">
         <div class="container">
             <div class="corso-story-layout">
@@ -107,7 +91,6 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         </div>
     </section>
 
-    <!-- Il Metodo -->
     <section class="corso-metodo-section sezione-scura">
         <div class="corso-metodo-wrapper">
             <div class="corso-metodo-header">
@@ -125,7 +108,6 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         </div>
     </section>
 
-    <!-- Le competenze occupano tutta la sezione, senza colonne fotografiche. -->
     <section class="corso-impara-section" aria-labelledby="corsoImparaTitolo">
         <div class="corso-impara-wrapper">
             <header class="corso-impara-header">
@@ -148,10 +130,8 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         </div>
     </section>
 
-    <!-- Corsi simili: gli altri corsi della stessa categoria -->
     <CorsiSimili corso={Astro.params.corso} />
 
-    <!-- CTA -->
     <section class="cta-contatto sezione-scura">
         <div class="cta-bg" style={contatto.style}></div>
         <div class="cta-overlay"></div>

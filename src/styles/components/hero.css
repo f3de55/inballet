@@ -1,18 +1,9 @@
-/*
- * Hero delle pagine interne (markup condiviso: foto, velo in basso, breadcrumb, titolo e lead
- * allineati a sinistra e centrati in verticale). La home ha la sua hero in pages/index.css.
- */
 .chisiamo-hero {
-  /* Altezza minima (non fissa): se il contenuto è più alto l'hero cresce
-     invece di traboccare sotto la navbar fissa */
   min-height: calc(clamp(420px, 62vh, 560px) - var(--header-h));
   position: relative;
   overflow: hidden;
   display: flex;
-  /* Testo centrato in verticale: stesso spazio sopra (sotto la navbar) e sotto */
   align-items: center;
-  /* Il bordo ondulato della sezione successiva copre gli ultimi --onda-h: lo si aggiunge sotto,
-     così il testo resta centrato nella parte visibile */
   padding: 3.5rem 0 calc(3.5rem + var(--onda-h));
 }
 
@@ -23,19 +14,14 @@
   width: 100%;
   height: 100%;
   background-size: cover;
-  /* Leggermente in alto: nelle foto verticali restano visibili i volti */
   background-position: center 30%;
   background-repeat: no-repeat;
 }
 
-/* Le fotografie sono preparate nel formato del riquadro: niente nuovi tagli ai soggetti. */
 @media (min-width: 769px) {
   .chisiamo-hero.hero-banner {
     min-height: var(--hero-altezza-min);
     aspect-ratio: var(--hero-rapporto);
-    /* Larghezza esplicita: con solo aspect-ratio e min-height, sotto i 1440px Chrome ricava la larghezza
-       dall'altezza minima (22.5rem x 4 = 1440px), il banner esce dallo schermo e la pagina scorre in
-       orizzontale. Così resta largo quanto lo schermo e, se serve, diventa più alto del rapporto */
     width: 100%;
   }
 }
@@ -45,7 +31,7 @@
     aspect-ratio: 8 / 5;
   }
 
-  .hero-banner > .hero-banner-image[style*="--sfondo-lg"][style*="--fuoco-lg"] {
+  .hero-banner > .hero-banner-image[style*='--sfondo-lg'][style*='--fuoco-lg'] {
     background-image: var(--sfondo-md);
     background-position: var(--fuoco-md);
   }
@@ -91,8 +77,6 @@
     max-width: none;
   }
 
-  /* Tutte le hero delle pagine interne usano lo stesso sfondo illustrato (la home ha la sua hero).
-     Sopra l'azzurro chiaro serve un velo scuro, altrimenti il testo bianco non si legge. */
   .chisiamo-hero-image {
     background-image: url('/assets/images/hero-mobile.webp') !important;
     background-position: center !important;

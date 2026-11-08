@@ -1,11 +1,6 @@
-/**
- * Dashboard › Insegnanti: intestazione della sezione, modale crea/modifica
- * insegnante (con foto caricabile anche trascinando), ordine ed eliminazione.
- * Il backend è chiamato tramite Astro Actions.
- */
 import { actions } from 'astro:actions';
 import { conferma } from './conferma';
-import { $, aggiornaContatore, attivaContatori, elencoOrdinabile, MAX_SIZE, zonaCaricamento } from './comune';
+import { $, aggiornaContatore, attivaContatori, elencoOrdinabile, MAX_SIZE, mostraModal, nascondiModal, zonaCaricamento } from './comune';
 import { toast } from './toast';
 
 interface Insegnante {
@@ -18,8 +13,6 @@ interface Insegnante {
 }
 
 attivaContatori();
-
-// === INTESTAZIONE DELLA SEZIONE ===
 
 const formTesti = $<HTMLFormElement>('formTestiInsegnanti');
 const valore = (id: string) => $<HTMLInputElement>(id).value.trim();
@@ -51,8 +44,6 @@ formTesti.addEventListener('submit', async (e) => {
   toast('Testi salvati', 'success');
 });
 
-// === MODALE INSEGNANTE ===
-
 const modal = $('modalInsegnante');
 const form = $<HTMLFormElement>('formInsegnante');
 const campi = {
@@ -64,7 +55,6 @@ const campi = {
   file: $<HTMLInputElement>('insFile'),
 };
 const zona = modal.querySelector<HTMLElement>('[data-upload-foto]')!;
-/** Foto scelta ma non ancora salvata. */
 let nuovaFoto: File | null = null;
 let togliFoto = false;
 let anteprimaUrl = '';
@@ -81,7 +71,9 @@ function mostraFoto() {
   $('insFotoAttuale').hidden = !src;
   if (src) $<HTMLImageElement>('insFotoAnteprima').src = src;
   $('insUploadTesto').textContent = nuovaFoto ? nuovaFoto.name : src ? 'Sostituisci la foto' : 'Carica la foto';
-  $('insUploadNota').textContent = nuovaFoto ? 'Verrà caricata al salvataggio · clicca per cambiare file' : 'JPG, PNG o WebP fino a 20 MB · viene ritagliata in verticale';
+  $('insUploadNota').textContent = nuovaFoto
+    ? 'Verrà caricata al salvataggio · clicca per cambiare file'
+    : 'JPG, PNG o WebP fino a 20 MB · viene ritagliata in verticale';
   zona.classList.toggle('scelto', !!nuovaFoto);
 }
 
@@ -100,18 +92,25 @@ function apriModal(ins?: Insegnante) {
   mostraFoto();
   modificato = false;
 
-  modal.classList.add('open');
-  document.documentElement.classList.add('modal-aperta');
+  mostraModal(modal);
   modal.querySelector('.modal-body')!.scrollTop = 0;
-  // Su touch il focus aprirebbe subito la tastiera: solo con mouse
   if (matchMedia('(hover: hover)').matches) campi.nome.focus();
 }
 
 async function chiudiModal(forza = false) {
   if (!modal.classList.contains('open') || inCorso) return;
-  if (!forza && modificato && !(await conferma({ titolo: 'Chiudere senza salvare?', testo: 'Le modifiche a questo insegnante andranno perse.', ok: 'Chiudi senza salvare', pericolo: true }))) return;
-  modal.classList.remove('open');
-  document.documentElement.classList.remove('modal-aperta');
+  if (
+    !forza &&
+    modificato &&
+    !(await conferma({
+      titolo: 'Chiudere senza salvare?',
+      testo: 'Le modifiche a questo insegnante andranno perse.',
+      ok: 'Chiudi senza salvare',
+      pericolo: true,
+    }))
+  )
+    return;
+  nascondiModal(modal);
 }
 
 function sceltaFile(files: Iterable<File>) {
@@ -167,21 +166,27 @@ form.addEventListener('submit', async (e) => {
   setTimeout(() => location.reload(), 700);
 });
 
-// === ELENCO: ORDINE ED ELIMINAZIONE ===
-
 const lista = document.getElementById('insLista');
 
 const sposta = elencoOrdinabile(lista, '.ins', (ids) => actions.insegnanti.ordina({ ids }));
 
 async function elimina(riga: HTMLElement) {
   const ins = JSON.parse(riga.dataset.modifica!) as Insegnante;
-  if (!(await conferma({ titolo: `Eliminare ${ins.nome}?`, testo: 'La scheda sparirà dalla pagina Chi siamo e la foto caricata verrà cancellata. L’operazione non si può annullare.', ok: 'Elimina', pericolo: true }))) return;
+  if (
+    !(await conferma({
+      titolo: `Eliminare ${ins.nome}?`,
+      testo: 'La scheda sparirà dalla pagina Chi siamo e la foto caricata verrà cancellata. L’operazione non si può annullare.',
+      ok: 'Elimina',
+      pericolo: true,
+    }))
+  )
+    return;
   const { error } = await actions.insegnanti.elimina({ id: ins.id });
   if (error) return toast(error.message || "Errore durante l'eliminazione", 'error');
 
   toast('Insegnante eliminato', 'success');
   riga.classList.add('in-uscita');
-  setTimeout(() => location.reload(), 700); // aggiorna conteggi e stato vuoto
+  setTimeout(() => location.reload(), 700);
 }
 
 document.addEventListener('click', (e) => {
@@ -199,7 +204,6 @@ document.addEventListener('click', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-  // Con un popup di conferma aperto, Esc chiude solo quello
   if (e.key !== 'Escape' || document.querySelector('dialog[open]')) return;
   void chiudiModal();
 });

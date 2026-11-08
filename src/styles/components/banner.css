@@ -1,5 +1,5 @@
 event-banner {
-    display: contents;
+  display: contents;
 }
 
 .event-banner {
@@ -12,15 +12,14 @@ event-banner {
   color: var(--dark-navy);
   padding: 0.7rem 1.5rem;
   display: none;
-  box-shadow: 0 2px 12px rgb(var(--nero-rgb) / .15);
-  transition: padding .3s ease;
+  box-shadow: 0 2px 12px rgb(var(--nero-rgb) / 0.15);
+  transition: padding 0.3s ease;
 }
 
 .event-banner.visible {
   display: block;
 }
 
-/* Ridotto dopo lo scroll, insieme alla navbar (classe is-scrolled da navbar.ts) */
 html.is-scrolled .event-banner {
   padding-block: 0.35rem;
 }
@@ -52,19 +51,16 @@ html.is-scrolled .event-banner {
   color: var(--dark-navy);
 }
 
-/* Due anelli sottili che si allargano e svaniscono dall'icona, uno dopo l'altro (sfasati di mezzo giro):
-   l'onda riparte esattamente dove finisce l'altra, quindi il ciclo è continuo e senza stacchi. Solo transform e
-   opacità: leggero e fluido. L'anello resta dentro l'altezza del banner anche dopo lo scroll. */
 .event-banner-icon::before,
 .event-banner-icon::after {
   content: '';
   position: absolute;
   inset: 0;
-  border: 1.5px solid rgb(var(--bianco-rgb) / .8);
+  border: 1.5px solid rgb(var(--bianco-rgb) / 0.8);
   border-radius: var(--radius-full);
   opacity: 0;
   pointer-events: none;
-  animation: banner-onda 3.2s cubic-bezier(.2, .6, .3, 1) infinite;
+  animation: banner-onda 3.2s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
 }
 
 .event-banner-icon::after {
@@ -74,7 +70,7 @@ html.is-scrolled .event-banner {
 @keyframes banner-onda {
   0% {
     transform: scale(1);
-    opacity: .85;
+    opacity: 0.85;
   }
 
   80%,
@@ -84,7 +80,6 @@ html.is-scrolled .event-banner {
   }
 }
 
-/* «Riduci movimento»: gli anelli non si allargano, l'icona respira con un alone che sfuma */
 @media (prefers-reduced-motion: reduce) {
   .event-banner-icon::before {
     animation: banner-respiro 3.2s ease-in-out infinite;
@@ -102,7 +97,7 @@ html.is-scrolled .event-banner {
     }
 
     50% {
-      opacity: .7;
+      opacity: 0.7;
     }
   }
 }
@@ -141,7 +136,7 @@ html.is-scrolled .event-banner {
   text-decoration: none;
   font-size: var(--text-xs);
   font-weight: var(--font-bold);
-  --lc: rgb(var(--nero-rgb) / .4);
+  --lc: rgb(var(--nero-rgb) / 0.4);
   background: var(--linea-basso);
   padding-bottom: 3px;
   transition: all 0.2s ease;
@@ -164,7 +159,7 @@ html.is-scrolled .event-banner {
   transform: translateY(-50%);
   width: 24px;
   height: 24px;
-  background: rgb(var(--nero-rgb) / .25);
+  background: rgb(var(--nero-rgb) / 0.25);
   border: none;
   border-radius: var(--radius-full);
   cursor: pointer;
@@ -176,7 +171,7 @@ html.is-scrolled .event-banner {
 }
 
 .event-banner-close:hover {
-  background: rgb(var(--nero-rgb) / .4);
+  background: rgb(var(--nero-rgb) / 0.4);
 }
 
 .event-banner-close i {
@@ -215,7 +210,6 @@ html.is-scrolled .event-banner {
     width: 24px;
     height: 24px;
   }
-
 }
 
 body.has-event-banner .main-header {

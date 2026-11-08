@@ -1,10 +1,6 @@
 .gallery-section {
-  /* Sfondo azzurrino: separa la galleria dalle sezioni bianche sopra e sotto, senza linee */
   background: var(--bg-soft);
   position: relative;
-}
-
-.gallery-section {
   padding: var(--section-y) 0;
   overflow: hidden;
 }
@@ -16,7 +12,6 @@
   z-index: 2;
 }
 
-/* Mobile: allineata a sinistra come le altre sezioni, più leggibile */
 @media (max-width: 600px) {
   .gallery-header {
     text-align: left;
@@ -40,11 +35,6 @@
   margin: 0 auto;
 }
 
-/* ---------- Galleria a scorrimento continuo ---------- */
-/* Scorrimento vero (src/scripts/carosello.ts): si sposta da sola e a mano, anche con il mouse.
-   Due serie identiche di foto: oltre la prima si torna indietro di una serie, senza salti.
-   Niente animazione CSS né maschere sul contenitore (le foto potevano sparire dopo un po'):
-   i bordi sfumati sono due sovrapposizioni sopra, non toccano le foto. */
 .gallery-infinite {
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -92,18 +82,19 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .5s ease, filter .3s ease;
+  transition:
+    transform 0.5s ease,
+    filter 0.3s ease;
 }
 
 .gallery-apri:focus-visible {
   outline-offset: -3px;
 }
 
-/* Icona ingrandisci: compare al passaggio del mouse o col focus da tastiera */
 .gallery-zoom-icon {
   position: absolute;
-  right: .9rem;
-  bottom: .9rem;
+  right: 0.9rem;
+  bottom: 0.9rem;
   display: grid;
   place-items: center;
   width: 2.5rem;
@@ -114,13 +105,15 @@
   color: var(--dark-navy);
   opacity: 0;
   transform: translateY(6px);
-  transition: opacity .3s ease, transform .3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .gallery-apri:hover img,
 .gallery-apri:focus-visible img {
   transform: scale(1.04);
-  filter: brightness(.88);
+  filter: brightness(0.88);
 }
 
 .gallery-apri:hover .gallery-zoom-icon,
@@ -129,9 +122,7 @@
   transform: none;
 }
 
-/* Movimento ridotto: niente scorrimento automatico, solo a mano, senza copie */
 @media (prefers-reduced-motion: reduce) {
-
   .gallery-infinite {
     scroll-snap-type: x mandatory;
     scroll-padding-inline: 1.5rem;
@@ -145,7 +136,7 @@
     scroll-snap-align: start;
   }
 
-  .gallery-item[aria-hidden="true"] {
+  .gallery-item[aria-hidden='true'] {
     display: none;
   }
 }
@@ -174,7 +165,6 @@
   }
 }
 
-/* ---------- Lightbox: dialog a tutto schermo ---------- */
 html.galleria-aperta {
   overflow: hidden;
 }
@@ -187,14 +177,14 @@ html.galleria-aperta {
   margin: 0;
   padding: 4.5rem 6rem 2rem;
   border: none;
-  background: rgb(var(--scuro-rgb) / .96);
+  background: rgb(var(--scuro-rgb) / 0.96);
   color: var(--white);
 }
 
 .galleria-dialog[open] {
   display: grid;
   place-items: center;
-  animation: galleria-entra .25s ease;
+  animation: galleria-entra 0.25s ease;
 }
 
 .galleria-dialog::backdrop {
@@ -207,7 +197,6 @@ html.galleria-aperta {
   }
 }
 
-/* La figura è larga quanto la foto; la didascalia non la allarga */
 .galleria-figura {
   display: grid;
   justify-items: start;
@@ -223,7 +212,7 @@ html.galleria-aperta {
   width: auto;
   height: auto;
   border-radius: var(--radius-md);
-  transition: opacity .25s ease;
+  transition: opacity 0.25s ease;
 }
 
 .galleria-foto.in-caricamento {
@@ -245,7 +234,7 @@ html.galleria-aperta {
 
 .galleria-contatore {
   flex-shrink: 0;
-  color: rgb(var(--bianco-rgb) / .6);
+  color: rgb(var(--bianco-rgb) / 0.6);
 }
 
 .galleria-chiudi,
@@ -271,7 +260,6 @@ html.galleria-aperta {
   right: 1.5rem;
 }
 
-/* Su schermi stretti le frecce scendono in basso, la foto usa tutta la larghezza */
 @media (max-width: 768px) {
   .galleria-dialog {
     padding: 4.5rem 1rem 6rem;

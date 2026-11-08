@@ -1,4 +1,3 @@
-/** Il pulsante apre i percorsi; i link del dialogo navigano alle sezioni esistenti. */
 export {};
 
 const apri = document.getElementById('trova-apri');
@@ -27,7 +26,6 @@ if (apri && scelta && popup) {
   popup.addEventListener('close', () => apri.setAttribute('aria-expanded', 'false'));
 
   popup.addEventListener('click', (event) => {
-    // Il clic sul backdrop chiude; il padding interno del dialogo resta cliccabile.
     if (event.target !== popup) return;
     const area = popup.getBoundingClientRect();
     if (event.clientX < area.left || event.clientX > area.right || event.clientY < area.top || event.clientY > area.bottom) popup.close();
@@ -35,19 +33,18 @@ if (apri && scelta && popup) {
 
   for (const opzione of opzioni) {
     opzione.addEventListener('click', (event) => {
-      // Mantiene il comportamento dei link per chi apre in un'altra scheda.
       if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       seleziona(opzione);
       popup.close();
 
-      // Dopo il salto il focus segue il percorso, anche navigando da tastiera.
       const titolo = document.getElementById(opzione.hash.slice(1))?.querySelector('h2');
-      if (titolo) requestAnimationFrame(() => {
-        const avevaTabindex = titolo.hasAttribute('tabindex');
-        if (!avevaTabindex) titolo.setAttribute('tabindex', '-1');
-        titolo.focus({ preventScroll: true });
-        if (!avevaTabindex) titolo.addEventListener('blur', () => titolo.removeAttribute('tabindex'), { once: true });
-      });
+      if (titolo)
+        requestAnimationFrame(() => {
+          const avevaTabindex = titolo.hasAttribute('tabindex');
+          if (!avevaTabindex) titolo.setAttribute('tabindex', '-1');
+          titolo.focus({ preventScroll: true });
+          if (!avevaTabindex) titolo.addEventListener('blur', () => titolo.removeAttribute('tabindex'), { once: true });
+        });
     });
   }
 }

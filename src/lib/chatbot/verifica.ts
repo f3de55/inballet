@@ -1,9 +1,3 @@
-/**
- * Verifica di qualità dalla dashboard: le domande di src/data/chatbot.ts
- * vengono poste a un singolo fornitore della catena e la risposta è
- * controllata contro i fatti attesi. Serve a sapere che anche i fornitori
- * di riserva rispondono giusto, non solo il primo.
- */
 import { VERIFICHE } from '../../data/chatbot';
 import { sistema } from './conoscenza';
 import { chiediAlModello, type Anello } from './fornitori';
@@ -12,14 +6,17 @@ import { calcolaCosto } from './registro';
 interface EsitoVerifica {
   ok: boolean;
   risposta: string;
-  /** Cosa manca o non doveva esserci */
   problemi: string[];
   ms?: number;
   costo?: number;
 }
 
-/** Per confrontare ignorando maiuscole, accenti, spazi e punteggiatura dei numeri di telefono. */
-const piatto = (s: string) => s.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/[\s.\-()+]/g, '');
+const piatto = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .replace(/[\s.\-()+]/g, '');
 
 export async function verifica(anello: Anello, indice: number, origine: string): Promise<EsitoVerifica> {
   const v = VERIFICHE[indice];

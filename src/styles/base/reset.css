@@ -1,6 +1,3 @@
-/*
- * Reset e base del documento: box model, scorrimento, corpo della pagina, focus da tastiera e skip link.
- */
 * {
   margin: 0;
   padding: 0;
@@ -10,9 +7,6 @@
 html {
   scrollbar-width: thin;
   scrollbar-color: var(--primary-blue) var(--dark-navy);
-  /* Le ancore atterrano subito sotto l'header fisso (e il banner eventi). Si usa l'altezza
-     dell'header ridotto (--header-h-scrolled): dopo il salto la pagina è scrollata e la barra
-     si rimpicciolisce. Niente scroll-margin-top nelle pagine: si sommerebbe a questo valore. */
   scroll-padding-top: calc(var(--header-h-scrolled) + var(--banner-height, 0px));
 }
 
@@ -42,15 +36,9 @@ html::-webkit-scrollbar-thumb:hover {
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  /* Navbar e banner sono fissi: la pagina parte sotto di loro, così nessuna sezione resta
-     coperta. --banner-spazio è l'altezza piena del banner (Banner.astro) e non cambia quando
-     si riduce allo scroll; anche --header-h resta fissa: il contenuto non salta mai */
   padding-top: calc(var(--header-h) + var(--banner-spazio, 0px));
 }
 
-/* ---------- Accessibilità ---------- */
-
-/* Focus da tastiera: azzurro scuro sui fondi chiari (5:1), azzurro chiaro su quelli scuri e sulle foto (10:1) */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -58,7 +46,7 @@ textarea:focus-visible,
 select:focus-visible,
 summary:focus-visible,
 [tabindex]:focus-visible,
-[role="button"]:focus-visible {
+[role='button']:focus-visible {
   outline: 3px solid var(--primary-blue-dark);
   outline-offset: 3px;
 }

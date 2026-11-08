@@ -13,9 +13,7 @@ try {
   process.exit(0);
 }
 
-const filePath =
-  (input.tool_input && input.tool_input.file_path) ||
-  (input.tool_response && input.tool_response.filePath);
+const filePath = (input.tool_input && input.tool_input.file_path) || (input.tool_response && input.tool_response.filePath);
 
 if (!filePath) process.exit(0);
 
@@ -29,17 +27,7 @@ try {
     // non-zero exit here means there IS a staged diff -> fall through to commit
   }
 
-  execFileSync(
-    'git',
-    [
-      'commit',
-      '-m',
-      'update',
-      '-m',
-      'Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>',
-    ],
-    { cwd: repoRoot, stdio: 'ignore' }
-  );
+  execFileSync('git', ['commit', '-m', 'update', '-m', 'Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>'], { cwd: repoRoot, stdio: 'ignore' });
 } catch {
   // never block the tool call on a commit failure
   process.exit(0);

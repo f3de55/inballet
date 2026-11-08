@@ -5,7 +5,6 @@ dist
 .vscode
 .claude
 
-# dati runtime: nell'immagine entrano solo i dati iniziali
 data/*
 !data/eventi.json
 !data/tipi_evento.json

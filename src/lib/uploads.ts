@@ -1,12 +1,3 @@
-/**
- * Locandine eventi caricate dalla dashboard. Salvate in DATA_DIR/uploads/eventi
- * e servite su /assets/images/eventi/<file> (stesso path della versione PHP,
- * così gli eventi già salvati continuano a funzionare).
- *
- * All'upload ogni immagine è ridotta (lato lungo 1600px) e convertita in WebP:
- * una foto da 20MB diventa qualche centinaio di KB. Accanto c'è una miniatura
- * `<nome>.mini.webp` per la libreria della dashboard.
- */
 import { randomBytes } from 'node:crypto';
 import { readdir, rename, stat, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -15,11 +6,9 @@ import { ensureDir, paths } from './storage';
 import { romeIso } from './time';
 
 export const PUBLIC_PREFIX = 'assets/images/eventi/';
-const MAX_SIZE = 20 * 1024 * 1024; // 20MB
-/** Lato lungo della locandina pubblicata e della miniatura */
+const MAX_SIZE = 20 * 1024 * 1024;
 const LATO = 1600;
 const LATO_MINI = 480;
-/** Locandine già salvate più grandi di così vengono ridotte (stesso nome e formato) */
 const PESO_MAX = 800 * 1024;
 
 export const MIME: Record<string, string> = {
@@ -33,11 +22,9 @@ export const MIME: Record<string, string> = {
 interface Immagine {
   nome: string;
   path: string;
-  /** Miniatura per la libreria della dashboard */
   mini: string;
 }
 
-/** Tipo MIME reale dai magic bytes (come finfo in PHP), o null. */
 export function sniffMime(buf: Uint8Array): string | null {
   const ascii = (start: number, end: number) => String.fromCharCode(...buf.subarray(start, end));
   if (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) return 'image/jpeg';
@@ -47,7 +34,6 @@ export function sniffMime(buf: Uint8Array): string | null {
   return null;
 }
 
-/** Nome file sicuro (basename, solo estensioni immagine) o null. */
 export function safeName(name: string): string | null {
   const base = path.basename(name);
   if (!/^[\w.-]+$/.test(base)) return null;
@@ -60,7 +46,6 @@ export const filePath = (name: string) => path.join(paths.immaginiEventi, name);
 export const isMini = (nome: string) => nome.endsWith('.mini.webp');
 export const nomeMini = (nome: string) => nome.replace(/\.[^.]+$/, '') + '.mini.webp';
 
-/** Originale associato a una locandina demo o alla sua miniatura. */
 export function originaleDemo(nome: string): string | null {
   const m = /^(demo-\d{4}-\d{2}-\d{2}-[a-f0-9]{6})(?:\.jpg|\.mini\.webp)$/.exec(nome);
   return m ? `${m[1]}.jpg` : null;
@@ -68,7 +53,6 @@ export function originaleDemo(nome: string): string | null {
 
 const sharp = async () => (await import('sharp')).default;
 
-/** Locandina pubblicata: orientamento corretto, lato lungo 1600px, WebP (GIF animate comprese). */
 async function ottimizza(buf: Uint8Array, mime: string): Promise<Buffer> {
   const s = await sharp();
   const animata = mime === 'image/gif';
@@ -90,11 +74,6 @@ export async function creaMini(nome: string): Promise<void> {
   }
 }
 
-/**
- * Locandine salvate prima dell'ottimizzazione: crea le miniature mancanti e
- * riduce i file troppo pesanti mantenendo nome e formato (gli eventi non cambiano).
- * Una volta per avvio del server, alla prima apertura della libreria.
- */
 let preparazione: Promise<void> | null = null;
 function preparaEsistenti(files: string[]): Promise<void> {
   preparazione ??= (async () => {
@@ -115,15 +94,12 @@ function preparaEsistenti(files: string[]): Promise<void> {
           await writeFile(file, ridotta);
         }
         if (!presenti.has(nomeMini(nome))) await creaMini(nome);
-      } catch {
-        // File illeggibile: resta com'è, la libreria mostra l'originale
-      }
+      } catch {}
     }
   })();
   return preparazione;
 }
 
-/** Immagini caricate, dalla più recente. */
 export async function elencaImmagini(): Promise<(Immagine & { size: number; data: string })[]> {
   await ensureDir(paths.immaginiEventi);
   let files = (await readdir(paths.immaginiEventi)).filter((f) => safeName(f));
@@ -136,11 +112,16 @@ export async function elencaImmagini(): Promise<(Immagine & { size: number; data
       .map(async (nome) => {
         const st = await stat(filePath(nome));
         const m = nomeMini(nome);
-        return { nome, path: PUBLIC_PREFIX + nome, mini: PUBLIC_PREFIX + (mini.has(m) ? m : nome), size: st.size, data: romeIso(st.mtimeMs), mtime: st.mtimeMs };
+        return {
+          nome,
+          path: PUBLIC_PREFIX + nome,
+          mini: PUBLIC_PREFIX + (mini.has(m) ? m : nome),
+          size: st.size,
+          data: romeIso(st.mtimeMs),
+          mtime: st.mtimeMs,
+        };
       }),
   );
-  // Se il volume ha perso una locandina demo, resta selezionabile: il suo URL
-  // la ricostruisce al primo caricamento, senza bloccare tutta la libreria.
   const presenti = new Set(list.map((img) => img.nome));
   for (const evento of await leggiEventi()) {
     if (!evento.demo) continue;
@@ -153,7 +134,6 @@ export async function elencaImmagini(): Promise<(Immagine & { size: number; data
   return list.sort((a, b) => b.mtime - a.mtime).map(({ mtime: _, ...img }) => img);
 }
 
-/** Salva i file validi (ottimizzati); restituisce immagini salvate ed errori per file. */
 export async function caricaImmagini(files: File[]): Promise<{ immagini: Immagine[]; errori: string[] }> {
   await ensureDir(paths.immaginiEventi);
   const immagini: Immagine[] = [];
@@ -182,7 +162,6 @@ export async function caricaImmagini(files: File[]): Promise<{ immagini: Immagin
   return { immagini, errori };
 }
 
-/** Elimina un'immagine (e la miniatura) e la toglie dagli eventi che la usavano. Restituisce un messaggio d'errore o null. */
 export async function eliminaImmagine(nome: string): Promise<string | null> {
   if (!nome) return 'Nome file non specificato';
   const safe = safeName(nome);
@@ -190,7 +169,6 @@ export async function eliminaImmagine(nome: string): Promise<string | null> {
   try {
     await unlink(filePath(safe));
   } catch (e) {
-    // Anche un riferimento demo recuperabile ma non ancora rigenerato può essere rimosso.
     if ((e as NodeJS.ErrnoException).code !== 'ENOENT') return 'Errore durante eliminazione';
   }
   await unlink(filePath(nomeMini(safe))).catch(() => {});

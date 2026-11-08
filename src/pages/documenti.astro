@@ -1,14 +1,10 @@
 ---
-/**
- * Pagina Documenti: testi e PDF da scaricare modificabili dalla dashboard
- * (sezione Documenti), quindi renderizzata dal server a ogni richiesta.
- */
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import { leggiDocumenti } from '../lib/documenti';
 import { scuola } from '../data/scuola';
 import { grassettoDaTesto, senzaGrassetto } from '../lib/text';
+import HeroPagina from '../components/HeroPagina.astro';
 import '../styles/pages/documenti.css';
 
 export const prerender = false;
@@ -19,7 +15,6 @@ const bg = {
 const { hero, sezione, documenti } = await leggiDocumenti();
 const moduli = documenti.filter((d) => d.categoria !== 'statuto');
 const statuto = documenti.find((d) => d.categoria === 'statuto');
-// Testo dell'hero (scritto dalla dashboard) completato con scuola e luogo, se c'è spazio
 const base = senzaGrassetto(hero.testo || sezione.intro);
 const luogo = ' InBallet, scuola di danza a Lainate e Rho (MI).';
 const description = base.length + luogo.length <= 160 ? base + luogo : base;
@@ -35,18 +30,10 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
     <Fragment slot="head">
         {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
     </Fragment>
-    <!-- Hero -->
-    <section class="chisiamo-hero hero-banner">
-        <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
-        <div class="chisiamo-hero-overlay"></div>
-        <div class="chisiamo-hero-glass">
-            <Breadcrumb />
-            <h1 class="chisiamo-hero-title">{hero.titolo}</h1>
-            {hero.testo && <p class="hero-lead" set:html={grassettoDaTesto(hero.testo)} />}
-        </div>
-    </section>
+    <HeroPagina titolo={hero.titolo} stile={bg.hero.style}>
+        {hero.testo && <p class="hero-lead" set:html={grassettoDaTesto(hero.testo)} />}
+    </HeroPagina>
 
-    <!-- Documenti: intestazione editoriale ed elenco dei PDF -->
     <section id="documenti" class="documenti-section decoro-onde" aria-labelledby="documenti-titolo">
         <div class="intro-editoriale">
             {sezione.eyebrow && <p class="eyebrow">{sezione.eyebrow}</p>}

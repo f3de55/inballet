@@ -1,4 +1,3 @@
-
 .simili-section {
   padding: var(--section-y) 0;
   background: var(--white);
@@ -18,7 +17,6 @@
   color: var(--heading-color);
 }
 
-/* Una card tonda per ogni corso, con spazio tra l'una e l'altra */
 .simili-lista {
   list-style: none;
   display: grid;
@@ -28,8 +26,6 @@
   padding: 0;
 }
 
-/* PC: al massimo 3 card per riga, qualunque sia il numero di corsi. Griglia a 6 colonne con card larghe 2:
-   l'ultima riga incompleta (1 o 2 card) resta centrata. */
 @media (min-width: 901px) {
   .simili-lista {
     grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -52,20 +48,17 @@
   }
 }
 
-/* Ogni cella occupa 5 righe della griglia (foto, titolo, età, frequenza, «Scopri il corso») e le
-   eredita con subgrid: titoli, testi e link stanno alla stessa altezza in tutte le celle della riga */
 .simili-lista li {
   display: grid;
   grid-row: span 5;
   grid-template-rows: subgrid;
   row-gap: 0;
   overflow: hidden;
-  border: 1px solid rgb(var(--blu-rgb) / .4);
+  border: 1px solid rgb(var(--blu-rgb) / 0.4);
   border-radius: var(--radius-card);
   background: var(--white);
 }
 
-/* Alternanza come nei blocchi di Contatti: azzurrina, bianca, azzurrina… */
 .simili-lista li:nth-child(odd) {
   background: var(--bg-soft);
 }
@@ -93,7 +86,6 @@
   border-radius: var(--radius-img);
 }
 
-/* Il contenitore non genera un box: titolo, età e frequenza sono righe della griglia della cella */
 .simili-testo {
   display: contents;
 }
@@ -111,12 +103,12 @@
 
 .simili-eta {
   display: block;
-  margin-top: .75rem;
+  margin-top: 0.75rem;
 }
 
 .simili-desc {
   display: block;
-  margin-top: .4rem;
+  margin-top: 0.4rem;
 }
 
 .simili-voce:focus-visible {
@@ -124,13 +116,11 @@
   outline-offset: -4px;
 }
 
-/* Tablet: due colonne */
 @media (max-width: 900px) {
   .simili-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  /* Ogni voce occupa sempre una colonna: con un numero dispari resta un riquadro vuoto */
   .simili-lista:has(> li:last-child:nth-child(odd))::after {
     content: '';
     grid-row: span 5;
@@ -147,7 +137,6 @@
   }
 }
 
-/* Mobile: card fotografiche e fila scorrevole condivise con /corsi. */
 @media (max-width: 600px) {
   .simili-wrapper {
     display: none;

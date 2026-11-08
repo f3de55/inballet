@@ -1,4 +1,3 @@
-/* Colonna centrale dei contenuti: stessa larghezza e stesso margine laterale in tutte le pagine */
 .container {
   max-width: 1200px;
   margin: 0 auto;

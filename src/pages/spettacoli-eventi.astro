@@ -1,14 +1,5 @@
 ---
-/**
- * Spettacoli ed eventi: calendario degli appuntamenti salvati dalla dashboard,
- * renderizzato dal server a ogni richiesta (l'elenco è nell'HTML, leggibile dai
- * motori di ricerca, con i dati strutturati schema.org/Event).
- * Il dettaglio di un evento si apre in un modale; il link ?evento=<slug> lo apre
- * direttamente e, condiviso, mostra titolo e locandina nell'anteprima social.
- * La vista "Calendario" (griglia del mese) è disegnata dal browser.
- */
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import {
   datiStrutturati,
@@ -27,13 +18,14 @@ import {
   type Evento,
 } from '../lib/eventi';
 import { romeDate } from '../lib/time';
+import HeroPagina from '../components/HeroPagina.astro';
+import '../styles/components/dialogo.css';
 import '../styles/pages/spettacoli-eventi.css';
 
 export const prerender = false;
 
 const site = Astro.site ?? new URL(Astro.url.origin);
 
-// ?evento=<slug> (anche uno slug precedente o il vecchio id): il modale si apre da solo
 const richiesto = Astro.url.searchParams.get('evento');
 const trovato = richiesto ? await trovaEvento(richiesto) : null;
 const aperto = trovato && trovato.evento.stato !== 'bozza' ? trovato.evento : null;
@@ -42,7 +34,6 @@ const bg = {
   hero: await heroPagina('spettacoli-eventi'),
 };
 
-/** Eventi curati dalla Direzione oltre al calendario della scuola. */
 const tipiEvento = [
   { nome: 'Spettacolo annuale in teatro', icona: 'fa-masks-theater', testo: "Ogni anno uno <strong>spettacolo in teatro</strong>: sul palco salgono gli allievi della scuola, insieme ai ragazzi di NoiConVoi e delle classi integrate." },
   { nome: 'Eventi celebrativi', icona: 'fa-champagne-glasses', testo: 'La danza come cuore o arricchimento di <strong>eventi unici</strong> e occasioni speciali.' },
@@ -63,7 +54,6 @@ const eventi = await eventiPubblici();
 const prossimi = eventi.filter((e) => !passato(e, adesso));
 const passati = eventi.filter((e) => passato(e, adesso)).reverse();
 
-/** Eventi raggruppati per mese di inizio, nell'ordine ricevuto. */
 function perMese(lista: Evento[]) {
   const gruppi = new Map<string, Evento[]>();
   for (const e of lista) gruppi.set(e.data.slice(0, 7), [...(gruppi.get(e.data.slice(0, 7)) ?? []), e]);
@@ -73,7 +63,6 @@ function perMese(lista: Evento[]) {
   });
 }
 
-/** Dati di una riga dell'elenco. */
 function voce(e: Evento) {
   const [y, m, d] = e.data.split('-').map(Number);
   const finito = passato(e, adesso);
@@ -99,7 +88,6 @@ function voce(e: Evento) {
 const gruppiProssimi = perMese(prossimi);
 const gruppiPassati = perMese(passati);
 
-// Dati per il browser: griglia del mese e contenuto del modale, già pronti da mostrare
 const datiEventi = {
   oggi,
   aperto: aperto?.slug ?? null,
@@ -130,10 +118,8 @@ const datiEventi = {
   }),
 };
 
-// Dati strutturati per Google: gli appuntamenti in programma (non i demo)
 const schemaEventi = prossimi.filter((e) => !e.demo).map((e) => datiStrutturati(e, site));
 
-// Link condiviso a un evento: anteprima social con titolo, data e locandina
 const descrizioneAperto = aperto ? testoDescrizione(aperto.descrizione).replace(/\s+/g, ' ') : '';
 const og = aperto
   ? {
@@ -156,19 +142,10 @@ const og = aperto
     <Fragment slot="head">
         {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
     </Fragment>
-        <!-- Hero -->
-        <section class="chisiamo-hero hero-banner">
-            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
-            <div class="chisiamo-hero-overlay"></div>
-            <div class="chisiamo-hero-glass">
-                <Breadcrumb />
-                <h1 class="chisiamo-hero-title">Spettacoli ed eventi</h1>
-                <p class="hero-lead">Il <strong>calendario di spettacoli e workshop</strong> di InBallet a Lainate e Rho, per allievi, famiglie e appassionati.</p>
-            </div>
-        </section>
+        <HeroPagina titolo="Spettacoli ed eventi" stile={bg.hero.style}>
+            <p class="hero-lead">Il <strong>calendario di spettacoli e workshop</strong> di InBallet a Lainate e Rho, per allievi, famiglie e appassionati.</p>
+        </HeroPagina>
 
-        <!-- Calendario: elenco dei prossimi appuntamenti (vista principale) o griglia del mese.
-             Escluso dal testo letto dal chatbot: gli eventi gli arrivano già aggiornati. -->
         <section id="calendario" class="eventi-section decoro-onde" aria-labelledby="eventi-titolo" data-chatbot-escludi>
             <div class="container">
                 <header class="eventi-header">
@@ -185,7 +162,6 @@ const og = aperto
                     )}
                 </header>
 
-                <!-- Nessun appuntamento futuro (gli eventi passati restano consultabili sotto) -->
                 {prossimi.length === 0 && (
                     <div class="eventi-vuoto">
                         <span class="eventi-vuoto-icona" aria-hidden="true">
@@ -200,7 +176,6 @@ const og = aperto
                     </div>
                 )}
 
-                <!-- Vista elenco -->
                 <div class="vista-elenco" id="vistaElenco">
                     {[{ gruppi: gruppiProssimi, passati: false }, { gruppi: gruppiPassati, passati: true }].map(({ gruppi, passati: sonoPassati }) => {
                         const elenco = gruppi.map((mese) => (
@@ -251,7 +226,6 @@ const og = aperto
                     })}
                 </div>
 
-                <!-- Vista calendario: griglia del mese (disegnata da scripts/calendario.ts) -->
                 {eventi.length > 0 && (
                     <div class="vista-calendario" id="vistaCalendario" hidden>
                         <div class="calendario-nav">
@@ -267,7 +241,6 @@ const og = aperto
             </div>
         </section>
 
-        <!-- Eventi curati dalla Direzione: intestazione editoriale e sei voci -->
         <section class="eventi-cura-section" aria-labelledby="cura-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">Eventi su misura</p>
@@ -275,7 +248,7 @@ const og = aperto
                 <p>La Direzione di I.N. Ballet cura la <strong>parte artistica e organizzativa</strong> di <strong>eventi di ogni tipo</strong>: così allievi e progetti della scuola incontrano il pubblico e nuove collaborazioni.</p>
             </div>
             <div class="container">
-                <ul class="cura-lista">
+                <ul class="voci-griglia cura-lista">
                     {tipiEvento.map((t) => (
                         <li class="voce">
                             <i class={`fas ${t.icona} voce-icona`} aria-hidden="true"></i>
@@ -290,12 +263,11 @@ const og = aperto
         {schemaEventi.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(schemaEventi).replace(/</g, '\\u003c')} />}
 
     <Fragment slot="after-main">
-    <!-- Dettaglio evento (riempito da scripts/calendario.ts) -->
-    <dialog class="evento-dialog" id="eventoDialog" aria-labelledby="dialogTitolo">
-        <div class="evento-dialog-barra">
+    <dialog class="dialogo evento-dialog" id="eventoDialog" aria-labelledby="dialogTitolo">
+        <div class="dialogo-barra">
             <button type="button" class="btn-icon evento-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
         </div>
-        <div class="evento-dialog-corpo" id="dialogCorpo">
+        <div class="dialogo-corpo evento-dialog-corpo" id="dialogCorpo">
             <button type="button" class="evento-locandina" id="dialogLocandinaBtn" aria-label="Ingrandisci la locandina" hidden>
                 <img id="dialogLocandina" src="data:," alt="">
                 <span class="evento-locandina-zoom" aria-hidden="true"><i class="fas fa-expand"></i></span>
@@ -325,7 +297,6 @@ const og = aperto
         </div>
     </dialog>
 
-    <!-- Locandina a tutto schermo -->
     <dialog class="locandina-dialog" id="locandinaDialog" aria-label="Locandina">
         <button type="button" class="btn-icon btn-icon--scuro locandina-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
         <img id="locandinaGrande" src="data:," alt="">

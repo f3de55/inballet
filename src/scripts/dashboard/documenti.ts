@@ -1,15 +1,8 @@
-/**
- * Dashboard › Documenti: testi della pagina, modale crea/modifica documento
- * (con caricamento del PDF anche trascinando), ordine ed eliminazione.
- * Il backend è chiamato tramite Astro Actions.
- */
 import { actions } from 'astro:actions';
 import { conferma } from './conferma';
-import { $, aggiornaContatore, attivaContatori, elencoOrdinabile, MAX_SIZE, zonaCaricamento } from './comune';
+import { $, aggiornaContatore, attivaContatori, elencoOrdinabile, MAX_SIZE, mostraModal, nascondiModal, zonaCaricamento } from './comune';
 import { toast } from './toast';
 import type { Documento } from '../../data/documenti';
-
-// === TESTI DELLA PAGINA ===
 
 const formTesti = $<HTMLFormElement>('formTesti');
 
@@ -52,8 +45,6 @@ formTesti.addEventListener('submit', async (e) => {
   toast('Testi salvati', 'success');
 });
 
-// === MODALE DOCUMENTO ===
-
 const modal = $('modalDocumento');
 const form = $<HTMLFormElement>('formDocumento');
 const campi = {
@@ -64,7 +55,6 @@ const campi = {
   file: $<HTMLInputElement>('docFile'),
 };
 const zona = modal.querySelector<HTMLElement>('[data-upload-pdf]')!;
-/** PDF scelto ma non ancora salvato. */
 let nuovoFile: File | null = null;
 let modificato = false;
 let inCorso = false;
@@ -107,18 +97,25 @@ function apriModal(doc?: Documento) {
   mostraFile(doc);
   modificato = false;
 
-  modal.classList.add('open');
-  document.documentElement.classList.add('modal-aperta');
+  mostraModal(modal);
   modal.querySelector('.modal-body')!.scrollTop = 0;
-  // Su touch il focus aprirebbe subito la tastiera: solo con mouse
   if (matchMedia('(hover: hover)').matches) campi.titolo.focus();
 }
 
 async function chiudiModal(forza = false) {
   if (!modal.classList.contains('open') || inCorso) return;
-  if (!forza && modificato && !(await conferma({ titolo: 'Chiudere senza salvare?', testo: 'Le modifiche a questo documento andranno perse.', ok: 'Chiudi senza salvare', pericolo: true }))) return;
-  modal.classList.remove('open');
-  document.documentElement.classList.remove('modal-aperta');
+  if (
+    !forza &&
+    modificato &&
+    !(await conferma({
+      titolo: 'Chiudere senza salvare?',
+      testo: 'Le modifiche a questo documento andranno perse.',
+      ok: 'Chiudi senza salvare',
+      pericolo: true,
+    }))
+  )
+    return;
+  nascondiModal(modal);
 }
 
 function sceltaFile(files: Iterable<File>) {
@@ -166,21 +163,27 @@ form.addEventListener('submit', async (e) => {
   setTimeout(() => location.reload(), 700);
 });
 
-// === ELENCO: ORDINE ED ELIMINAZIONE ===
-
 const lista = document.getElementById('docLista');
 
 const sposta = elencoOrdinabile(lista, '.doc', (ids) => actions.documenti.ordina({ ids }));
 
 async function elimina(riga: HTMLElement) {
   const doc = JSON.parse(riga.dataset.modifica!) as Documento;
-  if (!(await conferma({ titolo: `Eliminare «${doc.titolo}»?`, testo: 'Il documento sparirà dalla pagina e il PDF caricato verrà cancellato. L’operazione non si può annullare.', ok: 'Elimina', pericolo: true }))) return;
+  if (
+    !(await conferma({
+      titolo: `Eliminare «${doc.titolo}»?`,
+      testo: 'Il documento sparirà dalla pagina e il PDF caricato verrà cancellato. L’operazione non si può annullare.',
+      ok: 'Elimina',
+      pericolo: true,
+    }))
+  )
+    return;
   const { error } = await actions.documenti.elimina({ id: doc.id });
   if (error) return toast(error.message || "Errore durante l'eliminazione", 'error');
 
   toast('Documento eliminato', 'success');
   riga.classList.add('in-uscita');
-  setTimeout(() => location.reload(), 700); // aggiorna conteggi e stato vuoto
+  setTimeout(() => location.reload(), 700);
 }
 
 document.addEventListener('click', (e) => {
@@ -198,7 +201,6 @@ document.addEventListener('click', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-  // Con un popup di conferma aperto, Esc chiude solo quello
   if (e.key !== 'Escape' || document.querySelector('dialog[open]')) return;
   void chiudiModal();
 });

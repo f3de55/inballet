@@ -1,13 +1,7 @@
 ---
-/**
- * Breadcrumb delle pagine interne (Home › Sezione › Pagina), ricavato dalla
- * struttura della navigazione in src/data/navigazione.ts, con i dati
- * strutturati BreadcrumbList per i motori di ricerca.
- */
 import { altrePagine, menu } from '../data/navigazione';
 
 interface Props {
-  /** Nome della pagina se non è nel menu né in altrePagine. */
   nome?: string;
 }
 

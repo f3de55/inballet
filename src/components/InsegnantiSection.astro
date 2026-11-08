@@ -1,12 +1,4 @@
 ---
-/**
- * Sezione «Insegnanti» di Chi siamo, gestita dalla dashboard (sezione Insegnanti).
- * Stesso schema della galleria «Le nostre sale»: intestazione centrata e fila di card
- * a scorrimento continuo (scorrimento vero, anche a mano con il mouse; pausa al passaggio; si
- * trascina con il mouse o col dito e scorre da sola, src/scripts/carosello.ts). Ogni card: foto, e su
- * un velo scuro nome, disciplina e «Scopri di più», che apre la scheda completa
- * (InsegnantiDialoghi.astro). Senza insegnanti la sezione non compare.
- */
 import type { SezioneInsegnanti } from '../lib/insegnanti';
 import { grassettoDaTesto } from '../lib/text';
 import '../styles/components/insegnanti-section.css';
@@ -17,7 +9,6 @@ interface Props {
 
 const { sezione, insegnanti } = Astro.props.dati;
 const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2).join('').toUpperCase();
-// Ogni metà della fila deve essere più larga dello schermo: con pochi insegnanti l'elenco si ripete
 const ripetizioni = Math.max(1, Math.ceil(10 / Math.max(1, insegnanti.length)));
 const meta = Array.from({ length: ripetizioni }, () => insegnanti).flat();
 ---
@@ -32,8 +23,6 @@ const meta = Array.from({ length: ripetizioni }, () => insegnanti).flat();
       </div>
     </div>
 
-    <!-- Due metà identiche: la seconda serve solo alla continuità dello scorrimento ed è
-         nascosta a tastiera e screen reader (come le ripetizioni nella prima metà) -->
     <div class="carosello-wrap">
     <div class="carosello insegnanti-fila" data-giro="35">
       <ul class="carosello-track insegnanti-track">

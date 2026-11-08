@@ -1,7 +1,6 @@
 ---
 import { ANNI_ATTIVITA, categorieCorsi, FONDAZIONE, sedi } from '../data/scuola';
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import InsegnantiSection from '../components/InsegnantiSection.astro';
 import InsegnantiDialoghi from '../components/InsegnantiDialoghi.astro';
@@ -9,9 +8,9 @@ import SediMappa from '../components/SediMappa.astro';
 import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import { leggiInsegnanti } from '../lib/insegnanti';
+import HeroPagina from '../components/HeroPagina.astro';
 import '../styles/pages/chi-siamo.css';
 
-// Gli insegnanti si gestiscono dalla dashboard: la pagina è generata a ogni richiesta
 export const prerender = false;
 
 const bg = {
@@ -26,7 +25,6 @@ const [lainate, rho] = sedi;
 
 const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
-// InBallet in numeri: valore (animato dal conteggio), etichetta e nota
 const numeri = [
   { valore: ANNI_ATTIVITA, etichetta: 'Anni di danza', nota: `Dal ${FONDAZIONE}` },
   { valore: totaleCorsi, etichetta: 'Corsi', nota: `In ${categorieCorsi.length} percorsi` },
@@ -46,18 +44,10 @@ const numeri = [
         {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
     </Fragment>
 
-        <!-- Hero Chi Siamo -->
-        <section class="chisiamo-hero hero-banner">
-            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
-            <div class="chisiamo-hero-overlay"></div>
-            <div class="chisiamo-hero-glass">
-                <Breadcrumb />
-                <h1 class="chisiamo-hero-title">Chi siamo: la nostra storia</h1>
-                <p class="hero-lead">Dal {FONDAZIONE} a Lainate e Rho: una scuola di danza multidisciplinare, un luogo di vita <strong>aperto a tutte le età</strong>.</p>
-            </div>
-        </section>
+        <HeroPagina titolo="Chi siamo: la nostra storia" stile={bg.hero.style}>
+            <p class="hero-lead">Dal {FONDAZIONE} a Lainate e Rho: una scuola di danza multidisciplinare, un luogo di vita <strong>aperto a tutte le età</strong>.</p>
+        </HeroPagina>
 
-        <!-- Fondatrice Section -->
         <section id="fondatrice" class="fondatrice-section decoro-onde">
             <div class="container">
                 <div class="fondatrice-layout">
@@ -83,7 +73,6 @@ const numeri = [
             </div>
         </section>
 
-        <!-- Timeline della storia -->
         <section class="storia-section" aria-labelledby="storia-titolo">
             <div class="container">
                 <div class="storia-header">
@@ -125,7 +114,6 @@ const numeri = [
             </div>
         </section>
 
-        <!-- InBallet in Numeri: intestazione, pulsante e quattro numeri in fila separati da filetti verticali -->
         <section class="numeri-section sezione-scura" aria-labelledby="numeri-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">In sintesi</p>
@@ -151,10 +139,8 @@ const numeri = [
             </div>
         </section>
 
-        <!-- Insegnanti (gestiti dalla dashboard; la sezione compare solo se ce ne sono) -->
         <InsegnantiSection dati={insegnanti} />
 
-        <!-- Foto delle sedi collegate agli indirizzi sulla cartografia originale. -->
         <section class="sede-section" id="dove-trovarci" aria-labelledby="sedi-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">Le nostre sedi</p>
@@ -166,7 +152,6 @@ const numeri = [
             </div>
         </section>
 
-        <!-- CTA Finale - Stesso stile template corsi -->
         <section class="cta-contatto sezione-scura">
             <div class="cta-bg" style={bg.cta.style}></div>
             <div class="cta-overlay"></div>

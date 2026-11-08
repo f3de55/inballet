@@ -1,12 +1,3 @@
-/**
- * Eventi e tipi evento: schema di validazione (unico, usato dall'Action),
- * lettura/scrittura su data/*.json, stato (bozza, annullato…), slug degli URL
- * e regole di tempo (inizio, fine, passato) valide in tutto il sito.
- *
- * I testi sono salvati come testo puro: l'escape si fa quando si disegnano.
- * Gli eventi del vecchio formato PHP (testi salvati con escape HTML, senza
- * `stato`) si convertono alla lettura e restano convertiti alla prima scrittura.
- */
 import { randomBytes } from 'node:crypto';
 import { z } from 'astro/zod';
 import { paths, readJson, serialized, writeJson } from './storage';
@@ -19,53 +10,59 @@ export type Stato = (typeof STATI)[number];
 
 export interface Evento {
   id: string;
-  /** Identificativo leggibile nei link: /spettacoli-eventi?evento=<slug> */
   slug: string;
-  /** Slug precedenti (titolo o data cambiati): i vecchi link aprono ancora l'evento */
   alias?: string[];
   titolo: string;
-  /** Inizio: YYYY-MM-DD e HH:MM (ora facoltativa) */
   data: string;
   ora: string;
-  /** Fine facoltativa: giorno (eventi su più giorni) e/o ora */
   dataFine: string;
   oraFine: string;
   stato: Stato;
   tipo: string;
   luogo: string;
-  /** HTML ridotto: b, strong, i, em, ul, li, br */
   descrizione: string;
   immagine: string;
   destinatari: string;
   costo: string;
-  /** Link per prenotare o comprare i biglietti */
   prenotazione: string;
   creato: string;
   modificato: string;
-  /** Creato dal generatore demo della dashboard */
   demo?: boolean;
 }
 
-/** Errore con messaggio da mostrare all'utente. */
 export class ErroreEvento extends Error {}
 
-// === SCHEMA (unica fonte delle regole: l'Action lo usa come input) ===
-
 const dataValida = (s: string) => isDateFormat(s) && !Number.isNaN(romeTimestamp(s, '12:00'));
-/** "9:30" → "09:30": così le ore si confrontano come stringhe. */
 const ora2 = (s: string) => (s ? s.padStart(5, '0') : s);
 
 const testo = (max: number, messaggio: string) => z.string().trim().max(max, messaggio).default('');
 const ora = (messaggio: string) =>
-  z.string().trim().default('').refine((s) => !s || isValidTime(s), messaggio).transform(ora2);
+  z
+    .string()
+    .trim()
+    .default('')
+    .refine((s) => !s || isValidTime(s), messaggio)
+    .transform(ora2);
 
 export const inputEvento = z
   .object({
-    id: z.string().regex(/^evt_[a-f0-9]{12}$/, 'ID evento non valido').optional(),
-    titolo: z.string().trim().min(1, 'Il titolo è obbligatorio').min(3, 'Il titolo deve avere almeno 3 caratteri').max(100, 'Il titolo non può superare i 100 caratteri'),
+    id: z
+      .string()
+      .regex(/^evt_[a-f0-9]{12}$/, 'ID evento non valido')
+      .optional(),
+    titolo: z
+      .string()
+      .trim()
+      .min(1, 'Il titolo è obbligatorio')
+      .min(3, 'Il titolo deve avere almeno 3 caratteri')
+      .max(100, 'Il titolo non può superare i 100 caratteri'),
     data: z.string().trim().min(1, 'La data è obbligatoria').refine(dataValida, 'Data non valida'),
     ora: ora('Ora non valida (usa HH:MM)'),
-    dataFine: z.string().trim().default('').refine((s) => !s || dataValida(s), 'Data di fine non valida'),
+    dataFine: z
+      .string()
+      .trim()
+      .default('')
+      .refine((s) => !s || dataValida(s), 'Data di fine non valida'),
     oraFine: ora('Ora di fine non valida (usa HH:MM)'),
     stato: z.enum(STATI).default('pubblicato'),
     tipo: testo(30, 'Tipo troppo lungo'),
@@ -83,7 +80,6 @@ export const inputEvento = z
       .trim()
       .max(500, 'Link troppo lungo')
       .default('')
-      // "www.sito.it" va bene lo stesso: si aggiunge https://
       .transform((s) => (s && !/^https?:\/\//i.test(s) ? `https://${s}` : s))
       .refine((s) => !s || (URL.canParse(s) && /^https?:$/.test(new URL(s).protocol)), 'Link di prenotazione non valido'),
   })
@@ -96,36 +92,24 @@ export const inputEvento = z
 
 type InputEvento = z.output<typeof inputEvento>;
 
-// === TEMPO (stesse regole per sito, banner, dashboard e chatbot) ===
-
-/** Fine: giorno e ora di fine se ci sono, altrimenti fine giornata (fuso di Roma). */
 export const fineEvento = (e: Pick<Evento, 'data' | 'dataFine' | 'oraFine'>) => romeTimestamp(e.dataFine || e.data, e.oraFine || '23:59');
 
-/** Un evento è passato quando è finito: fino ad allora resta "in programma". */
 export const passato = (e: Evento, now = Date.now()) => fineEvento(e) < now;
 
-/** Visibile sul sito: tutto tranne le bozze. */
 const pubblico = (e: Evento) => e.stato !== 'bozza';
 
-/** Link che apre il dettaglio dell'evento (modale) nel calendario. */
 export const urlEvento = (e: Pick<Evento, 'slug'>) => `/spettacoli-eventi?evento=${encodeURIComponent(e.slug)}`;
 
-/** File .ics dell'evento ("Apple / Outlook"). */
 export const urlIcs = (e: Pick<Evento, 'slug'>) => `/spettacoli-eventi/${e.slug}/calendario.ics`;
 
-/** Indirizzo della locandina per <img>: i percorsi salvati sono relativi ("assets/images/eventi/…"). */
 export const srcImmagine = (immagine: string) => (/^https?:\/\//i.test(immagine) ? immagine : '/' + immagine.replace(/^\.?\/+/, ''));
 
 const perInizio = (a: Evento, b: Evento) => (a.data + ora2(a.ora)).localeCompare(b.data + ora2(b.ora));
 
-// === SLUG ===
-
-/** "Galà di Natale" + 2026-12-19 → "gala-di-natale-2026-12-19" */
 export function baseSlug(titolo: string, data: string): string {
   return `${slug(titolo, 60) || 'evento'}-${data}`;
 }
 
-/** Primo slug libero: base, base-2, base-3… */
 export function slugUnico(base: string, usati: Set<string>): string {
   let slug = base;
   for (let n = 2; usati.has(slug); n++) slug = `${base}-${n}`;
@@ -134,13 +118,9 @@ export function slugUnico(base: string, usati: Set<string>): string {
 
 const usaSlug = (slug: string, base: string) => slug === base || new RegExp(`^${base}-\\d+$`).test(slug);
 
-// === LETTURA ===
-
 const str = (v: unknown) => (typeof v === 'string' ? v : '');
 
-/** Porta un evento letto dal file al formato attuale (senza assegnare lo slug). */
 function normalizza(raw: Record<string, unknown>): Evento {
-  // Formato PHP: testi salvati con escape HTML
   const vecchio = !raw.stato;
   const t = (v: unknown) => (vecchio ? decodeHtml(str(v)) : str(v));
   const stato = STATI.includes(raw.stato as Stato) ? (raw.stato as Stato) : 'pubblicato';
@@ -157,7 +137,6 @@ function normalizza(raw: Record<string, unknown>): Evento {
     stato,
     tipo: t(raw.tipo),
     luogo: t(raw.luogo),
-    // Ripulita anche in lettura: il file può contenere eventi del vecchio sito o modificati a mano
     descrizione: pulisciDescrizione(str(raw.descrizione)),
     immagine: t(raw.immagine),
     destinatari: t(raw.destinatari),
@@ -169,14 +148,12 @@ function normalizza(raw: Record<string, unknown>): Evento {
   };
 }
 
-/** Tutti gli eventi (anche bozze), nel formato attuale e ciascuno con uno slug univoco. */
 export async function leggiEventi(): Promise<Evento[]> {
   const raw = await readJson<unknown[]>(paths.eventi, []);
   const eventi = (Array.isArray(raw) ? raw : [])
     .filter((r): r is Record<string, unknown> => !!r && typeof r === 'object')
     .map(normalizza)
     .filter((e) => e.id && e.data);
-  // Prima gli slug già salvati, poi quelli da assegnare: un link esistente non cambia mai
   const usati = new Set<string>();
   for (const e of eventi) {
     if (e.slug && !usati.has(e.slug)) usati.add(e.slug);
@@ -188,15 +165,12 @@ export async function leggiEventi(): Promise<Evento[]> {
 
 export const leggiTipi = () => readJson<string[]>(paths.tipi, []);
 
-/** Eventi visibili sul sito (niente bozze), dal primo all'ultimo. */
 export const eventiPubblici = async () => (await leggiEventi()).filter(pubblico).sort(perInizio);
 
-/** Prossimi eventi visibili e non ancora finiti, in ordine di inizio (banner, chatbot). */
 export async function prossimiEventi(limite = 10, now = Date.now()): Promise<Evento[]> {
   return (await eventiPubblici()).filter((e) => !passato(e, now)).slice(0, limite);
 }
 
-/** Evento dallo slug, da uno slug precedente o dall'id (link condivisi prima degli slug). */
 export async function trovaEvento(chiave: string): Promise<{ evento: Evento; vecchio: boolean } | null> {
   const eventi = await leggiEventi();
   const evento = eventi.find((e) => e.slug === chiave);
@@ -205,9 +179,6 @@ export async function trovaEvento(chiave: string): Promise<{ evento: Evento; vec
   return altro ? { evento: altro, vecchio: true } : null;
 }
 
-// === SCRITTURA ===
-
-/** Descrizione: righe a capo come <br>, solo tag sicuri e senza attributi. */
 function pulisciDescrizione(html: string): string {
   return stripTags(html.replace(/<\/(div|p)>\s*/gi, '<br>'), ['b', 'strong', 'i', 'em', 'ul', 'li', 'br'])
     .replace(/<([a-z]+)\s+[^>]*>/gi, '<$1>')
@@ -216,12 +187,10 @@ function pulisciDescrizione(html: string): string {
     .trim();
 }
 
-/** Valida (già fatto dallo schema) e salva un evento nuovo o modificato. */
 export async function salvaEvento(input: InputEvento): Promise<{ evento: Evento; warnings: string[] }> {
   const warnings: string[] = [];
   const eventoId = input.id ?? null;
 
-  // Avviso solo per i NUOVI eventi nel passato
   if (!eventoId && fineEvento(input) < Date.now()) warnings.push('Attenzione: stai inserendo un evento nel passato');
   if (input.immagine && !/^(https?:\/\/|assets\/|images\/|\.\/|\/)/.test(input.immagine)) warnings.push('Il percorso immagine potrebbe non essere valido');
 
@@ -236,11 +205,9 @@ export async function salvaEvento(input: InputEvento): Promise<{ evento: Evento;
       warnings.push('Esiste già un evento con lo stesso titolo nella stessa data');
     }
 
-    // Tipo: uno di quelli esistenti (senza badare a maiuscole) o quello che l'evento aveva già
     const tipoInput = input.tipo.toLowerCase();
     const tipo = tipoInput ? (tipi.find((t) => t.toLowerCase() === tipoInput) ?? (esistente?.tipo.toLowerCase() === tipoInput ? esistente.tipo : '')) : '';
 
-    // Slug: cambia solo se cambiano titolo o data; il vecchio resta come alias
     const base = baseSlug(input.titolo, input.data);
     const usati = new Set(eventi.filter((e) => e.id !== eventoId).flatMap((e) => [e.slug, ...(e.alias ?? [])]));
     let slug = esistente?.slug ?? '';
@@ -271,7 +238,6 @@ export async function salvaEvento(input: InputEvento): Promise<{ evento: Evento;
       prenotazione: input.prenotazione,
       creato: esistente?.creato || adesso,
       modificato: adesso,
-      // Un evento demo modificato resta demo (si rimuove con gli altri)
       ...(esistente?.demo && { demo: true }),
     };
 
@@ -290,17 +256,23 @@ export async function eliminaEvento(id: string): Promise<void> {
   await serialized(async () => {
     const eventi = await leggiEventi();
     if (!eventi.some((e) => e.id === id)) throw new ErroreEvento('Evento non trovato');
-    await writeJson(paths.eventi, eventi.filter((e) => e.id !== id));
+    await writeJson(
+      paths.eventi,
+      eventi.filter((e) => e.id !== id),
+    );
   });
 }
 
-/** Locandina cancellata: gli eventi che la usavano restano senza immagine (niente immagini rotte). */
 export async function togliImmagine(nome: string): Promise<number> {
   return serialized(async () => {
     const eventi = await leggiEventi();
     const usano = (e: Evento) => !!e.immagine && e.immagine.split('/').pop() === nome;
     const n = eventi.filter(usano).length;
-    if (n) await writeJson(paths.eventi, eventi.map((e) => (usano(e) ? { ...e, immagine: '' } : e)));
+    if (n)
+      await writeJson(
+        paths.eventi,
+        eventi.map((e) => (usano(e) ? { ...e, immagine: '' } : e)),
+      );
     return n;
   });
 }
@@ -318,7 +290,6 @@ export async function aggiungiTipo(nome: string): Promise<string[]> {
   });
 }
 
-/** Rimuove un tipo dalla lista: gli eventi che lo usano lo mantengono. */
 export async function rimuoviTipo(nome: string): Promise<string[]> {
   const tipo = nome.trim();
   if (!tipo) throw new ErroreEvento('Tipo da rimuovere non specificato');
@@ -331,8 +302,6 @@ export async function rimuoviTipo(nome: string): Promise<string[]> {
 
 const nuovoId = () => 'evt_' + randomBytes(6).toString('hex');
 
-// === PRESENTAZIONE (pagine, banner, chatbot) ===
-
 const GIORNI = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
 const MESI = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
 
@@ -341,10 +310,6 @@ function parti(data: string) {
   return { y, m, d, giorno: GIORNI[new Date(Date.UTC(y, m - 1, d)).getUTCDay()], mese: MESI[m - 1] };
 }
 
-/**
- * Data leggibile: "sabato 9 gennaio 2027, ore 20:30–22:30" oppure, su più
- * giorni, "da sabato 14 a domenica 15 marzo 2027, ore 10:00".
- */
 export function quando(e: Pick<Evento, 'data' | 'ora' | 'dataFine' | 'oraFine'>): string {
   const a = parti(e.data);
   const ore = e.ora ? `, ore ${e.ora}${e.oraFine ? `–${e.oraFine}` : ''}` : '';
@@ -363,7 +328,6 @@ export const ETICHETTE_STATO: Record<Stato, string> = {
   esaurito: 'Posti esauriti',
 };
 
-/** Testo semplice della descrizione (anteprime, meta description, calendari). */
 export function testoDescrizione(html: string): string {
   return decodeHtml(stripTags(html.replace(/<br\s*\/?>|<\/li>|<\/p>/gi, '\n').replace(/<li>/gi, '- ')))
     .replace(/&nbsp;/g, ' ')
@@ -372,20 +336,17 @@ export function testoDescrizione(html: string): string {
     .trim();
 }
 
-/** Sede della scuola citata nel luogo (per l'indirizzo completo), se c'è. */
 export function sedeDi(luogo: string) {
   const norma = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
   return sedi.find((s) => norma(luogo).includes(norma(s.via)));
 }
 
-/** Prezzo dal testo libero del costo: "Gratuito" → 0, "Ingresso 10 €" → 10; null se non si capisce. */
 function prezzo(costo: string): number | null {
   if (/gratu|gratis|libero|free/i.test(costo)) return 0;
   const n = /(\d+(?:[.,]\d{1,2})?)/.exec(costo);
   return n ? Number(n[1].replace(',', '.')) : null;
 }
 
-/** Dati strutturati schema.org/Event per Google (risultati con data, luogo e prezzo). */
 export function datiStrutturati(e: Evento, site: URL) {
   const url = new URL(urlEvento(e), site).href;
   const iso = (data: string, ora: string) => romeIso(romeTimestamp(data, ora));
@@ -406,7 +367,14 @@ export function datiStrutturati(e: Evento, site: URL) {
         '@type': 'Place',
         name: e.luogo,
         address: sede
-          ? { '@type': 'PostalAddress', streetAddress: sede.via, addressLocality: sede.citta, postalCode: sede.cap, addressRegion: sede.provincia, addressCountry: 'IT' }
+          ? {
+              '@type': 'PostalAddress',
+              streetAddress: sede.via,
+              addressLocality: sede.citta,
+              postalCode: sede.cap,
+              addressRegion: sede.provincia,
+              addressCountry: 'IT',
+            }
           : e.luogo,
       },
     }),
@@ -425,21 +393,22 @@ export function datiStrutturati(e: Evento, site: URL) {
   };
 }
 
-/** Inizio/fine per i calendari: in UTC con orario, oppure giornate intere. */
 function intervallo(e: Evento) {
-  const utc = (ms: number) => new Date(ms).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  const utc = (ms: number) =>
+    new Date(ms)
+      .toISOString()
+      .replace(/[-:]/g, '')
+      .replace(/\.\d{3}/, '');
   const giorno = (data: string, piu = 0) => {
     const [y, m, d] = data.split('-').map(Number);
     return new Date(Date.UTC(y, m - 1, d + piu)).toISOString().slice(0, 10).replace(/-/g, '');
   };
   if (!e.ora) return { start: giorno(e.data), end: giorno(e.dataFine || e.data, 1), allDay: true };
   const inizio = romeTimestamp(e.data, e.ora);
-  // Senza un'ora di fine: un'ora di durata (o fino a fine giornata dell'ultimo giorno)
   const fine = e.oraFine ? romeTimestamp(e.dataFine || e.data, e.oraFine) : e.dataFine ? romeTimestamp(e.dataFine, '23:59') : inizio + 3_600_000;
   return { start: utc(inizio), end: utc(fine), allDay: false };
 }
 
-/** Link "aggiungi a Google Calendar". */
 export function linkGoogleCalendar(e: Evento, site: URL): string {
   const { start, end } = intervallo(e);
   const dettagli = [testoDescrizione(e.descrizione), new URL(urlEvento(e), site).href].filter(Boolean).join('\n\n');
@@ -447,14 +416,15 @@ export function linkGoogleCalendar(e: Evento, site: URL): string {
   return `https://calendar.google.com/calendar/render?${q}`;
 }
 
-/** File iCalendar (RFC 5545) di un evento, per Apple Calendar e Outlook. */
 export function fileIcs(e: Evento, site: URL): string {
   const { start, end, allDay } = intervallo(e);
   const campo = (s: string) => s.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
-  // Righe lunghe spezzate a 74 caratteri (continuano con uno spazio)
   const piega = (riga: string) => riga.match(/.{1,74}/gu)?.join('\r\n ') ?? riga;
   const tipo = allDay ? ';VALUE=DATE' : '';
-  const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  const stamp = new Date()
+    .toISOString()
+    .replace(/[-:]/g, '')
+    .replace(/\.\d{3}/, '');
   return [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',

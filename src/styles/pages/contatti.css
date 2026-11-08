@@ -1,7 +1,6 @@
 .contatti {
   padding: var(--section-y) 0;
   background: var(--white);
-  /* l'ancora #contatti non deve finire sotto l'header fisso (e il banner) */
 }
 
 .contatti-intro {
@@ -27,7 +26,6 @@
   margin: 0;
 }
 
-/* ---------- Tre box con accenti azzurri brevi e centrati ---------- */
 .info {
   font-size: var(--body-size);
   line-height: var(--body-lh);
@@ -37,7 +35,6 @@
   column-gap: 1.25rem;
 }
 
-/* Ogni blocco occupa 2 righe (titolo, dati): i titoli stanno alla stessa quota anche se uno va a capo */
 .info-blocco {
   position: relative;
   isolation: isolate;
@@ -48,20 +45,17 @@
   align-content: start;
   min-width: 0;
   padding: 2rem 1.25rem 1.5rem;
-  border: 1px solid rgb(var(--blu-rgb) / .4);
+  border: 1px solid rgb(var(--blu-rgb) / 0.4);
   border-radius: var(--radius-card);
   background: var(--white);
   text-align: center;
 }
 
-/* Contatti e orari su fondo azzurrino, le sedi al centro restano bianche */
 .info-blocco:first-child,
 .info-blocco:last-child {
   background: var(--bg-soft);
 }
 
-/* Come nelle card corsi: illustrazione davanti al bordo, dietro al titolo.
-   La parte inferiore sfuma sull'immagine stessa, senza aggiungere veli bianchi. */
 .info-illustrazione {
   position: absolute;
   top: -4.25rem;
@@ -72,8 +66,22 @@
   height: 10.5rem;
   object-fit: contain;
   transform: translateX(-50%);
-  -webkit-mask-image: linear-gradient(to bottom, rgb(var(--nero-rgb)) 0%, rgb(var(--nero-rgb)) 35%, rgb(var(--nero-rgb) / .28) 60%, rgb(var(--nero-rgb) / .06) 76%, rgb(var(--nero-rgb) / 0) 90%);
-  mask-image: linear-gradient(to bottom, rgb(var(--nero-rgb)) 0%, rgb(var(--nero-rgb)) 35%, rgb(var(--nero-rgb) / .28) 60%, rgb(var(--nero-rgb) / .06) 76%, rgb(var(--nero-rgb) / 0) 90%);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgb(var(--nero-rgb)) 0%,
+    rgb(var(--nero-rgb)) 35%,
+    rgb(var(--nero-rgb) / 0.28) 60%,
+    rgb(var(--nero-rgb) / 0.06) 76%,
+    rgb(var(--nero-rgb) / 0) 90%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgb(var(--nero-rgb)) 0%,
+    rgb(var(--nero-rgb)) 35%,
+    rgb(var(--nero-rgb) / 0.28) 60%,
+    rgb(var(--nero-rgb) / 0.06) 76%,
+    rgb(var(--nero-rgb) / 0) 90%
+  );
   pointer-events: none;
   user-select: none;
 }
@@ -92,7 +100,6 @@
   z-index: 1;
 }
 
-/* Una misura di lettura comune mantiene i dati centrati e consente il ritorno a capo. */
 .info-corpo {
   width: 100%;
   max-width: 24ch;
@@ -121,23 +128,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: .35rem;
+  gap: 0.35rem;
   min-width: 0;
   padding: 0;
 }
 
-/* Stesso intervallo tra telefono, WhatsApp ed email. */
 .info-riga + .info-riga {
-  margin-top: .35rem;
+  margin-top: 0.35rem;
 }
 
-/* Ondina doppia (components/ondina.css) al posto dei filetti, centrata: separa i gruppi (tra le due sedi, prima dei social). */
 .info-riga.sede + .info-riga.sede::before,
 .info-social::before {
   margin-inline: auto;
 }
 
-/* Le due sedi sono gruppi distinti, con spazio uguale sopra e sotto l'ondina. */
 .info-riga.sede + .info-riga.sede {
   margin-top: 1.25rem;
 }
@@ -154,7 +158,6 @@
   padding-bottom: 0;
 }
 
-/* Icona sopra e testo sotto: entrambi sullo stesso asse centrale del box. */
 .info-icona {
   display: block;
   width: 1em;
@@ -165,7 +168,6 @@
   color: var(--primary-blue-dark);
 }
 
-/* I dati dei box (numero, e-mail, WhatsApp, social, nomi delle sedi) in grassetto */
 .info-valore {
   margin: 0;
   font-size: inherit;
@@ -175,7 +177,6 @@
   overflow-wrap: anywhere;
 }
 
-/* Tutti i collegamenti dei box condividono colore e sottolineatura del testo. */
 .info a {
   color: var(--primary-blue-dark);
   text-decoration: none;
@@ -195,23 +196,22 @@ a.info-valore {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .45em;
+  gap: 0.45em;
 }
 
 .info-email .info-link-testo {
   min-width: 0;
 }
 
-/* Sedi */
 .sede a .fa-arrow-up-right-from-square {
-  margin-inline-start: .4em;
+  margin-inline-start: 0.4em;
   font-size: var(--icona-mini);
-  vertical-align: .08em;
+  vertical-align: 0.08em;
 }
 
 .sede-indirizzo {
   max-width: 22ch;
-  margin: .2rem auto 0;
+  margin: 0.2rem auto 0;
   font-style: normal;
   text-wrap: pretty;
 }
@@ -222,13 +222,12 @@ a.info-valore {
   font-size: inherit;
 }
 
-/* Orari: stato e giorno corrente da src/scripts/contatti.ts */
 .orari-status {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: .45rem;
-  margin: -.5rem 0 .75rem;
+  gap: 0.45rem;
+  margin: -0.5rem 0 0.75rem;
   font-size: var(--body-size);
   color: var(--dark-navy);
 }
@@ -258,13 +257,12 @@ a.info-valore {
   line-height: var(--body-lh);
 }
 
-/* Giorno e orario sono centrati sull'asse della card, come i dati di recapiti e sedi. */
 .orario-item {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: .6rem;
-  padding: .3rem 0;
+  gap: 0.6rem;
+  padding: 0.3rem 0;
   text-align: center;
 }
 
@@ -292,14 +290,13 @@ a.info-valore {
   color: var(--primary-blue-dark);
 }
 
-/* I canali diretti restano distinti dai social; ogni link ha un'area comoda da toccare. */
 .info-whatsapp,
 .info-social-link a,
 .sede-mappa {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .4rem;
+  gap: 0.4rem;
   min-height: 44px;
   max-width: 100%;
   color: var(--primary-blue-dark);
@@ -308,12 +305,11 @@ a.info-valore {
   text-decoration: none;
 }
 
-/* Una linea sotto ogni riga del testo, senza decorazioni sulle icone. */
 .info .info-link-testo {
   text-decoration: underline;
   text-decoration-color: var(--primary-blue);
   text-decoration-thickness: 1px;
-  text-underline-offset: .22em;
+  text-underline-offset: 0.22em;
   text-decoration-skip-ink: auto;
 }
 
@@ -327,7 +323,7 @@ a.info-valore {
 }
 
 .info-social::before {
-  margin-bottom: .75rem;
+  margin-bottom: 0.75rem;
 }
 
 .info-social-link {
@@ -351,14 +347,13 @@ a.info-valore {
   text-align: center;
 }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 1000px) {
   .info {
-    column-gap: .75rem;
+    column-gap: 0.75rem;
   }
 
   .info-blocco {
-    padding-inline: .75rem;
+    padding-inline: 0.75rem;
   }
 }
 
@@ -379,8 +374,6 @@ a.info-valore {
   }
 }
 
-/* Mobile: illustrazioni oblique che emergono dall'angolo in basso a destra;
-   il velo sfumato riprende il colore del box fra le immagini e i testi. */
 @media (max-width: 600px) {
   .contatti-intro {
     margin-bottom: 2rem;
@@ -419,7 +412,13 @@ a.info-valore {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(115deg, color-mix(in srgb, var(--info-colore-velo) 96%, transparent) 0%, color-mix(in srgb, var(--info-colore-velo) 94%, transparent) 45%, color-mix(in srgb, var(--info-colore-velo) 86%, transparent) 72%, color-mix(in srgb, var(--info-colore-velo) 78%, transparent) 100%);
+    background: linear-gradient(
+      115deg,
+      color-mix(in srgb, var(--info-colore-velo) 96%, transparent) 0%,
+      color-mix(in srgb, var(--info-colore-velo) 94%, transparent) 45%,
+      color-mix(in srgb, var(--info-colore-velo) 86%, transparent) 72%,
+      color-mix(in srgb, var(--info-colore-velo) 78%, transparent) 100%
+    );
     pointer-events: none;
   }
 
@@ -433,9 +432,8 @@ a.info-valore {
   }
 }
 
-/* ---------- InBallet in breve: tre voci aperte con icone e soli divisori ---------- */
 .fondamenti {
-  padding: 0 0 calc(var(--section-y) * .5);
+  padding: 0 0 calc(var(--section-y) * 0.5);
   background: var(--white);
 }
 
@@ -472,7 +470,7 @@ a.info-valore {
   align-items: center;
   height: 100%;
   min-width: 0;
-  padding: .5rem 1.75rem;
+  padding: 0.5rem 1.75rem;
   color: inherit;
   text-decoration: none;
 }
@@ -490,7 +488,7 @@ a.info-valore {
 }
 
 .fondamento-titolo {
-  margin: 0 0 .5rem;
+  margin: 0 0 0.5rem;
   transition: color var(--transition-base);
 }
 
@@ -530,7 +528,7 @@ a.info-valore {
   }
 
   .fondamento-icona {
-    margin-bottom: .75rem;
+    margin-bottom: 0.75rem;
     font-size: var(--text-2xl);
   }
 }

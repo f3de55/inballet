@@ -1,16 +1,13 @@
-/* ---------- Volontariato d'impresa ---------- */
 .sost-impresa-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
 }
 
-/* ---------- Dona ---------- */
 .sost-dona-section {
   padding: var(--section-y) 0;
   background: var(--dark-navy);
 }
 
-/* Pulsante e nota sempre centrati sotto l'intestazione, su ogni dispositivo */
 .sost-dona-azione {
   display: flex;
   flex-direction: column;
@@ -23,7 +20,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: .6rem;
+  gap: 0.6rem;
   margin: 0;
   text-align: center;
 }
@@ -31,5 +28,3 @@
 .sost-dona-nota i {
   color: var(--primary-blue);
 }
-
-/* ---------- Mobile ---------- */

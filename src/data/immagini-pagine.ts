@@ -6,10 +6,6 @@ interface ImmaginePagina {
   fuoco?: Fuoco;
 }
 
-/** Foto principali condivise fra le pagine e le relative card della homepage.
- * Per le pagine senza foto introduttiva si usa l'originale del banner,
- * senza l'estensione laterale predisposta per il testo della hero.
- */
 export const immaginiPagine: Record<string, ImmaginePagina> = {
   'formazione-insegnanti': { src: 'gallery-7.jpg', alt: 'Le insegnanti di InBallet in sala' },
   'formazioni-personalizzate': { src: 'foto/bambini-insegnante.jpg', alt: "Un'insegnante guida un gioco di movimento con i bambini" },

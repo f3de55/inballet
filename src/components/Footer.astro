@@ -1,8 +1,4 @@
 ---
-/**
- * Footer: colonne generate dalla navigazione (src/data/navigazione.ts) e dai
- * dati ufficiali della scuola, così restano sempre allineate a navbar e contatti.
- */
 import { categorieCorsi, scuola } from '../data/scuola';
 import { menu, type Voce } from '../data/navigazione';
 import Img from './Img.astro';
@@ -10,7 +6,6 @@ import '../styles/components/footer.css';
 
 const anno = new Date().getFullYear();
 
-// Il titolo Corsi porta alla pagina; sotto restano le cinque macrocategorie.
 const colonne: { titolo: string; href?: string; voci: Voce[] }[] = [
   {
     titolo: 'Corsi',
@@ -36,7 +31,6 @@ const colonne: { titolo: string; href?: string; voci: Voce[] }[] = [
   </div>
 
   <nav class="footer-nav" aria-label="Mappa del sito">
-    {/* Colonne sempre aperte; su mobile footer.ts le chiude e diventano a fisarmonica */}
     {colonne.map((c) => (
       <details class="footer-col" open>
         <summary><h2 class="footer-titolo titoletto">{c.href ? <a href={c.href}>{c.titolo}</a> : c.titolo}</h2></summary>
@@ -45,7 +39,6 @@ const colonne: { titolo: string; href?: string; voci: Voce[] }[] = [
         </ul>
       </details>
     ))}
-    {/* Contatti: una colonna come le altre (aperta su desktop e tablet, a fisarmonica chiusa su mobile) */}
     <details class="footer-col footer-contatti" open>
       <summary><h2 class="footer-titolo titoletto">Contatti</h2></summary>
       <ul>

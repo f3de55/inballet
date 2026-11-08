@@ -1,15 +1,10 @@
 ---
-/**
- * Galleria fotografica a scorrimento continuo con lightbox (homepage, contatti).
- * Scorrimento, touch e lightbox in src/scripts/galleria.ts.
- */
 import Img from './Img.astro';
 import { webp } from '../lib/images';
 import '../styles/components/galleria.css';
 
 interface Props {
   eyebrow?: string;
-  /** Titolo (HTML, con <em> per l'accento). */
   titolo?: string;
   testo?: string;
 }
@@ -20,7 +15,6 @@ const {
   testo = 'Lezioni in sala, <strong>spettacoli in teatro</strong> e dietro le quinte.',
 } = Astro.props;
 
-// Galleria: miniature responsive + versione grande per il lightbox
 const alts = [
   'Allieve si preparano dietro le quinte prima dello spettacolo',
   'Corpo di ballo sul palco illuminato di blu',
@@ -50,8 +44,6 @@ const gallery = await Promise.all(
         </div>
     </div>
 
-    <!-- Due serie identiche: la seconda serve solo alla continuità dello scorrimento
-         ed è nascosta a tastiera e screen reader -->
     <div class="carosello-wrap carosello-wrap--soft">
     <div class="carosello gallery-infinite" data-giro="40">
         <div class="carosello-track gallery-track" id="galleryTrack">
@@ -59,9 +51,6 @@ const gallery = await Promise.all(
                 gallery.map((img, i) => (
                     <div class="gallery-item" aria-hidden={set === 1 ? 'true' : undefined}>
                         <button type="button" class="gallery-apri" data-index={i} data-full={img.full} data-alt={img.alt} aria-label={`Ingrandisci: ${img.alt}`} tabindex={set === 1 ? -1 : undefined}>
-                            {/* Anteprime già ritagliate in verticale (5:7). sizes = larghezza della foto a schermo:
-                                sui riquadri più stretti la decide l'altezza (altezza × 5/7).
-                                alt solo sulla prima serie (ricerca immagini); il nome del pulsante resta l'aria-label */}
                             <Img src={img.file} alt={set === 0 ? img.alt : ''} width="300" height="420" loading="eager" decoding="async" draggable="false" rapporto={1.4} widths={[300, 450, 600]} sizes="(max-width: 480px) 215px, (max-width: 768px) 245px, (max-width: 1024px) 275px, 300px" />
                             <span class="gallery-zoom-icon" aria-hidden="true"><i class="fas fa-expand"></i></span>
                         </button>
@@ -73,7 +62,6 @@ const gallery = await Promise.all(
     </div>
 </section>
 
-<!-- Lightbox galleria: dialog nativo (focus intrappolato, Esc, sfondo inerte) -->
 <dialog class="galleria-dialog" id="lightbox" aria-label="Galleria fotografica">
     <button type="button" class="btn-icon btn-icon--scuro galleria-chiudi" id="lightbox-close" aria-label="Chiudi galleria">
         <i class="fas fa-times" aria-hidden="true"></i>

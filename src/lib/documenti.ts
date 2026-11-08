@@ -1,9 +1,3 @@
-/**
- * Pagina /documenti modificabile dalla dashboard: testi e PDF da scaricare.
- * I testi stanno in DATA_DIR/documenti.json, i PDF caricati in
- * DATA_DIR/uploads/documenti e sono serviti su /assets/documenti/<file>.
- * Finché non si salva nulla valgono i contenuti di src/data/documenti.ts.
- */
 import { randomBytes } from 'node:crypto';
 import { unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -13,11 +7,10 @@ import { controllaLunghezza, riga as str, slug } from './text';
 
 export type { Documento };
 
-/** Errore di validazione con messaggio da mostrare all'utente. */
 export class ErroreDocumenti extends Error {}
 
 const PUBLIC_PREFIX = '/assets/documenti/';
-const MAX_SIZE = 20 * 1024 * 1024; // 20MB
+const MAX_SIZE = 20 * 1024 * 1024;
 const MAX_DOCUMENTI = 20;
 
 const LIMITI = {
@@ -31,7 +24,6 @@ const LIMITI = {
   docNota: 150,
 } as const;
 
-/** Contenuti correnti: quelli salvati, con i predefiniti per ciò che manca. */
 export async function leggiDocumenti(): Promise<PaginaDocumenti> {
   const salvato = await readJson<Partial<PaginaDocumenti> | null>(paths.documenti, null);
   const base = documentiPredefiniti;
@@ -44,7 +36,6 @@ export async function leggiDocumenti(): Promise<PaginaDocumenti> {
 
 type TestiInput = Partial<Record<'heroTitolo' | 'heroTesto' | 'eyebrow' | 'titolo' | 'accento' | 'intro', string>>;
 
-/** Valida e salva i testi della pagina (hero e intestazione della sezione). */
 export async function salvaTesti(input: TestiInput): Promise<PaginaDocumenti> {
   const v = {
     heroTitolo: str(input.heroTitolo),
@@ -72,9 +63,6 @@ export async function salvaTesti(input: TestiInput): Promise<PaginaDocumenti> {
   });
 }
 
-// === PDF ===
-
-/** Nome file sicuro per i PDF caricati (lo stesso formato che genera `salvaPdf`). */
 export function nomePdfSicuro(name: string): string | null {
   return /^[a-z0-9]+(?:-[a-z0-9]+)*\.pdf$/.test(name) ? name : null;
 }
@@ -86,7 +74,6 @@ function formattaPeso(bytes: number): string {
   return kb >= 1024 ? `PDF, ${(kb / 1024).toFixed(1).replace('.', ',')} MB` : `PDF, ${kb} KB`;
 }
 
-/** Salva un PDF caricato; restituisce percorso pubblico e peso. */
 async function salvaPdf(file: File): Promise<{ file: string; peso: string }> {
   if (file.size > MAX_SIZE) throw new ErroreDocumenti('Il PDF è troppo grande (massimo 20 MB)');
   const buf = new Uint8Array(await file.arrayBuffer());
@@ -100,14 +87,11 @@ async function salvaPdf(file: File): Promise<{ file: string; peso: string }> {
   return { file: PUBLIC_PREFIX + nome, peso: formattaPeso(buf.length) };
 }
 
-/** Elimina il PDF solo se l'ha caricato la dashboard (i file del sito non si toccano). */
 async function rimuoviPdf(file: string): Promise<void> {
   if (!file.startsWith(PUBLIC_PREFIX)) return;
   const nome = nomePdfSicuro(file.slice(PUBLIC_PREFIX.length));
   if (nome) await unlink(percorsoPdf(nome)).catch(() => {});
 }
-
-// === Elenco documenti ===
 
 const ID = /^doc_[a-z0-9]+$/;
 const nuovoId = () => 'doc_' + randomBytes(6).toString('hex');
@@ -117,11 +101,9 @@ interface DocumentoInput {
   titolo?: string;
   nota?: string;
   categoria?: 'modulo' | 'statuto';
-  /** Nuovo PDF (obbligatorio per un documento nuovo) */
   file?: File;
 }
 
-/** Crea o aggiorna un documento. Con `file` sostituisce il PDF. */
 export async function salvaDocumento(input: DocumentoInput): Promise<Documento> {
   const id = str(input.id) || null;
   const titolo = str(input.titolo);
@@ -171,7 +153,6 @@ export async function eliminaDocumento(id: string): Promise<void> {
   });
 }
 
-/** Riordina i documenti: `ids` è il nuovo ordine (devono essere tutti e soli quelli esistenti). */
 export async function ordinaDocumenti(ids: string[]): Promise<void> {
   await serialized(async () => {
     const pagina = await leggiDocumenti();

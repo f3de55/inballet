@@ -1,12 +1,9 @@
-/** Pezzi condivisi dagli script della dashboard (eventi, documenti, insegnanti). */
 import { toast } from './toast';
 
 export const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 
-/** Peso massimo di un file caricato (lo stesso limite del server). */
 export const MAX_SIZE = 20 * 1024 * 1024;
 
-/** Contatore «12/40» accanto ai campi con `data-counter`: compare solo vicino al limite, altrimenti è rumore. */
 export function aggiornaContatore(input: HTMLInputElement | HTMLTextAreaElement) {
   const max = Number(input.dataset.counter);
   const contatore = $(`${input.id}-counter`);
@@ -22,7 +19,6 @@ export function attivaContatori() {
   });
 }
 
-/** Zona di caricamento: clic, Invio o spazio aprono la scelta dei file; si possono anche trascinare. */
 export function zonaCaricamento(zona: HTMLElement, input: HTMLInputElement, scelti: (files: File[]) => void) {
   zona.addEventListener('click', (e) => {
     if (e.target !== input) input.click();
@@ -50,10 +46,6 @@ export function zonaCaricamento(zona: HTMLElement, input: HTMLInputElement, scel
   });
 }
 
-/**
- * Elenco riordinabile con i tasti su/giù (`data-azione`) delle righe `selettore` (con `data-id`):
- * l'elenco si aggiorna subito, `salva` riceve il nuovo ordine; se il server rifiuta si ricarica la pagina.
- */
 export function elencoOrdinabile(lista: HTMLElement | null, selettore: string, salva: (ids: string[]) => Promise<{ error?: { message: string } }>) {
   const righe = () => [...(lista?.querySelectorAll<HTMLElement>(selettore) ?? [])];
   const tasto = (riga: HTMLElement, verso: 'su' | 'giu') => riga.querySelector<HTMLButtonElement>(`[data-azione="${verso}"]`)!;
@@ -78,4 +70,14 @@ export function elencoOrdinabile(lista: HTMLElement | null, selettore: string, s
     }
     toast('Ordine aggiornato', 'success');
   };
+}
+
+export function mostraModal(modal: HTMLElement) {
+  modal.classList.add('open');
+  document.documentElement.classList.add('modal-aperta');
+}
+
+export function nascondiModal(modal: HTMLElement) {
+  modal.classList.remove('open');
+  if (!document.querySelector('.modal.open')) document.documentElement.classList.remove('modal-aperta');
 }

@@ -1,9 +1,4 @@
 ---
-/**
- * Gestione eventi: elenco per mese (in programma dal più vicino, passati dal
- * più recente), filtri, ricerca e modali di modifica evento / gestione tipi.
- * Logica client in src/scripts/dashboard/eventi.ts.
- */
 import { ETICHETTE_STATO, leggiEventi, leggiTipi, passato, urlEvento, type Evento } from '../../lib/eventi';
 import { romeDate } from '../../lib/time';
 import { sedi } from '../../data/scuola';
@@ -21,12 +16,10 @@ const oggi = romeDate(adesso);
 const domani = romeDate(adesso + 86400000);
 
 const ordina = (a: Evento, b: Evento) => (a.data + a.ora).localeCompare(b.data + b.ora);
-// Stessa regola del sito: un evento è passato quando è finito
 const futuri = tutti.filter((e) => !passato(e, adesso)).sort(ordina);
 const passati = tutti.filter((e) => passato(e, adesso)).sort((a, b) => ordina(b, a));
 const bozze = tutti.filter((e) => e.stato === 'bozza').length;
 
-/** Eventi raggruppati per mese, nell'ordine ricevuto. */
 function perMese(lista: Evento[]) {
   const gruppi = new Map<string, Evento[]>();
   for (const e of lista) gruppi.set(e.data.slice(0, 7), [...(gruppi.get(e.data.slice(0, 7)) ?? []), e]);
@@ -41,7 +34,6 @@ const giorno = (data: string) => {
   return { numero: d, settimana: GIORNI[new Date(Date.UTC(y, m - 1, d)).getUTCDay()] };
 };
 
-/** Valori già usati, dal più frequente: suggerimenti nei campi del modulo. */
 function usati(campo: 'luogo' | 'destinatari' | 'costo') {
   const conta = new Map<string, number>();
   for (const e of tutti) {

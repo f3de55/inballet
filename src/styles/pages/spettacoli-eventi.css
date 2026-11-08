@@ -3,19 +3,9 @@
   background: var(--white);
 }
 
-/* ---------- Eventi su misura ---------- */
 .eventi-cura-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
-}
-
-.cura-lista {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 3rem;
-  margin: var(--spazio-intestazione) 0 0;
-  padding: 0;
 }
 
 @media (max-width: 900px) {
@@ -36,7 +26,6 @@
   display: none !important;
 }
 
-/* ---------- Intestazione e scelta della vista centrate ---------- */
 .eventi-header {
   display: flex;
   flex-direction: column;
@@ -73,7 +62,7 @@
 .vista-switch button {
   display: inline-flex;
   align-items: center;
-  gap: .5rem;
+  gap: 0.5rem;
   min-height: 44px;
   padding: 0 1.25rem;
   border: none;
@@ -84,25 +73,26 @@
   font-weight: var(--ui-weight);
   color: var(--text-muted);
   cursor: pointer;
-  transition: background-color .3s ease, color .3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .vista-switch button i {
   font-size: var(--text-xs);
 }
 
-.vista-switch button[aria-pressed="true"] {
+.vista-switch button[aria-pressed='true'] {
   background: var(--white);
   color: var(--dark-navy);
   box-shadow: var(--shadow-sm);
 }
 
-/* ---------- Nessun evento futuro ---------- */
 .eventi-vuoto {
   max-width: 40rem;
   margin-inline: auto;
   padding: 2rem 1.5rem;
-  border: 1px solid rgb(var(--blu-rgb) / .4);
+  border: 1px solid rgb(var(--blu-rgb) / 0.4);
   border-radius: var(--radius-card);
   background: var(--bg-soft);
   text-align: center;
@@ -114,7 +104,7 @@
   width: 6rem;
   height: 6rem;
   margin: 0 auto 1.5rem;
-  border: 1px solid rgb(var(--blu-rgb) / .4);
+  border: 1px solid rgb(var(--blu-rgb) / 0.4);
   border-radius: var(--radius-full);
   background: var(--white);
   color: var(--primary-blue-dark);
@@ -126,7 +116,7 @@
 }
 
 .eventi-vuoto h3 {
-  margin-bottom: .75rem;
+  margin-bottom: 0.75rem;
   color: var(--dark-navy);
 }
 
@@ -134,10 +124,8 @@
   margin-bottom: 1.75rem;
 }
 
-/* ---------- Elenco: mese, poi righe con data grande, testo e freccia ---------- */
-/* Un blocco per mese: azzurrino e bianco con bordo, alternati */
 .agenda-gruppo {
-  padding: 1.75rem 2rem .25rem;
+  padding: 1.75rem 2rem 0.25rem;
   border: 1px solid transparent;
   border-radius: var(--radius-card);
   background: var(--bg-soft);
@@ -199,7 +187,7 @@
 }
 
 .agenda-settimana {
-  margin-top: .4rem;
+  margin-top: 0.4rem;
   color: var(--text-muted);
 }
 
@@ -207,19 +195,19 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: .4rem;
+  gap: 0.4rem;
 }
 
 .agenda-sopra {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: .4rem .75rem;
+  gap: 0.4rem 0.75rem;
 }
 
 .agenda-vicino,
 .agenda-stato {
-  padding: .2rem .6rem;
+  padding: 0.2rem 0.6rem;
   border-radius: var(--radius-pill);
   background: var(--primary-blue);
   font-size: var(--text-xs);
@@ -239,7 +227,7 @@
 }
 
 .agenda-titolo {
-  transition: color .3s ease;
+  transition: color 0.3s ease;
 }
 
 .annullato .agenda-titolo {
@@ -250,11 +238,11 @@
 .agenda-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: .25rem 1.25rem;
+  gap: 0.25rem 1.25rem;
 }
 
 .agenda-meta i {
-  margin-right: .4rem;
+  margin-right: 0.4rem;
   font-size: var(--text-xs);
   color: var(--primary-blue-dark);
 }
@@ -278,7 +266,6 @@
   }
 }
 
-/* Eventi passati: in fondo, chiusi, con colori spenti */
 .agenda-passati {
   margin-top: 3.5rem;
 }
@@ -286,7 +273,7 @@
 .agenda-passati summary {
   display: inline-flex;
   align-items: center;
-  gap: .6rem;
+  gap: 0.6rem;
   min-height: 44px;
   font-size: var(--ui-size);
   font-weight: var(--ui-weight);
@@ -309,7 +296,7 @@
 .agenda-passati summary i {
   font-size: var(--text-xs);
   color: var(--primary-blue-dark);
-  transition: transform .3s ease;
+  transition: transform 0.3s ease;
 }
 
 .agenda-passati[open] summary i {
@@ -326,7 +313,6 @@
   color: var(--text-muted);
 }
 
-/* ---------- Calendario del mese ---------- */
 .calendario-nav {
   display: flex;
   justify-content: space-between;
@@ -341,7 +327,7 @@
 
 .calendario-frecce {
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .calendario-frecce button {
@@ -355,11 +341,13 @@
   font-size: var(--text-sm);
   color: var(--dark-navy);
   cursor: pointer;
-  transition: background-color .3s ease, border-color .3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .calendario-frecce button:disabled {
-  opacity: .3;
+  opacity: 0.3;
   cursor: default;
 }
 
@@ -370,7 +358,6 @@
   }
 }
 
-/* Il gap da 1px sul fondo grigio disegna i filetti tra le celle */
 .calendario-grid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -382,7 +369,7 @@
 }
 
 .calendario-grid .cal-intestazione {
-  padding: .75rem .5rem;
+  padding: 0.75rem 0.5rem;
   background: var(--white);
   text-align: center;
   color: var(--primary-blue-dark);
@@ -391,9 +378,9 @@
 .calendario-grid .cal-giorno {
   display: flex;
   flex-direction: column;
-  gap: .3rem;
+  gap: 0.3rem;
   min-height: 7rem;
-  padding: .6rem;
+  padding: 0.6rem;
   background: var(--white);
   color: inherit;
   text-decoration: none;
@@ -426,7 +413,7 @@
 .calendario-grid .cal-evento {
   display: block;
   width: 100%;
-  padding: .3rem .5rem .3rem calc(.5rem + 3px);
+  padding: 0.3rem 0.5rem 0.3rem calc(0.5rem + 3px);
   --lc: var(--primary-blue);
   --ls: 3px;
   background: var(--linea-sx);
@@ -440,7 +427,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: background-color .3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .calendario-grid .cal-evento.passato {
@@ -455,67 +442,22 @@
 
 @media (hover: hover) and (pointer: fine) {
   .calendario-grid .cal-evento:hover {
-    background: rgb(var(--blu-rgb) / .35);
+    background: rgb(var(--blu-rgb) / 0.35);
   }
 }
 
-/* Punto sotto il numero: usato al posto dei titoli sugli schermi stretti */
 .calendario-grid .cal-punti {
   display: none;
 }
 
-/* ---------- Dialog dettaglio evento ---------- */
 .evento-dialog [hidden] {
   display: none !important;
-}
-
-.evento-dialog {
-  width: min(52rem, calc(100% - 3rem));
-  max-height: min(48rem, calc(100dvh - 3rem));
-  margin: auto;
-  padding: 0;
-  border: none;
-  border-radius: var(--radius-card);
-  background: var(--white);
-  color: var(--text-body);
-  box-shadow: 0 25px 80px rgb(var(--nero-rgb) / .25);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  /* Non la barra della pagina (blu su nero): sottile e discreta sul bianco */
-  scrollbar-width: thin;
-  scrollbar-color: var(--linea) transparent;
-}
-
-.evento-dialog[open] {
-  animation: evento-entra .3s ease;
-}
-
-.evento-dialog::backdrop {
-  background: rgb(var(--scuro-rgb) / .6);
-}
-
-@keyframes evento-entra {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
 }
 
 html:has(dialog[open]) {
   overflow: hidden;
 }
 
-/* Barra con la X: resta in alto mentre il contenuto scorre */
-.evento-dialog-barra {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  display: flex;
-  justify-content: flex-end;
-  height: 0;
-}
-
-/* X un gradino più piccola del pulsante tondo standard e azzurra con bordo, così si vede sul fondo bianco */
 .evento-chiudi,
 .locandina-chiudi {
   width: 40px;
@@ -535,21 +477,11 @@ html:has(dialog[open]) {
   color: var(--white);
 }
 
-.evento-dialog-corpo {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 2.5rem;
-  padding: 3rem;
-}
-
-/* PC: locandina a sinistra, ferma mentre il testo scorre */
 .evento-dialog-corpo.con-locandina {
   grid-template-columns: 17rem minmax(0, 1fr);
   align-items: start;
 }
 
-/* Locandina: stesso riquadro per tutti gli eventi. L'immagine è sempre intera
-   (contain); attorno, la stessa immagine sfocata. */
 .evento-locandina {
   position: sticky;
   top: 3rem;
@@ -571,7 +503,7 @@ html:has(dialog[open]) {
   inset: -2rem;
   z-index: -1;
   background: var(--locandina, none) center / cover no-repeat;
-  filter: blur(24px) brightness(.75);
+  filter: blur(24px) brightness(0.75);
 }
 
 .evento-locandina img {
@@ -583,14 +515,14 @@ html:has(dialog[open]) {
 
 .evento-locandina-zoom {
   position: absolute;
-  right: .6rem;
-  bottom: .6rem;
+  right: 0.6rem;
+  bottom: 0.6rem;
   display: grid;
   place-items: center;
   width: 2.25rem;
   height: 2.25rem;
   border-radius: var(--radius-full);
-  background: rgb(var(--nero-rgb) / .55);
+  background: rgb(var(--nero-rgb) / 0.55);
   font-size: var(--text-xs);
   color: var(--white);
 }
@@ -599,17 +531,16 @@ html:has(dialog[open]) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: .5rem 1rem;
-  margin: 0 3rem .75rem 0;
+  gap: 0.5rem 1rem;
+  margin: 0 3rem 0.75rem 0;
 }
 
 .evento-etichette:empty {
   display: none;
 }
 
-/* Evento concluso, annullato o esaurito */
 .evento-etichette .evento-stato {
-  padding: .2rem .6rem;
+  padding: 0.2rem 0.6rem;
   border-radius: var(--radius-pill);
   background: var(--grigio-100);
   font-size: var(--text-xs);
@@ -632,7 +563,6 @@ html:has(dialog[open]) {
   margin-right: 1.5rem;
 }
 
-/* Dettagli: etichetta e valore su righe separate da filetti */
 .evento-dettagli {
   margin: 0 0 1.75rem;
 }
@@ -640,9 +570,8 @@ html:has(dialog[open]) {
 .evento-dettagli div {
   display: grid;
   grid-template-columns: 6.5rem minmax(0, 1fr);
-  /* etichetta e valore hanno corpo e altezza di riga diversi: si allineano sulla linea di base del testo */
   align-items: baseline;
-  padding: .8rem 0;
+  padding: 0.8rem 0;
   background: var(--linea-basso);
 }
 
@@ -664,7 +593,7 @@ html:has(dialog[open]) {
   color: var(--primary-blue-dark);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: .2em;
+  text-underline-offset: 0.2em;
   transition: color var(--transition-base);
 }
 
@@ -673,9 +602,9 @@ html:has(dialog[open]) {
 }
 
 .evento-dettagli .evento-mappa i {
-  margin-inline-start: .35em;
+  margin-inline-start: 0.35em;
   font-size: var(--icona-mini);
-  vertical-align: .08em;
+  vertical-align: 0.08em;
 }
 
 .evento-descrizione:empty {
@@ -683,12 +612,12 @@ html:has(dialog[open]) {
 }
 
 .evento-descrizione ul {
-  margin: .75rem 0;
+  margin: 0.75rem 0;
   padding-left: 1.25rem;
 }
 
 .evento-descrizione li {
-  margin: .3rem 0;
+  margin: 0.3rem 0;
 }
 
 .evento-descrizione b,
@@ -710,7 +639,6 @@ html:has(dialog[open]) {
   margin-top: 2rem;
 }
 
-/* Prenota: su una riga tutta sua, sopra i calendari */
 .evento-azioni .btn-primary {
   width: 100%;
   justify-content: center;
@@ -718,14 +646,14 @@ html:has(dialog[open]) {
 
 .evento-azioni-label {
   display: block;
-  margin-bottom: .6rem;
+  margin-bottom: 0.6rem;
   color: var(--text-muted);
 }
 
 .evento-azioni-btn {
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .evento-azione {
@@ -734,22 +662,25 @@ html:has(dialog[open]) {
   justify-content: center;
   min-height: 44px;
   padding: 0 1.25rem;
-  border: 1px solid rgb(var(--blu-scuro-rgb) / .35);
+  border: 1px solid rgb(var(--blu-scuro-rgb) / 0.35);
   border-radius: var(--radius-pill);
   background: var(--white);
   font-size: var(--ui-size);
   font-weight: var(--ui-weight);
   color: var(--dark-navy);
   text-decoration: none;
-  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .evento-condividi {
   display: inline-flex;
   align-items: center;
-  gap: .5rem;
+  gap: 0.5rem;
   min-height: 44px;
-  padding: 0 .25rem;
+  padding: 0 0.25rem;
   border: none;
   background: none;
   font: inherit;
@@ -770,7 +701,6 @@ html:has(dialog[open]) {
   }
 }
 
-/* ---------- Locandina a tutto schermo ---------- */
 .locandina-dialog {
   width: 100%;
   height: 100%;
@@ -779,14 +709,14 @@ html:has(dialog[open]) {
   margin: 0;
   padding: 4.5rem 1.5rem 2rem;
   border: none;
-  background: rgb(var(--scuro-rgb) / .96);
+  background: rgb(var(--scuro-rgb) / 0.96);
   cursor: zoom-out;
 }
 
 .locandina-dialog[open] {
   display: grid;
   place-items: center;
-  animation: locandina-entra .25s ease;
+  animation: locandina-entra 0.25s ease;
 }
 
 .locandina-dialog::backdrop {
@@ -818,7 +748,6 @@ html:has(dialog[open]) {
   }
 }
 
-/* Dialog su tablet: locandina sopra il testo */
 @media (max-width: 900px) {
   .evento-dialog-corpo {
     padding: 2.5rem 2rem 2rem;
@@ -836,20 +765,9 @@ html:has(dialog[open]) {
   }
 }
 
-/* Dialog su telefono: a schermo intero */
 @media (max-width: 600px) {
-  .evento-dialog {
-    width: 100%;
-    max-width: 100%;
-    height: 100dvh;
-    max-height: 100dvh;
-    margin: 0;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
   .evento-chiudi {
-    margin: .75rem .75rem 0 0;
+    margin: 0.75rem 0.75rem 0 0;
   }
 
   .evento-chiudi,
@@ -865,7 +783,6 @@ html:has(dialog[open]) {
     padding: 1.5rem 1.5rem 2rem;
   }
 
-  /* Il testo precede la locandina anche negli eventi con immagine. */
   .evento-dialog-corpo:not(.con-locandina) {
     padding-top: 2rem;
   }
@@ -900,7 +817,6 @@ html:has(dialog[open]) {
     width: 100%;
   }
 
-  /* Pulsanti Google Calendar e Apple / Outlook: testo più piccolo e a capo se serve, affiancati solo se ci stanno */
   .evento-azioni-btn {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
@@ -908,7 +824,7 @@ html:has(dialog[open]) {
   }
 
   .evento-azione {
-    padding: .5rem .75rem;
+    padding: 0.5rem 0.75rem;
     font-size: var(--text-xs);
     line-height: 1.2;
     text-align: center;
@@ -919,13 +835,11 @@ html:has(dialog[open]) {
   }
 }
 
-/* ---------- Tablet ---------- */
 @media (max-width: 900px) {
-  /* Calendario: niente titoli nelle celle, solo un punto; il tocco apre il primo evento del giorno */
   .calendario-grid .cal-giorno {
     align-items: center;
     min-height: 4.5rem;
-    padding: .5rem 0;
+    padding: 0.5rem 0;
   }
 
   .calendario-grid .cal-evento {
@@ -949,7 +863,6 @@ html:has(dialog[open]) {
   }
 }
 
-/* ---------- Mobile ---------- */
 @media (max-width: 600px) {
   .vista-switch {
     display: flex;
@@ -966,7 +879,7 @@ html:has(dialog[open]) {
   }
 
   .agenda-mese {
-    padding-bottom: .75rem;
+    padding-bottom: 0.75rem;
   }
 
   .agenda-voce {
@@ -986,11 +899,11 @@ html:has(dialog[open]) {
   }
 
   .calendario-grid .cal-intestazione {
-    padding: .6rem 0;
+    padding: 0.6rem 0;
   }
 
   .calendario-grid .cal-giorno {
     min-height: 3.5rem;
-    padding: .35rem 0;
+    padding: 0.35rem 0;
   }
 }

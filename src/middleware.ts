@@ -1,12 +1,5 @@
-/**
- * - Compatibilità con i vecchi URL: /chi-siamo.php → /chi-siamo e le pagine
- *   .html del vecchio sito ufficiale (es. /hip_hop.html → /hip-hop), con 301.
- * - Le Actions accettano solo richieste dallo stesso sito (oltre al controllo
- *   Origin di Astro sui form, copre anche le chiamate JSON).
- */
 import { defineMiddleware } from 'astro:middleware';
 
-/** Pagine del vecchio sito ufficiale il cui nome non coincide con quello attuale. */
 const vecchieHtml: Record<string, string> = {
   avviamento_alla_danza: '/avviamento-danza',
   educazione_alla_danza: '/educazione-danza',

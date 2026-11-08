@@ -1,18 +1,6 @@
-/* ========================================
-   FILE A SCORRIMENTO CONTINUO (galleria «Le nostre sale» e insegnanti di Chi siamo)
-   Struttura: .carosello (contenitore che scorre, overflow-x) > .carosello-track (due metà
-   identiche). Scorre da solo ovunque (PC, tablet, telefono) e si può spostare a mano:
-   trascinando col mouse o col dito, con la rotella orizzontale o il trackpad. Si ferma
-   con il mouse sopra, al tocco e mentre una finestra è aperta. Dopo un gesto manuale
-   riparte dopo 2 secondi; alla chiusura della finestra riparte subito solo se il mouse è fuori.
-   È scorrimento vero (scrollLeft), con la parte decimale in una traslazione; non è un'animazione CSS: così le foto restano sempre
-   disegnate anche dopo molto tempo e il giro è infinito in entrambi i versi.
-   ======================================== */
-
 const ridotto = window.matchMedia('(prefers-reduced-motion: reduce)');
-const SOGLIA_TRASCINAMENTO = 6; // px oltre i quali un clic diventa trascinamento
+const SOGLIA_TRASCINAMENTO = 6;
 
-// Le coordinate restano aggiornate anche quando una modale copre le card.
 let puntatoreMouse: { x: number; y: number } | null = null;
 const aggiornaPuntatore = (event: PointerEvent) => {
   puntatoreMouse = event.pointerType === 'mouse' ? { x: event.clientX, y: event.clientY } : null;
@@ -26,10 +14,9 @@ window.addEventListener('pointerout', (event) => {
 document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
   const track = fila.querySelector<HTMLElement>('.carosello-track');
   if (!track) return;
-  const secondi = Number(fila.dataset.giro) || 60; // secondi per far passare una metà
-  const giro = () => track.scrollWidth / 2; // larghezza di una metà (due metà identiche)
+  const secondi = Number(fila.dataset.giro) || 60;
+  const giro = () => track.scrollWidth / 2;
 
-  // Foto che non si caricano o spariscono: si ricaricano (errore di rete, memoria liberata dal browser)
   const foto = [...track.querySelectorAll<HTMLImageElement>('img')];
   const ricarica = (img: HTMLImageElement) => {
     const src = img.currentSrc || img.src;
@@ -45,12 +32,8 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
   window.addEventListener('pageshow', controlla);
   setInterval(controlla, 30000);
 
-  if (ridotto.matches) return; // movimento ridotto: solo scorrimento a mano, gestito dal CSS
+  if (ridotto.matches) return;
 
-  // La posizione `pos` (px dall'inizio della prima metà) vive sempre in scrollLeft, così mouse, rotella
-  // e dito scorrono in modo nativo senza cambi di modalità (che al tocco si "perdevano" e facevano
-  // saltare le card). scrollLeft però avanza a pixel interi, e a 30-40 px/s questo dava il tremolio:
-  // la parte decimale di `pos` è quindi applicata con una traslazione del track (sub-pixel).
   let pos = 0;
   let ultimo = 0;
   let fermo = false;
@@ -80,7 +63,6 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
     clearTimeout(ripresa);
     ripresa = window.setTimeout(function ripresaTimer() {
       if (trascinando) return;
-      // Spinta del dito ancora in corso: si aspetta che finisca, senza interromperla
       if (performance.now() - ultimoScroll < 250) {
         ripresa = window.setTimeout(ripresaTimer, 300);
         return;
@@ -90,22 +72,22 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
     }, 2000);
   };
 
-  // `close` non risale il DOM: la cattura copre Esc, X e clic sullo sfondo per entrambe le modali.
-  document.addEventListener('close', (event) => {
-    if (!(event.target instanceof HTMLDialogElement) || document.querySelector('dialog[open]')) return;
-    clearTimeout(ripresa);
-    trascinando = false;
-    spostato = false;
-    fila.classList.remove('trascinando');
-    // Al prossimo frame tutte le modali avranno restituito focus e sbloccato lo scroll.
-    // Si verifica la card sotto il puntatore senza aspettare un nuovo pointerenter.
-    ricalcolaHover = true;
-    pos = mod(fila.scrollLeft);
-    ultimo = performance.now();
-    fermo = false;
-  }, true);
+  document.addEventListener(
+    'close',
+    (event) => {
+      if (!(event.target instanceof HTMLDialogElement) || document.querySelector('dialog[open]')) return;
+      clearTimeout(ripresa);
+      trascinando = false;
+      spostato = false;
+      fila.classList.remove('trascinando');
+      ricalcolaHover = true;
+      pos = mod(fila.scrollLeft);
+      ultimo = performance.now();
+      fermo = false;
+    },
+    true,
+  );
 
-  // Posizione iniziale: a metà del giro; si aggiorna al caricamento (le foto fissano le larghezze)
   const inizia = () => {
     if (fermo) return;
     pos = mod(giro() / 2);
@@ -131,7 +113,6 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
 
   new IntersectionObserver(([e]) => (visibile = e.isIntersecting)).observe(fila);
 
-  // Giro infinito anche a mano: oltre una metà si torna indietro di una metà (contenuto identico)
   fila.addEventListener(
     'scroll',
     () => {
@@ -145,7 +126,6 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
     { passive: true },
   );
 
-  // Mouse: pausa al passaggio e trascinamento
   fila.addEventListener('pointerenter', (e) => {
     if (e.pointerType !== 'mouse') return;
     aggiornaPuntatore(e);
@@ -176,7 +156,6 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
       fila.classList.add('trascinando');
     }
     if (!spostato) return;
-    // Spostamento incrementale, con il giro già applicato: non si resta mai bloccati ai bordi
     const g = giro();
     let x = fila.scrollLeft - dx;
     if (g && x >= g) x -= g;
@@ -189,7 +168,6 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
     fila.classList.remove('trascinando');
     riparti();
   });
-  // Un trascinamento non deve aprire la foto o la scheda sotto il mouse
   fila.addEventListener(
     'click',
     (e) => {
@@ -201,7 +179,6 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
     true,
   );
 
-  // Dito, rotella e trackpad: scorrimento nativo, con pausa
   fila.addEventListener('touchstart', ferma, { passive: true });
   fila.addEventListener('touchend', riparti, { passive: true });
   fila.addEventListener('touchcancel', riparti, { passive: true });

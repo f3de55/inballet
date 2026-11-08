@@ -1,7 +1,3 @@
-/**
- * Date/ore nel fuso Europe/Rome indipendentemente dal fuso del server
- * (equivalente a date_default_timezone_set('Europe/Rome') in PHP).
- */
 const TZ = 'Europe/Rome';
 
 const partsFormatter = new Intl.DateTimeFormat('en-US', {
@@ -38,10 +34,6 @@ const TIME_RE = /^([01]?[0-9]|2[0-3]):([0-5][0-9])$/;
 export const isValidTime = (ora: string) => TIME_RE.test(ora);
 export const isDateFormat = (data: string) => DATE_RE.test(data);
 
-/**
- * Timestamp (ms) di una data `YYYY-MM-DD` e ora `HH:MM` nel fuso di Roma.
- * Restituisce NaN se la data non è valida.
- */
 export function romeTimestamp(data: string, ora = '23:59'): number {
   const dm = DATE_RE.exec(data);
   const tm = TIME_RE.exec(ora || '23:59');
@@ -56,16 +48,13 @@ export function romeTimestamp(data: string, ora = '23:59'): number {
   return ts;
 }
 
-/** `YYYY-MM-DD` di oggi (o di `ms`) nel fuso di Roma. */
 export function romeDate(ms = Date.now()): string {
   const p = romeParts(ms);
   return `${p.y}-${String(p.m).padStart(2, '0')}-${String(p.d).padStart(2, '0')}`;
 }
 
-/** Ora (0-23) nel fuso di Roma. */
 export const romeHour = (ms = Date.now()) => romeParts(ms).h;
 
-/** ISO 8601 con offset di Roma, come date('c') in PHP. */
 export function romeIso(ms = Date.now()): string {
   const p = romeParts(ms);
   const off = Math.round(offsetMs(ms) / 60000);

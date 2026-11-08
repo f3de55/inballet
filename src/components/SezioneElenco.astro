@@ -1,5 +1,4 @@
 ---
-/** Intestazione illustrata e contenuti a filetti, condivisi fra formazione, progetti e servizi. */
 import Img from './Img.astro';
 import '../styles/components/intro-split.css';
 import '../styles/components/righe.css';
@@ -11,7 +10,6 @@ interface Props {
 }
 
 const { titoloId, illustrazione, class: className } = Astro.props;
-// Onde decorative (layout/decori.css) solo sulle sezioni bianche, mai sulle azzurrine
 const bianca = !className?.includes('split-section--soft');
 ---
 

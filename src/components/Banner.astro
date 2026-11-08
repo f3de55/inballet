@@ -1,10 +1,4 @@
 ---
-/**
- * Banner evento prossimo. Usato come Server Island (`server:defer`): le pagine
- * restano HTML statico e solo questo frammento viene renderizzato a ogni
- * richiesta leggendo gli eventi aggiornati dalla dashboard.
- * Il comportamento è un custom element: si attiva quando l'island arriva.
- */
 import { fineEvento, prossimiEventi, urlEvento } from '../lib/eventi';
 import { mbLen, mbSlice } from '../lib/text';
 import '../styles/components/banner.css';
@@ -12,8 +6,6 @@ import '../styles/components/banner.css';
 const giorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
 const mesi = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
 
-// Anche gli eventi successivi: se il primo viene chiuso, alla sua fine
-// il banner passa al prossimo senza ricaricare la pagina. Gli annullati non si annunciano.
 const eventi = (await prossimiEventi(12))
   .filter((e) => e.stato !== 'annullato')
   .slice(0, 10)
@@ -26,7 +18,6 @@ const eventi = (await prossimiEventi(12))
   });
 const primo = eventi[0];
 
-// Il frammento non va messo in cache: dipende dagli eventi correnti
 Astro.response.headers.set('Cache-Control', 'no-store');
 ---
 
@@ -71,17 +62,12 @@ Astro.response.headers.set('Cache-Control', 'no-store');
     class EventBanner extends HTMLElement {
         #interval = 0;
         #eventi: EventoBanner[] = [];
-        /** Evento corrente (il primo non ancora scaduto), mostrato o chiuso */
         #corrente: string | null = null;
-        // Segue l'altezza a ogni fotogramma, anche mentre si riduce allo scroll:
-        // la navbar sotto (top: --banner-height) resta sempre attaccata
         #observer = new ResizeObserver(() => this.#updateHeight());
 
         connectedCallback() {
             this.#eventi = JSON.parse(this.dataset.eventi ?? '[]');
 
-            // Chiusura con X o con click su "Scopri di più": vale solo per l'evento corrente,
-            // alla sua scadenza compare il successivo (se c'è)
             const dismiss = () => {
                 if (!this.#corrente) return;
                 try {
@@ -93,7 +79,6 @@ Astro.response.headers.set('Cache-Control', 'no-store');
             this.querySelector('.event-banner-link')!.addEventListener('click', dismiss);
 
             this.#aggiorna();
-            // Controllo scadenza ogni minuto
             if (this.isConnected) this.#interval = window.setInterval(() => this.#aggiorna(), 60000);
         }
 
@@ -103,10 +88,8 @@ Astro.response.headers.set('Cache-Control', 'no-store');
             this.#hide();
         }
 
-        /** Mostra il primo evento non scaduto, a meno che non sia stato chiuso. */
         #aggiorna() {
             const evento = this.#eventi.find((e) => e.ts >= Date.now());
-            // Nessun evento successivo: niente banner
             if (!evento) return this.remove();
             if (evento.id === this.#corrente) return;
             this.#corrente = evento.id;
@@ -119,19 +102,14 @@ Astro.response.headers.set('Cache-Control', 'no-store');
             this.querySelector<HTMLAnchorElement>('.event-banner-link')!.href = evento.href;
             banner.classList.add('visible');
             document.body.classList.add('has-event-banner');
-            // border-box: allo scroll cambia il padding, non il contenuto
             this.#observer.observe(banner, { box: 'border-box' });
         }
 
         #updateHeight() {
             const banner = this.querySelector<HTMLElement>('.event-banner');
             if (!banner) return;
-            // Altezza esatta, decimali compresi: offsetHeight arrotonda all'intero e lasciava
-            // una fessura sub-pixel tra banner e navbar (visibile sugli schermi ad alta densità)
             const altezza = `${banner.getBoundingClientRect().height}px`;
             root.style.setProperty('--banner-height', altezza);
-            // Spazio che sposta la pagina sotto il banner: solo l'altezza piena (in cima),
-            // così quando il banner si riduce allo scroll il contenuto non salta
             if (!root.classList.contains('is-scrolled') || !root.style.getPropertyValue('--banner-spazio')) {
                 root.style.setProperty('--banner-spazio', altezza);
             }

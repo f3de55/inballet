@@ -1,8 +1,3 @@
-/**
- * GET /assets/images/eventi/<file> — serve le locandine caricate dalla
- * dashboard (salvate fuori da dist/, in DATA_DIR/uploads/eventi).
- * Una locandina demo persa viene rigenerata al volo.
- */
 import { access } from 'node:fs/promises';
 import type { APIRoute } from 'astro';
 import { nonTrovato, serviFile } from '../../../../lib/storage';

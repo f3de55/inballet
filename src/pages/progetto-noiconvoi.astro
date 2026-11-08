@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { immaginiPagine } from '../data/immagini-pagine';
 import { sfondoCta } from '../lib/images';
@@ -8,6 +7,7 @@ import { heroPagina } from '../lib/hero-pagine';
 import { scuola } from '../data/scuola';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
+import HeroPagina from '../components/HeroPagina.astro';
 import '../styles/pages/progetto-noiconvoi.css';
 
 const bg = {
@@ -46,18 +46,10 @@ const info = [
         {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
     </Fragment>
 
-        <!-- Hero Section -->
-        <section class="chisiamo-hero hero-banner">
-            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
-            <div class="chisiamo-hero-overlay"></div>
-            <div class="chisiamo-hero-glass">
-                <Breadcrumb />
-                <h1 class="chisiamo-hero-title">Progetto NoiConVoi</h1>
-                <p class="hero-lead"><strong>Dal 2013</strong> la danza è per tutti: ragazzi con disabilità, volontari e famiglie insieme in sala.</p>
-            </div>
-        </section>
+        <HeroPagina titolo="Progetto NoiConVoi" stile={bg.hero.style}>
+            <p class="hero-lead"><strong>Dal 2013</strong> la danza è per tutti: ragazzi con disabilità, volontari e famiglie insieme in sala.</p>
+        </HeroPagina>
 
-        <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo) -->
         <section id="intro" class="intro-split decoro-onde">
             <div class="container intro-split-layout">
                 <div class="intro-split-content">
@@ -78,7 +70,6 @@ const info = [
             </div>
         </section>
 
-        <!-- Metodo: intestazione editoriale e due fasi -->
         <section class="noi-metodo-section" aria-labelledby="metodo-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">La metodologia</p>
@@ -98,7 +89,6 @@ const info = [
             </div>
         </section>
 
-        <!-- Destinatari: introduzione ed elenco aperto delle persone coinvolte. -->
         <SezioneElenco titoloId="target-titolo" illustrazione="progetto-noiconvoi">
             <Fragment slot="introduzione">
                 <p class="eyebrow">A chi è rivolto</p>
@@ -114,7 +104,6 @@ const info = [
             </ul>
         </SezioneElenco>
 
-        <!-- Informazioni pratiche: intestazione editoriale e quattro voci -->
         <section class="noi-info-section" aria-labelledby="info-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">Come funziona</p>
@@ -134,7 +123,6 @@ const info = [
             </div>
         </section>
 
-        <!-- CTA -->
         <section class="cta-contatto sezione-scura">
             <div class="cta-bg" style={bg.cta.style}></div>
             <div class="cta-overlay"></div>

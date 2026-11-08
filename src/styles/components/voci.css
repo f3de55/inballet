@@ -1,6 +1,10 @@
-/* Voci: punti di un elenco in colonne, con l'ondina doppia sotto il titolo (components/ondina.css), niente card */
 .voce {
   position: relative;
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  align-content: start;
   text-align: left;
 }
 
@@ -15,11 +19,11 @@
 .voce-anno {
   display: block;
   color: var(--primary-blue-dark);
-  margin-bottom: .9rem;
+  margin-bottom: 0.9rem;
 }
 
 .voce-titolo {
-  margin: 0 0 .6rem;
+  margin: 0 0 0.6rem;
 }
 
 .voce-testo {
@@ -28,17 +32,6 @@
 
 .sezione-scura .voce-anno {
   color: var(--primary-blue);
-}
-
-
-/* Righe allineate: in una griglia di voci l'icona o l'anno, il titolo, l'ondina e il testo stanno alla stessa quota
-   in tutte le colonne, anche quando un titolo va a capo (subgrid: le quattro righe sono quelle della lista). */
-.voce {
-  display: grid;
-  grid-row: span 4;
-  grid-template-rows: subgrid;
-  row-gap: 0;
-  align-content: start;
 }
 
 .voce > .voce-icona,
@@ -52,4 +45,20 @@
 
 .voce > .voce-testo {
   grid-row: 4;
+}
+
+.voci-griglia {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3rem;
+  margin: var(--spazio-intestazione) 0 0;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .voci-griglia {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
 }

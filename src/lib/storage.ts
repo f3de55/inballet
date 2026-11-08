@@ -1,7 +1,3 @@
-/**
- * Storage su filesystem per i dati runtime (eventi, tipi evento, analytics,
- * conversazioni del chatbot, immagini caricate) nella cartella DATA_DIR.
- */
 import { mkdir, readFile, rename, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { DATA_DIR } from 'astro:env/server';
@@ -25,7 +21,6 @@ export async function ensureDir(dir: string): Promise<void> {
   await mkdir(dir, { recursive: true });
 }
 
-/** Legge un file JSON; restituisce `fallback` se manca o non è valido. */
 export async function readJson<T>(file: string, fallback: T): Promise<T> {
   try {
     return (JSON.parse(await readFile(file, 'utf8')) ?? fallback) as T;
@@ -34,7 +29,6 @@ export async function readJson<T>(file: string, fallback: T): Promise<T> {
   }
 }
 
-/** Scrittura atomica: file temporaneo + rename. */
 export async function writeJson(file: string, data: unknown): Promise<void> {
   await ensureDir(path.dirname(file));
   const tmp = `${file}.${process.pid}.tmp`;
@@ -44,20 +38,12 @@ export async function writeJson(file: string, data: unknown): Promise<void> {
 
 let queue: Promise<unknown> = Promise.resolve();
 
-/**
- * Esegue le operazioni lettura→modifica→scrittura una alla volta, così due
- * richieste contemporanee non si sovrascrivono a vicenda.
- */
 export function serialized<T>(task: () => Promise<T>): Promise<T> {
   const run = queue.then(task, task);
   queue = run.catch(() => {});
   return run;
 }
 
-/**
- * GET di un file caricato dalla dashboard, con ETag e un giorno di cache (il nome cambia
- * a ogni nuovo caricamento). Lancia ENOENT se il file manca.
- */
 export async function serviFile(file: string, request: Request, headers: Record<string, string>): Promise<Response> {
   const st = await stat(file);
   const etag = `"${st.size.toString(16)}-${Math.floor(st.mtimeMs).toString(16)}"`;

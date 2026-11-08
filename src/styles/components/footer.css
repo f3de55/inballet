@@ -1,8 +1,6 @@
-/* ---------- Contenitore ---------- */
 .footer {
   background: var(--dark-navy);
   color: var(--white);
-  /* Scala compatta per i testi di servizio; il menu ha dimensioni dedicate. */
   --footer-text-size: var(--text-xs);
   --footer-note-size: var(--text-2xs);
   --footer-title-size: var(--label-size);
@@ -10,15 +8,11 @@
   text-align: left;
   position: relative;
   z-index: 10;
-  /* Spazio sopra il logo e sotto il copyright: lo stesso valore */
   --footer-y: 3rem;
-  /* Testi e link del footer: un solo colore, bianco pieno solo per titoli e hover */
   --footer-testo: var(--testo-su-scuro-debole);
   padding: var(--footer-y) 0 0;
 }
 
-/* Desktop: nastro vettoriale trasparente, ancorato in basso sul nero originale.
-   Le proporzioni restano costanti anche sui monitor larghi; nessuno spazio aggiunto al footer. */
 @media (min-width: 1025px) {
   .footer {
     background-image: var(--decoro-footer-desktop);
@@ -34,10 +28,6 @@
   }
 }
 
-/* Mobile: illustrazione decorativa (757x2076, sfondo ~#0e0e0e) larga quanto il footer e
-   ancorata in alto: la sua scala dipende solo dalla larghezza, quindi resta ferma quando le
-   fisarmoniche allungano il footer. Sotto l'immagine continua lo stesso nero, messo nello
-   pseudo-elemento perché il filtro scurisca allo stesso modo foto e fondo (nessuna giunta). */
 @media (max-width: 768px) {
   .footer {
     background: var(--footer-bg);
@@ -50,7 +40,7 @@
     inset: 0;
     z-index: -1;
     background: var(--footer-bg) url('/assets/images/footer-mobile.webp') center top / 100% auto no-repeat;
-    filter: brightness(.2);
+    filter: brightness(0.2);
     pointer-events: none;
   }
 }
@@ -64,8 +54,6 @@
   padding: 0 2rem 3rem;
 }
 
-/* ---------- Marchio ---------- */
-/* Logo, ente formativo e social: blocchi senza spazio di riga, distanziati dallo stesso valore */
 .footer-brand {
   --footer-brand-gap: 1.25rem;
 }
@@ -98,7 +86,7 @@
 
 .footer-social {
   display: flex;
-  gap: .6rem;
+  gap: 0.6rem;
   margin-top: var(--footer-brand-gap);
 }
 
@@ -112,17 +100,17 @@
   border-radius: var(--radius-full);
   color: var(--white);
   text-decoration: none;
-  transition: border-color .3s ease, color .3s ease;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .footer-social a:hover {
   border-color: var(--white);
 }
 
-/* ---------- Colonne ---------- */
 .footer-nav {
   display: grid;
-  /* Colonne larghe quanto le loro voci: meno link spezzati a capo (quattro della mappa + Contatti) */
   grid-template-columns: repeat(5, auto);
   justify-content: space-between;
   gap: 1.5rem;
@@ -137,7 +125,7 @@
   justify-content: flex-start;
   align-items: center;
   min-height: 44px;
-  margin-bottom: .75rem;
+  margin-bottom: 0.75rem;
   list-style: none;
   cursor: default;
 }
@@ -165,22 +153,18 @@
   line-height: 1.4;
   color: var(--footer-testo);
   text-decoration: none;
-  /* A capo bilanciato: le righe di una voce lunga hanno una lunghezza simile, senza una parola sola in coda
-     (solo lo stile: il nowrap di telefono ed e-mail resta) */
   text-wrap-style: balance;
-  transition: color .3s ease;
+  transition: color 0.3s ease;
 }
 
-/* Il bilanciamento agisce sui blocchi, non sui link in linea: le voci della mappa sono inline-block */
 .footer-main ul a {
   display: inline-block;
 }
 
-/* Filetti corti allineati a sinistra in tutte le colonne, compresa Contatti. */
 .footer-col li + li {
   position: relative;
-  margin-top: .65rem;
-  padding-top: .65rem;
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
 }
 
 .footer-col li + li::before,
@@ -192,7 +176,7 @@
   width: 1.5rem;
   height: var(--linea-sp);
   border-radius: var(--radius-pill);
-  background: rgb(var(--blu-rgb) / .45);
+  background: rgb(var(--blu-rgb) / 0.45);
 }
 
 .footer-titolo a {
@@ -208,8 +192,6 @@
   color: var(--white);
 }
 
-/* Tablet e PC: le voci della mappa del sito sono larghe al massimo 8em, quindi quelle a più parole vanno a capo
-   su due righe bilanciate (Spettacoli / ed Eventi, Classi / Integrate…) e le colonne risultano della stessa larghezza */
 @media (min-width: 701px) {
   .footer-col:not(.footer-contatti) ul a {
     max-inline-size: 8em;
@@ -235,13 +217,11 @@
   outline-offset: 2px;
 }
 
-/* ---------- Contatti ---------- */
-/* Recapiti allineati a sinistra, con l'icona accanto al testo. */
 .footer-dato {
   display: grid;
   grid-template-columns: 1.1rem minmax(0, 1fr);
   justify-items: start;
-  column-gap: .6rem;
+  column-gap: 0.6rem;
   align-items: center;
 }
 
@@ -254,50 +234,46 @@
   color: var(--primary-blue);
 }
 
-/* Numero ed e-mail restano su una riga */
 .footer-dato > a {
   white-space: nowrap;
 }
 
-/* «Altre informazioni»: niente sottolineatura (si confonderebbe con i filetti delle altre voci), c'è la freccia */
 .footer-link {
   position: relative;
   display: inline-flex;
   justify-content: flex-start;
   align-items: center;
-  gap: .6rem;
+  gap: 0.6rem;
   min-height: 24px;
-  padding: .2rem 0;
+  padding: 0.2rem 0;
   margin-top: 1.3rem;
 }
 
 .footer-link::before {
-  top: -.65rem;
+  top: -0.65rem;
 }
 
 .footer-link i {
   font-size: var(--icona-in-testo);
-  transition: transform .3s ease;
+  transition: transform 0.3s ease;
 }
 
 .footer-link:hover i {
   transform: translateX(4px);
 }
 
-/* ---------- Barra finale ---------- */
-/* Staccata dalle colonne da un filetto largo quanto il contenuto (non fino ai bordi) */
 .footer-bottom {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: .5rem 2rem;
+  gap: 0.5rem 2rem;
   width: min(100% - 4rem, 1200px - 4rem);
   margin: 0 auto;
   padding: 1.5rem 0 var(--footer-y);
   --lc: var(--velo-chiaro);
   background: var(--linea-alto);
   font-size: var(--footer-text-size);
-  color: rgb(var(--bianco-rgb) / .55);
+  color: rgb(var(--bianco-rgb) / 0.55);
 }
 
 .footer-credits a {
@@ -310,22 +286,16 @@
   color: var(--white);
 }
 
-/* ---------- Responsive ---------- */
-/* Tablet e PC stretto: marchio in fascia orizzontale in alto, sotto una sola griglia con
-   le quattro colonne della mappa del sito e Contatti come quinta colonna */
 @media (min-width: 701px) and (max-width: 1240px) {
   .footer-main {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2.5rem;
   }
 
-  /* Le colonne della mappa diventano figlie dirette della griglia, accanto a Contatti */
   .footer-nav {
     display: contents;
   }
 
-  /* Logo a sinistra, accanto descrizione ed ente formativo in colonna, social staccati
-     all'estremità destra della fascia */
   .footer-brand {
     grid-column: 1 / -1;
     display: grid;
@@ -338,7 +308,6 @@
     background: var(--linea-basso);
   }
 
-  /* Logo centrato in verticale rispetto al blocco di testo, solo in questa fascia */
   .footer-logo {
     grid-row: 1 / 3;
     align-self: center;
@@ -363,7 +332,6 @@
   }
 }
 
-/* Da 1001px a 1240px cinque colonne larghe quanto le loro voci */
 @media (min-width: 1001px) and (max-width: 1240px) {
   .footer-main {
     grid-template-columns: repeat(5, auto);
@@ -377,7 +345,6 @@
   }
 }
 
-/* Stesso margine laterale del .container (1.5rem) già da 768px */
 @media (max-width: 768px) {
   .footer-main {
     padding-inline: 1.5rem;
@@ -388,19 +355,17 @@
   }
 }
 
-/* Mobile: contatti subito dopo il marchio, mappa del sito a fisarmonica */
 @media (max-width: 700px) {
-  /* Un piccolo incremento per rendere più leggibili i testi del footer su telefono. */
   .footer {
-    --footer-text-size: calc(var(--text-xs) + .0625rem);
-    --footer-note-size: calc(var(--text-2xs) + .0625rem);
-    --footer-title-size: calc(var(--label-size) + .0625rem);
+    --footer-text-size: calc(var(--text-xs) + 0.0625rem);
+    --footer-note-size: calc(var(--text-2xs) + 0.0625rem);
+    --footer-title-size: calc(var(--label-size) + 0.0625rem);
   }
 
   .footer-main {
     grid-template-columns: 1fr;
     gap: 1.75rem;
-    padding: 0 1.5rem .75rem;
+    padding: 0 1.5rem 0.75rem;
   }
 
   .footer-brand {
@@ -420,7 +385,6 @@
     background: var(--linea-basso);
   }
 
-  /* Contatti è la prima voce della fisarmonica (su desktop e tablet resta l'ultima colonna) */
   .footer-contatti {
     order: -1;
   }
@@ -435,7 +399,6 @@
     cursor: pointer;
   }
 
-  /* "+" disegnato con due barre: centrato al pixel anche quando ruota in × */
   .footer-col summary::after {
     content: '';
     position: absolute;
@@ -448,7 +411,9 @@
     color: var(--primary-blue);
     --ps: 14px;
     background: var(--piu);
-    transition: transform .3s ease, color .3s ease;
+    transition:
+      transform 0.3s ease,
+      color 0.3s ease;
   }
 
   .footer-col[open] summary::after {
@@ -460,16 +425,8 @@
   }
 
   .footer-col ul {
-    padding: 0;
-  }
-
-  .footer-col .footer-link {
-    margin-bottom: .75rem;
-  }
-
-  /* Voci e recapiti hanno la stessa altezza compatta, con il filetto fra le righe. */
-  .footer-col ul {
     gap: 0;
+    padding: 0;
   }
 
   .footer-col ul a,
@@ -479,7 +436,7 @@
     justify-content: flex-start;
     width: 100%;
     min-height: 38px;
-    padding-block: .25rem;
+    padding-block: 0.25rem;
   }
 
   .footer-col li:first-child > a {
@@ -488,6 +445,7 @@
 
   .footer-col .footer-link {
     margin-top: 0;
+    margin-bottom: 0.75rem;
   }
 
   .footer-col .footer-link::before {
@@ -495,10 +453,9 @@
   }
 
   .footer-col > ul:last-child {
-    padding-bottom: .75rem;
+    padding-bottom: 0.75rem;
   }
 
-  /* Anche Contatti usa solo lo spazio dell'area cliccabile, senza margini aggiuntivi. */
   .footer-col li + li {
     margin-top: 0;
     padding-top: 0;
@@ -508,7 +465,6 @@
     content: '';
   }
 
-  /* La fisarmonica chiude già con un filetto: niente secondo filetto */
   .footer-bottom {
     width: auto;
     padding: 0 1.5rem var(--footer-y);

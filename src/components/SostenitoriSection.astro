@@ -3,7 +3,6 @@ import Img from './Img.astro';
 import '../styles/components/sostenitori-section.css';
 
 interface Props {
-  /** Link alla pagina Sostieni (falso sulla pagina stessa). */
   link?: boolean;
 }
 
@@ -34,7 +33,6 @@ const sponsors = [
         )}
     </div>
 
-    <!-- Loghi in griglia separata da filetti: i loghi hanno fondo bianco, la sezione resta bianca -->
     <div class="container">
         <ul class="sostenitori-loghi">
             {sponsors.map((s) => (

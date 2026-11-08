@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
+import HeroPagina from '../components/HeroPagina.astro';
 import ElencoPercorsi from '../components/ElencoPercorsi.astro';
 import SchedaPercorso from '../components/SchedaPercorso.astro';
 import { heroPagina } from '../lib/hero-pagine';
@@ -10,7 +10,6 @@ import { enfatizza } from '../lib/text';
 import { immaginiSottocorsi } from '../data/immagini-sottocorsi';
 import '../styles/pages/corsi.css';
 
-// Fascia d'età e frequenza di ogni corso, dalla sua pagina (es. "/hip-hop" → "Dai 6 anni · 1-2 lezioni a settimana")
 const pagineCorsi = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.data]));
 const percorsi = categorieCorsi.map((cat) => ({
     ...cat,
@@ -22,9 +21,7 @@ const percorsi = categorieCorsi.map((cat) => ({
         return { ...c, pagina, immagine };
     }),
 }));
-// Nel nome basta la disciplina: l'età è già nell'etichetta accanto
 const nomeBreve = (nome: string) => nome.replace(/\s*\(.*\)$/, '');
-// Titolo della sezione: l'ultima parola in corsivo, come gli altri titoli del sito
 const titoloEm = (nome: string) => nome.replace(/(\S+)$/, '<em>$1</em>');
 const totale = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
@@ -41,29 +38,21 @@ const hero = await heroPagina('corsi');
     <Fragment slot="head">
         {hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
     </Fragment>
-    <!-- Hero -->
-    <section class="chisiamo-hero hero-banner">
-        <div class="chisiamo-hero-image hero-banner-image" style={hero.style}></div>
-        <div class="chisiamo-hero-overlay"></div>
-        <div class="chisiamo-hero-glass">
-            <Breadcrumb />
-            <h1 class="chisiamo-hero-title">I nostri corsi di danza</h1>
-            <p class="hero-lead"><strong>Dai 3 anni all'età adulta</strong>, dalla classica agli stili urbani: c'è un corso anche per te, a <strong>ogni livello</strong>.</p>
-            <div class="trova-scelta" id="trova-scelta" hidden>
-                <button type="button" class="btn-primary btn-piccolo" id="trova-apri" aria-haspopup="dialog" aria-controls="trova-popup" aria-expanded="false">
-                    Trova il tuo corso
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </button>
-            </div>
-            <noscript>
-                <ul class="trova-alternative">
-                    {percorsi.map((cat) => <li><a href={`#${cat.id}`}>{cat.nome}</a></li>)}
-                </ul>
-            </noscript>
+    <HeroPagina titolo="I nostri corsi di danza" stile={hero.style}>
+        <p class="hero-lead"><strong>Dai 3 anni all'età adulta</strong>, dalla classica agli stili urbani: c'è un corso anche per te, a <strong>ogni livello</strong>.</p>
+        <div class="trova-scelta" id="trova-scelta" hidden>
+            <button type="button" class="btn-primary btn-piccolo" id="trova-apri" aria-haspopup="dialog" aria-controls="trova-popup" aria-expanded="false">
+                Trova il tuo corso
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </button>
         </div>
-    </section>
+        <noscript>
+            <ul class="trova-alternative">
+                {percorsi.map((cat) => <li><a href={`#${cat.id}`}>{cat.nome}</a></li>)}
+            </ul>
+        </noscript>
+    </HeroPagina>
 
-    <!-- Tre sottocorsi per riga su desktop, con lo stesso formato in tutte le categorie. -->
     {percorsi.map((cat, i) => (
         <section id={cat.id} class:list={['corsi-stile', { 'corsi-stile--soft': i % 2 === 1 }, i % 2 === 0 ? ['decoro-onde', { 'decoro-onde--sinistra': i === 4 }] : '']} aria-labelledby={`${cat.id}-titolo`}>
             <div class="intro-editoriale">
@@ -79,7 +68,6 @@ const hero = await heroPagina('corsi');
         </section>
     ))}
 
-    <!-- Chiusura: invito al contatto -->
     <section class="corsi-chiusura" aria-labelledby="corsi-fine-titolo">
         <div class="container">
             <aside class="corsi-fine">

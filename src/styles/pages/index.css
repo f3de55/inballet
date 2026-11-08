@@ -1,10 +1,8 @@
 .hero {
-  /* Altezza minima della foto; il contenuto può allungarla (testi grandi, schermi bassi) */
   min-height: calc(clamp(560px, 72vh, 800px) - var(--header-h));
   position: relative;
   overflow: hidden;
   display: flex;
-  /* Testo centrato in verticale: stesso spazio sopra (sotto la navbar) e sotto */
   align-items: center;
   z-index: 1;
   padding: 4rem 0 calc(4rem + var(--onda-h));
@@ -21,8 +19,6 @@
   content-visibility: auto;
 }
 
-/* Sopra la foto (primo fotogramma), compare in dissolvenza solo quando il video sta
-davvero andando: niente riquadro nero mentre carica */
 .hero-video {
   position: absolute;
   inset: 0;
@@ -32,7 +28,7 @@ davvero andando: niente riquadro nero mentre carica */
   object-position: center;
   z-index: 1;
   opacity: 0;
-  transition: opacity .8s ease;
+  transition: opacity 0.8s ease;
   pointer-events: none;
 }
 
@@ -46,20 +42,16 @@ davvero andando: niente riquadro nero mentre carica */
   left: 0;
   width: 100%;
   height: 100%;
-  /* Video in movimento e testo centrato a sinistra: velo più scuro dietro il testo,
-  più leggero a destra dove il video resta protagonista */
   background:
-  linear-gradient(to right, rgb(var(--scuro-rgb) / .78) 0%, rgb(var(--scuro-rgb) / .48) 55%, rgb(var(--scuro-rgb) / .25) 100%),
-  linear-gradient(to top, rgb(var(--scuro-rgb) / .55) 0%, rgb(var(--scuro-rgb) / .2) 50%, rgb(var(--scuro-rgb) / .3) 100%);
+    linear-gradient(to right, rgb(var(--scuro-rgb) / 0.78) 0%, rgb(var(--scuro-rgb) / 0.48) 55%, rgb(var(--scuro-rgb) / 0.25) 100%),
+    linear-gradient(to top, rgb(var(--scuro-rgb) / 0.55) 0%, rgb(var(--scuro-rgb) / 0.2) 50%, rgb(var(--scuro-rgb) / 0.3) 100%);
   z-index: 2;
 }
 
-/* Su mobile il testo occupa tutta la larghezza: velo uniforme */
 @media (max-width: 768px) {
   .hero-overlay {
-    background: linear-gradient(to top, rgb(var(--scuro-rgb) / .85) 0%, rgb(var(--scuro-rgb) / .68) 50%, rgb(var(--scuro-rgb) / .6) 100%);
+    background: linear-gradient(to top, rgb(var(--scuro-rgb) / 0.85) 0%, rgb(var(--scuro-rgb) / 0.68) 50%, rgb(var(--scuro-rgb) / 0.6) 100%);
   }
-
 }
 
 .hero-content {
@@ -110,7 +102,6 @@ davvero andando: niente riquadro nero mentre carica */
   margin-bottom: 1.5rem;
 }
 
-/* Testo a sinistra, foto a destra: colonne uguali, così la foto non diventa troppo verticale */
 .story-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -133,17 +124,15 @@ davvero andando: niente riquadro nero mentre carica */
 }
 
 .story-cta {
-  /* A blocco (non inline): niente spazio in più dalla riga di testo sopra e sotto */
   display: flex;
   width: fit-content;
-  margin-top: .75rem;
+  margin-top: 0.75rem;
 }
 
 .story-cta + .story-quote {
   margin-top: 2.65rem;
 }
 
-/* Spazio per la cornice sfalsata (in basso a sinistra) dentro la colonna */
 .story-image {
   display: flex;
   padding: 0 0 1.5rem 1.5rem;
@@ -163,9 +152,8 @@ davvero andando: niente riquadro nero mentre carica */
 
 @media (max-width: 600px) {
   .story-image {
-    padding: 0 0 .75rem .75rem;
+    padding: 0 0 0.75rem 0.75rem;
   }
-
 }
 
 .corsi-section {
@@ -214,7 +202,6 @@ davvero andando: niente riquadro nero mentre carica */
   margin: 1.5rem 0 0;
 }
 
-/* Quattro stili: immagini e testi occupano spazi distinti; su mobile la fila è sfogliabile. */
 .corsi-indice {
   list-style: none;
   display: grid;
@@ -225,7 +212,6 @@ davvero andando: niente riquadro nero mentre carica */
   padding: 0;
 }
 
-/* Il contenuto è centrato nei due assi e le card di ogni riga hanno pari altezza. */
 .corsi-indice li {
   display: flex;
 }
@@ -268,22 +254,19 @@ davvero andando: niente riquadro nero mentre carica */
   display: contents;
 }
 
-/* La composizione delle figure cambia nei breakpoint desktop e mobile. */
 .corsi-stile-figura {
   display: none;
 }
 
-/* Velo uniforme: il testo è centrato su tutta la foto */
 .corsi-stile-foto::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgb(var(--scuro-rgb) / .32);
+  background: rgb(var(--scuro-rgb) / 0.32);
 }
 
-/* Foto pensate per la home (più chiare): velo più scuro dietro il testo */
 .corsi-stile-foto--home::after {
-  background: rgb(var(--scuro-rgb) / .6);
+  background: rgb(var(--scuro-rgb) / 0.6);
 }
 
 .corsi-stile-testo {
@@ -292,7 +275,7 @@ davvero andando: niente riquadro nero mentre carica */
   align-items: center;
   width: 100%;
   max-width: 30rem;
-  text-shadow: 0 1px 12px rgb(var(--nero-rgb) / .45);
+  text-shadow: 0 1px 12px rgb(var(--nero-rgb) / 0.45);
 }
 
 .corsi-stile-nome {
@@ -301,11 +284,10 @@ davvero andando: niente riquadro nero mentre carica */
 }
 
 .corsi-stile-desc {
-  margin: .5rem 0 1rem;
+  margin: 0.5rem 0 1rem;
   color: var(--body-color-su-scuro);
 }
 
-/* «Vedi di più» bianco; in hover la freccia scorre in avanti e il testo si fa più spazioso, senza cambiare colore */
 .corsi-stile-link,
 .corsi-stile-link:hover,
 .corsi-stile:hover .corsi-stile-link {
@@ -319,8 +301,6 @@ davvero andando: niente riquadro nero mentre carica */
   color: var(--white);
 }
 
-/* Un velo scuro uniforme mantiene visibile l'illustrazione anche dietro
-   al blocco centrale; il testo bianco conserva contrasto su tutto lo sfondo. */
 .corsi-stile--grafica .corsi-stile-desc {
   color: var(--white);
 }
@@ -333,7 +313,6 @@ davvero andando: niente riquadro nero mentre carica */
   .corsi-stile:hover .corsi-stile-link {
     gap: 1rem;
   }
-
 }
 
 .corsi-stile:focus-visible {
@@ -341,14 +320,11 @@ davvero andando: niente riquadro nero mentre carica */
   outline-offset: 4px;
 }
 
-/* Solo il pulsante, centrato sotto gli stili come il titolo della sezione */
 .corsi-cta {
   margin-top: 3.5rem;
   text-align: center;
 }
 
-/* Tablet e desktop: figure decorative oltre il bordo superiore.
-   Lo sfondo resta ritagliato, mentre la figura passa davanti alla cornice. */
 @media (min-width: 601px) {
   .corsi-indice {
     padding-top: 8rem;
@@ -398,9 +374,22 @@ davvero andando: niente riquadro nero mentre carica */
     height: 18rem;
     object-fit: contain;
     transform: translateX(-50%);
-    /* La sfumatura lascia leggibile il testo sotto la decorazione. */
-    -webkit-mask-image: linear-gradient(to bottom, rgb(var(--nero-rgb)) 0%, rgb(var(--nero-rgb)) 35%, rgb(var(--nero-rgb) / .28) 60%, rgb(var(--nero-rgb) / .06) 76%, rgb(var(--nero-rgb) / 0) 90%);
-    mask-image: linear-gradient(to bottom, rgb(var(--nero-rgb)) 0%, rgb(var(--nero-rgb)) 35%, rgb(var(--nero-rgb) / .28) 60%, rgb(var(--nero-rgb) / .06) 76%, rgb(var(--nero-rgb) / 0) 90%);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      rgb(var(--nero-rgb)) 0%,
+      rgb(var(--nero-rgb)) 35%,
+      rgb(var(--nero-rgb) / 0.28) 60%,
+      rgb(var(--nero-rgb) / 0.06) 76%,
+      rgb(var(--nero-rgb) / 0) 90%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      rgb(var(--nero-rgb)) 0%,
+      rgb(var(--nero-rgb)) 35%,
+      rgb(var(--nero-rgb) / 0.28) 60%,
+      rgb(var(--nero-rgb) / 0.06) 76%,
+      rgb(var(--nero-rgb) / 0) 90%
+    );
     pointer-events: none;
     user-select: none;
   }
@@ -423,10 +412,8 @@ davvero andando: niente riquadro nero mentre carica */
     grid-template-columns: repeat(4, minmax(0, 1fr));
     max-width: none;
   }
-
 }
 
-/* Mobile: testi in alto e figura decorativa sotto, ritagliata dal bordo del box. */
 @media (max-width: 600px) {
   .corsi-indice {
     grid-template-columns: none;
@@ -456,7 +443,6 @@ davvero andando: niente riquadro nero mentre carica */
     justify-content: flex-start;
     gap: 0;
     min-height: 0;
-    /* 8rem riservati alla figura decorativa sotto al testo. */
     padding: 1.5rem 1.25rem 8rem;
     overflow: hidden;
     border: 2px solid var(--primary-blue);
@@ -467,14 +453,13 @@ davvero andando: niente riquadro nero mentre carica */
     text-align: center;
   }
 
-  /* Onde leggere su tutta la card, sotto alle figure e ai testi. */
   .corsi-indice .corsi-stile::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: -1;
     background: var(--decoro-onde) center / cover no-repeat;
-    opacity: .65;
+    opacity: 0.65;
     pointer-events: none;
   }
 
@@ -501,7 +486,7 @@ davvero andando: niente riquadro nero mentre carica */
     z-index: 1;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: .75rem;
+    gap: 0.75rem;
     min-width: 0;
     max-width: none;
     justify-items: center;
@@ -522,9 +507,9 @@ davvero andando: niente riquadro nero mentre carica */
 
   .corsi-indice .corsi-stile .corsi-stile-link {
     justify-self: center;
-    gap: .5rem;
-    margin: .25rem 0 0;
-    padding: 0 0 .25rem;
+    gap: 0.5rem;
+    margin: 0.25rem 0 0;
+    padding: 0 0 0.25rem;
     border: 0;
     --lc: currentColor;
     background: var(--linea-basso);
@@ -543,7 +528,6 @@ davvero andando: niente riquadro nero mentre carica */
   .corsi-wrapper {
     padding: 0 1.5rem;
   }
-
 }
 
 .corsi-indice:focus-visible {
@@ -551,7 +535,6 @@ davvero andando: niente riquadro nero mentre carica */
   outline-offset: 4px;
 }
 
-/* ---------- Dicono di noi: intro e sintesi a sinistra, una recensione alla volta a destra ---------- */
 .dicono-di-noi-section {
   padding: var(--section-y) 0;
   background: var(--white);
@@ -559,10 +542,10 @@ davvero andando: niente riquadro nero mentre carica */
 
 .recensioni-layout {
   display: grid;
-  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   grid-template-areas:
-  "intro carosello"
-  "sintesi carosello";
+    'intro carosello'
+    'sintesi carosello';
   grid-template-rows: auto 1fr;
   gap: 2.5rem 5rem;
 }
@@ -589,8 +572,8 @@ davvero andando: niente riquadro nero mentre carica */
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-areas:
-  "voto stelle"
-  "voto totale";
+    'voto stelle'
+    'voto totale';
   column-gap: 1rem;
   align-items: center;
 }
@@ -620,7 +603,6 @@ davvero andando: niente riquadro nero mentre carica */
   align-self: start;
 }
 
-/* Recensione come citazione libera, senza card */
 .recensioni-carousel {
   grid-area: carosello;
   align-self: center;
@@ -634,7 +616,9 @@ davvero andando: niente riquadro nero mentre carica */
   display: none;
   margin: 0;
   opacity: 0;
-  transition: opacity .35s ease, transform .35s ease;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
 }
 
 .testimonials-slide.active {
@@ -664,11 +648,11 @@ davvero andando: niente riquadro nero mentre carica */
 }
 
 .recensioni-carousel .review-text {
-  transition: opacity .15s ease;
+  transition: opacity 0.15s ease;
 }
 
 .recensioni-carousel .read-more-btn {
-  margin-left: .35rem;
+  margin-left: 0.35rem;
   padding: 0 0 1px;
   border: none;
   --lc: var(--primary-blue);
@@ -683,7 +667,7 @@ davvero andando: niente riquadro nero mentre carica */
 .recensioni-carousel .recensione-autore {
   display: flex;
   align-items: center;
-  gap: .9rem;
+  gap: 0.9rem;
   margin-top: 1.75rem;
   padding-left: 1.5rem;
 }
@@ -725,18 +709,20 @@ davvero andando: niente riquadro nero mentre carica */
 .carousel-indicators {
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .carousel-indicators .indicator {
-  width: .5rem;
-  height: .5rem;
+  width: 0.5rem;
+  height: 0.5rem;
   padding: 0;
   border: none;
   border-radius: var(--radius-pill);
   background: var(--linea);
   cursor: pointer;
-  transition: width .3s ease, background-color .3s ease;
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .carousel-indicators .indicator.active {
@@ -744,7 +730,6 @@ davvero andando: niente riquadro nero mentre carica */
   background: var(--primary-blue-dark);
 }
 
-/* Una colonna: intro, valutazione Google con il link subito sotto, poi recensione. */
 @media (max-width: 900px) {
   .recensioni-layout {
     display: flex;
@@ -762,20 +747,17 @@ davvero andando: niente riquadro nero mentre carica */
     order: 1;
   }
 
-  /* Recensione, firma e frecce formano un solo riquadro: le frecce stanno in fondo al riquadro, sotto la
-     recensione che cambiano, separate da un filetto, così è chiaro a quale recensione appartengono */
   .recensioni-carousel {
     order: 3;
     display: flex;
     flex-direction: column;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     padding: 1.5rem 1.25rem 1.25rem;
     border: 1px solid var(--linea);
     border-radius: var(--radius-card);
     background: var(--bg-soft);
   }
 
-  /* L'iniziale su fondo bianco: il riquadro è già azzurrino */
   .recensioni-carousel .author-avatar {
     background: var(--white);
   }
@@ -790,7 +772,6 @@ davvero andando: niente riquadro nero mentre carica */
   .testimonials-track {
     min-height: 0 !important;
   }
-
 }
 
 @media (max-width: 600px) {
@@ -798,10 +779,8 @@ davvero andando: niente riquadro nero mentre carica */
   .recensioni-carousel .recensione-autore {
     padding-left: 1.1rem;
   }
-
 }
 
-/* Formazione e progetti: piccole figure decorative sopra le voci desktop. */
 .oltre-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
@@ -822,7 +801,6 @@ davvero andando: niente riquadro nero mentre carica */
   padding: 2.75rem 0 0;
 }
 
-/* Titoli, descrizioni e link allineati; le figure non occupano una riga. */
 .oltre-elemento {
   position: relative;
   display: grid;
@@ -865,7 +843,6 @@ davvero andando: niente riquadro nero mentre carica */
   user-select: none;
 }
 
-/* Desktop: quattro voci per riga */
 @media (min-width: 1025px) {
   .oltre-lista {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -888,7 +865,7 @@ davvero andando: niente riquadro nero mentre carica */
   row-gap: 0;
   justify-items: center;
   align-content: start;
-  padding: 3.75rem .75rem 1.25rem;
+  padding: 3.75rem 0.75rem 1.25rem;
   text-align: center;
   color: inherit;
   text-decoration: none;
@@ -907,7 +884,7 @@ davvero andando: niente riquadro nero mentre carica */
 
 .oltre-desc {
   display: block;
-  margin-top: .75rem;
+  margin-top: 0.75rem;
   color: var(--dark-navy);
 }
 
@@ -916,22 +893,18 @@ davvero andando: niente riquadro nero mentre carica */
   outline-offset: -4px;
 }
 
-/* Tablet: due colonne */
 @media (max-width: 1024px) {
   .oltre-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
 }
 
 @media (max-width: 768px) {
   .oltre-layout {
     padding: 0 1.5rem;
   }
-
 }
 
-/* Mobile: le stesse schede e lo stesso scorrimento di Corsi simili. */
 @media (max-width: 600px) {
   .oltre-layout {
     display: none;
@@ -943,16 +916,13 @@ davvero andando: niente riquadro nero mentre carica */
   }
 }
 
-@media (max-width:1024px) {
+@media (max-width: 1024px) {
   .story-layout {
     gap: 4rem;
   }
-
 }
 
-@media (max-width:900px) {
-  /* Una colonna: titolo, foto, testo, link «Scopri chi siamo» e per ultima la citazione
-  (story-content "si scioglie" così i suoi figli si ordinano insieme alla foto) */
+@media (max-width: 900px) {
   .story-layout {
     display: flex;
     flex-direction: column;
@@ -988,7 +958,7 @@ davvero andando: niente riquadro nero mentre carica */
   }
 
   .story-text,
-.story-quote {
+  .story-quote {
     max-width: none;
   }
 
@@ -997,10 +967,9 @@ davvero andando: niente riquadro nero mentre carica */
     min-height: 0;
     aspect-ratio: 3 / 2;
   }
-
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
   .hero {
     padding: 2.5rem 0 calc(2.5rem + var(--onda-h));
     height: auto;
@@ -1012,7 +981,7 @@ davvero andando: niente riquadro nero mentre carica */
   }
 
   .hero-badge {
-    margin-bottom: .8rem;
+    margin-bottom: 0.8rem;
   }
 
   .hero h1 {
@@ -1025,27 +994,24 @@ davvero andando: niente riquadro nero mentre carica */
   }
 
   .hero-cta {
-    gap: .75rem;
+    gap: 0.75rem;
   }
-
 }
 
-@media (max-width:480px) {
+@media (max-width: 480px) {
   .hero-badge {
-    margin-bottom: .6rem;
+    margin-bottom: 0.6rem;
   }
 
   .hero h1 {
-    margin-bottom: .8rem;
+    margin-bottom: 0.8rem;
   }
 
   .hero-lead {
     margin-bottom: 1.5rem;
   }
-
 }
 
-/* ---------- Domande frequenti ---------- */
 .faq-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
@@ -1053,12 +1019,11 @@ davvero andando: niente riquadro nero mentre carica */
 
 .faq-layout {
   display: grid;
-  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   gap: 5rem;
   align-items: start;
 }
 
-/* L'intro resta in vista mentre si scorre l'elenco */
 .faq-intro {
   position: sticky;
   top: calc(var(--header-h) + var(--banner-height, 0px) + 2rem);
@@ -1092,14 +1057,13 @@ davvero andando: niente riquadro nero mentre carica */
   color: var(--dark-navy);
   cursor: pointer;
   list-style: none;
-  transition: color .3s ease;
+  transition: color 0.3s ease;
 }
 
 .faq-item summary::-webkit-details-marker {
   display: none;
 }
 
-/* "+" disegnato con due barre (non un carattere): centrato al pixel, e ruotato diventa una × centrata */
 .faq-item summary::after {
   content: '';
   flex-shrink: 0;
@@ -1109,17 +1073,19 @@ davvero andando: niente riquadro nero mentre carica */
   border: 1px solid var(--linea);
   color: var(--primary-blue-dark);
   background: var(--piu);
-  transition: transform .3s ease, background-color .3s ease, border-color .3s ease, color .3s ease;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
-/* Domanda aperta: titolo azzurro (stato attivo) */
 .faq-item[open] summary {
   color: var(--primary-blue-dark);
 }
 
 .faq-item[open] summary::after {
   transform: rotate(45deg);
-  /* Sfondo completo (barre + colore): il minificatore trasforma background-color nella forma abbreviata */
   background: var(--piu), var(--primary-blue);
   border-color: var(--primary-blue);
   color: var(--dark-navy);
@@ -1129,28 +1095,26 @@ davvero andando: niente riquadro nero mentre carica */
   .faq-item summary:hover {
     color: var(--primary-blue-dark);
   }
-
 }
 
-/* Email e telefono come righe ben toccabili, non link piccoli dentro il testo */
 .faq-contatti {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: .25rem;
+  gap: 0.25rem;
   margin-top: 1.25rem;
 }
 
 .faq-contatti a {
   display: inline-flex;
   align-items: center;
-  gap: .75rem;
+  gap: 0.75rem;
   min-height: 44px;
   font-size: var(--text-base);
   font-weight: var(--font-semibold);
   color: var(--dark-navy);
   text-decoration: none;
-  transition: color .3s ease;
+  transition: color 0.3s ease;
 }
 
 .faq-contatti i {
@@ -1163,7 +1127,6 @@ davvero andando: niente riquadro nero mentre carica */
   .faq-contatti a:hover {
     color: var(--primary-blue-dark);
   }
-
 }
 
 .faq-item p {
@@ -1171,7 +1134,6 @@ davvero andando: niente riquadro nero mentre carica */
   padding: 0 3.5rem 1.25rem 0;
 }
 
-/* Apertura e chiusura morbide dove il browser lo supporta (altrove si apre di colpo) */
 @supports (interpolate-size: allow-keywords) {
   .faq-list {
     interpolate-size: allow-keywords;
@@ -1180,20 +1142,20 @@ davvero andando: niente riquadro nero mentre carica */
   .faq-item::details-content {
     height: 0;
     overflow: clip;
-    transition: height .3s ease, content-visibility .3s allow-discrete;
+    transition:
+      height 0.3s ease,
+      content-visibility 0.3s allow-discrete;
   }
 
   .faq-item[open]::details-content {
     height: auto;
   }
-
 }
 
 @media (prefers-reduced-motion: reduce) {
   .faq-item::details-content {
     transition: none;
   }
-
 }
 
 @media (max-width: 900px) {
@@ -1205,39 +1167,39 @@ davvero andando: niente riquadro nero mentre carica */
   .faq-intro {
     position: static;
   }
-
 }
 
 @media (max-width: 600px) {
   .faq-item p {
     padding-right: 0;
   }
-
 }
 
 @media (max-width: 900px) {
   .chi-siamo-header .section-tagline {
     margin-bottom: 1.2rem;
   }
-
 }
 
 @media (max-width: 768px) {
   .chi-siamo-header .section-tagline {
     margin-bottom: 1rem;
   }
-
 }
 
 @media (max-width: 480px) {
   .chi-siamo-header .section-tagline {
-    margin-bottom: .8rem;
+    margin-bottom: 0.8rem;
   }
-
 }
 
-/* ---------- Animazioni ---------- */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

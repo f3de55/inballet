@@ -1,14 +1,7 @@
-/* ========================================
-   NAVIGAZIONE: menu a tendina (desktop) e menu mobile
-   ======================================== */
-
-/** Deve coincidere con il breakpoint CSS della navbar (Navbar.astro). */
 const DESKTOP = window.matchMedia('(min-width: 1201px)');
-/** Hover solo su dispositivi con puntatore preciso (mouse/trackpad). */
 const HOVER = window.matchMedia('(hover: hover) and (pointer: fine)');
 const CHIUSURA_MS = 150;
 
-// --- Menu a tendina (desktop) ---
 interface Tendina {
   item: HTMLElement;
   trigger: HTMLElement;
@@ -22,7 +15,6 @@ const tendine: Tendina[] = [...document.querySelectorAll<HTMLElement>('.nav-item
   return trigger && pannello ? [{ item, trigger, pannello }] : [];
 });
 
-/** La freccetta del pannello punta al centro della voce padre (il pannello Corsi è centrato sulla pagina, non sulla voce). */
 function puntaFreccia(t: Tendina) {
   const p = t.pannello.getBoundingClientRect();
   const v = t.trigger.getBoundingClientRect();
@@ -49,20 +41,17 @@ const aperta = (t: Tendina) => t.pannello.classList.contains('active');
 
 for (const t of tendine) {
   imposta(t, false);
-  // Le voci con pagina propria (Corsi → /corsi) navigano al clic; le altre aprono la tendina
   const conPagina = t.trigger instanceof HTMLAnchorElement;
 
   t.item.addEventListener('pointerenter', () => HOVER.matches && apri(t));
   t.item.addEventListener('pointerleave', () => {
     if (!HOVER.matches) return;
-    // Breve ritardo: passando dalla voce alla tendina (o uscendo per sbaglio) non si chiude
     t.timer = window.setTimeout(() => imposta(t, false), CHIUSURA_MS);
   });
 
   t.trigger.addEventListener('click', (e) => {
     if (conPagina) return;
     e.preventDefault();
-    // Con il mouse il pannello si apre già al passaggio: il clic lo lascia aperto invece di chiuderlo
     if (HOVER.matches) return apri(t);
     aperta(t) ? imposta(t, false) : apri(t);
   });
@@ -75,7 +64,6 @@ for (const t of tendine) {
     }
   });
 
-  // Chiudi quando il focus esce dalla voce (navigazione da tastiera)
   t.item.addEventListener('focusout', (e) => {
     if (!t.item.contains(e.relatedTarget as Node | null)) imposta(t, false);
   });
@@ -85,7 +73,6 @@ document.addEventListener('click', (e) => {
   if (!(e.target as Element).closest('.nav-item')) chiudiTutte();
 });
 
-// Voci e pannelli cambiano misura (resize, navbar ridotta allo scroll): la freccetta li segue
 const aggiornaFrecce = () => tendine.forEach(puntaFreccia);
 const osservatore = new ResizeObserver(aggiornaFrecce);
 const nav = document.querySelector('.nav-menu');
@@ -103,7 +90,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// --- Menu mobile ---
 const root = document.documentElement;
 const menuBtn = document.getElementById('mobileMenuBtn')!;
 const menu = document.getElementById('mobileMenu')!;
@@ -138,7 +124,6 @@ menuBtn.addEventListener('click', () => impostaMenu(!menu.classList.contains('ac
 chiudiBtn.addEventListener('click', () => impostaMenu(false));
 overlay.addEventListener('click', () => impostaMenu(false));
 
-// Una sola sezione aperta alla volta
 for (const s of sezioni) {
   s.toggle.addEventListener('click', () => {
     const apri = !s.submenu.classList.contains('active');
@@ -154,14 +139,11 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && menu.classList.contains('active')) impostaMenu(false);
 });
 
-// Passando alla versione desktop chiudi il menu mobile, e viceversa le tendine
 DESKTOP.addEventListener('change', (e) => {
   if (e.matches && menu.classList.contains('active')) impostaMenu(false);
   if (!e.matches) chiudiTutte();
 });
 
-// --- Header (e banner evento) ridotti dopo lo scroll ---
-// La classe sulla radice serve al banner, che arriva dopo come Server Island
 const header = document.querySelector<HTMLElement>('.main-header');
 const sentinella = () => {
   const scrollata = window.scrollY > 50;
@@ -171,7 +153,6 @@ const sentinella = () => {
 window.addEventListener('scroll', sentinella, { passive: true });
 sentinella();
 
-// --- Skip link: porta il focus al contenuto principale ---
 document.getElementById('skip-link')?.addEventListener('click', (e) => {
   e.preventDefault();
   const main = document.getElementById('main-content');
@@ -181,8 +162,6 @@ document.getElementById('skip-link')?.addEventListener('click', (e) => {
   main.scrollIntoView({ block: 'start' });
 });
 
-// --- Link verso un'ancora della pagina in cui ci si trova (es. /corsi#urban dentro /corsi) ---
-// Il browser non rifà la navigazione: serve chiudere menu e tendine e scorrere alla sezione a mano
 document.querySelectorAll<HTMLAnchorElement>('.nav-container a[href*="#"], .mobile-menu a[href*="#"]').forEach((link) => {
   link.addEventListener('click', (e) => {
     const url = new URL(link.href, location.href);

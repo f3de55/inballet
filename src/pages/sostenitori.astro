@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { immaginiPagine } from '../data/immagini-pagine';
 import SostenitoriSection from '../components/SostenitoriSection.astro';
@@ -8,6 +7,7 @@ import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
+import HeroPagina from '../components/HeroPagina.astro';
 import '../styles/pages/sostenitori.css';
 
 const bg = {
@@ -35,18 +35,10 @@ const destinazioni: { nome: string; href?: string }[] = [
         {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
     </Fragment>
 
-        <!-- Hero Section -->
-        <section class="chisiamo-hero hero-banner">
-            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
-            <div class="chisiamo-hero-overlay"></div>
-            <div class="chisiamo-hero-glass">
-                <Breadcrumb />
-                <h1 class="chisiamo-hero-title">Sostieni i nostri progetti sociali</h1>
-                <p class="hero-lead">Donazioni e <strong>volontariato d'impresa</strong> per la danza inclusiva a Lainate e Rho, dal 2013.</p>
-            </div>
-        </section>
+        <HeroPagina titolo="Sostieni i nostri progetti sociali" stile={bg.hero.style}>
+            <p class="hero-lead">Donazioni e <strong>volontariato d'impresa</strong> per la danza inclusiva a Lainate e Rho, dal 2013.</p>
+        </HeroPagina>
 
-        <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo) -->
         <section class="intro-split decoro-onde">
             <div class="container intro-split-layout">
                 <div class="intro-split-content">
@@ -63,7 +55,6 @@ const destinazioni: { nome: string; href?: string }[] = [
             </div>
         </section>
 
-        <!-- Volontariato d'impresa: intestazione editoriale -->
         <section class="sost-impresa-section" aria-labelledby="impresa-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">Aziende ed enti, dal 2024</p>
@@ -76,7 +67,6 @@ const destinazioni: { nome: string; href?: string }[] = [
             </div>
         </section>
 
-        <!-- Dona: intestazione editoriale, sotto il pulsante PayPal -->
         <section id="dona" class="sost-dona-section sezione-scura" aria-labelledby="dona-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">Dona ora</p>
@@ -96,7 +86,6 @@ const destinazioni: { nome: string; href?: string }[] = [
             </div>
         </section>
 
-        <!-- Destinazioni: introduzione e collegamenti ai progetti sostenuti. -->
         <SezioneElenco titoloId="utilizzo-titolo" illustrazione="sostenitori" class="split-section--soft">
             <Fragment slot="introduzione">
                 <p class="eyebrow">I progetti che sostieni</p>
@@ -121,10 +110,8 @@ const destinazioni: { nome: string; href?: string }[] = [
             </ul>
         </SezioneElenco>
 
-        <!-- Loghi dei sostenitori (stessa sezione della homepage, senza il link a questa pagina) -->
         <SostenitoriSection link={false} />
 
-        <!-- CTA -->
         <section class="cta-contatto sezione-scura">
             <div class="cta-bg" style={bg.cta.style}></div>
             <div class="cta-overlay"></div>

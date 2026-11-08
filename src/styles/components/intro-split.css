@@ -1,11 +1,3 @@
-/*
- * Schema condiviso dalle pagine con introduzione "testo + foto" e sezione "intestazione + elenco"
- * (classi integrate, collaborazioni, formazione insegnanti, NoiConVoi, sostenitori, sportello psicologico).
- *
- * intro-split: testo a sinistra e foto a destra; sotto i 900px titolo, foto, testo, citazione.
- * split-section (SezioneElenco): intestazione illustrata accanto a un elenco a filetti.
- *   --soft mantiene il fondo azzurrino della sezione, senza pannelli sulle singole voci.
- */
 .intro-split {
   background: var(--white);
   padding: var(--section-y) 0;
@@ -158,11 +150,10 @@
   }
 
   .intro-split-visual {
-    margin: 0 0 3rem .75rem;
+    margin: 0 0 3rem 0.75rem;
   }
 
   .intro-split-visual img {
     aspect-ratio: 4 / 3;
   }
 }
-

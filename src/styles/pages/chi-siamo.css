@@ -46,9 +46,9 @@
 }
 
 .fondatrice-bio a .fa-arrow-up-right-from-square {
-  margin-inline-start: .35em;
+  margin-inline-start: 0.35em;
   font-size: var(--icona-mini);
-  vertical-align: .08em;
+  vertical-align: 0.08em;
 }
 
 .storia-section {
@@ -63,7 +63,6 @@
   margin-bottom: 4rem;
 }
 
-/* Tre tappe per riga, da sinistra a destra; il raccordo passa fra le righe. */
 .timeline {
   --nodo: 14px;
   position: relative;
@@ -96,14 +95,13 @@
   border: 2px solid var(--primary-blue-dark);
   border-radius: var(--radius-full);
   background: var(--bg-soft);
-  /* il nodo non è un'ondina: niente maschera */
   -webkit-mask: none;
   mask: none;
 }
 
 .timeline .voce:last-child::before {
   background: var(--primary-blue-dark);
-  box-shadow: 0 0 0 5px rgb(var(--blu-rgb) / .2);
+  box-shadow: 0 0 0 5px rgb(var(--blu-rgb) / 0.2);
 }
 
 .timeline .voce-anno::before {
@@ -131,7 +129,6 @@
   stroke-linejoin: round;
 }
 
-/* Tablet e telefono: una colonna cronologica, senza righe da leggere al contrario. */
 @media (max-width: 1024px) {
   .timeline {
     display: block;
@@ -150,15 +147,15 @@
   }
 
   .timeline .voce::before {
-    top: .5rem;
+    top: 0.5rem;
   }
 
   .timeline .voce:not(:last-child)::after {
     content: '';
     position: absolute;
-    top: calc(.5rem + var(--nodo));
-    bottom: -.5rem;
-    left: calc(var(--nodo) / 2 - .75px);
+    top: calc(0.5rem + var(--nodo));
+    bottom: -0.5rem;
+    left: calc(var(--nodo) / 2 - 0.75px);
     width: 1.5px;
     border-radius: var(--radius-pill);
     background: var(--primary-blue);
@@ -174,8 +171,6 @@
   margin: 0;
 }
 
-/* ---------- InBallet in numeri ---------- */
-/* Fondo scuro; numeri bianchi in fila, divisi da filetti verticali */
 .numeri-section {
   padding: var(--section-y) 0;
   background: var(--dark-navy);
@@ -184,7 +179,7 @@
 .numeri-lista {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: calc(var(--spazio-intestazione) - .5rem) 0 0;
+  margin: calc(var(--spazio-intestazione) - 0.5rem) 0 0;
   text-align: center;
 }
 
@@ -192,7 +187,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: .5rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   --lc: var(--linea-su-scuro);
 }
 
@@ -216,7 +211,7 @@
 
 .numero-nota {
   order: 3;
-  margin: .35rem 0 0;
+  margin: 0.35rem 0 0;
 }
 
 .numeri-cta {
@@ -224,7 +219,6 @@
   text-align: center;
 }
 
-/* Tablet e mobile: 2x2 a celle uguali, con linee tonde solo tra una cella e l'altra */
 @media (max-width: 900px) {
   .numeri-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -239,7 +233,6 @@
     background: none;
   }
 
-  /* Croce di linee tonde tra le quattro celle: a destra delle prime di ogni riga, sotto la prima riga */
   .numero:nth-child(odd) {
     background: var(--linea-dx);
   }
@@ -261,11 +254,11 @@
 @media (max-width: 640px) {
   .numero,
   .numero + .numero {
-    padding: 1.5rem .75rem;
+    padding: 1.5rem 0.75rem;
   }
 
   .numero-etichetta {
-    margin-top: .75rem;
+    margin-top: 0.75rem;
     text-align: center;
   }
 
@@ -301,7 +294,6 @@
     margin-bottom: 1.75rem;
   }
 
-  /* La cornice "--sinistra" sporge a destra e in basso: spazio dentro i margini */
   .fondatrice-visual {
     order: 3;
     margin: 0 1.5rem 3.75rem 0;
@@ -324,22 +316,18 @@
     order: 5;
   }
 
-  /* Intestazioni a sinistra, allineate ai contenuti sotto */
   .storia-header {
     text-align: left;
     margin-bottom: 2.5rem;
   }
-
 }
 
 @media (max-width: 480px) {
-
   .fondatrice-visual {
-    margin: 0 0 3rem .75rem;
+    margin: 0 0 3rem 0.75rem;
   }
 
   .fondatrice-image-wrapper img {
     aspect-ratio: 4 / 3;
   }
-
 }

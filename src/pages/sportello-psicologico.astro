@@ -1,12 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { immaginiPagine } from '../data/immagini-pagine';
 import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
+import HeroPagina from '../components/HeroPagina.astro';
 import '../styles/pages/sportello-psicologico.css';
 
 const bg = {
@@ -39,18 +39,10 @@ const servizi = [
         {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
     </Fragment>
 
-        <!-- Hero Section -->
-        <section class="chisiamo-hero hero-banner">
-            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
-            <div class="chisiamo-hero-overlay"></div>
-            <div class="chisiamo-hero-glass">
-                <Breadcrumb />
-                <h1 class="chisiamo-hero-title">Sportello Psicologico</h1>
-                <p class="hero-lead">Uno spazio di <strong>ascolto e sostegno</strong> per genitori, bambini e famiglie, con una <strong>psicoterapeuta</strong>.</p>
-            </div>
-        </section>
+        <HeroPagina titolo="Sportello Psicologico" stile={bg.hero.style}>
+            <p class="hero-lead">Uno spazio di <strong>ascolto e sostegno</strong> per genitori, bambini e famiglie, con una <strong>psicoterapeuta</strong>.</p>
+        </HeroPagina>
 
-        <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo) -->
         <section id="intro" class="intro-split decoro-onde">
             <div class="container intro-split-layout">
                 <div class="intro-split-content">
@@ -70,7 +62,6 @@ const servizi = [
             </div>
         </section>
 
-        <!-- Pilastri: intestazione editoriale e tre voci -->
         <section class="sport-pilastri-section" aria-labelledby="pilastri-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">I tre pilastri</p>
@@ -78,7 +69,7 @@ const servizi = [
                 <p>Quando <strong>rivolgersi a uno specialista</strong> può aiutare te e la tua famiglia.</p>
             </div>
             <div class="container">
-                <ul class="pilastri-lista">
+                <ul class="voci-griglia">
                     {pilastri.map((p) => (
                         <li class="voce">
                             <i class={`fas ${p.icona} voce-icona`} aria-hidden="true"></i>
@@ -90,7 +81,6 @@ const servizi = [
             </div>
         </section>
 
-        <!-- Accesso: intestazione illustrata e servizi a filetti. -->
         <SezioneElenco titoloId="accesso-titolo" illustrazione="sportello-psicologico">
             <Fragment slot="introduzione">
                 <p class="eyebrow">Come accedere</p>
@@ -106,7 +96,6 @@ const servizi = [
             </ul>
         </SezioneElenco>
 
-        <!-- CTA -->
         <section class="cta-contatto sezione-scura">
             <div class="cta-bg" style={bg.cta.style}></div>
             <div class="cta-overlay"></div>

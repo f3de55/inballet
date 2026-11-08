@@ -1,19 +1,9 @@
-/**
- * Pagina /documenti: contenuti predefiniti. Sono quelli che il sito mostra
- * finché non vengono modificati dalla dashboard (che li salva in
- * DATA_DIR/documenti.json, vedi src/lib/documenti.ts).
- */
-
 export interface Documento {
   id: string;
   titolo: string;
-  /** Riga sotto il titolo (es. «Per bambini sotto i 6 anni») */
   nota: string;
-  /** Percorso pubblico del PDF */
   file: string;
-  /** Peso già formattato (es. «PDF, 730 KB») */
   peso: string;
-  /** I documenti preesistenti senza categoria restano nella modulistica. */
   categoria?: 'modulo' | 'statuto';
 }
 
@@ -22,7 +12,6 @@ export interface PaginaDocumenti {
   sezione: {
     eyebrow: string;
     titolo: string;
-    /** Parte finale del titolo, in corsivo azzurro (facoltativa) */
     accento: string;
     intro: string;
   };

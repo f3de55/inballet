@@ -1,8 +1,3 @@
-/**
- * GET /spettacoli-eventi/<slug>/calendario.ics — file iCalendar di un evento
- * ("Apple / Outlook" nel dettaglio dell'evento). Servito dal server con il tipo
- * giusto: su iPhone si apre direttamente "Aggiungi al calendario".
- */
 import type { APIRoute } from 'astro';
 import { fileIcs, trovaEvento } from '../../../lib/eventi';
 

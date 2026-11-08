@@ -1,4 +1,3 @@
-// I punti restano legati all'immagine; i richiami seguono il layout effettivo.
 document.querySelectorAll<HTMLElement>('[data-sedi-mappa]').forEach((tavola) => {
   const svg = tavola.querySelector<SVGSVGElement>('.sedi-mappa-linee');
   const viewport = tavola.querySelector<HTMLElement>('.sedi-mappa-viewport');
@@ -16,19 +15,17 @@ document.querySelectorAll<HTMLElement>('[data-sedi-mappa]').forEach((tavola) => 
         x: parseFloat(punto.style.getPropertyValue('--punto-x')) / 100,
         y: parseFloat(punto.style.getPropertyValue('--punto-y')) / 100,
       }));
-      // Riserva spazio sotto ogni punto per il popup, inclusa la sede più in basso.
       const altezzaPopup = Math.max(...popup.map((el) => el.getBoundingClientRect().height));
       const raggio = punti[0].getBoundingClientRect().height / 2;
       const primoY = 16 + raggio;
       const distanzaY = coordinate[1].y - coordinate[0].y;
-      const altezzaMinCarta = box.width * 852 / 1111;
-      // La mappa copre tutta la larghezza, con spazio per entrambi i popup.
+      const altezzaMinCarta = (box.width * 852) / 1111;
       const altezzaMinTavola = primoY + altezzaMinCarta * distanzaY + 16 + altezzaPopup + raggio + 8;
       tavola.style.setProperty('--mappa-altezza-min', `${Math.ceil(altezzaMinTavola)}px`);
       box = viewport.getBoundingClientRect();
       const ultimoY = box.height - 16 - altezzaPopup - raggio - 8;
       const altezza = Math.max(altezzaMinCarta, (ultimoY - primoY) / distanzaY);
-      const larghezza = altezza * 1111 / 852;
+      const larghezza = (altezza * 1111) / 852;
       const distanzaX = (coordinate[1].x - coordinate[0].x) * larghezza;
       cartografia.style.setProperty('--carta-width', `${larghezza}px`);
       cartografia.style.setProperty('--carta-height', `${altezza}px`);
@@ -62,7 +59,7 @@ document.querySelectorAll<HTMLElement>('[data-sedi-mappa]').forEach((tavola) => 
         d = `M${sx} ${sy} C${sx} ${my} ${x} ${my} ${x} ${fineY}`;
       } else {
         const sx = (x < card.left - area.left ? card.left : card.right) - area.left;
-        const sy = card.top + card.height * .4 - area.top;
+        const sy = card.top + card.height * 0.4 - area.top;
         const fineX = x + (sx < x ? -raggio : raggio);
         const mx = (sx + fineX) / 2;
         d = `M${sx} ${sy} C${mx} ${sy} ${mx} ${y} ${fineX} ${y}`;

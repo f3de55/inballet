@@ -1,9 +1,4 @@
-/**
- * Dati ufficiali della scuola: unica fonte per pagine, dati strutturati
- * (Schema.org), chatbot e llms.txt. Modificare qui, non nelle pagine.
- */
 export const FONDAZIONE = 2008;
-/** Anni di attività (aggiornati automaticamente a ogni build). */
 export const ANNI_ATTIVITA = new Date().getFullYear() - FONDAZIONE;
 
 export const scuola = {
@@ -16,7 +11,6 @@ export const scuola = {
   email: 'info@inballet.it',
   whatsapp: 'https://wa.me/393937802996',
   fondatrice: 'Ilenia Nobile',
-  /** Dati legali dell'associazione (modulo di iscrizione). */
   ragioneSociale: 'Associazione Sportiva Dilettantistica I.N. Ballet',
   codiceFiscale: '93550490150',
   social: {
@@ -61,7 +55,6 @@ export const sedi: Sede[] = [
   },
 ];
 
-/** Orari di apertura (come da scheda Google della scuola). */
 export const orari: { giorni: string[]; etichetta: string; apre: string; chiude: string }[] = [
   { giorni: ['Monday', 'Tuesday', 'Friday'], etichetta: 'Lun, Mar, Ven', apre: '15:00', chiude: '23:00' },
   { giorni: ['Wednesday'], etichetta: 'Mer', apre: '16:00', chiude: '23:30' },
@@ -69,18 +62,14 @@ export const orari: { giorni: string[]; etichetta: string; apre: string; chiude:
   { giorni: ['Saturday'], etichetta: 'Sab', apre: '10:30', chiude: '19:00' },
 ];
 
-/** Corsi con la loro pagina, per categoria (usati in homepage e nei dati strutturati). */
 export const categorieCorsi = [
   {
     id: 'classica-moderna',
-    /** Icona Font Awesome della categoria (classe completa, così `npm run icons` la include) */
     icona: 'fa-feather',
     nome: 'Danza Classica e Moderna',
-    /** Nome corto della categoria */
     breve: 'Classica e Moderna',
     sintesi: 'La base di ogni stile: si comincia giocando a 3 anni e si arriva ai livelli avanzati.',
     immagine: { src: 'foto/tutu-classica.jpg', alt: 'Tutù rosa di danza classica', fuoco: { desktop: '60% 50%', mobile: '50% 45%' } },
-    /** Fondo grafico della card in homepage, ispirato agli azzurri delle immagini del team. */
     immagineHome: { src: 'grafica-corsi/classica-moderna-unica.webp', fuoco: { desktop: '50% 50%' } },
     descrizione: 'Si comincia giocando: a 3 anni con Avviamento alla Danza, a 4-5 anni con Educazione alla Danza. Dai 6 anni arrivano Danza Classica e Modern, fino ai livelli avanzati.',
     evidenzia: ['3 anni', '4-5 anni', 'dai 6 anni'],
@@ -162,7 +151,6 @@ export const categorieCorsi = [
   },
 ];
 
-/** Iscrizioni all'anno in corso (dal modulo ufficiale): aggiornare a ogni anno. */
 export const iscrizioni = {
   anno: '2026/2027',
   quota: 30,
@@ -173,7 +161,6 @@ export const iscrizioni = {
   ],
 };
 
-/** Domande frequenti (tutte per chatbot e /llms.txt; quelle con `home` in homepage e nel FAQPage). */
 export const faq = [
   {
     home: true,
@@ -243,5 +230,4 @@ export const faq = [
   },
 ];
 
-/** Le domande mostrate in homepage (e pubblicate come FAQPage). */
 export const faqHome = faq.filter((f) => f.home);

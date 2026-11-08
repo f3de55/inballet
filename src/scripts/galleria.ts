@@ -1,7 +1,3 @@
-/* ========================================
-   LIGHTBOX DELLA GALLERIA (componente Galleria.astro; lo scorrimento è in carosello.ts)
-   ======================================== */
-
 const track = document.getElementById('galleryTrack');
 const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
 const foto = document.getElementById('lightbox-image') as HTMLImageElement | null;
@@ -10,7 +6,6 @@ const contatore = document.getElementById('lightbox-counter');
 
 if (track && dialog && foto && didascalia && contatore) {
   const bottoni = [...track.querySelectorAll<HTMLButtonElement>('.gallery-apri')];
-  // Le prime 10 sono le foto uniche (le altre sono il duplicato per lo scorrimento)
   const foto10 = bottoni.slice(0, 10).map((b) => ({ src: b.dataset.full!, alt: b.dataset.alt ?? '' }));
   const n = foto10.length;
   let index = 0;
@@ -35,7 +30,6 @@ if (track && dialog && foto && didascalia && contatore) {
     dialog.showModal();
   };
 
-  // Esc, pulsante chiudi o clic fuori dalla foto: chiusura unica, focus restituito alla miniatura
   dialog.addEventListener('close', () => {
     document.documentElement.classList.remove('galleria-aperta');
     opener?.focus({ preventScroll: true });

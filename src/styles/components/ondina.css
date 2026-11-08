@@ -1,9 +1,3 @@
-/*
- * Ondina doppia: separatore minimale al posto dei filetti, due linee sinusoidali parallele (disegno e misure
- * in base/variables.css, --ondina-*). È un ::before che colora una maschera: il colore è il fondo dell'elemento.
- * Qui c'è solo la forma comune; posizione e colore li decide chi la usa (centrata nelle card di /contatti,
- * a sinistra in cima a ogni .voce).
- */
 .voce::before,
 .info-riga.sede + .info-riga.sede::before,
 .info-social::before {
@@ -12,19 +6,17 @@
   flex-shrink: 0;
   width: var(--ondina-w);
   height: var(--ondina-h);
-  background: rgb(var(--blu-rgb) / .65);
+  background: rgb(var(--blu-rgb) / 0.65);
   -webkit-mask: var(--ondina-svg) 50% 50% / var(--ondina-periodo) var(--ondina-h) repeat-x;
   mask: var(--ondina-svg) 50% 50% / var(--ondina-periodo) var(--ondina-h) repeat-x;
 }
 
-/* Sotto il titolo di una voce (riga 3 della griglia, tra titolo e testo): a sinistra, azzurro pieno e un po' più
-   grande (≈1.4×, sempre 3 periodi esatti). */
 .voce::before {
   --ondina-w: 102px;
   --ondina-h: 17px;
   --ondina-periodo: 34px;
   grid-row: 3;
-  margin-bottom: .75rem;
+  margin-bottom: 0.75rem;
   background: var(--primary-blue);
   -webkit-mask-position: 0 50%;
   mask-position: 0 50%;

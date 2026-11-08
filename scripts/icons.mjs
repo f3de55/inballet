@@ -1,10 +1,3 @@
-/**
- * Genera un sottoinsieme di Font Awesome con le sole icone usate nel sito:
- *   - src/styles/icons.css      CSS di Font Awesome senza le icone inutilizzate
- *   - src/assets/fonts/*.woff2  font ridotti ai soli glifi usati
- * Le icone vengono cercate nei sorgenti (classi `fa-…` e `content:'\fXXXX'`).
- * Eseguito automaticamente prima di `npm run dev` / `npm run build`.
- */
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import path from 'node:path';
@@ -22,7 +15,6 @@ const FONTS = [
   { file: 'fa-brands-400', family: 'Font Awesome 6 Brands', weight: 400 },
 ];
 
-/** Tutti i file sorgente (escluso il CSS generato). */
 async function* sources(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
@@ -43,7 +35,6 @@ const css = await readFile(path.join(faDir, 'css/all.min.css'), 'utf8');
 const codepoints = new Set(extraCodepoints);
 const iconRules = [];
 
-// Regole delle icone: tieni solo i selettori usati
 let base = css.replace(/([^{}]+)\{content:"\\([0-9a-f]+)"\}/g, (_, selectors, hex) => {
   const kept = selectors.split(',').filter((sel) => {
     const m = /^\.fa-([a-z0-9-]+):(?:before|after)$/.exec(sel.trim());
@@ -56,7 +47,6 @@ let base = css.replace(/([^{}]+)\{content:"\\([0-9a-f]+)"\}/g, (_, selectors, he
   return '';
 });
 
-// @font-face originali (inclusi alias v4/v5) sostituiti da quelli ridotti
 base = base.replace(/@font-face\{[^}]*\}/g, '').replace(/\/\*![\s\S]*?\*\//, '');
 const fontFaces = FONTS.map(
   (f) =>

@@ -1,12 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { immaginiPagine } from '../data/immagini-pagine';
 import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
+import HeroPagina from '../components/HeroPagina.astro';
 import '../styles/pages/classi-integrate.css';
 
 const bg = {
@@ -41,18 +41,10 @@ const classi = [
         {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
     </Fragment>
 
-        <!-- Hero Section -->
-        <section class="chisiamo-hero hero-banner">
-            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
-            <div class="chisiamo-hero-overlay"></div>
-            <div class="chisiamo-hero-glass">
-                <Breadcrumb />
-                <h1 class="chisiamo-hero-title">Classi Multidisciplinari Integrate</h1>
-                <p class="hero-lead">Qui c'è posto per tutti: quasi tutti i nostri corsi possono accogliere bambini e ragazzi con <strong>bisogni speciali</strong>.</p>
-            </div>
-        </section>
+        <HeroPagina titolo="Classi Multidisciplinari Integrate" stile={bg.hero.style}>
+            <p class="hero-lead">Qui c'è posto per tutti: quasi tutti i nostri corsi possono accogliere bambini e ragazzi con <strong>bisogni speciali</strong>.</p>
+        </HeroPagina>
 
-        <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo) -->
         <section id="intro" class="intro-split decoro-onde">
             <div class="container intro-split-layout">
                 <div class="intro-split-content">
@@ -72,7 +64,6 @@ const classi = [
             </div>
         </section>
 
-        <!-- Valori: intestazione editoriale e tre voci -->
         <section class="integrate-valori-section" aria-labelledby="valori-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">Come funziona</p>
@@ -80,7 +71,7 @@ const classi = [
                 <p>Tre passaggi per costruire un'<strong>accoglienza su misura</strong>, insieme alla famiglia.</p>
             </div>
             <div class="container">
-                <ol class="valori-lista">
+                <ol class="voci-griglia">
                     {passi.map((v) => (
                         <li class="voce">
                             <i class={`fas ${v.icona} voce-icona`} aria-hidden="true"></i>
@@ -92,7 +83,6 @@ const classi = [
             </div>
         </section>
 
-        <!-- Classi: introduzione e collegamenti testuali alle discipline. -->
         <SezioneElenco titoloId="classi-titolo" illustrazione="classi-integrate">
             <Fragment slot="introduzione">
                 <p class="eyebrow">Le nostre discipline</p>
@@ -111,7 +101,6 @@ const classi = [
             </ul>
         </SezioneElenco>
 
-        <!-- CTA -->
         <section class="cta-contatto sezione-scura">
             <div class="cta-bg" style={bg.cta.style}></div>
             <div class="cta-overlay"></div>

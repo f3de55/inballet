@@ -29,7 +29,6 @@
   }
 }
 
-/* ---------- Fila a scorrimento (come la galleria; logica in src/scripts/carosello.ts) ---------- */
 .insegnanti-fila {
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -72,7 +71,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .5s ease;
+  transition: transform 0.5s ease;
 }
 
 .insegnante-iniziali {
@@ -83,16 +82,15 @@
   color: var(--primary-blue-dark);
 }
 
-/* Velo scuro in basso: nome, disciplina e pulsante leggibili su qualsiasi foto */
 .insegnante-velo {
   position: absolute;
   inset: auto 0 0;
   padding: 7rem 1.5rem 1.5rem;
-  background: linear-gradient(to top, rgb(var(--scuro-rgb) / .92) 0%, rgb(var(--scuro-rgb) / .78) 45%, rgb(var(--scuro-rgb) / 0) 100%);
+  background: linear-gradient(to top, rgb(var(--scuro-rgb) / 0.92) 0%, rgb(var(--scuro-rgb) / 0.78) 45%, rgb(var(--scuro-rgb) / 0) 100%);
 }
 
 .insegnante-ruolo {
-  margin: .35rem 0 0;
+  margin: 0.35rem 0 0;
   color: var(--primary-blue);
 }
 
@@ -101,11 +99,10 @@
   color: var(--white);
 }
 
-/* Pulsante sotto il nome; anche il resto della card apre la scheda (data-apri-insegnante sul <li>) */
 .insegnante-cta {
   position: static;
   margin-top: 1rem;
-  padding: 0 0 .4rem;
+  padding: 0 0 0.4rem;
   border: none;
   --lc: currentColor;
   background: var(--linea-basso);
@@ -138,7 +135,6 @@
   }
 }
 
-/* Movimento ridotto: solo a mano, senza copie */
 @media (prefers-reduced-motion: reduce) {
   .insegnanti-fila {
     scroll-snap-type: x mandatory;
@@ -153,7 +149,7 @@
     scroll-snap-align: start;
   }
 
-  .insegnante[aria-hidden="true"] {
+  .insegnante[aria-hidden='true'] {
     display: none;
   }
 }

@@ -1,15 +1,6 @@
-/*
- * Sezione contatto prima del footer: foto di sfondo (sfondoCta() in lib/images.ts) con velo scuro,
- * titolo, testo e pulsanti centrati. Usata dalle pagine interne e da quelle dei corsi.
- * Le classi cta-bg e cta-overlay devono finire in "-bg" / "-overlay": layout/onde.css le allunga
- * nella fascia del bordo ondulato.
- */
 .cta-contatto {
   position: relative;
-  /* Sopra c'è un titolo, sotto un pulsante: la riga del titolo ha ~.17em di aria sopra le maiuscole,
-     il pulsante no. Si toglie quell'aria dal padding superiore così lo spazio che si vede (dal bordo al
-     bordo delle lettere e del pulsante) è uguale sopra e sotto */
-  padding: calc(var(--section-y) - .17 * var(--h2-size)) 0 var(--section-y);
+  padding: calc(var(--section-y) - 0.17 * var(--h2-size)) 0 var(--section-y);
   overflow: hidden;
 }
 

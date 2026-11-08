@@ -1,25 +1,27 @@
-/* Contatti: orari di apertura e stato aperto/chiuso.
- * La pagina arriva già con gli orari di src/data/scuola.ts; qui si evidenzia il giorno
- * corrente e si calcola lo stato, poi si prova ad aggiornarli da Google Places. */
 import { PUBLIC_GOOGLE_PLACE_ID } from 'astro:env/client';
 import { loadGoogleMaps, whenNear } from './google-maps';
 
-/** Nome del giorno (inglese o italiano, come restituito da Google) → abbreviazione. */
 const GIORNI: Record<string, string> = {
-  monday: 'Lun', lunedì: 'Lun',
-  tuesday: 'Mar', martedì: 'Mar',
-  wednesday: 'Mer', mercoledì: 'Mer',
-  thursday: 'Gio', giovedì: 'Gio',
-  friday: 'Ven', venerdì: 'Ven',
-  saturday: 'Sab', sabato: 'Sab',
-  sunday: 'Dom', domenica: 'Dom',
+  monday: 'Lun',
+  lunedì: 'Lun',
+  tuesday: 'Mar',
+  martedì: 'Mar',
+  wednesday: 'Mer',
+  mercoledì: 'Mer',
+  thursday: 'Gio',
+  giovedì: 'Gio',
+  friday: 'Ven',
+  venerdì: 'Ven',
+  saturday: 'Sab',
+  sabato: 'Sab',
+  sunday: 'Dom',
+  domenica: 'Dom',
 };
 const ORDINE = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
 
 const grid = document.getElementById('orari-grid');
 const statusEl = document.getElementById('open-status');
 
-// Giorno e ora di Roma, non del dispositivo: gli orari sono quelli della segreteria
 const parti = Object.fromEntries(
   new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Rome', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
     .formatToParts(new Date())
@@ -36,7 +38,6 @@ function mostraStato(aperto: boolean) {
   statusEl.className = `orari-status ${aperto ? 'aperto' : 'chiuso'}`;
 }
 
-/** Orari già nella pagina: giorno corrente evidenziato e stato calcolato dai dati. */
 function initStatici() {
   if (!grid) return;
   let aperto = false;
@@ -59,7 +60,6 @@ async function initGoogle() {
     const hours = place.regularOpeningHours;
     if (!hours?.weekdayDescriptions) return;
 
-    // Aperto ora?
     mostraStato(
       hours.periods.some((p) => {
         if (p.open.day !== giornoSettimana) return false;
@@ -69,7 +69,6 @@ async function initGoogle() {
       }),
     );
 
-    // Griglia orari, da lunedì, con evidenziato il giorno corrente
     const items = hours.weekdayDescriptions
       .map((text) => {
         const [nome, orario = 'Chiuso'] = text.split(': ');
@@ -90,7 +89,6 @@ async function initGoogle() {
       }),
     );
   } catch (error) {
-    // Restano gli orari della pagina
     console.error('Errore nel caricamento degli orari:', error);
   }
 }

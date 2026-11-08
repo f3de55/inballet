@@ -1,8 +1,3 @@
-/* ========================================
-   INBALLET - HOMEPAGE
-   Recensioni Google (Maps JS caricato solo quando la sezione è vicina);
-   la galleria è in galleria.ts
-   ======================================== */
 import { PUBLIC_GOOGLE_PLACE_ID } from 'astro:env/client';
 import { loadGoogleMaps, whenNear } from './google-maps';
 
@@ -16,11 +11,9 @@ interface Review {
 const MAX_REVIEWS = 5;
 const MIN_RATING = 1;
 
-const escapeHtml = (s: string) =>
-  s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[c]!);
+const escapeHtml = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[c]!);
 
-const stars = (rating: number) =>
-  Array.from({ length: 5 }, (_, i) => `<i class="${i < rating ? 'fas' : 'far'} fa-star"></i>`).join('');
+const stars = (rating: number) => Array.from({ length: 5 }, (_, i) => `<i class="${i < rating ? 'fas' : 'far'} fa-star"></i>`).join('');
 
 const initials = (name: string) =>
   name
@@ -30,9 +23,6 @@ const initials = (name: string) =>
     .substring(0, 2)
     .toUpperCase();
 
-// === RECENSIONI GOOGLE ===
-
-/** Valutazione e recensioni del luogo dalla Places API (timeout 10s). */
 async function fetchReviews(placeId: string): Promise<{ rating: number; total: number; reviews: Review[] }> {
   const { Place } = (await google.maps.importLibrary('places')) as google.maps.PlacesLibrary;
   const place = new Place({ id: placeId, requestedLanguage: 'it' });
@@ -78,7 +68,6 @@ function createSlide(review: Review, index: number) {
   slide.className = `testimonials-slide ${index === 0 ? 'active' : ''}`;
   const full = review.text;
   const isLong = full.length > 200;
-  // Taglio a fine parola, non a metà
   const short = isLong ? full.substring(0, 200).replace(/\s+\S*$/, '') : full;
   slide.innerHTML = `
             <div class="recensione-stelle" role="img" aria-label="${review.rating} stelle su 5">${stars(review.rating)}</div>
@@ -154,7 +143,6 @@ class TestimonialsCarousel {
     this.bindTouch(this.carousel);
   }
 
-  /** Altezza minima = slide più alta, per evitare salti di layout. */
   setMinHeight() {
     this.slides.forEach((s) => Object.assign(s.style, { display: 'block', opacity: '0', position: 'absolute' }));
     const max = Math.max(...[...this.slides].map((s) => s.offsetHeight));
@@ -183,7 +171,7 @@ class TestimonialsCarousel {
         this.currentY = e.touches[0].clientY;
         const diffX = this.currentX - this.startX;
         const diffY = Math.abs(this.currentY - this.startY);
-        if (Math.abs(diffX) > diffY) e.preventDefault(); // swipe orizzontale: blocca lo scroll
+        if (Math.abs(diffX) > diffY) e.preventDefault();
         if (Math.abs(diffX) > 10 && Math.abs(diffX) > diffY) {
           const slide = this.slides[this.current];
           slide.style.transform = `translateX(${Math.max(-50, Math.min(50, diffX / 4))}px)`;
@@ -228,7 +216,7 @@ class TestimonialsCarousel {
       const to = this.slides[index];
       Object.assign(to.style, { display: 'block', opacity: '0', transform: `translateX(${20 * dir}px)` });
       to.classList.add('active');
-      void to.offsetHeight; // forza il reflow prima della transizione
+      void to.offsetHeight;
       setTimeout(() => {
         to.style.opacity = '1';
         to.style.transform = 'translateX(0)';

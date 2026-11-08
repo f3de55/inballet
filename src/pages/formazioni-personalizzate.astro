@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
+import HeroPagina from '../components/HeroPagina.astro';
 import '../styles/pages/formazioni-personalizzate.css';
 
 const bg = {
@@ -22,18 +22,10 @@ const bg = {
         {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
     </Fragment>
 
-        <!-- Hero Section -->
-        <section class="chisiamo-hero hero-banner">
-            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
-            <div class="chisiamo-hero-overlay"></div>
-            <div class="chisiamo-hero-glass">
-                <Breadcrumb />
-                <h1 class="chisiamo-hero-title">Formazioni Personalizzate</h1>
-                <p class="hero-lead">Percorsi di formazione <strong>su misura</strong> per professionisti dell'educazione, della terapia e della danza.</p>
-            </div>
-        </section>
+        <HeroPagina titolo="Formazioni Personalizzate" stile={bg.hero.style}>
+            <p class="hero-lead">Percorsi di formazione <strong>su misura</strong> per professionisti dell'educazione, della terapia e della danza.</p>
+        </HeroPagina>
 
-        <!-- Intro Section -->
         <section id="intro" class="perso-intro-section decoro-onde">
             <div class="perso-intro-wrapper intro-editoriale">
                 <p class="perso-intro-label eyebrow">Formazione su misura</p>
@@ -47,7 +39,6 @@ const bg = {
             </div>
         </section>
 
-        <!-- Tipologie Section -->
         <section class="perso-tipo-section">
             <div class="perso-tipo-wrapper">
                 <div class="perso-tipo-header">
@@ -87,7 +78,6 @@ const bg = {
             </div>
         </section>
 
-        <!-- CTA Section -->
         <section class="cta-contatto sezione-scura">
             <div class="cta-bg" style={bg.cta.style}></div>
             <div class="cta-overlay"></div>

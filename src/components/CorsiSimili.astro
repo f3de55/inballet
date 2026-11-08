@@ -1,9 +1,4 @@
 ---
-/**
- * «Corsi simili»: gli altri corsi della stessa categoria (scuola.ts → categorieCorsi), escluso
- * quello della pagina. Desktop e tablet mantengono le celle a filetti con le foto dei corsi; su mobile
- * si usano le stesse card fotografiche e lo scorrimento della pagina /corsi.
- */
 import { getCollection } from 'astro:content';
 import { categorieCorsi } from '../data/scuola';
 import { immaginiSottocorsi } from '../data/immagini-sottocorsi';
@@ -13,14 +8,12 @@ import SchedaPercorso from './SchedaPercorso.astro';
 import '../styles/components/corsi-simili.css';
 
 interface Props {
-  /** id del corso corrente (es. "hip-hop"), da escludere */
   corso: string;
 }
 
 const { corso } = Astro.props;
 const categoria = categorieCorsi.find((c) => c.corsi.some((k) => k.url === `/${corso}`));
 const pagine = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.data]));
-// Nel nome basta la disciplina: l'età sta nella riga sotto
 const nomeBreve = (nome: string) => nome.replace(/\s*\(.*\)$/, '');
 const altri = (categoria?.corsi ?? [])
   .filter((k) => k.url !== `/${corso}`)

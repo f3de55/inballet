@@ -1,4 +1,3 @@
-/** PDF di verifica e credenziali restano nel container temporaneo, senza volume dati. */
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { get } from 'node:http';
@@ -9,18 +8,34 @@ const container = `inballet-statuto-test-${process.pid}`;
 const dataDir = '/tmp/inballet-statuto-test';
 const docker = (...args) => execFileSync('docker', args, { encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'] }).trim();
 const inside = (source) => execFileSync('docker', ['exec', '-i', container, 'node', '--input-type=module'], { input: source, encoding: 'utf8' }).trim();
-const ready = (url) => new Promise((resolve) => {
-  const request = get(url, (response) => { response.resume(); resolve(response.statusCode === 200); });
-  request.setTimeout(1000, () => request.destroy());
-  request.on('error', () => resolve(false));
-});
+const ready = (url) =>
+  new Promise((resolve) => {
+    const request = get(url, (response) => {
+      response.resume();
+      resolve(response.statusCode === 200);
+    });
+    request.setTimeout(1000, () => request.destroy());
+    request.on('error', () => resolve(false));
+  });
 
 test('statuto: sezione pubblica e gestione del PDF nella dashboard', { timeout: 120_000 }, async (t) => {
-  // Mantiene attivo Node anche durante il primo collegamento alla porta Docker.
   const keepAlive = setInterval(() => {}, 1000);
   let started = false;
   try {
-    docker('run', '-d', '--rm', '--name', container, '-p', '127.0.0.1::8080', '-e', `DATA_DIR=${dataDir}`, '-e', 'DASHBOARD_PASSWORD=statuto-test-only', 'inballet-site');
+    docker(
+      'run',
+      '-d',
+      '--rm',
+      '--name',
+      container,
+      '-p',
+      '127.0.0.1::8080',
+      '-e',
+      `DATA_DIR=${dataDir}`,
+      '-e',
+      'DASHBOARD_PASSWORD=statuto-test-only',
+      'inballet-site',
+    );
     started = true;
     const base = `http://127.0.0.1:${docker('port', container, '8080/tcp').split(':').at(-1)}`;
     for (let i = 0; ; i++) {
@@ -46,11 +61,16 @@ test('statuto: sezione pubblica e gestione del PDF nella dashboard', { timeout: 
     const loginAction = /<form[^>]+action="([^"]+)"/.exec(loginHtml)?.[1];
     assert.ok(loginAction);
     const login = await fetch(new URL(loginAction.replaceAll('&amp;', '&'), base + '/login'), {
-      method: 'POST', redirect: 'manual', headers: { Origin: base, 'Content-Type': 'application/x-www-form-urlencoded' },
+      method: 'POST',
+      redirect: 'manual',
+      headers: { Origin: base, 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ password: 'statuto-test-only' }),
     });
     assert.ok([302, 303].includes(login.status));
-    const cookie = login.headers.getSetCookie().map((value) => value.split(';')[0]).join('; ');
+    const cookie = login.headers
+      .getSetCookie()
+      .map((value) => value.split(';')[0])
+      .join('; ');
     assert.ok(cookie);
     const save = (fields, withFile = true) => {
       const body = new FormData();
@@ -109,7 +129,9 @@ test('statuto: sezione pubblica e gestione del PDF nella dashboard', { timeout: 
       assert.doesNotMatch(section(html), /Statuto aggiornato di verifica/);
       assert.ok(html.includes(statute.file));
       response = await fetch(base + '/_actions/documenti.elimina', {
-        method: 'POST', headers: { Cookie: cookie, Origin: base, 'Content-Type': 'application/json' }, body: JSON.stringify({ id: statute.id }),
+        method: 'POST',
+        headers: { Cookie: cookie, Origin: base, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: statute.id }),
       });
       assert.equal(response.status, 204, await response.text());
       html = await page();
@@ -118,7 +140,10 @@ test('statuto: sezione pubblica e gestione del PDF nella dashboard', { timeout: 
       assert.equal((await fetch(base + statute.file)).status, 404);
     });
   } finally {
-    try { if (started) docker('stop', container); }
-    finally { clearInterval(keepAlive); }
+    try {
+      if (started) docker('stop', container);
+    } finally {
+      clearInterval(keepAlive);
+    }
   }
 });

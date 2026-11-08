@@ -3,7 +3,6 @@ import Img from './Img.astro';
 import { menu, type Menu } from '../data/navigazione';
 import '../styles/components/navbar.css';
 
-// Pagina corrente (senza .html e slash finale) per evidenziare voce e sottovoce
 const corrente = Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1');
 const attiva = (href: string) => href === corrente;
 const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s) => s.voci.some((v) => attiva(v.href)));
@@ -53,7 +52,6 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
     </button>
 </nav>
 
-<!-- Mobile Menu -->
 <div class="mobile-overlay" id="mobileOverlay"></div>
 <div class="mobile-menu sezione-scura" id="mobileMenu" aria-hidden="true">
     <div class="mobile-menu-top">

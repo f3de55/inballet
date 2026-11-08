@@ -1,4 +1,3 @@
-/** Integrazione sul Docker appena costruito: dati e password sono solo del container temporaneo. */
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { test } from 'node:test';
@@ -19,45 +18,85 @@ const inside = (source) => execFileSync('docker', ['exec', '-i', container, 'nod
 test('locandine demo: file persi, miniature e generazione nel runtime Docker', { timeout: 180_000 }, async (t) => {
   let started = false;
   try {
-    docker('run', '-d', '--rm', '--name', container, '-p', '127.0.0.1::8080', '-e', `DATA_DIR=${dataDir}`, '-e', 'DASHBOARD_PASSWORD=demo-image-test-only', 'inballet-site');
+    docker(
+      'run',
+      '-d',
+      '--rm',
+      '--name',
+      container,
+      '-p',
+      '127.0.0.1::8080',
+      '-e',
+      `DATA_DIR=${dataDir}`,
+      '-e',
+      'DASHBOARD_PASSWORD=demo-image-test-only',
+      'inballet-site',
+    );
     started = true;
     const port = docker('port', container, '8080/tcp').split(':').at(-1);
     const base = `http://127.0.0.1:${port}`;
     const url = (name) => base + prefix + name;
     for (let i = 0; ; i++) {
-      try { if ((await fetch(base + '/login')).ok) break; } catch {}
+      try {
+        if ((await fetch(base + '/login')).ok) break;
+      } catch {}
       if (i >= 40) throw new Error('Il container di test non risponde');
       await setTimeout(250);
     }
 
     const fixture = (id, file, demo = true) => ({
-      id, slug: id, titolo: 'Workshop di danza contemporanea', data: '2026-11-05', ora: '10:30', dataFine: '', oraFine: '',
-      stato: 'pubblicato', tipo: 'Workshop', luogo: 'Sede di Rho, Via Tevere 19', descrizione: 'Evento di verifica',
-      immagine: prefix.slice(1) + file, destinatari: '', costo: '', prenotazione: '',
-      creato: '2026-11-05T10:00:00+01:00', modificato: '2026-11-05T10:00:00+01:00', demo,
+      id,
+      slug: id,
+      titolo: 'Workshop di danza contemporanea',
+      data: '2026-11-05',
+      ora: '10:30',
+      dataFine: '',
+      oraFine: '',
+      stato: 'pubblicato',
+      tipo: 'Workshop',
+      luogo: 'Sede di Rho, Via Tevere 19',
+      descrizione: 'Evento di verifica',
+      immagine: prefix.slice(1) + file,
+      destinatari: '',
+      costo: '',
+      prenotazione: '',
+      creato: '2026-11-05T10:00:00+01:00',
+      modificato: '2026-11-05T10:00:00+01:00',
+      demo,
     });
     const events = [
-      fixture('demo-originale', original), fixture('demo-libreria', missing), fixture('evento-reale', real, false),
+      fixture('demo-originale', original),
+      fixture('demo-libreria', missing),
+      fixture('evento-reale', real, false),
       { ...fixture('demo-legacy', legacy), titolo: 'Lezione di prova di Breaking', tipo: 'Lezione di prova' },
       { ...fixture('demo-titolo-lungo', longTitle), titolo: 'Incontro di danza, musica e movimento & scoperta '.repeat(5).slice(0, 200) },
     ];
-    inside(`import fs from 'node:fs'; fs.mkdirSync('${dataDir}', { recursive: true }); fs.writeFileSync('${dataDir}/eventi.json', ${JSON.stringify(JSON.stringify(events))}); fs.writeFileSync('${dataDir}/tipi_evento.json', '["Workshop"]');`);
+    inside(
+      `import fs from 'node:fs'; fs.mkdirSync('${dataDir}', { recursive: true }); fs.writeFileSync('${dataDir}/eventi.json', ${JSON.stringify(JSON.stringify(events))}); fs.writeFileSync('${dataDir}/tipi_evento.json', '["Workshop"]');`,
+    );
     const snapshot = inside(`import fs from 'node:fs'; process.stdout.write(fs.readFileSync('${dataDir}/eventi.json', 'utf8'));`);
 
-    // Login normale, con una password inventata e valida soltanto in questo container.
     const loginPage = await fetch(base + '/login');
     const form = /<form[^>]+action="([^"]+)"/.exec(await loginPage.text());
     assert.ok(form, 'Form login presente');
     const login = await fetch(new URL(form[1].replaceAll('&amp;', '&'), base + '/login'), {
-      method: 'POST', redirect: 'manual', headers: { Origin: base, 'Content-Type': 'application/x-www-form-urlencoded' },
+      method: 'POST',
+      redirect: 'manual',
+      headers: { Origin: base, 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ password: 'demo-image-test-only' }),
     });
     assert.ok(login.status === 302 || login.status === 303, 'Login nel container di test riuscito');
-    const cookie = login.headers.getSetCookie().map((value) => value.split(';')[0]).join('; ');
+    const cookie = login.headers
+      .getSetCookie()
+      .map((value) => value.split(';')[0])
+      .join('; ');
     assert.ok(cookie, 'Sessione del test ricevuta');
-    const action = (name, input = {}) => fetch(base + '/_actions/' + name, {
-      method: 'POST', headers: { Cookie: cookie, Origin: base, 'Content-Type': 'application/json' }, body: JSON.stringify(input),
-    });
+    const action = (name, input = {}) =>
+      fetch(base + '/_actions/' + name, {
+        method: 'POST',
+        headers: { Cookie: cookie, Origin: base, 'Content-Type': 'application/json' },
+        body: JSON.stringify(input),
+      });
 
     await t.test('la libreria elenca i demo recuperabili prima che esistano i file', async () => {
       const response = await action('immagini.lista');
@@ -74,11 +113,19 @@ test('locandine demo: file persi, miniature e generazione nel runtime Docker', {
         assert.equal(response.headers.get('content-type'), index % 2 ? 'image/webp' : 'image/jpeg');
         assert.ok((await response.arrayBuffer()).byteLength > 1000);
       }
-      const metadata = JSON.parse(inside(`import sharp from 'sharp'; const full=await sharp('${dataDir}/uploads/eventi/${original}').metadata(); const mini=await sharp('${dataDir}/uploads/eventi/${miniature}').metadata(); const stats=await sharp('${dataDir}/uploads/eventi/${original}').stats(); console.log(JSON.stringify({full:[full.width,full.height],mini:[mini.width,mini.height],deviation:stats.channels[0].stdev}));`));
+      const metadata = JSON.parse(
+        inside(
+          `import sharp from 'sharp'; const full=await sharp('${dataDir}/uploads/eventi/${original}').metadata(); const mini=await sharp('${dataDir}/uploads/eventi/${miniature}').metadata(); const stats=await sharp('${dataDir}/uploads/eventi/${original}').stats(); console.log(JSON.stringify({full:[full.width,full.height],mini:[mini.width,mini.height],deviation:stats.channels[0].stdev}));`,
+        ),
+      );
       assert.deepEqual(metadata.full, [1080, 1350]);
       assert.ok(Math.max(...metadata.mini) <= 480);
       assert.ok(metadata.deviation > 10, 'Locandina effettivamente disegnata, non un rettangolo vuoto');
-      assert.equal(inside(`import fs from 'node:fs'; process.stdout.write(fs.readFileSync('${dataDir}/eventi.json', 'utf8'));`), snapshot, 'Recupero senza modificare eventi o riferimenti');
+      assert.equal(
+        inside(`import fs from 'node:fs'; process.stdout.write(fs.readFileSync('${dataDir}/eventi.json', 'utf8'));`),
+        snapshot,
+        'Recupero senza modificare eventi o riferimenti',
+      );
     });
 
     await t.test('la miniatura mancante si rigenera senza sostituire la locandina', async () => {

@@ -1,12 +1,6 @@
-/**
-* Struttura della navigazione: usata dalla navbar (desktop e mobile) e dai
-* breadcrumb delle pagine interne. Modificare qui per aggiungere una pagina.
-*/
-/** `breve`: nome corto usato nel footer, dove lo spazio è minore. */
 export interface Voce { nome: string; href: string; breve?: string }
 export interface Menu { id: string; label: string; href?: string; compatto: boolean; sezioni: { titolo: string; href?: string; voci: Voce[] }[] }
 
-/** Voci della navigazione (desktop e mobile). Corsi apre la sua pagina al clic. */
 export const menu: Menu[] = [
   {
     id: 'corsi', label: 'Corsi', href: '/corsi', compatto: false,
@@ -72,7 +66,6 @@ export const menu: Menu[] = [
   },
 ];
 
-/** Pagine fuori dal menu: nome mostrato nei breadcrumb. */
 export const altrePagine: Record<string, string> = {
   '/contatti': 'Contatti',
 };

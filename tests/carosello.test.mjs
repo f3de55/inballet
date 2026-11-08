@@ -4,12 +4,10 @@ import test from 'node:test';
 import vm from 'node:vm';
 import ts from 'typescript';
 
-const source = ts.transpileModule(
-  readFileSync(new URL('../src/scripts/carosello.ts', import.meta.url), 'utf8'),
-  { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } },
-).outputText;
+const source = ts.transpileModule(readFileSync(new URL('../src/scripts/carosello.ts', import.meta.url), 'utf8'), {
+  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+}).outputText;
 
-// Il DOM minimo delle due file, con frame e timer controllati senza attese reali.
 function setup({ reducedMotion = false } = {}) {
   class Target {
     listeners = new Map();
@@ -29,10 +27,11 @@ function setup({ reducedMotion = false } = {}) {
   const dialogs = [];
   class Dialog {
     open = true;
-    constructor() { dialogs.push(this); }
+    constructor() {
+      dialogs.push(this);
+    }
     close() {
       this.open = false;
-      // L'evento nativo close non fa bubbling: lo ricevono solo gli osservatori in cattura.
       document.emit('close', { target: this }, true);
     }
   }
@@ -41,7 +40,8 @@ function setup({ reducedMotion = false } = {}) {
     const classes = new Set();
     const track = { scrollWidth: 2000, style: {}, querySelectorAll: () => [] };
     Object.assign(row, {
-      dataset: { giro: '40' }, scrollLeft: 0,
+      dataset: { giro: '40' },
+      scrollLeft: 0,
       classList: { add: (value) => classes.add(value), remove: (value) => classes.delete(value), contains: (value) => classes.has(value) },
       querySelector: () => track,
       contains: (target) => target === row,
@@ -67,19 +67,31 @@ function setup({ reducedMotion = false } = {}) {
   };
   window.setTimeout = setTimeout;
   vm.runInNewContext(source, {
-    window, document, HTMLDialogElement: Dialog, exports: {},
+    window,
+    document,
+    HTMLDialogElement: Dialog,
+    exports: {},
     performance: { now: () => now },
     requestAnimationFrame: (callback) => frames.push(callback),
-    setTimeout, clearTimeout: (id) => timers.delete(id), setInterval: () => 0,
+    setTimeout,
+    clearTimeout: (id) => timers.delete(id),
+    setInterval: () => 0,
     IntersectionObserver: class {
-      constructor(callback) { this.callback = callback; }
-      observe() { this.callback([{ isIntersecting: true }]); }
+      constructor(callback) {
+        this.callback = callback;
+      }
+      observe() {
+        this.callback([{ isIntersecting: true }]);
+      }
     },
   });
   const frame = (elapsed = 16) => {
     now += elapsed;
     for (const [id, timer] of timers) {
-      if (timer.at <= now) { timers.delete(id); timer.callback(); }
+      if (timer.at <= now) {
+        timers.delete(id);
+        timer.callback();
+      }
     }
     const pending = frames;
     frames = [];
@@ -110,7 +122,6 @@ test('chiudendo con il mouse già sulle card la fila resta ferma senza uscire e 
   window.emit('pointerup');
   assert.equal(timers.size, 1);
   const dialog = new Dialog();
-  // La modale riceve il mouse, la fila sottostante non riceve un nuovo ingresso.
   rows[0].emit('pointerleave', mouse);
   window.emit('pointermove', mouse);
   const before = positions(rows);

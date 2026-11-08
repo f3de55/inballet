@@ -1,10 +1,3 @@
-/**
- * Sezione «Insegnanti» di Chi siamo, modificabile dalla dashboard: testi e schede
- * (nome, disciplina, breve presentazione, foto). I testi stanno in
- * DATA_DIR/insegnanti.json, le foto in DATA_DIR/uploads/insegnanti, servite su
- * /assets/images/insegnanti/<file>. Ogni foto caricata è ritagliata in verticale
- * (4:5, 800x1000) e convertita in WebP.
- */
 import { randomBytes } from 'node:crypto';
 import { unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -15,11 +8,10 @@ import { controllaLunghezza, mbLen, riga as str, slug } from './text';
 
 export type { SezioneInsegnanti };
 
-/** Errore di validazione con messaggio da mostrare all'utente. */
 export class ErroreInsegnanti extends Error {}
 
 export const PUBLIC_PREFIX = '/assets/images/insegnanti/';
-const MAX_SIZE = 20 * 1024 * 1024; // 20MB
+const MAX_SIZE = 20 * 1024 * 1024;
 export const MAX_INSEGNANTI = 40;
 
 const LIMITI = {
@@ -34,7 +26,6 @@ const LIMITI = {
   competenze: 12,
 } as const;
 
-/** Contenuti correnti: quelli salvati, con i predefiniti per ciò che manca. */
 export async function leggiInsegnanti(): Promise<SezioneInsegnanti> {
   const salvato = await readJson<Partial<SezioneInsegnanti> | null>(paths.insegnanti, null);
   const base = insegnantiPredefiniti;
@@ -49,7 +40,6 @@ export async function leggiInsegnanti(): Promise<SezioneInsegnanti> {
 
 type TestiInput = Partial<Record<'eyebrow' | 'titolo' | 'accento' | 'intro', string>>;
 
-/** Valida e salva l'intestazione della sezione. */
 export async function salvaTesti(input: TestiInput): Promise<SezioneInsegnanti> {
   const v = { eyebrow: str(input.eyebrow), titolo: str(input.titolo), accento: str(input.accento), intro: str(input.intro) };
   const errors: string[] = [];
@@ -67,16 +57,12 @@ export async function salvaTesti(input: TestiInput): Promise<SezioneInsegnanti> 
   });
 }
 
-// === FOTO ===
-
-/** Nome file sicuro per le foto caricate (lo stesso formato che genera `salvaFoto`). */
 export function nomeFotoSicuro(name: string): string | null {
   return /^[a-z0-9]+(?:-[a-z0-9]+)*\.webp$/.test(name) ? name : null;
 }
 
 export const percorsoFoto = (nome: string) => path.join(paths.fotoInsegnanti, nome);
 
-/** Salva la foto: orientamento corretto, ritaglio 4:5 sul soggetto, WebP. */
 async function salvaFoto(file: File, nome: string): Promise<string> {
   if (file.size > MAX_SIZE) throw new ErroreInsegnanti('La foto è troppo grande (massimo 20 MB)');
   const buf = new Uint8Array(await file.arrayBuffer());
@@ -95,8 +81,6 @@ async function rimuoviFoto(foto: string): Promise<void> {
   if (nome) await unlink(percorsoFoto(nome)).catch(() => {});
 }
 
-// === SCHEDE ===
-
 const ID = /^ins_[a-z0-9]+$/;
 const nuovoId = () => 'ins_' + randomBytes(6).toString('hex');
 
@@ -105,22 +89,25 @@ interface InsegnanteInput {
   nome?: string;
   ruolo?: string;
   bio?: string;
-  /** Competenze, una per riga (o separate da virgola o «|») */
   competenze?: string;
-  /** Nuova foto (facoltativa) */
   foto?: File;
-  /** Togli la foto attuale */
   togliFoto?: boolean;
 }
 
-/** Crea o aggiorna un insegnante. Con `foto` sostituisce la foto. */
 export async function salvaInsegnante(input: InsegnanteInput): Promise<Insegnante> {
   const id = str(input.id) || null;
   const nome = str(input.nome);
   const ruolo = str(input.ruolo);
   const bio = str(input.bio);
   const foto = input.foto && input.foto.size > 0 ? input.foto : undefined;
-  const competenze = [...new Set((input.competenze ?? '').split(/[\n,|]/).map(str).filter(Boolean))];
+  const competenze = [
+    ...new Set(
+      (input.competenze ?? '')
+        .split(/[\n,|]/)
+        .map(str)
+        .filter(Boolean),
+    ),
+  ];
 
   const errors: string[] = [];
   if (id && !ID.test(id)) errors.push('ID non valido');
@@ -166,11 +153,8 @@ export async function eliminaInsegnante(id: string): Promise<void> {
   });
 }
 
-// === DATI DEMO (src/lib/demo.ts) ===
-
 export const nuovoIdInsegnante = nuovoId;
 
-/** Aggiunge in coda insegnanti demo già pronti (foto comprese). */
 export async function aggiungiInsegnanti(nuovi: Insegnante[]): Promise<void> {
   await serialized(async () => {
     const dati = await leggiInsegnanti();
@@ -179,7 +163,6 @@ export async function aggiungiInsegnanti(nuovi: Insegnante[]): Promise<void> {
   });
 }
 
-/** Rimuove gli insegnanti demo e le loro foto; restituisce quanti erano. */
 export async function rimuoviInsegnantiDemo(): Promise<number> {
   const demo = await serialized(async () => {
     const dati = await leggiInsegnanti();
@@ -192,7 +175,6 @@ export async function rimuoviInsegnantiDemo(): Promise<number> {
   return demo.length;
 }
 
-/** Riordina: `ids` è il nuovo ordine (devono essere tutti e soli quelli esistenti). */
 export async function ordinaInsegnanti(ids: string[]): Promise<void> {
   await serialized(async () => {
     const dati = await leggiInsegnanti();

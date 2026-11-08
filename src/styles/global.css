@@ -1,15 +1,3 @@
-/*
- * Punto d'ingresso del CSS del sito pubblico (importato da layouts/Base.astro).
- * Qui non ci sono regole: solo l'elenco ordinato dei moduli condivisi da tutte le pagine.
- * L'ordine conta (a parità di specificità vince l'ultimo): variabili → base → layout → componenti condivisi.
- *
- *   base/        variabili, reset, tipografia
- *   layout/      struttura della pagina: colonne, sezioni, bordo ondulato, decori
- *   components/  elementi riutilizzati in più pagine
- *
- * Il CSS di un componente (components/navbar.css, footer.css…) o di una pagina (pages/*.css) lo importa
- * il file .astro che lo usa, così ogni pagina carica solo il proprio.
- */
 @import './base/variables.css';
 @import './base/reset.css';
 @import './base/typography.css';

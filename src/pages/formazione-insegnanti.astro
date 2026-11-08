@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import Img from '../components/Img.astro';
 import { immaginiPagine } from '../data/immagini-pagine';
 import { sfondoCta } from '../lib/images';
@@ -9,6 +8,7 @@ import logoCsen from '../assets/images/csen-logo.svg';
 import logoConi from '../assets/images/logo_coni.svg';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
+import HeroPagina from '../components/HeroPagina.astro';
 import '../styles/pages/formazione-insegnanti.css';
 
 const bg = {
@@ -40,18 +40,10 @@ const enti = [
         {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
     </Fragment>
 
-        <!-- Hero Section -->
-        <section class="chisiamo-hero hero-banner">
-            <div class="chisiamo-hero-image hero-banner-image" style={bg.hero.style}></div>
-            <div class="chisiamo-hero-overlay"></div>
-            <div class="chisiamo-hero-glass">
-                <Breadcrumb />
-                <h1 class="chisiamo-hero-title">Corso per Insegnanti di Danza</h1>
-                <p class="hero-lead">Percorso <strong>biennale</strong> per insegnanti di danza, con specializzazione <strong>Modern</strong>, riconosciuto <strong>CSEN e CONI</strong>.</p>
-            </div>
-        </section>
+        <HeroPagina titolo="Corso per Insegnanti di Danza" stile={bg.hero.style}>
+            <p class="hero-lead">Percorso <strong>biennale</strong> per insegnanti di danza, con specializzazione <strong>Modern</strong>, riconosciuto <strong>CSEN e CONI</strong>.</p>
+        </HeroPagina>
 
-        <!-- Intro: testo a sinistra, foto a destra (sotto i 900px: titolo, foto, testo); sotto, il corso in breve -->
         <section id="intro" class="intro-split decoro-onde">
             <div class="container intro-split-layout">
                 <div class="intro-split-content">
@@ -71,7 +63,6 @@ const enti = [
             </div>
         </section>
 
-        <!-- Aree di studio: introduzione ed elenco aperto dei contenuti. -->
         <SezioneElenco titoloId="aree-titolo" illustrazione="formazione-insegnanti" class="split-section--soft">
             <Fragment slot="introduzione">
                 <p class="eyebrow">Il programma</p>
@@ -88,7 +79,6 @@ const enti = [
             </ol>
         </SezioneElenco>
 
-        <!-- Diploma: intestazione editoriale, sotto gli enti che lo riconoscono -->
         <section class="form-cert-section decoro-onde decoro-onde--sinistra" aria-labelledby="cert-titolo">
             <div class="intro-editoriale">
                 <p class="eyebrow">Riconoscimenti</p>
@@ -109,7 +99,6 @@ const enti = [
             </div>
         </section>
 
-        <!-- CTA -->
         <section class="cta-contatto sezione-scura">
             <div class="cta-bg" style={bg.cta.style}></div>
             <div class="cta-overlay"></div>

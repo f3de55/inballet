@@ -1,6 +1,3 @@
-/* Pagina Corsi: invito a esplorare i percorsi, sezioni dei corsi e contatto. */
-
-/* ---------- Trova il tuo corso: pulsante nell'hero e dialogo dei percorsi ---------- */
 .trova-scelta {
   margin-top: 1.5rem;
 }
@@ -26,7 +23,7 @@ html:has(.trova-popup[open]) {
 }
 
 .trova-popup::backdrop {
-  background: rgb(var(--navy-rgb) / .45);
+  background: rgb(var(--navy-rgb) / 0.45);
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
 }
@@ -38,7 +35,7 @@ html:has(.trova-popup[open]) {
 }
 
 #trova-popup-titolo {
-  margin: 0 2.5rem .5rem 0;
+  margin: 0 2.5rem 0.5rem 0;
 }
 
 .trova-popup-intro {
@@ -61,7 +58,7 @@ html:has(.trova-popup[open]) {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 1rem;
-  padding: .9rem .25rem;
+  padding: 0.9rem 0.25rem;
   border-radius: var(--radius-xs);
   color: var(--heading-color);
   text-decoration: none;
@@ -73,13 +70,13 @@ html:has(.trova-popup[open]) {
   background: var(--bg-soft);
 }
 
-.trova-opzione[aria-current="location"] .trova-opzione-nome {
+.trova-opzione[aria-current='location'] .trova-opzione-nome {
   color: var(--primary-blue-dark);
 }
 
 .trova-opzione-testo {
   display: grid;
-  gap: .125rem;
+  gap: 0.125rem;
 }
 
 .trova-opzione > i {
@@ -91,19 +88,19 @@ html:has(.trova-popup[open]) {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: .75rem 1.5rem;
+  gap: 0.75rem 1.5rem;
   margin-top: 1.5rem;
 }
 
 .trova-alternative a {
   color: var(--primary-blue);
   text-decoration: underline;
-  text-underline-offset: .2em;
+  text-underline-offset: 0.2em;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .trova-popup[open] {
-    animation: trova-apparsa .18s ease-out;
+    animation: trova-apparsa 0.18s ease-out;
   }
 }
 
@@ -114,12 +111,8 @@ html:has(.trova-popup[open]) {
   }
 }
 
-/* ---------- Sezioni degli stili ----------
-   Moduli aperti e tutti uguali: tre colonne fisse su desktop in tutte le categorie.
-   Le righe incomplete seguono lo stesso allineamento delle righe piene.
-   Filetti tra le colonne e le righe, senza pannelli, ombre o bordi esterni. */
 .corsi-stile {
-  padding: calc(var(--section-y) * .75) 0;
+  padding: calc(var(--section-y) * 0.75) 0;
   background: var(--white);
 }
 
@@ -127,13 +120,11 @@ html:has(.trova-popup[open]) {
   background: var(--bg-soft);
 }
 
-/* ---------- Chiusura ---------- */
 .corsi-chiusura {
   padding: var(--section-y) 0;
   background: var(--bg-soft);
 }
 
-/* Card bianca: titolo e testo a sinistra, pulsante a destra */
 .corsi-fine {
   display: flex;
   align-items: center;
@@ -145,7 +136,7 @@ html:has(.trova-popup[open]) {
 }
 
 .corsi-fine-titolo {
-  margin: 0 0 .5rem;
+  margin: 0 0 0.5rem;
 }
 
 .corsi-fine p {
@@ -157,7 +148,6 @@ html:has(.trova-popup[open]) {
   flex-shrink: 0;
 }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 768px) {
   .corsi-fine {
     flex-direction: column;
@@ -175,19 +165,19 @@ html:has(.trova-popup[open]) {
   }
 
   .trova-popup-chiudi {
-    top: .75rem;
-    right: .75rem;
+    top: 0.75rem;
+    right: 0.75rem;
   }
 
   .trova-popup-intro {
-    margin-bottom: .75rem;
+    margin-bottom: 0.75rem;
     font-size: var(--label-size);
   }
 
   .trova-opzione {
     min-height: 56px;
-    gap: .75rem;
-    padding: .7rem 0;
+    gap: 0.75rem;
+    padding: 0.7rem 0;
   }
 
   .trova-opzione-testo {

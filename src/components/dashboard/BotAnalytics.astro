@@ -1,9 +1,4 @@
 ---
-/**
- * Statistiche del chatbot: messaggi, persone, spesa, grafici per giorno/ora e
- * domande più frequenti nel periodo selezionato; stato della catena di
- * fornitori con la verifica di qualità e le ultime conversazioni.
- */
 import { CHATBOT_BUDGET_GIORNO } from 'astro:env/server';
 import type { LogEntry } from '../../lib/chatbot';
 import { GIORNI_CONSERVAZIONE, ultimeConversazioni } from '../../lib/chatbot/conversazioni';
@@ -51,7 +46,6 @@ const oggi = romeDate();
 const periodi = [7, 30, 90].map((n) => ({ n, from: giorniFa(n), attivo: filterTo === oggi && filterFrom === giorniFa(n) }));
 const dataIt = (d: string) => d.split('-').reverse().join('/');
 
-// Spesa e affidabilità
 const dalModello = logs.filter((l) => l.type === 'success');
 const somma = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
 const spesa = somma(logs.map((l) => l.costo ?? 0));
@@ -237,7 +231,6 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
 <DemoModal tipo="chatbot" presenti={tuttiLog.filter((l) => l.demo).length} liberi={10000 - tuttiLog.length} />
 
 <script>
-    /* Verifica di qualità: le domande di prova, una alla volta, al fornitore scelto */
     import { actions } from 'astro:actions';
 
     const domande: string[] = JSON.parse(document.querySelector<HTMLElement>('.catena')?.dataset.verifiche ?? '[]');
@@ -287,7 +280,6 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
                 if (data?.ok) corrette++;
                 costo += data?.costo ?? 0;
                 lista.append(riga(domanda, data, error?.message));
-                // I piani gratuiti limitano le richieste al minuto
                 if (i < domande.length - 1) await pausa(1500);
             }
             stato.textContent = `${corrette} risposte corrette su ${domande.length}${costo ? ` · costo della verifica ${costo.toFixed(4).replace('.', ',')} $` : ''}`;

@@ -1,8 +1,4 @@
 /// <reference types="google.maps" />
-/**
- * Caricamento su richiesta di Google Maps JS (libreria places), una sola volta
- * per pagina. La chiave pubblica arriva da astro:env (PUBLIC_GOOGLE_MAPS_KEY).
- */
 import { PUBLIC_GOOGLE_MAPS_KEY } from 'astro:env/client';
 
 let loading: Promise<void> | null = null;
@@ -21,7 +17,6 @@ export function loadGoogleMaps(): Promise<void> {
   return loading;
 }
 
-/** Esegue `fn` quando `el` si avvicina al viewport (una sola volta). */
 export function whenNear(el: Element, fn: () => void, margin = '600px 0px') {
   const io = new IntersectionObserver(
     (entries) => {

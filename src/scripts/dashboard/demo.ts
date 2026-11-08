@@ -1,10 +1,7 @@
-/**
- * Dashboard › Dati demo: apertura del pannello, scelta della quantità,
- * generazione e rimozione (sempre dopo una conferma).
- */
 import { actions } from 'astro:actions';
 import { conferma } from './conferma';
 import { toast } from './toast';
+import { mostraModal, nascondiModal } from './comune';
 
 const modal = document.getElementById('modalDemo');
 
@@ -25,12 +22,10 @@ if (modal) {
   };
 
   const apri = () => {
-    modal.classList.add('open');
-    document.documentElement.classList.add('modal-aperta');
+    mostraModal(modal);
   };
   const chiudi = () => {
-    modal.classList.remove('open');
-    document.documentElement.classList.remove('modal-aperta');
+    nascondiModal(modal);
   };
 
   document.addEventListener('click', (e) => {
@@ -42,13 +37,11 @@ if (modal) {
     if (e.key === 'Escape' && modal.classList.contains('open') && !document.querySelector('dialog[open]')) chiudi();
   });
 
-  // Quantità: +/−, scorciatoie, campo libero
   modal.addEventListener('click', (e) => {
     const t = e.target as HTMLElement;
     const passo = t.closest<HTMLElement>('[data-passo]')?.dataset.passo;
     const rapido = t.closest<HTMLElement>('[data-valore]')?.dataset.valore;
     if (!quanti || (!passo && !rapido)) return;
-    // Il passo cresce con il numero: 1 per gli eventi, 50 per i messaggi
     quanti.value = String(rapido ? Number(rapido) : Math.max(1, Math.min(max, valore() + Number(passo) * (tipo === 'chatbot' ? 50 : 1))));
     aggiornaPulsante();
   });
@@ -87,7 +80,6 @@ if (modal) {
     }
     toast(`${data.creati.toLocaleString('it-IT')} ${unita} demo creati`, 'success');
     setTimeout(() => {
-      // Chatbot: mostra il periodo appena riempito (stesso link del filtro "N giorni", date di Roma)
       const periodo = [...document.querySelectorAll<HTMLAnchorElement>('.periodo .filtro')].find((a) => parseInt(a.textContent!, 10) === giorni);
       if (tipo !== 'chatbot' || !periodo) location.reload();
       else location.href = periodo.href;
@@ -95,7 +87,6 @@ if (modal) {
   });
 
   document.getElementById('demoRimuovi')?.addEventListener('click', async (e) => {
-    // currentTarget non è più disponibile dopo l'await: lo si legge subito
     const btn = e.currentTarget as HTMLButtonElement;
     const ok = await conferma({
       titolo: `Rimuovere ${presenti.toLocaleString('it-IT')} ${unita} demo?`,

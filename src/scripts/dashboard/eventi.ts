@@ -1,15 +1,9 @@
-/**
- * Dashboard › Eventi: modale crea/modifica, eliminazione, filtri e ricerca,
- * locandine (upload anche trascinando, selezione, eliminazione) e gestione
- * tipi evento. Il backend è chiamato tramite Astro Actions.
- */
 import { actions, isInputError } from 'astro:actions';
 import { createEditor } from './editor';
 import { conferma } from './conferma';
-import { $, MAX_SIZE, zonaCaricamento } from './comune';
+import { $, MAX_SIZE, mostraModal, nascondiModal, zonaCaricamento } from './comune';
 import { toast } from './toast';
 
-/** Come salvato sul server (testi puri, senza escape). */
 interface Evento {
   id: string;
   slug: string;
@@ -30,10 +24,8 @@ interface Evento {
 interface Immagine {
   nome: string;
   path: string;
-  /** Miniatura per la libreria */
   mini: string;
 }
-
 
 const modalEvento = $('modalEvento');
 const modalTipi = $('modalTipi');
@@ -53,22 +45,17 @@ const campi = {
   prenotazione: $<HTMLInputElement>('prenotazione'),
   stato: $<HTMLSelectElement>('stato'),
 };
-/** Campi del modulo per nome (per mettere il cursore sul campo con l'errore). */
-const campoDi = (nome: string): HTMLElement | null => (nome === 'descrizione' ? $('descrizione') : (campi as Record<string, HTMLElement>)[nome] ?? null);
+const campoDi = (nome: string): HTMLElement | null => (nome === 'descrizione' ? $('descrizione') : ((campi as Record<string, HTMLElement>)[nome] ?? null));
 
 let tipiEvento: string[] = JSON.parse($('tipiEventoData').textContent || '[]');
 let immagini: Immagine[] = [];
 let immagineSelezionata = '';
-/** Modifiche non salvate nel modulo aperto. */
 let modificato = false;
-
-// === CONTATORI CARATTERI ===
 
 function updateCounter(input: HTMLInputElement) {
   const max = Number(input.dataset.counter);
   const counter = $(`${input.id}-counter`);
   const len = input.value.length;
-  // Solo vicino al limite: altrimenti è rumore
   counter.textContent = len > max * 0.8 ? `${len}/${max}` : '';
   counter.classList.toggle('vicino', len > max * 0.9);
 }
@@ -87,8 +74,6 @@ const editor = createEditor($('descrizione'), modalEvento.querySelector<HTMLElem
 campi.titolo.addEventListener('input', () => updateCounter(campi.titolo));
 form.addEventListener('input', () => (modificato = true));
 
-// === MODALE EVENTO ===
-
 function apriModal(ev?: Evento) {
   form.reset();
   $('modalTitle').textContent = ev ? 'Modifica evento' : 'Nuovo evento';
@@ -100,7 +85,6 @@ function apriModal(ev?: Evento) {
   if (ev) {
     campi.titolo.value = ev.titolo;
     campi.data.value = ev.data;
-    // <input type="time"> vuole "09:30": alcune ore sono salvate come "9:30"
     campi.ora.value = ev.ora ? ev.ora.padStart(5, '0') : '';
     campi.dataFine.value = ev.dataFine || '';
     campi.oraFine.value = ev.oraFine ? ev.oraFine.padStart(5, '0') : '';
@@ -116,23 +100,23 @@ function apriModal(ev?: Evento) {
   updateEditorCounter();
   modificato = false;
 
-  modalEvento.classList.add('open');
-  document.documentElement.classList.add('modal-aperta');
+  mostraModal(modalEvento);
   modalEvento.querySelector('.modal-body')!.scrollTop = 0;
-  // Su touch il focus aprirebbe subito la tastiera: solo con mouse
   if (matchMedia('(hover: hover)').matches) campi.titolo.focus();
   void caricaImmagini();
 }
 
 async function chiudiModal(forza = false) {
   if (!modalEvento.classList.contains('open')) return;
-  if (!forza && modificato && !(await conferma({ titolo: 'Chiudere senza salvare?', testo: 'Le modifiche a questo evento andranno perse.', ok: 'Chiudi senza salvare', pericolo: true }))) return;
-  modalEvento.classList.remove('open');
-  document.documentElement.classList.remove('modal-aperta');
+  if (
+    !forza &&
+    modificato &&
+    !(await conferma({ titolo: 'Chiudere senza salvare?', testo: 'Le modifiche a questo evento andranno perse.', ok: 'Chiudi senza salvare', pericolo: true }))
+  )
+    return;
+  nascondiModal(modalEvento);
 }
 
-// Le regole di validazione stanno solo sul server (schema `inputEvento` in src/lib/eventi.ts):
-// qui si mostra il primo errore e si porta il cursore sul campo
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const salva = $<HTMLButtonElement>('btnSalva');
@@ -172,7 +156,6 @@ form.addEventListener('submit', async (e) => {
   setTimeout(() => location.reload(), data.warnings.length ? 2500 : 700);
 });
 
-// Sedi: un tocco compila il luogo
 modalEvento.addEventListener('click', (e) => {
   const chip = (e.target as Element).closest<HTMLElement>('[data-luogo]');
   if (!chip) return;
@@ -182,16 +165,22 @@ modalEvento.addEventListener('click', (e) => {
 
 async function eliminaEvento(row: HTMLElement) {
   const ev = JSON.parse(row.dataset.modifica!) as Evento;
-  if (!(await conferma({ titolo: `Eliminare «${ev.titolo}»?`, testo: "L'evento sparirà dal calendario del sito. L'operazione non si può annullare.", ok: 'Elimina', pericolo: true }))) return;
+  if (
+    !(await conferma({
+      titolo: `Eliminare «${ev.titolo}»?`,
+      testo: "L'evento sparirà dal calendario del sito. L'operazione non si può annullare.",
+      ok: 'Elimina',
+      pericolo: true,
+    }))
+  )
+    return;
   const { error } = await actions.eventi.elimina({ id: ev.id });
   if (error) return toast(error.message || "Errore durante l'eliminazione", 'error');
 
   toast('Evento eliminato', 'success');
   row.classList.add('in-uscita');
-  setTimeout(() => location.reload(), 700); // aggiorna conteggi e gruppi
+  setTimeout(() => location.reload(), 700);
 }
-
-// === FILTRI E RICERCA ===
 
 const cerca = document.getElementById('searchEventi') as HTMLInputElement | null;
 let filtro = 'futuri';
@@ -200,7 +189,6 @@ function aggiornaElenco() {
   const q = cerca?.value.trim().toLowerCase() ?? '';
   let trovati = 0;
   document.querySelectorAll<HTMLElement>('.ev-gruppo').forEach((gruppo) => {
-    // La ricerca guarda in tutti gli eventi, non solo nel filtro scelto
     const nelFiltro = q || filtro === 'tutti' || gruppo.dataset.gruppo === filtro;
     let visibiliGruppo = 0;
     gruppo.querySelectorAll<HTMLElement>('.ev-mese').forEach((mese) => {
@@ -233,9 +221,6 @@ function scegliFiltro(btn: HTMLElement) {
 
 cerca?.addEventListener('input', aggiornaElenco);
 
-// === LOCANDINE ===
-
-/** Imposta la locandina scelta: campo nascosto, anteprima e griglia. */
 function impostaLocandina(path: string) {
   immagineSelezionata = path;
   campi.immagine.value = path;
@@ -295,7 +280,15 @@ async function gestisciGriglia(target: Element) {
   const del = target.closest<HTMLElement>('.delete-img');
   if (del) {
     const nome = del.dataset.nome!;
-    if (!(await conferma({ titolo: 'Eliminare questa locandina?', testo: 'Il file viene cancellato definitivamente: gli eventi che la usano resteranno senza immagine.', ok: 'Elimina', pericolo: true }))) return;
+    if (
+      !(await conferma({
+        titolo: 'Eliminare questa locandina?',
+        testo: 'Il file viene cancellato definitivamente: gli eventi che la usano resteranno senza immagine.',
+        ok: 'Elimina',
+        pericolo: true,
+      }))
+    )
+      return;
     const { error } = await actions.immagini.elimina({ nome });
     if (error) return toast(error.message || 'Errore eliminazione', 'error');
     toast('Locandina eliminata', 'success');
@@ -306,7 +299,6 @@ async function gestisciGriglia(target: Element) {
   }
   const item = target.closest<HTMLElement>('.img-item');
   if (!item) return;
-  // Clic sulla locandina già scelta: la toglie
   impostaLocandina(immagineSelezionata === item.dataset.path ? '' : item.dataset.path!);
   modificato = true;
 }
@@ -337,7 +329,6 @@ async function caricaFile(files: Iterable<File>) {
   const n = data.immagini.length;
   toast(n > 1 ? `${n} locandine caricate` : 'Locandina caricata', 'success');
   immagini.unshift(...data.immagini);
-  // Un evento ha una sola locandina: si usa la prima caricata
   impostaLocandina(data.immagini[0].path);
   modificato = true;
   data.errori.forEach((err) => toast(err, 'warning'));
@@ -347,16 +338,12 @@ const fileInput = $<HTMLInputElement>('fileInput');
 const uploadZone = modalEvento.querySelector<HTMLElement>('[data-upload]')!;
 zonaCaricamento(uploadZone, fileInput, (files) => void caricaFile(files));
 
-// === TIPI EVENTO ===
-
 function apriModalTipi() {
-  modalTipi.classList.add('open');
-  document.documentElement.classList.add('modal-aperta');
+  mostraModal(modalTipi);
   renderTipi();
 }
 function chiudiModalTipi() {
-  modalTipi.classList.remove('open');
-  if (!modalEvento.classList.contains('open')) document.documentElement.classList.remove('modal-aperta');
+  nascondiModal(modalTipi);
 }
 
 function renderTipi() {
@@ -382,10 +369,6 @@ function renderTipi() {
   );
 }
 
-/**
- * Opzioni del tipo: "Nessun tipo" più i tipi esistenti. `extra`: il tipo di un
- * evento già salvato ma rimosso dalla lista, che resta selezionato così com'è.
- */
 function aggiornaSelectTipo(extra = '') {
   const tipi = extra && !tipiEvento.includes(extra) ? [...tipiEvento, extra] : tipiEvento;
   campi.tipo.hidden = !tipi.length;
@@ -413,7 +396,15 @@ $<HTMLFormElement>('formTipo').addEventListener('submit', async (e) => {
 $('tipiList').addEventListener('click', async (e) => {
   const tipo = (e.target as Element).closest<HTMLElement>('[data-tipo]')?.dataset.tipo;
   if (!tipo) return;
-  if (!(await conferma({ titolo: `Rimuovere il tipo «${tipo}»?`, testo: 'Gli eventi che lo usano lo mantengono, ma non sarà più selezionabile.', ok: 'Rimuovi', pericolo: true }))) return;
+  if (
+    !(await conferma({
+      titolo: `Rimuovere il tipo «${tipo}»?`,
+      testo: 'Gli eventi che lo usano lo mantengono, ma non sarà più selezionabile.',
+      ok: 'Rimuovi',
+      pericolo: true,
+    }))
+  )
+    return;
   const { data, error } = await actions.tipi.rimuovi({ tipo });
   if (error) return toast(error.message || 'Errore', 'error');
   tipiEvento = data.tipi;
@@ -421,8 +412,6 @@ $('tipiList').addEventListener('click', async (e) => {
   aggiornaSelectTipo();
   toast('Tipo rimosso', 'success');
 });
-
-// === EVENTI DI PAGINA (delegati) ===
 
 document.addEventListener('click', (e) => {
   const t = e.target as Element;
@@ -445,7 +434,6 @@ document.addEventListener('click', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-  // Con un popup di conferma aperto, Esc chiude solo quello
   if (e.key !== 'Escape' || document.querySelector('dialog[open]')) return;
   if (modalTipi.classList.contains('open')) chiudiModalTipi();
   else void chiudiModal();

@@ -1,4 +1,3 @@
-/** robots.txt: tutto indicizzabile tranne l'area riservata; punta alla sitemap. */
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = ({ site }) =>

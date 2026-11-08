@@ -1,6 +1,5 @@
 import { sfondo } from './images';
 
-/** Coppie già composte: desktop 16:5 e tablet 8:5, soggetto a destra. */
 const banner = {
   'chi-siamo': 'hero-pagine/chi-siamo',
   corsi: 'hero-pagine/corsi',

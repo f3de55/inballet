@@ -1,6 +1,3 @@
-/** Una serpentina: la linea attraversa i nodi di una riga da sinistra a destra, gira con un tornante tondo
- *  fuori dal contenuto, torna indietro nello spazio fra le righe e rientra a sinistra sulla riga successiva,
- *  così l'ultima tappa («oggi») è sempre in basso a destra. */
 export {};
 
 const timeline = document.querySelector<HTMLElement>('.timeline');
@@ -38,9 +35,6 @@ if (timeline) {
         fondoRiga = Math.max(fondoRiga, b.fondo);
         continue;
       }
-      // A capo come nel testo: ogni riga si legge da sinistra a destra. La linea esce a destra con un tornante
-      // tondo, torna indietro a sinistra nello spazio fra le due righe e rientra con un secondo tornante tondo.
-      // Il raggio è lo spazio libero fuori dal contenuto (al massimo GIRO_MAX), uguale sui due lati.
       const mezzo = fondoRiga + (b.y - nodo / 2 - fondoRiga) / 2;
       const libero = Math.min(window.innerWidth - area.right, area.left);
       const fuori = Math.max(12, Math.min(GIRO_MAX, libero - 8));

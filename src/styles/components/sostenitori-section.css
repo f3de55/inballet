@@ -4,10 +4,9 @@
 }
 
 .sostenitori-intro .btn-primary {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
-/* Un riquadro tondo per ogni logo, con spazio tra l'uno e l'altro */
 .sostenitori-loghi {
   list-style: none;
   display: grid;
@@ -18,7 +17,6 @@
   margin: var(--spazio-intestazione) auto 0;
 }
 
-/* Flex (non grid): così il max-height del logo si riferisce all'altezza fissa della cella */
 .sostenitori-loghi li {
   display: flex;
   min-height: 0;
@@ -36,7 +34,7 @@
   height: 100%;
   min-width: 0;
   min-height: 0;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .sostenitori-loghi img {
@@ -50,7 +48,7 @@
 
 @media (max-width: 900px) {
   .sostenitori-loghi a {
-    padding: .75rem;
+    padding: 0.75rem;
   }
 }
 
@@ -61,6 +59,6 @@
   }
 
   .sostenitori-loghi a {
-    padding: .5rem .75rem;
+    padding: 0.5rem 0.75rem;
   }
 }

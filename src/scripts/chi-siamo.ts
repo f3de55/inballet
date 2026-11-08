@@ -1,6 +1,3 @@
-/* Chi Siamo: contatori animati */
-
-// === CONTATORI ===
 function animateCounters() {
   document.querySelectorAll<HTMLElement>('.numero-value').forEach((counter) => {
     const target = Number(counter.dataset.target);

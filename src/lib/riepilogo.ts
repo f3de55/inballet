@@ -1,8 +1,3 @@
-/**
- * Riepilogo in Markdown dei fatti chiave della scuola, generato dai dati
- * ufficiali (src/data/scuola.ts e collection dei corsi). Usato da /llms.txt
- * (con URL assoluti) e come base di conoscenza del chatbot (con percorsi).
- */
 import { getCollection } from 'astro:content';
 import { ANNI_ATTIVITA, categorieCorsi, faq, FONDAZIONE, iscrizioni, orari, scuola, sedi } from '../data/scuola';
 import type { Documento } from './documenti';
@@ -10,14 +5,11 @@ import type { Documento } from './documenti';
 const strip = (html: string) => html.replace(/<[^>]+>/g, '');
 
 interface Opzioni {
-  /** Indirizzo di una pagina: assoluto per llms.txt, percorso per il chatbot. */
   url: (path: string) => string;
-  /** PDF di /documenti; senza, la sezione iscrizioni non li elenca. */
   documenti?: Documento[];
 }
 
 export async function riepilogoScuola({ url, documenti = [] }: Opzioni): Promise<string> {
-  // Età e frequenza di ogni corso, dalla collection delle pagine corso
   const corsi = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.data]));
   const dettagli = (path: string) => {
     const c = corsi.get(path);

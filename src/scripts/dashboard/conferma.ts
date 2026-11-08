@@ -1,9 +1,7 @@
-/** Popup di conferma con lo stile della dashboard. Risolve true solo con il pulsante di conferma. */
 interface Opzioni {
   titolo: string;
   testo: string;
   ok?: string;
-  /** Azione distruttiva: pulsante rosso, focus su Annulla */
   pericolo?: boolean;
 }
 

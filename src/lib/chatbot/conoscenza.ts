@@ -1,20 +1,3 @@
-/**
- * Istruzioni e base di conoscenza del modello. Il modello non viene
- * "allenato": a ogni domanda riceve questo testo, ricomposto in automatico
- * dalle fonti del sito, e risponde leggendolo. Niente RAG né database
- * vettoriale: tutto il sito sta nel prompt e i fornitori lo tengono in cache,
- * quindi dalla seconda domanda costa una frazione.
- *
- * Fonti:
- * - dati ufficiali (src/lib/riepilogo.ts: contatti, sedi, orari, quota, FAQ…)
- * - testi di TUTTE le pagine del sito, letti dalle pagine vere (pagine.ts)
- * - data di oggi, documenti ed eventi salvati dalla dashboard
- *
- * Il prompt di sistema ha due parti, in quest'ordine:
- * - fissa: istruzioni, dati ufficiali, testi delle pagine (cambiano solo con un deploy)
- * - variabile: data, documenti ed eventi (cambiano dalla dashboard)
- * così una modifica alla parte variabile non invalida la cache della parte fissa.
- */
 import { createHash } from 'node:crypto';
 import { leggiDocumenti } from '../documenti';
 import { ETICHETTE_STATO, prossimiEventi, quando, testoDescrizione, urlEvento } from '../eventi';
@@ -23,7 +6,6 @@ import { mbSlice } from '../text';
 import { scuola } from '../../data/scuola';
 import { leggiSito, testoPagine, type Pagina } from './pagine';
 
-/** Indicatore per la verifica "il modello non deve ripetere le istruzioni". */
 const SEGNO_ISTRUZIONI = 'ETOILE-ISTRUZIONI';
 
 const ISTRUZIONI = `[${SEGNO_ISTRUZIONI}]
@@ -47,7 +29,6 @@ REGOLE
 const dataLunga = new Intl.DateTimeFormat('it-IT', { timeZone: 'Europe/Rome', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
 async function parteVariabile(): Promise<string> {
-  // Gli stessi eventi del calendario del sito (anche quelli demo, finché sono pubblicati)
   const [{ documenti }, eventi] = await Promise.all([leggiDocumenti(), prossimiEventi(30)]);
   const campo = (etichetta: string, valore?: string) => (valore ? `; ${etichetta}: ${valore}` : '');
   return [
@@ -65,17 +46,10 @@ async function parteVariabile(): Promise<string> {
   ].join('\n\n');
 }
 
-// === TESTI DELLE PAGINE ===
-
-/** In sviluppo le pagine cambiano spesso; in produzione solo a ogni deploy. */
 const DURATA_PAGINE = import.meta.env.DEV ? 60_000 : 30 * 60_000;
 let pagine: { elenco: Pagina[]; letto: number } | null = null;
 let lettura: Promise<Pagina[]> | null = null;
 
-/**
- * Il server visita sé stesso: prima dalla porta locale (veloce, senza passare
- * da internet), poi dall'indirizzo della richiesta se la porta non risponde.
- */
 async function leggiDaServer(origineRichiesta: string): Promise<Pagina[]> {
   const indirizzi = [...(process.env.PORT ? [`http://localhost:${process.env.PORT}`] : []), origineRichiesta];
   for (const indirizzo of new Set(indirizzi)) {
@@ -96,40 +70,33 @@ function rileggi(origine: string): Promise<Pagina[]> {
   return lettura;
 }
 
-/** Testi delle pagine: la prima volta si aspetta la lettura, poi si rinfrescano in background. */
 async function testiDelSito(origine: string): Promise<Pagina[]> {
   if (!pagine) return rileggi(origine);
   if (Date.now() - pagine.letto > DURATA_PAGINE) void rileggi(origine);
   return pagine.elenco;
 }
 
-/** Pagine lette, per la dashboard. */
-export const pagineLette = () => (pagine ? { numero: pagine.elenco.length, letto: pagine.letto, caratteri: pagine.elenco.reduce((s, p) => s + p.testo.length, 0) } : null);
-
-// === PROMPT DI SISTEMA ===
+export const pagineLette = () =>
+  pagine ? { numero: pagine.elenco.length, letto: pagine.letto, caratteri: pagine.elenco.reduce((s, p) => s + p.testo.length, 0) } : null;
 
 export interface Sistema {
-  /** Istruzioni + dati ufficiali + testi di tutte le pagine */
   fisso: string;
   variabile: string;
-  /** Impronta dei contenuti: cambia quando cambia la conoscenza (invalida la cache risposte) */
   versione: string;
 }
 
 const DURATA = 5 * 60 * 1000;
 let memo: { sistema: Sistema; creato: number; pagine: Pagina[] } | null = null;
 
-/**
- * Prompt di sistema, ricostruito al massimo ogni 5 minuti (documenti ed eventi)
- * o quando cambiano i testi delle pagine. `origine`: indirizzo del sito dalla richiesta.
- */
 export async function sistema(origine: string): Promise<Sistema> {
   const elenco = await testiDelSito(origine);
   if (memo && memo.pagine === elenco && Date.now() - memo.creato < DURATA) return memo.sistema;
   const [riepilogo, variabile] = await Promise.all([riepilogoScuola({ url: (p) => p }), parteVariabile()]);
   const fisso = `${ISTRUZIONI}\n\nBASE DI CONOSCENZA\n\n# DATI UFFICIALI\n\n${riepilogo}\n\n# TESTI DEL SITO\n\n${testoPagine(elenco)}`;
-  // La data entra nella versione: la cache risposte si rinnova ogni giorno
-  const versione = createHash('sha256').update(fisso + variabile).digest('hex').slice(0, 12);
+  const versione = createHash('sha256')
+    .update(fisso + variabile)
+    .digest('hex')
+    .slice(0, 12);
   memo = { sistema: { fisso, variabile, versione }, creato: Date.now(), pagine: elenco };
   return memo.sistema;
 }

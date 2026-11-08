@@ -1,8 +1,3 @@
-/**
- * Dati strutturati Schema.org (JSON-LD) generati dai dati ufficiali della
- * scuola: una DanceSchool principale (sede di Lainate) con la sede di Rho come
- * reparto, catalogo corsi e FAQ.
- */
 import { categorieCorsi, faqHome, FONDAZIONE, orari, scuola, sedi, type Sede } from '../data/scuola';
 import { stripTags } from './text';
 
@@ -25,7 +20,6 @@ const orariSchema = orari.map((o) => ({
   closes: o.chiude,
 }));
 
-/** JSON-LD di una pagina corso: il corso, tenuto in sede a Lainate e Rho dalla scuola. */
 export function schemaCorso(corso: { titolo: string; description: string; eta: string; frequenza: string; impara: string[] }, url: string) {
   return {
     '@context': 'https://schema.org',
@@ -47,7 +41,6 @@ export function schemaCorso(corso: { titolo: string; description: string; eta: s
   };
 }
 
-/** Grafo JSON-LD della homepage. */
 export function schemaHome(immagine: string) {
   const [principale, ...altre] = sedi;
   return {
@@ -60,8 +53,7 @@ export function schemaHome(immagine: string) {
         legalName: scuola.ragioneSociale,
         taxID: scuola.codiceFiscale,
         alternateName: scuola.nomiAlternativi,
-        description:
-          `Scuola di danza multidisciplinare a Lainate e Rho (MI), fondata nel ${FONDAZIONE} da ${scuola.fondatrice}: danza classica, modern, contemporanea, hip-hop, breaking, yoga e pilates per bambini dai 3 anni, ragazzi e adulti. Classi integrate, progetto NoiConVoi per persone con disabilità ed ente formativo CSEN e CONI per insegnanti di danza.`,
+        description: `Scuola di danza multidisciplinare a Lainate e Rho (MI), fondata nel ${FONDAZIONE} da ${scuola.fondatrice}: danza classica, modern, contemporanea, hip-hop, breaking, yoga e pilates per bambini dai 3 anni, ragazzi e adulti. Classi integrate, progetto NoiConVoi per persone con disabilità ed ente formativo CSEN e CONI per insegnanti di danza.`,
         url: `${site}/`,
         logo: `${site}/assets/images/logo.png`,
         image: immagine,

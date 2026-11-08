@@ -54,10 +54,21 @@
 }
 
 /* ---------- Marchio ---------- */
+/* Logo, ente formativo e social: blocchi senza spazio di riga, distanziati dallo stesso valore */
+.footer-brand {
+  --footer-brand-gap: 1.25rem;
+}
+
+.footer-logo {
+  display: block;
+  width: fit-content;
+}
+
 .footer-brand img {
+  display: block;
   width: 120px;
   height: auto;
-  margin-bottom: 1.25rem;
+  margin: 0;
 }
 
 .footer-brand p {

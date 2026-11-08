@@ -32,7 +32,7 @@ export interface PaginaDocumenti {
 export const documentiPredefiniti: PaginaDocumenti = {
   hero: {
     titolo: 'Iscrizioni e documenti',
-    testo: "Modulo di iscrizione, autocertificazione e scadenze per l'anno **2026/2027**.",
+    testo: "Modulo di iscrizione, autocertificazione e scadenze **2026/2027**: tutto ciò che serve alle famiglie per iscriversi.",
   },
   sezione: {
     eyebrow: 'Iscrizioni 2026/2027',

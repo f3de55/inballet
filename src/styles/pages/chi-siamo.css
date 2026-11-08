@@ -149,10 +149,6 @@
     padding-bottom: 0;
   }
 
-  .timeline .voce:nth-of-type(3n + 2) {
-    margin-top: 0;
-  }
-
   .timeline .voce::before {
     top: .5rem;
   }

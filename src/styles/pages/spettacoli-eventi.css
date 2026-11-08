@@ -867,7 +867,6 @@ html:has(dialog[open]) {
 
   .evento-dettagli div {
     grid-template-columns: 5.5rem minmax(0, 1fr);
-    gap: .75rem;
   }
 
   .evento-azioni {

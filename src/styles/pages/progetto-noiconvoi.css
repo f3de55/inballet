@@ -19,7 +19,7 @@
 }
 
 .info-lista {
-  --gap-colonne: 2.5rem;
+  --gap-colonne: 4rem;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--gap-colonne);
 }
@@ -50,7 +50,7 @@
   /* Informazioni: griglia 2x2 */
   .info-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 1.5rem;
+    row-gap: 2rem;
   }
 
   .info-lista .voce:nth-child(even)::after {
@@ -58,7 +58,7 @@
   }
 
   .info-lista .voce:nth-child(n + 3) {
-    padding-top: 1.5rem;
+    padding-top: 2rem;
     background: var(--linea-alto);
   }
 }
@@ -79,7 +79,7 @@
   }
 
   .info-lista .voce:nth-child(n + 2) {
-    padding-top: 1.5rem;
+    padding-top: 2rem;
     background: var(--linea-alto);
   }
 }

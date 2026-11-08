@@ -170,7 +170,7 @@
 }
 
 .agenda > li:last-child {
-  border-bottom: none;
+  background: none;
 }
 
 .agenda-voce {

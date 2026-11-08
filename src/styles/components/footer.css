@@ -289,8 +289,7 @@
 
 .footer-credits a {
   color: inherit;
-  text-decoration: underline;
-  text-underline-offset: .2em;
+  text-decoration: none;
   transition: color var(--transition-base);
 }
 

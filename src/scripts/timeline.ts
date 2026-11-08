@@ -23,31 +23,38 @@ if (timeline) {
     const nodo = parseFloat(getComputedStyle(timeline).getPropertyValue('--nodo'));
     const punti = [...timeline.querySelectorAll<HTMLElement>(':scope > .voce')].map((voce) => {
       const box = voce.getBoundingClientRect();
-      return { x: box.left - area.left + nodo / 2, y: box.top - area.top + nodo / 2 };
+      return { x: box.left - area.left + nodo / 2, y: box.top - area.top + nodo / 2, fondo: box.bottom - area.top };
     });
     if (punti.length < 2) return;
     svg.setAttribute('viewBox', `0 0 ${area.width} ${area.height}`);
     let d = `M ${punti[0].x} ${punti[0].y}`;
+    let fondoRiga = punti[0].fondo;
     for (let i = 1; i < punti.length; i++) {
       const a = punti[i - 1];
       const b = punti[i];
       if (Math.abs(b.y - a.y) <= TOLLERANZA) {
         d += ` L ${b.x} ${b.y}`;
+        fondoRiga = Math.max(fondoRiga, b.fondo);
         continue;
       }
-      // Tornante: due quarti di cerchio e un tratto dritto, sul lato in cui la riga è finita.
-      // Il raggio è lo spazio libero fuori dal contenuto (al massimo GIRO_MAX), uguale su entrambi i lati.
-      const destra = a.x > area.width / 2;
-      const libero = destra ? window.innerWidth - area.right : area.left;
-      const r = Math.max(12, Math.min(GIRO_MAX, libero - 8, (b.y - a.y) / 2));
+      // A capo come nel testo: ogni riga si legge da sinistra a destra. La linea esce a destra con un tornante
+      // tondo, torna indietro a sinistra nello spazio fra le due righe e rientra con un secondo tornante tondo.
+      // Il raggio è lo spazio libero fuori dal contenuto (al massimo GIRO_MAX), uguale sui due lati.
+      const mezzo = fondoRiga + (b.y - nodo / 2 - fondoRiga) / 2;
+      const libero = Math.min(window.innerWidth - area.right, area.left);
+      const r = Math.max(12, Math.min(GIRO_MAX, libero - 8, (b.y - mezzo) / 2));
       const k = r * 0.5523;
-      const s = destra ? 1 : -1;
-      const x0 = destra ? area.width : 0;
-      d += ` L ${x0} ${a.y}`;
-      d += ` C ${x0 + s * k} ${a.y} ${x0 + s * r} ${a.y + r - k} ${x0 + s * r} ${a.y + r}`;
-      d += ` L ${x0 + s * r} ${b.y - r}`;
-      d += ` C ${x0 + s * r} ${b.y - r + k} ${x0 + s * k} ${b.y} ${x0} ${b.y}`;
+      const W = area.width;
+      d += ` L ${W} ${a.y}`;
+      d += ` C ${W + k} ${a.y} ${W + r} ${a.y + r - k} ${W + r} ${a.y + r}`;
+      d += ` L ${W + r} ${mezzo - r}`;
+      d += ` C ${W + r} ${mezzo - r + k} ${W + k} ${mezzo} ${W} ${mezzo}`;
+      d += ` L 0 ${mezzo}`;
+      d += ` C ${-k} ${mezzo} ${-r} ${mezzo + r - k} ${-r} ${mezzo + r}`;
+      d += ` L ${-r} ${b.y - r}`;
+      d += ` C ${-r} ${b.y - r + k} ${-k} ${b.y} 0 ${b.y}`;
       d += ` L ${b.x} ${b.y}`;
+      fondoRiga = b.fondo;
     }
     path.setAttribute('d', d);
   };

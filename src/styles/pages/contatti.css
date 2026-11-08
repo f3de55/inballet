@@ -131,18 +131,10 @@
   margin-top: .35rem;
 }
 
-/* Ondina doppia al posto dei filetti: separa i gruppi (tra le due sedi, prima dei social) senza linee piene. */
+/* Ondina doppia (components/ondina.css) al posto dei filetti, centrata: separa i gruppi (tra le due sedi, prima dei social). */
 .info-riga.sede + .info-riga.sede::before,
 .info-social::before {
-  content: '';
-  display: block;
-  flex-shrink: 0;
-  width: var(--ondina-w);
-  height: var(--ondina-h);
   margin-inline: auto;
-  background: rgb(var(--blu-rgb) / .4);
-  -webkit-mask: var(--ondina-svg) 50% 50% / 24px var(--ondina-h) repeat-x;
-  mask: var(--ondina-svg) 50% 50% / 24px var(--ondina-h) repeat-x;
 }
 
 /* Le due sedi sono gruppi distinti, con spazio uguale sopra e sotto l'ondina. */

@@ -17,11 +17,14 @@
   mask: var(--ondina-svg) 50% 50% / var(--ondina-periodo) var(--ondina-h) repeat-x;
 }
 
-/* In cima a una voce: a sinistra, azzurro pieno come il filetto che sostituisce, fuori dalla griglia delle righe. */
+/* Sotto il titolo di una voce (riga 3 della griglia, tra titolo e testo): a sinistra, azzurro pieno e un po' più
+   grande (≈1.4×, sempre 3 periodi esatti). */
 .voce::before {
-  position: absolute;
-  top: 0;
-  left: 0;
+  --ondina-w: 102px;
+  --ondina-h: 17px;
+  --ondina-periodo: 34px;
+  grid-row: 3;
+  margin-bottom: .75rem;
   background: var(--primary-blue);
   -webkit-mask-position: 0 50%;
   mask-position: 0 50%;

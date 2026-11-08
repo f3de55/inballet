@@ -131,11 +131,27 @@
   margin-top: .35rem;
 }
 
-/* Le due sedi sono gruppi distinti, separati da un filetto con spazio sui due lati. */
+/* Ondina doppia al posto dei filetti: separa i gruppi (tra le due sedi, prima dei social) senza linee piene. */
+.info-riga.sede + .info-riga.sede::before,
+.info-social::before {
+  content: '';
+  display: block;
+  flex-shrink: 0;
+  width: var(--ondina-w);
+  height: var(--ondina-h);
+  margin-inline: auto;
+  background: rgb(var(--blu-rgb) / .4);
+  -webkit-mask: var(--ondina-svg) 50% 50% / 24px var(--ondina-h) repeat-x;
+  mask: var(--ondina-svg) 50% 50% / 24px var(--ondina-h) repeat-x;
+}
+
+/* Le due sedi sono gruppi distinti, con spazio uguale sopra e sotto l'ondina. */
 .info-riga.sede + .info-riga.sede {
   margin-top: 1.25rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid rgb(var(--blu-rgb) / .4);
+}
+
+.info-riga.sede + .info-riga.sede::before {
+  margin-bottom: 1.25rem;
 }
 
 .info-riga:first-child {

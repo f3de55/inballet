@@ -50,9 +50,6 @@ a.riga {
 }
 
 a.riga > .riga-nome {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: .2em;
   transition: color var(--transition-base);
 }
 

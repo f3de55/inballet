@@ -1,5 +1,6 @@
-/** Una serpentina: la linea attraversa i nodi di una riga, gira con un tornante tondo fuori dal contenuto e
- *  torna indietro sulla riga successiva (le righe pari sono disposte da destra a sinistra, vedi chi-siamo.css). */
+/** Una serpentina: la linea attraversa i nodi di una riga da sinistra a destra, gira con un tornante tondo
+ *  fuori dal contenuto, torna indietro nello spazio fra le righe e rientra a sinistra sulla riga successiva,
+ *  così l'ultima tappa («oggi») è sempre in basso a destra. */
 export {};
 
 const timeline = document.querySelector<HTMLElement>('.timeline');

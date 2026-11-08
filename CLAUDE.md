@@ -30,7 +30,7 @@ Every new or edited line follows these rules; `npm run verifica:stile`, `npm run
 
 ## Architecture
 
-**Astro 7** with hybrid rendering. Default output is `static` (prerendered HTML), but pages with `export const prerender = false` are SSR. Currently SSR: `/login`, `/dashboard`, `/documenti`, `/spettacoli-eventi` (+ `/spettacoli-eventi/<slug>/calendario.ics`), and the image asset route.
+**Astro 7** with hybrid rendering. Default output is `static` (prerendered HTML), but pages with `export const prerender = false` are SSR. Currently SSR: `/login`, `/dashboard`, `/robots.txt`, `/llms.txt`, `/documenti`, `/spettacoli-eventi` (+ `/spettacoli-eventi/<slug>/calendario.ics`), and the image asset route.
 
 ### Request flow
 
@@ -196,7 +196,9 @@ docker build -t inballet-site . && docker rm -f inballet-web && docker run -d --
 - **Password rejected**: check `.env` — no quotes around `DASHBOARD_PASSWORD`
 
 ## Deploy check
-Railway builds on every push to `main`. To see which commit is live, compare `curl -sI https://inballet-production.up.railway.app/ | grep -i last-modified` (UTC) with `git log -1 --format=%cd --date=format:%H:%M`: if the page is older than the last commit, that build failed or is still running (check the Railway deploy log).
+Live site: https://inballet.up.railway.app (Railway). The official domain in `site` (astro.config.mjs) is https://www.inballet.it, still serving the old site: canonical URLs, sitemap, schema.org and llms.txt already point to it, and `/robots.txt` (SSR) disallows everything on any other host, so the Railway address is not indexed. When the domain points to Railway, nothing needs to change.
+
+Railway builds on every push to `main`. To see which commit is live, compare `curl -sI https://inballet.up.railway.app/ | grep -i last-modified` (UTC) with `git log -1 --format=%cd --date=format:%H:%M`: if the page is older than the last commit, that build failed or is still running (check the Railway deploy log).
 
 ## Type scale and single style system
 One system, all in `src/styles/` (tokens in `base/variables.css`, headings and text in `base/typography.css`); pages and components only lay things out. Run `npm run verifica:stile` before pushing: it fails on a `<style>` block in an `.astro` file, a literal `font-size` / `font-weight`, a hand-written colour, an inline style with real properties, or a heading restyled outside `base/typography.css`.

@@ -1,16 +1,11 @@
 import type { APIRoute } from 'astro';
 
-export const GET: APIRoute = ({ site }) =>
-  new Response(
-    [
-      'User-agent: *',
-      'Allow: /',
-      'Disallow: /login',
-      'Disallow: /dashboard',
-      'Disallow: /_actions/',
-      '',
-      `Sitemap: ${new URL('/sitemap-index.xml', site)}`,
-      '',
-    ].join('\n'),
-    { headers: { 'Content-Type': 'text/plain; charset=utf-8' } },
-  );
+export const prerender = false;
+
+const ufficiale = ['User-agent: *', 'Allow: /', 'Disallow: /login', 'Disallow: /dashboard', 'Disallow: /_actions/'];
+
+export const GET: APIRoute = ({ site, url }) => {
+  const dominio = url.hostname.replace(/^www\./, '') === site!.hostname.replace(/^www\./, '');
+  const righe = dominio ? [...ufficiale, '', `Sitemap: ${new URL('/sitemap-index.xml', site)}`] : ['User-agent: *', 'Disallow: /'];
+  return new Response(righe.join('\n') + '\n', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+};

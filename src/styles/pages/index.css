@@ -755,7 +755,7 @@ davvero andando: niente riquadro nero mentre carica */
   .recensioni-sintesi {
     order: 2;
     padding-top: 0;
-    border-top: none;
+    background: none;
   }
 
   .recensioni-intro {

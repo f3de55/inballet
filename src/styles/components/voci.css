@@ -1,8 +1,8 @@
-/* Voci: punti di un elenco in colonne, con filetto in alto (niente card) */
+/* Voci: punti di un elenco in colonne, con l'ondina doppia in alto (components/ondina.css), niente card */
 .voce {
+  position: relative;
   text-align: left;
-  padding-top: 1.75rem;
-  border-top: 2px solid var(--primary-blue);
+  padding-top: calc(var(--ondina-h) + 1.25rem);
 }
 
 .voce-icona {

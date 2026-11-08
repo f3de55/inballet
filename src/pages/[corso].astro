@@ -62,7 +62,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         <div class="chisiamo-hero-glass">
             <Breadcrumb />
             <h1 class="chisiamo-hero-title">{data.titolo}</h1>
-            <p class="hero-lead">{data.tagline}</p>
+            <p class="hero-lead" set:html={data.tagline} />
         </div>
     </section>
 

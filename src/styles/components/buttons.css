@@ -79,8 +79,7 @@
   }
 }
 
-.btn-primary.btn-piccolo,
-.btn-secondary.btn-piccolo {
+.btn-primary.btn-piccolo {
   --btn-pad: 0.55rem;
   padding: calc(round(nearest, var(--btn-pad), 1px) + var(--btn-sposta)) 1.25rem calc(round(nearest, var(--btn-pad), 1px) - var(--btn-sposta));
   gap: 0.45rem;

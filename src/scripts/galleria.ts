@@ -15,7 +15,7 @@ if (track && dialog && foto && didascalia && contatore) {
     index = (i + n) % n;
     const { src, alt } = foto10[index];
     foto.classList.add('in-caricamento');
-    foto.onload = () => foto.classList.remove('in-caricamento');
+    foto.addEventListener('load', () => foto.classList.remove('in-caricamento'), { once: true });
     foto.src = src;
     foto.alt = alt;
     didascalia.textContent = alt;

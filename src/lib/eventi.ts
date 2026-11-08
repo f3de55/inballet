@@ -121,26 +121,24 @@ const usaSlug = (slug: string, base: string) => slug === base || new RegExp(`^${
 const str = (v: unknown) => (typeof v === 'string' ? v : '');
 
 function normalizza(raw: Record<string, unknown>): Evento {
-  const vecchio = !raw.stato;
-  const t = (v: unknown) => (vecchio ? decodeHtml(str(v)) : str(v));
   const stato = STATI.includes(raw.stato as Stato) ? (raw.stato as Stato) : 'pubblicato';
   const alias = Array.isArray(raw.alias) ? raw.alias.filter((a): a is string => typeof a === 'string') : [];
   return {
     id: str(raw.id),
     slug: str(raw.slug),
     ...(alias.length && { alias }),
-    titolo: t(raw.titolo),
+    titolo: str(raw.titolo),
     data: str(raw.data),
     ora: ora2(str(raw.ora)),
     dataFine: str(raw.dataFine),
     oraFine: ora2(str(raw.oraFine)),
     stato,
-    tipo: t(raw.tipo),
-    luogo: t(raw.luogo),
+    tipo: str(raw.tipo),
+    luogo: str(raw.luogo),
     descrizione: pulisciDescrizione(str(raw.descrizione)),
-    immagine: t(raw.immagine),
-    destinatari: t(raw.destinatari),
-    costo: t(raw.costo),
+    immagine: str(raw.immagine),
+    destinatari: str(raw.destinatari),
+    costo: str(raw.costo),
     prenotazione: str(raw.prenotazione),
     creato: str(raw.creato),
     modificato: str(raw.modificato),

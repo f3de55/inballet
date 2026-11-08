@@ -24,18 +24,18 @@
     "verifica:stile": "node scripts/verifica-stile.mjs"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^1.1.0",
-    "@astrojs/node": "^11.1.7",
+    "@anthropic-ai/sdk": "^1.6.0",
+    "@astrojs/node": "^11.1.11",
     "astro": "^7.3.8",
     "sharp": "^0.35.5"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.10",
+    "@astrojs/check": "^0.9.12",
     "@astrojs/sitemap": "^3.7.4",
-    "@fortawesome/fontawesome-free": "^6.0.0",
-    "@types/google.maps": "^3.66.6",
-    "@types/node": "^22.20.5",
-    "chart.js": "^4.5.1",
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "@types/google.maps": "^3.66.10",
+    "@types/node": "^24.19.2",
+    "chart.js": "^4.6.1",
     "prettier": "^3.9.10",
     "subset-font": "^2.9.0",
     "typescript": "^6.0.3"

@@ -1,6 +1,6 @@
 import { ActionError, defineAction, type ActionAPIContext } from 'astro:actions';
 import { z } from 'astro/zod';
-import { isLoggedIn, login, logout, passwordValida } from '../lib/auth';
+import { isLoggedIn, login, logout, verificaAccesso } from '../lib/auth';
 import { prepara, rispondi } from '../lib/chatbot';
 import { ipVisitatore } from '../lib/chatbot/protezioni';
 import { verifica } from '../lib/chatbot/verifica';
@@ -221,7 +221,9 @@ export const server = {
       accept: 'form',
       input: z.object({ password: z.string().max(200) }),
       handler: async ({ password }, context) => {
-        if (!passwordValida(password)) throw new ActionError({ code: 'UNAUTHORIZED', message: 'Password non corretta' });
+        const esito = verificaAccesso(password, ipVisitatore(context.request.headers, context.clientAddress));
+        if (esito === 'bloccato') throw new ActionError({ code: 'TOO_MANY_REQUESTS', message: 'Troppi tentativi: riprova tra 15 minuti' });
+        if (esito === 'errata') throw new ActionError({ code: 'UNAUTHORIZED', message: 'Password non corretta' });
         await login(context.session);
       },
     }),

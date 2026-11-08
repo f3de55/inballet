@@ -35,12 +35,10 @@ Every new or edited line follows these rules; `npm run verifica:stile`, `npm run
 ### Request flow
 
 ```
-Browser → middleware.ts → Astro page / Action
+Browser → Astro page / Action
 ```
 
-`src/middleware.ts` handles two things:
-1. Legacy PHP URL redirects (`/chi-siamo.php` → `/chi-siamo`, 301)
-2. CSRF protection: POST to `/_actions/*` must have matching `Origin` header
+Old site URLs (`/danza_classica_accademica.html` …) are redirected (301) by `src/pages/404.astro` (rendered on demand): names that changed are mapped, the others become the same name with hyphens. CSRF: Astro's built-in origin check (`security.checkOrigin`, on by default) rejects cross-site form posts; JSON Action calls are same-origin only (no CORS headers).
 
 ### Backend: Astro Actions
 
@@ -71,7 +69,7 @@ In Docker, this directory is a named volume (`inballet-data`) so data survives r
 
 - Model: `data`/`ora` start, optional `dataFine`/`oraFine`, `stato` (`pubblicato`, `bozza` = hidden from the site, `annullato`, `esaurito`), `prenotazione` link, `slug` (+ `alias` of old slugs).
 - No per-event pages on purpose: details open in a modal on `/spettacoli-eventi` (SSR list + `scripts/calendario.ts`). `?evento=<slug>` (or an old slug / the id) opens the modal and sets og:title/og:image to that event, so shared links preview the poster. The page also carries schema.org/Event JSON-LD for upcoming non-demo events (`datiStrutturati()`).
-- Text fields are stored as plain text and escaped when rendered. Legacy PHP entries (no `stato`, HTML-escaped text) are converted on read and persisted at the next write.
+- Text fields are stored as plain text and escaped when rendered.
 - One rule for "past" everywhere (site, banner, dashboard, chatbot): `passato()` = the end (`dataFine`/`oraFine`, default 23:59 Rome time) is over.
 - Removing a type keeps it on the events that use it; deleting a poster clears it from the events that use it.
 

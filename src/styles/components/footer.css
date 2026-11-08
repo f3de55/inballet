@@ -179,19 +179,6 @@
   background: rgb(var(--blu-rgb) / 0.45);
 }
 
-.footer-titolo a {
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  color: inherit;
-  text-decoration: none;
-}
-
-.footer-titolo a:hover {
-  color: var(--white);
-}
-
 @media (min-width: 701px) {
   .footer-col:not(.footer-contatti) ul a {
     max-inline-size: 8em;

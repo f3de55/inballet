@@ -51,6 +51,10 @@ summary:focus-visible,
   outline-offset: 3px;
 }
 
+main[tabindex]:focus-visible {
+  outline: none;
+}
+
 .main-header :focus-visible,
 .mobile-menu :focus-visible,
 .footer :focus-visible,

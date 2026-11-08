@@ -30,7 +30,6 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
   const controlla = () => foto.forEach((img) => img.complete && img.naturalWidth === 0 && img.src && ricarica(img));
   document.addEventListener('visibilitychange', () => !document.hidden && controlla());
   window.addEventListener('pageshow', controlla);
-  setInterval(controlla, 30000);
 
   if (ridotto.matches) return;
 

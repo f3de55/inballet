@@ -30,10 +30,6 @@
   margin: 0;
 }
 
-.sezione-scura .voce-anno {
-  color: var(--primary-blue);
-}
-
 .voce > .voce-icona,
 .voce > .voce-anno {
   grid-row: 1;

@@ -16,9 +16,7 @@ interface Props {
   ogImage?: string;
   ogImageAlt?: string;
   tipo?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage';
-  skipLinkId?: string;
   indicizza?: boolean;
-  mainFocusable?: boolean;
 }
 
 const {
@@ -29,9 +27,7 @@ const {
   ogImage,
   ogImageAlt = 'Allievi di InBallet in sala durante una lezione di danza',
   tipo = 'WebPage',
-  skipLinkId,
   indicizza = true,
-  mainFocusable = true,
 } = Astro.props;
 
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(^|\/)index$/, '/').replace(/(.)\/$/, '$1');
@@ -85,7 +81,7 @@ const pagina = {
     <slot name="head" />
 </head>
 <body>
-    <a href="#main-content" class="skip-link" id={skipLinkId}>Salta al contenuto principale</a>
+    <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
     <Banner server:defer />
 
@@ -93,7 +89,7 @@ const pagina = {
         <Navbar />
     </header>
 
-    <main id="main-content" tabindex={mainFocusable ? '-1' : undefined}>
+    <main id="main-content">
         <slot />
     </main>
 

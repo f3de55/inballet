@@ -65,23 +65,21 @@ export async function ultimeConversazioni(limite = 30): Promise<Conversazione[]>
 export async function eliminaConversazioniVecchie(giorni = GIORNI_CONSERVAZIONE): Promise<number> {
   const limite = Date.now() - giorni * 86400000;
   const nomi = await readdir(paths.conversazioni).catch(() => [] as string[]);
-  let eliminate = 0;
-  for (const n of nomi) {
-    const p = path.join(paths.conversazioni, n);
-    const vecchia = await stat(p).then(
-      (s) => s.mtimeMs < limite,
-      () => false,
-    );
-    if (
-      vecchia &&
-      (await unlink(p).then(
-        () => true,
-        () => false,
-      ))
-    )
-      eliminate++;
-  }
-  return eliminate;
+  const eliminate = await Promise.all(
+    nomi.map(async (n) => {
+      const p = path.join(paths.conversazioni, n);
+      const s = await stat(p).catch(() => null);
+      return (
+        !!s &&
+        s.mtimeMs < limite &&
+        (await unlink(p).then(
+          () => true,
+          () => false,
+        ))
+      );
+    }),
+  );
+  return eliminate.filter(Boolean).length;
 }
 
 export async function eliminaTutteConversazioni(): Promise<void> {

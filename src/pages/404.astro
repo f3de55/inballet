@@ -5,6 +5,23 @@ import SezioneElenco from '../components/SezioneElenco.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import { menu } from '../data/navigazione';
 
+export const prerender = false;
+
+const vecchie: Record<string, string> = {
+  index: '/',
+  avviamento_alla_danza: '/avviamento-danza',
+  educazione_alla_danza: '/educazione-danza',
+  danza_classica_accademica: '/danza-classica',
+  danza_contemporanea_adulti: '/contemporanea-adulti',
+  classi_multidisciplinari_integrate: '/classi-integrate',
+  sostenitori_progetti_sociali: '/sostenitori',
+  corso_di_formazione_per_insegnanti_di_danza: '/formazione-insegnanti',
+  spettacoli_ed_eventi: '/spettacoli-eventi',
+  collaborazioni_con_scuole: '/collaborazioni-scuole',
+};
+const vecchia = /^\/([\w-]+)\.html$/.exec(Astro.url.pathname)?.[1].toLowerCase();
+if (vecchia) return Astro.redirect(`${vecchie[vecchia] ?? `/${vecchia.replaceAll('_', '-')}`}${Astro.url.search}`, 301);
+
 const hero = await heroPagina('corsi');
 const pagine = [
   { nome: 'Home', href: '/' },

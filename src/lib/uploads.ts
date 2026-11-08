@@ -9,7 +9,6 @@ export const PUBLIC_PREFIX = 'assets/images/eventi/';
 const MAX_SIZE = 20 * 1024 * 1024;
 const LATO = 1600;
 const LATO_MINI = 480;
-const PESO_MAX = 800 * 1024;
 
 export const MIME: Record<string, string> = {
   jpg: 'image/jpeg',
@@ -74,37 +73,9 @@ export async function creaMini(nome: string): Promise<void> {
   }
 }
 
-let preparazione: Promise<void> | null = null;
-function preparaEsistenti(files: string[]): Promise<void> {
-  preparazione ??= (async () => {
-    const s = await sharp();
-    const presenti = new Set(files);
-    for (const nome of files.filter((f) => !isMini(f))) {
-      try {
-        const file = filePath(nome);
-        const meta = await s(file).metadata();
-        const grande = (await stat(file)).size > PESO_MAX || Math.max(meta.width ?? 0, meta.height ?? 0) > LATO;
-        if (grande && meta.format !== 'gif') {
-          const formato = meta.format as 'jpeg' | 'png' | 'webp';
-          const ridotta = await s(file)
-            .rotate()
-            .resize(LATO, LATO, { fit: 'inside', withoutEnlargement: true })
-            .toFormat(formato, formato === 'png' ? { compressionLevel: 9 } : { quality: 82, ...(formato === 'jpeg' && { mozjpeg: true }) })
-            .toBuffer();
-          await writeFile(file, ridotta);
-        }
-        if (!presenti.has(nomeMini(nome))) await creaMini(nome);
-      } catch {}
-    }
-  })();
-  return preparazione;
-}
-
 export async function elencaImmagini(): Promise<(Immagine & { size: number; data: string })[]> {
   await ensureDir(paths.immaginiEventi);
-  let files = (await readdir(paths.immaginiEventi)).filter((f) => safeName(f));
-  await preparaEsistenti(files);
-  files = (await readdir(paths.immaginiEventi)).filter((f) => safeName(f));
+  const files = (await readdir(paths.immaginiEventi)).filter((f) => safeName(f));
   const mini = new Set(files.filter(isMini));
   const list = await Promise.all(
     files

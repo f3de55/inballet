@@ -153,7 +153,7 @@ const sentinella = () => {
 window.addEventListener('scroll', sentinella, { passive: true });
 sentinella();
 
-document.getElementById('skip-link')?.addEventListener('click', (e) => {
+document.querySelector('.skip-link')?.addEventListener('click', (e) => {
   e.preventDefault();
   const main = document.getElementById('main-content');
   if (!main) return;

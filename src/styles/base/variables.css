@@ -13,8 +13,9 @@
   --grigio-100: #eee;
   --grigio-300: #ccc;
   --grigio-400: #9aa0a6;
-  --stato-ok: #22c55e;
-  --stato-errore: #ef4444;
+  --esito-ok: #2e7d4f;
+  --esito-avviso: #a86400;
+  --esito-errore: #c0392b;
   --stelle: #f5b301;
 
   --bianco-rgb: 255 255 255;
@@ -72,9 +73,6 @@
   --small-size: var(--text-sm);
   --small-lh: 1.5;
   --small-color: var(--text-muted);
-  --lead-size: var(--text-xl);
-  --hero-lead-size: calc(var(--lead-size) * 0.92);
-  --hero-lead-size-mobile: calc(var(--lead-size) * 0.86);
   --lead-weight: var(--font-light);
   --lead-lh: 1.55;
   --label-size: var(--text-xs);

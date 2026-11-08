@@ -1,5 +1,6 @@
 @import './base/variables.css';
 @import './base/reset.css';
+@import './base/accessibilita.css';
 @import './base/typography.css';
 
 @import './layout/container.css';

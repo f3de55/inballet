@@ -12,7 +12,7 @@ const n = documenti.length;
         <p class="pagina-sotto">{n === 0 ? 'Nessun documento da scaricare' : n === 1 ? '1 documento da scaricare' : `${n} documenti da scaricare`}</p>
     </div>
     <div class="pagina-azioni pagina-azioni--due">
-        <a href="/documenti" target="_blank" rel="noopener" class="btn btn-secondary">Vedi la pagina</a>
+        <a href="/documenti" target="_blank" rel="noopener" class="btn btn-secondary">Vedi la pagina<span class="sr-only"> (si apre in una nuova scheda)</span></a>
         <button type="button" class="btn btn-primary" data-nuovo-documento><i class="fas fa-plus" aria-hidden="true"></i> Nuovo documento</button>
     </div>
 </div>
@@ -53,7 +53,7 @@ const n = documenti.length;
                     <small class="contatore" id="accento-counter"></small>
                 </div>
             </div>
-            <p class="doc-anteprima-titolo" aria-live="polite">Anteprima: <strong id="anteprimaTitolo"></strong></p>
+            <small class="doc-anteprima-titolo" aria-live="polite">Anteprima: <strong id="anteprimaTitolo"></strong></small>
             <div class="campo">
                 <label for="intro">Testo introduttivo</label>
                 <textarea id="intro" name="intro" rows="4" maxlength="600" data-counter="600">{sezione.intro}</textarea>

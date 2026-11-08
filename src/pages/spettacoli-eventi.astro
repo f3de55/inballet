@@ -136,6 +136,7 @@ const og = aperto
     ogTitle={og?.title ?? 'Spettacoli ed Eventi | InBallet'}
     ogDescription={og?.description ?? 'Il calendario degli appuntamenti e gli eventi curati dalla Direzione: teatro, scuole, aziende e territorio.'}
     ogImage={og?.image}
+    ogImageAlt={og?.image && `Locandina: ${aperto!.titolo}`}
     mainFocusable={false}
 >
 
@@ -206,7 +207,7 @@ const og = aperto
                                                         </div>
                                                     )}
                                                 </div>
-                                                <p class="link-cta agenda-cta" aria-hidden="true">Vedi dettagli <i class="fas fa-arrow-right"></i></p>
+                                                <span class="link-cta agenda-cta" aria-hidden="true">Vedi dettagli <i class="fas fa-arrow-right"></i></span>
                                             </a>
                                         </li>
                                     ))}
@@ -280,11 +281,11 @@ const og = aperto
                 <div class="evento-azioni">
                     <a class="btn-primary" id="dialogPrenota" href="#" target="_blank" rel="noopener" hidden>
                         Prenota <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
+                    <span class="sr-only"> (si apre in una nuova scheda)</span></a>
                     <div class="evento-azioni-calendario" id="dialogCalendario">
                         <p class="evento-azioni-label titoletto">Aggiungi al calendario</p>
                         <div class="evento-azioni-btn">
-                            <a class="evento-azione" id="btnGoogle" href="#" target="_blank" rel="noopener noreferrer">Google Calendar</a>
+                            <a class="evento-azione" id="btnGoogle" href="#" target="_blank" rel="noopener noreferrer">Google Calendar<span class="sr-only"> (si apre in una nuova scheda)</span></a>
                             <a class="evento-azione" id="btnApple" href="#" download>Apple / Outlook</a>
                         </div>
                     </div>

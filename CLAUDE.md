@@ -18,6 +18,16 @@ npm run icons      # regenerate Font Awesome icon subset (run after using a new 
 
 No comments in code (TS, CSS, Astro, config): names and this file carry the explanations. Only functional directives stay (`/// <reference>`, `// @ts-check`).
 
+## Standards for every change
+
+Every new or edited line follows these rules; `npm run verifica:stile`, `npm run check`, `npm run format:check` and `npm test` must pass before committing.
+
+- Minimal and current: no dead code, no unused files, assets or exports, no duplicated markup or CSS (reuse the components and shared classes below), no comments, Prettier formatting.
+- Only essential files in the repo: no seed data, no generated output, no working material, no local tool settings (`.claude/` is ignored).
+- Typography and colours only from the tokens (site, chat panel and dashboard alike). Every `<p>` is body text at `--body-size`.
+- Accessibility (WCAG 2.2 AA, checked with axe-core at desktop and 390px width, zero violations): one `h1` per page, no skipped heading levels, real landmarks (no `aside` inside sections, no redundant roles), every control with a visible or accessible name, no interactive element inside `<summary>` or another control, decorative icons `aria-hidden`, text contrast ≥ 4.5:1 (state colours `--esito-*`), links with `target="_blank"` announce it (`<span class="sr-only"> (si apre in una nuova scheda)</span>` or in the `aria-label`), `.sr-only` from `base/accessibilita.css` for screen-reader-only text.
+- SEO and GEO: unique title (≤ 60 chars) and description (≤ 160) per page, canonical, Open Graph with `og:image:alt`, `<Base tipo>` for the schema.org page type (WebPage, AboutPage, ContactPage, CollectionPage) linked to the school (`#scuola`) and site (`#sito`) entities defined on the home, BreadcrumbList (`#percorso`) from `<Breadcrumb>`, course and event data in `src/lib/schema.ts`. New public pages go in `src/data/navigazione.ts` (menu, breadcrumb, footer, sitemap). `/llms.txt` and the chatbot read the same official data (`src/lib/riepilogo.ts`). `src/pages/404.astro` is `noindex`.
+
 ## Architecture
 
 **Astro 7** with hybrid rendering. Default output is `static` (prerendered HTML), but pages with `export const prerender = false` are SSR. Currently SSR: `/login`, `/dashboard`, `/documenti`, `/spettacoli-eventi` (+ `/spettacoli-eventi/<slug>/calendario.ics`), and the image asset route.
@@ -43,13 +53,13 @@ Everything is JSON files on disk in `DATA_DIR` (default `./data/`, set in `.env`
 - `serialized()` — a promise queue that prevents concurrent read→modify→write races
 
 File layout in `data/`:
-- `eventi.json`, `tipi_evento.json` — event data
+- `eventi.json`, `tipi_evento.json` — event data (created on first save; the repo ships no data)
 - `analytics.json` — chatbot logs (capped at 10000 entries)
 - `sessions/` — fsLite session driver
 - `uploads/eventi/` — event posters: uploads are resized (1600px) and converted to WebP, plus a `<name>.mini.webp` thumbnail for the dashboard library
 - `documenti.json` — texts and PDF list of `/documenti` (defaults in `src/data/documenti.ts` until first save)
 - `uploads/documenti/` — PDFs uploaded from the dashboard, served on `/assets/documenti/<file>`
-- `insegnanti.json` — header and teacher cards (name, role, bio, competenze list, photo) of the «Insegnanti» carousel in `/chi-siamo` (dashboard › Insegnanti; defaults in `src/data/insegnanti.ts`, no teachers by default: the section is hidden while the list is empty). `/chi-siamo` is therefore rendered on demand. Demo teachers (dashboard › Insegnanti › Dati demo, `generaInsegnanti` in `src/lib/demo.ts`) carry `demo: true` and are removed with their photos in one click
+- `insegnanti.json` — header and teacher cards (name, role, bio, competenze list, photo) of the «Insegnanti» carousel in `/chi-siamo` (dashboard › Insegnanti; defaults in `src/data/insegnanti.ts`, no teachers by default: the section is hidden while the list is empty). `/chi-siamo` is therefore rendered on demand. Demo teachers (dashboard › Insegnanti › Dati demo, `generaInsegnanti` in `src/lib/demo.ts`) carry `demo: true` and are removed with their photos in one click; their portraits come from `demo/insegnanti` (vertical photos named `donna-*` / `uomo-*`, the prefix picks the name), without photos they get initials
 - `uploads/insegnanti/` — teacher photos, cropped 4:5 (800x1000) and converted to WebP on upload, served on `/assets/images/insegnanti/<file>`
 - `conversazioni/` — chatbot conversations, one `<uuid>.json` per chat (deleted after 30 days)
 
@@ -78,7 +88,19 @@ In Docker, this directory is a named volume (`inballet-data`) so data survives r
 - `formato.ts`: escape everything, then rebuild bold/lists/links; links only to site paths, tel/mailto and a few known hosts.
 - Dashboard (Chatbot tab): spend, provider chain status, quality check (`VERIFICHE` in `src/data/chatbot.ts`, run per provider via `actions.chatbot.verifica`), last conversations.
 
-All chatbot env vars are `access: 'secret'` on purpose: read at runtime, so they can change without a rebuild (public server vars are inlined at build time). See `.env.example`.
+All server env vars are `access: 'secret'` on purpose: read at runtime, so they can change without a rebuild. The schema with defaults is `env.schema` in astro.config.mjs; values go in `.env` (no quotes):
+
+| Variable | Meaning |
+| --- | --- |
+| `DASHBOARD_PASSWORD` | password of /login |
+| `DATA_DIR` | runtime data folder (default `./data`) |
+| `CHATBOT_MODELLI` | provider chain `fornitore:modello,…` (anthropic, gemini, mistral, groq, openrouter, openai, cerebras, compatibile) |
+| `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `MISTRAL_API_KEY`, `GROQ_API_KEY`, `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `CEREBRAS_API_KEY` | provider keys; providers without a key are skipped |
+| `CHATBOT_COMPATIBILE_URL`, `CHATBOT_COMPATIBILE_KEY` | any OpenAI-compatible API (e.g. Ollama `http://localhost:11434/v1`) |
+| `CHATBOT_GRATUITI` | free-tier providers whose cost counts zero (e.g. `gemini,mistral`) |
+| `CHATBOT_BUDGET_GIORNO` | daily spend cap in dollars, then FAQ-only answers (0 = no cap) |
+| `CHATBOT_IP_HEADER` | header with the real visitor IP behind a proxy (e.g. `cf-connecting-ip`); spoofable, leave empty if unsure |
+| `PUBLIC_GOOGLE_MAPS_KEY`, `PUBLIC_GOOGLE_PLACE_ID` | Google Maps JS key and place for the reviews (public, inlined at build) |
 
 ### Content collections
 
@@ -179,14 +201,14 @@ Railway builds on every push to `main`. To see which commit is live, compare `cu
 ## Type scale and single style system
 One system, all in `src/styles/` (tokens in `base/variables.css`, headings and text in `base/typography.css`); pages and components only lay things out. Run `npm run verifica:stile` before pushing: it fails on a `<style>` block in an `.astro` file, a literal `font-size` / `font-weight`, a hand-written colour, an inline style with real properties, or a heading restyled outside `base/typography.css`.
 
-- **Roles, not sizes**: pages never pick a size, weight, line-height or colour for text. `base/variables.css` ("Ruoli tipografici") defines each role and `base/typography.css` applies it: titles `--h1-*` … `--h4-*` (h1 56px, h2 46, h3 32, h4 26 on desktop; one style per level on every page), body text `--body-*` (22px, 1.7, one colour for every paragraph/list), small text `--small-*` (`.testo-piccolo`: notes, ages, frequencies, captions), lead `--lead-*` (`.hero-lead`), label `--label-*` (`.eyebrow`/`.titoletto`), buttons/links `--ui-*`, numbers `--numero-*`. Changing a role in the variables file changes the whole site. The raw scale `--text-5xl` … `--text-xs` feeds the roles and sizes icons/numerals; dashboard/login (`admin/`) and the chat panel (`components/chatbot.css`) keep their own scales.
-- **Tags carry the role**: titles are `h1`-`h4` (card/course/document/sede names `h3`, titles under an `h3` `h4`), text is `<p>` (or `li`, `dd`…), labels `<p class="eyebrow">`. Never a `<span>`/`<div>` for a title or a paragraph: `span` only for an inline fragment inside text (e.g. `sede-tag`, a count-up number) or an icon wrapper inside a button. Don't wrap button/link labels in a span. `h2`/`.titolo-sezione` section title, dialog `h2` uses the `h3` style, `.valore` = `h4` style on a non-title (phone, email). Components never set size/weight/line-height/letter-spacing/colour on titles or paragraphs; big numbers `.numero-grande` / `.numero-medio`.
+- **Roles, not sizes**: pages never pick a size, weight, line-height or colour for text. `base/variables.css` ("Ruoli tipografici") defines each role and `base/typography.css` applies it: titles `--h1-*` … `--h4-*` (h1 56px, h2 46, h3 32, h4 26 on desktop; one style per level on every page), body text `--body-*` (22px, 1.7, one colour for every paragraph/list), small text `--small-*` (`<small class="testo-piccolo">`: ages, frequencies, file sizes, sources; never on a `<p>`), hero lead (`.hero-lead`: body size, light weight), label `--label-*` (`.eyebrow`/`.titoletto`), buttons/links `--ui-*`, numbers `--numero-*`. Changing a role in the variables file changes the whole site. The raw scale `--text-5xl` … `--text-2xs` feeds the roles and sizes icons/numerals. **Every `<p>` is body text at `--body-size` (22px desktop, fluid down to 18px)**, on the site, in the chat panel and in the dashboard; anything smaller is not a paragraph (`<small>`, labels, UI). Dashboard/login (`admin/`, which imports `base/variables.css`) and the chat panel use the same palette, font and raw scale, never their own sizes or hex colours.
+- **Tags carry the role**: titles are `h1`-`h4` (card/course/document/sede names `h3`, titles under an `h3` `h4`), text is `<p>` (or `li`, `dd`…), labels `<p class="eyebrow">`. Never a `<span>`/`<div>` for a title or a paragraph: `span` only for an inline fragment inside text (e.g. `sede-tag`, a count-up number) or an icon wrapper inside a button. Don't wrap button/link labels in a span; the visual «Scopri il corso →» label inside a whole-card link is `<span class="link-cta">`, timeline years are `<span class="voce-anno numero-medio">`, fine print (copyright, captions, notes) is `<small>`. `h2`/`.titolo-sezione` section title, dialog `h2` uses the `h3` style, `.valore` = `h4` style on a non-title (phone, email). Components never set size/weight/line-height/letter-spacing/colour on titles or paragraphs; big numbers `.numero-grande` / `.numero-medio`.
 - **Labels**: one uppercase label style, `.titoletto` (and `.eyebrow`, same look plus margin): menu group titles, categories, table headers, footer column titles, any h2/h3 that is only a label.
 - **Hero lead** under the h1: `.hero-lead` (home and inner pages).
 - **Buttons**: `.btn-primary`, `.btn-secondary`, `.link-cta`; round icon buttons `.btn-icon` + `--scuro` (on photos/dark), `--contorno` (carousel arrows), `--nudo` (menu). 44px, same icon size. The navbar "Contattaci" is a `btn-primary` (`aria-current="page"` turns it white).
 - **Icons** follow the text next to them or a scale step: `--icona-in-testo`, `--icona-mini`, `--icona-punto`, never px/rem in components.
 - **Rounded lines and cards**: no square line ends or corners anywhere. A CSS `border` always has square ends, so separators are never `border-top/bottom/left/right`: they are drawn by `components/linee.css` as 2px (`--linea-sp`) lines with round caps, using the element's own background (`--lc: <colour>; background: var(--linea-basso)`, also `--linea-alto` / `--linea-sx` / `--linea-dx`, several separated by a comma; set `--ls` for a thicker bar; on an element that also needs a background colour, put `background-color` after). The «+» of accordions is `background: var(--piu)` (`--ps` = size). Pseudo-element lines (`::before` / `::after`) get `border-radius: var(--radius-pill)`; short rules between groups are the double wave `components/ondina.css`. Boxes (cards, grids of cells, dialogs) always have `border-radius: var(--radius-card)` (or `--radius-md` for small ones); a grid of cells separated by a 1px `gap` on a coloured background is not allowed, use separate rounded cards with a gap or lines on the cells. Full-screen mobile dialogs and the mobile menu drawer are the only square boxes.
-- **Colours** only from the palette tokens: `--white`, `--dark-navy`, `--primary-blue*`, `--text-*`, greys `--grigio-*`, states `--stato-*`, lines: ONE hairline colour `--linea` for every separator on light backgrounds (same as the home accordion; never invent another), `--linea-su-scuro` on dark, text on dark `--testo-su-scuro*`, and for transparencies `rgb(var(--navy-rgb) / .4)` (also `--bianco-rgb`, `--nero-rgb`, `--scuro-rgb`, `--blu-rgb`, `--blu-scuro-rgb`, `--header-rgb`).
+- **Colours** only from the palette tokens: `--white`, `--dark-navy`, `--primary-blue*`, `--text-*`, greys `--grigio-*`, states `--esito-*`, lines: ONE hairline colour `--linea` for every separator on light backgrounds (same as the home accordion; never invent another), `--linea-su-scuro` on dark, text on dark `--testo-su-scuro*`, and for transparencies `rgb(var(--navy-rgb) / .4)` (also `--bianco-rgb`, `--nero-rgb`, `--scuro-rgb`, `--blu-rgb`, `--blu-scuro-rgb`, `--header-rgb`).
 - **Font weights** only from the tokens `--font-light` … `--font-bold` (300-700) or the role tokens (`--heading-weight`, `--ui-weight`…). Text colours from the role tokens (`--body-color`, `--small-color`, `--heading-color`, `--label-color`, and the `*-su-scuro` variants for dark sections) or `--text-body` / `--text-muted`.
 - **Inline `style=`** is left only for the image data computed at build time, as CSS variables (`--sfondo-*` / `--fuoco-*` from `sfondo()` and `<Img fuoco>`); the rules that use them are in `components/sfondo.css`. Counters and per-item tweaks (index, number of items, logo scale, veil) are CSS: `:nth-child`, `:has()`, modifier classes or data attributes. The few `element.style` writes in `src/scripts` are runtime values (measured heights, drag offset, carousel slide state).
 

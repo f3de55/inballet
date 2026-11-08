@@ -70,7 +70,7 @@ const { tipi, sedi, luoghi, destinatari, costi } = Astro.props;
                         <option value="">Nessun tipo</option>
                         {tipi.map((t) => <option value={t}>{t}</option>)}
                     </select>
-                    <p class="nota" id="noTipoMsg" hidden={tipi.length > 0}>Nessun tipo ancora: aggiungine uno con «Modifica i tipi».</p>
+                    <small class="nota" id="noTipoMsg" hidden={tipi.length > 0}>Nessun tipo ancora: aggiungine uno con «Modifica i tipi».</small>
                 </div>
 
                 <div class="campo">
@@ -79,7 +79,7 @@ const { tipi, sedi, luoghi, destinatari, costi } = Astro.props;
                     <div class="locandina-anteprima" id="locandinaAnteprima" hidden>
                         <img id="locandinaImg" src="data:," alt="Locandina selezionata">
                         <div>
-                            <p>Locandina scelta</p>
+                            <small>Locandina scelta</small>
                             <button type="button" class="btn-link" id="locandinaTogli">Togli la locandina</button>
                         </div>
                     </div>

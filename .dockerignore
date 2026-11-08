@@ -5,11 +5,8 @@ dist
 .vscode
 .claude
 
-data/*
-!data/eventi.json
-!data/tipi_evento.json
+data
 
 .env
 .env.*
-!.env.example
 *.md

@@ -1,8 +1,0 @@
-dist
-.astro
-node_modules
-data
-package-lock.json
-src/styles/icons.css
-*.astro
-*.md

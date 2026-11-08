@@ -14,7 +14,10 @@ interface Props {
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
+  ogImageAlt?: string;
+  tipo?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage';
   skipLinkId?: string;
+  indicizza?: boolean;
   mainFocusable?: boolean;
 }
 
@@ -24,13 +27,30 @@ const {
   ogTitle,
   ogDescription,
   ogImage,
+  ogImageAlt = 'Allievi di InBallet in sala durante una lezione di danza',
+  tipo = 'WebPage',
   skipLinkId,
+  indicizza = true,
   mainFocusable = true,
 } = Astro.props;
 
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(^|\/)index$/, '/').replace(/(.)\/$/, '$1');
 const canonical = new URL(path, Astro.site).href;
 const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
+const sito = new URL('/', Astro.site).href;
+const pagina = {
+  '@context': 'https://schema.org',
+  '@type': tipo,
+  '@id': `${canonical}#pagina`,
+  url: canonical,
+  name: title,
+  description,
+  inLanguage: 'it-IT',
+  isPartOf: { '@id': `${sito}#sito` },
+  about: { '@id': `${sito}#scuola` },
+  primaryImageOfPage: { '@type': 'ImageObject', url: image, caption: ogImageAlt },
+  ...(path !== '/' && { breadcrumb: { '@id': `${canonical}#percorso` } }),
+};
 ---
 
 <!doctype html>
@@ -40,6 +60,7 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content={description}>
     <meta name="author" content="InBallet ASD">
+    <meta name="robots" content={indicizza ? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' : 'noindex, follow'}>
     <meta name="theme-color" content="#87CEEB">
     <link rel="canonical" href={canonical}>
 
@@ -50,18 +71,17 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
     <meta property="og:title" content={ogTitle ?? title}>
     <meta property="og:description" content={ogDescription ?? description}>
     <meta property="og:image" content={image}>
+    <meta property="og:image:alt" content={ogImageAlt}>
     {!ogImage && <meta property="og:image:width" content="1200">}
     {!ogImage && <meta property="og:image:height" content="630">}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content={ogTitle ?? title}>
-    <meta name="twitter:description" content={ogDescription ?? description}>
-    <meta name="twitter:image" content={image}>
 
     <title>{title}</title>
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <Font cssVariable="--font-rubik" preload={[{ style: 'normal', subset: 'latin' }]} />
     
+    <script type="application/ld+json" set:html={JSON.stringify(pagina)} />
     <slot name="head" />
 </head>
 <body>
@@ -69,17 +89,17 @@ const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'
 
     <Banner server:defer />
 
-    <header class="main-header" role="banner">
+    <header class="main-header">
         <Navbar />
     </header>
 
-    <main id="main-content" role="main" tabindex={mainFocusable ? '-1' : undefined}>
+    <main id="main-content" tabindex={mainFocusable ? '-1' : undefined}>
         <slot />
     </main>
 
     <slot name="after-main" />
 
-    <footer class="footer" role="contentinfo">
+    <footer class="footer">
         <Footer />
     </footer>
 

@@ -11,7 +11,7 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      filter: (page) => !/\/(login|dashboard)/.test(page),
+      filter: (page) => !/\/(login|dashboard|404)/.test(page),
       customPages: ['https://www.inballet.it/documenti', 'https://www.inballet.it/spettacoli-eventi'],
     }),
   ],

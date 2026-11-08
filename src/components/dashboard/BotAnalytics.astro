@@ -146,7 +146,7 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
         <section class="pannello">
             <h2>Domande più frequenti</h2>
             {topQuestions.length === 0 ? (
-                <p class="nota">Nessuna domanda nel periodo.</p>
+                <small class="nota">Nessuna domanda nel periodo.</small>
             ) : (
                 <ol class="domande">
                     {topQuestions.map(([q, c]) => (
@@ -160,14 +160,14 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
 
 <section class="pannello bot-sezione" aria-labelledby="catenaTitolo">
     <h2 id="catenaTitolo">Fornitori AI</h2>
-    <p class="nota bot-intro">In ordine di priorità: se il primo non risponde si passa al successivo; se nessuno risponde, Étoile risponde con le FAQ. Si configurano in <code>CHATBOT_MODELLI</code> nel file <code>.env</code>.</p>
-    <p class="nota bot-intro">
+    <small class="nota bot-intro">In ordine di priorità: se il primo non risponde si passa al successivo; se nessuno risponde, Étoile risponde con le FAQ. Si configurano in <code>CHATBOT_MODELLI</code> nel file <code>.env</code>.</small>
+    <small class="nota bot-intro">
         {sito
             ? `Conoscenza: testi di ${sito.numero} pagine del sito (${fmt.format(Math.round(sito.caratteri / 1000))} mila caratteri), letti alle ${orario(sito.letto)} e riletti in automatico, più documenti ed eventi della dashboard.`
             : 'Conoscenza: le pagine del sito vengono lette alla prima domanda dopo l’avvio del server.'}
-    </p>
+    </small>
     {catena.length === 0 ? (
-        <p class="nota">Nessun fornitore configurato: il chatbot risponde solo con le FAQ.</p>
+        <small class="nota">Nessun fornitore configurato: il chatbot risponde solo con le FAQ.</small>
     ) : (
         <ol class="catena" data-verifiche={JSON.stringify(VERIFICHE.map((v) => v.domanda))}>
             {catena.map((a, i) => (
@@ -189,7 +189,7 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
                             <button type="button" class="btn btn-secondary anello-verifica" data-fornitore={a.fornitore} data-modello={a.modello}>Verifica</button>
                         )}
                     </div>
-                    {a.ultimoErrore && a.quando && <p class="anello-errore">Ultimo errore alle {orario(a.quando)}: {a.ultimoErrore}</p>}
+                    {a.ultimoErrore && a.quando && <small class="anello-errore">Ultimo errore alle {orario(a.quando)}: {a.ultimoErrore}</small>}
                     <div class="verifica" hidden aria-live="polite"></div>
                 </li>
             ))}
@@ -199,9 +199,9 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
 
 <section class="pannello bot-sezione" aria-labelledby="convTitolo">
     <h2 id="convTitolo">Ultime conversazioni</h2>
-    <p class="nota bot-intro">Conservate {GIORNI_CONSERVAZIONE} giorni, poi cancellate automaticamente. Le persone sono anonime.</p>
+    <small class="nota bot-intro">Conservate {GIORNI_CONSERVAZIONE} giorni, poi cancellate automaticamente. Le persone sono anonime.</small>
     {conversazioni.length === 0 ? (
-        <p class="nota">Nessuna conversazione salvata.</p>
+        <small class="nota">Nessuna conversazione salvata.</small>
     ) : (
         <ul class="conversazioni">
             {conversazioni.map((c) => (
@@ -217,7 +217,7 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
                                 <li>
                                     <p class="conv-domanda">{s.domanda}</p>
                                     <p class="conv-risposta" set:html={formatta(s.risposta)} />
-                                    <p class="nota">{s.ora.slice(11, 16)} · {s.modello ?? etichettaTipo[s.tipo] ?? s.tipo}</p>
+                                    <small class="nota">{s.ora.slice(11, 16)} · {s.modello ?? etichettaTipo[s.tipo] ?? s.tipo}</small>
                                 </li>
                             ))}
                         </ol>
@@ -292,8 +292,9 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
     import { BarController, BarElement, CategoryScale, Chart, Filler, LinearScale, LineController, LineElement, PointElement } from 'chart.js';
 
     Chart.register(LineController, BarController, LineElement, BarElement, PointElement, CategoryScale, LinearScale, Filler);
-    Chart.defaults.color = '#6a6f75';
-    Chart.defaults.borderColor = '#e3e6e9';
+    const token = (nome: string) => getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
+    Chart.defaults.color = token('--text-muted');
+    Chart.defaults.borderColor = token('--grigio-100');
     Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
 
     type Serie = { labels: string[]; data: number[] };
@@ -305,19 +306,19 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
             maintainAspectRatio: false,
             plugins: { legend: { display: false } },
             scales: {
-                y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: '#eef0f2' } },
+                y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: token('--grigio-100') } },
                 x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkipPadding: 12 } },
             },
         };
 
         new Chart(document.querySelector<HTMLCanvasElement>('#chartDaily')!, {
             type: 'line',
-            data: { labels: daily.labels, datasets: [{ label: 'Messaggi', data: daily.data, borderColor: '#4682B4', backgroundColor: 'rgba(135,206,235,.25)', fill: true, cubicInterpolationMode: 'monotone', pointRadius: 2 }] },
+            data: { labels: daily.labels, datasets: [{ label: 'Messaggi', data: daily.data, borderColor: token('--primary-blue-dark'), backgroundColor: `rgb(${token('--blu-rgb')} / 0.25)`, fill: true, cubicInterpolationMode: 'monotone', pointRadius: 2 }] },
             options,
         });
         new Chart(document.querySelector<HTMLCanvasElement>('#chartHourly')!, {
             type: 'bar',
-            data: { labels: hourly.labels, datasets: [{ label: 'Messaggi', data: hourly.data, backgroundColor: '#87CEEB', borderRadius: 3 }] },
+            data: { labels: hourly.labels, datasets: [{ label: 'Messaggi', data: hourly.data, backgroundColor: token('--primary-blue'), borderRadius: 3 }] },
             options,
         });
     }

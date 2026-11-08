@@ -47,7 +47,7 @@ function renderStats(rating: number, total: number) {
   box.innerHTML = `
             <p class="sintesi-voto">${rating.toFixed(1).replace('.', ',')}</p>
             <div class="sintesi-stelle" aria-hidden="true">${stars(Math.round(rating))}</div>
-            <p class="sintesi-totale testo-piccolo">${total ? `${total} recensioni su Google` : 'Recensioni su Google'}</p>
+            <small class="sintesi-totale testo-piccolo">${total ? `${total} recensioni su Google` : 'Recensioni su Google'}</small>
         `;
   box.setAttribute('aria-label', `Valutazione media ${rating.toFixed(1)} su 5${total ? `, ${total} recensioni su Google` : ''}`);
   box.hidden = false;
@@ -81,7 +81,7 @@ function createSlide(review: Review, index: number) {
                 <div class="author-avatar" aria-hidden="true">${escapeHtml(initials(review.author_name))}</div>
                 <div>
                     <strong>${escapeHtml(review.author_name)}</strong>
-                    <p class="recensione-fonte testo-piccolo">Recensione su Google</p>
+                    <small class="recensione-fonte testo-piccolo">Recensione su Google</small>
                 </div>
             </figcaption>
         `;

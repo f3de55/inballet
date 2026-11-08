@@ -33,6 +33,7 @@ const hero = await heroPagina('corsi');
     description={`${totale} corsi a Lainate e Rho: classica, modern, contemporanea, hip-hop, breaking, yoga e pilates, per bambini dai 3 anni, ragazzi e adulti. Trova il tuo.`}
     ogTitle="I corsi di danza di InBallet"
     ogDescription="Classica, contemporanea, urban e benessere, dai 3 anni all'età adulta: trova il corso giusto per te."
+    tipo="CollectionPage"
 >
 
     <Fragment slot="head">
@@ -70,7 +71,7 @@ const hero = await heroPagina('corsi');
 
     <section class="corsi-chiusura" aria-labelledby="corsi-fine-titolo">
         <div class="container">
-            <aside class="corsi-fine">
+            <div class="corsi-fine">
                 <div class="corsi-fine-testo">
                     <h3 class="corsi-fine-titolo" id="corsi-fine-titolo">Non sai quale corso scegliere?</h3>
                     <p>Raccontaci <strong>età, esperienza</strong> e cosa ti piacerebbe provare: lo troviamo insieme.</p>
@@ -79,7 +80,7 @@ const hero = await heroPagina('corsi');
                     Parliamone insieme
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
-            </aside>
+            </div>
         </div>
     </section>
 
@@ -91,7 +92,7 @@ const hero = await heroPagina('corsi');
                 </button>
             </form>
             <h2 id="trova-popup-titolo">Da dove iniziamo?</h2>
-            <p id="trova-popup-intro" class="trova-popup-intro testo-piccolo">Scegli un percorso e scopri i suoi corsi.</p>
+            <p id="trova-popup-intro" class="trova-popup-intro">Scegli un percorso e scopri i suoi corsi.</p>
             <ul class="trova-opzioni">
                 {percorsi.map((cat) => (
                     <li>

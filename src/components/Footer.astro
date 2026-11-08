@@ -6,15 +6,14 @@ import '../styles/components/footer.css';
 
 const anno = new Date().getFullYear();
 
-const colonne: { titolo: string; href?: string; voci: Voce[] }[] = [
+const colonne: { titolo: string; voci: Voce[] }[] = [
   {
     titolo: 'Corsi',
-    href: '/corsi',
-    voci: categorieCorsi.map((c) => ({ nome: c.nome, href: `/corsi#${c.id}` })),
+    voci: [{ nome: 'Tutti i corsi', href: '/corsi' }, ...categorieCorsi.map((c) => ({ nome: c.nome, href: `/corsi#${c.id}` }))],
   },
   ...menu
     .filter((m) => m.id !== 'corsi')
-    .map((m) => ({ titolo: m.label, href: undefined, voci: m.sezioni.flatMap((s) => s.voci) })),
+    .map((m) => ({ titolo: m.label, voci: m.sezioni.flatMap((s) => s.voci) })),
 ];
 ---
 
@@ -25,15 +24,15 @@ const colonne: { titolo: string; href?: string; voci: Voce[] }[] = [
     </a>
     <p class="footer-ente titoletto">Ente Formativo<br>CSEN · CONI</p>
     <div class="footer-social">
-      <a href={scuola.social.instagram} target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-      <a href={scuola.social.facebook} target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+      <a href={scuola.social.instagram} target="_blank" rel="noopener" aria-label="Instagram (si apre in una nuova scheda)"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+      <a href={scuola.social.facebook} target="_blank" rel="noopener" aria-label="Facebook (si apre in una nuova scheda)"><i class="fab fa-facebook" aria-hidden="true"></i></a>
     </div>
   </div>
 
   <nav class="footer-nav" aria-label="Mappa del sito">
     {colonne.map((c) => (
       <details class="footer-col" open>
-        <summary><h2 class="footer-titolo titoletto">{c.href ? <a href={c.href}>{c.titolo}</a> : c.titolo}</h2></summary>
+        <summary><h2 class="footer-titolo titoletto">{c.titolo}</h2></summary>
         <ul>
           {c.voci.map((v) => <li><a href={v.href}>{v.breve ?? v.nome}</a></li>)}
         </ul>
@@ -52,8 +51,8 @@ const colonne: { titolo: string; href?: string; voci: Voce[] }[] = [
 </div>
 
 <div class="footer-bottom">
-  <p>&copy; <span id="footerYear">{anno}</span> {scuola.ragioneSociale} · C.F. {scuola.codiceFiscale}</p>
-  <p class="footer-credits"><a href="mailto:fedecpz03@gmail.com">Crediti</a></p>
+  <small>&copy; <span id="footerYear">{anno}</span> {scuola.ragioneSociale} · C.F. {scuola.codiceFiscale}</small>
+  <small class="footer-credits"><a href="mailto:fedecpz03@gmail.com">Crediti</a></small>
 </div>
 
 <script>

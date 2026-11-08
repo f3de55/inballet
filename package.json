@@ -16,8 +16,8 @@
     "start": "node --env-file-if-exists=.env ./dist/server/entry.mjs",
     "precheck": "npm run icons",
     "check": "astro check",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format": "prettier --write src scripts tests astro.config.mjs",
+    "format:check": "prettier --check src scripts tests astro.config.mjs",
     "test": "node --test tests/carosello.test.mjs",
     "test:demo": "node --test tests/locandine-demo.test.mjs",
     "test:statuto": "node --test tests/statuto.test.mjs",
@@ -39,5 +39,10 @@
     "prettier": "^3.9.10",
     "subset-font": "^2.9.0",
     "typescript": "^6.0.3"
+  },
+  "prettier": {
+    "printWidth": 160,
+    "singleQuote": true,
+    "trailingComma": "all"
   }
 }

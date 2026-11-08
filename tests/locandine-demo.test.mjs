@@ -38,7 +38,8 @@ test('locandine demo: file persi, miniature e generazione nel runtime Docker', {
     const url = (name) => base + prefix + name;
     for (let i = 0; ; i++) {
       try {
-        if ((await fetch(base + '/login')).ok) break;
+        docker('exec', container, 'wget', '-q', '-O', '/dev/null', 'http://127.0.0.1:8080/login');
+        break;
       } catch {}
       if (i >= 40) throw new Error('Il container di test non risponde');
       await setTimeout(250);

@@ -68,9 +68,9 @@ const intro = {
                     <button type="submit" class="btn btn-primary btn-pieno" id="demoGenera">Genera {iniziale} {unita}</button>
                 </form>
             ) : (
-                <p class="nota">{chatbot
+                <small class="nota">{chatbot
                     ? 'Il registro del chatbot è pieno (10.000 righe): rimuovi i messaggi demo per crearne altri.'
-                    : "L'elenco degli insegnanti è pieno: rimuovi gli insegnanti demo per crearne altri."}</p>
+                    : "L'elenco degli insegnanti è pieno: rimuovi gli insegnanti demo per crearne altri."}</small>
             )}
 
             <div class="demo-presenti">
@@ -80,7 +80,7 @@ const intro = {
                         <button type="button" class="btn-link btn-link--rosso" id="demoRimuovi">Rimuovi tutti i {unita} demo</button>
                     </>
                 ) : (
-                    <p class="nota">Nessun {impostazioni.singolare} demo presente.</p>
+                    <small class="nota">Nessun {impostazioni.singolare} demo presente.</small>
                 )}
             </div>
         </div>

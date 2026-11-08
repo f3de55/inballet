@@ -86,3 +86,7 @@ summary:focus-visible,
   outline: 3px solid var(--dark-navy);
   outline-offset: 2px;
 }
+
+small {
+  font-size: inherit;
+}

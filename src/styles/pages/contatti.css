@@ -241,11 +241,11 @@ a.info-valore {
 }
 
 .orari-status.aperto i {
-  color: var(--stato-ok);
+  color: var(--esito-ok);
 }
 
 .orari-status.chiuso i {
-  color: var(--stato-errore);
+  color: var(--esito-errore);
 }
 
 .orari-grid {

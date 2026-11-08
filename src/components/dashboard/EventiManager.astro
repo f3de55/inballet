@@ -61,7 +61,7 @@ const gruppi = [
     </div>
     <div class="pagina-azioni">
         <button type="button" class="btn btn-secondary" data-apri-demo><i class="fas fa-flask" aria-hidden="true"></i> Dati demo</button>
-        <a href="/spettacoli-eventi" target="_blank" rel="noopener" class="btn btn-secondary">Vedi il calendario</a>
+        <a href="/spettacoli-eventi" target="_blank" rel="noopener" class="btn btn-secondary">Vedi il calendario<span class="sr-only"> (si apre in una nuova scheda)</span></a>
         <button type="button" class="btn btn-primary" data-nuovo-evento><i class="fas fa-plus" aria-hidden="true"></i> Nuovo evento</button>
     </div>
 </div>
@@ -114,7 +114,7 @@ const gruppi = [
                                             </span>
                                         </button>
                                         <div class="ev-azioni">
-                                            {ev.stato !== 'bozza' && <a href={urlEvento(ev)} target="_blank" rel="noopener" aria-label={`Vedi ${titolo} sul sito`} title="Vedi sul sito"><i class="fas fa-external-link-alt" aria-hidden="true"></i></a>}
+                                            {ev.stato !== 'bozza' && <a href={urlEvento(ev)} target="_blank" rel="noopener" aria-label={`Vedi ${titolo} sul sito (si apre in una nuova scheda)`} title="Vedi sul sito"><i class="fas fa-external-link-alt" aria-hidden="true"></i></a>}
                                             <button type="button" data-azione="modifica" aria-label={`Modifica ${titolo}`} title="Modifica"><i class="fas fa-pen" aria-hidden="true"></i></button>
                                             <button type="button" class="elimina" data-azione="elimina" aria-label={`Elimina ${titolo}`} title="Elimina"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
                                         </div>

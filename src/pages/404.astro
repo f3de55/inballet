@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPagina from '../components/HeroPagina.astro';
+import SezioneElenco from '../components/SezioneElenco.astro';
+import { heroPagina } from '../lib/hero-pagine';
+import { menu } from '../data/navigazione';
+
+const hero = await heroPagina('corsi');
+const pagine = [
+  { nome: 'Home', href: '/' },
+  ...menu.map((m) => ({ nome: m.label, href: m.href ?? m.sezioni[0].voci[0].href })),
+  { nome: 'Contatti', href: '/contatti' },
+];
+---
+
+<Base title="Pagina non trovata | InBallet" description="La pagina cercata non esiste o è stata spostata: riparti dai corsi, dalla scuola o dai contatti di InBallet." indicizza={false}>
+    <HeroPagina titolo="Pagina non trovata" stile={hero.style}>
+        <p class="hero-lead">La pagina che cerchi non esiste più o è stata spostata. <strong>Riparti da qui</strong>.</p>
+    </HeroPagina>
+
+    <SezioneElenco titoloId="non-trovata-titolo" illustrazione="spettacoli-eventi">
+        <Fragment slot="introduzione">
+            <p class="eyebrow">Errore 404</p>
+            <h2 class="titolo-sezione" id="non-trovata-titolo">Dove vuoi <em>andare?</em></h2>
+            <p class="intro-sezione">Le sezioni principali del sito, oppure <a href="/contatti">scrivici</a>: ti rispondiamo noi.</p>
+        </Fragment>
+        <ul class="righe">
+            {pagine.map((p) => (
+                <li>
+                    <a class="riga" href={p.href}>
+                        <p class="riga-nome">{p.nome}</p>
+                        <i class="riga-freccia fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </SezioneElenco>
+</Base>

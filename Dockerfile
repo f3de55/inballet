@@ -19,10 +19,9 @@ ENV NODE_ENV=production \
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY package.json ./
-COPY --chown=node:node data/eventi.json data/tipi_evento.json ./data/
 COPY demo ./demo
 COPY src/assets/images/*.jpg ./demo/foto/
-RUN chown node:node /app/data
+RUN mkdir data && chown node:node data
 USER node
 
 EXPOSE 8080

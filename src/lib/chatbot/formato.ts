@@ -15,7 +15,7 @@ const LINK_RE = new RegExp(
 
 const a = (href: string, testo: string) => {
   const esterno = /^https?:/.test(href) ? ' target="_blank" rel="noopener"' : '';
-  return `<a href="${href}" class="cb-link"${esterno}>${testo}</a>`;
+  return `<a href="${href}" class="cb-link"${esterno}>${testo}${esterno && '<span class="sr-only"> (si apre in una nuova scheda)</span>'}</a>`;
 };
 
 function hrefSicuro(url: string): string | null {

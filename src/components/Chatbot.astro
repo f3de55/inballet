@@ -15,7 +15,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
         <span class="cb-avatar" aria-hidden="true"><i class="fas fa-star"></i></span>
         <div class="cb-head-testo">
             <h2 id="cb-title">Étoile</h2>
-            <p>Assistente virtuale di InBallet</p>
+            <small>Assistente virtuale di InBallet</small>
         </div>
         <button type="button" id="cb-reset" class="cb-head-btn" aria-label="Nuova conversazione" title="Nuova conversazione">
             <i class="fas fa-redo-alt" aria-hidden="true"></i>
@@ -32,13 +32,13 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
     </div>
 
     <form id="cb-inp">
-        <label for="cb-txt" class="cb-sr-only">Scrivi la tua domanda</label>
+        <label for="cb-txt" class="sr-only">Scrivi la tua domanda</label>
         <input type="text" id="cb-txt" placeholder="Scrivi la tua domanda…" maxlength="500" autocomplete="off" enterkeyhint="send">
         <button type="submit" id="cb-send" aria-label="Invia">
             <i class="fas fa-paper-plane" aria-hidden="true"></i>
         </button>
     </form>
-    <p class="cb-nota">Risposte automatiche; chat anonime, conservate 30 giorni: non scrivere dati personali. Conferme al <a href={scuola.telefonoHref}>{scuola.telefono}</a>.</p>
+    <small class="cb-nota">Risposte automatiche; chat anonime, conservate 30 giorni: non scrivere dati personali. Conferme al <a href={scuola.telefonoHref}>{scuola.telefono}</a>.</small>
 </section>
 
 <script>

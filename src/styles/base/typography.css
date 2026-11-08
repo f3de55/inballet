@@ -69,8 +69,12 @@ dialog h2 {
   color: var(--small-color);
 }
 
+.testo-piccolo:where(small) {
+  display: block;
+}
+
 .hero-lead {
-  font-size: var(--hero-lead-size);
+  font-size: var(--body-size);
   font-weight: var(--lead-weight);
   line-height: var(--lead-lh);
   color: rgb(var(--bianco-rgb) / 0.88);

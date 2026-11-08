@@ -27,6 +27,7 @@ const ultimo = passi.length - 1;
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
+  '@id': `${new URL(corrente, Astro.site).href}#percorso`,
   itemListElement: passi
     .filter((p) => p.href)
     .map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.nome, item: new URL(p.href!, Astro.site).href })),

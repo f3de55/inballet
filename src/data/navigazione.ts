@@ -68,4 +68,5 @@ export const menu: Menu[] = [
 
 export const altrePagine: Record<string, string> = {
   '/contatti': 'Contatti',
+  '/404': 'Pagina non trovata',
 };

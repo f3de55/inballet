@@ -61,7 +61,6 @@ const schema = schemaHome(socialImage);
     description={`Scuola di danza a Lainate e Rho dal ${FONDAZIONE}: classica, modern, contemporanea, hip-hop, yoga e pilates per bambini dai 3 anni, ragazzi e adulti.`}
     ogTitle="InBallet, la scuola di danza di Lainate e Rho"
     ogDescription={`Dal ${FONDAZIONE} un luogo dove la danza è per tutti: corsi dai 3 anni all'età adulta, classi inclusive e formazione insegnanti CSEN e CONI.`}
-    ogImage={socialImage}
     skipLinkId="skip-link"
 >
     <Fragment slot="head">
@@ -132,8 +131,8 @@ const schema = schemaHome(socialImage);
                             )}
                             <div class="corsi-stile-testo">
                                 <h3 class="corsi-stile-nome">{cat.nome}</h3>
-                                <p class="corsi-stile-desc testo-piccolo" set:html={enfatizza(cat.sintesi, grassettoStili[cat.id] ?? [])} />
-                                <p class="link-cta corsi-stile-link"><span class="corsi-stile-link-label">Vedi di più</span> <i class="fas fa-arrow-right" aria-hidden="true"></i></p>
+                                <p class="corsi-stile-desc" set:html={enfatizza(cat.sintesi, grassettoStili[cat.id] ?? [])} />
+                                <span class="link-cta corsi-stile-link"><span class="corsi-stile-link-label">Vedi di più</span> <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
                             </div>
                         </a>
                     </li>
@@ -198,8 +197,8 @@ const schema = schemaHome(socialImage);
                         <a href={v.href} class="oltre-voce">
                             <Img class="oltre-illustrazione" src={`grafica-oltre/${v.illustrazione}.webp`} alt="" aria-hidden="true" width="88" height="88" widths={[160, 320]} sizes="88px" loading="lazy" decoding="async" />
                             <h3 class="oltre-nome">{v.nome}</h3>
-                            <p class="oltre-desc testo-piccolo" set:html={v.testo} />
-                            <p class="link-cta oltre-cta">Scopri di più <i class="fas fa-arrow-right" aria-hidden="true"></i></p>
+                            <p class="oltre-desc" set:html={v.testo} />
+                            <span class="link-cta oltre-cta">Scopri di più <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
                         </a>
                     </li>
                 ))}

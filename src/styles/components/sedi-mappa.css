@@ -118,8 +118,8 @@
   font-weight: var(--font-medium);
 }
 
-.sedi-mappa-didascalia p {
-  margin: 0;
+.sedi-mappa-didascalia .valore {
+  display: block;
 }
 
 .sedi-mappa-dettaglio {

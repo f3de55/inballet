@@ -5,13 +5,8 @@ node_modules/
 
 .env
 .env.*
-!.env.example
 
-data/*
-!data/eventi.json
-!data/tipi_evento.json
-
-npm-debug.log*
+data/
 
 .DS_Store
 Thumbs.db
@@ -19,4 +14,4 @@ Thumbs.db
 src/styles/icons.css
 src/assets/fonts/
 
-.claude/settings.local.json
+.claude/

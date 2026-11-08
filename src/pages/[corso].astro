@@ -39,6 +39,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
     ogTitle={data.ogTitle}
     ogDescription={data.ogDescription}
     ogImage={ogImage}
+    ogImageAlt={`${data.titolo} a InBallet, Lainate e Rho`}
 >
     <Fragment slot="head">
         <link rel="preload" as="image" href={hero.preload[0].href} media="(min-width: 1025px)" fetchpriority="high">

@@ -8,5 +8,19 @@ body {
   font-family: var(--font-rubik), 'Segoe UI', system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
+  font-size: var(--text-sm);
   -webkit-font-smoothing: antialiased;
+}
+
+p {
+  font-size: var(--body-size);
+  line-height: var(--body-lh);
+}
+
+small {
+  font-size: inherit;
+}
+
+small:where(.nota, .anello-errore, .doc-anteprima-titolo, #docFilePeso, .locandina-anteprima small) {
+  display: block;
 }

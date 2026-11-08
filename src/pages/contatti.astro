@@ -31,6 +31,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
     description={`Chiamaci al ${TEL} o scrivici: ti aiutiamo a scegliere il corso. Sedi in ${sedi[0].via} a Lainate e ${sedi[1].via} a Rho (MI).`}
     ogTitle="Contatti e sedi | InBallet"
     ogDescription="Due sedi a Lainate e Rho: chiamaci o scrivici per scegliere il corso giusto."
+    tipo="ContactPage"
 >
 
     <Fragment slot="head">
@@ -61,17 +62,17 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                     <ul class="info-righe">
                         <li class="info-riga">
                             <a class="info-valore" href={TEL_HREF}><span class="info-link-testo">{TEL}</span></a>
-                            <a class="info-whatsapp" href={scuola.whatsapp} target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i><span class="info-link-testo">WhatsApp</span></a>
+                            <a class="info-whatsapp" href={scuola.whatsapp} target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i><span class="info-link-testo">WhatsApp</span><span class="sr-only"> (si apre in una nuova scheda)</span></a>
                         </li>
                         <li class="info-riga">
                             <a class="info-valore info-email" href={`mailto:${EMAIL}`}><i class="fas fa-envelope" aria-hidden="true"></i><span class="info-link-testo">{EMAIL}</span></a>
                         </li>
                     </ul>
                     <div class="info-social">
-                        <p class="testo-piccolo">Seguici sui social</p>
+                        <small class="testo-piccolo">Seguici sui social</small>
                         <div class="info-social-link">
-                            <a href={scuola.social.instagram} target="_blank" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i><span class="info-link-testo">Instagram</span></a>
-                            <a href={scuola.social.facebook} target="_blank" rel="noopener"><i class="fab fa-facebook" aria-hidden="true"></i><span class="info-link-testo">Facebook</span></a>
+                            <a href={scuola.social.instagram} target="_blank" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i><span class="info-link-testo">Instagram</span><span class="sr-only"> (si apre in una nuova scheda)</span></a>
+                            <a href={scuola.social.facebook} target="_blank" rel="noopener"><i class="fab fa-facebook" aria-hidden="true"></i><span class="info-link-testo">Facebook</span><span class="sr-only"> (si apre in una nuova scheda)</span></a>
                         </div>
                     </div>
                     </div>

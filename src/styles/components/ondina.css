@@ -12,7 +12,7 @@
   flex-shrink: 0;
   width: var(--ondina-w);
   height: var(--ondina-h);
-  background: rgb(var(--blu-rgb) / .4);
+  background: rgb(var(--blu-rgb) / .65);
   -webkit-mask: var(--ondina-svg) 50% 50% / var(--ondina-periodo) var(--ondina-h) repeat-x;
   mask: var(--ondina-svg) 50% 50% / var(--ondina-periodo) var(--ondina-h) repeat-x;
 }

@@ -175,6 +175,11 @@
   --hero-rapporto: 16 / 4;
   --hero-altezza-min: 22.5rem;
   /* Onda decorativa tra le sezioni: altezza e passo (più piccole su mobile) */
+  /* Ondina doppia: separatore minimale tra gruppi dentro una card (due linee sinusoidali parallele).
+     Usata come maschera sul colore del separatore; larghezza = 3 periodi (--ondina-w = 3 × 24px). */
+  --ondina-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.25' stroke-linecap='round'%3E%3Cpath d='M0 3Q6 0 12 3T24 3'/%3E%3Cpath d='M0 9Q6 6 12 9T24 9'/%3E%3C/g%3E%3C/svg%3E");
+  --ondina-w: 72px;
+  --ondina-h: 12px;
   --onda-h: 34px;
   --onda-w: 480px;
   --onda-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28' preserveAspectRatio='none'%3E%3Cpath fill-opacity='.55' d='M0 9Q30 1 60 9T120 9V28H0Z'/%3E%3Cpath d='M0 19Q30 11 60 19T120 19V28H0Z'/%3E%3C/svg%3E");

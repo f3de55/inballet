@@ -243,19 +243,21 @@ a.info-valore {
 
 .orari-grid {
   list-style: none;
-  width: fit-content;
-  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
   padding: 0;
   font-size: var(--body-size);
   line-height: var(--body-lh);
 }
 
+/* Giorno e orario sono centrati sull'asse della card, come i dati di recapiti e sedi. */
 .orario-item {
-  display: grid;
-  grid-template-columns: 3.5rem 1fr;
-  gap: 1rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: .6rem;
   padding: .3rem 0;
+  text-align: center;
 }
 
 .orario-item + .orario-item {

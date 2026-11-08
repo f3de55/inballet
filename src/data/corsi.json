@@ -6,7 +6,7 @@
     "ogDescription": "Iniziare da zero, ricominciare dopo anni o continuare: a InBallet c'è un corso anche per te.",
     "badge": "Adulti",
     "titolo": "Danza per adulti",
-    "tagline": "Iniziare da zero, ricominciare dopo anni o continuare: a Lainate e Rho c'è un corso per adulti di ogni età",
+    "tagline": "<strong>Iniziare da zero</strong>, ricominciare dopo anni o continuare: a Lainate e Rho c'è un corso per <strong>adulti di ogni età</strong>",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/adulti-desktop.png",
       "tablet": "assets/images/hero-corsi/adulti-tablet.png",
@@ -68,7 +68,7 @@
     "ogDescription": "Il primo approccio a musica e movimento attraverso il gioco, in una classe a numero chiuso.",
     "badge": "Dai 3 anni",
     "titolo": "Avviamento alla Danza",
-    "tagline": "Dai 3 anni compiuti, il primo incontro con la musica e il movimento attraverso il gioco, a Lainate e Rho",
+    "tagline": "Dai <strong>3 anni compiuti</strong>, il primo incontro con la <strong>musica e il movimento</strong> attraverso il gioco, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/foto/preeducazione-1.png",
       "tablet": "assets/images/foto/preeducazione-1-tablet.png"
@@ -127,7 +127,7 @@
     "ogDescription": "Classica, Modern, Contemporanea, Hip-Hop e Breaking: l'età per consolidare la tecnica e trovare il proprio stile.",
     "badge": "9-11 anni",
     "titolo": "Danza per bambini da 9 a 11 anni",
-    "tagline": "Per bambini da 9 a 11 anni: consolidare la tecnica e scoprire il proprio stile, a Lainate e Rho",
+    "tagline": "Per <strong>bambini da 9 a 11 anni</strong>: consolidare la <strong>tecnica</strong> e scoprire il proprio stile, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/bambini-desktop.png",
       "tablet": "assets/images/hero-corsi/bambini-tablet.png",
@@ -187,7 +187,7 @@
     "ogDescription": "La danza a terra della cultura Hip-Hop: passi in piedi, movimenti al pavimento e freeze.",
     "badge": "Dai 6 anni",
     "titolo": "Corso di Breaking",
-    "tagline": "Dai 6 anni, per livelli: la danza della cultura Hip-Hop, dal cerchio ai freeze, a Lainate e Rho",
+    "tagline": "Dai <strong>6 anni</strong>, per livelli: la danza della <strong>cultura Hip-Hop</strong>, dal cerchio ai freeze, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/breaking-desktop.png",
       "tablet": "assets/images/hero-corsi/breaking-tablet.png",
@@ -247,7 +247,7 @@
     "ogDescription": "Hatha Yoga e Pilates in gruppo, da soli o accanto ai corsi di danza.",
     "badge": "Adulti",
     "titolo": "Classi di Yoga e Pilates",
-    "tagline": "Hatha Yoga e Pilates in gruppo per adulti di tutte le età: corpo e mente in equilibrio, a Lainate e Rho",
+    "tagline": "<strong>Hatha Yoga e Pilates</strong> in gruppo per <strong>adulti di tutte le età</strong>: corpo e mente in equilibrio, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/classi-desktop.png",
       "tablet": "assets/images/hero-corsi/classi-tablet.png",
@@ -308,7 +308,7 @@
     "ogDescription": "Improvvisazione e contatto tra due corpi: un linguaggio universale, condiviso e trasmesso.",
     "badge": "Improvvisazione",
     "titolo": "Contact Improvisation",
-    "tagline": "Per danzatori: due corpi in ascolto, un linguaggio universale, in una classe settimanale a Lainate e Rho",
+    "tagline": "Per <strong>danzatori</strong>: due corpi in ascolto, un <strong>linguaggio universale</strong>, in una classe settimanale a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/contact-improvisation-desktop.png",
       "tablet": "assets/images/hero-corsi/contact-improvisation-tablet.png",
@@ -368,7 +368,7 @@
     "ogDescription": "Tecniche liriche e urbane in un unico stile, con un piano di lavoro personalizzato.",
     "badge": "Dai 16 anni",
     "titolo": "Contaminato",
-    "tagline": "Dai 16 anni, con esperienza: tecniche liriche e urbane che confluiscono in un unico stile, a Lainate e Rho",
+    "tagline": "Dai <strong>16 anni, con esperienza</strong>: tecniche <strong>liriche e urbane</strong> che confluiscono in un unico stile, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/contaminato-desktop.png",
       "tablet": "assets/images/hero-corsi/contaminato-tablet.png",
@@ -429,7 +429,7 @@
     "ogDescription": "Un corso vero e proprio per chi ricomincia dopo anni di stop o inizia da zero, dai 40 anni in su.",
     "badge": "Dai 40 anni",
     "titolo": "Danza Contemporanea Adulti",
-    "tagline": "Dai 40 anni, senza limiti di età: ricominciare dopo anni di stop o iniziare da zero, a Lainate e Rho",
+    "tagline": "Dai <strong>40 anni</strong>, senza limiti di età: <strong>ricominciare dopo anni di stop</strong> o iniziare da zero, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/adulti-desktop.png",
       "tablet": "assets/images/hero-corsi/adulti-tablet.png",
@@ -491,7 +491,7 @@
     "ogDescription": "Dinamiche aeree, emozionanti e scenografiche per danzatori di ogni stile.",
     "badge": "Ogni stile",
     "titolo": "Danza Acrobatica",
-    "tagline": "Per danzatori di ogni stile: dinamiche aeree e linee precise, per stupire e stupirsi, a Lainate e Rho",
+    "tagline": "Per <strong>danzatori di ogni stile</strong>: <strong>dinamiche aeree</strong> e linee precise, per stupire e stupirsi, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/danza-acrobatica-desktop.png",
       "tablet": "assets/images/hero-corsi/danza-acrobatica-tablet.png",
@@ -553,7 +553,7 @@
     "ogDescription": "La tecnica accademica dalla sbarra al centro, per bambini, ragazzi e adulti.",
     "badge": "Tutti i livelli",
     "titolo": "Danza Classica",
-    "tagline": "Per bambini, ragazzi e adulti: la tecnica alla base di ogni stile, dalla sbarra al centro, a Lainate e Rho",
+    "tagline": "Per <strong>bambini, ragazzi e adulti</strong>: la <strong>tecnica</strong> alla base di ogni stile, dalla sbarra al centro, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/foto/danza-classica.png",
       "tablet": "assets/images/foto/danza-classica-tablet.png"
@@ -612,7 +612,7 @@
     "ogDescription": "L'evoluzione più attuale della danza: l'arte più libera del movimento.",
     "badge": "Dai 10 anni",
     "titolo": "Danza Contemporanea",
-    "tagline": "Dai 10 anni: l'evoluzione più attuale della danza, l'arte più libera del movimento, a Lainate e Rho",
+    "tagline": "Dai <strong>10 anni</strong>: l'evoluzione più attuale della danza, l'<strong>arte più libera del movimento</strong>, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-danza-contemporanea.jpg",
       "tablet": "assets/images/hero-corsi/danza-contemporanea-tablet.png",
@@ -673,7 +673,7 @@
     "ogDescription": "Gli stimoli motori diventano competenze psicomotorie: ritmo, posizioni e prime sequenze.",
     "badge": "4-5 anni",
     "titolo": "Educazione alla Danza",
-    "tagline": "Per bambini di 4-5 anni: ritmo, ascolto e prime sequenze, sempre giocando, a Lainate e Rho",
+    "tagline": "Per <strong>bambini di 4-5 anni</strong>: ritmo, ascolto e <strong>prime sequenze</strong>, sempre giocando, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/foto/educazione-alla-danza-1.png",
       "tablet": "assets/images/foto/educazione-alla-danza-1-tablet.png"
@@ -733,7 +733,7 @@
     "ogDescription": "Femminilità, portamento e sensualità: il linguaggio del corpo sui tacchi.",
     "badge": "Urban",
     "titolo": "Corso di Heels",
-    "tagline": "Per danzatori: portamento, femminilità e sensualità sui tacchi, in una lezione settimanale a Lainate e Rho",
+    "tagline": "Per <strong>danzatori</strong>: <strong>portamento, femminilità</strong> e sensualità sui tacchi, in una lezione settimanale a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/heels-desktop.png",
       "tablet": "assets/images/hero-corsi/heels-tablet.png",
@@ -794,7 +794,7 @@
     "ogDescription": "Old School, Popping, Locking, House, Krump e molto altro: la cultura Hip-Hop in sala.",
     "badge": "Dai 6 anni",
     "titolo": "Corso di Hip-Hop",
-    "tagline": "Dai 6 anni, in gruppi per età: energia, groove e stile urbano in ogni passo, a Lainate e Rho",
+    "tagline": "Dai <strong>6 anni</strong>, in gruppi per età: <strong>energia, groove</strong> e stile urbano in ogni passo, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/hip-hop-desktop.png",
       "tablet": "assets/images/hero-corsi/hip-hop-tablet.png",
@@ -856,7 +856,7 @@
     "ogDescription": "Un insegnante dedicato a un solo allievo, per esigenze specifiche o grazie alle borse di studio.",
     "badge": "Tutte le età",
     "titolo": "Lezioni Individuali",
-    "tagline": "Per bambini, ragazzi e adulti: un percorso su misura, pensato esclusivamente per te, a Lainate e Rho",
+    "tagline": "Per <strong>bambini, ragazzi e adulti</strong>: un <strong>percorso su misura</strong>, pensato esclusivamente per te, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/lezioni-individuali-desktop.png",
       "tablet": "assets/images/hero-corsi/lezioni-individuali-tablet.png",
@@ -918,7 +918,7 @@
     "ogDescription": "Tecnica, emozione e immaginazione: lo studio della Modern Dance e dei suoi grandi maestri.",
     "badge": "Dai 6 anni",
     "titolo": "Danza Modern",
-    "tagline": "Dai 6 anni, per livelli: tecnica, emozione e immaginazione, la danza senza schemi, a Lainate e Rho",
+    "tagline": "Dai <strong>6 anni</strong>, per livelli: <strong>tecnica ed emozione</strong>, la danza senza schemi, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/foto/modern-contrasti.png",
       "tablet": "assets/images/foto/modern-contrasti-tablet.png"
@@ -978,7 +978,7 @@
     "ogDescription": "Dialogare con il proprio corpo partendo dalla mente: un percorso per danzatori e non, dai 18 anni.",
     "badge": "Dai 18 anni",
     "titolo": "Movimento Creativo",
-    "tagline": "Per adulti dai 18 anni, danzatori e non: dialogare con il proprio corpo, partendo dalla mente, a Lainate e Rho",
+    "tagline": "Per <strong>adulti dai 18 anni</strong>, danzatori e non: <strong>dialogare con il proprio corpo</strong>, partendo dalla mente, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/movimento-creativo-desktop.png",
       "tablet": "assets/images/hero-corsi/movimento-creativo-tablet.png",
@@ -1039,7 +1039,7 @@
     "ogDescription": "Il metodo di Joseph Pilates per livelli: Power House, postura e respirazione.",
     "badge": "Adulti - tutti i livelli",
     "titolo": "Corso di Pilates",
-    "tagline": "Per adulti di tutte le età: controllare i muscoli con la mente, partendo dalla Power House, a Lainate e Rho",
+    "tagline": "Per <strong>adulti di tutte le età</strong>: controllare i muscoli con la mente, partendo dalla <strong>Power House</strong>, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/pilates-desktop.png",
       "tablet": "assets/images/hero-corsi/pilates-tablet.png",
@@ -1101,7 +1101,7 @@
     "ogDescription": "Avviamento ed Educazione alla Danza: gioco, musica e movimento per i più piccoli.",
     "badge": "3-5 anni",
     "titolo": "Danza per bambini da 3 a 5 anni",
-    "tagline": "Per bambini da 3 a 5 anni: i primi passi nella danza, attraverso il gioco e la musica, a Lainate e Rho",
+    "tagline": "Per <strong>bambini da 3 a 5 anni</strong>: i <strong>primi passi</strong> nella danza, attraverso il gioco e la musica, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/prima-infanzia-desktop.png",
       "tablet": "assets/images/hero-corsi/prima-infanzia-tablet.png",
@@ -1162,7 +1162,7 @@
     "ogDescription": "Tecnica, stile personale e palcoscenico: i corsi per ragazze e ragazzi dai 12 ai 16 anni.",
     "badge": "12-16 anni",
     "titolo": "Danza per ragazzi da 12 a 16 anni",
-    "tagline": "Per ragazzi da 12 a 16 anni: tecnica, stile personale e palcoscenico, con corsi a Lainate e Rho",
+    "tagline": "Per <strong>ragazzi da 12 a 16 anni</strong>: tecnica, <strong>stile personale</strong> e palcoscenico, con corsi a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/ragazzi-desktop.png",
       "tablet": "assets/images/hero-corsi/ragazzi-tablet.png",
@@ -1223,7 +1223,7 @@
     "ogDescription": "Classica, Modern, Hip-Hop e Breaking: a 6 anni si sceglie il primo stile.",
     "badge": "6-8 anni",
     "titolo": "Danza per bambini da 6 a 8 anni",
-    "tagline": "Per bambini da 6 a 8 anni: a 6 anni si sceglie il primo stile, dal gioco alla tecnica, a Lainate e Rho",
+    "tagline": "Per <strong>bambini da 6 a 8 anni</strong>: a 6 anni si sceglie il <strong>primo stile</strong>, dal gioco alla tecnica, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/seconda-infanzia-desktop.png",
       "tablet": "assets/images/hero-corsi/seconda-infanzia-tablet.png",
@@ -1284,7 +1284,7 @@
     "ogDescription": "Un'ora e mezza dedicata a te: asana, pranayama e meditazione.",
     "badge": "Adulti - tutti i livelli",
     "titolo": "Corso di Hatha Yoga",
-    "tagline": "Per adulti di tutte le età: un'ora e mezza dedicata a te, tra respiro, posture e quiete, a Lainate e Rho",
+    "tagline": "Per <strong>adulti di tutte le età</strong>: <strong>un'ora e mezza</strong> dedicata a te, tra respiro, posture e quiete, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-corsi/yoga-desktop.png",
       "tablet": "assets/images/hero-corsi/yoga-tablet.png",

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 560" fill="none">
+  <defs>
+    <linearGradient id="nastro" x1="0" y1="440" x2="1600" y2="300" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#87ceeb" stop-opacity=".055"/>
+      <stop offset=".38" stop-color="#87ceeb" stop-opacity=".015"/>
+      <stop offset=".7" stop-color="#87ceeb" stop-opacity=".035"/>
+      <stop offset="1" stop-color="#87ceeb" stop-opacity=".095"/>
+    </linearGradient>
+    <linearGradient id="filo" x1="0" y1="400" x2="1600" y2="260" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#87ceeb" stop-opacity=".2"/>
+      <stop offset=".38" stop-color="#87ceeb" stop-opacity=".035"/>
+      <stop offset=".7" stop-color="#87ceeb" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#87ceeb" stop-opacity=".25"/>
+    </linearGradient>
+    <linearGradient id="piega" x1="1100" y1="560" x2="1580" y2="110" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#87ceeb" stop-opacity="0"/>
+      <stop offset=".55" stop-color="#87ceeb" stop-opacity=".04"/>
+      <stop offset="1" stop-color="#87ceeb" stop-opacity=".075"/>
+    </linearGradient>
+    <linearGradient id="risvolto" x1="1350" y1="90" x2="1510" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#87ceeb" stop-opacity="0"/>
+      <stop offset=".45" stop-color="#87ceeb" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#87ceeb" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Un nastro continuo attraversa il margine inferiore, lasciando ariosa la mappa del sito. -->
+  <path d="M-120 240C110 240 210 505 560 518C970 534 1050 248 1370 240C1520 236 1630 298 1720 375L1720 452C1570 312 1490 294 1350 311C1070 345 985 574 585 573C225 572 80 332-120 322Z" fill="url(#nastro)"/>
+  <g stroke="url(#filo)" stroke-width="1" vector-effect="non-scaling-stroke">
+    <path d="M-120 240C110 240 210 505 560 518C970 534 1050 248 1370 240C1520 236 1630 298 1720 375"/>
+    <path d="M-120 281C95 286 220 540 572 546C978 553 1060 297 1360 276C1505 266 1600 305 1720 413" opacity=".55"/>
+    <path d="M-120 322C80 332 225 572 585 573C985 574 1070 345 1350 311C1490 294 1570 312 1720 452" opacity=".7"/>
+  </g>
+
+  <!-- La piega risale sul bordo destro, come la traiettoria di un gesto di danza. -->
+  <path d="M1030 600C1205 508 1500 431 1540 262C1560 177 1510 117 1420 119C1330 121 1280 198 1317 268C1359 348 1530 380 1710 284L1710 332C1520 412 1350 375 1290 285C1228 192 1306 89 1415 92C1535 88 1605 165 1577 277C1531 459 1250 559 1140 600Z" fill="url(#piega)"/>
+  <path d="M1030 600C1205 508 1500 431 1540 262C1560 177 1510 117 1420 119C1330 121 1280 198 1317 268C1359 348 1530 380 1710 284" stroke="url(#risvolto)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+  <path d="M1140 600C1250 559 1531 459 1577 277C1605 165 1535 88 1415 92C1306 89 1228 192 1290 285C1350 375 1520 412 1710 332" stroke="url(#risvolto)" stroke-width="1" opacity=".5" vector-effect="non-scaling-stroke"/>
+</svg>

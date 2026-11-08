@@ -17,6 +17,17 @@
   padding: var(--footer-y) 0 0;
 }
 
+/* Desktop: nastro vettoriale trasparente, ancorato in basso sul nero originale.
+   Le proporzioni restano costanti anche sui monitor larghi; nessuno spazio aggiunto al footer. */
+@media (min-width: 1025px) {
+  .footer {
+    background-image: var(--decoro-footer-desktop);
+    background-position: center bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+
 @media (max-width: 1024px) {
   .footer {
     --footer-y: 2rem;

@@ -190,6 +190,7 @@
   --decoro-onde: url('../../assets/images/decorazioni/onde-destra.webp');
   --decoro-onde-sinistra: url('../../assets/images/decorazioni/onde-sinistra.webp');
   --decoro-curve-scuro: url('../../assets/images/decorazioni/curve-scuro.svg');
+  --decoro-footer-desktop: url('../../assets/images/decorazioni/footer-desktop.svg');
 }
 
 /* Tablet e mobile: navbar più bassa (menu hamburger) */

@@ -32,20 +32,25 @@ for await (const file of sources(path.join(root, 'src'))) {
 }
 
 const css = await readFile(path.join(faDir, 'css/all.min.css'), 'utf8');
+const definite = new Set([...css.matchAll(/\.fa-([a-z0-9-]+)/g)].map((m) => m[1]));
+const sconosciute = [...used].filter((n) => !definite.has(n));
+if (sconosciute.length) throw new Error(`[icons] classi Font Awesome inesistenti: ${sconosciute.map((n) => `fa-${n}`).join(', ')}`);
 const codepoints = new Set(extraCodepoints);
 const iconRules = [];
 
-let base = css.replace(/([^{}]+)\{content:"\\([0-9a-f]+)"\}/g, (_, selectors, hex) => {
+let base = css.replace(/([^{}]+)\{--fa:"\\([0-9a-f]+)"\}/g, (_, selectors, hex) => {
   const kept = selectors.split(',').filter((sel) => {
-    const m = /^\.fa-([a-z0-9-]+):(?:before|after)$/.exec(sel.trim());
+    const m = /^\.fa-([a-z0-9-]+)$/.exec(sel.trim());
     return m && used.has(m[1]);
   });
   if (kept.length) {
-    iconRules.push(`${kept.join(',')}{content:"\\${hex}"}`);
+    iconRules.push(`${kept.join(',')}{--fa:"\\${hex}"}`);
     codepoints.add(parseInt(hex, 16));
   }
   return '';
 });
+
+if (!iconRules.length) throw new Error('[icons] nessuna icona estratta: il formato del CSS di Font Awesome è cambiato');
 
 base = base.replace(/@font-face\{[^}]*\}/g, '').replace(/\/\*![\s\S]*?\*\//, '');
 const fontFaces = FONTS.map(

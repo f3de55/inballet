@@ -148,7 +148,7 @@ Shared classes and tokens: every content section uses them.
 
 ### Icons
 
-`scripts/icons.mjs` generates a Font Awesome subset from `@fortawesome/fontawesome-free`. It scans source files for `fa-*` class usage and builds a minimal subset. Run `npm run icons` after adding any new Font Awesome icon class.
+`scripts/icons.mjs` generates a Font Awesome subset from `@fortawesome/fontawesome-free`. It scans source files for `fa-*` class usage and builds a minimal subset (Font Awesome 6.7 format, `--fa` per icon); it stops the build if a used class does not exist or no icon is extracted. Run `npm run icons` after adding any new Font Awesome icon class.
 
 ### Session & Auth
 

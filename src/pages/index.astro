@@ -31,10 +31,10 @@ const fondiDesktop = Object.fromEntries(await Promise.all(stili.map(async (cat) 
 
 // Parole chiave in grassetto nelle card dei quattro stili (le sintesi restano testo semplice nei dati)
 const grassettoStili: Record<string, string[]> = {
-  classica: ['3 anni', 'livelli avanzati'],
+  'classica-moderna': ['3 anni', 'livelli avanzati'],
   contemporanea: ['dai 10 anni in su', 'anche da zero'],
-  'hip-hop': ['Hip-Hop', 'dai 6 anni'],
-  yoga: ['per il corpo e per la mente'],
+  urban: ['Hip-Hop', 'dai 6 anni'],
+  benessere: ['per il corpo e per la mente'],
 };
 
 // Formazione e progetti, come nel menu del sito: due gruppi con titolo, frase e voci

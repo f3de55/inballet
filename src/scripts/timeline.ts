@@ -43,17 +43,20 @@ if (timeline) {
       // Il raggio è lo spazio libero fuori dal contenuto (al massimo GIRO_MAX), uguale sui due lati.
       const mezzo = fondoRiga + (b.y - nodo / 2 - fondoRiga) / 2;
       const libero = Math.min(window.innerWidth - area.right, area.left);
-      const r = Math.max(12, Math.min(GIRO_MAX, libero - 8, (b.y - mezzo) / 2));
+      const fuori = Math.max(12, Math.min(GIRO_MAX, libero - 8));
+      const r = Math.min(fuori, (b.y - mezzo) / 2);
       const k = r * 0.5523;
       const W = area.width;
-      d += ` L ${W} ${a.y}`;
-      d += ` C ${W + k} ${a.y} ${W + r} ${a.y + r - k} ${W + r} ${a.y + r}`;
-      d += ` L ${W + r} ${mezzo - r}`;
-      d += ` C ${W + r} ${mezzo - r + k} ${W + k} ${mezzo} ${W} ${mezzo}`;
-      d += ` L 0 ${mezzo}`;
-      d += ` C ${-k} ${mezzo} ${-r} ${mezzo + r - k} ${-r} ${mezzo + r}`;
-      d += ` L ${-r} ${b.y - r}`;
-      d += ` C ${-r} ${b.y - r + k} ${-k} ${b.y} 0 ${b.y}`;
+      const xd = W + fuori;
+      const xs = -fuori;
+      d += ` L ${xd - r} ${a.y}`;
+      d += ` C ${xd - r + k} ${a.y} ${xd} ${a.y + r - k} ${xd} ${a.y + r}`;
+      d += ` L ${xd} ${mezzo - r}`;
+      d += ` C ${xd} ${mezzo - r + k} ${xd - r + k} ${mezzo} ${xd - r} ${mezzo}`;
+      d += ` L ${xs + r} ${mezzo}`;
+      d += ` C ${xs + r - k} ${mezzo} ${xs} ${mezzo + r - k} ${xs} ${mezzo + r}`;
+      d += ` L ${xs} ${b.y - r}`;
+      d += ` C ${xs} ${b.y - r + k} ${xs + r - k} ${b.y} ${xs + r} ${b.y}`;
       d += ` L ${b.x} ${b.y}`;
       fondoRiga = b.fondo;
     }

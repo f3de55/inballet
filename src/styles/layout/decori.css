@@ -3,8 +3,6 @@
  * .decoro-onde / .decoro-onde--sinistra: onde azzurre su tutta la sezione, come immagine di sfondo sopra il
  * colore della sezione (già sbiadite al 22% nel file; --sinistra: copia specchiata). Solo sulle sezioni bianche:
  * quelle azzurrine (--bg-soft) restano senza.
- * .decoro-fascia / .decoro-fascia--sinistra: le stesse onde dentro una fascia bianca con doppia onda (.fascia-onda),
- * sopra il suo bianco: le parti azzurrine tra una fascia e l'altra restano senza decorazione.
  * "section." vince sul "background" delle pagine senza toccarne il colore.
  * Le sezioni scure con fondo nero uniforme ricevono curve azzurre sottili e trasparenti.
  */
@@ -19,14 +17,6 @@
   section.decoro-onde--sinistra {
     background-image: var(--decoro-onde-sinistra);
     background-position: left bottom;
-  }
-
-  .decoro-fascia.fascia-onda::before {
-    background: var(--decoro-onde) right bottom / cover no-repeat, var(--fascia, var(--white));
-  }
-
-  .decoro-fascia--sinistra.fascia-onda::before {
-    background: var(--decoro-onde-sinistra) left bottom / cover no-repeat, var(--fascia, var(--white));
   }
 
   /* Le sezioni scure con foto hanno un elemento -bg e conservano il loro sfondo. */

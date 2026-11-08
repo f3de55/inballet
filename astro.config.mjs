@@ -24,16 +24,7 @@ export default defineConfig({
 
   // URL puliti senza slash finale: /chi-siamo -> dist/client/chi-siamo.html
   trailingSlash: 'never',
-  build: {
-    format: 'file',
-    // CSS piccoli (specifici di pagina) inline, il CSS globale resta in cache
-    inlineStylesheets: 'auto',
-  },
-
-  compressHTML: true,
-
-  // Stili scoped dei componenti con :where(): stessa specificità del CSS originale
-  scopedStyleStrategy: 'where',
+  build: { format: 'file' },
 
   // Prefetch dei link interni al passaggio del mouse: navigazione istantanea
   prefetch: {
@@ -112,10 +103,5 @@ export default defineConfig({
     // Il client delle Actions è caricato solo all'apertura della chat: senza questa riga, in sviluppo
     // Vite lo scopre in quel momento, lo ricompila e la chat aperta riceve un 504 "Outdated Optimize Dep"
     optimizeDeps: { include: ['astro/actions/runtime/entrypoints/client.js'] },
-  },
-
-  image: {
-    // Immagini locali convertite in WebP e ridimensionate al build
-    responsiveStyles: false,
   },
 });

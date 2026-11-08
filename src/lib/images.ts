@@ -40,7 +40,7 @@ export function varFuoco(fuoco: Fuoco = {}): string {
 }
 
 /** Foto diverse per formato (es. un banner largo solo su desktop). */
-export type Sorgenti = string | { desktop: string; tablet?: string; mobile?: string };
+type Sorgenti = string | { desktop: string; tablet?: string; mobile?: string };
 
 /**
  * Sfondo responsive: WebP della giusta larghezza per desktop, tablet e mobile
@@ -64,8 +64,8 @@ export async function sfondo(sorgenti: Sorgenti, fuoco: Fuoco = {}) {
 }
 
 /** Fotografie CTA dedicate, con tre tagli e inquadrature per tema. */
-export const TEMI_CTA = ['danza', 'urban', 'bambini', 'benessere', 'formazione', 'comunita', 'ascolto'] as const;
-export type TemaCta = (typeof TEMI_CTA)[number];
+const TEMI_CTA = ['danza', 'urban', 'bambini', 'benessere', 'formazione', 'comunita', 'ascolto'] as const;
+type TemaCta = (typeof TEMI_CTA)[number];
 
 /** I formati si scelgono con gli stessi breakpoint delle CTA (900 e 600px). */
 export function sfondoCta(tema: TemaCta = 'danza') {

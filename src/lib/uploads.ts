@@ -15,7 +15,7 @@ import { ensureDir, paths } from './storage';
 import { romeIso } from './time';
 
 export const PUBLIC_PREFIX = 'assets/images/eventi/';
-export const MAX_SIZE = 20 * 1024 * 1024; // 20MB
+const MAX_SIZE = 20 * 1024 * 1024; // 20MB
 /** Lato lungo della locandina pubblicata e della miniatura */
 const LATO = 1600;
 const LATO_MINI = 480;
@@ -30,7 +30,7 @@ export const MIME: Record<string, string> = {
   webp: 'image/webp',
 };
 
-export interface Immagine {
+interface Immagine {
   nome: string;
   path: string;
   /** Miniatura per la libreria della dashboard */
@@ -38,7 +38,7 @@ export interface Immagine {
 }
 
 /** Tipo MIME reale dai magic bytes (come finfo in PHP), o null. */
-function sniffMime(buf: Uint8Array): string | null {
+export function sniffMime(buf: Uint8Array): string | null {
   const ascii = (start: number, end: number) => String.fromCharCode(...buf.subarray(start, end));
   if (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) return 'image/jpeg';
   if (buf[0] === 0x89 && ascii(1, 4) === 'PNG') return 'image/png';

@@ -24,7 +24,7 @@ import { scuola } from '../../data/scuola';
 import { leggiSito, testoPagine, type Pagina } from './pagine';
 
 /** Indicatore per la verifica "il modello non deve ripetere le istruzioni". */
-export const SEGNO_ISTRUZIONI = 'ETOILE-ISTRUZIONI';
+const SEGNO_ISTRUZIONI = 'ETOILE-ISTRUZIONI';
 
 const ISTRUZIONI = `[${SEGNO_ISTRUZIONI}]
 Sei Étoile, l'assistente virtuale del sito di ${scuola.nome} (I.N. Ballet), scuola di danza a Lainate e Rho, in provincia di Milano. Rispondi a chi visita il sito: soprattutto genitori, ragazzi e adulti che cercano un corso.

@@ -8,8 +8,8 @@
     "titolo": "Danza per adulti",
     "tagline": "<strong>Iniziare da zero</strong>, ricominciare dopo anni o continuare: a Lainate e Rho c'è un corso per <strong>adulti di ogni età</strong>",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/adulti-desktop.png",
-      "tablet": "assets/images/hero-corsi/adulti-tablet.png",
+      "desktop": "assets/images/hero-corsi/adulti-desktop.webp",
+      "tablet": "assets/images/hero-corsi/adulti-tablet.webp",
       "mobile": "assets/images/foto/danza-dolce.jpg"
     },
     "heroFuoco": {
@@ -70,8 +70,8 @@
     "titolo": "Avviamento alla Danza",
     "tagline": "Dai <strong>3 anni compiuti</strong>, il primo incontro con la <strong>musica e il movimento</strong> attraverso il gioco, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/foto/preeducazione-1.png",
-      "tablet": "assets/images/foto/preeducazione-1-tablet.png"
+      "desktop": "assets/images/foto/preeducazione-1.webp",
+      "tablet": "assets/images/foto/preeducazione-1-tablet.webp"
     },
     "heroFuoco": {
       "desktop": "50% 30%"
@@ -129,8 +129,8 @@
     "titolo": "Danza per bambini da 9 a 11 anni",
     "tagline": "Per <strong>bambini da 9 a 11 anni</strong>: consolidare la <strong>tecnica</strong> e scoprire il proprio stile, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/bambini-desktop.png",
-      "tablet": "assets/images/hero-corsi/bambini-tablet.png",
+      "desktop": "assets/images/hero-corsi/bambini-desktop.webp",
+      "tablet": "assets/images/hero-corsi/bambini-tablet.webp",
       "mobile": "assets/images/bg-progetti-territorio.jpg"
     },
     "heroFuoco": {
@@ -189,8 +189,8 @@
     "titolo": "Corso di Breaking",
     "tagline": "Dai <strong>6 anni</strong>, per livelli: la danza della <strong>cultura Hip-Hop</strong>, dal cerchio ai freeze, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/breaking-desktop.png",
-      "tablet": "assets/images/hero-corsi/breaking-tablet.png",
+      "desktop": "assets/images/hero-corsi/breaking-desktop.webp",
+      "tablet": "assets/images/hero-corsi/breaking-tablet.webp",
       "mobile": "assets/images/foto/breaking.jpg"
     },
     "heroFuoco": {
@@ -249,8 +249,8 @@
     "titolo": "Classi di Yoga e Pilates",
     "tagline": "<strong>Hatha Yoga e Pilates</strong> in gruppo per <strong>adulti di tutte le età</strong>: corpo e mente in equilibrio, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/classi-desktop.png",
-      "tablet": "assets/images/hero-corsi/classi-tablet.png",
+      "desktop": "assets/images/hero-corsi/classi-desktop.webp",
+      "tablet": "assets/images/hero-corsi/classi-tablet.webp",
       "mobile": "assets/images/gallery-5.jpg"
     },
     "heroFuoco": {
@@ -310,8 +310,8 @@
     "titolo": "Contact Improvisation",
     "tagline": "Per <strong>danzatori</strong>: due corpi in ascolto, un <strong>linguaggio universale</strong>, in una classe settimanale a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/contact-improvisation-desktop.png",
-      "tablet": "assets/images/hero-corsi/contact-improvisation-tablet.png",
+      "desktop": "assets/images/hero-corsi/contact-improvisation-desktop.webp",
+      "tablet": "assets/images/hero-corsi/contact-improvisation-tablet.webp",
       "mobile": "assets/images/foto/contactimprovisation.jpg"
     },
     "heroFuoco": {
@@ -370,8 +370,8 @@
     "titolo": "Contaminato",
     "tagline": "Dai <strong>16 anni, con esperienza</strong>: tecniche <strong>liriche e urbane</strong> che confluiscono in un unico stile, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/contaminato-desktop.png",
-      "tablet": "assets/images/hero-corsi/contaminato-tablet.png",
+      "desktop": "assets/images/hero-corsi/contaminato-desktop.webp",
+      "tablet": "assets/images/hero-corsi/contaminato-tablet.webp",
       "mobile": "assets/images/foto/contaminato.jpg"
     },
     "heroFuoco": {
@@ -431,8 +431,8 @@
     "titolo": "Danza Contemporanea Adulti",
     "tagline": "Dai <strong>40 anni</strong>, senza limiti di età: <strong>ricominciare dopo anni di stop</strong> o iniziare da zero, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/adulti-desktop.png",
-      "tablet": "assets/images/hero-corsi/adulti-tablet.png",
+      "desktop": "assets/images/hero-corsi/adulti-desktop.webp",
+      "tablet": "assets/images/hero-corsi/adulti-tablet.webp",
       "mobile": "assets/images/foto/danza-dolce.jpg"
     },
     "heroFuoco": {
@@ -493,8 +493,8 @@
     "titolo": "Danza Acrobatica",
     "tagline": "Per <strong>danzatori di ogni stile</strong>: <strong>dinamiche aeree</strong> e linee precise, per stupire e stupirsi, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/danza-acrobatica-desktop.png",
-      "tablet": "assets/images/hero-corsi/danza-acrobatica-tablet.png",
+      "desktop": "assets/images/hero-corsi/danza-acrobatica-desktop.webp",
+      "tablet": "assets/images/hero-corsi/danza-acrobatica-tablet.webp",
       "mobile": "assets/images/foto/danzacontemporanea.jpg"
     },
     "heroFuoco": {
@@ -555,8 +555,8 @@
     "titolo": "Danza Classica",
     "tagline": "Per <strong>bambini, ragazzi e adulti</strong>: la <strong>tecnica</strong> alla base di ogni stile, dalla sbarra al centro, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/foto/danza-classica.png",
-      "tablet": "assets/images/foto/danza-classica-tablet.png"
+      "desktop": "assets/images/foto/danza-classica.webp",
+      "tablet": "assets/images/foto/danza-classica-tablet.webp"
     },
     "heroFuoco": {
       "desktop": "50% 25%",
@@ -615,7 +615,7 @@
     "tagline": "Dai <strong>10 anni</strong>: l'evoluzione più attuale della danza, l'<strong>arte più libera del movimento</strong>, a Lainate e Rho",
     "heroImage": {
       "desktop": "assets/images/hero-danza-contemporanea.jpg",
-      "tablet": "assets/images/hero-corsi/danza-contemporanea-tablet.png",
+      "tablet": "assets/images/hero-corsi/danza-contemporanea-tablet.webp",
       "mobile": "assets/images/hero-danza-contemporanea.jpg"
     },
     "heroFuoco": {
@@ -675,8 +675,8 @@
     "titolo": "Educazione alla Danza",
     "tagline": "Per <strong>bambini di 4-5 anni</strong>: ritmo, ascolto e <strong>prime sequenze</strong>, sempre giocando, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/foto/educazione-alla-danza-1.png",
-      "tablet": "assets/images/foto/educazione-alla-danza-1-tablet.png"
+      "desktop": "assets/images/foto/educazione-alla-danza-1.webp",
+      "tablet": "assets/images/foto/educazione-alla-danza-1-tablet.webp"
     },
     "heroFuoco": {
       "desktop": "50% 40%",
@@ -735,8 +735,8 @@
     "titolo": "Corso di Heels",
     "tagline": "Per <strong>danzatori</strong>: <strong>portamento, femminilità</strong> e sensualità sui tacchi, in una lezione settimanale a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/heels-desktop.png",
-      "tablet": "assets/images/hero-corsi/heels-tablet.png",
+      "desktop": "assets/images/hero-corsi/heels-desktop.webp",
+      "tablet": "assets/images/hero-corsi/heels-tablet.webp",
       "mobile": "assets/images/gallery-2.jpg"
     },
     "heroFuoco": {
@@ -796,8 +796,8 @@
     "titolo": "Corso di Hip-Hop",
     "tagline": "Dai <strong>6 anni</strong>, in gruppi per età: <strong>energia, groove</strong> e stile urbano in ogni passo, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/hip-hop-desktop.png",
-      "tablet": "assets/images/hero-corsi/hip-hop-tablet.png",
+      "desktop": "assets/images/hero-corsi/hip-hop-desktop.webp",
+      "tablet": "assets/images/hero-corsi/hip-hop-tablet.webp",
       "mobile": "assets/images/foto/hiphop.jpg"
     },
     "heroFuoco": {
@@ -858,8 +858,8 @@
     "titolo": "Lezioni Individuali",
     "tagline": "Per <strong>bambini, ragazzi e adulti</strong>: un <strong>percorso su misura</strong>, pensato esclusivamente per te, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/lezioni-individuali-desktop.png",
-      "tablet": "assets/images/hero-corsi/lezioni-individuali-tablet.png",
+      "desktop": "assets/images/hero-corsi/lezioni-individuali-desktop.webp",
+      "tablet": "assets/images/hero-corsi/lezioni-individuali-tablet.webp",
       "mobile": "assets/images/gallery-4.jpg"
     },
     "heroFuoco": {
@@ -920,8 +920,8 @@
     "titolo": "Danza Modern",
     "tagline": "Dai <strong>6 anni</strong>, per livelli: <strong>tecnica ed emozione</strong>, la danza senza schemi, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/foto/modern-contrasti.png",
-      "tablet": "assets/images/foto/modern-contrasti-tablet.png"
+      "desktop": "assets/images/foto/modern-contrasti.webp",
+      "tablet": "assets/images/foto/modern-contrasti-tablet.webp"
     },
     "heroFuoco": {
       "desktop": "50% 70%",
@@ -980,8 +980,8 @@
     "titolo": "Movimento Creativo",
     "tagline": "Per <strong>adulti dai 18 anni</strong>, danzatori e non: <strong>dialogare con il proprio corpo</strong>, partendo dalla mente, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/movimento-creativo-desktop.png",
-      "tablet": "assets/images/hero-corsi/movimento-creativo-tablet.png",
+      "desktop": "assets/images/hero-corsi/movimento-creativo-desktop.webp",
+      "tablet": "assets/images/hero-corsi/movimento-creativo-tablet.webp",
       "mobile": "assets/images/gallery-10.jpg"
     },
     "heroFuoco": {
@@ -1041,8 +1041,8 @@
     "titolo": "Corso di Pilates",
     "tagline": "Per <strong>adulti di tutte le età</strong>: controllare i muscoli con la mente, partendo dalla <strong>Power House</strong>, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/pilates-desktop.png",
-      "tablet": "assets/images/hero-corsi/pilates-tablet.png",
+      "desktop": "assets/images/hero-corsi/pilates-desktop.webp",
+      "tablet": "assets/images/hero-corsi/pilates-tablet.webp",
       "mobile": "assets/images/foto/pilates.jpg"
     },
     "heroFuoco": {
@@ -1103,8 +1103,8 @@
     "titolo": "Danza per bambini da 3 a 5 anni",
     "tagline": "Per <strong>bambini da 3 a 5 anni</strong>: i <strong>primi passi</strong> nella danza, attraverso il gioco e la musica, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/prima-infanzia-desktop.png",
-      "tablet": "assets/images/hero-corsi/prima-infanzia-tablet.png",
+      "desktop": "assets/images/hero-corsi/prima-infanzia-desktop.webp",
+      "tablet": "assets/images/hero-corsi/prima-infanzia-tablet.webp",
       "mobile": "assets/images/gallery-8.jpg"
     },
     "heroFuoco": {
@@ -1164,8 +1164,8 @@
     "titolo": "Danza per ragazzi da 12 a 16 anni",
     "tagline": "Per <strong>ragazzi da 12 a 16 anni</strong>: tecnica, <strong>stile personale</strong> e palcoscenico, con corsi a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/ragazzi-desktop.png",
-      "tablet": "assets/images/hero-corsi/ragazzi-tablet.png",
+      "desktop": "assets/images/hero-corsi/ragazzi-desktop.webp",
+      "tablet": "assets/images/hero-corsi/ragazzi-tablet.webp",
       "mobile": "assets/images/gallery-6.jpg"
     },
     "heroFuoco": {
@@ -1225,8 +1225,8 @@
     "titolo": "Danza per bambini da 6 a 8 anni",
     "tagline": "Per <strong>bambini da 6 a 8 anni</strong>: a 6 anni si sceglie il <strong>primo stile</strong>, dal gioco alla tecnica, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/seconda-infanzia-desktop.png",
-      "tablet": "assets/images/hero-corsi/seconda-infanzia-tablet.png",
+      "desktop": "assets/images/hero-corsi/seconda-infanzia-desktop.webp",
+      "tablet": "assets/images/hero-corsi/seconda-infanzia-tablet.webp",
       "mobile": "assets/images/gallery-1.jpg"
     },
     "heroFuoco": {
@@ -1286,8 +1286,8 @@
     "titolo": "Corso di Hatha Yoga",
     "tagline": "Per <strong>adulti di tutte le età</strong>: <strong>un'ora e mezza</strong> dedicata a te, tra respiro, posture e quiete, a Lainate e Rho",
     "heroImage": {
-      "desktop": "assets/images/hero-corsi/yoga-desktop.png",
-      "tablet": "assets/images/hero-corsi/yoga-tablet.png",
+      "desktop": "assets/images/hero-corsi/yoga-desktop.webp",
+      "tablet": "assets/images/hero-corsi/yoga-tablet.webp",
       "mobile": "assets/images/foto/yoga.jpg"
     },
     "heroFuoco": {

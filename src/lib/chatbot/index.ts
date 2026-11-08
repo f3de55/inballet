@@ -20,7 +20,7 @@ import { scuola } from '../../data/scuola';
 
 export type { LogEntry } from './registro';
 
-export interface Messaggio {
+interface Messaggio {
   testo: string;
   /** ID della conversazione restituito alla risposta precedente */
   conversazione?: string;
@@ -30,7 +30,7 @@ export interface Messaggio {
   origine: string;
 }
 
-export interface Risposta {
+interface Risposta {
   /** HTML sicuro da mostrare nel fumetto */
   html: string;
   conversazione: string;

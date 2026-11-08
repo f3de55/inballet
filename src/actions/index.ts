@@ -16,24 +16,30 @@ import { eliminaTutto, PAROLA_CONFERMA } from '../lib/pulizia';
 import { eliminaDocumento, ErroreDocumenti, ordinaDocumenti, salvaDocumento, salvaTesti } from '../lib/documenti';
 import * as insegnanti from '../lib/insegnanti';
 
-/** Blocca le azioni della dashboard senza sessione valida. */
-async function soloAdmin(context: ActionAPIContext) {
-  if (!(await isLoggedIn(context.session))) {
-    throw new ActionError({ code: 'UNAUTHORIZED', message: 'Sessione scaduta: effettua di nuovo il login' });
-  }
+/**
+ * Azione della dashboard: senza sessione valida risponde UNAUTHORIZED, gli errori
+ * di validazione (con messaggio per l'utente) diventano BAD_REQUEST.
+ */
+function admin<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O>) {
+  return async (input: I, context: ActionAPIContext): Promise<O> => {
+    if (!(await isLoggedIn(context.session))) {
+      throw new ActionError({ code: 'UNAUTHORIZED', message: 'Sessione scaduta: effettua di nuovo il login' });
+    }
+    try {
+      return await handler(input, context);
+    } catch (e) {
+      if (e instanceof ErroreEvento || e instanceof ErroreDocumenti || e instanceof insegnanti.ErroreInsegnanti) {
+        throw new ActionError({ code: 'BAD_REQUEST', message: e.message });
+      }
+      throw e;
+    }
+  };
 }
 
-/** Converte gli errori di validazione in errori leggibili dal client. */
-async function conErrori<T>(fn: () => Promise<T>): Promise<T> {
-  try {
-    return await fn();
-  } catch (e) {
-    if (e instanceof ErroreEvento || e instanceof ErroreDocumenti || e instanceof insegnanti.ErroreInsegnanti) throw new ActionError({ code: 'BAD_REQUEST', message: e.message });
-    throw e;
-  }
-}
-
+const richiesta = (message: string) => new ActionError({ code: 'BAD_REQUEST', message });
 const campo = z.string().max(2000).optional();
+const perId = z.object({ id: z.string().max(40) });
+const ordine = (max: number) => z.object({ ids: z.array(z.string().max(40)).max(max) });
 
 export const server = {
   chatbot: {
@@ -61,10 +67,7 @@ export const server = {
     /** Verifica di qualità: una domanda di prova a un fornitore della catena (dashboard). */
     verifica: defineAction({
       input: z.object({ fornitore: z.string().max(40), modello: z.string().max(120), indice: z.number().int().min(0).max(100) }),
-      handler: async ({ fornitore, modello, indice }, context) => {
-        await soloAdmin(context);
-        return verifica({ fornitore, modello }, indice, context.url.origin);
-      },
+      handler: admin(({ fornitore, modello, indice }, context) => verifica({ fornitore, modello }, indice, context.url.origin)),
     }),
   },
 
@@ -73,92 +76,64 @@ export const server = {
     /** Regole di validazione in `inputEvento` (src/lib/eventi.ts): errori per campo nel modulo. */
     salva: defineAction({
       input: inputEvento,
-      handler: async (input, context) => {
-        await soloAdmin(context);
-        return conErrori(() => salvaEvento(input));
-      },
+      handler: admin((input) => salvaEvento(input)),
     }),
 
     elimina: defineAction({
       input: z.object({ id: z.string() }),
-      handler: async ({ id }, context) => {
-        await soloAdmin(context);
-        await conErrori(() => eliminaEvento(id.trim()));
-      },
+      handler: admin(({ id }) => eliminaEvento(id.trim())),
     }),
   },
 
   tipi: {
     lista: defineAction({
-      handler: async (_, context) => {
-        await soloAdmin(context);
-        return { tipi: await leggiTipi() };
-      },
+      handler: admin(async () => ({ tipi: await leggiTipi() })),
     }),
 
     aggiungi: defineAction({
       input: z.object({ tipo: z.string().max(200) }),
-      handler: async ({ tipo }, context) => {
-        await soloAdmin(context);
-        return { tipi: await conErrori(() => aggiungiTipo(tipo)) };
-      },
+      handler: admin(async ({ tipo }) => ({ tipi: await aggiungiTipo(tipo) })),
     }),
 
     rimuovi: defineAction({
       input: z.object({ tipo: z.string().max(200) }),
-      handler: async ({ tipo }, context) => {
-        await soloAdmin(context);
-        return { tipi: await conErrori(() => rimuoviTipo(tipo)) };
-      },
+      handler: admin(async ({ tipo }) => ({ tipi: await rimuoviTipo(tipo) })),
     }),
   },
 
   immagini: {
     lista: defineAction({
-      handler: async (_, context) => {
-        await soloAdmin(context);
-        return { immagini: await elencaImmagini() };
-      },
+      handler: admin(async () => ({ immagini: await elencaImmagini() })),
     }),
 
     carica: defineAction({
       accept: 'form',
       input: z.object({ immagini: z.array(z.instanceof(File)) }),
-      handler: async ({ immagini: files }, context) => {
-        await soloAdmin(context);
+      handler: admin(async ({ immagini: files }) => {
         const valid = files.filter((f) => f.size > 0);
-        if (!valid.length) throw new ActionError({ code: 'BAD_REQUEST', message: 'Nessun file caricato' });
+        if (!valid.length) throw richiesta('Nessun file caricato');
         const { immagini, errori } = await caricaImmagini(valid);
-        if (!immagini.length) throw new ActionError({ code: 'BAD_REQUEST', message: errori.join(', ') || 'Nessun file caricato' });
+        if (!immagini.length) throw richiesta(errori.join(', ') || 'Nessun file caricato');
         return { immagini, errori };
-      },
+      }),
     }),
 
     elimina: defineAction({
       input: z.object({ nome: z.string() }),
-      handler: async ({ nome }, context) => {
-        await soloAdmin(context);
+      handler: admin(async ({ nome }) => {
         const errore = await eliminaImmagine(nome);
-        if (errore) throw new ActionError({ code: 'BAD_REQUEST', message: errore });
-      },
+        if (errore) throw richiesta(errore);
+      }),
     }),
   },
 
   /** Pagina /documenti: testi e PDF da scaricare, modificabili dalla dashboard. */
   documenti: {
     salvaTesti: defineAction({
-      input: z.object({
-        heroTitolo: campo,
-        heroTesto: campo,
-        eyebrow: campo,
-        titolo: campo,
-        accento: campo,
-        intro: campo,
+      input: z.object({ heroTitolo: campo, heroTesto: campo, eyebrow: campo, titolo: campo, accento: campo, intro: campo }),
+      handler: admin(async (input) => {
+        await salvaTesti(input);
       }),
-      handler: async (input, context) => {
-        await soloAdmin(context);
-        await conErrori(() => salvaTesti(input));
-      },
     }),
 
     /** Crea o modifica un documento; con `file` carica (o sostituisce) il PDF. */
@@ -171,26 +146,17 @@ export const server = {
         categoria: z.enum(['modulo', 'statuto']).optional(),
         file: z.instanceof(File).optional(),
       }),
-      handler: async (input, context) => {
-        await soloAdmin(context);
-        return { documento: await conErrori(() => salvaDocumento(input)) };
-      },
+      handler: admin(async (input) => ({ documento: await salvaDocumento(input) })),
     }),
 
     elimina: defineAction({
-      input: z.object({ id: z.string().max(40) }),
-      handler: async ({ id }, context) => {
-        await soloAdmin(context);
-        await conErrori(() => eliminaDocumento(id));
-      },
+      input: perId,
+      handler: admin(({ id }) => eliminaDocumento(id)),
     }),
 
     ordina: defineAction({
-      input: z.object({ ids: z.array(z.string().max(40)).max(50) }),
-      handler: async ({ ids }, context) => {
-        await soloAdmin(context);
-        await conErrori(() => ordinaDocumenti(ids));
-      },
+      input: ordine(50),
+      handler: admin(({ ids }) => ordinaDocumenti(ids)),
     }),
   },
 
@@ -198,10 +164,9 @@ export const server = {
   insegnanti: {
     salvaTesti: defineAction({
       input: z.object({ eyebrow: campo, titolo: campo, accento: campo, intro: campo }),
-      handler: async (input, context) => {
-        await soloAdmin(context);
-        await conErrori(() => insegnanti.salvaTesti(input));
-      },
+      handler: admin(async (input) => {
+        await insegnanti.salvaTesti(input);
+      }),
     }),
 
     /** Crea o modifica un insegnante; con `foto` carica (o sostituisce) la foto. */
@@ -216,26 +181,17 @@ export const server = {
         foto: z.instanceof(File).optional(),
         togliFoto: z.string().max(5).optional(),
       }),
-      handler: async (input, context) => {
-        await soloAdmin(context);
-        return { insegnante: await conErrori(() => insegnanti.salvaInsegnante({ ...input, togliFoto: input.togliFoto === 'true' })) };
-      },
+      handler: admin(async (input) => ({ insegnante: await insegnanti.salvaInsegnante({ ...input, togliFoto: input.togliFoto === 'true' }) })),
     }),
 
     elimina: defineAction({
-      input: z.object({ id: z.string().max(40) }),
-      handler: async ({ id }, context) => {
-        await soloAdmin(context);
-        await conErrori(() => insegnanti.eliminaInsegnante(id));
-      },
+      input: perId,
+      handler: admin(({ id }) => insegnanti.eliminaInsegnante(id)),
     }),
 
     ordina: defineAction({
-      input: z.object({ ids: z.array(z.string().max(40)).max(60) }),
-      handler: async ({ ids }, context) => {
-        await soloAdmin(context);
-        await conErrori(() => insegnanti.ordinaInsegnanti(ids));
-      },
+      input: ordine(60),
+      handler: admin(({ ids }) => insegnanti.ordinaInsegnanti(ids)),
     }),
   },
 
@@ -243,58 +199,39 @@ export const server = {
   demo: {
     eventi: defineAction({
       input: z.object({ quanti: z.number().int().min(1).max(MAX_EVENTI) }),
-      handler: async ({ quanti }, context) => {
-        await soloAdmin(context);
-        return { creati: await generaEventi(quanti) };
-      },
+      handler: admin(async ({ quanti }) => ({ creati: await generaEventi(quanti) })),
     }),
 
     rimuoviEventi: defineAction({
-      handler: async (_, context) => {
-        await soloAdmin(context);
-        return { rimossi: await rimuoviEventiDemo() };
-      },
+      handler: admin(async () => ({ rimossi: await rimuoviEventiDemo() })),
     }),
 
     chatbot: defineAction({
       input: z.object({ quanti: z.number().int().min(1).max(MAX_MESSAGGI), giorni: z.number().int().min(1).max(365) }),
-      handler: async ({ quanti, giorni }, context) => {
-        await soloAdmin(context);
-        return { creati: await generaChat(quanti, giorni) };
-      },
+      handler: admin(async ({ quanti, giorni }) => ({ creati: await generaChat(quanti, giorni) })),
     }),
 
     rimuoviChatbot: defineAction({
-      handler: async (_, context) => {
-        await soloAdmin(context);
-        return { rimossi: await rimuoviChatDemo() };
-      },
+      handler: admin(async () => ({ rimossi: await rimuoviChatDemo() })),
     }),
 
     insegnanti: defineAction({
       input: z.object({ quanti: z.number().int().min(1).max(MAX_INSEGNANTI_DEMO) }),
-      handler: async ({ quanti }, context) => {
-        await soloAdmin(context);
-        return { creati: await generaInsegnanti(quanti) };
-      },
+      handler: admin(async ({ quanti }) => ({ creati: await generaInsegnanti(quanti) })),
     }),
 
     rimuoviInsegnanti: defineAction({
-      handler: async (_, context) => {
-        await soloAdmin(context);
-        return { rimossi: await insegnanti.rimuoviInsegnantiDemo() };
-      },
+      handler: admin(async () => ({ rimossi: await insegnanti.rimuoviInsegnantiDemo() })),
     }),
 
     /** Elimina TUTTI i dati scelti (anche quelli veri). Serve la parola di conferma. */
     eliminaTutto: defineAction({
       input: z.object({ eventi: z.boolean(), chatbot: z.boolean(), conferma: z.string() }),
-      handler: async ({ eventi, chatbot, conferma }, context) => {
-        await soloAdmin(context);
-        if (conferma.trim().toUpperCase() !== PAROLA_CONFERMA) throw new ActionError({ code: 'BAD_REQUEST', message: `Scrivi ${PAROLA_CONFERMA} per confermare` });
-        if (!eventi && !chatbot) throw new ActionError({ code: 'BAD_REQUEST', message: 'Scegli cosa eliminare' });
+      handler: admin(async ({ eventi, chatbot, conferma }) => {
+        if (conferma.trim().toUpperCase() !== PAROLA_CONFERMA) throw richiesta(`Scrivi ${PAROLA_CONFERMA} per confermare`);
+        if (!eventi && !chatbot) throw richiesta('Scegli cosa eliminare');
         return eliminaTutto({ eventi, chatbot });
-      },
+      }),
     }),
   },
 

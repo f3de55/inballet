@@ -31,6 +31,26 @@ export const mbLen = (s: string) => [...s].length;
 /** Primi `n` caratteri Unicode (mb_substr). */
 export const mbSlice = (s: string, n: number) => [...s].slice(0, n).join('');
 
+/** "Galà di Natale" → "gala-di-natale" (al massimo `max` caratteri, senza trattino finale). */
+export const slug = (s: string, max = 40) =>
+  s
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, max)
+    .replace(/-+$/, '');
+
+/** Campo di un form: stringa su una riga, senza spazi doppi (vuota se il valore non è una stringa). */
+export const riga = (v: unknown) => (typeof v === 'string' ? v.replace(/\s+/g, ' ').trim() : '');
+
+/** Aggiunge a `errori` il messaggio per un campo vuoto (se obbligatorio) o troppo lungo. */
+export function controllaLunghezza(errori: string[], nome: string, valore: string, max: number, obbligatorio = false) {
+  if (obbligatorio && !valore) errori.push(`${nome}: campo obbligatorio`);
+  else if (mbLen(valore) > max) errori.push(`${nome}: massimo ${max} caratteri`);
+}
+
 /**
  * Mette in grassetto (<strong>) le frasi indicate: solo la prima volta che compaiono, mai dentro
  * un link o un altro grassetto. Serve per le parole chiave dei testi (età, qualifiche, nomi dei corsi)

@@ -14,7 +14,7 @@ import { isMini } from './uploads';
 /** Parola da scrivere per confermare (controllata anche dal server). */
 export const PAROLA_CONFERMA = 'ELIMINA';
 
-export interface Totali {
+interface Totali {
   eventi: number;
   locandine: number;
   messaggi: number;

@@ -42,7 +42,7 @@ export interface LogEntry {
   errore?: string;
 }
 
-export const MAX_LOG = 10000;
+const MAX_LOG = 10000;
 
 export interface Token {
   /** Token in ingresso in totale (cache compresa) */
@@ -95,7 +95,7 @@ export async function budgetEsaurito(): Promise<boolean> {
 
 // === SCRITTURA ===
 
-export type NuovaVoce = Pick<LogEntry, 'ip_hash' | 'message' | 'type' | 'user_agent'> &
+type NuovaVoce = Pick<LogEntry, 'ip_hash' | 'message' | 'type' | 'user_agent'> &
   Partial<Omit<LogEntry, 'timestamp' | 'date' | 'hour' | 'cached' | 'response_preview'>> & { risposta: string };
 
 export function registra({ risposta, ...voce }: NuovaVoce) {

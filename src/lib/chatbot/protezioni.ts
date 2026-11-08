@@ -8,7 +8,7 @@ import { CHATBOT_IP_HEADER } from 'astro:env/server';
 import { mbSlice } from '../text';
 import { scuola } from '../../data/scuola';
 
-export const MAX_LUNGHEZZA = 500;
+const MAX_LUNGHEZZA = 500;
 
 // === IP ===
 

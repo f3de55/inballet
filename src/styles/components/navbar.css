@@ -595,22 +595,6 @@ html.menu-aperto {
   color: inherit;
 }
 
-.mobile-tutti {
-  margin: .25rem 0 1.5rem;
-  color: var(--white);
-  font-size: var(--text-xs);
-}
-
-.mobile-tutti:hover {
-  color: var(--white);
-  border-color: var(--primary-blue);
-}
-
-.mobile-tutti i,
-.mobile-tutti:hover i {
-  color: var(--white);
-}
-
 /* Centrato, larghezza del contenuto (non tutto il pannello) */
 /* Nel pannello mobile le maiuscole risultano più alte del centro: lo spostamento si arrotonda per eccesso */
 .mobile-cta.btn-primary {

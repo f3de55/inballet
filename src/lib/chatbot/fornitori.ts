@@ -26,7 +26,7 @@ interface Fornitore {
   extra?: (modello: string) => Record<string, unknown>;
 }
 
-export const FORNITORI: Record<string, Fornitore> = {
+const FORNITORI: Record<string, Fornitore> = {
   anthropic: { nome: 'Anthropic (Claude)', chiave: 'ANTHROPIC_API_KEY', tipo: 'anthropic' },
   gemini: {
     nome: 'Google Gemini',
@@ -92,7 +92,7 @@ export interface Anello {
 }
 
 /** Catena configurata, compresi i fornitori senza chiave (mostrati in dashboard). */
-export function catena(): (Anello & { nome: string; attivo: boolean })[] {
+function catena(): (Anello & { nome: string; attivo: boolean })[] {
   return CHATBOT_MODELLI.split(',')
     .map((voce) => voce.trim())
     .filter(Boolean)
@@ -157,12 +157,12 @@ function registraErrore(a: Anello, e: ErroreFornitore) {
 
 // === CHIAMATE ===
 
-export interface Scambio {
+interface Scambio {
   domanda: string;
   risposta: string;
 }
 
-export interface Domanda {
+interface Domanda {
   sistema: Sistema;
   storia: Scambio[];
   domanda: string;
@@ -273,11 +273,11 @@ function chiama(a: Anello, r: Richiesta): Promise<RispostaModello> {
   return f.tipo === 'anthropic' ? chiamaAnthropic(a.modello, chiaveApi, r) : chiamaOpenAI(f, a.modello, chiaveApi, r);
 }
 
-export interface Tentativo extends Anello {
+interface Tentativo extends Anello {
   errore: string;
 }
 
-export type Esito =
+type Esito =
   | ({ ok: true; testo: string; token: Token; ms: number; tentativi: Tentativo[] } & Anello)
   | { ok: false; tentativi: Tentativo[] };
 

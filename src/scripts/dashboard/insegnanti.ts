@@ -5,6 +5,7 @@
  */
 import { actions } from 'astro:actions';
 import { conferma } from './conferma';
+import { $, aggiornaContatore, attivaContatori, elencoOrdinabile, MAX_SIZE, zonaCaricamento } from './comune';
 import { toast } from './toast';
 
 interface Insegnante {
@@ -16,22 +17,7 @@ interface Insegnante {
   foto: string;
 }
 
-const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
-const MAX_SIZE = 20 * 1024 * 1024; // 20MB
-
-function aggiornaContatore(input: HTMLInputElement | HTMLTextAreaElement) {
-  const max = Number(input.dataset.counter);
-  const contatore = $(`${input.id}-counter`);
-  const len = input.value.length;
-  // Solo vicino al limite: altrimenti è rumore
-  contatore.textContent = len > max * 0.8 ? `${len}/${max}` : '';
-  contatore.classList.toggle('vicino', len > max * 0.9);
-}
-
-document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-counter]').forEach((el) => {
-  aggiornaContatore(el);
-  el.addEventListener('input', () => aggiornaContatore(el));
-});
+attivaContatori();
 
 // === INTESTAZIONE DELLA SEZIONE ===
 
@@ -145,30 +131,7 @@ $('insTogliFoto').addEventListener('click', () => {
   modificato = true;
   mostraFoto();
 });
-zona.addEventListener('click', (e) => {
-  if (e.target !== campi.file) campi.file.click();
-});
-zona.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' || e.key === ' ') {
-    e.preventDefault();
-    campi.file.click();
-  }
-});
-campi.file.addEventListener('change', () => {
-  const files = [...(campi.file.files ?? [])];
-  campi.file.value = '';
-  sceltaFile(files);
-});
-zona.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  zona.classList.add('sopra');
-});
-zona.addEventListener('dragleave', () => zona.classList.remove('sopra'));
-zona.addEventListener('drop', (e) => {
-  e.preventDefault();
-  zona.classList.remove('sopra');
-  sceltaFile(e.dataTransfer?.files ?? []);
-});
+zonaCaricamento(zona, campi.file, sceltaFile);
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -208,32 +171,7 @@ form.addEventListener('submit', async (e) => {
 
 const lista = document.getElementById('insLista');
 
-function aggiornaFrecce() {
-  const righe = [...(lista?.querySelectorAll<HTMLElement>('.ins') ?? [])];
-  righe.forEach((riga, i) => {
-    riga.querySelector<HTMLButtonElement>('[data-azione="su"]')!.disabled = i === 0;
-    riga.querySelector<HTMLButtonElement>('[data-azione="giu"]')!.disabled = i === righe.length - 1;
-  });
-}
-
-async function sposta(riga: HTMLElement, verso: 'su' | 'giu') {
-  const altra = verso === 'su' ? riga.previousElementSibling : riga.nextElementSibling;
-  if (!altra) return;
-  const tasto = riga.querySelector<HTMLButtonElement>(`[data-azione="${verso}"]`)!;
-  // Aggiorna subito l'elenco; se il server rifiuta si ricarica la pagina
-  if (verso === 'su') altra.before(riga);
-  else altra.after(riga);
-  aggiornaFrecce();
-  (tasto.disabled ? riga.querySelector<HTMLButtonElement>(`[data-azione="${verso === 'su' ? 'giu' : 'su'}"]`)! : tasto).focus();
-
-  const { error } = await actions.insegnanti.ordina({ ids: [...lista!.querySelectorAll<HTMLElement>('.ins')].map((r) => r.dataset.id!) });
-  if (error) {
-    toast(error.message || "Errore nel salvataggio dell'ordine", 'error');
-    setTimeout(() => location.reload(), 1200);
-    return;
-  }
-  toast('Ordine aggiornato', 'success');
-}
+const sposta = elencoOrdinabile(lista, '.ins', (ids) => actions.insegnanti.ordina({ ids }));
 
 async function elimina(riga: HTMLElement) {
   const ins = JSON.parse(riga.dataset.modifica!) as Insegnante;

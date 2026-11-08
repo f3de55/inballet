@@ -510,7 +510,7 @@ davvero andando: niente riquadro nero mentre carica */
 
   .corsi-stile-nome {
     display: block;
-    font-size: clamp(1.625rem, 1.25rem + 1.67vw, 1.875rem);
+    font-size: var(--h3-size-scheda);
     line-height: 1.2;
     letter-spacing: var(--h3-ls);
   }

@@ -9,7 +9,7 @@ import { sistema } from './conoscenza';
 import { chiediAlModello, type Anello } from './fornitori';
 import { calcolaCosto } from './registro';
 
-export interface EsitoVerifica {
+interface EsitoVerifica {
   ok: boolean;
   risposta: string;
   /** Cosa manca o non doveva esserci */

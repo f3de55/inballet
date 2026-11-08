@@ -1,5 +1,5 @@
 /** Notifiche a comparsa della dashboard. */
-export type ToastTipo = 'success' | 'error' | 'warning';
+type ToastTipo = 'success' | 'error' | 'warning';
 
 const ICONS: Record<ToastTipo, string> = {
   success: 'fa-check-circle',

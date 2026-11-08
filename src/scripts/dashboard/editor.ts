@@ -3,7 +3,7 @@
  * Selection/Range, senza document.execCommand (deprecato).
  * Produce solo i tag ammessi dal server: <b>, <i>, <ul>, <li>.
  */
-export type Formato = 'bold' | 'italic' | 'list';
+type Formato = 'bold' | 'italic' | 'list';
 
 const TAGS: Record<Formato, string[]> = {
   bold: ['B', 'STRONG'],

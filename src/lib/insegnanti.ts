@@ -10,15 +10,16 @@ import { unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { insegnantiPredefiniti, type Insegnante, type SezioneInsegnanti } from '../data/insegnanti';
 import { ensureDir, paths, readJson, serialized, writeJson } from './storage';
-import { mbLen } from './text';
+import { sniffMime } from './uploads';
+import { controllaLunghezza, mbLen, riga as str, slug } from './text';
 
-export type { Insegnante, SezioneInsegnanti };
+export type { SezioneInsegnanti };
 
 /** Errore di validazione con messaggio da mostrare all'utente. */
 export class ErroreInsegnanti extends Error {}
 
 export const PUBLIC_PREFIX = '/assets/images/insegnanti/';
-export const MAX_SIZE = 20 * 1024 * 1024; // 20MB
+const MAX_SIZE = 20 * 1024 * 1024; // 20MB
 export const MAX_INSEGNANTI = 40;
 
 const LIMITI = {
@@ -46,14 +47,7 @@ export async function leggiInsegnanti(): Promise<SezioneInsegnanti> {
   };
 }
 
-const str = (v: unknown) => (typeof v === 'string' ? v.replace(/\s+/g, ' ').trim() : '');
-
-function controllaLunghezza(errors: string[], nome: string, valore: string, max: number, obbligatorio = false) {
-  if (obbligatorio && !valore) errors.push(`${nome}: campo obbligatorio`);
-  else if (mbLen(valore) > max) errors.push(`${nome}: massimo ${max} caratteri`);
-}
-
-export type TestiInput = Partial<Record<'eyebrow' | 'titolo' | 'accento' | 'intro', string>>;
+type TestiInput = Partial<Record<'eyebrow' | 'titolo' | 'accento' | 'intro', string>>;
 
 /** Valida e salva l'intestazione della sezione. */
 export async function salvaTesti(input: TestiInput): Promise<SezioneInsegnanti> {
@@ -82,27 +76,11 @@ export function nomeFotoSicuro(name: string): string | null {
 
 export const percorsoFoto = (nome: string) => path.join(paths.fotoInsegnanti, nome);
 
-const slug = (s: string) =>
-  s
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 40)
-    .replace(/-+$/, '');
-
-/** Tipo immagine dai primi byte (JPEG, PNG, WebP), o null. */
-function eImmagine(buf: Uint8Array): boolean {
-  const ascii = (a: number, b: number) => String.fromCharCode(...buf.subarray(a, b));
-  return (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) || (buf[0] === 0x89 && ascii(1, 4) === 'PNG') || (ascii(0, 4) === 'RIFF' && ascii(8, 12) === 'WEBP');
-}
-
 /** Salva la foto: orientamento corretto, ritaglio 4:5 sul soggetto, WebP. */
 async function salvaFoto(file: File, nome: string): Promise<string> {
   if (file.size > MAX_SIZE) throw new ErroreInsegnanti('La foto è troppo grande (massimo 20 MB)');
   const buf = new Uint8Array(await file.arrayBuffer());
-  if (!eImmagine(buf)) throw new ErroreInsegnanti('La foto deve essere un file JPG, PNG o WebP');
+  if (!['image/jpeg', 'image/png', 'image/webp'].includes(sniffMime(buf) ?? '')) throw new ErroreInsegnanti('La foto deve essere un file JPG, PNG o WebP');
   const sharp = (await import('sharp')).default;
   const out = await sharp(buf).rotate().resize(800, 1000, { fit: 'cover', position: 'attention' }).webp({ quality: 82 }).toBuffer();
   const file_ = `${slug(nome) || 'insegnante'}-${randomBytes(3).toString('hex')}.webp`;
@@ -122,7 +100,7 @@ async function rimuoviFoto(foto: string): Promise<void> {
 const ID = /^ins_[a-z0-9]+$/;
 const nuovoId = () => 'ins_' + randomBytes(6).toString('hex');
 
-export interface InsegnanteInput {
+interface InsegnanteInput {
   id?: string;
   nome?: string;
   ruolo?: string;

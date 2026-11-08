@@ -4,17 +4,13 @@ dist
 .git
 .vscode
 .claude
-data/sessions
-data/cache
-data/ratelimit
-data/uploads
-data/analytics.json
+
+# dati runtime: nell'immagine entrano solo i dati iniziali
+data/*
+!data/eventi.json
+!data/tipi_evento.json
+
 .env
 .env.*
 !.env.example
 *.md
-!README.md
-
-# sorgenti non usati dal build (foto originali, video master da cui sono ricavati quelli dell'hero)
-IMMAGINI RICOLORATE
-src/assets/video/hero-video-inballet.mp4

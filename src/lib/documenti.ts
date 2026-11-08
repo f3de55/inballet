@@ -9,16 +9,16 @@ import { unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { documentiPredefiniti, type Documento, type PaginaDocumenti } from '../data/documenti';
 import { ensureDir, paths, readJson, serialized, writeJson } from './storage';
-import { mbLen } from './text';
+import { controllaLunghezza, riga as str, slug } from './text';
 
-export type { Documento, PaginaDocumenti };
+export type { Documento };
 
 /** Errore di validazione con messaggio da mostrare all'utente. */
 export class ErroreDocumenti extends Error {}
 
-export const PUBLIC_PREFIX = '/assets/documenti/';
-export const MAX_SIZE = 20 * 1024 * 1024; // 20MB
-export const MAX_DOCUMENTI = 20;
+const PUBLIC_PREFIX = '/assets/documenti/';
+const MAX_SIZE = 20 * 1024 * 1024; // 20MB
+const MAX_DOCUMENTI = 20;
 
 const LIMITI = {
   heroTitolo: 80,
@@ -42,14 +42,7 @@ export async function leggiDocumenti(): Promise<PaginaDocumenti> {
   };
 }
 
-const str = (v: unknown) => (typeof v === 'string' ? v.replace(/\s+/g, ' ').trim() : '');
-
-function controllaLunghezza(errors: string[], nome: string, valore: string, max: number, obbligatorio = false) {
-  if (obbligatorio && !valore) errors.push(`${nome}: campo obbligatorio`);
-  else if (mbLen(valore) > max) errors.push(`${nome}: massimo ${max} caratteri`);
-}
-
-export type TestiInput = Partial<Record<'heroTitolo' | 'heroTesto' | 'eyebrow' | 'titolo' | 'accento' | 'intro', string>>;
+type TestiInput = Partial<Record<'heroTitolo' | 'heroTesto' | 'eyebrow' | 'titolo' | 'accento' | 'intro', string>>;
 
 /** Valida e salva i testi della pagina (hero e intestazione della sezione). */
 export async function salvaTesti(input: TestiInput): Promise<PaginaDocumenti> {
@@ -88,16 +81,6 @@ export function nomePdfSicuro(name: string): string | null {
 
 export const percorsoPdf = (nome: string) => path.join(paths.fileDocumenti, nome);
 
-const slug = (s: string) =>
-  s
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 40)
-    .replace(/-+$/, '');
-
 function formattaPeso(bytes: number): string {
   const kb = Math.max(1, Math.round(bytes / 1024));
   return kb >= 1024 ? `PDF, ${(kb / 1024).toFixed(1).replace('.', ',')} MB` : `PDF, ${kb} KB`;
@@ -129,7 +112,7 @@ async function rimuoviPdf(file: string): Promise<void> {
 const ID = /^doc_[a-z0-9]+$/;
 const nuovoId = () => 'doc_' + randomBytes(6).toString('hex');
 
-export interface DocumentoInput {
+interface DocumentoInput {
   id?: string;
   titolo?: string;
   nota?: string;

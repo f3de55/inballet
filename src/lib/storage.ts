@@ -2,7 +2,7 @@
  * Storage su filesystem per i dati runtime (eventi, tipi evento, analytics,
  * conversazioni del chatbot, immagini caricate) nella cartella DATA_DIR.
  */
-import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rename, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { DATA_DIR } from 'astro:env/server';
 
@@ -53,3 +53,17 @@ export function serialized<T>(task: () => Promise<T>): Promise<T> {
   queue = run.catch(() => {});
   return run;
 }
+
+/**
+ * GET di un file caricato dalla dashboard, con ETag e un giorno di cache (il nome cambia
+ * a ogni nuovo caricamento). Lancia ENOENT se il file manca.
+ */
+export async function serviFile(file: string, request: Request, headers: Record<string, string>): Promise<Response> {
+  const st = await stat(file);
+  const etag = `"${st.size.toString(16)}-${Math.floor(st.mtimeMs).toString(16)}"`;
+  const tutti = { ...headers, 'Cache-Control': 'public, max-age=86400', 'X-Content-Type-Options': 'nosniff', ETag: etag };
+  if (request.headers.get('if-none-match') === etag) return new Response(null, { status: 304, headers: tutti });
+  return new Response(await readFile(file), { headers: tutti });
+}
+
+export const nonTrovato = () => new Response('Not found', { status: 404 });

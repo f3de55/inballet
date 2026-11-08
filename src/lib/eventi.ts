@@ -10,11 +10,11 @@
 import { randomBytes } from 'node:crypto';
 import { z } from 'astro/zod';
 import { paths, readJson, serialized, writeJson } from './storage';
-import { decodeHtml, stripTags } from './text';
+import { decodeHtml, slug, stripTags } from './text';
 import { isDateFormat, isValidTime, romeIso, romeTimestamp } from './time';
 import { scuola, sedi } from '../data/scuola';
 
-export const STATI = ['pubblicato', 'bozza', 'annullato', 'esaurito'] as const;
+const STATI = ['pubblicato', 'bozza', 'annullato', 'esaurito'] as const;
 export type Stato = (typeof STATI)[number];
 
 export interface Evento {
@@ -94,7 +94,7 @@ export const inputEvento = z
     else if (e.ora && e.oraFine && (!e.dataFine || e.dataFine === e.data) && e.oraFine <= e.ora) errore('oraFine', 'L’ora di fine è prima dell’inizio');
   });
 
-export type InputEvento = z.output<typeof inputEvento>;
+type InputEvento = z.output<typeof inputEvento>;
 
 // === TEMPO (stesse regole per sito, banner, dashboard e chatbot) ===
 
@@ -105,7 +105,7 @@ export const fineEvento = (e: Pick<Evento, 'data' | 'dataFine' | 'oraFine'>) => 
 export const passato = (e: Evento, now = Date.now()) => fineEvento(e) < now;
 
 /** Visibile sul sito: tutto tranne le bozze. */
-export const pubblico = (e: Evento) => e.stato !== 'bozza';
+const pubblico = (e: Evento) => e.stato !== 'bozza';
 
 /** Link che apre il dettaglio dell'evento (modale) nel calendario. */
 export const urlEvento = (e: Pick<Evento, 'slug'>) => `/spettacoli-eventi?evento=${encodeURIComponent(e.slug)}`;
@@ -122,15 +122,7 @@ const perInizio = (a: Evento, b: Evento) => (a.data + ora2(a.ora)).localeCompare
 
 /** "Galà di Natale" + 2026-12-19 → "gala-di-natale-2026-12-19" */
 export function baseSlug(titolo: string, data: string): string {
-  const parole = titolo
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 60)
-    .replace(/-+$/, '');
-  return `${parole || 'evento'}-${data}`;
+  return `${slug(titolo, 60) || 'evento'}-${data}`;
 }
 
 /** Primo slug libero: base, base-2, base-3… */
@@ -216,7 +208,7 @@ export async function trovaEvento(chiave: string): Promise<{ evento: Evento; vec
 // === SCRITTURA ===
 
 /** Descrizione: righe a capo come <br>, solo tag sicuri e senza attributi. */
-export function pulisciDescrizione(html: string): string {
+function pulisciDescrizione(html: string): string {
   return stripTags(html.replace(/<\/(div|p)>\s*/gi, '<br>'), ['b', 'strong', 'i', 'em', 'ul', 'li', 'br'])
     .replace(/<([a-z]+)\s+[^>]*>/gi, '<$1>')
     .replace(/<br>\s*(<\/?(ul|li)>)/gi, '$1')
@@ -387,7 +379,7 @@ export function sedeDi(luogo: string) {
 }
 
 /** Prezzo dal testo libero del costo: "Gratuito" → 0, "Ingresso 10 €" → 10; null se non si capisce. */
-export function prezzo(costo: string): number | null {
+function prezzo(costo: string): number | null {
   if (/gratu|gratis|libero|free/i.test(costo)) return 0;
   const n = /(\d+(?:[.,]\d{1,2})?)/.exec(costo);
   return n ? Number(n[1].replace(',', '.')) : null;

@@ -6,6 +6,7 @@
 import { actions, isInputError } from 'astro:actions';
 import { createEditor } from './editor';
 import { conferma } from './conferma';
+import { $, MAX_SIZE, zonaCaricamento } from './comune';
 import { toast } from './toast';
 
 /** Come salvato sul server (testi puri, senza escape). */
@@ -33,8 +34,6 @@ interface Immagine {
   mini: string;
 }
 
-const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
-const MAX_SIZE = 20 * 1024 * 1024; // 20MB
 
 const modalEvento = $('modalEvento');
 const modalTipi = $('modalTipi');
@@ -346,32 +345,7 @@ async function caricaFile(files: Iterable<File>) {
 
 const fileInput = $<HTMLInputElement>('fileInput');
 const uploadZone = modalEvento.querySelector<HTMLElement>('[data-upload]')!;
-uploadZone.addEventListener('click', (e) => {
-  if (e.target !== fileInput) fileInput.click();
-});
-uploadZone.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' || e.key === ' ') {
-    e.preventDefault();
-    fileInput.click();
-  }
-});
-fileInput.addEventListener('change', () => {
-  const files = [...(fileInput.files ?? [])];
-  fileInput.value = '';
-  void caricaFile(files);
-});
-
-// Trascinamento dal computer
-uploadZone.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  uploadZone.classList.add('sopra');
-});
-uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('sopra'));
-uploadZone.addEventListener('drop', (e) => {
-  e.preventDefault();
-  uploadZone.classList.remove('sopra');
-  void caricaFile(e.dataTransfer?.files ?? []);
-});
+zonaCaricamento(uploadZone, fileInput, (files) => void caricaFile(files));
 
 // === TIPI EVENTO ===
 

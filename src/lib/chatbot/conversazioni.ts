@@ -17,7 +17,7 @@ export const MAX_SCAMBI = 20;
 /** Scambi precedenti passati al modello come memoria */
 export const MEMORIA = 6;
 
-export interface ScambioSalvato {
+interface ScambioSalvato {
   ora: string;
   domanda: string;
   /** Testo grezzo della risposta (senza HTML) */
@@ -27,7 +27,7 @@ export interface ScambioSalvato {
   modello?: string;
 }
 
-export interface Conversazione {
+interface Conversazione {
   id: string;
   creata: string;
   aggiornata: string;
@@ -39,7 +39,7 @@ const ID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const file = (id: string) => path.join(paths.conversazioni, `${id}.json`);
 
 export const nuovoId = () => randomUUID();
-export const idValido = (id: unknown): id is string => typeof id === 'string' && ID_RE.test(id);
+const idValido = (id: unknown): id is string => typeof id === 'string' && ID_RE.test(id);
 
 export async function leggiConversazione(id: unknown): Promise<Conversazione | null> {
   return idValido(id) ? readJson<Conversazione | null>(file(id), null) : null;

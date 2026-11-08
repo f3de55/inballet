@@ -18,7 +18,7 @@ const banner = {
 
 export async function heroPagina(pagina: keyof typeof banner) {
   const base = banner[pagina];
-  const hero = await sfondo({ desktop: `${base}-desktop.png`, tablet: `${base}-tablet.png` }, { desktop: '100% 50%', tablet: '100% 50%' });
+  const hero = await sfondo({ desktop: `${base}-desktop.webp`, tablet: `${base}-tablet.webp` }, { desktop: '100% 50%', tablet: '100% 50%' });
   return {
     ...hero,
     preload: [

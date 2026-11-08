@@ -526,7 +526,8 @@ davvero andando: niente riquadro nero mentre carica */
     margin: .25rem 0 0;
     padding: 0 0 .25rem;
     border: 0;
-    border-bottom: 1px solid currentColor;
+    --lc: currentColor;
+    background: var(--linea-basso);
     color: var(--primary-blue-dark);
   }
 
@@ -581,7 +582,7 @@ davvero andando: niente riquadro nero mentre carica */
   align-items: flex-start;
   gap: 1.75rem;
   padding-top: 2rem;
-  border-top: 1px solid var(--linea);
+  background: var(--linea-alto);
 }
 
 .sintesi-google {
@@ -657,7 +658,9 @@ davvero andando: niente riquadro nero mentre carica */
   position: relative;
   margin: 0;
   padding-left: 1.5rem;
-  border-left: 3px solid var(--primary-blue);
+  --lc: var(--primary-blue);
+  --ls: 3px;
+  background: var(--linea-sx);
 }
 
 .recensioni-carousel .review-text {
@@ -668,8 +671,8 @@ davvero andando: niente riquadro nero mentre carica */
   margin-left: .35rem;
   padding: 0 0 1px;
   border: none;
-  border-bottom: 1px solid var(--primary-blue);
-  background: none;
+  --lc: var(--primary-blue);
+  background: var(--linea-basso);
   font: inherit;
   font-size: var(--ui-size);
   font-weight: var(--ui-weight);
@@ -781,7 +784,7 @@ davvero andando: niente riquadro nero mentre carica */
     justify-content: space-between;
     margin: 1.5rem 0 0;
     padding: 1.25rem 0 0;
-    border-top: 1px solid var(--linea);
+    background: var(--linea-alto);
   }
 
   .testimonials-track {
@@ -826,7 +829,7 @@ davvero andando: niente riquadro nero mentre carica */
   grid-row: span 3;
   grid-template-rows: subgrid;
   row-gap: 0;
-  border-top: 1px solid var(--linea);
+  background: var(--linea-alto);
 }
 
 .oltre-elemento::after {
@@ -835,7 +838,8 @@ davvero andando: niente riquadro nero mentre carica */
   top: 0;
   bottom: 0;
   left: -1rem;
-  border-left: 1px solid var(--linea);
+  width: var(--ls);
+  background: var(--linea-sx);
   pointer-events: none;
 }
 
@@ -1069,11 +1073,11 @@ davvero andando: niente riquadro nero mentre carica */
 }
 
 .faq-list {
-  border-top: 1px solid var(--linea);
+  background: var(--linea-alto);
 }
 
 .faq-item {
-  border-bottom: 1px solid var(--linea);
+  background: var(--linea-basso);
 }
 
 .faq-item summary {
@@ -1104,9 +1108,7 @@ davvero andando: niente riquadro nero mentre carica */
   border-radius: var(--radius-full);
   border: 1px solid var(--linea);
   color: var(--primary-blue-dark);
-  background:
-  linear-gradient(currentColor, currentColor) center / 12px 2px no-repeat,
-  linear-gradient(currentColor, currentColor) center / 2px 12px no-repeat;
+  background: var(--piu);
   transition: transform .3s ease, background-color .3s ease, border-color .3s ease, color .3s ease;
 }
 
@@ -1118,10 +1120,7 @@ davvero andando: niente riquadro nero mentre carica */
 .faq-item[open] summary::after {
   transform: rotate(45deg);
   /* Sfondo completo (barre + colore): il minificatore trasforma background-color nella forma abbreviata */
-  background:
-  linear-gradient(currentColor, currentColor) center / 12px 2px no-repeat,
-  linear-gradient(currentColor, currentColor) center / 2px 12px no-repeat,
-  var(--primary-blue);
+  background: var(--piu), var(--primary-blue);
   border-color: var(--primary-blue);
   color: var(--dark-navy);
 }

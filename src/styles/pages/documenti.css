@@ -8,11 +8,11 @@
   list-style: none;
   margin: var(--spazio-intestazione) 0 0;
   padding: 0;
-  border-top: 1px solid var(--linea);
+  background: var(--linea-alto);
 }
 
 .documenti-lista li {
-  border-bottom: 1px solid var(--linea);
+  background: var(--linea-basso);
 }
 
 .documento {
@@ -82,7 +82,7 @@
 
 .statuto-documento,
 .statuto-disponibilita {
-  border-block: 1px solid var(--linea);
+  background: var(--linea-alto), var(--linea-basso);
 }
 
 .statuto-documento {

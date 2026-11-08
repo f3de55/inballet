@@ -190,7 +190,8 @@
   top: 0;
   left: 0;
   width: 1.5rem;
-  height: 1px;
+  height: var(--linea-sp);
+  border-radius: var(--radius-pill);
   background: rgb(var(--blu-rgb) / .45);
 }
 
@@ -293,7 +294,8 @@
   width: min(100% - 4rem, 1200px - 4rem);
   margin: 0 auto;
   padding: 1.5rem 0 var(--footer-y);
-  border-top: 1px solid var(--velo-chiaro);
+  --lc: var(--velo-chiaro);
+  background: var(--linea-alto);
   font-size: var(--footer-text-size);
   color: rgb(var(--bianco-rgb) / .55);
 }
@@ -332,7 +334,8 @@
     align-items: start;
     column-gap: 2.5rem;
     padding-bottom: 2.5rem;
-    border-bottom: 1px solid var(--velo-chiaro);
+    --lc: var(--velo-chiaro);
+    background: var(--linea-basso);
   }
 
   /* Logo centrato in verticale rispetto al blocco di testo, solo in questa fascia */
@@ -408,11 +411,13 @@
     grid-row: auto;
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
-    border-top: 1px solid var(--velo-chiaro);
+    --lc: var(--velo-chiaro);
+    background: var(--linea-alto);
   }
 
   .footer-col {
-    border-bottom: 1px solid var(--velo-chiaro);
+    --lc: var(--velo-chiaro);
+    background: var(--linea-basso);
   }
 
   /* Contatti è la prima voce della fisarmonica (su desktop e tablet resta l'ultima colonna) */
@@ -441,9 +446,8 @@
     width: 14px;
     height: 14px;
     color: var(--primary-blue);
-    background:
-      linear-gradient(currentColor, currentColor) center / 14px 2px no-repeat,
-      linear-gradient(currentColor, currentColor) center / 2px 14px no-repeat;
+    --ps: 14px;
+    background: var(--piu);
     transition: transform .3s ease, color .3s ease;
   }
 

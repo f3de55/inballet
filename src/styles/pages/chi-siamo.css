@@ -176,6 +176,7 @@
     bottom: -.5rem;
     left: calc(var(--nodo) / 2 - .75px);
     width: 1.5px;
+    border-radius: var(--radius-pill);
     background: var(--primary-blue);
   }
 }
@@ -208,10 +209,12 @@
   flex-direction: column;
   align-items: center;
   padding: .5rem 1.5rem;
+  --lc: var(--linea-su-scuro);
 }
 
 .numero + .numero {
-  border-left: 1px solid var(--linea-su-scuro);
+  --lc: var(--linea-su-scuro);
+  background: var(--linea-sx);
 }
 
 .numero-valore {
@@ -237,23 +240,32 @@
   text-align: center;
 }
 
-/* Tablet e mobile: 2x2 a celle uguali, con filetti solo tra una cella e l'altra (come i loghi dei sostenitori):
-   il gap da 1px sul fondo chiaro disegna le linee, le celle hanno il fondo scuro */
+/* Tablet e mobile: 2x2 a celle uguali, con linee tonde solo tra una cella e l'altra */
 @media (max-width: 900px) {
   .numeri-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1px;
+    gap: 0;
     margin-top: var(--spazio-intestazione);
-    background: var(--linea-su-scuro);
-    border-block: 1px solid var(--linea-su-scuro);
   }
 
   .numero,
   .numero + .numero {
     justify-content: center;
     padding: 2rem 1rem;
-    border-left: none;
-    background: var(--dark-navy);
+    background: none;
+  }
+
+  /* Croce di linee tonde tra le quattro celle: a destra delle prime di ogni riga, sotto la prima riga */
+  .numero:nth-child(odd) {
+    background: var(--linea-dx);
+  }
+
+  .numero:nth-child(-n + 2) {
+    background: var(--linea-basso);
+  }
+
+  .numero:nth-child(1) {
+    background: var(--linea-dx), var(--linea-basso);
   }
 
   .numeri-cta {

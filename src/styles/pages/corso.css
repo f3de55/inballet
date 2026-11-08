@@ -74,7 +74,7 @@
   align-items: flex-start;
   gap: 1.2rem;
   padding: 1.1rem 0 0;
-  border-top: 1px solid var(--linea);
+  background: var(--linea-alto);
   flex: 1;
   min-width: 180px;
 }
@@ -197,7 +197,8 @@
   top: .5rem;
   bottom: .5rem;
   left: -1.5rem;
-  border-left: 1px solid var(--linea);
+  width: var(--ls);
+  background: var(--linea-sx);
 }
 
 .impara-competenza:nth-child(n + 4)::after {
@@ -206,7 +207,8 @@
   top: -1.5rem;
   left: 0;
   right: 0;
-  border-top: 1px solid var(--linea);
+  height: var(--ls);
+  background: var(--linea-alto);
 }
 
 .impara-simbolo {
@@ -319,7 +321,8 @@
     top: -1.25rem;
     left: 10%;
     right: 10%;
-    border-top: 1px solid var(--linea);
+    height: var(--ls);
+    background: var(--linea-alto);
   }
 
   .impara-simbolo {

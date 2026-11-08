@@ -172,7 +172,8 @@
   align-items: center;
   gap: .75rem;
   padding-bottom: .4rem;
-  border-bottom: 2px solid currentColor;
+  --lc: currentColor;
+  background: var(--linea-basso);
   color: var(--dark-navy);
   font-size: var(--label-size);
   font-weight: var(--ui-weight);

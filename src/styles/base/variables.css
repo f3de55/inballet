@@ -181,6 +181,8 @@
   --ondina-w: 72px;
   --ondina-h: 12px;
   --ondina-periodo: 24px;
+  /* Spessore dei separatori: linee tonde da 2px (components/linee.css) */
+  --linea-sp: 2px;
   --onda-h: 34px;
   --onda-w: 480px;
   --onda-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28' preserveAspectRatio='none'%3E%3Cpath fill-opacity='.55' d='M0 9Q30 1 60 9T120 9V28H0Z'/%3E%3Cpath d='M0 19Q30 11 60 19T120 19V28H0Z'/%3E%3C/svg%3E");

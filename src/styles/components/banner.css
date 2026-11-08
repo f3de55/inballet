@@ -141,8 +141,9 @@ html.is-scrolled .event-banner {
   text-decoration: none;
   font-size: var(--text-xs);
   font-weight: var(--font-bold);
-  border-bottom: 1px solid rgb(var(--nero-rgb) / .4);
-  padding-bottom: 1px;
+  --lc: rgb(var(--nero-rgb) / .4);
+  background: var(--linea-basso);
+  padding-bottom: 3px;
   transition: all 0.2s ease;
   white-space: nowrap;
 }

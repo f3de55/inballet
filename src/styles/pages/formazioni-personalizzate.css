@@ -53,7 +53,8 @@
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 1px;
+  width: var(--linea-sp);
+  border-radius: var(--radius-pill);
   background: rgb(var(--blu-rgb) / .3);
   transform: translateX(-50%);
 }
@@ -63,11 +64,12 @@
   grid-template-columns: 2.25rem 1fr;
   gap: 1rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid rgb(var(--blu-rgb) / .3);
+  --lc: rgb(var(--blu-rgb) / .3);
+  background: var(--linea-basso);
 }
 
 .perso-tipo-item:nth-last-child(-n+2) {
-  border-bottom: none;
+  background: none;
   padding-bottom: 0;
 }
 
@@ -97,7 +99,7 @@
   }
 
   .perso-tipo-item:nth-last-child(2) {
-    border-bottom: 1px solid rgb(var(--blu-rgb) / .3);
+    background: var(--linea-basso);
     padding-bottom: 2rem;
   }
 }

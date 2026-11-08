@@ -7,22 +7,24 @@
   margin-top: .5rem;
 }
 
-/* Il gap da 1px sul fondo grigio disegna i filetti solo tra un logo e l'altro */
+/* Un riquadro tondo per ogni logo, con spazio tra l'uno e l'altro */
 .sostenitori-loghi {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-auto-rows: 10.5rem;
-  gap: 1px;
+  gap: 1rem;
   max-width: 1200px;
   margin: var(--spazio-intestazione) auto 0;
-  background: var(--linea);
 }
 
 /* Flex (non grid): così il max-height del logo si riferisce all'altezza fissa della cella */
 .sostenitori-loghi li {
   display: flex;
   min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--linea);
+  border-radius: var(--radius-card);
   background: var(--white);
 }
 

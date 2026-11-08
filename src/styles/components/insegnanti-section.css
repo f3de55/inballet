@@ -107,8 +107,8 @@
   margin-top: 1rem;
   padding: 0 0 .4rem;
   border: none;
-  border-bottom: 2px solid currentColor;
-  background: none;
+  --lc: currentColor;
+  background: var(--linea-basso);
   font-family: inherit;
   color: var(--white);
   cursor: pointer;
@@ -120,7 +120,7 @@
 
 .insegnante-cta:hover {
   color: var(--white);
-  border-color: var(--white);
+  --lc: var(--white);
 }
 
 .insegnante-cta:focus-visible {

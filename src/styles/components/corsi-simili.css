@@ -18,16 +18,14 @@
   color: var(--heading-color);
 }
 
-/* Il gap da 1px sul fondo chiaro disegna i filetti tra le celle (come nei loghi dei sostenitori) */
+/* Una card tonda per ogni corso, con spazio tra l'una e l'altra */
 .simili-lista {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(var(--n), minmax(0, 1fr));
-  gap: 1px;
+  gap: 1rem;
   margin: 0;
   padding: 0;
-  background: rgb(var(--blu-rgb) / .65);
-  border-block: 1px solid rgb(var(--blu-rgb) / .65);
 }
 
 /* Ogni cella occupa 5 righe della griglia (foto, titolo, età, frequenza, «Scopri il corso») e le
@@ -45,6 +43,9 @@
   grid-row: span 5;
   grid-template-rows: subgrid;
   row-gap: 0;
+  overflow: hidden;
+  border: 1px solid rgb(var(--blu-rgb) / .4);
+  border-radius: var(--radius-card);
   background: var(--white);
 }
 
@@ -117,7 +118,6 @@
   .simili-lista:has(> li:last-child:nth-child(odd))::after {
     content: '';
     grid-row: span 5;
-    background: var(--white);
   }
 
   .simili-voce {

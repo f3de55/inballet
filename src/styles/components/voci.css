@@ -31,11 +31,11 @@
 }
 
 
-/* Righe allineate: in una griglia di voci l'icona o l'anno, il titolo e il testo stanno alla stessa quota in tutte
-   le colonne, anche quando un titolo va a capo (subgrid: le tre righe sono quelle della lista). */
+/* Righe allineate: in una griglia di voci l'icona o l'anno, il titolo, l'ondina e il testo stanno alla stessa quota
+   in tutte le colonne, anche quando un titolo va a capo (subgrid: le quattro righe sono quelle della lista). */
 .voce {
   display: grid;
-  grid-row: span 3;
+  grid-row: span 4;
   grid-template-rows: subgrid;
   row-gap: 0;
   align-content: start;

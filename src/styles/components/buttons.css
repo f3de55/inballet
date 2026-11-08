@@ -89,6 +89,16 @@
   }
 }
 
+/* Variante compatta (es. «Trova il tuo corso» nell'hero): testo un gradino più piccolo, meno padding.
+   Specificità maggiore delle media query sopra, così vale a ogni larghezza. */
+.btn-primary.btn-piccolo,
+.btn-secondary.btn-piccolo {
+  --btn-pad: .55rem;
+  padding: calc(round(nearest, var(--btn-pad), 1px) + var(--btn-sposta)) 1.25rem calc(round(nearest, var(--btn-pad), 1px) - var(--btn-sposta));
+  gap: .45rem;
+  font-size: var(--text-xs);
+}
+
 /* ---------- Pulsanti tondi con sola icona ----------
    (chiudi, frecce, menu): stessa misura (44px, area di tocco minima), stessa icona;
    la variante dipende dallo sfondo su cui stanno */

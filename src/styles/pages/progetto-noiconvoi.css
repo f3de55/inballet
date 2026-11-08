@@ -19,8 +19,30 @@
 }
 
 .info-lista {
+  --gap-colonne: 2.5rem;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 2.5rem;
+  gap: var(--gap-colonne);
+}
+
+/* Separatori tra le voci: linea tonda verticale a metà dello spazio tra due colonne (PC e tablet) e
+   linea tonda in cima alla voce quando le voci vanno su più righe (tablet e telefono) */
+.info-lista .voce::after {
+  content: '';
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--gap-colonne) / -2 - var(--ls) / 2);
+  width: var(--ls);
+  border-radius: var(--radius-pill);
+  background: var(--lc);
+  pointer-events: none;
+}
+
+@media (min-width: 1025px) {
+  .info-lista .voce:not(:first-child)::after {
+    display: block;
+  }
 }
 
 /* ---------- Tablet ---------- */
@@ -28,16 +50,36 @@
   /* Informazioni: griglia 2x2 */
   .info-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 1.5rem;
   }
 
+  .info-lista .voce:nth-child(even)::after {
+    display: block;
+  }
+
+  .info-lista .voce:nth-child(n + 3) {
+    padding-top: 1.5rem;
+    background: var(--linea-alto);
+  }
 }
 
 /* ---------- Mobile ---------- */
 @media (max-width: 600px) {
-  .fasi-lista,
-  .info-lista {
+  .fasi-lista {
     grid-template-columns: minmax(0, 1fr);
     gap: 2.25rem;
   }
 
+  .info-lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .info-lista .voce:nth-child(n)::after {
+    display: none;
+  }
+
+  .info-lista .voce:nth-child(n + 2) {
+    padding-top: 1.5rem;
+    background: var(--linea-alto);
+  }
 }

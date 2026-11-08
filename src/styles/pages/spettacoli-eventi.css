@@ -622,6 +622,8 @@ html:has(dialog[open]) {
 .evento-dettagli div {
   display: grid;
   grid-template-columns: 6.5rem minmax(0, 1fr);
+  /* etichetta e valore hanno corpo e altezza di riga diversi: si allineano sulla linea di base del testo */
+  align-items: baseline;
   gap: 1rem;
   padding: .8rem 0;
   border-bottom: 1px solid var(--linea);

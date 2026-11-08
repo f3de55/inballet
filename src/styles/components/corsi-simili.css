@@ -22,22 +22,38 @@
 .simili-lista {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   margin: 0;
   padding: 0;
 }
 
+/* PC: al massimo 3 card per riga, qualunque sia il numero di corsi. Griglia a 6 colonne con card larghe 2:
+   l'ultima riga incompleta (1 o 2 card) resta centrata. */
+@media (min-width: 901px) {
+  .simili-lista {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .simili-lista li {
+    grid-column: span 2;
+  }
+
+  .simili-lista li:last-child:nth-child(3n + 1) {
+    grid-column: 3 / span 2;
+  }
+
+  .simili-lista li:nth-last-child(2):nth-child(3n + 1) {
+    grid-column: 2 / span 2;
+  }
+
+  .simili-lista li:last-child:nth-child(3n + 2) {
+    grid-column: 4 / span 2;
+  }
+}
+
 /* Ogni cella occupa 5 righe della griglia (foto, titolo, età, frequenza, «Scopri il corso») e le
    eredita con subgrid: titoli, testi e link stanno alla stessa altezza in tutte le celle della riga */
-/* Numero di voci (--n): una colonna per voce, fino a 6 */
-.simili-lista { --n: 1; }
-.simili-lista:has(> :nth-child(2)) { --n: 2; }
-.simili-lista:has(> :nth-child(3)) { --n: 3; }
-.simili-lista:has(> :nth-child(4)) { --n: 4; }
-.simili-lista:has(> :nth-child(5)) { --n: 5; }
-.simili-lista:has(> :nth-child(6)) { --n: 6; }
-
 .simili-lista li {
   display: grid;
   grid-row: span 5;

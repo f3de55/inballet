@@ -1,6 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { CHATBOT_MODELLI, getSecret } from 'astro:env/server';
-import type { Sistema } from './conoscenza';
+import type { Conoscenza } from './conoscenza';
 import type { Token } from './registro';
 
 interface Fornitore {
@@ -135,7 +135,8 @@ interface Scambio {
 }
 
 interface Domanda {
-  sistema: Sistema;
+  sistema: Pick<Conoscenza, 'fisso' | 'variabile'>;
+  contesto?: string;
   storia: Scambio[];
   domanda: string;
 }
@@ -148,6 +149,8 @@ interface RispostaModello {
   testo: string;
   token: Token;
 }
+
+const ultimaDomanda = (r: Domanda) => (r.contesto ? `${r.contesto}\n\nDOMANDA\n${r.domanda}` : r.domanda);
 
 const secondi = (h: string | null) => (h && Number.isFinite(+h) ? +h : undefined);
 
@@ -166,7 +169,7 @@ async function chiamaOpenAI(f: Fornitore, modello: string, chiaveApi: string, r:
             { role: 'user', content: s.domanda },
             { role: 'assistant', content: s.risposta },
           ]),
-          { role: 'user', content: r.domanda },
+          { role: 'user', content: ultimaDomanda(r) },
         ],
         [f.campoMax ?? 'max_tokens']: CONFIG.maxToken,
         ...f.extra?.(modello),
@@ -214,7 +217,7 @@ async function chiamaAnthropic(modello: string, chiaveApi: string, r: Richiesta)
             { role: 'user', content: s.domanda },
             { role: 'assistant', content: s.risposta },
           ]),
-          { role: 'user', content: r.domanda },
+          { role: 'user', content: ultimaDomanda(r) },
         ],
         ...effort,
       },

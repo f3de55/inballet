@@ -11,7 +11,7 @@ export interface LogEntry {
   ip_hash: string;
   message: string;
   response_preview: string;
-  type: 'success' | 'cached' | 'offline' | 'filtered' | 'blocked' | 'error';
+  type: 'success' | 'cached' | 'offline' | 'filtered' | 'blocked';
   cached: boolean;
   user_agent: string;
   demo?: boolean;
@@ -27,7 +27,8 @@ export interface LogEntry {
   errore?: string;
 }
 
-const MAX_LOG = 10000;
+export const MAX_LOG = 10000;
+const ATTESA_SCRITTURA = 2000;
 
 export interface Token {
   ingresso: number;
@@ -77,6 +78,26 @@ export async function budgetEsaurito(): Promise<boolean> {
 type NuovaVoce = Pick<LogEntry, 'ip_hash' | 'message' | 'type' | 'user_agent'> &
   Partial<Omit<LogEntry, 'timestamp' | 'date' | 'hour' | 'cached' | 'response_preview'>> & { risposta: string };
 
+let daScrivere: LogEntry[] = [];
+let scrittura: Promise<void> | null = null;
+
+function scriviRegistro() {
+  scrittura ??= new Promise((r) => setTimeout(r, ATTESA_SCRITTURA))
+    .then(() =>
+      serialized(async () => {
+        const nuove = daScrivere;
+        daScrivere = [];
+        const logs = await readJson<LogEntry[]>(paths.analytics, []);
+        await writeJson(paths.analytics, [...logs, ...nuove].slice(-MAX_LOG));
+      }),
+    )
+    .catch((e) => console.error('Errore registro chatbot:', e))
+    .finally(() => {
+      scrittura = null;
+      if (daScrivere.length) scriviRegistro();
+    });
+}
+
 export function registra({ risposta, ...voce }: NuovaVoce) {
   const now = Date.now();
   const entry: LogEntry = {
@@ -91,9 +112,6 @@ export function registra({ risposta, ...voce }: NuovaVoce) {
     user_agent: mbSlice(voce.user_agent, 100),
   };
   if (entry.costo && spesa.giorno === entry.date) spesa.usd += entry.costo;
-  void serialized(async () => {
-    const logs = await readJson<LogEntry[]>(paths.analytics, []);
-    logs.push(entry);
-    await writeJson(paths.analytics, logs.slice(-MAX_LOG));
-  }).catch((e) => console.error('Errore registro chatbot:', e));
+  daScrivere.push(entry);
+  scriviRegistro();
 }

@@ -238,7 +238,7 @@ $('locandinaTogli').addEventListener('click', () => {
 
 async function caricaImmagini() {
   const { data, error } = await actions.immagini.lista();
-  if (error) return console.error('Errore caricamento immagini', error);
+  if (error) return toast(error.message || 'Errore nel caricamento delle locandine', 'error');
   immagini = data.immagini;
   renderImmagini();
 }
@@ -312,26 +312,34 @@ grid.addEventListener('keydown', (e) => {
   }
 });
 
+function fileValido(file: File) {
+  if (!file.type.startsWith('image/')) toast(`${file.name}: non è un'immagine`, 'error');
+  else if (file.size > MAX_SIZE) toast(`${file.name}: troppo grande (max 20 MB)`, 'error');
+  else return true;
+  return false;
+}
+
 async function caricaFile(files: Iterable<File>) {
-  const formData = new FormData();
-  for (const file of files) {
-    if (!file.type.startsWith('image/')) toast(`${file.name}: non è un'immagine`, 'error');
-    else if (file.size > MAX_SIZE) toast(`${file.name}: troppo grande (max 20 MB)`, 'error');
-    else formData.append('immagini', file);
-  }
-  if (!formData.has('immagini')) return;
+  const validi = [...files].filter(fileValido);
+  if (!validi.length) return;
 
   uploadZone.classList.add('in-corso');
-  const { data, error } = await actions.immagini.carica(formData);
+  const caricate: Immagine[] = [];
+  for (const file of validi) {
+    const formData = new FormData();
+    formData.append('immagini', file);
+    const { data, error } = await actions.immagini.carica(formData);
+    if (error) toast(error.message || `${file.name}: errore nel caricamento`, 'error');
+    else caricate.push(...data.immagini);
+    data?.errori.forEach((err) => toast(err, 'warning'));
+  }
   uploadZone.classList.remove('in-corso');
-  if (error) return toast(error.message || 'Errore nel caricamento', 'error');
+  if (!caricate.length) return;
 
-  const n = data.immagini.length;
-  toast(n > 1 ? `${n} locandine caricate` : 'Locandina caricata', 'success');
-  immagini.unshift(...data.immagini);
-  impostaLocandina(data.immagini[0].path);
+  toast(caricate.length > 1 ? `${caricate.length} locandine caricate` : 'Locandina caricata', 'success');
+  immagini.unshift(...caricate);
+  impostaLocandina(caricate[0].path);
   modificato = true;
-  data.errori.forEach((err) => toast(err, 'warning'));
 }
 
 const fileInput = $<HTMLInputElement>('fileInput');

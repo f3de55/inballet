@@ -3,7 +3,7 @@ import { aggiungiScambio, eliminaConversazioniVecchie, leggiConversazione, MAX_S
 import { formatta } from './formato';
 import { chiediAlModello } from './fornitori';
 import { rispostaOffline } from './offline';
-import { controllaContenuto, controllaLimiti, hashIP, pulisciLimiti, sanitizza } from './protezioni';
+import { bloccato, controllaContenuto, controllaLimiti, hashIP, pulisciLimiti, sanitizza } from './protezioni';
 import { budgetEsaurito, calcolaCosto, registra } from './registro';
 import { scuola } from '../../data/scuola';
 
@@ -69,15 +69,16 @@ export async function rispondi({ testo, conversazione, ip, userAgent, origine }:
 
   const msg = sanitizza(testo);
   if (!msg) return { html: 'Scrivi la tua domanda.', conversazione: id };
+  if (bloccato(ipHash)) return { html: formatta(controllaLimiti(ipHash)!), conversazione: id };
 
   const rifiuta = (risposta: string, type: 'filtered' | 'blocked') => {
     registra({ ...base, message: msg, risposta, type });
     return { html: formatta(risposta), conversazione: id };
   };
-  const scarto = controllaContenuto(msg);
-  if (scarto) return rifiuta(scarto, 'filtered');
   const limite = controllaLimiti(ipHash);
   if (limite) return rifiuta(limite, 'blocked');
+  const scarto = controllaContenuto(msg);
+  if (scarto) return rifiuta(scarto, 'filtered');
   if ((conv?.scambi.length ?? 0) >= MAX_SCAMBI) {
     return rifiuta(`Questa conversazione è diventata lunga: tocca ↻ in alto per iniziarne una nuova, oppure chiamaci al ${scuola.telefono}.`, 'blocked');
   }

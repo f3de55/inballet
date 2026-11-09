@@ -12,7 +12,6 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) => !/\/(login|dashboard|404)/.test(page),
-      customPages: ['https://www.inballet.it/documenti', 'https://www.inballet.it/spettacoli-eventi'],
     }),
   ],
 
@@ -31,7 +30,7 @@ export default defineConfig({
   },
 
   security: {
-    actionBodySizeLimit: 100 * 1024 * 1024,
+    actionBodySizeLimit: 25 * 1024 * 1024,
     allowedDomains: [
       { hostname: '**.up.railway.app', protocol: 'https' },
       { hostname: 'inballet.it', protocol: 'https' },

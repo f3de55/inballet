@@ -8,7 +8,9 @@ export function decodeHtml(s: string): string {
 
 export function stripTags(s: string, allowed: string[] = []): string {
   const ok = new Set(allowed.map((t) => t.toLowerCase()));
-  return s.replace(/<!--[\s\S]*?-->/g, '').replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, (tag, name: string) => (ok.has(name.toLowerCase()) ? tag : ''));
+  return s
+    .replace(/<!--[\s\S]*?-->|<(script|style)\b[\s\S]*?<\/\1>/gi, '')
+    .replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, (tag, name: string) => (ok.has(name.toLowerCase()) ? tag : ''));
 }
 
 export const mbLen = (s: string) => [...s].length;

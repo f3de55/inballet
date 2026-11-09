@@ -127,6 +127,7 @@ export async function caricaImmagini(files: File[]): Promise<{ immagini: Immagin
       await creaMini(nome);
       immagini.push({ nome, path: PUBLIC_PREFIX + nome, mini: PUBLIC_PREFIX + nomeMini(nome) });
     } catch {
+      await Promise.all([unlink(filePath(nome)), unlink(filePath(nomeMini(nome)))].map((p) => p.catch(() => {})));
       errori.push(`${file.name}: immagine danneggiata o non leggibile`);
     }
   }

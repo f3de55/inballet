@@ -1,4 +1,5 @@
 ---
+import { GIORNI_CONSERVAZIONE } from '../lib/chatbot/conversazioni';
 import { scuola } from '../data/scuola';
 import Img from './Img.astro';
 import '../styles/components/chatbot.css';
@@ -41,7 +42,7 @@ const domande = ['Corsi per bambini', 'Sedi e orari', 'Come contattarvi', 'Come 
             <i class="fas fa-paper-plane" aria-hidden="true"></i>
         </button>
     </form>
-    <small class="cb-nota">Risposte automatiche; chat anonime, conservate 30 giorni: non scrivere dati personali. Conferme al <a href={scuola.telefonoHref}>{scuola.telefono}</a>.</small>
+    <small class="cb-nota">Risposte automatiche; chat anonime, conservate {GIORNI_CONSERVAZIONE} giorni: non scrivere dati personali. Conferme al <a href={scuola.telefonoHref}>{scuola.telefono}</a>.</small>
 </section>
 
 <script>

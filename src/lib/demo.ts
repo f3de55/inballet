@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { readdir, rename, stat, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { LogEntry } from './chatbot';
+import { MAX_LOG } from './chatbot/registro';
 import { baseSlug, leggiEventi, leggiTipi, slugUnico, srcImmagine, type Evento } from './eventi';
 import { ensureDir, paths, readJson, serialized, writeJson } from './storage';
 import { romeDate, romeHour, romeIso, romeTimestamp } from './time';
@@ -12,7 +13,6 @@ import type { Insegnante } from '../data/insegnanti';
 
 export const MAX_EVENTI = 60;
 export const MAX_MESSAGGI = 2000;
-const MAX_LOG = 10000;
 
 const cartella = (...candidati: string[]) => candidati.map((c) => path.resolve(c)).find((c) => existsSync(c)) ?? path.resolve(candidati[0]);
 const DIR_FOTO = cartella('demo/foto', 'src/assets/images');

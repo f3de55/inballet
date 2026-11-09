@@ -53,6 +53,43 @@ let base = css.replace(/([^{}]+)\{--fa:"\\([0-9a-f]+)"\}/g, (_, selectors, hex) 
 if (!iconRules.length) throw new Error('[icons] nessuna icona estratta: il formato del CSS di Font Awesome è cambiato');
 
 base = base.replace(/@font-face\{[^}]*\}/g, '').replace(/\/\*![\s\S]*?\*\//, '');
+
+function blocchi(testo) {
+  const out = [];
+  let inizio = 0;
+  let livello = 0;
+  for (let i = 0; i < testo.length; i++) {
+    if (testo[i] === '{') livello++;
+    else if (testo[i] === '}' && --livello === 0) {
+      const blocco = testo.slice(inizio, i + 1);
+      const graffa = blocco.indexOf('{');
+      out.push({ testa: blocco.slice(0, graffa), corpo: blocco.slice(graffa + 1, -1) });
+      inizio = i + 1;
+    }
+  }
+  return out;
+}
+
+const selettoreUsato = (sel) => !/\.sr-only/.test(sel) && [...sel.matchAll(/\.fa-([a-z0-9-]+)/g)].every(([, nome]) => used.has(nome));
+
+function pota(testo) {
+  return blocchi(testo)
+    .map(({ testa, corpo }) => {
+      if (testa.startsWith('@keyframes')) return { testa, corpo };
+      if (testa.startsWith('@')) {
+        const interno = pota(corpo);
+        return interno && { testa, corpo: interno };
+      }
+      const selettori = testa.split(',').filter(selettoreUsato);
+      return selettori.length && { testa: selettori.join(','), corpo };
+    })
+    .filter(Boolean)
+    .map(({ testa, corpo }) => `${testa}{${corpo}}`)
+    .join('');
+}
+
+base = pota(base);
+base = base.replace(/@keyframes ([\w-]+)\{(?:[^{}]*\{[^}]*\})*[^{}]*\}/g, (regola, nome) => (base.includes(`animation-name:${nome}`) ? regola : ''));
 const fontFaces = FONTS.map(
   (f) =>
     `@font-face{font-family:"${f.family}";font-style:normal;font-weight:${f.weight};font-display:block;src:url(../assets/fonts/${f.file}.woff2) format("woff2")}`,

@@ -1,4 +1,4 @@
-export interface Prezzo {
+interface Prezzo {
   ingresso: number;
   cache: number;
   scritturaCache?: number;

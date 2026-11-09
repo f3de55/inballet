@@ -177,9 +177,11 @@ export async function trovaEvento(chiave: string): Promise<{ evento: Evento; vec
   return altro ? { evento: altro, vecchio: true } : null;
 }
 
+const TAG_DESCRIZIONE = ['b', 'strong', 'i', 'em', 'ul', 'li', 'br'];
+
 function pulisciDescrizione(html: string): string {
-  return stripTags(html.replace(/<\/(div|p)>\s*/gi, '<br>'), ['b', 'strong', 'i', 'em', 'ul', 'li', 'br'])
-    .replace(/<([a-z]+)\s+[^>]*>/gi, '<$1>')
+  return stripTags(html.replace(/<\/(div|p)>\s*/gi, '<br>'), TAG_DESCRIZIONE)
+    .replace(/<(\/?)([a-z]+)\b[^>]*>/gi, (_, chiusura: string, tag: string) => `<${chiusura}${tag.toLowerCase()}>`)
     .replace(/<br>\s*(<\/?(ul|li)>)/gi, '$1')
     .replace(/(<br>\s*)+$/i, '')
     .trim();
@@ -192,10 +194,8 @@ export async function salvaEvento(input: InputEvento): Promise<{ evento: Evento;
   if (!eventoId && fineEvento(input) < Date.now()) warnings.push('Attenzione: stai inserendo un evento nel passato');
   if (input.immagine && !/^(https?:\/\/|assets\/|images\/|\.\/|\/)/.test(input.immagine)) warnings.push('Il percorso immagine potrebbe non essere valido');
 
-  const tipi = await leggiTipi();
-
   return serialized(async () => {
-    const eventi = await leggiEventi();
+    const [eventi, tipi] = await Promise.all([leggiEventi(), leggiTipi()]);
     const esistente = eventoId ? eventi.find((e) => e.id === eventoId) : undefined;
     if (eventoId && !esistente) throw new ErroreEvento('Evento non trovato: forse è stato eliminato');
 
@@ -379,7 +379,7 @@ export function datiStrutturati(e: Evento, site: URL) {
     ...(e.immagine && { image: [new URL(srcImmagine(e.immagine), site).href] }),
     ...(descrizione && { description: descrizione.slice(0, 500) }),
     organizer: { '@type': 'Organization', name: scuola.nome, url: site.href },
-    ...(costo !== null && costo === 0 && { isAccessibleForFree: true }),
+    ...(costo === 0 && { isAccessibleForFree: true }),
     ...((costo !== null || e.prenotazione) && {
       offers: {
         '@type': 'Offer',
@@ -417,7 +417,14 @@ export function linkGoogleCalendar(e: Evento, site: URL): string {
 export function fileIcs(e: Evento, site: URL): string {
   const { start, end, allDay } = intervallo(e);
   const campo = (s: string) => s.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
-  const piega = (riga: string) => riga.match(/.{1,74}/gu)?.join('\r\n ') ?? riga;
+  const piega = (riga: string) => {
+    const righe = [''];
+    for (const c of riga) {
+      if (Buffer.byteLength(righe.at(-1)! + c) > (righe.length > 1 ? 74 : 75)) righe.push('');
+      righe[righe.length - 1] += c;
+    }
+    return righe.join('\r\n ');
+  };
   const tipo = allDay ? ';VALUE=DATE' : '';
   const stamp = new Date()
     .toISOString()

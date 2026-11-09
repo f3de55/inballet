@@ -20,7 +20,7 @@ const a = (href: string, testo: string) => {
 
 function hrefSicuro(url: string): string | null {
   const u = url.replace(/&amp;/g, '&');
-  if (/^\/[a-z0-9/._-]*$/i.test(u) && !u.includes('..')) return url;
+  if (/^\/(?!\/)[a-z0-9/._-]*$/i.test(u) && !u.includes('..')) return url;
   if (/^tel:\+?[\d\s-]+$/.test(u) || /^mailto:[\w.%+-]+@[\w.-]+$/.test(u)) return url;
   return SITI_ESTERNI.test(u) ? url : null;
 }

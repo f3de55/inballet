@@ -16,7 +16,6 @@
   height: 100%;
   background: center/cover no-repeat;
   z-index: 1;
-  content-visibility: auto;
 }
 
 .hero-video {

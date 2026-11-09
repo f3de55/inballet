@@ -50,8 +50,10 @@ const DURATA_PAGINE = import.meta.env.DEV ? 60_000 : 30 * 60_000;
 let pagine: { elenco: Pagina[]; letto: number } | null = null;
 let lettura: Promise<Pagina[]> | null = null;
 
+const locale = (origine: string) => ['localhost', '127.0.0.1', '[::1]'].includes(new URL(origine).hostname);
+
 async function leggiDaServer(origineRichiesta: string): Promise<Pagina[]> {
-  const indirizzi = [...(process.env.PORT ? [`http://localhost:${process.env.PORT}`] : []), origineRichiesta];
+  const indirizzi = [`http://localhost:${process.env.PORT ?? 4321}`, ...(locale(origineRichiesta) ? [origineRichiesta] : [])];
   for (const indirizzo of new Set(indirizzi)) {
     const elenco = await leggiSito(indirizzo);
     if (elenco.length) return elenco;

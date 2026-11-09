@@ -69,6 +69,8 @@ interface Visitatore {
 
 const visitatori = new Map<string, Visitatore>();
 
+export const bloccato = (ipHash: string) => (visitatori.get(ipHash)?.bloccatoFino ?? 0) > Date.now() / 1000;
+
 export function controllaLimiti(ipHash: string): string | null {
   const now = Date.now() / 1000;
   const v = visitatori.get(ipHash) ?? { accettati: [], tentativi: [], bloccatoFino: 0 };

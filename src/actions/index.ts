@@ -67,7 +67,7 @@ export const server = {
     }),
 
     elimina: defineAction({
-      input: z.object({ id: z.string() }),
+      input: z.object({ id: z.string().max(40) }),
       handler: admin(({ id }) => eliminaEvento(id.trim())),
     }),
   },
@@ -106,7 +106,7 @@ export const server = {
     }),
 
     elimina: defineAction({
-      input: z.object({ nome: z.string() }),
+      input: z.object({ nome: z.string().max(200) }),
       handler: admin(async ({ nome }) => {
         const errore = await eliminaImmagine(nome);
         if (errore) throw richiesta(errore);
@@ -207,7 +207,7 @@ export const server = {
     }),
 
     eliminaTutto: defineAction({
-      input: z.object({ eventi: z.boolean(), chatbot: z.boolean(), conferma: z.string() }),
+      input: z.object({ eventi: z.boolean(), chatbot: z.boolean(), conferma: z.string().max(40) }),
       handler: admin(async ({ eventi, chatbot, conferma }) => {
         if (conferma.trim().toUpperCase() !== PAROLA_CONFERMA) throw richiesta(`Scrivi ${PAROLA_CONFERMA} per confermare`);
         if (!eventi && !chatbot) throw richiesta('Scegli cosa eliminare');

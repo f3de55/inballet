@@ -66,18 +66,10 @@ body {
   gap: 1.5rem;
   margin-left: auto;
 }
-.topbar-azioni a {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--testo-su-scuro-debole);
-  font-size: var(--text-xs);
-  text-decoration: none;
-  transition: color 0.2s;
+.topbar-azioni form {
+  display: contents;
 }
-.topbar-azioni a:hover {
-  color: var(--white);
-}
+.topbar-azioni a,
 .topbar-azioni button {
   display: flex;
   align-items: center;
@@ -88,10 +80,15 @@ body {
   color: var(--testo-su-scuro-debole);
   font: inherit;
   font-size: var(--text-xs);
+  text-decoration: none;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: color var(--durata-breve);
 }
+.topbar-azioni a:hover,
 .topbar-azioni button:hover {
+  color: var(--white);
+}
+.topbar-azioni .topbar-elimina:hover {
   color: var(--su-scuro-errore);
 }
 

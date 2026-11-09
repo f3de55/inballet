@@ -12,6 +12,9 @@ interface Props {
 
 const { title } = Astro.props;
 Astro.response.headers.set('Cache-Control', 'no-store');
+Astro.response.headers.set('X-Frame-Options', 'DENY');
+Astro.response.headers.set('Content-Security-Policy', "frame-ancestors 'none'");
+Astro.response.headers.set('Referrer-Policy', 'same-origin');
 ---
 
 <!doctype html>

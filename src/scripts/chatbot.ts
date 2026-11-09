@@ -70,7 +70,6 @@ function loadSession() {
   } catch (e) {
     console.error('Errore caricamento sessione chatbot:', e);
   }
-  scrivi('inballet_chatbot_count', null);
 }
 
 function saveMessage(type: Tipo, content: string) {
@@ -200,5 +199,3 @@ suggerimenti.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !box.hidden) chiudi();
 });
-
-Object.assign(window, { cbClearSession: nuovaConversazione });

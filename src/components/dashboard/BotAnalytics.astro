@@ -5,6 +5,7 @@ import { GIORNI_CONSERVAZIONE, ultimeConversazioni } from '../../lib/chatbot/con
 import { pagineLette } from '../../lib/chatbot/conoscenza';
 import { formatta } from '../../lib/chatbot/formato';
 import { statoCatena } from '../../lib/chatbot/fornitori';
+import { MAX_LOG } from '../../lib/chatbot/registro';
 import { paths, readJson } from '../../lib/storage';
 import { mbSlice } from '../../lib/text';
 import { romeDate } from '../../lib/time';
@@ -55,7 +56,7 @@ const costoMille = conCosto.length ? (somma(conCosto.map((l) => l.costo!)) / con
 const tempi = dalModello.flatMap((l) => (l.ms ? [l.ms] : []));
 const tempoMedio = tempi.length ? somma(tempi) / tempi.length / 1000 : 0;
 const daRiserva = dalModello.filter((l) => (l.fallback ?? 0) > 0).length;
-const senzaModello = logs.filter((l) => l.type === 'offline' || l.type === 'error').length;
+const senzaModello = logs.filter((l) => l.type === 'offline').length;
 const perModello = new Map<string, number>();
 for (const l of dalModello) if (l.modello) perModello.set(`${l.fornitore}:${l.modello}`, (perModello.get(`${l.fornitore}:${l.modello}`) ?? 0) + 1);
 
@@ -228,7 +229,7 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
     )}
 </section>
 
-<DemoModal tipo="chatbot" presenti={tuttiLog.filter((l) => l.demo).length} liberi={10000 - tuttiLog.length} />
+<DemoModal tipo="chatbot" presenti={tuttiLog.filter((l) => l.demo).length} liberi={MAX_LOG - tuttiLog.length} />
 
 <script>
     import { actions } from 'astro:actions';

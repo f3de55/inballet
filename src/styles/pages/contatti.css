@@ -183,26 +183,6 @@
   background: none;
 }
 
-a.info-valore {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  max-width: 100%;
-  width: fit-content;
-}
-
-.info a.info-email {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45em;
-}
-
-.info-email .info-link-testo {
-  min-width: 0;
-}
-
 .sede a .fa-arrow-up-right-from-square {
   margin-inline-start: 0.4em;
   font-size: var(--icona-mini);

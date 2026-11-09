@@ -56,7 +56,7 @@ test('ricerca: verbi, sinonimi e parole vuote', () => {
   assert.equal(primo('dove siete?'), '/contatti');
   assert.equal(primo('a che età si può iniziare da adulto?'), '/adulti');
   assert.equal(primo('fate breakdance?'), '/breaking');
-  assert.deepEqual(cerca(indice, [{ testo: 'ciao, grazie!', peso: 1 }]), []);
+  assert.equal(cerca(indice, [{ testo: 'ciao, grazie!', peso: 1 }]).length, 0);
 });
 
 test('ricerca: una domanda di seguito resta sul corso di cui si parlava', () => {

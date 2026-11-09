@@ -55,13 +55,6 @@ export const sedi: Sede[] = [
   },
 ];
 
-export const orari: { giorni: string[]; etichetta: string; apre: string; chiude: string }[] = [
-  { giorni: ['Monday', 'Tuesday', 'Friday'], etichetta: 'Lun, Mar, Ven', apre: '15:00', chiude: '23:00' },
-  { giorni: ['Wednesday'], etichetta: 'Mer', apre: '16:00', chiude: '23:30' },
-  { giorni: ['Thursday'], etichetta: 'Gio', apre: '15:00', chiude: '23:30' },
-  { giorni: ['Saturday'], etichetta: 'Sab', apre: '10:30', chiude: '19:00' },
-];
-
 export const categorieCorsi = [
   {
     id: 'classica-moderna',

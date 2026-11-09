@@ -1,4 +1,4 @@
-import { categorieCorsi, faqHome, FONDAZIONE, orari, scuola, sedi, type Sede } from '../data/scuola';
+import { categorieCorsi, faqHome, FONDAZIONE, scuola, sedi, type Sede } from '../data/scuola';
 import { stripTags } from './text';
 
 const site = scuola.sito;

@@ -33,10 +33,17 @@ function testoPrincipale(html: string): string {
       .replace(/<(br|hr)\b[^>]*>/gi, '\n')
       .replace(/<\/dt>/gi, ': ')
       .replace(/<\/(p|div|section|article|header|footer|h[1-6]|li|ul|ol|dt|dd|blockquote|figcaption|tr|table|summary|details)>/gi, '\n')
+      .replace(/<\/?(?:strong|em|b|a|span|small|abbr|mark|sup|sub)\b[^>]*>/gi, '')
       .replace(/<[^>]+>/g, ' '),
   )
     .split('\n')
-    .map((r) => r.replace(/\s+/g, ' ').trim())
+    .map((r) =>
+      r
+        .replace(/\s+/g, ' ')
+        .replace(/ ([,.;:!?)])/g, '$1')
+        .replace(/([(']) /g, '$1')
+        .trim(),
+    )
     .filter((r) => r.replace(/^[#-]+\s*/, '').length > 1)
     .join('\n');
 }

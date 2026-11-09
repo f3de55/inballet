@@ -30,7 +30,7 @@ Every new or edited line follows these rules; `npm run verifica:stile`, `npm run
 
 ## Architecture
 
-**Astro 7** with hybrid rendering. Default output is `static` (prerendered HTML), but pages with `export const prerender = false` are SSR. Currently SSR: `/login`, `/dashboard`, `/robots.txt`, `/llms.txt`, `/documenti`, `/spettacoli-eventi` (+ `/spettacoli-eventi/<slug>/calendario.ics`), and the image asset route.
+**Astro 7** with hybrid rendering. Default output is `static` (prerendered HTML), but pages with `export const prerender = false` are SSR. Currently SSR: `/login`, `/dashboard`, `/robots.txt`, `/llms.txt`, `/documenti`, `/spettacoli-eventi` (+ `/spettacoli-eventi/<slug>/calendario.ics`), and the image asset route. Server islands (`server:defer`, the page stays static): `Banner`, `RecensioniGoogle` (home), `OrariSegreteria` (`/contatti`).
 
 ### Request flow
 

@@ -44,16 +44,15 @@ ${scuola.fondatrice} è la fondatrice e Direttrice Artistica della scuola: profe
 - E-mail: ${scuola.email}
 - WhatsApp: ${scuola.whatsapp}
 - Instagram: ${scuola.social.instagram}
-- Facebook: ${scuola.social.facebook}
+- Facebook: ${scuola.social.facebook}${voto}
 
 ## Sedi
 
 ${sedi.map((s) => `- ${s.titolo}: ${s.indirizzo}`).join('\n')}
 
-## Orari
+## Orari della segreteria
 
-${orari.map((o) => `- ${o.etichetta}: ${o.apre}-${o.chiude}`).join('\n')}
-- Domenica: chiuso
+${orari}
 
 ## Corsi
 

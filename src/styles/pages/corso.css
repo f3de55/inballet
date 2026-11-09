@@ -329,9 +329,25 @@
     gap: 2rem;
   }
 
+  /* Tablet e mobile: intestazione e competenze allineate a sinistra, come il resto della pagina */
+  .corso-impara-header {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+  }
+
   .corso-impara-list {
     grid-template-columns: minmax(0, 1fr);
     gap: 2.5rem;
+  }
+
+  .impara-competenza {
+    text-align: left;
+  }
+
+  .impara-testo {
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .impara-competenza:not(:nth-child(3n + 1))::before {
@@ -342,8 +358,8 @@
     content: '';
     position: absolute;
     top: -1.25rem;
-    left: 10%;
-    right: 10%;
+    left: 0;
+    right: 0;
     height: var(--ls);
     background: var(--linea-alto);
   }
@@ -351,7 +367,7 @@
   .impara-simbolo {
     width: 4.25rem;
     height: 4.25rem;
-    margin-bottom: 1rem;
+    margin: 0 0 1rem;
   }
 }
 

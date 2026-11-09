@@ -1,0 +1,33 @@
+---
+import { datiGoogle, GIORNI, schemaOrari } from '../lib/google';
+import { scuola } from '../data/scuola';
+
+const dati = await datiGoogle();
+const settimana = dati?.orari.some((f) => f.length) ? dati.orari : null;
+const schema = settimana && { '@context': 'https://schema.org', '@type': 'DanceSchool', '@id': `${scuola.sito}/#scuola`, openingHoursSpecification: schemaOrari(settimana) };
+
+Astro.response.headers.set('Cache-Control', 'public, max-age=3600');
+---
+
+<orari-segreteria>
+    {settimana ? (
+        <p class="orari-status" aria-live="polite"></p>
+        <ul class="orari-grid">
+            {settimana.map((fasce, i) => (
+                <li class="orario-item" data-fasce={fasce.map((f) => `${f.apre}-${f.chiude}`).join(' ')}>
+                    <p class="orario-day"><abbr title={GIORNI[i]}>{GIORNI[i].slice(0, 3)}</abbr></p>
+                    {fasce.length
+                        ? <p class="orario-time">{fasce.map((f) => `${f.apre}–${f.chiude}`).join(', ')}</p>
+                        : <p class="orario-time chiuso">Chiuso</p>}
+                </li>
+            ))}
+        </ul>
+        <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ) : (
+        <p>Orari non disponibili in questo momento: chiamaci al <a href={scuola.telefonoHref}>{scuola.telefono}</a>.</p>
+    )}
+</orari-segreteria>
+
+<script>
+    import '../scripts/orari';
+</script>

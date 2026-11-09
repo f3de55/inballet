@@ -29,7 +29,9 @@ export interface Parte {
 }
 
 const VUOTE = new Set(
-  `a ad agli ai al alla alle allo anche ancora avete abbiamo c che chi ci ciao come con cosa cui da dagli dai dal dalla dalle dei del della delle dello di dove e ed era essere fa fare fate gia gli grazie ha hai hanno ho i il in info informazioni io la le li lo loro ma me mi mio mia mie miei molto ne nei nel nella nelle negli no noi non o per perche piu po posso potete puo qual quale quali quando quanta quante quanti quanto quella quelle quello questa queste questi questo salve se sei si sia sono su sua sue sui sul sulla suo suoi te ti tra tu tua tuo un una uno vi voi vorrei voglio sapere buongiorno buonasera the and of to is are do you`.split(' '),
+  `a ad agli ai al alla alle allo anche ancora avete abbiamo c che chi ci ciao come con cosa cui da dagli dai dal dalla dalle dei del della delle dello di dove e ed era essere fa fare fate gia gli grazie ha hai hanno ho i il in info informazioni io la le li lo loro ma me mi mio mia mie miei molto ne nei nel nella nelle negli no noi non o per perche piu po posso potete puo qual quale quali quando quanta quante quanti quanto quella quelle quello questa queste questi questo salve se sei si sia sono su sua sue sui sul sulla suo suoi te ti tra tu tua tuo un una uno vi voi vorrei voglio sapere buongiorno buonasera the and of to is are do you`.split(
+    ' ',
+  ),
 );
 
 export const normalizza = (s: string) =>
@@ -98,7 +100,11 @@ function pesiRichiesta(parti: Parte[]): { pesi: Map<string, number>; principali:
 const K1 = 1.2;
 const B = 0.75;
 
-export function cerca(indice: Indice, parti: Parte[], opzioni: { massimo?: number; caratteri?: number; perPagina?: number; pagine?: Set<string> } = {}): Trovato[] {
+export function cerca(
+  indice: Indice,
+  parti: Parte[],
+  opzioni: { massimo?: number; caratteri?: number; perPagina?: number; pagine?: Set<string> } = {},
+): Trovato[] {
   const { massimo = 6, caratteri = 5500, perPagina = 3, pagine = new Set() } = opzioni;
   const { pesi, principali } = pesiRichiesta(parti);
   if (!pesi.size) return [];

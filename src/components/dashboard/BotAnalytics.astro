@@ -2,7 +2,7 @@
 import { CHATBOT_BUDGET_GIORNO } from 'astro:env/server';
 import type { LogEntry } from '../../lib/chatbot';
 import { GIORNI_CONSERVAZIONE, ultimeConversazioni } from '../../lib/chatbot/conversazioni';
-import { pagineLette } from '../../lib/chatbot/conoscenza';
+import { statoConoscenza } from '../../lib/chatbot/conoscenza';
 import { formatta } from '../../lib/chatbot/formato';
 import { statoCatena } from '../../lib/chatbot/fornitori';
 import { MAX_LOG } from '../../lib/chatbot/registro';
@@ -65,7 +65,7 @@ const orario = (ms: number) => new Intl.DateTimeFormat('it-IT', { timeZone: 'Eur
 const quando = (iso: string) => `${dataIt(iso.slice(0, 10))} ${iso.slice(11, 16)}`;
 
 const catena = statoCatena();
-const sito = pagineLette();
+const sito = statoConoscenza();
 const conversazioni = await ultimeConversazioni(20);
 const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 'dalle FAQ, senza AI' };
 ---
@@ -164,7 +164,7 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
     <small class="nota bot-intro">In ordine di priorità: se il primo non risponde si passa al successivo; se nessuno risponde, Étoile risponde con le FAQ. Si configurano in <code>CHATBOT_MODELLI</code> nel file <code>.env</code>.</small>
     <small class="nota bot-intro">
         {sito
-            ? `Conoscenza: testi di ${sito.numero} pagine del sito (${fmt.format(Math.round(sito.caratteri / 1000))} mila caratteri), letti alle ${orario(sito.letto)} e riletti in automatico, più documenti ed eventi della dashboard.`
+            ? `Conoscenza: dati ufficiali sempre presenti (circa ${fmt.format(Math.round(sito.caratteriFissi / 360) * 100)} token, in cache presso i fornitori) e, per ogni domanda, i passaggi pertinenti scelti tra ${fmt.format(sito.passaggi)} (testi di ${sito.pagine} pagine letti alle ${orario(sito.letto)}, FAQ ed eventi).`
             : 'Conoscenza: le pagine del sito vengono lette alla prima domanda dopo l’avvio del server.'}
     </small>
     {catena.length === 0 ? (

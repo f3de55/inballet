@@ -19,7 +19,8 @@ const pagine = [
   {
     percorso: '/seconda-infanzia',
     titolo: 'Danza per bambini da 6 a 8 anni',
-    testo: '## Danza per bambini da 6 a 8 anni\nDal gioco al primo stile: classica, modern e hip-hop, una o due volte a settimana.\n## I corsi da 6 a 8 anni\nOgni bambina e ogni bambino sceglie il suo stile con le insegnanti, dopo una lezione di prova.',
+    testo:
+      '## Danza per bambini da 6 a 8 anni\nDal gioco al primo stile: classica, modern e hip-hop, una o due volte a settimana.\n## I corsi da 6 a 8 anni\nOgni bambina e ogni bambino sceglie il suo stile con le insegnanti, dopo una lezione di prova.',
   },
   {
     percorso: '/adulti',

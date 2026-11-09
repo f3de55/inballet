@@ -1,4 +1,4 @@
-import { sistema } from './conoscenza';
+import { conoscenza, contesto } from './conoscenza';
 import { aggiungiScambio, eliminaConversazioniVecchie, leggiConversazione, MAX_SCAMBI, MEMORIA, nuovoId } from './conversazioni';
 import { formatta } from './formato';
 import { chiediAlModello } from './fornitori';
@@ -57,7 +57,7 @@ function avviaManutenzione() {
 
 export async function prepara(origine: string): Promise<void> {
   avviaManutenzione();
-  await sistema(origine);
+  await conoscenza(origine);
 }
 
 export async function rispondi({ testo, conversazione, ip, userAgent, origine }: Messaggio): Promise<Risposta> {
@@ -87,7 +87,7 @@ export async function rispondi({ testo, conversazione, ip, userAgent, origine }:
   const salva = (risposta: string, tipo: 'success' | 'cached' | 'offline', modello?: { fornitore: string; modello: string }) =>
     aggiungiScambio(id, ipHash, { domanda: msg, risposta, tipo, ...modello }).catch((e) => console.error('Salvataggio conversazione:', e));
 
-  const s = await sistema(origine);
+  const s = await conoscenza(origine);
   const kCache = storia.length ? null : chiaveCache(s.versione, msg);
   const inCache = kCache && leggiCache(kCache);
   if (inCache) {
@@ -105,7 +105,7 @@ export async function rispondi({ testo, conversazione, ip, userAgent, origine }:
 
   if (await budgetEsaurito()) return offline('tetto di spesa giornaliero raggiunto', 0);
 
-  const esito = await chiediAlModello({ sistema: s, storia, domanda: msg });
+  const esito = await chiediAlModello({ sistema: s, storia, domanda: msg, contesto: contesto(s, msg, storia) });
   const ultimoErrore = esito.tentativi.at(-1);
   const errore = ultimoErrore && `${ultimoErrore.fornitore}: ${ultimoErrore.errore}`;
   if (!esito.ok) return offline(errore ?? 'nessun fornitore configurato', esito.tentativi.length);

@@ -39,7 +39,13 @@ interface Momento {
 interface RispostaPlaces {
   rating?: number;
   userRatingCount?: number;
-  reviews?: { rating?: number; publishTime?: string; text?: { text?: string }; originalText?: { text?: string }; authorAttribution?: { displayName?: string } }[];
+  reviews?: {
+    rating?: number;
+    publishTime?: string;
+    text?: { text?: string };
+    originalText?: { text?: string };
+    authorAttribution?: { displayName?: string };
+  }[];
   regularOpeningHours?: { periods?: { open?: Momento; close?: Momento }[] };
 }
 

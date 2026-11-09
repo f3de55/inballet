@@ -31,7 +31,7 @@ const altri = (categoria?.corsi ?? [])
 ---
 
 {categoria && altri.length > 0 && (
-  <section class="simili-section decoro-onde decoro-onde--sinistra" aria-labelledby="simili-titolo">
+  <section class="simili-section decoro-onde decoro-onde--sinistra" aria-labelledby="simili-titolo" data-chatbot-escludi>
     <div class="intro-editoriale">
       <p class="eyebrow">{categoria.nome}</p>
       <h2 class="titolo-sezione" id="simili-titolo">Corsi <em>simili</em></h2>

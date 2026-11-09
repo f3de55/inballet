@@ -90,7 +90,12 @@ let memo: { conoscenza: Conoscenza; creato: number; pagine: Pagina[] } | null = 
 
 export const statoConoscenza = () =>
   memo && pagine
-    ? { pagine: pagine.elenco.length, passaggi: memo.conoscenza.indice.voci.length, letto: pagine.letto, caratteriFissi: memo.conoscenza.fisso.length + memo.conoscenza.variabile.length }
+    ? {
+        pagine: pagine.elenco.length,
+        passaggi: memo.conoscenza.indice.voci.length,
+        letto: pagine.letto,
+        caratteriFissi: memo.conoscenza.fisso.length + memo.conoscenza.variabile.length,
+      }
     : null;
 
 export async function conoscenza(origine: string): Promise<Conoscenza> {
@@ -101,10 +106,12 @@ export async function conoscenza(origine: string): Promise<Conoscenza> {
   const variabile = [
     `# OGGI\n\n${dataLunga.format(new Date())}`,
     `# DOCUMENTI PER L'ISCRIZIONE (pagina /documenti)\n\n${documenti.map((d) => `- ${d.titolo}${d.nota ? `: ${d.nota}` : ''}`).join('\n') || '- Nessun documento pubblicato'}`,
-    `# PROSSIMI EVENTI (pagina /spettacoli-eventi)\n\n${eventi
-      .slice(0, 10)
-      .map((e) => `- ${e.titolo}${stato(e)}: ${quando(e)}${campo('luogo', e.luogo)}; pagina: ${urlEvento(e)}`)
-      .join('\n') || '- Nessun evento in programma al momento'}`,
+    `# PROSSIMI EVENTI (pagina /spettacoli-eventi)\n\n${
+      eventi
+        .slice(0, 10)
+        .map((e) => `- ${e.titolo}${stato(e)}: ${quando(e)}${campo('luogo', e.luogo)}; pagina: ${urlEvento(e)}`)
+        .join('\n') || '- Nessun evento in programma al momento'
+    }`,
   ].join('\n\n');
   const passaggi = [...elenco.flatMap(dividi), ...passaggiFaq, ...eventi.map(passaggioEvento)];
   const versione = createHash('sha256')

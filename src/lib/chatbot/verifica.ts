@@ -1,5 +1,5 @@
 import { VERIFICHE } from '../../data/chatbot';
-import { sistema } from './conoscenza';
+import { conoscenza, contesto } from './conoscenza';
 import { chiediAlModello, type Anello } from './fornitori';
 import { calcolaCosto } from './registro';
 
@@ -21,7 +21,9 @@ const piatto = (s: string) =>
 export async function verifica(anello: Anello, indice: number, origine: string): Promise<EsitoVerifica> {
   const v = VERIFICHE[indice];
   if (!v) throw new Error('Domanda di verifica inesistente');
-  const esito = await chiediAlModello({ sistema: await sistema(origine), storia: v.prima ? [v.prima] : [], domanda: v.domanda }, anello);
+  const s = await conoscenza(origine);
+  const storia = v.prima ? [v.prima] : [];
+  const esito = await chiediAlModello({ sistema: s, storia, domanda: v.domanda, contesto: contesto(s, v.domanda, storia) }, anello);
   if (!esito.ok) return { ok: false, risposta: '', problemi: [esito.tentativi[0]?.errore ?? 'fornitore non configurato'] };
 
   const testo = piatto(esito.testo);

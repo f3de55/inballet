@@ -106,5 +106,3 @@ export async function leggiSito(origine: string): Promise<Pagina[]> {
   pagine.sort((a, b) => (a.percorso === '/' ? -1 : b.percorso === '/' ? 1 : a.percorso.localeCompare(b.percorso)));
   return togliRipetute(pagine);
 }
-
-export const testoPagine = (pagine: Pagina[]) => pagine.map((p) => `=== Pagina "${p.titolo}" (${p.percorso}) ===\n${p.testo}`).join('\n\n');

@@ -14,7 +14,9 @@ interface Opzioni {
 export async function riepilogoScuola({ url, documenti = [], conFaq = true }: Opzioni): Promise<string> {
   const [collezione, google] = await Promise.all([getCollection('corsi'), datiGoogle()]);
   const corsi = new Map(collezione.map((c) => [`/${c.id}`, c.data]));
-  const orari = google?.orari.some((f) => f.length) ? testoOrari(google.orari) : `- Non disponibili in questo momento: chiedere alla segreteria (${scuola.telefono})`;
+  const orari = google?.orari.some((f) => f.length)
+    ? testoOrari(google.orari)
+    : `- Non disponibili in questo momento: chiedere alla segreteria (${scuola.telefono})`;
   const voto = google?.voto ? `\n- Valutazione su Google: ${google.voto.toFixed(1).replace('.', ',')} su 5 (${google.totale} recensioni)` : '';
   const dettagli = (path: string) => {
     const c = corsi.get(path);

@@ -17,7 +17,9 @@ class CaroselloRecensioni {
     const carousel = root.querySelector<HTMLElement>('.testimonials-carousel');
     if (this.slides.length < 2 || !carousel || !this.track) return;
     this.setMinHeight();
-    root.querySelectorAll<HTMLElement>('.recensioni-nav').forEach((b) => b.addEventListener('click', () => (b.dataset.passo === '1' ? this.next() : this.prev())));
+    root
+      .querySelectorAll<HTMLElement>('.recensioni-nav')
+      .forEach((b) => b.addEventListener('click', () => (b.dataset.passo === '1' ? this.next() : this.prev())));
     this.indicators.forEach((dot, i) => dot.addEventListener('click', () => this.goTo(i)));
     this.bindTouch(carousel);
   }

@@ -25,11 +25,9 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
     description={description}
     ogTitle={`${hero.titolo} | InBallet`}
     ogDescription={base}
+    preload={bg.hero.preload}
 >
 
-    <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
-    </Fragment>
     <HeroPagina titolo={hero.titolo} stile={bg.hero.style}>
         {hero.testo && <p class="hero-lead" set:html={grassettoDaTesto(hero.testo)} />}
     </HeroPagina>
@@ -73,7 +71,7 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
                 <p>Il documento che definisce finalità, organizzazione e regole di partecipazione dell'<strong>{scuola.ragioneSociale}</strong>.</p>
             </header>
             {statuto ? (
-                <a class="documento statuto-documento" href={statuto.file} download aria-label="Scarica lo statuto di InBallet in PDF">
+                <a class="documento statuto-documento" href={statuto.file} download>
                     <i class="fas fa-file-pdf documento-icona" aria-hidden="true"></i>
                     <div class="documento-testo">
                         <h3 class="documento-nome">{statuto.titolo}</h3>

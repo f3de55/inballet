@@ -1,16 +1,12 @@
 ---
-import { altrePagine, menu } from '../data/navigazione';
-
-interface Props {
-  nome?: string;
-}
+import { altrePagine, menu, percorsoPagina } from '../data/navigazione';
 
 interface Passo {
   nome: string;
   href?: string;
 }
 
-const corrente = Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1');
+const corrente = percorsoPagina(Astro.url);
 const passi: Passo[] = [{ nome: 'Home', href: '/' }];
 
 const sezione = menu.find((m) => m.href === corrente || m.sezioni.some((s) => s.voci.some((v) => v.href === corrente)));
@@ -20,7 +16,7 @@ if (sezione?.href === corrente) {
   const voce = sezione.sezioni.flatMap((s) => s.voci).find((v) => v.href === corrente)!;
   passi.push({ nome: sezione.label, href: sezione.href }, { nome: voce.nome, href: corrente });
 } else {
-  passi.push({ nome: altrePagine[corrente] ?? Astro.props.nome ?? '', href: corrente });
+  passi.push({ nome: altrePagine[Astro.response.status === 404 ? '/404' : corrente] ?? '', href: corrente });
 }
 
 const ultimo = passi.length - 1;

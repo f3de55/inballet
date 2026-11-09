@@ -9,7 +9,6 @@ interface Review {
 }
 
 const MAX_REVIEWS = 5;
-const MIN_RATING = 1;
 
 const escapeHtml = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[c]!);
 
@@ -29,7 +28,6 @@ async function fetchReviews(placeId: string): Promise<{ rating: number; total: n
   const timeout = new Promise<never>((_, reject) => setTimeout(() => reject(new Error('Timeout caricamento recensioni')), 10000));
   await Promise.race([place.fetchFields({ fields: ['rating', 'userRatingCount', 'reviews'] }), timeout]);
   const reviews = (place.reviews ?? [])
-    .filter((r) => (r.rating ?? 0) >= MIN_RATING)
     .map((r) => ({
       author_name: r.authorAttribution?.displayName || 'Anonimo',
       rating: r.rating ?? 0,

@@ -1,17 +1,14 @@
 ---
-import { fineEvento, prossimiEventi, urlEvento } from '../lib/eventi';
+import { fineEvento, giornoBreve, maiuscola, MESI, prossimiEventi, urlEvento } from '../lib/eventi';
 import { mbLen, mbSlice } from '../lib/text';
 import '../styles/components/banner.css';
-
-const giorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-const mesi = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
 
 const eventi = (await prossimiEventi(12))
   .filter((e) => e.stato !== 'annullato')
   .slice(0, 10)
   .map((evento) => {
-    const [y, m, d] = evento.data.split('-').map(Number);
-    let quando = `${giorni[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]} ${d} ${mesi[m - 1]}`;
+    const [, m, d] = evento.data.split('-').map(Number);
+    let quando = `${giornoBreve(evento.data)} ${d} ${maiuscola(MESI[m - 1].slice(0, 3))}`;
     if (evento.ora) quando += ` • ${evento.ora}`;
     const titolo = mbLen(evento.titolo) > 20 ? mbSlice(evento.titolo, 20) + '…' : evento.titolo;
     return { id: evento.id, ts: fineEvento(evento), titolo, quando, href: urlEvento(evento) };
@@ -23,7 +20,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 
 {primo && (
     <event-banner data-eventi={JSON.stringify(eventi)}>
-        <div class="event-banner" id="eventBanner">
+        <aside class="event-banner" aria-label="Prossimo evento">
             <div class="event-banner-content">
                 <div class="event-banner-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></div>
                 <div class="event-banner-info">
@@ -35,7 +32,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
                 </div>
                 <button type="button" class="event-banner-close" aria-label="Chiudi banner"><i class="fas fa-times" aria-hidden="true"></i></button>
             </div>
-        </div>
+        </aside>
     </event-banner>
 )}
 

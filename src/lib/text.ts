@@ -67,6 +67,10 @@ export function enfatizza(html: string, frasi: readonly string[]): string {
     .join('');
 }
 
+export const nomeBreve = (nome: string) => nome.replace(/\s*\(.*\)$/, '');
+
+export const etichettaEta = (badge: string) => badge.replace(' - ', ' · ');
+
 export const grassettoDaTesto = (s: string) => escapeHtml(s).replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
 
 export const senzaGrassetto = (s: string) => s.replace(/\*\*([^*]+?)\*\*/g, '$1');

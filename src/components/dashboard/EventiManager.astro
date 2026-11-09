@@ -1,13 +1,10 @@
 ---
-import { ETICHETTE_STATO, leggiEventi, leggiTipi, passato, urlEvento, type Evento } from '../../lib/eventi';
+import { ETICHETTE_STATO, giornoBreve, leggiEventi, leggiTipi, passato, perInizio, perMese, urlEvento } from '../../lib/eventi';
 import { romeDate } from '../../lib/time';
 import { sedi } from '../../data/scuola';
 import EventoModal from './EventoModal.astro';
 import TipiModal from './TipiModal.astro';
 import DemoModal from './DemoModal.astro';
-
-const MESI = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-const GIORNI = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
 
 const tipiEvento = await leggiTipi();
 const tutti = await leggiEventi();
@@ -15,24 +12,11 @@ const adesso = Date.now();
 const oggi = romeDate(adesso);
 const domani = romeDate(adesso + 86400000);
 
-const ordina = (a: Evento, b: Evento) => (a.data + a.ora).localeCompare(b.data + b.ora);
-const futuri = tutti.filter((e) => !passato(e, adesso)).sort(ordina);
-const passati = tutti.filter((e) => passato(e, adesso)).sort((a, b) => ordina(b, a));
+const futuri = tutti.filter((e) => !passato(e, adesso)).sort(perInizio);
+const passati = tutti.filter((e) => passato(e, adesso)).sort((a, b) => perInizio(b, a));
 const bozze = tutti.filter((e) => e.stato === 'bozza').length;
 
-function perMese(lista: Evento[]) {
-  const gruppi = new Map<string, Evento[]>();
-  for (const e of lista) gruppi.set(e.data.slice(0, 7), [...(gruppi.get(e.data.slice(0, 7)) ?? []), e]);
-  return [...gruppi].map(([k, ev]) => {
-    const [y, m] = k.split('-').map(Number);
-    return { titolo: `${MESI[m - 1]} ${y}`, eventi: ev };
-  });
-}
-
-const giorno = (data: string) => {
-  const [y, m, d] = data.split('-').map(Number);
-  return { numero: d, settimana: GIORNI[new Date(Date.UTC(y, m - 1, d)).getUTCDay()] };
-};
+const giorno = (data: string) => ({ numero: Number(data.slice(8, 10)), settimana: giornoBreve(data) });
 
 function usati(campo: 'luogo' | 'destinatari' | 'costo') {
   const conta = new Map<string, number>();

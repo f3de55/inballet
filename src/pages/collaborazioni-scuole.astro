@@ -7,6 +7,7 @@ import { heroPagina } from '../lib/hero-pagine';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
 import HeroPagina from '../components/HeroPagina.astro';
+import CtaContatto from '../components/CtaContatto.astro';
 import '../styles/pages/collaborazioni-scuole.css';
 
 const bg = {
@@ -34,11 +35,8 @@ const progetti = [
     description="Progetti di danza su misura con supporto psicomotorio per nidi, scuole dell'infanzia, primarie e secondarie, a Lainate, Rho e in provincia di Milano."
     ogTitle="Collaborazioni con le scuole | InBallet"
     ogDescription="Da molti anni portiamo la danza nelle scuole del territorio, con progetti educativi costruiti insieme ai docenti."
+    preload={bg.hero.preload}
 >
-
-    <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
-    </Fragment>
 
         <HeroPagina titolo="Collaborazioni con le scuole" stile={bg.hero.style}>
             <p class="hero-lead">Progetti di <strong>danza e movimento</strong> per le scuole, <strong>dal nido alle secondarie di secondo grado</strong>.</p>
@@ -101,17 +99,8 @@ const progetti = [
             </ol>
         </SezioneElenco>
 
-        <section class="cta-contatto sezione-scura">
-            <div class="cta-bg" style={bg.cta.style}></div>
-            <div class="cta-overlay"></div>
-            <div class="cta-wrapper">
-                <h2 class="titolo-sezione">Portiamo la danza <em>nella tua scuola</em></h2>
-                <p class="intro-sezione">Contattaci per un <strong>primo incontro</strong>: costruiamo insieme un progetto su misura per la tua scuola.</p>
-                <div class="cta-pulsanti">
-                    <a href="/contatti" class="btn-primary">
-                        Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+        <CtaContatto stile={bg.cta.style}>
+            <h2 class="titolo-sezione">Portiamo la danza <em>nella tua scuola</em></h2>
+            <p class="intro-sezione">Contattaci per un <strong>primo incontro</strong>: costruiamo insieme un progetto su misura per la tua scuola.</p>
+        </CtaContatto>
 </Base>

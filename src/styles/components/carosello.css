@@ -27,7 +27,39 @@
   background: linear-gradient(to left, var(--fade-bg, var(--white)), transparent);
 }
 
+.carosello {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.carosello::-webkit-scrollbar {
+  display: none;
+}
+
 .carosello img {
   -webkit-user-drag: none;
   user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carosello {
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1.5rem;
+  }
+
+  .carosello-track {
+    padding: 0 1.5rem;
+  }
+
+  .carosello-track > * {
+    scroll-snap-align: start;
+  }
+
+  .carosello-track > [aria-hidden='true'] {
+    display: none;
+  }
 }

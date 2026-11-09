@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import HeroPagina from '../components/HeroPagina.astro';
+import CtaContatto from '../components/CtaContatto.astro';
 import '../styles/pages/formazioni-personalizzate.css';
 
 const bg = {
@@ -16,11 +17,8 @@ const bg = {
     description="Formazioni su misura di InBallet per educatori, insegnanti, terapeuti e pedagogisti: linguaggi espressivi, corporeità, motricità ed esplorazione del sé."
     ogTitle="Formazioni Personalizzate | InBallet"
     ogDescription="Corsi di formazione su misura che intrecciano linguaggi espressivi, corporeità e motricità."
+    preload={bg.hero.preload}
 >
-
-    <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
-    </Fragment>
 
         <HeroPagina titolo="Formazioni Personalizzate" stile={bg.hero.style}>
             <p class="hero-lead">Percorsi di formazione <strong>su misura</strong> per professionisti dell'educazione, della terapia e della danza.</p>
@@ -78,17 +76,8 @@ const bg = {
             </div>
         </section>
 
-        <section class="cta-contatto sezione-scura">
-            <div class="cta-bg" style={bg.cta.style}></div>
-            <div class="cta-overlay"></div>
-            <div class="cta-wrapper">
-                <h2 class="titolo-sezione">Hai un progetto <em>in mente?</em></h2>
-                <p class="intro-sezione">Contattaci per un <strong>primo colloquio</strong>: definiamo insieme obiettivi e contenuti del tuo percorso.</p>
-                <div class="cta-pulsanti">
-                    <a href="/contatti" class="btn-primary">
-                        Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+        <CtaContatto stile={bg.cta.style}>
+            <h2 class="titolo-sezione">Hai un progetto <em>in mente?</em></h2>
+            <p class="intro-sezione">Contattaci per un <strong>primo colloquio</strong>: definiamo insieme obiettivi e contenuti del tuo percorso.</p>
+        </CtaContatto>
 </Base>

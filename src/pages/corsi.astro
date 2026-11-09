@@ -6,7 +6,7 @@ import ElencoPercorsi from '../components/ElencoPercorsi.astro';
 import SchedaPercorso from '../components/SchedaPercorso.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import { categorieCorsi } from '../data/scuola';
-import { enfatizza } from '../lib/text';
+import { enfatizza, etichettaEta, nomeBreve } from '../lib/text';
 import { immaginiSottocorsi } from '../data/immagini-sottocorsi';
 import '../styles/components/dialogo.css';
 import '../styles/pages/corsi.css';
@@ -22,7 +22,6 @@ const percorsi = categorieCorsi.map((cat) => ({
         return { ...c, pagina, immagine };
     }),
 }));
-const nomeBreve = (nome: string) => nome.replace(/\s*\(.*\)$/, '');
 const titoloEm = (nome: string) => nome.replace(/(\S+)$/, '<em>$1</em>');
 const totale = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
@@ -35,11 +34,9 @@ const hero = await heroPagina('corsi');
     ogTitle="I corsi di danza di InBallet"
     ogDescription="Classica, contemporanea, urban e benessere, dai 3 anni all'età adulta: trova il corso giusto per te."
     tipo="CollectionPage"
+    preload={hero.preload}
 >
 
-    <Fragment slot="head">
-        {hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
-    </Fragment>
     <HeroPagina titolo="I nostri corsi di danza" stile={hero.style}>
         <p class="hero-lead"><strong>Dai 3 anni all'età adulta</strong>, dalla classica agli stili urbani: c'è un corso anche per te, a <strong>ogni livello</strong>.</p>
         <div class="trova-scelta" id="trova-scelta" hidden>
@@ -64,7 +61,7 @@ const hero = await heroPagina('corsi');
             </div>
             <ElencoPercorsi class="container" id={`${cat.id}-corsi`} titolo={`${cat.id}-titolo`} nome={cat.nome}>
                 {cat.corsi.map((c) => (
-                    <SchedaPercorso href={c.url} nome={nomeBreve(c.nome)} idTitolo={`${c.url.slice(1)}-nome`} etichetta={c.pagina.badge.replace(' - ', ' · ')} dettaglio={c.pagina.frequenza} immagine={c.immagine} iconaDettaglio="far fa-clock" />
+                    <SchedaPercorso href={c.url} nome={nomeBreve(c.nome)} idTitolo={`${c.url.slice(1)}-nome`} etichetta={etichettaEta(c.pagina.badge)} dettaglio={c.pagina.frequenza} immagine={c.immagine} iconaDettaglio="far fa-clock" />
                 ))}
             </ElencoPercorsi>
         </section>

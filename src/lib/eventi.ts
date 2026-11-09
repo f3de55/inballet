@@ -104,7 +104,7 @@ export const urlIcs = (e: Pick<Evento, 'slug'>) => `/spettacoli-eventi/${e.slug}
 
 export const srcImmagine = (immagine: string) => (/^https?:\/\//i.test(immagine) ? immagine : '/' + immagine.replace(/^\.?\/+/, ''));
 
-const perInizio = (a: Evento, b: Evento) => (a.data + ora2(a.ora)).localeCompare(b.data + ora2(b.ora));
+export const perInizio = (a: Evento, b: Evento) => (a.data + ora2(a.ora)).localeCompare(b.data + ora2(b.ora));
 
 export function baseSlug(titolo: string, data: string): string {
   return `${slug(titolo, 60) || 'evento'}-${data}`;
@@ -301,7 +301,7 @@ export async function rimuoviTipo(nome: string): Promise<string[]> {
 const nuovoId = () => 'evt_' + randomBytes(6).toString('hex');
 
 const GIORNI = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
-const MESI = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
+export const MESI = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
 
 function parti(data: string) {
   const [y, m, d] = data.split('-').map(Number);
@@ -318,6 +318,19 @@ export function quando(e: Pick<Evento, 'data' | 'ora' | 'dataFine' | 'oraFine'>)
 }
 
 export const maiuscola = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+const GIORNI_BREVI = GIORNI.map((g) => maiuscola(g.slice(0, 3)));
+
+export const giornoBreve = (data: string) => GIORNI_BREVI[new Date(`${data}T12:00:00Z`).getUTCDay()];
+
+export function perMese(lista: Evento[]) {
+  const gruppi = new Map<string, Evento[]>();
+  for (const e of lista) gruppi.set(e.data.slice(0, 7), [...(gruppi.get(e.data.slice(0, 7)) ?? []), e]);
+  return [...gruppi].map(([chiave, eventi]) => {
+    const [y, m] = chiave.split('-').map(Number);
+    return { titolo: `${maiuscola(MESI[m - 1])} ${y}`, eventi };
+  });
+}
 
 export const ETICHETTE_STATO: Record<Stato, string> = {
   pubblicato: 'Pubblicato',

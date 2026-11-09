@@ -5,10 +5,11 @@ import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import CorsiSimili from '../components/CorsiSimili.astro';
 import { iconeCompetenze } from '../data/icone-competenze';
-import { getImage } from 'astro:assets';
-import { getAsset, sfondo, sfondoCta } from '../lib/images';
+import { immagineSocial, sfondoCta } from '../lib/images';
+import { heroDa } from '../lib/hero-pagine';
 import { schemaCorso } from '../lib/schema';
 import HeroPagina from '../components/HeroPagina.astro';
+import CtaContatto from '../components/CtaContatto.astro';
 import '../styles/pages/corso.css';
 
 export const getStaticPaths = (async () => {
@@ -25,10 +26,10 @@ const icone = iconeCompetenze[Astro.params.corso ?? ''];
 if (data.imparaTitoli.length !== data.impara.length || icone?.length !== data.impara.length) {
     throw new Error(`Competenze del corso incomplete: ${Astro.params.corso}`);
 }
-const hero = await sfondo(data.heroImage, data.heroFuoco);
+const hero = await heroDa(data.heroImage, data.heroFuoco);
 const contatto = await sfondoCta(data.ctaTema);
-const ogImage = new URL((await getImage({ src: getAsset(typeof data.heroImage === 'string' ? data.heroImage : data.heroImage.desktop), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
-const schema = schemaCorso(data, new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1'), Astro.site).href);
+const ogImage = await immagineSocial(typeof data.heroImage === 'string' ? data.heroImage : data.heroImage.desktop, Astro.site);
+const schema = schemaCorso(data, new URL(`/${Astro.params.corso}`, Astro.site).href);
 
 const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</em>');
 ---
@@ -40,11 +41,9 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
     ogDescription={data.ogDescription}
     ogImage={ogImage}
     ogImageAlt={`${data.titolo} a InBallet, Lainate e Rho`}
+    preload={hero.preload}
 >
     <Fragment slot="head">
-        <link rel="preload" as="image" href={hero.preload[0].href} media="(min-width: 1025px)" fetchpriority="high">
-        <link rel="preload" as="image" href={hero.preload[1].href} media="(min-width: 769px) and (max-width: 1024px)" fetchpriority="high">
-        <link rel="preload" as="image" href="/assets/images/hero-mobile.webp" media="(max-width: 768px)" fetchpriority="high">
         <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     </Fragment>
 
@@ -52,16 +51,16 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         <p class="hero-lead" set:html={data.tagline} />
     </HeroPagina>
 
-    <section id="corso-intro" class="corso-intro-section decoro-onde">
+    <section class="corso-intro-section decoro-onde">
         <div class="container">
             <div class="corso-story-layout">
                 <div class="corso-story-content">
                     <div class="corso-section-header">
-                        <p class="corso-section-tagline eyebrow" id="corsoIntroTagline">Il percorso</p>
-                        <h2 class="corso-section-title titolo-sezione" id="corsoIntroTitolo" set:html={data.introTitolo ?? 'Di cosa <em>si tratta</em>'} />
+                        <p class="corso-section-tagline eyebrow">Il percorso</p>
+                        <h2 class="corso-section-title titolo-sezione" set:html={data.introTitolo ?? 'Di cosa <em>si tratta</em>'} />
                     </div>
 
-                    <div class="corso-story-text" id="corsoIntroText" set:html={data.intro} />
+                    <div class="corso-story-text" set:html={data.intro} />
 
                     <div class="corso-intro-meta">
                         <div class="corso-meta-card">
@@ -70,7 +69,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                             </div>
                             <div class="corso-meta-info">
                                 <p class="corso-meta-label titoletto">Età</p>
-                                <strong id="corsoEta">{data.eta}</strong>
+                                <strong>{data.eta}</strong>
                             </div>
                         </div>
                         <div class="corso-meta-card">
@@ -79,14 +78,14 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                             </div>
                             <div class="corso-meta-info">
                                 <p class="corso-meta-label titoletto">Frequenza</p>
-                                <strong id="corsoFrequenza">{data.frequenza}</strong>
+                                <strong>{data.frequenza}</strong>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="corso-story-image foto-cornice">
-                    <Img id="corsoIntroImg" src={data.introImage} alt={data.introAlt} fuoco={data.introFuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 400px" />
+                    <Img src={data.introImage} alt={data.introAlt} fuoco={data.introFuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 400px" />
                 </div>
             </div>
         </div>
@@ -96,9 +95,9 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         <div class="corso-metodo-wrapper">
             <div class="corso-metodo-header">
                 <p class="corso-metodo-label eyebrow">Come lavoriamo</p>
-                <h2 id="corsoMetodoTitolo" class="titolo-sezione" set:html={accento(data.metodoTitolo)} />
+                <h2 class="titolo-sezione" set:html={accento(data.metodoTitolo)} />
             </div>
-            <div class="corso-metodo-list" id="corsoMetodoContent">
+            <div class="corso-metodo-list">
                 {data.metodo.map((item) => (
                     <div class="corso-metodo-item voce">
                         <h3 class="voce-titolo" set:html={item.titolo} />
@@ -115,7 +114,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                 <p class="corso-impara-label eyebrow">Gli obiettivi del percorso</p>
                 <h2 id="corsoImparaTitolo" class="titolo-sezione" set:html={accento(data.imparaTitolo)} />
             </header>
-            <dl class="corso-impara-list" id="corsoImparaGrid" data-in-vista>
+            <dl class="corso-impara-list" data-in-vista>
                 {data.impara.map((item, indice) => (
                     <div class="impara-competenza">
                         <dt class="impara-titolo">
@@ -133,21 +132,14 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
 
     <CorsiSimili corso={Astro.params.corso} />
 
-    <section class="cta-contatto sezione-scura">
-        <div class="cta-bg" style={contatto.style}></div>
-        <div class="cta-overlay"></div>
-        <div class="cta-wrapper">
-            <h2 class="titolo-sezione">Scegliamo insieme <em>il tuo corso</em></h2>
-            <p class="intro-sezione"><strong>Scrivici o chiamaci</strong>: ti aiutiamo a trovare il gruppo e l'orario giusti per <strong>età e livello</strong>.</p>
-            <div class="cta-pulsanti">
-                <a href="/contatti" class="btn-primary">
-                    Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-</Base>
+    <CtaContatto stile={contatto.style}>
+        <h2 class="titolo-sezione">Scegliamo insieme <em>il tuo corso</em></h2>
+        <p class="intro-sezione"><strong>Scrivici o chiamaci</strong>: ti aiutiamo a trovare il gruppo e l'orario giusti per <strong>età e livello</strong>.</p>
+    </CtaContatto>
 
-<script>
-  import '../scripts/in-vista';
-</script>
+    <Fragment slot="scripts">
+        <script>
+            import '../scripts/in-vista';
+        </script>
+    </Fragment>
+</Base>

@@ -8,6 +8,7 @@ import { heroPagina } from '../lib/hero-pagine';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
 import HeroPagina from '../components/HeroPagina.astro';
+import CtaContatto from '../components/CtaContatto.astro';
 import '../styles/pages/sostenitori.css';
 
 const bg = {
@@ -29,11 +30,8 @@ const destinazioni: { nome: string; href?: string }[] = [
     description="Dal 2013 InBallet accoglie giovani e adulti con disabilità in provincia di Milano: sostieni i progetti sociali con una donazione o il volontariato d'impresa."
     ogTitle="Sostieni i progetti sociali | InBallet"
     ogDescription="Donazioni e volontariato d'impresa per la danza inclusiva: dal 2013 in provincia di Milano."
+    preload={bg.hero.preload}
 >
-
-    <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
-    </Fragment>
 
         <HeroPagina titolo="Sostieni i nostri progetti sociali" stile={bg.hero.style}>
             <p class="hero-lead">Donazioni e <strong>volontariato d'impresa</strong> per la danza inclusiva a Lainate e Rho, dal 2013.</p>
@@ -112,17 +110,8 @@ const destinazioni: { nome: string; href?: string }[] = [
 
         <SostenitoriSection link={false} />
 
-        <section class="cta-contatto sezione-scura">
-            <div class="cta-bg" style={bg.cta.style}></div>
-            <div class="cta-overlay"></div>
-            <div class="cta-wrapper">
-                <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
-                <p class="intro-sezione">Contatta la Direzione per informazioni sui progetti o per proporre un'<strong>esperienza di volontariato con la tua azienda</strong>.</p>
-                <div class="cta-pulsanti">
-                    <a href="/contatti" class="btn-primary">
-                        Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+        <CtaContatto stile={bg.cta.style}>
+            <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
+            <p class="intro-sezione">Contatta la Direzione per informazioni sui progetti o per proporre un'<strong>esperienza di volontariato con la tua azienda</strong>.</p>
+        </CtaContatto>
 </Base>

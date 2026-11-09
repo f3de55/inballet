@@ -21,5 +21,5 @@ export function toast(msg: string, tipo: ToastTipo): void {
   icon.className = `fas ${ICONS[tipo]}`;
   t.append(icon, ` ${msg}`);
   container.appendChild(t);
-  setTimeout(() => t.remove(), tipo === 'warning' ? 5000 : 3000);
+  setTimeout(() => t.remove(), tipo === 'success' ? 3000 : 6000);
 }

@@ -8,6 +8,7 @@ import { scuola } from '../data/scuola';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
 import HeroPagina from '../components/HeroPagina.astro';
+import CtaContatto from '../components/CtaContatto.astro';
 import '../styles/pages/progetto-noiconvoi.css';
 
 const bg = {
@@ -40,11 +41,8 @@ const info = [
     description="NoiConVoi è il progetto di volontariato di InBallet: dal 2013, il lunedì sera a Lainate, ragazzi con disabilità danzano con volontari e supporto psicomotorio."
     ogTitle="Progetto NoiConVoi, la danza è per tutti | InBallet"
     ogDescription="Dal 2013 ragazzi con disabilità e volontari insieme in sala: psicomotricità, danza e spettacolo di fine anno."
+    preload={bg.hero.preload}
 >
-
-    <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
-    </Fragment>
 
         <HeroPagina titolo="Progetto NoiConVoi" stile={bg.hero.style}>
             <p class="hero-lead"><strong>Dal 2013</strong> la danza è per tutti: ragazzi con disabilità, volontari e famiglie insieme in sala.</p>
@@ -123,17 +121,8 @@ const info = [
             </div>
         </section>
 
-        <section class="cta-contatto sezione-scura">
-            <div class="cta-bg" style={bg.cta.style}></div>
-            <div class="cta-overlay"></div>
-            <div class="cta-wrapper">
-                <h2 class="titolo-sezione">Unisciti a <em>NoiConVoi</em></h2>
-                <p class="intro-sezione">Vuoi <strong>partecipare</strong> o <strong>diventare volontario</strong>? Non serve saper danzare: contattaci e ti raccontiamo come fare.</p>
-                <div class="cta-pulsanti">
-                    <a href="/contatti" class="btn-primary">
-                        Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+        <CtaContatto stile={bg.cta.style}>
+            <h2 class="titolo-sezione">Unisciti a <em>NoiConVoi</em></h2>
+            <p class="intro-sezione">Vuoi <strong>partecipare</strong> o <strong>diventare volontario</strong>? Non serve saper danzare: contattaci e ti raccontiamo come fare.</p>
+        </CtaContatto>
 </Base>

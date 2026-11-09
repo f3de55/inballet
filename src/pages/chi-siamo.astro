@@ -9,6 +9,7 @@ import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import { leggiInsegnanti } from '../lib/insegnanti';
 import HeroPagina from '../components/HeroPagina.astro';
+import CtaContatto from '../components/CtaContatto.astro';
 import '../styles/pages/chi-siamo.css';
 
 export const prerender = false;
@@ -17,7 +18,6 @@ const bg = {
   hero: await heroPagina('chi-siamo'),
   cta: await sfondoCta('danza'),
 };
-
 
 const insegnanti = await leggiInsegnanti();
 
@@ -39,11 +39,8 @@ const numeri = [
     ogTitle="Chi siamo | InBallet"
     ogDescription={`Dalle prime lezioni allo skate park alle due sedi di oggi: la storia di InBallet, scuola di danza a Lainate e Rho dal ${FONDAZIONE}.`}
     tipo="AboutPage"
+    preload={bg.hero.preload}
 >
-
-    <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
-    </Fragment>
 
         <HeroPagina titolo="Chi siamo: la nostra storia" stile={bg.hero.style}>
             <p class="hero-lead">Dal {FONDAZIONE} a Lainate e Rho: una scuola di danza multidisciplinare, un luogo di vita <strong>aperto a tutte le età</strong>.</p>
@@ -153,32 +150,20 @@ const numeri = [
             </div>
         </section>
 
-        <section class="cta-contatto sezione-scura">
-            <div class="cta-bg" style={bg.cta.style}></div>
-            <div class="cta-overlay"></div>
-            <div class="cta-wrapper">
-                <h2 class="titolo-sezione">Vuoi conoscerci <em>meglio?</em></h2>
-                <p class="intro-sezione"><strong>Scrivici o chiamaci</strong>: ti raccontiamo corsi, orari e sedi, e facciamo insieme il primo passo.</p>
-                <div class="cta-pulsanti">
-                    <a href="/contatti" class="btn-primary">
-                        Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+        <CtaContatto stile={bg.cta.style}>
+            <h2 class="titolo-sezione">Vuoi conoscerci <em>meglio?</em></h2>
+            <p class="intro-sezione"><strong>Scrivici o chiamaci</strong>: ti raccontiamo corsi, orari e sedi, e facciamo insieme il primo passo.</p>
+        </CtaContatto>
 
     <Fragment slot="after-main">
         <InsegnantiDialoghi dati={insegnanti} />
     </Fragment>
 
     <Fragment slot="scripts">
-    <script>
-        import '../scripts/chi-siamo';
-    </script>
+        <script>
+            import '../scripts/chi-siamo';
+            import '../scripts/timeline';
+            import '../scripts/in-vista';
+        </script>
     </Fragment>
 </Base>
-
-<script>
-  import '../scripts/timeline';
-  import '../scripts/in-vista';
-</script>

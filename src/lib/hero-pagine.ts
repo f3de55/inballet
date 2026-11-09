@@ -1,4 +1,4 @@
-import { sfondo } from './images';
+import { sfondo, type Fuoco, type Sorgenti } from './images';
 
 const banner = {
   'chi-siamo': 'hero-pagine/chi-siamo',
@@ -15,9 +15,8 @@ const banner = {
   'spettacoli-eventi': 'hero-pagine/spettacoli-eventi',
 } as const;
 
-export async function heroPagina(pagina: keyof typeof banner) {
-  const base = banner[pagina];
-  const hero = await sfondo({ desktop: `${base}-desktop.webp`, tablet: `${base}-tablet.webp` }, { desktop: '100% 50%', tablet: '100% 50%' });
+export async function heroDa(sorgenti: Sorgenti, fuoco: Fuoco = {}) {
+  const hero = await sfondo(sorgenti, fuoco);
   return {
     ...hero,
     preload: [
@@ -26,4 +25,9 @@ export async function heroPagina(pagina: keyof typeof banner) {
       { href: '/assets/images/hero-mobile.webp', media: '(max-width: 768px)' },
     ],
   };
+}
+
+export function heroPagina(pagina: keyof typeof banner) {
+  const base = banner[pagina];
+  return heroDa({ desktop: `${base}-desktop.webp`, tablet: `${base}-tablet.webp` }, { desktop: '100% 50%', tablet: '100% 50%' });
 }

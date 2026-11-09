@@ -7,6 +7,7 @@ import { heroPagina } from '../lib/hero-pagine';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
 import HeroPagina from '../components/HeroPagina.astro';
+import CtaContatto from '../components/CtaContatto.astro';
 import '../styles/pages/classi-integrate.css';
 
 const bg = {
@@ -35,11 +36,8 @@ const classi = [
     description="Danza inclusiva a Lainate e Rho: quasi tutti i corsi possono accogliere bambini e ragazzi con bisogni speciali, dopo un colloquio con la famiglia."
     ogTitle="Classi Multidisciplinari Integrate | InBallet"
     ogDescription="Quasi tutti i corsi InBallet possono accogliere bambini e ragazzi con bisogni speciali, dopo un colloquio con la famiglia."
+    preload={bg.hero.preload}
 >
-
-    <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
-    </Fragment>
 
         <HeroPagina titolo="Classi Multidisciplinari Integrate" stile={bg.hero.style}>
             <p class="hero-lead">Qui c'è posto per tutti: quasi tutti i nostri corsi possono accogliere bambini e ragazzi con <strong>bisogni speciali</strong>.</p>
@@ -101,17 +99,8 @@ const classi = [
             </ul>
         </SezioneElenco>
 
-        <section class="cta-contatto sezione-scura">
-            <div class="cta-bg" style={bg.cta.style}></div>
-            <div class="cta-overlay"></div>
-            <div class="cta-wrapper">
-                <h2 class="titolo-sezione">Parliamo <em>di tuo figlio o tua figlia</em></h2>
-                <p class="intro-sezione">Contatta la Direzione per fissare un <strong>colloquio conoscitivo</strong>: insieme troveremo il gruppo classe più adatto.</p>
-                <div class="cta-pulsanti">
-                    <a href="/contatti" class="btn-primary">
-                        Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+        <CtaContatto stile={bg.cta.style}>
+            <h2 class="titolo-sezione">Parliamo <em>di tuo figlio o tua figlia</em></h2>
+            <p class="intro-sezione">Contatta la Direzione per fissare un <strong>colloquio conoscitivo</strong>: insieme troveremo il gruppo classe più adatto.</p>
+        </CtaContatto>
 </Base>

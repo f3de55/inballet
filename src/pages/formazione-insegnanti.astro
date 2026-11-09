@@ -9,6 +9,7 @@ import logoConi from '../assets/images/logo_coni.svg';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
 import HeroPagina from '../components/HeroPagina.astro';
+import CtaContatto from '../components/CtaContatto.astro';
 import '../styles/pages/formazione-insegnanti.css';
 
 const bg = {
@@ -34,11 +35,8 @@ const enti = [
     description="Corso biennale per Insegnanti di Danza Modern: titolo CSEN e CONI a valenza nazionale, sei master a seguire e uno sguardo su pedagogia, sviluppo e disabilità."
     ogTitle="Corso di formazione per Insegnanti di Danza | InBallet"
     ogDescription="Percorso biennale con specializzazione Modern: titolo riconosciuto CSEN e CONI a valenza nazionale."
+    preload={bg.hero.preload}
 >
-
-    <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
-    </Fragment>
 
         <HeroPagina titolo="Corso per Insegnanti di Danza" stile={bg.hero.style}>
             <p class="hero-lead">Percorso <strong>biennale</strong> per insegnanti di danza, con specializzazione <strong>Modern</strong>, riconosciuto <strong>CSEN e CONI</strong>.</p>
@@ -99,17 +97,8 @@ const enti = [
             </div>
         </section>
 
-        <section class="cta-contatto sezione-scura">
-            <div class="cta-bg" style={bg.cta.style}></div>
-            <div class="cta-overlay"></div>
-            <div class="cta-wrapper">
-                <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
-                <p class="intro-sezione">Contattaci per informazioni su <strong>date, costi e modalità di iscrizione</strong>.</p>
-                <div class="cta-pulsanti">
-                    <a href="/contatti" class="btn-primary">
-                        Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+        <CtaContatto stile={bg.cta.style}>
+            <h2 class="titolo-sezione">Vuoi saperne <em>di più?</em></h2>
+            <p class="intro-sezione">Contattaci per informazioni su <strong>date, costi e modalità di iscrizione</strong>.</p>
+        </CtaContatto>
 </Base>

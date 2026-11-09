@@ -1,8 +1,9 @@
 ---
 import '../styles/icons.css';
 import '../styles/global.css';
-import { Font, getImage } from 'astro:assets';
-import { getAsset } from '../lib/images';
+import { Font } from 'astro:assets';
+import { immagineSocial } from '../lib/images';
+import { percorsoPagina } from '../data/navigazione';
 import Banner from '../components/Banner.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
@@ -14,9 +15,11 @@ interface Props {
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
+  ogUrl?: string;
   ogImageAlt?: string;
   tipo?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage';
   indicizza?: boolean;
+  preload?: { href: string; media: string }[];
 }
 
 const {
@@ -25,14 +28,16 @@ const {
   ogTitle,
   ogDescription,
   ogImage,
+  ogUrl,
   ogImageAlt = 'Allievi di InBallet in sala durante una lezione di danza',
   tipo = 'WebPage',
   indicizza = true,
+  preload = [],
 } = Astro.props;
 
-const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(^|\/)index$/, '/').replace(/(.)\/$/, '$1');
+const path = percorsoPagina(Astro.url);
 const canonical = new URL(path, Astro.site).href;
-const image = ogImage ?? new URL((await getImage({ src: getAsset('gallery-3.jpg'), width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site).href;
+const image = ogImage ?? (await immagineSocial('gallery-3.jpg', Astro.site));
 const sito = new URL('/', Astro.site).href;
 const pagina = {
   '@context': 'https://schema.org',
@@ -63,7 +68,7 @@ const pagina = {
     <meta property="og:type" content="website">
     <meta property="og:locale" content="it_IT">
     <meta property="og:site_name" content="InBallet">
-    <meta property="og:url" content={canonical}>
+    <meta property="og:url" content={ogUrl ?? canonical}>
     <meta property="og:title" content={ogTitle ?? title}>
     <meta property="og:description" content={ogDescription ?? description}>
     <meta property="og:image" content={image}>
@@ -76,7 +81,7 @@ const pagina = {
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <Font cssVariable="--font-rubik" preload={[{ style: 'normal', subset: 'latin' }]} />
-    
+    {preload.map((p) => <link rel="preload" as="image" href={p.href} media={p.media} fetchpriority="high">)}
     <script type="application/ld+json" set:html={JSON.stringify(pagina)} />
     <slot name="head" />
 </head>

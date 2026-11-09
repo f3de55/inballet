@@ -1,7 +1,7 @@
 import { actions, isInputError } from 'astro:actions';
 import { createEditor } from './editor';
 import { conferma } from './conferma';
-import { $, MAX_SIZE, mostraModal, nascondiModal, zonaCaricamento } from './comune';
+import { $, aggiornaContatore, MAX_SIZE, mostraModal, nascondiModal, zonaCaricamento } from './comune';
 import { toast } from './toast';
 
 interface Evento {
@@ -52,14 +52,6 @@ let immagini: Immagine[] = [];
 let immagineSelezionata = '';
 let modificato = false;
 
-function updateCounter(input: HTMLInputElement) {
-  const max = Number(input.dataset.counter);
-  const counter = $(`${input.id}-counter`);
-  const len = input.value.length;
-  counter.textContent = len > max * 0.8 ? `${len}/${max}` : '';
-  counter.classList.toggle('vicino', len > max * 0.9);
-}
-
 function updateEditorCounter() {
   const counter = $('descrizione-counter');
   const len = editor.text.trim().length;
@@ -71,7 +63,7 @@ const editor = createEditor($('descrizione'), modalEvento.querySelector<HTMLElem
   modificato = true;
   updateEditorCounter();
 });
-campi.titolo.addEventListener('input', () => updateCounter(campi.titolo));
+campi.titolo.addEventListener('input', () => aggiornaContatore(campi.titolo));
 form.addEventListener('input', () => (modificato = true));
 
 function apriModal(ev?: Evento) {
@@ -96,7 +88,7 @@ function apriModal(ev?: Evento) {
   $<HTMLDetailsElement>('fineEvento').open = !!(ev?.dataFine || ev?.oraFine);
   impostaLocandina(ev?.immagine ?? '');
   $<HTMLDetailsElement>('libreria').open = false;
-  updateCounter(campi.titolo);
+  aggiornaContatore(campi.titolo);
   updateEditorCounter();
   modificato = false;
 

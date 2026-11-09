@@ -29,19 +29,6 @@
   }
 }
 
-.insegnanti-fila {
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-  cursor: grab;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.insegnanti-fila::-webkit-scrollbar {
-  display: none;
-}
-
 .insegnanti-fila.trascinando {
   cursor: grabbing;
 }
@@ -132,25 +119,6 @@
 @media (hover: hover) and (pointer: fine) {
   .insegnante:hover .insegnante-foto {
     transform: scale(1.04);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .insegnanti-fila {
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 1.5rem;
-  }
-
-  .insegnanti-track {
-    padding: 0 1.5rem;
-  }
-
-  .insegnante {
-    scroll-snap-align: start;
-  }
-
-  .insegnante[aria-hidden='true'] {
-    display: none;
   }
 }
 

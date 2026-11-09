@@ -5,9 +5,12 @@ import {
   datiStrutturati,
   ETICHETTE_STATO,
   eventiPubblici,
+  giornoBreve,
   linkGoogleCalendar,
   maiuscola,
+  MESI,
   passato,
+  perMese,
   quando,
   sedeDi,
   srcImmagine,
@@ -44,9 +47,6 @@ const tipiEvento = [
   { nome: 'Sul territorio', icona: 'fa-map-location-dot', testo: 'Spesso ospiti di iniziative a <strong>Milano e in provincia</strong>.' },
 ];
 
-const MESI = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-const GIORNI_BREVI = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-
 const adesso = Date.now();
 const oggi = romeDate(adesso);
 const domani = romeDate(adesso + 86_400_000);
@@ -55,29 +55,20 @@ const eventi = await eventiPubblici();
 const prossimi = eventi.filter((e) => !passato(e, adesso));
 const passati = eventi.filter((e) => passato(e, adesso)).reverse();
 
-function perMese(lista: Evento[]) {
-  const gruppi = new Map<string, Evento[]>();
-  for (const e of lista) gruppi.set(e.data.slice(0, 7), [...(gruppi.get(e.data.slice(0, 7)) ?? []), e]);
-  return [...gruppi].map(([k, ev]) => {
-    const [y, m] = k.split('-').map(Number);
-    return { titolo: `${MESI[m - 1]} ${y}`, eventi: ev };
-  });
-}
-
 function voce(e: Evento) {
-  const [y, m, d] = e.data.split('-').map(Number);
+  const [, m, d] = e.data.split('-').map(Number);
   const finito = passato(e, adesso);
   const inCorso = !finito && e.data < oggi;
   const vicino = e.data === oggi || inCorso ? (e.dataFine ? 'In corso' : 'Oggi') : e.data === domani ? 'Domani' : '';
   let fino = '';
   if (e.dataFine) {
     const [, mf, df] = e.dataFine.split('-').map(Number);
-    fino = `Fino a ${GIORNI_BREVI[new Date(Date.UTC(y, mf - 1, df)).getUTCDay()].toLowerCase()} ${df}${mf !== m ? ` ${MESI[mf - 1].toLowerCase()}` : ''}`;
+    fino = `Fino a ${giornoBreve(e.dataFine).toLowerCase()} ${df}${mf !== m ? ` ${MESI[mf - 1]}` : ''}`;
   }
   return {
     e,
     giorno: d,
-    settimana: GIORNI_BREVI[new Date(Date.UTC(y, m - 1, d)).getUTCDay()],
+    settimana: giornoBreve(e.data),
     vicino: finito ? '' : vicino,
     stato: e.stato === 'pubblicato' ? '' : ETICHETTE_STATO[e.stato],
     ora: e.ora ? `${e.ora}${e.oraFine ? `–${e.oraFine}` : ''}` : '',
@@ -127,6 +118,7 @@ const og = aperto
       title: `${aperto.titolo} · ${maiuscola(quando(aperto))}`,
       description: (descrizioneAperto.length > 155 ? descrizioneAperto.slice(0, 154).replace(/\s+\S*$/, '') + '…' : descrizioneAperto) || aperto.luogo || 'Spettacoli ed eventi InBallet',
       image: aperto.immagine ? new URL(srcImmagine(aperto.immagine), site).href : undefined,
+      url: new URL(urlEvento(aperto), site).href,
     }
   : null;
 ---
@@ -137,12 +129,11 @@ const og = aperto
     ogTitle={og?.title ?? 'Spettacoli ed Eventi | InBallet'}
     ogDescription={og?.description ?? 'Il calendario degli appuntamenti e gli eventi curati dalla Direzione: teatro, scuole, aziende e territorio.'}
     ogImage={og?.image}
+    ogUrl={og?.url}
     ogImageAlt={og?.image && `Locandina: ${aperto!.titolo}`}
+    preload={bg.hero.preload}
 >
 
-    <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
-    </Fragment>
         <HeroPagina titolo="Spettacoli ed eventi" stile={bg.hero.style}>
             <p class="hero-lead">Il <strong>calendario di spettacoli e workshop</strong> di InBallet a Lainate e Rho, per allievi, famiglie e appassionati.</p>
         </HeroPagina>

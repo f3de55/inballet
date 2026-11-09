@@ -1,10 +1,12 @@
 ---
 import { categorieCorsi, scuola } from '../data/scuola';
-import { menu, type Voce } from '../data/navigazione';
+import { menu, percorsoPagina, type Voce } from '../data/navigazione';
 import Img from './Img.astro';
 import '../styles/components/footer.css';
 
 const anno = new Date().getFullYear();
+const corrente = percorsoPagina(Astro.url);
+const attiva = (href: string) => href === corrente;
 
 const colonne: { titolo: string; voci: Voce[] }[] = [
   {
@@ -34,7 +36,7 @@ const colonne: { titolo: string; voci: Voce[] }[] = [
       <details class="footer-col" open>
         <summary><h2 class="footer-titolo titoletto">{c.titolo}</h2></summary>
         <ul>
-          {c.voci.map((v) => <li><a href={v.href}>{v.breve ?? v.nome}</a></li>)}
+          {c.voci.map((v) => <li><a href={v.href} class:list={{ attiva: attiva(v.href) }} aria-current={attiva(v.href) ? 'page' : undefined}>{v.breve ?? v.nome}</a></li>)}
         </ul>
       </details>
     ))}
@@ -44,7 +46,7 @@ const colonne: { titolo: string; voci: Voce[] }[] = [
         <li class="footer-dato"><i class="fas fa-phone" aria-hidden="true"></i><a href={scuola.telefonoHref}>{scuola.telefono}</a></li>
         <li class="footer-dato"><i class="fas fa-envelope" aria-hidden="true"></i><a href={`mailto:${scuola.email}`}>{scuola.email}</a></li>
       </ul>
-      <a href="/contatti" class="footer-link">Altre informazioni <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+      <a href="/contatti" class="footer-link" aria-current={attiva('/contatti') ? 'page' : undefined}>Altre informazioni <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
     </details>
   </nav>
 

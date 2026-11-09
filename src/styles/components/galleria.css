@@ -35,19 +35,6 @@
   margin: 0 auto;
 }
 
-.gallery-infinite {
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-  cursor: grab;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.gallery-infinite::-webkit-scrollbar {
-  display: none;
-}
-
 .gallery-infinite.trascinando {
   cursor: grabbing;
 }
@@ -120,25 +107,6 @@
 .gallery-apri:focus-visible .gallery-zoom-icon {
   opacity: 1;
   transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .gallery-infinite {
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 1.5rem;
-  }
-
-  .gallery-track {
-    padding: 0 1.5rem;
-  }
-
-  .gallery-item {
-    scroll-snap-align: start;
-  }
-
-  .gallery-item[aria-hidden='true'] {
-    display: none;
-  }
 }
 
 @media (max-width: 1024px) {

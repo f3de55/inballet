@@ -4,6 +4,7 @@ import { categorieCorsi } from '../data/scuola';
 import { immaginiSottocorsi } from '../data/immagini-sottocorsi';
 import Img from './Img.astro';
 import ElencoPercorsi from './ElencoPercorsi.astro';
+import { etichettaEta, nomeBreve } from '../lib/text';
 import SchedaPercorso from './SchedaPercorso.astro';
 import '../styles/components/corsi-simili.css';
 
@@ -14,7 +15,6 @@ interface Props {
 const { corso } = Astro.props;
 const categoria = categorieCorsi.find((c) => c.corsi.some((k) => k.url === `/${corso}`));
 const pagine = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.data]));
-const nomeBreve = (nome: string) => nome.replace(/\s*\(.*\)$/, '');
 const altri = (categoria?.corsi ?? [])
   .filter((k) => k.url !== `/${corso}`)
   .map((k) => {
@@ -23,7 +23,7 @@ const altri = (categoria?.corsi ?? [])
     return {
       nome: nomeBreve(k.nome),
       href: k.url,
-      eta: (pagine.get(k.url)?.badge ?? '').replace(' - ', ' · '),
+      eta: etichettaEta(pagine.get(k.url)?.badge ?? ''),
       frequenza: pagine.get(k.url)?.frequenza ?? '',
       immagine,
     };
@@ -63,5 +63,4 @@ const altri = (categoria?.corsi ?? [])
     </ElencoPercorsi>
   </section>
 )}
-
 

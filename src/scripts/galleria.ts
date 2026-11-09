@@ -7,8 +7,8 @@ const contatore = document.getElementById('lightbox-counter');
 if (track && dialog && fotoIniziale && didascalia && contatore) {
   let foto: HTMLImageElement = fotoIniziale;
   const bottoni = [...track.querySelectorAll<HTMLButtonElement>('.gallery-apri')];
-  const foto10 = bottoni.slice(0, 10).map((b) => ({ src: b.dataset.full!, alt: b.dataset.alt ?? '' }));
-  const n = foto10.length;
+  const originali = bottoni.slice(0, bottoni.length / 2).map((b) => ({ src: b.dataset.full!, alt: b.dataset.alt ?? '' }));
+  const n = originali.length;
   let index = 0;
   let richiesta = 0;
   let opener: HTMLElement | null = null;
@@ -39,7 +39,7 @@ if (track && dialog && fotoIniziale && didascalia && contatore) {
   const mostra = async (i: number, subito = false) => {
     index = (i + n) % n;
     const questa = ++richiesta;
-    const { src, alt } = foto10[index];
+    const { src, alt } = originali[index];
     const piena = carica(src);
     const caricata = await Promise.race([piena.pronta.then(() => true), attesa(subito ? 0 : 250)]);
     if (questa !== richiesta) return;
@@ -54,7 +54,7 @@ if (track && dialog && fotoIniziale && didascalia && contatore) {
     }
     didascalia.textContent = alt;
     contatore.textContent = `${index + 1} / ${n}`;
-    [(index - 1 + n) % n, (index + 1) % n].forEach((j) => carica(foto10[j].src));
+    [(index - 1 + n) % n, (index + 1) % n].forEach((j) => carica(originali[j].src));
     await piena.pronta;
     if (questa === richiesta) sostituisci(piena.img, alt);
   };
@@ -68,7 +68,7 @@ if (track && dialog && fotoIniziale && didascalia && contatore) {
 
   bottoni.forEach((b) => {
     const precarica = () => {
-      carica(foto10[Number(b.dataset.index)].src);
+      carica(originali[Number(b.dataset.index)].src);
     };
     b.addEventListener('pointerenter', precarica, { passive: true });
     b.addEventListener('pointerdown', precarica, { passive: true });

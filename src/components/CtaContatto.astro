@@ -1,0 +1,20 @@
+---
+interface Props {
+  stile: string;
+}
+
+const { stile } = Astro.props;
+---
+
+<section class="cta-contatto sezione-scura">
+    <div class="cta-bg" style={stile}></div>
+    <div class="cta-overlay"></div>
+    <div class="cta-wrapper">
+        <slot />
+        <div class="cta-pulsanti">
+            <a href="/contatti" class="btn-primary">
+                Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+</section>

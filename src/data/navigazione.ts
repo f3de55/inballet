@@ -66,6 +66,12 @@ export const menu: Menu[] = [
   },
 ];
 
+export const percorsoPagina = (url: URL) =>
+  url.pathname
+    .replace(/\.html$/, '')
+    .replace(/(^|\/)index$/, '/')
+    .replace(/(.)\/$/, '$1');
+
 export const altrePagine: Record<string, string> = {
   '/contatti': 'Contatti',
   '/404': 'Pagina non trovata',

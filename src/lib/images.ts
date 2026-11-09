@@ -5,7 +5,7 @@ const modules = import.meta.glob<{ default: ImageMetadata }>('../assets/images/*
   eager: true,
 });
 
-export function getAsset(name: string): ImageMetadata {
+function getAsset(name: string): ImageMetadata {
   const clean = name.replace(/^\.?\/?(assets\/images\/)?/, '');
   const mod = modules[`../assets/images/${clean}`];
   if (!mod) throw new Error(`Immagine non trovata: ${name}`);
@@ -16,6 +16,11 @@ export async function webp(name: string, width = 1280): Promise<string> {
   const src = getAsset(name);
   const img = await getImage({ src, width: Math.min(width, src.width), format: 'webp' });
   return img.src;
+}
+
+export async function immagineSocial(nome: string, site: URL | undefined): Promise<string> {
+  const img = await getImage({ src: getAsset(nome), width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+  return new URL(img.src, site).href;
 }
 
 export interface Fuoco {
@@ -31,7 +36,7 @@ export function varFuoco(fuoco: Fuoco = {}): string {
   return `--fuoco-lg:${lg};--fuoco-md:${md};--fuoco-sm:${sm};`;
 }
 
-type Sorgenti = string | { desktop: string; tablet?: string; mobile?: string };
+export type Sorgenti = string | { desktop: string; tablet?: string; mobile?: string };
 
 export async function sfondo(sorgenti: Sorgenti, fuoco: Fuoco = {}) {
   const s = typeof sorgenti === 'string' ? { desktop: sorgenti } : sorgenti;

@@ -18,11 +18,11 @@ const luoghi = posizioni.map((p, i) => ({ ...p, sede: sedi.find((s) => s.id === 
                     <Img class="sedi-mappa-base" src="sedi/mappa-lainate-rho-v3.webp" alt="Mappa dettagliata tra Via Puccini a Lainate e Via Tevere a Rho" width="1111" height="852" widths={[640, 900, 1111]} sizes="(max-width: 768px) 700px, (max-width: 1200px) 77vw, 877px" loading="lazy" />
                     {luoghi.map(({ sede, numero, x, y }) => (
                       <Fragment>
-                        <a class="sedi-mappa-punto" data-sede={sede.id} href={sede.maps} target="_blank" rel="noopener noreferrer" style={`--punto-x:${x / 1111 * 100}%;--punto-y:${y / 852 * 100}%;`} aria-label={`${sede.citta}, ${sede.via}: apri la mappa (nuova scheda)`}>
+                        <a class="sedi-mappa-punto" data-sede={sede.id} href={sede.maps} target="_blank" rel="noopener noreferrer" style={`--punto-x:${x / 1111 * 100}%;--punto-y:${y / 852 * 100}%;`} tabindex="-1" aria-hidden="true">
                             <span>{numero}</span>
                         </a>
-                        <a class="sedi-mappa-popup" data-sede={sede.id} href={sede.maps} target="_blank" rel="noopener noreferrer" style={`--punto-x:${x / 1111 * 100}%;--punto-y:${y / 852 * 100}%;`} aria-label={`Sede InBallet di ${sede.citta}: apri su Google Maps (nuova scheda)`}>
-                            <Img class="sedi-mappa-popup-logo" src="logo.png" alt="InBallet" width="376" height="133" widths={[150, 300]} sizes="80px" loading="lazy" />
+                        <a class="sedi-mappa-popup" data-sede={sede.id} href={sede.maps} target="_blank" rel="noopener noreferrer" style={`--punto-x:${x / 1111 * 100}%;--punto-y:${y / 852 * 100}%;`} tabindex="-1" aria-hidden="true">
+                            <Img class="sedi-mappa-popup-logo" src="logo.png" alt="" width="376" height="133" widths={[150, 300]} sizes="80px" loading="lazy" />
                             <p class="titoletto">Sede {sede.citta}</p>
                         </a>
                       </Fragment>
@@ -41,13 +41,14 @@ const luoghi = posizioni.map((p, i) => ({ ...p, sede: sedi.find((s) => s.id === 
             </svg>
 
             {luoghi.map(({ sede, id, foto, alt, fuoco, numero }) => (
-                <a class={`sedi-mappa-foto sedi-mappa-foto--${id}`} data-sede={id} href={sede.maps} target="_blank" rel="noopener noreferrer" aria-label={`Apri su Google Maps la sede di ${sede.citta}, ${sede.via} (nuova scheda)`}>
+                <a class={`sedi-mappa-foto sedi-mappa-foto--${id}`} data-sede={id} href={sede.maps} target="_blank" rel="noopener noreferrer">
                     <Img src={foto} alt={alt} fuoco={fuoco} width="640" height="360" widths={[400, 640, 900]} sizes="(max-width: 768px) calc(100vw - 64px), (max-width: 1200px) 27vw, 307px" loading="lazy" rapporto={9 / 16} />
                     <div class="sedi-mappa-didascalia">
                         <span class="sedi-mappa-numero" aria-hidden="true">{numero}</span>
                         <div class="sedi-mappa-dettaglio">
                             <span class="valore">{sede.citta}</span>
                             <span class="sedi-mappa-azione testo-piccolo"><span class="sedi-mappa-azione-testo">Vedi di più</span> <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+                            <span class="sr-only">: {sede.via}, su Google Maps (si apre in una nuova scheda)</span>
                         </div>
                     </div>
                 </a>

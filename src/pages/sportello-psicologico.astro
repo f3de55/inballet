@@ -7,6 +7,7 @@ import { heroPagina } from '../lib/hero-pagine';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
 import HeroPagina from '../components/HeroPagina.astro';
+import CtaContatto from '../components/CtaContatto.astro';
 import '../styles/pages/sportello-psicologico.css';
 
 const bg = {
@@ -33,11 +34,8 @@ const servizi = [
     description="Lo sportello psicologico di InBallet, scuola di danza a Lainate e Rho: uno spazio di ascolto per genitori, bambini e coppie, con una psicoterapeuta."
     ogTitle="Sportello Psicologico | InBallet"
     ogDescription="Ascolto e sostegno per le famiglie: incontri con la psicoterapeuta, su richiesta alla Direzione."
+    preload={bg.hero.preload}
 >
-
-    <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
-    </Fragment>
 
         <HeroPagina titolo="Sportello Psicologico" stile={bg.hero.style}>
             <p class="hero-lead">Uno spazio di <strong>ascolto e sostegno</strong> per genitori, bambini e famiglie, con una <strong>psicoterapeuta</strong>.</p>
@@ -96,17 +94,8 @@ const servizi = [
             </ul>
         </SezioneElenco>
 
-        <section class="cta-contatto sezione-scura">
-            <div class="cta-bg" style={bg.cta.style}></div>
-            <div class="cta-overlay"></div>
-            <div class="cta-wrapper">
-                <h2 class="titolo-sezione">Prenota un colloquio <em>conoscitivo</em></h2>
-                <p class="intro-sezione"><strong>Scrivici o chiamaci</strong>: fissiamo insieme il primo incontro, nella <strong>massima riservatezza</strong>.</p>
-                <div class="cta-pulsanti">
-                    <a href="/contatti" class="btn-primary">
-                        Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+        <CtaContatto stile={bg.cta.style}>
+            <h2 class="titolo-sezione">Prenota un colloquio <em>conoscitivo</em></h2>
+            <p class="intro-sezione"><strong>Scrivici o chiamaci</strong>: fissiamo insieme il primo incontro, nella <strong>massima riservatezza</strong>.</p>
+        </CtaContatto>
 </Base>

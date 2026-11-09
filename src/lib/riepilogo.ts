@@ -74,7 +74,7 @@ ${categorieCorsi.map((c) => `### ${c.nome}\n\n${strip(c.descrizione)}\n\n${c.cor
 
 ## Iscrizioni ${iscrizioni.anno}
 
-- [Documenti per l'iscrizione](${url('/documenti')}): quota associativa annuale ${iscrizioni.quota} €, certificato medico per attività non agonistica dai 6 anni (sotto i 6 anni autocertificazione dei genitori), corso pagato in tre rate.
+- [Documenti per l'iscrizione](${url('/documenti')}): quota associativa annuale ${iscrizioni.quota} €, certificato medico per attività non agonistica dai 6 anni (sotto i 6 anni autocertificazione dei genitori), corso pagato in tre rate: ${iscrizioni.rate.map((r) => `entro il ${r.scadenza} (${r.periodo})`).join(', ')}.
 ${documenti.map((d) => `- [${d.titolo}](${url(d.file)})${d.nota ? `: ${d.nota.toLowerCase()}` : ''}`).join('\n')}
 
 ## Pagine principali

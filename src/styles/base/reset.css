@@ -33,6 +33,13 @@ html::-webkit-scrollbar-thumb:hover {
   background: var(--primary-blue-dark);
 }
 
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
 body {
   min-height: 100vh;
   overflow-x: hidden;

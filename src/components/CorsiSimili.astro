@@ -56,7 +56,7 @@ const altri = (categoria?.corsi ?? [])
       </ul>
     </div>
 
-    <ElencoPercorsi class={`container simili-mobile${categoria.id === 'eta' ? ' simili-mobile--eta' : ''}`} id="simili-corsi" titolo="simili-titolo" nome={categoria.nome}>
+    <ElencoPercorsi class="container simili-mobile" id="simili-corsi" titolo="simili-titolo" nome={categoria.nome}>
       {altri.map((c) => (
         <SchedaPercorso href={c.href} nome={c.nome} idTitolo={`simili-${c.href.slice(1)}-nome`} etichetta={c.eta} dettaglio={c.frequenza} immagine={c.immagine} iconaDettaglio="far fa-clock" />
       ))}

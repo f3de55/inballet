@@ -109,10 +109,6 @@
   margin: 0;
 }
 
-#eta .corsi-scheda-eta {
-  color: var(--heading-color);
-}
-
 .corsi-scheda-fondo {
   display: flex;
   align-items: center;

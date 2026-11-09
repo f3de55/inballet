@@ -13,10 +13,6 @@
   display: none;
 }
 
-.simili-mobile--eta .corsi-scheda-eta {
-  color: var(--heading-color);
-}
-
 .simili-lista {
   list-style: none;
   display: grid;

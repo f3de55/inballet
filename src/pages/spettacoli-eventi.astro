@@ -19,6 +19,7 @@ import {
 } from '../lib/eventi';
 import { romeDate } from '../lib/time';
 import HeroPagina from '../components/HeroPagina.astro';
+import Img from '../components/Img.astro';
 import '../styles/components/dialogo.css';
 import '../styles/pages/spettacoli-eventi.css';
 
@@ -164,9 +165,7 @@ const og = aperto
 
                 {prossimi.length === 0 && (
                     <div class="eventi-vuoto">
-                        <span class="eventi-vuoto-icona" aria-hidden="true">
-                            <i class="far fa-calendar-alt"></i>
-                        </span>
+                        <Img class="eventi-vuoto-illustrazione" src="eventi/calendario-danza.webp" alt="" width={640} height={640} widths={[160, 320, 480]} sizes="160px" loading="lazy" decoding="async" />
                         <h3>Nessun appuntamento in programma</h3>
                         <p>Stiamo preparando le <strong>prossime date</strong>: le pubblichiamo qui appena confermate.</p>
                         <a href="/contatti" class="link-cta">

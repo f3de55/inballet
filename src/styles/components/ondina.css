@@ -1,4 +1,5 @@
 .voce::before,
+.recensioni-sintesi::before,
 .info-riga.sede + .info-riga.sede::before,
 .info-social::before {
   content: '';

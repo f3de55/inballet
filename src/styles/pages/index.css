@@ -572,8 +572,6 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 1.75rem;
-  padding-top: 2rem;
-  background: var(--linea-alto);
 }
 
 .sintesi-google {
@@ -747,8 +745,10 @@
 
   .recensioni-sintesi {
     order: 2;
-    padding-top: 0;
-    background: none;
+  }
+
+  .recensioni-sintesi::before {
+    display: none;
   }
 
   .recensioni-intro {

@@ -54,6 +54,7 @@ const parole = (testo: string) =>
 export const termini = (testo: string) => parole(testo).map(radice);
 
 const ETA_MAX = 99;
+const ETA_APERTA = 3;
 const eta = (n: number) => `eta${n}`;
 
 function terminiEta(testo: string): string[] {

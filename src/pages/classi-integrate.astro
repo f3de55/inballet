@@ -38,7 +38,7 @@ const classi = [
 >
 
     <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
+        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
     </Fragment>
 
         <HeroPagina titolo="Classi Multidisciplinari Integrate" stile={bg.hero.style}>

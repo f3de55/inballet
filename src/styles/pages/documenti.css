@@ -37,7 +37,7 @@
 
 .documento-nome {
   color: var(--dark-navy);
-  transition: color 0.3s ease;
+  transition: color var(--durata-breve) ease;
 }
 
 .documento-azione {

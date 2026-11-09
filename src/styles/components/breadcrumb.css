@@ -27,7 +27,7 @@
   padding: 0.2rem 0;
   color: rgb(var(--bianco-rgb) / 0.85);
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color var(--durata-breve) ease;
 }
 
 .breadcrumb a:hover {

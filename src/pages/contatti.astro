@@ -35,7 +35,7 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
 >
 
     <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
+        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
     </Fragment>
     <HeroPagina titolo="Contatti e sedi" stile={bg.hero.style}>
         <p class="hero-lead"><strong>Due sedi</strong> a Lainate e Rho, a nord-ovest di Milano: chiamaci, scrivici o passa in segreteria.</p>

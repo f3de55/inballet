@@ -17,9 +17,9 @@
   text-decoration: none;
   cursor: pointer;
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease;
+    background-color var(--durata-breve) ease,
+    color var(--durata-breve) ease,
+    border-color var(--durata-breve) ease;
 }
 
 .btn-primary {
@@ -95,9 +95,9 @@
   line-height: 1;
   cursor: pointer;
   transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    color 0.3s ease;
+    background-color var(--durata-breve) ease,
+    border-color var(--durata-breve) ease,
+    color var(--durata-breve) ease;
 }
 
 .btn-icon:hover {
@@ -157,15 +157,15 @@
   text-transform: uppercase;
   text-decoration: none;
   transition:
-    color 0.3s ease,
-    border-color 0.3s ease;
+    color var(--durata-breve) ease,
+    border-color var(--durata-breve) ease;
 }
 
 .link-cta i {
   color: var(--black);
   transition:
-    transform 0.3s ease,
-    color 0.3s ease;
+    transform var(--durata) var(--curva),
+    color var(--durata-breve) ease;
 }
 
 .link-cta:hover,

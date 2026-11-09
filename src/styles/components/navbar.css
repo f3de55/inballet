@@ -7,7 +7,6 @@
   z-index: 1000;
   transition: background var(--transition-base);
   box-shadow: 0 2px 20px rgb(var(--nero-rgb) / 0.3);
-  min-height: var(--nav-h);
 }
 
 .main-header.is-scrolled {
@@ -44,10 +43,7 @@ html.menu-aperto {
   justify-content: space-between;
   align-items: center;
   height: var(--nav-h);
-  min-height: var(--nav-h);
-  transition:
-    height 0.3s ease,
-    min-height 0.3s ease;
+  transition: height var(--durata) var(--curva);
 }
 
 .logo-section {
@@ -60,9 +56,7 @@ html.menu-aperto {
   width: 150px;
   height: auto;
   filter: brightness(1.1);
-  transition:
-    width 0.3s ease,
-    filter var(--transition-base);
+  transition: width var(--durata) var(--curva);
 }
 
 .main-header.is-scrolled .logo-section img {
@@ -85,9 +79,7 @@ html.menu-aperto {
   color: var(--white);
   font-weight: var(--font-semibold);
   padding: 1rem 2rem;
-  transition:
-    color var(--transition-base),
-    font-size 0.3s ease;
+  transition: font-size var(--durata) var(--curva);
   cursor: pointer;
   text-transform: uppercase;
   font-size: var(--nav-size);
@@ -112,7 +104,7 @@ html.menu-aperto {
   border-radius: var(--radius-pill);
   background: var(--primary-blue-dark);
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--durata) var(--curva);
 }
 
 .nav-item:hover .nav-link::before,
@@ -126,12 +118,6 @@ html.menu-aperto {
 .nav-item:has(.mega-menu.active) .nav-link.attiva,
 .nav-item[data-menu]:has(.mega-menu.active) .nav-link.attiva::after {
   color: var(--white);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nav-link::before {
-    transition: none;
-  }
 }
 
 .nav-item[data-menu] .nav-link::after {
@@ -158,23 +144,15 @@ html.menu-aperto {
   transform: rotate(180deg);
 }
 
-.nav-container > .btn-primary {
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease,
-    padding 0.3s ease;
-}
-
 .main-header .nav-container > .btn-primary {
   --btn-pad: 0.6rem;
   padding-inline: 1.2rem;
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease,
-    padding 0.3s ease,
-    font-size 0.3s ease;
+    background-color var(--durata-breve) ease,
+    color var(--durata-breve) ease,
+    border-color var(--durata-breve) ease,
+    padding var(--durata) var(--curva),
+    font-size var(--durata) var(--curva);
 }
 
 .main-header.is-scrolled .nav-container > .btn-primary {
@@ -211,9 +189,9 @@ html.menu-aperto {
   opacity: 0;
   transform: translate(-50%, 8px);
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease,
-    visibility 0s linear 0.2s;
+    opacity var(--durata) var(--curva),
+    transform var(--durata) var(--curva),
+    visibility 0s linear var(--durata);
   overflow: visible;
   z-index: 999;
 }
@@ -245,14 +223,6 @@ html.menu-aperto {
   opacity: 1;
   transform: translate(-50%, 0);
   transition-delay: 0s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mega-menu,
-  .nav-container,
-  .logo-section img {
-    transition: none;
-  }
 }
 
 .mega-menu-content {
@@ -396,7 +366,7 @@ html.menu-aperto {
   display: none;
   margin-right: -2px;
   place-items: center end;
-  transition: color 0.3s ease;
+  transition: color var(--durata-breve) ease;
 }
 
 .mobile-menu {
@@ -418,8 +388,8 @@ html.menu-aperto {
   transform: translateX(100%);
   visibility: hidden;
   transition:
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0s linear 0.4s;
+    transform var(--durata-pannello) var(--curva),
+    visibility 0s linear var(--durata-pannello);
 }
 
 .mobile-menu.active {
@@ -439,8 +409,8 @@ html.menu-aperto {
   opacity: 0;
   visibility: hidden;
   transition:
-    opacity 0.4s ease,
-    visibility 0s linear 0.4s;
+    opacity var(--durata-pannello) var(--curva),
+    visibility 0s linear var(--durata-pannello);
 }
 
 .mobile-overlay.active {
@@ -489,7 +459,7 @@ html.menu-aperto {
   letter-spacing: -0.01em;
   text-align: left;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color var(--durata-breve) ease;
 }
 
 .mobile-nav-toggle.attiva {
@@ -500,8 +470,8 @@ html.menu-aperto {
   font-size: var(--icona-mini);
   color: var(--white);
   transition:
-    transform 0.3s ease,
-    color 0.3s ease;
+    transform var(--durata) var(--curva),
+    color var(--durata-breve) ease;
 }
 
 .mobile-nav-toggle.attiva .mobile-nav-freccia {
@@ -515,7 +485,7 @@ html.menu-aperto {
 .mobile-submenu {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.35s ease;
+  transition: grid-template-rows var(--durata) var(--curva);
 }
 
 .mobile-submenu.active {
@@ -555,7 +525,7 @@ html.menu-aperto {
   font-size: var(--text-sm);
   line-height: 1.35;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color var(--durata-breve) ease;
 }
 
 .mobile-gruppo a:hover {
@@ -581,14 +551,6 @@ html.menu-aperto {
   margin-top: 2rem;
   padding-inline: 3rem;
   flex-shrink: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mobile-menu,
-  .mobile-overlay,
-  .mobile-submenu {
-    transition: none;
-  }
 }
 
 @media (max-width: 480px) {

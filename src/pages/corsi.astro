@@ -38,7 +38,7 @@ const hero = await heroPagina('corsi');
 >
 
     <Fragment slot="head">
-        {hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
+        {hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
     </Fragment>
     <HeroPagina titolo="I nostri corsi di danza" stile={hero.style}>
         <p class="hero-lead"><strong>Dai 3 anni all'età adulta</strong>, dalla classica agli stili urbani: c'è un corso anche per te, a <strong>ogni livello</strong>.</p>

@@ -43,6 +43,7 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
   let ultimoScroll = 0;
   let trascinando = false;
   let spostato = false;
+  let attivo = false;
 
   const mod = (x: number) => {
     const g = giro();
@@ -96,21 +97,34 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
   window.addEventListener('load', inizia, { once: true });
 
   const passo = (t: number) => {
+    if (!visibile || document.hidden) {
+      attivo = false;
+      ultimo = 0;
+      return;
+    }
     const modaleAperta = !!document.querySelector('dialog[open]');
     if (ricalcolaHover && !modaleAperta) {
       sopra = puntatoreMouse !== null && fila.contains(document.elementFromPoint(puntatoreMouse.x, puntatoreMouse.y));
       ricalcolaHover = false;
     }
-    if (ultimo && !fermo && !sopra && visibile && !modaleAperta && !document.hidden) {
+    if (ultimo && !fermo && !sopra && !modaleAperta) {
       pos = mod(pos + (giro() / secondi) * ((t - ultimo) / 1000));
       mostra();
     }
     ultimo = t;
     requestAnimationFrame(passo);
   };
-  requestAnimationFrame(passo);
+  const avvia = () => {
+    if (attivo || !visibile || document.hidden) return;
+    attivo = true;
+    requestAnimationFrame(passo);
+  };
 
-  new IntersectionObserver(([e]) => (visibile = e.isIntersecting)).observe(fila);
+  new IntersectionObserver(([e]) => {
+    visibile = e.isIntersecting;
+    avvia();
+  }).observe(fila);
+  document.addEventListener('visibilitychange', avvia);
 
   fila.addEventListener(
     'scroll',

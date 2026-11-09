@@ -2,6 +2,11 @@
   margin-top: 1.5rem;
 }
 
+.trova-scelta[hidden] {
+  display: block;
+  visibility: hidden;
+}
+
 @media (min-width: 601px) {
   .trova-popup {
     width: min(36rem, calc(100% - 3rem));

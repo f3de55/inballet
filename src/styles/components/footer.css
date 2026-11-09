@@ -158,7 +158,7 @@
   color: var(--footer-testo);
   text-decoration: none;
   text-wrap-style: balance;
-  transition: color 0.3s ease;
+  transition: color var(--durata-breve) ease;
 }
 
 .footer-main ul a {
@@ -201,6 +201,7 @@
 .footer-main ul a.attiva {
   color: var(--white);
   font-weight: var(--font-bold);
+  transition: none;
 }
 
 .footer-main a:focus-visible {
@@ -246,7 +247,7 @@
 
 .footer-link i {
   font-size: var(--icona-in-testo);
-  transition: transform 0.3s ease;
+  transition: transform var(--durata) var(--curva);
 }
 
 .footer-link:hover i {
@@ -403,8 +404,8 @@
     --ps: 14px;
     background: var(--piu);
     transition:
-      transform 0.3s ease,
-      color 0.3s ease;
+      transform var(--durata) var(--curva),
+      color var(--durata-breve) ease;
   }
 
   .footer-col[open] summary::after {

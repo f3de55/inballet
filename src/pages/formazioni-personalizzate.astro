@@ -19,7 +19,7 @@ const bg = {
 >
 
     <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
+        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
     </Fragment>
 
         <HeroPagina titolo="Formazioni Personalizzate" stile={bg.hero.style}>

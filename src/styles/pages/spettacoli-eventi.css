@@ -74,8 +74,8 @@
   color: var(--text-muted);
   cursor: pointer;
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+    background-color var(--durata-breve) ease,
+    color var(--durata-breve) ease;
 }
 
 .vista-switch button i {
@@ -227,7 +227,7 @@
 }
 
 .agenda-titolo {
-  transition: color 0.3s ease;
+  transition: color var(--durata-breve) ease;
 }
 
 .annullato .agenda-titolo {
@@ -296,7 +296,7 @@
 .agenda-passati summary i {
   font-size: var(--text-xs);
   color: var(--primary-blue-dark);
-  transition: transform 0.3s ease;
+  transition: transform var(--durata) var(--curva);
 }
 
 .agenda-passati[open] summary i {
@@ -342,8 +342,8 @@
   color: var(--dark-navy);
   cursor: pointer;
   transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease;
+    background-color var(--durata-breve) ease,
+    border-color var(--durata-breve) ease;
 }
 
 .calendario-frecce button:disabled {
@@ -427,7 +427,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: background-color 0.3s ease;
+  transition: background-color var(--durata-breve) ease;
 }
 
 .calendario-grid .cal-evento.passato {
@@ -670,9 +670,9 @@ html:has(dialog[open]) {
   color: var(--dark-navy);
   text-decoration: none;
   transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    color 0.3s ease;
+    background-color var(--durata-breve) ease,
+    border-color var(--durata-breve) ease,
+    color var(--durata-breve) ease;
 }
 
 .evento-condividi {
@@ -716,7 +716,7 @@ html:has(dialog[open]) {
 .locandina-dialog[open] {
   display: grid;
   place-items: center;
-  animation: locandina-entra 0.25s ease;
+  animation: locandina-entra var(--durata) var(--curva);
 }
 
 .locandina-dialog::backdrop {
@@ -739,13 +739,6 @@ html:has(dialog[open]) {
   position: absolute;
   top: 1rem;
   right: 1rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .evento-dialog[open],
-  .locandina-dialog[open] {
-    animation: none;
-  }
 }
 
 @media (max-width: 900px) {

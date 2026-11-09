@@ -32,7 +32,7 @@ const destinazioni: { nome: string; href?: string }[] = [
 >
 
     <Fragment slot="head">
-        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} />)}
+        {bg.hero.preload.map((image) => <link rel="preload" as="image" href={image.href} media={image.media} fetchpriority="high" />)}
     </Fragment>
 
         <HeroPagina titolo="Sostieni i nostri progetti sociali" stile={bg.hero.style}>

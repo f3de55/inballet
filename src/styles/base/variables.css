@@ -98,7 +98,12 @@
   --icona-punto: 0.5em;
   --glifo-citazione: 5.5rem;
 
-  --transition-base: 0.3s ease;
+  --durata-breve: 0.15s;
+  --durata: 0.25s;
+  --durata-pannello: 0.35s;
+  --durata-lenta: 0.6s;
+  --curva: cubic-bezier(0.2, 0, 0, 1);
+  --transition-base: var(--durata-breve) ease;
 
   --radius-xs: 6px;
   --radius-sm: 10px;

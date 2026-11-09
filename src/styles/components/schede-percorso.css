@@ -218,14 +218,3 @@
   outline: 2px solid var(--primary-blue-dark);
   outline-offset: 4px;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .corsi-scheda-foto,
-  .corsi-scheda-freccia {
-    transition: none;
-  }
-
-  .corsi-scheda-link:hover .corsi-scheda-freccia {
-    transform: none;
-  }
-}

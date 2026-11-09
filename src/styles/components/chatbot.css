@@ -15,8 +15,8 @@
   color: var(--dark-navy);
   cursor: pointer;
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+    background-color var(--durata-breve) ease,
+    color var(--durata-breve) ease;
 }
 
 #cb-toggle i {
@@ -67,7 +67,7 @@
   border-radius: var(--radius-md);
   background: var(--white);
   box-shadow: 0 20px 60px rgb(var(--nero-rgb) / 0.22);
-  animation: cb-entra 0.25s ease;
+  animation: cb-entra var(--durata) var(--curva);
 }
 
 #cb-box[hidden] {
@@ -81,7 +81,7 @@
 @keyframes cb-entra {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(12px);
   }
 }
 
@@ -142,8 +142,8 @@
   color: var(--testo-su-scuro-debole);
   cursor: pointer;
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+    background-color var(--durata-breve) ease,
+    color var(--durata-breve) ease;
 }
 
 #cb-reset {
@@ -272,7 +272,7 @@
   font-size: var(--text-xs);
   color: var(--dark-navy);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--durata-breve) ease;
 }
 
 .cb-chip:hover {
@@ -319,9 +319,9 @@
   color: var(--dark-navy);
   cursor: pointer;
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    opacity 0.2s ease;
+    background-color var(--durata-breve) ease,
+    color var(--durata-breve) ease,
+    opacity var(--durata) var(--curva);
 }
 
 #cb-send:hover:not(:disabled) {
@@ -347,13 +347,6 @@
   color: inherit;
   font-weight: var(--font-semibold);
   white-space: nowrap;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #cb-box,
-  #cb-msgs .cb-m.load span {
-    animation: none;
-  }
 }
 
 @media (max-width: 900px) {

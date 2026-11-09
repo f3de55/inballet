@@ -70,12 +70,6 @@
   margin: 0 0 2rem;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .ins-dialog[open] {
-    animation: none;
-  }
-}
-
 @media (max-width: 900px) {
   .ins-dialog-corpo {
     padding: 2.5rem 2rem 2rem;

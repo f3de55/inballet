@@ -216,11 +216,11 @@
   place-items: center;
   position: relative;
   isolation: isolate;
-  width: 5rem;
-  height: 5rem;
+  width: 4rem;
+  height: 4rem;
   margin: 0 auto 1.25rem;
   color: var(--primary-blue-dark);
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
 }
 
 .impara-simbolo::before {
@@ -376,8 +376,9 @@
   }
 
   .impara-simbolo {
-    width: 4.25rem;
-    height: 4.25rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: var(--text-xl);
     margin: 0 0 1rem;
   }
 }

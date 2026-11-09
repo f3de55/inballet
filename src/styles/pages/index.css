@@ -467,43 +467,30 @@
     display: none;
   }
 
-  /* Titolo a tutta larghezza; sotto la descrizione e, accanto, la ballerina a destra (non più sotto il testo):
-     la card resta bassa e il testo non ci passa sopra */
-  .corsi-stile--grafica {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 4.5rem;
-    column-gap: 0.75rem;
-    align-content: start;
-    align-items: start;
-  }
-
-  .corsi-stile-testo {
-    display: contents;
-  }
-
-  .corsi-stile-nome {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    margin: 0 0 0.75rem;
-  }
-
-  .corsi-indice .corsi-stile-desc {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
   .corsi-stile-figura {
-    grid-column: 2;
-    grid-row: 2;
-    justify-self: end;
+    position: absolute;
+    top: -1.5rem;
+    right: -3rem;
+    z-index: 0;
     display: block;
-    width: 100%;
-    height: 6.5rem;
-    margin-right: -0.25rem;
+    width: 12.5rem;
+    height: 15rem;
     object-fit: contain;
     object-position: right top;
     pointer-events: none;
     user-select: none;
+  }
+
+  .corsi-stile-testo {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+    min-width: 0;
+    max-width: none;
+    justify-items: start;
+    text-shadow: none;
   }
 
   .corsi-stile-nome {
@@ -519,11 +506,9 @@
   }
 
   .corsi-indice .corsi-stile .corsi-stile-link {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    width: fit-content;
     gap: 0.5rem;
-    margin: 0.75rem 0 0;
+    margin: 0.25rem 0 0;
+    justify-self: start;
     padding: 0 0 0.25rem;
     border: 0;
     --lc: currentColor;

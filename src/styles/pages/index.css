@@ -585,10 +585,6 @@
   align-items: center;
 }
 
-.sintesi-google[hidden] {
-  display: none;
-}
-
 .sintesi-google .sintesi-voto {
   grid-area: voto;
   font-size: var(--numero-grande-size);

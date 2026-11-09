@@ -74,6 +74,14 @@ In Docker, this directory is a named volume (`inballet-data`) so data survives r
 - One rule for "past" everywhere (site, banner, dashboard, chatbot): `passato()` = the end (`dataFine`/`oraFine`, default 23:59 Rome time) is over.
 - Removing a type keeps it on the events that use it; deleting a poster clears it from the events that use it.
 
+### Google (reviews and opening hours)
+
+`src/lib/google.ts` is the only place that talks to Google: one Places API (New) Place Details call (`rating,userRatingCount,reviews,regularOpeningHours`, billed once as Enterprise + Atmosphere) every 30 days, from the server with `GOOGLE_PLACES_API_KEY`, saved in `data/google.json`. Every visitor sees that file; nothing Google runs in the browser (no Maps JS, no client key). An expired file is still served while the refresh runs in the background; a failed refresh is retried after an hour. No hand-written fallback: the opening hours exist only on Google (Google Business Profile is the place to change them, the site follows within 30 days or at once if `google.json` is deleted).
+
+- Home «Dicono di noi»: `<RecensioniGoogle server:defer>` (static page, the island is rendered on demand, `Cache-Control` 1h); `scripts/recensioni.ts` (`<recensioni-google>` custom element) only drives the carousel and «Leggi tutto».
+- `/contatti` «Orari segreteria»: `<OrariSegreteria server:defer>` with the week and the openingHoursSpecification JSON-LD of `#scuola`; `scripts/orari.ts` (`<orari-segreteria>`) marks today and «Aperto/Chiuso ora» in the visitor's browser (Rome time).
+- The same data feed `riepilogoScuola()` (opening hours and rating for `/llms.txt` and the chatbot).
+
 ### Chatbot (Étoile)
 
 `src/lib/chatbot/`, one file per concern; `index.ts` (`rispondi()`) runs the flow: sanitize → in-memory rate limit per IP hash (1s, 6/min, 30/h, 100/day; 60 attempts/h block the IP for an hour, and a blocked IP is no longer logged) → insult/spam filter → conversation memory (last 6 exchanges, max 20 per chat) → response cache (first message of a chat only, in memory, 24h, key includes the knowledge version) → daily spend cap → provider chain → FAQ fallback → log + save exchange.

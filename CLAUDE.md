@@ -108,7 +108,8 @@ All server env vars are `access: 'secret'` on purpose: read at runtime, so they 
 | `CHATBOT_GRATUITI` | free-tier providers whose cost counts zero (e.g. `gemini,mistral`) |
 | `CHATBOT_BUDGET_GIORNO` | daily spend cap in dollars, then FAQ-only answers (0 = no cap) |
 | `CHATBOT_IP_HEADER` | header with the real visitor IP behind a proxy (e.g. `cf-connecting-ip`); spoofable, leave empty if unsure |
-| `PUBLIC_GOOGLE_MAPS_KEY`, `PUBLIC_GOOGLE_PLACE_ID` | Google Maps JS key and place for the reviews (public, inlined at build) |
+| `GOOGLE_PLACES_API_KEY` | server key for the monthly Places call (reviews, opening hours) |
+| `PUBLIC_GOOGLE_PLACE_ID` | the school's Google place (also the «Vedi tutte» reviews link) |
 
 ### Content collections
 

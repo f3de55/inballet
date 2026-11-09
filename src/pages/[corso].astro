@@ -115,7 +115,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                 <p class="corso-impara-label eyebrow">Gli obiettivi del percorso</p>
                 <h2 id="corsoImparaTitolo" class="titolo-sezione" set:html={accento(data.imparaTitolo)} />
             </header>
-            <dl class="corso-impara-list" id="corsoImparaGrid">
+            <dl class="corso-impara-list" id="corsoImparaGrid" data-in-vista>
                 {data.impara.map((item, indice) => (
                     <div class="impara-competenza">
                         <dt class="impara-titolo">
@@ -147,3 +147,7 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
         </div>
     </section>
 </Base>
+
+<script>
+  import '../scripts/in-vista';
+</script>

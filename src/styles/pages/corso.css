@@ -240,6 +240,44 @@
   transform: rotate(36deg);
 }
 
+.impara-simbolo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 2px solid rgb(var(--blu-rgb) / 0.45);
+  border-radius: 42% 58% 38% 62% / 55% 43% 57% 45%;
+  transform: rotate(20deg) scale(1.12);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .impara-simbolo::after {
+    animation: impara-respiro 3.6s var(--curva) infinite alternate paused;
+  }
+
+  .impara-competenza:nth-child(3n + 2) .impara-simbolo::after {
+    animation-delay: -1.2s;
+  }
+
+  .impara-competenza:nth-child(3n) .impara-simbolo::after {
+    animation-delay: -2.4s;
+  }
+
+  .corso-impara-list.in-vista .impara-simbolo::after {
+    animation-play-state: running;
+  }
+}
+
+@keyframes impara-respiro {
+  from {
+    transform: rotate(20deg) scale(0.92);
+  }
+
+  to {
+    transform: rotate(-16deg) scale(1.24);
+  }
+}
+
 .impara-titolo {
   margin: 0 0 0.5rem;
   font-size: var(--h4-size);

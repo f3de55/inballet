@@ -61,7 +61,6 @@ if (timeline) {
     scia.setAttribute('d', d);
   };
 
-  new IntersectionObserver(([voce]) => timeline.classList.toggle('in-vista', voce.isIntersecting)).observe(timeline);
   new ResizeObserver(disegna).observe(timeline);
   document.fonts.ready.then(disegna);
   verticale.addEventListener('change', disegna);

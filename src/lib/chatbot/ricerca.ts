@@ -75,6 +75,7 @@ export function creaIndice(passaggi: Passaggio[]): Indice {
     const tutti = [...termini(p.testo), ...intestazione, ...intestazione];
     const conta = new Map<string, number>();
     for (const t of tutti) conta.set(t, (conta.get(t) ?? 0) + 1);
+    for (const t of terminiEta(`${p.sezione} ${p.testo}`)) conta.set(t, 1);
     for (const t of conta.keys()) df.set(t, (df.get(t) ?? 0) + 1);
     return { ...p, termini: conta, lunghezza: tutti.length };
   });

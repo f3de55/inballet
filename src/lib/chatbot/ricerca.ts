@@ -64,7 +64,7 @@ function terminiEta(testo: string): string[] {
 
 const etaRichiesta = (testo: string) => [...normalizza(testo).matchAll(/\b(\d{1,2}) ann[io]\b/g)].map(([, n]) => eta(+n));
 
-const ESPANSIONI = new Map(Object.entries(SINONIMI).map(([parola, altre]) => [radice(normalizza(parola)), termini(altre)]));
+const SOSTITUZIONI = new Map(Object.entries(SINONIMI).map(([parola, altre]) => [normalizza(parola), termini(altre)]));
 
 export function creaIndice(passaggi: Passaggio[]): Indice {
   const df = new Map<string, number>();

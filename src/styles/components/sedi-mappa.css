@@ -72,7 +72,7 @@
   transition: stroke var(--durata) var(--curva);
 }
 
-.attiva .sedi-mappa-linea {
+.sedi-mappa-attiva .sedi-mappa-linea {
   stroke: var(--dark-navy);
 }
 
@@ -133,7 +133,7 @@
     box-shadow var(--durata) var(--curva);
 }
 
-.sedi-mappa-foto.attiva {
+.sedi-mappa-foto.sedi-mappa-attiva {
   transform: translateY(-4px);
   box-shadow: var(--shadow-blue);
 }
@@ -193,11 +193,11 @@
   transition: transform var(--durata) var(--curva);
 }
 
-.sedi-mappa-foto.attiva .sedi-mappa-azione {
+.sedi-mappa-foto.sedi-mappa-attiva .sedi-mappa-azione {
   color: var(--dark-navy);
 }
 
-.sedi-mappa-foto.attiva .sedi-mappa-azione i {
+.sedi-mappa-foto.sedi-mappa-attiva .sedi-mappa-azione i {
   transform: translate(3px, -3px);
 }
 
@@ -240,7 +240,7 @@
     background-color var(--durata-breve) ease;
 }
 
-.sedi-mappa-punto.attiva span {
+.sedi-mappa-punto.sedi-mappa-attiva span {
   transform: scale(1.12);
   background-color: var(--dark-navy);
 }

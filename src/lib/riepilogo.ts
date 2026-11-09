@@ -1,6 +1,7 @@
 import { getCollection } from 'astro:content';
-import { ANNI_ATTIVITA, categorieCorsi, faq, FONDAZIONE, iscrizioni, orari, scuola, sedi } from '../data/scuola';
+import { ANNI_ATTIVITA, categorieCorsi, faq, FONDAZIONE, iscrizioni, scuola, sedi } from '../data/scuola';
 import type { Documento } from './documenti';
+import { datiGoogle, testoOrari } from './google';
 
 const strip = (html: string) => html.replace(/<[^>]+>/g, '');
 

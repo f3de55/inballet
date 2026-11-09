@@ -8,9 +8,10 @@ const strip = (html: string) => html.replace(/<[^>]+>/g, '');
 interface Opzioni {
   url: (path: string) => string;
   documenti?: Documento[];
+  conFaq?: boolean;
 }
 
-export async function riepilogoScuola({ url, documenti = [] }: Opzioni): Promise<string> {
+export async function riepilogoScuola({ url, documenti = [], conFaq = true }: Opzioni): Promise<string> {
   const [collezione, google] = await Promise.all([getCollection('corsi'), datiGoogle()]);
   const corsi = new Map(collezione.map((c) => [`/${c.id}`, c.data]));
   const orari = google?.orari.some((f) => f.length) ? testoOrari(google.orari) : `- Non disponibili in questo momento: chiedere alla segreteria (${scuola.telefono})`;

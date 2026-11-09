@@ -43,7 +43,7 @@ const altri = (categoria?.corsi ?? [])
         {altri.map((c) => (
           <li>
             <a href={c.href} class="simili-voce">
-              <Img class="simili-immagine" src={c.immagine.src} alt={c.immagine.alt} width={1536} height={1024} loading="lazy" decoding="async" widths={[320, 480, 800]} sizes="224px" />
+              <Img class="simili-immagine" src={c.immagine.src} alt={c.immagine.alt} width={1536} height={1024} loading="lazy" decoding="async" widths={[320, 480, 800]} sizes="(max-width: 900px) 50vw, 380px" />
               <div class="simili-testo">
                 <h3 class="simili-nome">{c.nome}</h3>
                 <p class="simili-eta">{c.eta}</p>

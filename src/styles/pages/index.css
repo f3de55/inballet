@@ -731,7 +731,7 @@ recensioni-google {
 
 .carousel-indicators .indicator.active {
   width: 2.5rem;
-  background: var(--primary-blue-dark);
+  background-color: var(--primary-blue-dark);
 }
 
 @media (max-width: 900px) {

@@ -40,7 +40,11 @@ export const normalizza = (s: string) =>
     .replace(/[^a-z0-9]+/g, ' ')
     .trim();
 
-const radice = (p: string) => (p.length > 4 ? p.replace(/(?:h[eio]|[aeiou])$/, '') : p);
+const radice = (p: string) => {
+  if (p.length < 5) return p;
+  if (p.length > 6 && /(?:are|ere|ire|ano|ono|ando|endo)$/.test(p)) return p.replace(/(?:ando|endo|are|ere|ire|ano|ono)$/, '');
+  return p.replace(/(?:h[eio]|[aeiou])$/, '');
+};
 
 const parole = (testo: string) =>
   normalizza(testo)
@@ -48,6 +52,19 @@ const parole = (testo: string) =>
     .filter((p) => (p.length > 1 || /\d/.test(p)) && !VUOTE.has(p));
 
 export const termini = (testo: string) => parole(testo).map(radice);
+
+const ETA_MAX = 99;
+const eta = (n: number) => `eta${n}`;
+
+function terminiEta(testo: string): string[] {
+  const t = normalizza(testo);
+  const anni = new Set<number>();
+  for (const [, da, a] of t.matchAll(/\b(\d{1,2}) (?:a |ai |agli )?(\d{1,2}) anni\b/g)) for (let n = +da; n <= +a && n <= ETA_MAX; n++) anni.add(n);
+  for (const [, da] of t.matchAll(/\b(?:dai|dagli|da) (\d{1,2}) anni\b(?! ?\d)/g)) for (let n = +da; n <= ETA_MAX; n++) anni.add(n);
+  return [...anni].map(eta);
+}
+
+const etaRichiesta = (testo: string) => [...normalizza(testo).matchAll(/\b(\d{1,2}) ann[io]\b/g)].map(([, n]) => eta(+n));
 
 const ESPANSIONI = new Map(Object.entries(SINONIMI).map(([parola, altre]) => [radice(normalizza(parola)), termini(altre)]));
 

@@ -1,34 +1,79 @@
 const track = document.getElementById('galleryTrack');
 const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
-const foto = document.getElementById('lightbox-image') as HTMLImageElement | null;
+const fotoIniziale = document.getElementById('lightbox-image') as HTMLImageElement | null;
 const didascalia = document.getElementById('lightbox-caption');
 const contatore = document.getElementById('lightbox-counter');
 
-if (track && dialog && foto && didascalia && contatore) {
+if (track && dialog && fotoIniziale && didascalia && contatore) {
+  let foto: HTMLImageElement = fotoIniziale;
   const bottoni = [...track.querySelectorAll<HTMLButtonElement>('.gallery-apri')];
   const foto10 = bottoni.slice(0, 10).map((b) => ({ src: b.dataset.full!, alt: b.dataset.alt ?? '' }));
   const n = foto10.length;
   let index = 0;
+  let richiesta = 0;
   let opener: HTMLElement | null = null;
 
-  const mostra = (i: number) => {
+  const immagini = new Map<string, { img: HTMLImageElement; pronta: Promise<void> }>();
+  const carica = (src: string) => {
+    let voce = immagini.get(src);
+    if (!voce) {
+      const img = new Image();
+      img.src = src;
+      img.className = foto.className;
+      voce = { img, pronta: img.decode().catch(() => {}) };
+      immagini.set(src, voce);
+    }
+    return voce;
+  };
+  const sostituisci = (img: HTMLImageElement, alt: string) => {
+    img.alt = alt;
+    if (img === foto) return;
+    foto.removeAttribute('id');
+    img.id = 'lightbox-image';
+    foto.replaceWith(img);
+    foto = img;
+  };
+  const miniatura = (i: number) => bottoni[i].querySelector('img')?.currentSrc ?? '';
+  const attesa = (ms: number) => new Promise<false>((risolvi) => setTimeout(() => risolvi(false), ms));
+
+  const mostra = async (i: number, subito = false) => {
     index = (i + n) % n;
+    const questa = ++richiesta;
     const { src, alt } = foto10[index];
-    foto.classList.add('in-caricamento');
-    foto.addEventListener('load', () => foto.classList.remove('in-caricamento'), { once: true });
-    foto.src = src;
-    foto.alt = alt;
+    const piena = carica(src);
+    const caricata = await Promise.race([piena.pronta.then(() => true), attesa(subito ? 0 : 250)]);
+    if (questa !== richiesta) return;
+    if (!caricata) {
+      const anteprima = miniatura(index);
+      if (anteprima) {
+        const mini = carica(anteprima);
+        await mini.pronta;
+        if (questa !== richiesta) return;
+        sostituisci(mini.img, alt);
+      }
+    }
     didascalia.textContent = alt;
     contatore.textContent = `${index + 1} / ${n}`;
-    [(index - 1 + n) % n, (index + 1) % n].forEach((j) => (new Image().src = foto10[j].src));
+    [(index - 1 + n) % n, (index + 1) % n].forEach((j) => carica(foto10[j].src));
+    await piena.pronta;
+    if (questa === richiesta) sostituisci(piena.img, alt);
   };
 
   const apri = (i: number, da: HTMLElement) => {
     opener = da;
-    mostra(i);
+    mostra(i, true);
     document.documentElement.classList.add('galleria-aperta');
     dialog.showModal();
   };
+
+  bottoni.forEach((b) => {
+    const precarica = () => {
+      carica(foto10[Number(b.dataset.index)].src);
+    };
+    b.addEventListener('pointerenter', precarica, { passive: true });
+    b.addEventListener('pointerdown', precarica, { passive: true });
+    b.addEventListener('focus', precarica);
+  });
 
   dialog.addEventListener('close', () => {
     document.documentElement.classList.remove('galleria-aperta');

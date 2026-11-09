@@ -212,11 +212,6 @@ html.galleria-aperta {
   width: auto;
   height: auto;
   border-radius: var(--radius-md);
-  transition: opacity var(--durata) var(--curva);
-}
-
-.galleria-foto.in-caricamento {
-  opacity: 0;
 }
 
 .galleria-didascalia {

@@ -728,7 +728,9 @@
   border-radius: var(--radius-pill);
   background: var(--linea);
   cursor: pointer;
-  transition: background-color var(--durata-breve) ease;
+  transition:
+    width var(--durata) var(--curva),
+    background-color var(--durata) var(--curva);
 }
 
 .carousel-indicators .indicator.active {

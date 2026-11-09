@@ -160,6 +160,7 @@ main .sezione-scura p a:is(:not([class]), [class^='astro-']:not([class*=' '])) {
 
 @media (max-width: 768px) {
   .hero-lead {
+    font-size: var(--lead-size-mobile);
     font-weight: var(--font-normal);
     color: rgb(var(--bianco-rgb) / 0.95);
     max-width: none;

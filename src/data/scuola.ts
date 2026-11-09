@@ -148,14 +148,14 @@ export const faq = [
   {
     home: true,
     domanda: 'Da che età si può iniziare a danzare a InBallet?',
-    risposta: "Dai 3 anni compiuti, con Avviamento alla Danza. A 4-5 anni c'è Educazione alla Danza e dai 6 anni si può scegliere tra danza classica, modern, hip-hop e breaking. E non c'è un limite di età: ragazzi e adulti trovano corsi anche per principianti assoluti.",
-    evidenzia: ['Dai 3 anni compiuti', '4-5 anni', 'dai 6 anni', "non c'è un limite di età"],
+    risposta: 'Dai 3 anni compiuti con Avviamento alla Danza, a 4-5 anni con Educazione alla Danza. Dai 6 anni si sceglie tra classica, modern, hip-hop e breaking; ragazzi e adulti possono iniziare anche da zero.',
+    evidenzia: ['Dai 3 anni compiuti', '4-5 anni', 'Dai 6 anni', 'anche da zero'],
   },
   {
     home: true,
     domanda: 'Dove si trovano le sedi?',
-    risposta: `InBallet ha due sedi a nord-ovest di Milano: la sede centrale in ${sedi[0].via} a ${sedi[0].citta} e la sede di ${sedi[1].via} a ${sedi[1].citta}.`,
-    evidenzia: ['nord-ovest di Milano', sedi[0].citta, sedi[1].citta],
+    risposta: `A nord-ovest di Milano: la sede centrale in ${sedi[0].via} a ${sedi[0].citta} e la sede di ${sedi[1].citta} in ${sedi[1].via}.`,
+    evidenzia: [sedi[0].citta, sedi[1].citta],
   },
   {
     domanda: 'Come posso scegliere il corso giusto?',
@@ -170,14 +170,14 @@ export const faq = [
   {
     home: true,
     domanda: 'Ci sono corsi di danza per adulti principianti?',
-    risposta: "Sì, a qualsiasi età. Danza Contemporanea Adulti è per chi ha dai 40 anni in su, anche partendo da zero o dopo anni di stop; Movimento Creativo è aperto dai 18 anni, a danzatori e non. Ci sono anche danza classica per livelli, hatha yoga e pilates.",
-    evidenzia: ['Danza Contemporanea Adulti', 'dai 40 anni in su', 'Movimento Creativo', 'dai 18 anni'],
+    risposta: 'Sì. Danza Contemporanea Adulti è dai 40 anni, anche da zero o dopo anni di stop; Movimento Creativo è aperto dai 18 anni, anche a chi non ha mai danzato. Ci sono anche yoga e pilates.',
+    evidenzia: ['Danza Contemporanea Adulti', 'dai 40 anni', 'Movimento Creativo', 'dai 18 anni'],
   },
   {
     home: true,
     domanda: 'InBallet accoglie bambini e ragazzi con disabilità?',
-    risposta: "Sì, la danza è per tutti. Quasi tutte le classi accolgono allievi con bisogni speciali: si parte da un colloquio con la famiglia, per scegliere insieme il gruppo più adatto. Dal 2013, inoltre, il progetto NoiConVoi accoglie il lunedì sera ragazzi con disabilità, con supporto psicomotorio e un team di volontari.",
-    evidenzia: ['bisogni speciali', 'progetto NoiConVoi', 'il lunedì sera'],
+    risposta: 'Sì. Quasi tutte le classi accolgono allievi con bisogni speciali, dopo un colloquio con la famiglia. Dal 2013 il progetto NoiConVoi accoglie il lunedì sera ragazzi con disabilità, con supporto psicomotorio e volontari.',
+    evidenzia: ['bisogni speciali', 'progetto NoiConVoi', 'lunedì sera'],
   },
   {
     domanda: 'InBallet forma anche insegnanti di danza?',
@@ -186,9 +186,15 @@ export const faq = [
   },
   {
     home: true,
-    domanda: 'Come ci si iscrive e quanto costano i corsi?',
-    risposta: `Basta consegnare in segreteria il modulo di iscrizione (pagina Documenti) con il certificato medico non agonistico, obbligatorio dai 6 anni; sotto i 6 anni basta l'autocertificazione dei genitori. La quota associativa è di ${iscrizioni.quota} € l'anno; il costo dei corsi dipende da disciplina e frequenza: per un preventivo chiama il ${scuola.telefono} o scrivi a ${scuola.email}.`,
-    evidenzia: ['certificato medico non agonistico', 'dai 6 anni', 'autocertificazione dei genitori', `${iscrizioni.quota} €`],
+    domanda: 'Come ci si iscrive?',
+    risposta: "Si consegna in segreteria il modulo di iscrizione, che trovi in Documenti, con il certificato medico non agonistico in originale, obbligatorio dai 6 anni. Sotto i 6 anni basta l'autocertificazione firmata da entrambi i genitori.",
+    evidenzia: ['modulo di iscrizione', 'certificato medico non agonistico', 'dai 6 anni', 'entrambi i genitori'],
+  },
+  {
+    home: true,
+    domanda: 'Quanto costa e come si paga?',
+    risposta: `La quota associativa è di ${iscrizioni.quota} € l'anno. Il corso, che varia per disciplina e frequenza, si paga in tre rate (settembre, dicembre, marzo), in contanti in sede o con bonifico. Per i figli minorenni la spesa è detraibile fino a 210 €.`,
+    evidenzia: [`${iscrizioni.quota} €`, 'tre rate', 'detraibile fino a 210 €'],
   },
   {
     domanda: 'Gli allievi si esibiscono in spettacoli?',
@@ -198,8 +204,8 @@ export const faq = [
   {
     home: true,
     domanda: 'La danza è anche per ragazzi e papà?',
-    risposta: "Certo, la danza è per tutti. A InBallet studiano anche i ragazzi, per esempio in hip-hop e breaking, che si possono iniziare dai 6 anni. E poi c'è Only for Dad, il gruppo di papà delle nostre allieve che propone coreografie.",
-    evidenzia: ['anche i ragazzi', 'Only for Dad'],
+    risposta: "Certo. Molti ragazzi studiano hip-hop e breaking, che si iniziano dai 6 anni. E c'è Only for Dad, il gruppo dei papà delle allieve che propone coreografie.",
+    evidenzia: ['hip-hop e breaking', 'dai 6 anni', 'Only for Dad'],
   },
   {
     domanda: 'InBallet assegna borse di studio?',

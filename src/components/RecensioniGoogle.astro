@@ -1,0 +1,83 @@
+---
+import { PUBLIC_GOOGLE_PLACE_ID } from 'astro:env/client';
+import { datiGoogle } from '../lib/google';
+
+const dati = await datiGoogle();
+const recensioni = dati?.recensioni ?? [];
+const LIMITE = 200;
+const breve = (testo: string) => (testo.length > LIMITE ? `${testo.slice(0, LIMITE).replace(/\s+\S*$/, '')}…` : testo);
+const iniziali = (nome: string) =>
+  nome
+    .split(/\s+/)
+    .map((p) => p[0] ?? '')
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+const stelle = (voto: number) => Array.from({ length: 5 }, (_, i) => (i < voto ? 'fas' : 'far'));
+const voto = dati?.voto ?? 0;
+
+Astro.response.headers.set('Cache-Control', 'public, max-age=3600');
+---
+
+<recensioni-google>
+    <div class="recensioni-sintesi">
+        {voto > 0 && (
+            <div class="sintesi-google">
+                <p class="sintesi-voto">{voto.toFixed(1).replace('.', ',')}<span class="sr-only"> su 5</span></p>
+                <div class="sintesi-stelle" aria-hidden="true">{stelle(Math.round(voto)).map((c) => <i class={`${c} fa-star`}></i>)}</div>
+                <small class="sintesi-totale testo-piccolo">{dati!.totale} recensioni su Google</small>
+            </div>
+        )}
+        <a href={`https://search.google.com/local/reviews?placeid=${PUBLIC_GOOGLE_PLACE_ID}`} target="_blank" rel="noopener" class="link-cta">
+            Vedi tutte <span class="sr-only">le recensioni su Google (si apre in una nuova scheda)</span>
+            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </a>
+    </div>
+
+    <div class="recensioni-carousel testimonials-carousel">
+        <div class="testimonials-track" aria-live="polite">
+            {recensioni.length ? recensioni.map((r, i) => (
+                <figure class:list={['testimonials-slide', { active: i === 0 }]} data-completo={r.testo.length > LIMITE ? r.testo : undefined}>
+                    <div class="recensione-stelle" role="img" aria-label={`${r.voto} stelle su 5`}>{stelle(r.voto).map((c) => <i class={`${c} fa-star`} aria-hidden="true"></i>)}</div>
+                    <blockquote class="recensione-testo">
+                        <p>
+                            <span class="review-text">{breve(r.testo)}</span>
+                            {r.testo.length > LIMITE && <button type="button" class="read-more-btn" aria-expanded="false">Leggi tutto</button>}
+                        </p>
+                    </blockquote>
+                    <figcaption class="recensione-autore">
+                        <div class="author-avatar" aria-hidden="true">{iniziali(r.autore)}</div>
+                        <div>
+                            <strong>{r.autore}</strong>
+                            <small class="recensione-fonte testo-piccolo">Recensione su Google</small>
+                        </div>
+                    </figcaption>
+                </figure>
+            )) : (
+                <div class="testimonials-slide active">
+                    <p class="recensioni-messaggio">Le recensioni non sono disponibili in questo momento: puoi leggerle direttamente su Google.</p>
+                </div>
+            )}
+        </div>
+
+        {recensioni.length > 1 && (
+            <div class="recensioni-controlli">
+                <button type="button" class="btn-icon btn-icon--contorno recensioni-nav" data-passo="-1" aria-label="Recensione precedente">
+                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <div class="carousel-indicators">
+                    {recensioni.map((_, i) => (
+                        <button type="button" class:list={['indicator', { active: i === 0 }]} aria-label={`Recensione ${i + 1} di ${recensioni.length}`}></button>
+                    ))}
+                </div>
+                <button type="button" class="btn-icon btn-icon--contorno recensioni-nav" data-passo="1" aria-label="Recensione successiva">
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        )}
+    </div>
+</recensioni-google>
+
+<script>
+    import '../scripts/recensioni';
+</script>

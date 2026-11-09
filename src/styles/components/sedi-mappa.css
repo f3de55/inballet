@@ -190,6 +190,15 @@
 
 .sedi-mappa-azione i {
   font-size: var(--icona-in-testo);
+  transition: transform var(--durata) var(--curva);
+}
+
+.sedi-mappa-foto.attiva .sedi-mappa-azione {
+  color: var(--dark-navy);
+}
+
+.sedi-mappa-foto.attiva .sedi-mappa-azione i {
+  transform: translate(3px, -3px);
 }
 
 .sedi-mappa-popup {

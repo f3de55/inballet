@@ -12,7 +12,7 @@ const luoghi = posizioni.map((p, i) => ({ ...p, sede: sedi.find((s) => s.id === 
 
 <div class="sedi-composizione">
     <figure class="sedi-mappa" aria-label="Le sedi InBallet di Lainate e Rho sulla mappa">
-        <div class="sedi-mappa-tavola" data-sedi-mappa>
+        <div class="sedi-mappa-tavola" data-sedi-mappa data-in-vista>
             <div class="sedi-mappa-viewport">
                 <div class="sedi-mappa-cartografia">
                     <Img class="sedi-mappa-base" src="sedi/mappa-lainate-rho-v3.webp" alt="Mappa dettagliata tra Via Puccini a Lainate e Via Tevere a Rho" width="1111" height="852" widths={[640, 900, 1111]} sizes="(max-width: 768px) 700px, (max-width: 1200px) 77vw, 877px" loading="lazy" />
@@ -35,6 +35,7 @@ const luoghi = posizioni.map((p, i) => ({ ...p, sede: sedi.find((s) => s.id === 
                     <g data-collegamento={id}>
                         <path class="sedi-mappa-linea-fondo" />
                         <path class="sedi-mappa-linea" />
+                        <path class="sedi-mappa-scia" pathLength="1" />
                     </g>
                 ))}
             </svg>
@@ -57,4 +58,5 @@ const luoghi = posizioni.map((p, i) => ({ ...p, sede: sedi.find((s) => s.id === 
 
 <script>
     import '../scripts/sedi-mappa';
+    import '../scripts/in-vista';
 </script>

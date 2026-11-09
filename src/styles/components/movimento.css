@@ -19,7 +19,18 @@
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     main > section:not(:first-child) :is(.intro-editoriale, .split-header, .cta-wrapper),
-    :is(.corsi-indice > li, .oltre-elemento, .corsi-scheda, .voce, .simili-lista > li, .numero, .timeline > li, .sostenitori-loghi li, .info-blocco) {
+    :is(
+      .corsi-indice > li,
+      .oltre-elemento,
+      .corsi-scheda,
+      .voce,
+      .simili-lista > li,
+      .numero,
+      .timeline > li,
+      .sostenitori-loghi li,
+      .info-blocco,
+      .sedi-mappa-foto
+    ) {
       animation-name: rivela;
       animation-fill-mode: both;
       animation-timing-function: linear;
@@ -69,5 +80,25 @@
   from {
     opacity: 0.001;
     transform: translateY(var(--rivela-y));
+  }
+}
+
+@keyframes respiro {
+  from {
+    transform: scale(var(--respiro-da));
+  }
+
+  to {
+    transform: scale(var(--respiro-a));
+  }
+}
+
+@keyframes scia {
+  from {
+    stroke-dashoffset: calc(1 + var(--scia));
+  }
+
+  to {
+    stroke-dashoffset: 0;
   }
 }

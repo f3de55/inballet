@@ -1360,10 +1360,12 @@ body {
   margin-top: 1rem;
 }
 .conv-domanda {
+  font-size: var(--text-xs);
   font-weight: var(--font-semibold);
 }
 .conv-risposta {
   margin-top: 0.25rem;
+  font-size: var(--text-xs);
 }
 .conv-risposta a {
   color: var(--primary-dark);

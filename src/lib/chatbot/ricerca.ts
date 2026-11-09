@@ -151,8 +151,9 @@ export function dividi(pagina: { percorso: string; titolo: string; testo: string
       corrente = [];
       if (!testo.replace(/^#+ .*$/gm, '').trim()) return;
       const prima = passaggi.at(-1);
-      if (prima && prima.testo.length < MIN_PASSAGGIO && prima.testo.length + testo.length < MAX_PASSAGGIO) {
+      if (prima && prima.percorso === pagina.percorso && prima.testo.length < MIN_PASSAGGIO && prima.testo.length + testo.length < MAX_PASSAGGIO) {
         prima.testo += `\n## ${sezione}\n${testo}`;
+        if (testo.length > MIN_PASSAGGIO) prima.sezione = sezione;
         return;
       }
       passaggi.push({ percorso: pagina.percorso, titolo: pagina.titolo, sezione, testo });

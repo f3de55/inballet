@@ -318,8 +318,7 @@
 }
 
 .info-social-link i,
-.info-whatsapp > i,
-.info-email > i {
+.info-whatsapp > i {
   width: 1em;
   flex-shrink: 0;
   font-size: var(--icona-in-testo);

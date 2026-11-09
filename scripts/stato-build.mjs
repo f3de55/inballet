@@ -13,7 +13,6 @@ const tappe = [
   [/prerendering static routes/, 46],
   [/exporting to docker image format/, 82],
   [/image push/, 90],
-  [/Starting Container/, 100],
 ];
 
 const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
@@ -76,9 +75,8 @@ let ultimo = '';
 for (;;) {
   const stato = elenco().find((d) => d.id === deploy.id)?.status ?? 'REMOVED';
   const pct = percentuale(stato, deploy.id);
-  const riga = `[${String(pct).padStart(3)}%] ${stato.toLowerCase()} · ${durata(Date.now() - partenza)}`;
-  if (riga.slice(0, 18) !== ultimo) console.log(riga);
-  ultimo = riga.slice(0, 18);
+  if (`${stato}${pct}` !== ultimo) console.log(`[${String(pct).padStart(3)}%] ${stato.toLowerCase()} · ${durata(Date.now() - partenza)}`);
+  ultimo = `${stato}${pct}`;
   if (stato in FINALI) {
     if (FINALI[stato]) console.log(righeLog('--build', deploy.id).slice(-15).join('\n'));
     process.exit(FINALI[stato]);

@@ -5,3 +5,4 @@
 - Preservare le modifiche locali preesistenti e includerle nel commit solo se fanno parte dell’intervento autorizzato.
 - Le frecce dei sottocorsi non devono avere sottolineature decorative. Nei box della pagina `/contatti` centrare tutti i testi e le icone (recapiti, sedi e orari), anche su mobile: icona sopra e testo sotto sullo stesso asse centrale, senza colonne laterali per le icone né sottogriglie di recapiti affiancati.
 - Struttura delle pagine, sistema di stile e regole di layout (compresa la pagina `/corsi`): vedi `CLAUDE.md`, che è la fonte unica.
+- Dopo ogni push eseguire `npm run deploy:stato` e riferire all’utente l’avanzamento della build su Railway in percentuale fino a `SUCCESS` o all’errore (dettagli in `CLAUDE.md`, sezione Deploy check). Se la CLI non è autenticata: `railway login`, poi `railway link`.

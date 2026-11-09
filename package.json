@@ -21,7 +21,8 @@
     "test": "node --test tests/carosello.test.mjs",
     "test:demo": "node --test tests/locandine-demo.test.mjs",
     "test:statuto": "node --test tests/statuto.test.mjs",
-    "verifica:stile": "node scripts/verifica-stile.mjs"
+    "verifica:stile": "node scripts/verifica-stile.mjs",
+    "deploy:stato": "node scripts/stato-build.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.6.0",

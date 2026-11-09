@@ -59,17 +59,19 @@
 }
 
 .corso-intro-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  --meta-spazio: 1rem;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
   max-width: 550px;
   margin-top: 2rem;
 }
 
 .corso-meta-card {
-  display: flex;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
   align-items: center;
-  gap: 1rem;
+  column-gap: var(--meta-spazio);
   min-width: 0;
   padding: 1rem 0;
   background: var(--linea-alto);
@@ -90,12 +92,7 @@
 }
 
 .corso-meta-info {
-  display: grid;
-  grid-template-columns: 6.5rem minmax(0, 1fr);
-  align-items: center;
-  gap: 1rem;
-  flex: 1;
-  min-width: 0;
+  display: contents;
 }
 
 .corso-meta-info .corso-meta-label {
@@ -104,7 +101,7 @@
 
 .corso-meta-info strong {
   display: block;
-  padding-inline-start: 1rem;
+  padding-inline-start: var(--meta-spazio);
   background: var(--linea-sx);
 }
 
@@ -401,12 +398,7 @@
     aspect-ratio: 3 / 2;
   }
 
-  .corso-meta-info {
-    grid-template-columns: 5.75rem minmax(0, 1fr);
-    gap: 0.75rem;
-  }
-
-  .corso-meta-info strong {
-    padding-inline-start: 0.75rem;
+  .corso-intro-meta {
+    --meta-spazio: 0.75rem;
   }
 }

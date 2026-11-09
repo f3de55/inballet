@@ -95,10 +95,10 @@
 
 @keyframes scia {
   from {
-    stroke-dashoffset: calc(1 + var(--scia));
+    stroke-dashoffset: calc((1 + var(--scia)) * 1px);
   }
 
   to {
-    stroke-dashoffset: 0;
+    stroke-dashoffset: 0px;
   }
 }

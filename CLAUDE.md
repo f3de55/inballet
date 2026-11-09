@@ -209,6 +209,8 @@ docker build -t inballet-site . && docker rm -f inballet-web && docker run -d --
 ## Deploy check
 Live site: https://inballet.up.railway.app (Railway). The official domain in `site` (astro.config.mjs) is https://www.inballet.it, still serving the old site: canonical URLs, sitemap, schema.org and llms.txt already point to it, and `/robots.txt` (SSR) disallows everything on any other host, so the Railway address is not indexed. When the domain points to Railway, nothing needs to change.
 
+Runtime data (events, teachers, documents, uploads, sessions) survives deploys only through the Railway volume `inballet-volume`, attached to the `inballet` service at `/app/data` (`railway volume list` must show `serviceName: inballet`). The image runs as `node` and the volume is mounted as root, so the service has `RAILWAY_RUN_UID=0`; without it every write fails.
+
 Railway builds on every push to `main`. After every push run `npm run deploy:stato` (`scripts/stato-build.mjs`, needs the Railway CLI logged in and linked: `railway login`, `railway link`): it finds the deploy of the current commit and prints the real build progress as a percentage (reads the build logs, about 80 s in total) until `SUCCESS` or failure, with the log tail on failure. Report those percentages to the user while it runs; a session that did not push can run it too. To see which commit is live, compare `curl -sI https://inballet.up.railway.app/ | grep -i last-modified` (UTC) with `git log -1 --format=%cd --date=format:%H:%M`: if the page is older than the last commit, that build failed or is still running (check the Railway deploy log).
 
 ## Type scale and single style system

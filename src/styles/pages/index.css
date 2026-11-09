@@ -374,6 +374,7 @@
     height: 18rem;
     object-fit: contain;
     transform: translateX(-50%);
+    transition: transform var(--durata-pannello) var(--curva);
     -webkit-mask-image: linear-gradient(
       to bottom,
       rgb(var(--nero-rgb)) 0%,
@@ -404,6 +405,12 @@
   .corsi-stile--grafica:hover .corsi-stile-link i {
     color: var(--dark-navy);
     border-color: currentColor;
+  }
+}
+
+@media (min-width: 601px) and (hover: hover) and (pointer: fine) {
+  .corsi-stile--grafica:hover .corsi-stile-figura {
+    transform: translate(-50%, -0.5rem);
   }
 }
 

@@ -1,0 +1,48 @@
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    main > section:not(:first-child) :is(.intro-editoriale, .split-header, .cta-wrapper),
+    :is(.corsi-indice > li, .oltre-elemento, .corsi-scheda, .voce, .simili-lista > li, .numero, .timeline > li, .sostenitori-loghi li, .info-blocco) {
+      animation-name: rivela;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+
+    :is(.corsi-scheda, .voce, .simili-lista > li, .info-blocco):nth-child(3n + 2),
+    :is(.corsi-indice > li, .oltre-elemento, .numero, .sostenitori-loghi li):nth-child(4n + 2) {
+      animation-range: entry 8% entry 68%;
+    }
+
+    :is(.corsi-scheda, .voce, .simili-lista > li, .info-blocco):nth-child(3n),
+    :is(.corsi-indice > li, .oltre-elemento, .numero, .sostenitori-loghi li):nth-child(4n + 3) {
+      animation-range: entry 16% entry 76%;
+    }
+
+    :is(.corsi-indice > li, .oltre-elemento, .numero, .sostenitori-loghi li):nth-child(4n) {
+      animation-range: entry 24% entry 84%;
+    }
+
+    main > section:not(:first-child) .foto-cornice img {
+      animation-name: scena;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+  }
+}
+
+@keyframes rivela {
+  from {
+    opacity: 0;
+    transform: translateY(var(--rivela-y));
+  }
+}
+
+@keyframes scena {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}

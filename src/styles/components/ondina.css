@@ -22,3 +22,24 @@
   -webkit-mask-position: 0 50%;
   mask-position: 0 50%;
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .voce::before,
+    .recensioni-sintesi::before,
+    .info-riga.sede + .info-riga.sede::before,
+    .info-social::before {
+      animation-name: ondina-flusso;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes ondina-flusso {
+  to {
+    -webkit-mask-position: calc(var(--ondina-periodo) * 2) 50%;
+    mask-position: calc(var(--ondina-periodo) * 2) 50%;
+  }
+}

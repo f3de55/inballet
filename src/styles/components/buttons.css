@@ -19,7 +19,23 @@
   transition:
     background-color var(--durata-breve) ease,
     color var(--durata-breve) ease,
-    border-color var(--durata-breve) ease;
+    border-color var(--durata-breve) ease,
+    transform var(--durata-breve) var(--curva);
+}
+
+.btn-primary:active,
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+.btn-primary .fa-arrow-right,
+.btn-secondary .fa-arrow-right {
+  transition: transform var(--durata) var(--curva);
+}
+
+.btn-primary:hover .fa-arrow-right,
+.btn-secondary:hover .fa-arrow-right {
+  transform: translateX(4px);
 }
 
 .btn-primary {

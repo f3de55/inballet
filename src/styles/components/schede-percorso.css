@@ -89,7 +89,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: filter var(--transition-base);
+  transition: transform var(--durata-lenta) var(--curva);
 }
 
 .corsi-scheda-corpo {
@@ -148,7 +148,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .corsi-scheda-link:hover .corsi-scheda-foto {
-    filter: brightness(1.06);
+    transform: scale(1.04);
   }
 
   .corsi-scheda-link:hover .corsi-scheda-freccia {

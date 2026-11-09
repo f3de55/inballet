@@ -103,6 +103,7 @@
   --durata-pannello: 0.35s;
   --durata-lenta: 0.6s;
   --curva: cubic-bezier(0.2, 0, 0, 1);
+  --rivela-y: 1rem;
   --transition-base: var(--durata-breve) ease;
 
   --radius-xs: 6px;

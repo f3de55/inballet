@@ -128,7 +128,14 @@
   box-shadow: var(--shadow-card);
   text-decoration: none;
   color: var(--dark-navy);
-  transition: box-shadow var(--transition-base);
+  transition:
+    transform var(--durata) var(--curva),
+    box-shadow var(--durata) var(--curva);
+}
+
+.sedi-mappa-foto.attiva {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-blue);
 }
 
 .sedi-mappa-foto--lainate {

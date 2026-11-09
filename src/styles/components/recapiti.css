@@ -1,0 +1,36 @@
+.recapito {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  min-height: 44px;
+  max-width: 100%;
+  font-size: var(--body-size);
+  line-height: var(--body-lh);
+  font-weight: var(--font-semibold);
+  color: var(--primary-blue-dark);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.recapito i {
+  width: 1em;
+  flex-shrink: 0;
+  font-size: var(--icona-in-testo);
+  line-height: 1;
+  text-align: center;
+}
+
+.recapito-testo {
+  min-width: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--primary-blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-skip-ink: auto;
+}
+
+.recapito:hover .recapito-testo,
+.recapito:focus-visible .recapito-testo {
+  text-decoration-thickness: 2px;
+}

@@ -202,6 +202,10 @@
   font-size: inherit;
 }
 
+orari-segreteria {
+  display: contents;
+}
+
 .orari-status {
   display: flex;
   align-items: center;

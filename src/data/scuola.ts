@@ -1,4 +1,4 @@
-export const FONDAZIONE = 2008;
+export const FONDAZIONE = 2007;
 export const ANNI_ATTIVITA = new Date().getFullYear() - FONDAZIONE;
 
 export const scuola = {

@@ -16,7 +16,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=3600');
         <ul class="orari-grid">
             {settimana.map((fasce, i) => (
                 <li class="orario-item" data-fasce={fasce.map((f) => `${f.apre}-${f.chiude}`).join(' ')}>
-                    <p class="orario-day"><abbr title={GIORNI[i]}>{GIORNI[i].slice(0, 3)}</abbr></p>
+                    <p class="orario-day">{GIORNI[i].slice(0, 3)}</p>
                     {fasce.length
                         ? <p class="orario-time">{fasce.map((f) => `${f.apre}–${f.chiude}`).join(', ')}</p>
                         : <p class="orario-time chiuso">Chiuso</p>}

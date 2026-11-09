@@ -16,7 +16,7 @@
   margin-top: var(--spazio-intestazione);
 }
 
-.sost-dona-nota {
+small.sost-dona-nota {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,4 +27,10 @@
 
 .sost-dona-nota i {
   color: var(--primary-blue);
+}
+
+@media (max-width: 600px) {
+  .sost-dona-nota-paypal {
+    display: block;
+  }
 }

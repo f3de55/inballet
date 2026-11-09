@@ -54,6 +54,10 @@
 }
 
 #cb-box {
+  --text-base: var(--compatto-base);
+  --text-sm: var(--compatto-sm);
+  --text-xs: var(--compatto-xs);
+  --text-2xs: var(--compatto-2xs);
   font-size: var(--text-sm);
   position: fixed;
   right: 24px;

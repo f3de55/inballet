@@ -60,6 +60,7 @@ File layout in `data/`:
 - `insegnanti.json` — header and teacher cards (name, role, bio, competenze list, photo) of the «Insegnanti» carousel in `/chi-siamo` (dashboard › Insegnanti; defaults in `src/data/insegnanti.ts`, no teachers by default: the section is hidden while the list is empty). `/chi-siamo` is therefore rendered on demand. Demo teachers (dashboard › Insegnanti › Dati demo, `generaInsegnanti` in `src/lib/demo.ts`) carry `demo: true` and are removed with their photos in one click; their portraits come from `demo/insegnanti` (vertical photos named `donna-*` / `uomo-*`, the prefix picks the name), without photos they get initials
 - `uploads/insegnanti/` — teacher photos, cropped 4:5 (800x1000) and converted to WebP on upload, served on `/assets/images/insegnanti/<file>`
 - `conversazioni/` — chatbot conversations, one `<uuid>.json` per chat (deleted after 30 days)
+- `google.json` — Google Places cache (rating, review count, 5 latest reviews, opening hours), see Google below
 
 In Docker, this directory is a named volume (`inballet-data`) so data survives rebuilds.
 

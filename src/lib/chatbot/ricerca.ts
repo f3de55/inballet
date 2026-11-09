@@ -87,6 +87,7 @@ function pesiRichiesta(parti: Parte[]): { pesi: Map<string, number>; principali:
   const aggiungi = (t: string, w: number) => pesi.set(t, Math.max(pesi.get(t) ?? 0, w));
   const principali = new Set(termini(parti[0]?.testo ?? ''));
   for (const { testo, peso } of parti) {
+    for (const t of etaRichiesta(testo)) aggiungi(t, peso * 1.5);
     for (const t of termini(testo)) {
       aggiungi(t, peso);
       for (const e of ESPANSIONI.get(t) ?? []) aggiungi(e, peso * 0.6);

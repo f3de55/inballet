@@ -332,10 +332,15 @@
   }
 
   .corsi-stile--grafica {
+    align-items: stretch;
     background: var(--bg-soft);
     color: var(--dark-navy);
     padding-block: 1.25rem;
     overflow: visible;
+  }
+
+  .corsi-stile--grafica .corsi-stile-link {
+    margin-top: auto;
   }
 
   .corsi-stile--grafica .corsi-stile-foto {

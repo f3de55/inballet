@@ -83,13 +83,14 @@ export function creaIndice(passaggi: Passaggio[]): Indice {
 function pesiRichiesta(parti: Parte[]): { pesi: Map<string, number>; principali: Set<string> } {
   const pesi = new Map<string, number>();
   const aggiungi = (t: string, w: number) => pesi.set(t, Math.max(pesi.get(t) ?? 0, w));
-  const principali = new Set(termini(parti[0]?.testo ?? ''));
+  const stemmi = (testo: string) =>
+    normalizza(testo)
+      .split(' ')
+      .flatMap((p) => SOSTITUZIONI.get(p)?.map((t) => ({ t, w: 0.8 })) ?? (valida(p) ? [{ t: radice(p), w: 1 }] : []));
+  const principali = new Set(stemmi(parti[0]?.testo ?? '').map(({ t }) => t));
   for (const { testo, peso } of parti) {
     for (const t of etaRichiesta(testo)) aggiungi(t, peso * 1.5);
-    for (const t of termini(testo)) {
-      aggiungi(t, peso);
-      for (const e of ESPANSIONI.get(t) ?? []) aggiungi(e, peso * 0.6);
-    }
+    for (const { t, w } of stemmi(testo)) aggiungi(t, peso * w);
   }
   return { pesi, principali };
 }

@@ -63,7 +63,7 @@
   width: fit-content;
 }
 
-.footer-brand img {
+.footer-logo img {
   display: block;
   width: 120px;
   height: auto;
@@ -94,19 +94,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border: 1px solid var(--linea-su-scuro);
+  width: 48px;
+  height: 48px;
   border-radius: var(--radius-full);
   color: var(--white);
   text-decoration: none;
-  transition:
-    border-color 0.3s ease,
-    color 0.3s ease;
+  transition: transform var(--transition-base);
 }
 
 .footer-social a:hover {
-  border-color: var(--white);
+  transform: translateY(-2px);
+}
+
+.footer-social img {
+  display: block;
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
 }
 
 .footer-nav {
@@ -300,7 +304,7 @@
     align-self: center;
   }
 
-  .footer-brand img {
+  .footer-logo img {
     margin: 0;
   }
 

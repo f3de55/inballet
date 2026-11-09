@@ -86,7 +86,7 @@
 
 .footer-social {
   display: flex;
-  gap: 0.125rem;
+  gap: 0.6rem;
   margin-top: var(--footer-brand-gap);
 }
 
@@ -94,23 +94,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--linea-su-scuro);
   border-radius: var(--radius-full);
   color: var(--white);
   text-decoration: none;
-  transition: transform var(--transition-base);
+  transition: border-color var(--durata-breve) ease;
 }
 
 .footer-social a:hover {
-  transform: translateY(-2px);
-}
-
-.footer-social img {
-  display: block;
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
+  border-color: var(--white);
 }
 
 .footer-nav {

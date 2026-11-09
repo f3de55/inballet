@@ -263,8 +263,8 @@ const schema = schemaHome(socialImage);
                 <h2 class="faq-title titolo-sezione" id="faq-titolo">Tutto quello che <em>vuoi sapere</em></h2>
                 <p class="faq-text intro-sezione">Età, sedi, corsi e iscrizioni. Non trovi la risposta? <strong>Scrivici o chiamaci</strong>: siamo qui per questo.</p>
                 <ul class="faq-contatti">
-                    <li><a href={`mailto:${scuola.email}`}><i class="fas fa-envelope" aria-hidden="true"></i>{scuola.email}</a></li>
-                    <li><a href={scuola.telefonoHref}><i class="fas fa-phone" aria-hidden="true"></i>{scuola.telefono}</a></li>
+                    <li><a class="recapito" href={scuola.telefonoHref}><span class="recapito-testo">{scuola.telefono}</span></a></li>
+                    <li><a class="recapito" href={`mailto:${scuola.email}`}><i class="fas fa-envelope" aria-hidden="true"></i><span class="recapito-testo">{scuola.email}</span></a></li>
                 </ul>
             </div>
             <div class="faq-list">

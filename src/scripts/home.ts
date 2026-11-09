@@ -209,6 +209,7 @@ class TestimonialsCarousel {
     from.style.opacity = '0';
     from.style.transform = `translateX(${-20 * dir}px)`;
     this.indicators[this.current].classList.remove('active');
+    this.indicators[index].classList.add('active');
     setTimeout(() => {
       from.classList.remove('active');
       from.style.display = 'none';

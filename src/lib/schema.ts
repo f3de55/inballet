@@ -13,13 +13,6 @@ const indirizzo = (s: Sede) => ({
   addressCountry: 'IT',
 });
 
-const orariSchema = orari.map((o) => ({
-  '@type': 'OpeningHoursSpecification',
-  dayOfWeek: o.giorni,
-  opens: o.apre,
-  closes: o.chiude,
-}));
-
 export function schemaCorso(corso: { titolo: string; description: string; eta: string; frequenza: string; impara: string[] }, url: string) {
   return {
     '@context': 'https://schema.org',

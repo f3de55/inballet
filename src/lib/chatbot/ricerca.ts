@@ -105,12 +105,12 @@ export function cerca(indice: Indice, parti: Parte[], opzioni: { massimo?: numbe
   const scelti: Trovato[] = [];
   const perOgniPagina = new Map<string, number>();
   let usati = 0;
-  for (const { termini: _t, lunghezza: _l, ...v } of punteggi) {
+  for (const v of punteggi) {
     if (v.punti < soglia || scelti.length >= massimo) break;
     if ((perOgniPagina.get(v.percorso) ?? 0) >= perPagina || usati + v.testo.length > caratteri) continue;
     perOgniPagina.set(v.percorso, (perOgniPagina.get(v.percorso) ?? 0) + 1);
     usati += v.testo.length;
-    scelti.push(v);
+    scelti.push({ percorso: v.percorso, titolo: v.titolo, sezione: v.sezione, testo: v.testo, punti: v.punti, comuni: v.comuni });
   }
   return scelti;
 }

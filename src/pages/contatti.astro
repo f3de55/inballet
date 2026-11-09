@@ -20,11 +20,6 @@ const fondamenti = [
   { titolo: 'Inclusione', testo: 'Classi integrate e ascolto per le famiglie.', href: '/classi-integrate', icona: 'fa-users' },
   { titolo: 'Formazione', testo: 'Due anni di formazione per insegnare danza.', href: '/formazione-insegnanti', icona: 'fa-graduation-cap' },
 ];
-
-const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno) => {
-  const o = orari.find((x) => x.giorni.some((d) => ABBR[d] === giorno));
-  return { giorno, apre: o?.apre, chiude: o?.chiude };
-});
 ---
 
 <Base

@@ -567,6 +567,10 @@
   margin-bottom: 1.5rem;
 }
 
+recensioni-google {
+  display: contents;
+}
+
 .recensioni-sintesi {
   grid-area: sintesi;
   display: flex;

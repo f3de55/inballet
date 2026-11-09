@@ -60,28 +60,28 @@
 
 .corso-intro-meta {
   display: flex;
-  gap: 1.2rem;
+  flex-direction: column;
+  gap: 0;
+  max-width: 550px;
   margin-top: 2rem;
 }
 
 .corso-meta-card {
   display: flex;
-  align-items: flex-start;
-  gap: 1.2rem;
-  padding: 1.1rem 0 0;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1rem 0;
   background: var(--linea-alto);
-  flex: 1;
-  min-width: 180px;
 }
 
 .corso-meta-icon {
-  width: 1.75rem;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding-top: 0.15rem;
+  justify-content: center;
+  align-items: center;
+  width: 1.5rem;
   color: var(--primary-blue-dark);
-  font-size: var(--text-xl);
+  font-size: var(--icona-in-testo);
   flex-shrink: 0;
 }
 
@@ -90,47 +90,22 @@
 }
 
 .corso-meta-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
 }
 
 .corso-meta-info .corso-meta-label {
-  color: var(--text-muted);
+  margin: 0;
 }
 
-@media (min-width: 901px) {
-  .corso-intro-meta {
-    flex-direction: column;
-    gap: 0;
-    max-width: 550px;
-    margin-top: 2rem;
-  }
-
-  .corso-meta-card {
-    flex: none;
-    align-items: center;
-    gap: 1rem;
-    min-width: 0;
-    padding: 0.9rem 0;
-  }
-
-  .corso-meta-icon {
-    justify-content: center;
-    width: 1.5rem;
-    padding-top: 0;
-    font-size: var(--icona-in-testo);
-  }
-
-  .corso-meta-info {
-    flex-direction: row;
-    align-items: baseline;
-    gap: 0;
-  }
-
-  .corso-meta-info .corso-meta-label {
-    flex: 0 0 9rem;
-  }
+.corso-meta-info strong {
+  display: block;
+  padding-inline-start: 1rem;
+  background: var(--linea-sx);
 }
 
 .corso-story-image {
@@ -388,8 +363,12 @@
     aspect-ratio: 3 / 2;
   }
 
-  .corso-intro-meta {
-    flex-direction: column;
-    gap: 1rem;
+  .corso-meta-info {
+    grid-template-columns: 5.75rem minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .corso-meta-info strong {
+    padding-inline-start: 0.75rem;
   }
 }

@@ -140,8 +140,12 @@
 
 @media (max-width: 600px) {
   .split-header {
-    grid-template-columns: 4.5rem minmax(0, 1fr);
-    column-gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .split-header .titolo-sezione {
+    margin: 0;
   }
 
   .split-illustrazione {

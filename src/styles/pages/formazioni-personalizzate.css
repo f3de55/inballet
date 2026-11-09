@@ -42,6 +42,7 @@
 .perso-tipo-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
   gap: 2.5rem 4rem;
   position: relative;
 }
@@ -89,6 +90,7 @@
 @media (max-width: 768px) {
   .perso-tipo-grid {
     grid-template-columns: 1fr;
+    grid-auto-rows: auto;
     gap: 2rem;
   }
 

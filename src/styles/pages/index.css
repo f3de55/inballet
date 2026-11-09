@@ -849,6 +849,10 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
+  .oltre-nome {
+    min-height: 3lh;
+  }
+
   .oltre-elemento:nth-child(2n + 1)::after {
     content: '';
   }
@@ -897,6 +901,10 @@
 @media (max-width: 1024px) {
   .oltre-lista {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .oltre-nome {
+    min-height: 2lh;
   }
 }
 

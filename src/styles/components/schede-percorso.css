@@ -63,8 +63,10 @@
 .corsi-scheda-link {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
   gap: 1rem;
   width: 100%;
+  height: 100%;
   color: inherit;
   text-decoration: none;
 }
@@ -92,8 +94,7 @@
 .corsi-scheda-corpo {
   --scheda-label-height: calc(var(--label-size) * var(--label-lh));
   display: grid;
-  grid-template-rows: var(--scheda-label-height) auto auto;
-  align-content: start;
+  grid-template-rows: var(--scheda-label-height) 1fr auto;
   gap: 0.5rem;
   min-height: calc(var(--scheda-label-height) + 2 * var(--h4-size) * var(--h4-lh) + 2 * var(--small-size) * var(--small-lh) + 1rem);
   min-width: 0;

@@ -69,6 +69,11 @@
 .sedi-mappa-linea {
   stroke: var(--primary-blue-dark);
   stroke-width: 1.5;
+  transition: stroke var(--durata) var(--curva);
+}
+
+.attiva .sedi-mappa-linea {
+  stroke: var(--dark-navy);
 }
 
 .sedi-mappa-scia {

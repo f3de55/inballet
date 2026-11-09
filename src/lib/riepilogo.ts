@@ -87,9 +87,5 @@ ${documenti.map((d) => `- [${d.titolo}](${url(d.file)})${d.nota ? `: ${d.nota.to
 - [Chi siamo](${url('/chi-siamo')})
 - [Spettacoli ed eventi](${url('/spettacoli-eventi')})
 - [Contatti](${url('/contatti')})
-
-## Domande frequenti
-
-${faq.map((f) => `### ${f.domanda}\n\n${f.risposta}`).join('\n\n')}
-`;
+${conFaq ? `\n## Domande frequenti\n\n${faq.map((f) => `### ${f.domanda}\n\n${f.risposta}`).join('\n\n')}\n` : ''}`;
 }

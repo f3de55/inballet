@@ -251,11 +251,9 @@
   }
 
   .sedi-mappa-cartografia {
-    left: 50%;
-    width: auto;
+    left: calc(17.128571% + 1.3039906rem);
+    width: calc(65.742858% - 2.6079812rem);
     height: calc(110% - 2rem);
-    aspect-ratio: 1111 / 852;
-    transform: translateX(-50%);
   }
 
   .sedi-mappa-foto--lainate {

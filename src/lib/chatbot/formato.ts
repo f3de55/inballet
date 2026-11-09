@@ -30,6 +30,7 @@ export function formatta(testo: string): string {
     .replace(/^#{1,6}\s+/gm, '')
     .replace(/^\s*[-*•]\s+/gm, '• ')
     .replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>')
+    .replace(/\[(\/[a-z0-9/-]*)\](?!\()/gi, '$1')
     .replace(LINK_RE, (m, mdTesto, mdUrl, url, email, tel, pagina) => {
       if (mdTesto) {
         const href = hrefSicuro(mdUrl);

@@ -8,6 +8,7 @@ import { heroPagina } from '../lib/hero-pagine';
 import { categorieCorsi } from '../data/scuola';
 import { enfatizza } from '../lib/text';
 import { immaginiSottocorsi } from '../data/immagini-sottocorsi';
+import '../styles/components/dialogo.css';
 import '../styles/pages/corsi.css';
 
 const pagineCorsi = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.data]));
@@ -85,12 +86,11 @@ const hero = await heroPagina('corsi');
     </section>
 
     <Fragment slot="after-main">
-        <dialog class="trova-popup" id="trova-popup" aria-labelledby="trova-popup-titolo" aria-describedby="trova-popup-intro">
-            <form method="dialog" class="trova-popup-chiudi">
-                <button type="submit" class="btn-icon btn-icon--contorno" aria-label="Chiudi la scelta del percorso">
-                    <i class="fas fa-times" aria-hidden="true"></i>
-                </button>
-            </form>
+        <dialog class="dialogo trova-popup" id="trova-popup" aria-labelledby="trova-popup-titolo" aria-describedby="trova-popup-intro">
+            <div class="dialogo-barra">
+                <button type="button" class="btn-icon" data-chiudi aria-label="Chiudi la scelta del percorso"><i class="fas fa-times" aria-hidden="true"></i></button>
+            </div>
+            <div class="dialogo-corpo trova-popup-corpo">
             <h2 id="trova-popup-titolo">Da dove iniziamo?</h2>
             <p id="trova-popup-intro" class="trova-popup-intro">Scegli un percorso e scopri i suoi corsi.</p>
             <ul class="trova-opzioni">
@@ -106,6 +106,7 @@ const hero = await heroPagina('corsi');
                     </li>
                 ))}
             </ul>
+            </div>
         </dialog>
     </Fragment>
 

@@ -2,36 +2,15 @@
   margin-top: 1.5rem;
 }
 
-html:has(.trova-popup[open]) {
-  overflow: hidden;
-  scrollbar-gutter: stable;
+@media (min-width: 601px) {
+  .trova-popup {
+    width: min(36rem, calc(100% - 3rem));
+  }
 }
 
-.trova-popup {
-  width: min(36rem, calc(100% - 3rem));
-  max-width: none;
-  max-height: calc(100dvh - 3rem);
-  margin: auto;
+.trova-popup-corpo {
+  gap: 0;
   padding: 2rem;
-  overflow: auto;
-  overscroll-behavior: contain;
-  border: 1px solid var(--linea);
-  border-radius: var(--radius-card);
-  background: var(--white);
-  color: var(--body-color);
-  box-shadow: var(--shadow-card);
-}
-
-.trova-popup::backdrop {
-  background: rgb(var(--navy-rgb) / 0.45);
-  -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px);
-}
-
-.trova-popup-chiudi {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
 }
 
 #trova-popup-titolo {
@@ -98,19 +77,6 @@ html:has(.trova-popup[open]) {
   text-underline-offset: 0.2em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .trova-popup[open] {
-    animation: trova-apparsa 0.18s ease-out;
-  }
-}
-
-@keyframes trova-apparsa {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-}
-
 .corsi-stile {
   padding: calc(var(--section-y) * 0.75) 0;
   background: var(--white);
@@ -157,16 +123,8 @@ html:has(.trova-popup[open]) {
 }
 
 @media (max-width: 600px) {
-  .trova-popup {
-    width: calc(100% - 1.5rem);
-    max-height: calc(100dvh - 1.5rem);
-    padding: 1.25rem;
-    border-radius: var(--radius-md);
-  }
-
-  .trova-popup-chiudi {
-    top: 0.75rem;
-    right: 0.75rem;
+  .trova-popup-corpo {
+    padding: 1.5rem 1.5rem 2rem;
   }
 
   .trova-popup-intro {

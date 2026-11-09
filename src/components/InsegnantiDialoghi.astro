@@ -14,7 +14,7 @@ const { insegnanti } = Astro.props.dati;
 {insegnanti.map((p) => (
   <dialog class="dialogo ins-dialog" id={`insegnante-${p.id}`} aria-labelledby={`insegnante-${p.id}-nome`}>
     <div class="dialogo-barra">
-      <button type="button" class="btn-icon ins-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+      <button type="button" class="btn-icon" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
     </div>
     <div class:list={['dialogo-corpo', 'ins-dialog-corpo', { 'con-foto': p.foto }]}>
       {p.foto && <img class="ins-dialog-foto" src={p.foto} alt={p.nome} width="800" height="1000" loading="lazy" decoding="async" />}

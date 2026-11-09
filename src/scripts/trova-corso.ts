@@ -25,6 +25,8 @@ if (apri && scelta && popup) {
 
   popup.addEventListener('close', () => apri.setAttribute('aria-expanded', 'false'));
 
+  popup.querySelector('[data-chiudi]')?.addEventListener('click', () => popup.close());
+
   popup.addEventListener('click', (event) => {
     if (event.target !== popup) return;
     const area = popup.getBoundingClientRect();

@@ -86,7 +86,7 @@
 
 .footer-social {
   display: flex;
-  gap: 0.6rem;
+  gap: 0.125rem;
   margin-top: var(--footer-brand-gap);
 }
 
@@ -108,8 +108,8 @@
 
 .footer-social img {
   display: block;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 }
 

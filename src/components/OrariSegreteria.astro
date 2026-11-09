@@ -12,18 +12,18 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=3600');
 <orari-segreteria>
     {settimana ? (
         <Fragment>
-        <p class="orari-status" aria-live="polite"></p>
-        <ul class="orari-grid">
-            {settimana.map((fasce, i) => (
-                <li class="orario-item" data-fasce={fasce.map((f) => `${f.apre}-${f.chiude}`).join(' ')}>
-                    <p class="orario-day">{GIORNI[i].slice(0, 3)}</p>
-                    {fasce.length
-                        ? <p class="orario-time">{fasce.map((f) => `${f.apre}–${f.chiude}`).join(', ')}</p>
-                        : <p class="orario-time chiuso">Chiuso</p>}
-                </li>
-            ))}
-        </ul>
-        <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+            <p class="orari-status" aria-live="polite"></p>
+            <ul class="orari-grid">
+                {settimana.map((fasce, i) => (
+                    <li class="orario-item" data-fasce={fasce.map((f) => `${f.apre}-${f.chiude}`).join(' ')}>
+                        <p class="orario-day">{GIORNI[i].slice(0, 3)}</p>
+                        {fasce.length
+                            ? <p class="orario-time">{fasce.map((f) => `${f.apre}–${f.chiude}`).join(', ')}</p>
+                            : <p class="orario-time chiuso">Chiuso</p>}
+                    </li>
+                ))}
+            </ul>
+            <script type="application/ld+json" set:html={JSON.stringify(schema)} />
         </Fragment>
     ) : (
         <p>Orari non disponibili in questo momento: chiamaci al <a href={scuola.telefonoHref}>{scuola.telefono}</a>.</p>

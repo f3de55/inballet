@@ -235,16 +235,14 @@
   font-weight: var(--font-semibold);
   line-height: 1;
   box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--durata) var(--curva),
+    background-color var(--durata-breve) ease;
 }
 
-.sedi-mappa-foto:hover,
-.sedi-mappa-foto:focus-visible {
-  box-shadow: var(--shadow-blue);
-}
-
-.sedi-mappa-punto:hover span,
-.sedi-mappa-punto:focus-visible span {
-  background: var(--dark-navy);
+.sedi-mappa-punto.attiva span {
+  transform: scale(1.12);
+  background-color: var(--dark-navy);
 }
 
 @media (min-width: 901px) {

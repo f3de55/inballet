@@ -46,12 +46,9 @@ const radice = (p: string) => {
   return p.replace(/(?:h[eio]|[aeiou])$/, '');
 };
 
-const parole = (testo: string) =>
-  normalizza(testo)
-    .split(' ')
-    .filter((p) => (p.length > 1 || /\d/.test(p)) && !VUOTE.has(p));
+const valida = (p: string) => (p.length > 1 || /\d/.test(p)) && !VUOTE.has(p);
 
-export const termini = (testo: string) => parole(testo).map(radice);
+export const termini = (testo: string) => normalizza(testo).split(' ').filter(valida).map(radice);
 
 const ETA_MAX = 99;
 const ETA_APERTA = 3;

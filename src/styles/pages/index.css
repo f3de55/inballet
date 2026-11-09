@@ -899,16 +899,6 @@ recensioni-google {
   outline-offset: -4px;
 }
 
-@media (max-width: 1024px) {
-  .oltre-lista {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .oltre-nome {
-    min-height: 2lh;
-  }
-}
-
 @media (max-width: 768px) {
   .oltre-layout {
     padding: 0 1.5rem;

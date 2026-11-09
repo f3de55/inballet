@@ -129,6 +129,35 @@
   stroke-linejoin: round;
 }
 
+.timeline-linea .timeline-scia {
+  display: none;
+  stroke: var(--primary-blue-dark);
+  stroke-width: 3;
+  stroke-dasharray: 0.06 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .timeline-linea .timeline-scia {
+    display: inline;
+    animation: timeline-scia 10s linear infinite paused;
+  }
+
+  .timeline.in-vista .timeline-scia,
+  .timeline.in-vista .voce:not(:last-child)::after {
+    animation-play-state: running;
+  }
+}
+
+@keyframes timeline-scia {
+  from {
+    stroke-dashoffset: 1.06;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 @media (max-width: 1024px) {
   .timeline {
     display: block;
@@ -159,6 +188,23 @@
     width: 1.5px;
     border-radius: var(--radius-pill);
     background: var(--primary-blue);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .timeline .voce:not(:last-child)::after {
+      background: linear-gradient(var(--primary-blue) 35%, var(--primary-blue-dark) 50%, var(--primary-blue) 65%) 0 0 / 100% 300%;
+      animation: timeline-flusso 2.4s linear infinite paused;
+    }
+  }
+}
+
+@keyframes timeline-flusso {
+  from {
+    background-position: 0 100%;
+  }
+
+  to {
+    background-position: 0 0;
   }
 }
 

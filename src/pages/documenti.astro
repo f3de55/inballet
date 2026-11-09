@@ -85,16 +85,16 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
                     </div>
                 </a>
             ) : (
-                <div class="statuto-disponibilita">
+                <a class="documento statuto-documento" href={`mailto:${scuola.email}?subject=${encodeURIComponent('Richiesta statuto I.N. Ballet')}`}>
                     <i class="fas fa-file-pdf documento-icona" aria-hidden="true"></i>
                     <div class="documento-testo">
                         <h3 class="documento-nome">Statuto dell'associazione</h3>
                         <p class="documento-nota">Per consultare lo statuto, contatta la segreteria.</p>
-                        <a class="link-cta statuto-contatto" href={`mailto:${scuola.email}?subject=${encodeURIComponent('Richiesta statuto I.N. Ballet')}`}>
-                            Richiedi lo statuto <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
                     </div>
-                </div>
+                    <div class="documento-azione">
+                        <span class="link-cta documento-scarica">Richiedi lo statuto <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                    </div>
+                </a>
             )}
         </div>
     </section>

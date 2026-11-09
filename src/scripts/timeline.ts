@@ -5,10 +5,13 @@ if (timeline) {
   const ns = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(ns, 'svg');
   const path = document.createElementNS(ns, 'path');
+  const scia = document.createElementNS(ns, 'path');
+  scia.classList.add('timeline-scia');
+  scia.setAttribute('pathLength', '1');
   svg.classList.add('timeline-linea');
   svg.setAttribute('aria-hidden', 'true');
   svg.setAttribute('focusable', 'false');
-  svg.append(path);
+  svg.append(path, scia);
   timeline.prepend(svg);
   const verticale = window.matchMedia('(max-width: 1024px)');
   const TOLLERANZA = 2;
@@ -55,8 +58,10 @@ if (timeline) {
       fondoRiga = b.fondo;
     }
     path.setAttribute('d', d);
+    scia.setAttribute('d', d);
   };
 
+  new IntersectionObserver(([voce]) => timeline.classList.toggle('in-vista', voce.isIntersecting)).observe(timeline);
   new ResizeObserver(disegna).observe(timeline);
   document.fonts.ready.then(disegna);
   verticale.addEventListener('change', disegna);

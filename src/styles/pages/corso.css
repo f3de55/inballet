@@ -400,5 +400,28 @@
 
   .corso-intro-meta {
     --meta-spazio: 0.75rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .corso-meta-card {
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    align-items: start;
+    padding-block: 1.25rem;
+  }
+
+  .corso-meta-icon {
+    padding-top: 0.15rem;
+  }
+
+  .corso-meta-info {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.375rem;
+    min-width: 0;
+  }
+
+  .corso-meta-info strong {
+    padding-inline-start: 0;
+    background: none;
   }
 }

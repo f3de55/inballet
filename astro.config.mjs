@@ -61,7 +61,7 @@ export default defineConfig({
       CHATBOT_COMPATIBILE_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       DASHBOARD_PASSWORD: envField.string({ context: 'server', access: 'secret', optional: true }),
       DATA_DIR: envField.string({ context: 'server', access: 'secret', default: './data' }),
-      PUBLIC_GOOGLE_MAPS_KEY: envField.string({ context: 'client', access: 'public', default: 'AIzaSyB1T64uyO5Ke-MttLo9Amscl5ViUvYYvtI' }),
+      GOOGLE_PLACES_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       PUBLIC_GOOGLE_PLACE_ID: envField.string({ context: 'client', access: 'public', default: 'ChIJMTLpHKeUhkcR23yEdflvQRQ' }),
     },
   },

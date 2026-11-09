@@ -23,4 +23,11 @@
   --su-scuro-avviso: #ffcc66;
   --su-scuro-errore: #ff8a80;
   --anello-focus: 0 0 0 3px rgb(var(--blu-rgb) / 0.35);
+  --text-3xl: var(--compatto-3xl);
+  --text-2xl: var(--compatto-2xl);
+  --text-xl: var(--compatto-xl);
+  --text-base: var(--compatto-base);
+  --text-sm: var(--compatto-sm);
+  --text-xs: var(--compatto-xs);
+  --text-2xs: var(--compatto-2xs);
 }

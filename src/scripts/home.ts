@@ -221,7 +221,6 @@ class TestimonialsCarousel {
       setTimeout(() => {
         to.style.opacity = '1';
         to.style.transform = 'translateX(0)';
-        this.indicators[index].classList.add('active');
         setTimeout(() => (this.transitioning = false), 350);
       }, 30);
     }, 150);

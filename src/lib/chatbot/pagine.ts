@@ -41,7 +41,7 @@ function testoPrincipale(html: string): string {
       r
         .replace(/\s+/g, ' ')
         .replace(/ ([,.;:!?)])/g, '$1')
-        .replace(/([(']) /g, '$1')
+        .replace(/\( /g, '(')
         .trim(),
     )
     .filter((r) => r.replace(/^[#-]+\s*/, '').length > 1)

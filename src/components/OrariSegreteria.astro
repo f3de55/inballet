@@ -11,6 +11,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=3600');
 
 <orari-segreteria>
     {settimana ? (
+        <Fragment>
         <p class="orari-status" aria-live="polite"></p>
         <ul class="orari-grid">
             {settimana.map((fasce, i) => (

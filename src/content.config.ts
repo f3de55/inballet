@@ -20,6 +20,7 @@ const corsi = defineCollection({
     heroFuoco: fuoco,
     introTitolo: z.string().optional(),
     introImage: z.string(),
+    introImageDesktop: z.string().optional(),
     introAlt: z.string(),
     introFuoco: fuoco,
     intro: z.string(),

@@ -16,7 +16,7 @@ const { href, nome, idTitolo, etichetta, dettaglio, immagine, iconaDettaglio } =
 ---
 
 <li class="corsi-scheda">
-  <a href={href} class="corsi-scheda-link" aria-labelledby={idTitolo}>
+  <a href={href} class="corsi-scheda-link">
     <div class="corsi-scheda-visual">
       <Img class="corsi-scheda-foto" src={immagine.src} alt={immagine.alt ?? ''} fuoco={immagine.fuoco} width={1536} height={1024} loading="lazy" decoding="async" widths={[320, 480, 800]} sizes="(min-width: 1200px) 352px, (min-width: 901px) 33vw, (min-width: 601px) 50vw, 80vw" />
     </div>

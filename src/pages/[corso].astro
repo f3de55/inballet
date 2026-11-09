@@ -5,7 +5,7 @@ import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import CorsiSimili from '../components/CorsiSimili.astro';
 import { iconeCompetenze } from '../data/icone-competenze';
-import { immagineSocial, sfondoCta } from '../lib/images';
+import { immagineSocial, sfondoCta, webpSrcset } from '../lib/images';
 import { heroDa } from '../lib/hero-pagine';
 import { schemaCorso } from '../lib/schema';
 import HeroPagina from '../components/HeroPagina.astro';
@@ -28,6 +28,7 @@ if (data.imparaTitoli.length !== data.impara.length || icone?.length !== data.im
 }
 const hero = await heroDa(data.heroImage, data.heroFuoco);
 const contatto = await sfondoCta(data.ctaTema);
+const introDesktop = data.introImageDesktop ? await webpSrcset(data.introImageDesktop, [480, 800, 1200]) : null;
 const ogImage = await immagineSocial(typeof data.heroImage === 'string' ? data.heroImage : data.heroImage.desktop, Astro.site);
 const schema = schemaCorso(data, new URL(`/${Astro.params.corso}`, Astro.site).href);
 
@@ -85,7 +86,10 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
                 </div>
 
                 <div class="corso-story-image foto-cornice">
-                    <Img src={data.introImage} alt={data.introAlt} fuoco={data.introFuoco} loading="lazy" decoding="async" widths={[480, 800, 1200]} sizes="(max-width: 900px) 100vw, 400px" />
+                    <picture>
+                        {introDesktop && <source media="(min-width: 901px)" srcset={introDesktop.srcset} sizes="400px" />}
+                        <Img src={data.introImage} alt={data.introAlt} fuoco={data.introFuoco} loading="lazy" decoding="async" widths={[480, 800, 1200, 1536]} sizes="(max-width: 900px) 100vw, 675px" />
+                    </picture>
                 </div>
             </div>
         </div>

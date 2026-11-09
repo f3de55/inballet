@@ -115,6 +115,8 @@ All server env vars are `access: 'secret'` on purpose: read at runtime, so they 
 
 Course pages use Astro Content Collections: `src/data/corsi.json` defines 22 courses, each keyed by slug. `src/pages/[corso].astro` renders them. Schema is in `src/content.config.ts`.
 
+Framed editorial photos live in `src/assets/images/percorsi/`. Course `introImage` supplies the landscape view at ≤900px; optional `introImageDesktop` supplies an independently composed portrait above 900px (Pilates, Classi and Contact Improvisation). The home story also has separate portrait and landscape compositions. Keep subjects visible in the actual frame: course photos are 400×450 on desktop and 3:2 below 900px; inner-page photos are 4:5, then 3:2 on tablet and 4:3 on mobile. Landscape sources cropped into portrait frames need a larger `sizes` value to account for `object-fit: cover`, so the visible crop stays sharp. School logos belong only on school T-shirts, never on added signs or background branding.
+
 ### UI system (use it, don't invent new styles)
 
 ### CSS structure (`src/styles/`)

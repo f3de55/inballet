@@ -716,12 +716,13 @@ recensioni-google {
 }
 
 .carousel-indicators .indicator {
-  width: 0.5rem;
-  height: 0.5rem;
-  padding: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.5rem;
   border: none;
   border-radius: var(--radius-pill);
   background: var(--linea);
+  background-clip: content-box;
   cursor: pointer;
   transition:
     width var(--durata) var(--curva),
@@ -729,7 +730,7 @@ recensioni-google {
 }
 
 .carousel-indicators .indicator.active {
-  width: 1.5rem;
+  width: 2.5rem;
   background: var(--primary-blue-dark);
 }
 

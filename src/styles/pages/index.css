@@ -705,10 +705,6 @@
   padding-left: 1.5rem;
 }
 
-.recensioni-controlli[hidden] {
-  display: none;
-}
-
 .carousel-indicators {
   display: flex;
   align-items: center;

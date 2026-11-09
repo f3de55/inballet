@@ -1344,6 +1344,7 @@ body {
   font-variant-numeric: tabular-nums;
 }
 .conv-prima {
+  font-size: var(--text-xs);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

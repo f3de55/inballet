@@ -217,35 +217,11 @@ const schema = schemaHome(await immagineSocial('gallery-3.jpg', Astro.site));
                 <p class="intro-sezione">Allievi e famiglie raccontano com'è stare con noi, nelle <strong>recensioni su Google</strong>.</p>
             </div>
 
-            <div class="recensioni-sintesi">
-                <div class="sintesi-google" id="googleStatsCard" hidden></div>
-                <a href={`https://search.google.com/local/reviews?placeid=${PUBLIC_GOOGLE_PLACE_ID}`}
-                   target="_blank"
-                   rel="noopener"
-                   class="link-cta"
-                   aria-label="Vedi tutte le recensioni su Google (si apre in una nuova scheda)">
-                    Vedi tutte
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-            </div>
-
-            <div class="recensioni-carousel testimonials-carousel">
-                <div class="testimonials-track" id="reviewsContainer" aria-live="polite">
-                    <div class="testimonials-slide active">
-                        <p class="recensioni-messaggio">Caricamento recensioni…</p>
-                    </div>
+            <RecensioniGoogle server:defer>
+                <div slot="fallback" class="recensioni-carousel">
+                    <p class="recensioni-messaggio">Caricamento recensioni…</p>
                 </div>
-
-                <div class="recensioni-controlli" id="reviewsControls" hidden>
-                    <button type="button" class="btn-icon btn-icon--contorno recensioni-nav" id="prevBtn" aria-label="Recensione precedente">
-                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
-                    </button>
-                    <div class="carousel-indicators" id="indicatorsContainer"></div>
-                    <button type="button" class="btn-icon btn-icon--contorno recensioni-nav" id="nextBtn" aria-label="Recensione successiva">
-                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
+            </RecensioniGoogle>
         </div>
     </section>
 

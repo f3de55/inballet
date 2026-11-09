@@ -65,6 +65,16 @@ document.querySelectorAll<HTMLElement>('[data-sedi-mappa]').forEach((tavola) => 
     });
   };
 
+  const evidenzia = (id: string | undefined, attiva: boolean) =>
+    tavola.querySelectorAll(`[data-sede="${id}"], [data-collegamento="${id}"]`).forEach((el) => el.classList.toggle('attiva', attiva));
+  tavola.querySelectorAll<HTMLElement>('.sedi-mappa-foto, .sedi-mappa-punto').forEach((el) => {
+    const id = el.dataset.sede;
+    el.addEventListener('pointerenter', () => evidenzia(id, true));
+    el.addEventListener('pointerleave', () => evidenzia(id, false));
+    el.addEventListener('focusin', () => evidenzia(id, true));
+    el.addEventListener('focusout', () => evidenzia(id, false));
+  });
+
   const aggiorna = () => {
     cancelAnimationFrame(frame);
     frame = requestAnimationFrame(disegna);

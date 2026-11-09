@@ -1121,30 +1121,6 @@
   margin-top: 1.25rem;
 }
 
-.faq-contatti a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  min-height: 44px;
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-  color: var(--dark-navy);
-  text-decoration: none;
-  transition: color var(--durata-breve) ease;
-}
-
-.faq-contatti i {
-  width: 1rem;
-  font-size: var(--text-sm);
-  color: var(--primary-blue-dark);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .faq-contatti a:hover {
-    color: var(--primary-blue-dark);
-  }
-}
-
 .faq-item p {
   max-width: 38rem;
   padding: 0 3.5rem 1.25rem 0;

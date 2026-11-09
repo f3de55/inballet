@@ -49,9 +49,9 @@
   --compatto-2xl: 1.375rem;
   --compatto-xl: 1.125rem;
   --compatto-base: 1rem;
-  --compatto-sm: 0.9375rem;
-  --compatto-xs: 0.8125rem;
-  --compatto-2xs: 0.75rem;
+  --compatto-sm: 1rem;
+  --compatto-xs: 0.875rem;
+  --compatto-2xs: 0.8125rem;
 
   --font-light: 300;
   --font-normal: 400;

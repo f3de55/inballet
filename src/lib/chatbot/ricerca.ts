@@ -60,7 +60,7 @@ function terminiEta(testo: string): string[] {
   const t = normalizza(testo);
   const anni = new Set<number>();
   for (const [, da, a] of t.matchAll(/\b(\d{1,2}) (?:a |ai |agli )?(\d{1,2}) anni\b/g)) for (let n = +da; n <= +a && n <= ETA_MAX; n++) anni.add(n);
-  for (const [, da] of t.matchAll(/\b(?:dai|dagli|da) (\d{1,2}) anni\b(?! ?\d)/g)) for (let n = +da; n <= ETA_MAX; n++) anni.add(n);
+  for (const [, da] of t.matchAll(/\b(?:dai|dagli|da) (\d{1,2}) anni\b(?! ?\d)/g)) for (let n = +da; n <= Math.min(+da + ETA_APERTA, ETA_MAX); n++) anni.add(n);
   return [...anni].map(eta);
 }
 

@@ -854,10 +854,6 @@ recensioni-google {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .oltre-nome {
-    min-height: 3lh;
-  }
-
   .oltre-elemento:nth-child(2n + 1)::after {
     content: '';
   }

@@ -58,7 +58,6 @@ export function schemaHome(immagine: string) {
         ...(principale.geo && {
           geo: { '@type': 'GeoCoordinates', latitude: principale.geo.lat, longitude: principale.geo.lng },
         }),
-        openingHoursSpecification: orariSchema,
         areaServed: sedi.map((s) => ({ '@type': 'City', name: s.citta })),
         sameAs: Object.values(scuola.social),
         department: altre.map((s) => ({

@@ -48,21 +48,18 @@ document.querySelectorAll<HTMLElement>('[data-sedi-mappa]').forEach((tavola) => 
       const pin = punto.getBoundingClientRect();
       const x = pin.left + pin.width / 2 - area.left;
       const y = pin.top + pin.height / 2 - area.top;
-      const raggio = Math.max(pin.width, pin.height) / 2 + 3;
       let d: string;
 
       if (pin.bottom <= card.top || pin.top >= card.bottom) {
         const sx = card.left + card.width / 2 - area.left;
         const sy = (pin.bottom <= card.top ? card.top : card.bottom) - area.top;
-        const fineY = y + (sy < y ? -raggio : raggio);
-        const my = (sy + fineY) / 2;
-        d = `M${sx} ${sy} C${sx} ${my} ${x} ${my} ${x} ${fineY}`;
+        const my = (sy + y) / 2;
+        d = `M${sx} ${sy} C${sx} ${my} ${x} ${my} ${x} ${y}`;
       } else {
         const sx = (x < card.left - area.left ? card.left : card.right) - area.left;
         const sy = card.top + card.height * 0.4 - area.top;
-        const fineX = x + (sx < x ? -raggio : raggio);
-        const mx = (sx + fineX) / 2;
-        d = `M${sx} ${sy} C${mx} ${sy} ${mx} ${y} ${fineX} ${y}`;
+        const mx = (sx + x) / 2;
+        d = `M${sx} ${sy} C${mx} ${sy} ${mx} ${y} ${x} ${y}`;
       }
       gruppo.querySelectorAll('path').forEach((path) => path.setAttribute('d', d));
     });

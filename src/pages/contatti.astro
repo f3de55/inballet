@@ -103,17 +103,9 @@ const settimana = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((giorno)
                     <Img class="info-illustrazione info-illustrazione--digitale" src="grafica-contatti/orari-digitale.webp" alt="" aria-hidden="true" width="176" height="176" loading="lazy" decoding="async" widths={[240, 480, 640]} sizes="(max-width: 600px) 264px, 208px" />
                     <h3 class="info-titolo">Orari segreteria</h3>
                     <div class="info-corpo">
-                    <p id="open-status" class="orari-status" aria-live="polite"></p>
-                    <ul class="orari-grid" id="orari-grid">
-                        {settimana.map((s) => (
-                            <li class="orario-item" data-giorno={s.giorno} data-apre={s.apre} data-chiude={s.chiude}>
-                                <p class="orario-day">{s.giorno}</p>
-                                {s.apre
-                                    ? <p class="orario-time">{s.apre}–{s.chiude}</p>
-                                    : <p class="orario-time chiuso">Chiuso</p>}
-                            </li>
-                        ))}
-                    </ul>
+                    <OrariSegreteria server:defer>
+                        <p slot="fallback">Caricamento orari…</p>
+                    </OrariSegreteria>
                     </div>
                 </div>
             </div>

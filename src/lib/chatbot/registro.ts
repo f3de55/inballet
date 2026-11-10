@@ -59,13 +59,20 @@ export function calcolaCosto(fornitore: string, modello: string, t: Token): numb
   return usd / 1e6;
 }
 
+const PRUDENTE = Object.values(PREZZI).reduce((a, b) => (b.uscita > a.uscita ? b : a));
+
+function perBudget(l: Pick<LogEntry, 'costo' | 'type' | 'fornitore' | 'token_in' | 'token_out'>): number {
+  if (l.costo !== undefined || l.type !== 'success' || gratuiti.has(l.fornitore ?? '')) return l.costo ?? 0;
+  return ((l.token_in ?? 0) * PRUDENTE.ingresso + (l.token_out ?? 0) * PRUDENTE.uscita) / 1e6;
+}
+
 const spesa = { giorno: '', usd: 0 };
 
 async function spesaDiOggi(): Promise<number> {
   const oggi = romeDate();
   if (spesa.giorno !== oggi) {
     const logs = await readJson<LogEntry[]>(paths.analytics, []);
-    spesa.usd = logs.filter((l) => l.date === oggi && !l.demo).reduce((s, l) => s + (l.costo ?? 0), 0);
+    spesa.usd = [...logs, ...daScrivere].filter((l) => l.date === oggi && !l.demo).reduce((s, l) => s + perBudget(l), 0);
     spesa.giorno = oggi;
   }
   return spesa.usd;
@@ -111,7 +118,7 @@ export function registra({ risposta, ...voce }: NuovaVoce) {
     cached: voce.type === 'cached',
     user_agent: mbSlice(voce.user_agent, 100),
   };
-  if (entry.costo && spesa.giorno === entry.date) spesa.usd += entry.costo;
+  if (spesa.giorno === entry.date) spesa.usd += perBudget(entry);
   daScrivere.push(entry);
   scriviRegistro();
 }

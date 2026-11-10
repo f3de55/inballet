@@ -9,7 +9,7 @@ npm run dev        # http://localhost:4321 with hot reload
 npm run build      # production build to dist/
 npm start          # run dist/ reading .env
 npm run check      # TypeScript type check
-npm test           # unit tests (carousel); test:demo / test:statuto run against the Docker image
+npm test           # unit tests (carousel, chatbot search and protections); test:demo / test:statuto run against the Docker image
 npm run format     # Prettier (TS, CSS, MJS, JSON; .astro files are formatted by hand)
 npm run icons      # regenerate Font Awesome icon subset (run after using a new fa-… icon)
 ```
@@ -40,6 +40,15 @@ Browser → Astro page / Action
 
 Old site URLs (`/danza_classica_accademica.html` …) are redirected (301) by `src/pages/404.astro` (rendered on demand): names that changed are mapped, the others become the same name with hyphens. CSRF: Astro's built-in origin check (`security.checkOrigin`, on by default) rejects cross-site form posts; JSON Action calls are same-origin only (no CORS headers).
 
+### Middleware (`src/middleware.ts`)
+
+Runs on every on-demand request (pages rendered on demand, Actions, server islands, `/_image`, asset routes), never on prerendered pages:
+
+- POST bodies over 256 KB (`Content-Length`) are refused with 413 before they are read; only the three upload Actions (`immagini.carica`, `documenti.salva`, `insegnanti.salva`) accept more, and only with a logged-in session.
+- POSTs to `/_actions/*` need an `Origin` header equal to the site origin (403 otherwise), so scripts and tests calling an Action must send it.
+- `/_image` (the Astro endpoint that resizes the photos of on-demand pages with sharp on every request) goes through `src/lib/immagini-ottimizzate.ts`: each variant is produced once and kept in memory (64 MB, least recently used out first, `immutable` + ETag); only the shapes the site generates are accepted (`href` in `/_astro/`, `w`/`h` up to 2560, `f` webp/jpg/png, `fit=cover`), at most 90 new variants a minute. Anything else, or a new variant over that ceiling, is redirected to the original file, so photos keep showing and nobody can make the server resize without end. A new `getImage` option (quality, another format…) must be added to `PARAMETRI` / `FORMATI` there.
+- Every response gets `X-Content-Type-Options`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy`; `/login` and `/dashboard` are `no-store`.
+
 ### Backend: Astro Actions
 
 All backend logic lives in `src/actions/index.ts` — no separate API routes. Actions are grouped: `chatbot`, `eventi`, `tipi`, `immagini`, `auth`. Admin actions guard themselves with `soloAdmin()` (checks session). Called from the browser via `import { actions } from 'astro:actions'` or as `<form>` action.
@@ -47,7 +56,8 @@ All backend logic lives in `src/actions/index.ts` — no separate API routes. Ac
 ### Data layer
 
 Everything is JSON files on disk in `DATA_DIR` (default `./data/`, set in `.env`). The `src/lib/storage.ts` module provides:
-- `readJson` / `writeJson` (atomic: write temp file → rename)
+- `readJson` / `writeJson` (atomic: write temp file → rename). `readJson` returns the fallback only when the file does not exist; any other read error is thrown, so a temporary disk error can never make a save overwrite real data with an empty list; a file that is not valid JSON is renamed `<name>.illeggibile` (kept for recovery) and the fallback is used
+- `serviFile` streams uploads (ETag, 304, `Content-Length`), never loading the file in memory
 - `serialized()` — a promise queue that prevents concurrent read→modify→write races
 
 File layout in `data/`:
@@ -76,7 +86,7 @@ In Docker, this directory is a named volume (`inballet-data`) so data survives r
 
 ### Google (reviews and opening hours)
 
-`src/lib/google.ts` is the only place that talks to Google: one Places API (New) Place Details call (`rating,userRatingCount,reviews,regularOpeningHours`, billed once as Enterprise + Atmosphere) every 30 days, from the server with `GOOGLE_PLACES_API_KEY`, saved in `data/google.json`. Every visitor sees that file; nothing Google runs in the browser (no Maps JS, no client key). An expired file is still served while the refresh runs in the background; a failed refresh is retried after an hour. No hand-written fallback: the opening hours exist only on Google (Google Business Profile is the place to change them, the site follows within 30 days or at once if `google.json` is deleted).
+`src/lib/google.ts` is the only place that talks to Google: one Places API (New) Place Details call (`rating,userRatingCount,reviews,regularOpeningHours`, billed once as Enterprise + Atmosphere) every 30 days, from the server with `GOOGLE_PLACES_API_KEY`, saved in `data/google.json`. Every visitor sees that file; nothing Google runs in the browser (no Maps JS, no client key). An expired file is still served while the refresh runs in the background; a failed refresh is retried after 1, 2, 4… hours (24 at most), and an answer without reviews or without opening hours is refreshed after a day instead of 30, so Google is called at most about once a day in the worst case. Concurrent visitors share one read of the file and one call; a `google.json` with the wrong shape is ignored. No hand-written fallback: the opening hours exist only on Google (Google Business Profile is the place to change them, the site follows within 30 days or at once if `google.json` is deleted).
 
 - Home «Dicono di noi»: `<RecensioniGoogle server:defer>` (static page, the island is rendered on demand, `Cache-Control` 1h); `scripts/recensioni.ts` (`<recensioni-google>` custom element) only drives the carousel and «Leggi tutto».
 - `/contatti` «Orari segreteria»: `<OrariSegreteria server:defer>` with the week and the openingHoursSpecification JSON-LD of `#scuola`; `scripts/orari.ts` (`<orari-segreteria>`) marks today and «Aperto/Chiuso ora» in the visitor's browser (Rome time).
@@ -84,15 +94,15 @@ In Docker, this directory is a named volume (`inballet-data`) so data survives r
 
 ### Chatbot (Étoile)
 
-`src/lib/chatbot/`, one file per concern; `index.ts` (`rispondi()`) runs the flow: sanitize → in-memory rate limit per IP hash (1s, 6/min, 30/h, 100/day; 60 attempts/h block the IP for an hour, and a blocked IP is no longer logged) → insult/spam filter → conversation memory (last 6 exchanges, max 20 per chat) → response cache (first message of a chat only, in memory, 24h, key includes the knowledge version) → daily spend cap → provider chain → FAQ fallback → log + save exchange.
+`src/lib/chatbot/`, one file per concern; `index.ts` (`rispondi()`) runs the flow: sanitize → in-memory rate limit per IP hash (1s, 6/min, 30/h, 100/day; 60 attempts/h block the IP for an hour, and a blocked IP is no longer logged; IPv6 addresses count by /64 network, `reteDi()`) → insult/spam filter → site-wide ceilings (`tetto` in `protezioni.ts`, whatever the IP: 60 messages/min, 600/h, 3000/day, then a «riprova tra qualche minuto» answer without reading or writing anything; 300 refused messages logged per hour, so a flood cannot push the real history out of `analytics.json`) → conversation memory (last 6 exchanges, max 20 per chat) → response cache (first message of a chat only, in memory, 24h, key includes the knowledge version) → daily spend cap → model ceilings (20 calls/min, 200/h, 1000/day and 6 at the same time, then FAQ answers: with the spend cap this bounds the bill even if every request comes from a different address) → provider chain → FAQ fallback → log + save exchange.
 
 - `fornitori.ts`: provider chain from `CHATBOT_MODELLI` (`fornitore:modello,...`, in priority order). Two adapters: official `@anthropic-ai/sdk` for Claude, OpenAI-compatible chat completions for gemini/mistral/groq/openrouter/openai/cerebras/`compatibile` (any URL in `CHATBOT_COMPATIBILE_URL`). Providers without a key are skipped. Hedged requests: a provider that fails hands over at once, one still silent after 5s gets the next one started in parallel, first valid answer wins and the others are aborted (the beaten one counts an error). Per-provider timeout 12s; 502/503/529 retried once at the end of the queue; circuit breaker (3 errors or slow losses → 5 min pause, 429 → `retry-after`, 4xx config errors → 30 min). No streaming (speed is bound by the provider queue).
-- Opening the chat calls `actions.chatbot.prepara` (crawl + index build), so the first question doesn't wait for it.
+- Opening the chat calls `actions.chatbot.prepara` (crawl + index build), so the first question doesn't wait for it. Crawl and index build are shared by concurrent requests; a failed or half-empty crawl (under half of the pages read before, or over 45 s) keeps the previous texts and is retried after a minute.
 - `conoscenza.ts`: about 4k input tokens per question instead of the whole site (~21k, which hit the Gemini free-tier tokens-per-minute limit after ~10 questions a minute). System prompt, cached by the providers (Claude: 1h on the fixed part): fixed part = instructions + official data (`riepilogoScuola({ conFaq: false })`, shared with `/llms.txt`) + index of the site pages (path: title); variable part = date, documents, next 10 events (rebuilt every 5 min). Then `contesto()` adds to the last user message only the passages relevant to that question («PASSAGGI DEL SITO»), chosen among page sections, every FAQ and the next 30 events (demo ones included because the site shows them). Follow-ups ("e da che età?") search with the previous questions too and favour the pages cited in the last answer.
 - `ricerca.ts`: local BM25 search, no external service, no vector DB: Italian normalisation (accents, light stemming incl. verbs), stop words, `SINONIMI` in `src/data/chatbot.ts` (replacements applied before stop words: «bimba» → bambina bambini, «dove» → sede indirizzo…), ages indexed by range («da 6 a 8 anni» answers «7 anni»), section titles and page path weighted double, max 6 passages / 5500 characters / 3 per page. `dividi()` cuts a page at its `##` headings (max 1200 characters, short sections merged). Covered by `tests/ricerca.test.mjs`.
 - `pagine.ts`: the server crawls its own site (from `/`, following internal links, max 150 pages; first `localhost:$PORT`, then the request origin) and keeps the `<main>` text of each page, dropping lines repeated on many pages and every `section[data-chatbot-escludi]` (event calendar, «Corsi simili», gallery, contact CTA, home FAQ: already indexed from the data). Re-read every 30 min in production (1 min in dev) in the background. Any new page linked from the site is covered automatically; text outside `<main>` (navbar, footer) and server islands are not, contacts and opening hours come from the official data.
 - `offline.ts`: when no provider answers or the spend cap is hit, the best `faq` match from the same search (at least 2 words of the question in common) plus the course page if a course is named, or upcoming events. The bot always answers.
-- `registro.ts`: `analytics.json` entries with provider, tokens, cost (`PREZZI` in `src/data/chatbot.ts`), latency, fallbacks; written in batches (one write every 2s at most, capped at `MAX_LOG`).
+- `registro.ts`: `analytics.json` entries with provider, tokens, cost (`PREZZI` in `src/data/chatbot.ts`), latency, fallbacks; written in batches (one write every 2s at most, capped at `MAX_LOG`). For the daily spend cap a model missing from `PREZZI` counts at the most expensive listed price (it used to count zero, which switched the cap off): add new models to `PREZZI`.
 - `formato.ts`: escape everything, then rebuild bold/lists/links; links only to site paths, tel/mailto and a few known hosts.
 - Dashboard (Chatbot tab): spend, provider chain status, quality check (`VERIFICHE` in `src/data/chatbot.ts`, run per provider via `actions.chatbot.verifica`), last conversations.
 
@@ -105,9 +115,9 @@ All server env vars are `access: 'secret'` on purpose: read at runtime, so they 
 | `CHATBOT_MODELLI` | provider chain `fornitore:modello,…` (anthropic, gemini, mistral, groq, openrouter, openai, cerebras, compatibile) |
 | `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `MISTRAL_API_KEY`, `GROQ_API_KEY`, `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `CEREBRAS_API_KEY` | provider keys; providers without a key are skipped |
 | `CHATBOT_COMPATIBILE_URL`, `CHATBOT_COMPATIBILE_KEY` | any OpenAI-compatible API (e.g. Ollama `http://localhost:11434/v1`) |
-| `CHATBOT_GRATUITI` | free-tier providers whose cost counts zero (e.g. `gemini,mistral`) |
+| `CHATBOT_GRATUITI` | free-tier providers whose cost counts zero (e.g. `gemini,mistral`); only for keys really without billing, because the spend cap ignores them |
 | `CHATBOT_BUDGET_GIORNO` | daily spend cap in dollars, then FAQ-only answers (0 = no cap) |
-| `CHATBOT_IP_HEADER` | header with the real visitor IP behind a proxy (e.g. `cf-connecting-ip`); spoofable, leave empty if unsure |
+| `CHATBOT_IP_HEADER` | header with the real visitor IP behind a proxy (e.g. `cf-connecting-ip`); spoofable, leave empty if unsure. Empty on Railway: its edge drops the `X-Forwarded-For` sent by the client (checked on the live site), so Astro's `clientAddress` is the real address; chatbot and login limits both use it |
 | `GOOGLE_PLACES_API_KEY` | server key for the monthly Places call (reviews, opening hours) |
 | `PUBLIC_GOOGLE_PLACE_ID` | the school's Google place (also the «Vedi tutte» reviews link) |
 

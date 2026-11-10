@@ -1,9 +1,9 @@
 import { conoscenza, contesto } from './conoscenza';
-import { aggiungiScambio, eliminaConversazioniVecchie, leggiConversazione, MAX_SCAMBI, MEMORIA, nuovoId } from './conversazioni';
+import { aggiungiScambio, eliminaConversazioniVecchie, idValido, leggiConversazione, MAX_SCAMBI, MEMORIA, nuovoId } from './conversazioni';
 import { formatta } from './formato';
 import { chiediAlModello } from './fornitori';
 import { rispostaOffline } from './offline';
-import { bloccato, controllaContenuto, controllaLimiti, hashIP, pulisciLimiti, sanitizza } from './protezioni';
+import { bloccato, controllaContenuto, controllaLimiti, hashIP, pulisciLimiti, sanitizza, tetto } from './protezioni';
 import { budgetEsaurito, calcolaCosto, registra } from './registro';
 import { scuola } from '../../data/scuola';
 
@@ -60,27 +60,43 @@ export async function prepara(origine: string): Promise<void> {
   await conoscenza(origine);
 }
 
+const IN_VOLO_MAX = 6;
+let inVolo = 0;
+
 export async function rispondi({ testo, conversazione, ip, userAgent, origine }: Messaggio): Promise<Risposta> {
   avviaManutenzione();
   const ipHash = hashIP(ip);
+  const richiesta = idValido(conversazione) ? conversazione : nuovoId();
+  const subito = (risposta: string) => ({ html: formatta(risposta), conversazione: richiesta });
+
+  const msg = sanitizza(testo);
+  if (!msg) return subito('Scrivi la tua domanda.');
+  if (bloccato(ipHash)) return subito(controllaLimiti(ipHash)!);
+
+  const limite = controllaLimiti(ipHash);
+  const scarto = limite ?? controllaContenuto(msg);
+  if (scarto) {
+    if (tetto.rifiuti()) {
+      registra({
+        ip_hash: ipHash,
+        user_agent: userAgent,
+        conversazione: richiesta.slice(0, 8),
+        message: msg,
+        risposta: scarto,
+        type: limite ? 'blocked' : 'filtered',
+      });
+    }
+    return subito(scarto);
+  }
+  if (!tetto.messaggi()) return subito(`In questo momento ricevo molte richieste: riprova tra qualche minuto, oppure chiamaci al ${scuola.telefono}.`);
+
   const conv = await leggiConversazione(conversazione);
   const id = conv?.id ?? nuovoId();
   const base = { ip_hash: ipHash, user_agent: userAgent, conversazione: id.slice(0, 8) };
-
-  const msg = sanitizza(testo);
-  if (!msg) return { html: 'Scrivi la tua domanda.', conversazione: id };
-  if (bloccato(ipHash)) return { html: formatta(controllaLimiti(ipHash)!), conversazione: id };
-
-  const rifiuta = (risposta: string, type: 'filtered' | 'blocked') => {
-    registra({ ...base, message: msg, risposta, type });
-    return { html: formatta(risposta), conversazione: id };
-  };
-  const limite = controllaLimiti(ipHash);
-  if (limite) return rifiuta(limite, 'blocked');
-  const scarto = controllaContenuto(msg);
-  if (scarto) return rifiuta(scarto, 'filtered');
   if ((conv?.scambi.length ?? 0) >= MAX_SCAMBI) {
-    return rifiuta(`Questa conversazione è diventata lunga: tocca ↻ in alto per iniziarne una nuova, oppure chiamaci al ${scuola.telefono}.`, 'blocked');
+    const risposta = `Questa conversazione è diventata lunga: tocca ↻ in alto per iniziarne una nuova, oppure chiamaci al ${scuola.telefono}.`;
+    registra({ ...base, message: msg, risposta, type: 'blocked' });
+    return { html: formatta(risposta), conversazione: id };
   }
 
   const storia = (conv?.scambi ?? []).slice(-MEMORIA).map((s) => ({ domanda: s.domanda, risposta: s.risposta }));
@@ -104,8 +120,10 @@ export async function rispondi({ testo, conversazione, ip, userAgent, origine }:
   };
 
   if (await budgetEsaurito()) return offline('tetto di spesa giornaliero raggiunto', 0);
+  if (inVolo >= IN_VOLO_MAX || !tetto.modello()) return offline('tetto di richieste al modello raggiunto', 0);
 
-  const esito = await chiediAlModello({ sistema: s, storia, domanda: msg, contesto: contesto(s, msg, storia) });
+  inVolo++;
+  const esito = await chiediAlModello({ sistema: s, storia, domanda: msg, contesto: contesto(s, msg, storia) }).finally(() => inVolo--);
   const ultimoErrore = esito.tentativi.at(-1);
   const errore = ultimoErrore && `${ultimoErrore.fornitore}: ${ultimoErrore.errore}`;
   if (!esito.ok) return offline(errore ?? 'nessun fornitore configurato', esito.tentativi.length);

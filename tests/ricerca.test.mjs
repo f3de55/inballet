@@ -1,17 +1,6 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import vm from 'node:vm';
-import ts from 'typescript';
-
-function carica(file, dipendenze = {}) {
-  const codice = ts.transpileModule(readFileSync(new URL(`../src/${file}`, import.meta.url), 'utf8'), {
-    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-  }).outputText;
-  const module = { exports: {} };
-  vm.runInNewContext(codice, { module, exports: module.exports, require: (nome) => dipendenze[nome] }, { filename: file });
-  return module.exports;
-}
+import { carica } from './carica.mjs';
 
 const { cerca, creaIndice, dividi } = carica('lib/chatbot/ricerca.ts', { '../../data/chatbot': carica('data/chatbot.ts') });
 

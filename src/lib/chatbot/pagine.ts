@@ -9,6 +9,7 @@ export interface Pagina {
 const ESCLUSE = /^\/(?:dashboard|login|_actions|_image|_server-islands|assets)(?:\/|$)|\.[a-z0-9]{2,4}$/i;
 const MAX_PAGINE = 150;
 const PARALLELE = 6;
+const TEMPO_MASSIMO = 45_000;
 
 function decodifica(s: string): string {
   return decodeHtml(s)
@@ -83,7 +84,8 @@ export async function leggiSito(origine: string): Promise<Pagina[]> {
   const visti = new Set<string>(['/']);
   const coda = ['/'];
   const pagine: Pagina[] = [];
-  while (coda.length) {
+  const scadenza = Date.now() + TEMPO_MASSIMO;
+  while (coda.length && Date.now() < scadenza) {
     const lotto = coda.splice(0, PARALLELE);
     await Promise.all(
       lotto.map(async (percorso) => {

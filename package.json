@@ -18,7 +18,7 @@
     "check": "astro check",
     "format": "prettier --write src scripts tests astro.config.mjs",
     "format:check": "prettier --check src scripts tests astro.config.mjs",
-    "test": "node --test tests/carosello.test.mjs tests/ricerca.test.mjs",
+    "test": "node --test tests/carosello.test.mjs tests/ricerca.test.mjs tests/protezioni.test.mjs",
     "test:demo": "node --test tests/locandine-demo.test.mjs",
     "test:statuto": "node --test tests/statuto.test.mjs",
     "verifica:stile": "node scripts/verifica-stile.mjs",

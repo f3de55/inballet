@@ -47,8 +47,11 @@ const passaggioEvento = (e: Evento): Passaggio => {
 const passaggiFaq: Passaggio[] = faq.map((f) => ({ percorso: '', titolo: 'Domanda frequente', sezione: f.domanda, testo: f.risposta }));
 
 const DURATA_PAGINE = import.meta.env.DEV ? 60_000 : 30 * 60_000;
+const RIPROVA_PAGINE = 60_000;
+const NESSUNA: Pagina[] = [];
 let pagine: { elenco: Pagina[]; letto: number } | null = null;
 let lettura: Promise<Pagina[]> | null = null;
+let prossimaLettura = 0;
 
 const locale = (origine: string) => ['localhost', '127.0.0.1', '[::1]'].includes(new URL(origine).hostname);
 
@@ -64,17 +67,26 @@ async function leggiDaServer(origineRichiesta: string): Promise<Pagina[]> {
 function rileggi(origine: string): Promise<Pagina[]> {
   lettura ??= leggiDaServer(origine)
     .then((elenco) => {
-      if (elenco.length) pagine = { elenco, letto: Date.now() };
-      else console.warn('Chatbot: nessuna pagina letta dal sito, restano i dati ufficiali');
-      return pagine?.elenco ?? [];
+      if (elenco.length && elenco.length >= (pagine?.elenco.length ?? 0) / 2) pagine = { elenco, letto: Date.now() };
+      else {
+        prossimaLettura = Date.now() + RIPROVA_PAGINE;
+        console.warn(`Chatbot: lettura del sito incompleta (${elenco.length} pagine), restano i testi già letti e i dati ufficiali`);
+      }
+      return pagine?.elenco ?? NESSUNA;
+    })
+    .catch((e) => {
+      prossimaLettura = Date.now() + RIPROVA_PAGINE;
+      console.error('Chatbot, lettura del sito:', e);
+      return pagine?.elenco ?? NESSUNA;
     })
     .finally(() => (lettura = null));
   return lettura;
 }
 
 async function testiDelSito(origine: string): Promise<Pagina[]> {
-  if (!pagine) return rileggi(origine);
-  if (Date.now() - pagine.letto > DURATA_PAGINE) void rileggi(origine);
+  const riprova = Date.now() >= prossimaLettura;
+  if (!pagine) return riprova ? rileggi(origine) : NESSUNA;
+  if (riprova && Date.now() - pagine.letto > DURATA_PAGINE) void rileggi(origine);
   return pagine.elenco;
 }
 
@@ -98,9 +110,16 @@ export const statoConoscenza = () =>
       }
     : null;
 
+let costruzione: Promise<Conoscenza> | null = null;
+
 export async function conoscenza(origine: string): Promise<Conoscenza> {
   const elenco = await testiDelSito(origine);
   if (memo && memo.pagine === elenco && Date.now() - memo.creato < DURATA) return memo.conoscenza;
+  costruzione ??= costruisci(elenco).finally(() => (costruzione = null));
+  return costruzione;
+}
+
+async function costruisci(elenco: Pagina[]): Promise<Conoscenza> {
   const [riepilogo, { documenti }, eventi] = await Promise.all([riepilogoScuola({ url: (p) => p, conFaq: false }), leggiDocumenti(), prossimiEventi(30)]);
   const fisso = `${ISTRUZIONI}\n\nBASE DI CONOSCENZA\n\n# DATI UFFICIALI\n\n${riepilogo}\n\n# PAGINE DEL SITO\n\n${elenco.map((p) => `- ${p.percorso}: ${p.titolo}`).join('\n')}`;
   const variabile = [

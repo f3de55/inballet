@@ -5,9 +5,26 @@ import { scuola } from '../../data/scuola';
 
 const MAX_LUNGHEZZA = 500;
 
+export function reteDi(ip: string): string {
+  const v = ip
+    .trim()
+    .toLowerCase()
+    .replace(/^\[|\]$|%.*$/g, '')
+    .replace(/^::ffff:(?=\d+\.)/, '');
+  if (!v.includes(':')) return v;
+  const [testa, coda] = v.split('::');
+  const prima = testa.split(':').filter(Boolean);
+  const dopo = (coda ?? '').split(':').filter(Boolean);
+  const gruppi = coda === undefined ? prima : [...prima, ...Array<string>(Math.max(0, 8 - prima.length - dopo.length)).fill('0'), ...dopo];
+  return `${gruppi
+    .slice(0, 4)
+    .map((g) => g.replace(/^0+(?=.)/, ''))
+    .join(':')}::/64`;
+}
+
 export function ipVisitatore(headers: Headers, clientAddress: string): string {
   const valore = CHATBOT_IP_HEADER ? headers.get(CHATBOT_IP_HEADER) : null;
-  return valore?.split(',').at(-1)?.trim() || clientAddress;
+  return reteDi(valore?.split(',').at(-1)?.trim() || clientAddress);
 }
 
 export const hashIP = (ip: string) => createHash('sha256').update(`${ip}inballet_salt_2024`).digest('hex');
@@ -67,14 +84,45 @@ interface Visitatore {
   bloccatoFino: number;
 }
 
+const MAX_VISITATORI = 20_000;
 const visitatori = new Map<string, Visitatore>();
+
+function finestre(limiti: [secondi: number, massimo: number][]) {
+  const stato = limiti.map(([secondi, massimo]) => ({ durata: secondi * 1000, massimo, da: 0, n: 0 }));
+  return () => {
+    const ora = Date.now();
+    for (const f of stato) if (ora - f.da >= f.durata) Object.assign(f, { da: ora, n: 0 });
+    if (stato.some((f) => f.n >= f.massimo)) return false;
+    for (const f of stato) f.n++;
+    return true;
+  };
+}
+
+export const tetto = {
+  messaggi: finestre([
+    [60, 60],
+    [3600, 600],
+    [86400, 3000],
+  ]),
+  modello: finestre([
+    [60, 20],
+    [3600, 200],
+    [86400, 1000],
+  ]),
+  rifiuti: finestre([[3600, 300]]),
+};
 
 export const bloccato = (ipHash: string) => (visitatori.get(ipHash)?.bloccatoFino ?? 0) > Date.now() / 1000;
 
 export function controllaLimiti(ipHash: string): string | null {
   const now = Date.now() / 1000;
-  const v = visitatori.get(ipHash) ?? { accettati: [], tentativi: [], bloccatoFino: 0 };
-  visitatori.set(ipHash, v);
+  let v = visitatori.get(ipHash);
+  if (!v) {
+    if (visitatori.size >= MAX_VISITATORI) pulisciLimiti();
+    if (visitatori.size >= MAX_VISITATORI) visitatori.delete(visitatori.keys().next().value!);
+    v = { accettati: [], tentativi: [], bloccatoFino: 0 };
+    visitatori.set(ipHash, v);
+  }
   if (v.bloccatoFino > now) return `Troppe richieste. Riprova tra ${Math.ceil((v.bloccatoFino - now) / 60)} minuti. ⏳`;
 
   v.tentativi = [...v.tentativi.filter((t) => now - t < 3600), now];

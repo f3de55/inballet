@@ -22,9 +22,9 @@ const { href, nome, idTitolo, etichetta, dettaglio, immagine, iconaDettaglio } =
     </div>
     <div class="corsi-scheda-corpo">
       <p class="eyebrow corsi-scheda-eta">{etichetta}</p>
-      <h3 class="titolo-card" id={idTitolo}>{nome}</h3>
+      <h3 id={idTitolo}>{nome}</h3>
       <div class="corsi-scheda-fondo">
-        <small class="testo-piccolo corsi-scheda-frequenza">{iconaDettaglio && <i class={iconaDettaglio} aria-hidden="true"></i>} <span><Fragment set:html={dettaglio} /></span></small>
+        <p class="corsi-scheda-frequenza">{iconaDettaglio && <i class={iconaDettaglio} aria-hidden="true"></i>} <span><Fragment set:html={dettaglio} /></span></p>
         <span class="corsi-scheda-freccia" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
       </div>
     </div>

@@ -11,7 +11,7 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      filter: (page) => !/\/(login|dashboard|404)/.test(page),
+      filter: (page) => !/\/(login|dashboard|presentazione|404)/.test(page),
     }),
   ],
 

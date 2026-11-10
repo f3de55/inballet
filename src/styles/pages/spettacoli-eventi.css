@@ -707,47 +707,30 @@ html:has(dialog[open]) {
 
 @media (min-width: 901px) {
   .evento-dialog {
-    --locandina-spazio: 12.5rem;
     width: min(46rem, calc(100% - 3rem));
   }
 
-  .evento-dialog[open] {
-    animation-name: locandina-entra;
-  }
-
-  .evento-dialog:has(.con-locandina) {
-    bottom: var(--locandina-spazio);
-    max-height: min(48rem, calc(100dvh - var(--locandina-spazio) - 3rem));
-  }
-
   .evento-locandina {
-    position: fixed;
+    position: relative;
     top: auto;
-    bottom: 0;
-    left: 50%;
-    z-index: 1;
+    order: 1;
+    justify-self: center;
     width: 14rem;
+    height: 11rem;
+    aspect-ratio: auto;
+    margin-bottom: -3rem;
     border-radius: var(--radius-md) var(--radius-md) 0 0;
-    box-shadow: 0 25px 80px rgb(var(--nero-rgb) / 0.35);
-    transform: translate(-50%, 6.5rem);
-    transition: transform var(--durata) var(--curva);
-    animation: locandina-sale var(--durata-pannello) var(--curva);
+    box-shadow: var(--shadow-card);
   }
 
-  .evento-locandina:hover,
-  .evento-locandina:focus-visible {
-    transform: translate(-50%, 5.75rem);
+  .evento-locandina img {
+    height: auto;
+    aspect-ratio: 4 / 5;
   }
 
   .evento-locandina-zoom {
     top: 0.6rem;
     bottom: auto;
-  }
-
-  @keyframes locandina-sale {
-    from {
-      transform: translate(-50%, 100%);
-    }
   }
 }
 

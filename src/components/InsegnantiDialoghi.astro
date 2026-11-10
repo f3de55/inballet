@@ -12,7 +12,7 @@ const { insegnanti } = Astro.props.dati;
 ---
 
 {insegnanti.map((p) => (
-  <dialog class="dialogo ins-dialog" id={`insegnante-${p.id}`} aria-labelledby={`insegnante-${p.id}-nome`}>
+  <dialog tabindex="-1" class="dialogo ins-dialog" id={`insegnante-${p.id}`} aria-labelledby={`insegnante-${p.id}-nome`}>
     <div class="dialogo-barra">
       <button type="button" class="btn-icon btn-icon--chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
     </div>
@@ -43,6 +43,7 @@ const { insegnanti } = Astro.props.dati;
       const dlg = document.getElementById(`insegnante-${apri.dataset.apriInsegnante}`) as HTMLDialogElement | null;
       if (dlg && !dlg.open) {
         dlg.showModal();
+        dlg.focus();
         dlg.scrollTop = 0;
       }
       return;

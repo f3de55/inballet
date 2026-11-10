@@ -64,6 +64,7 @@ if (track && dialog && fotoIniziale && didascalia && contatore) {
     mostra(i, true);
     document.documentElement.classList.add('galleria-aperta');
     dialog.showModal();
+    dialog.focus();
   };
 
   bottoni.forEach((b) => {

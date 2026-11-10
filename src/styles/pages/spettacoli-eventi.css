@@ -303,19 +303,29 @@
 
 .calendario-nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .calendario-mese {
+  flex: 0 1 9em;
+  order: 2;
+  text-align: center;
   color: var(--dark-navy);
 }
 
 .calendario-frecce {
-  display: flex;
-  gap: 0.5rem;
+  display: contents;
+}
+
+#btnMesePrev {
+  order: 1;
+}
+
+#btnMeseNext {
+  order: 3;
 }
 
 .calendario-frecce button {

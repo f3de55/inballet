@@ -19,6 +19,7 @@ if (apri && scelta && popup) {
 
   apri.addEventListener('click', () => {
     popup.showModal();
+    popup.focus();
     apri.setAttribute('aria-expanded', 'true');
     (opzioni.find((opzione) => opzione.hasAttribute('aria-current')) || opzioni[0])?.focus({ preventScroll: true });
   });

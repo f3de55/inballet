@@ -70,7 +70,8 @@ summary:focus-visible,
   outline-offset: 3px;
 }
 
-main[tabindex]:focus-visible {
+main[tabindex]:focus-visible,
+dialog[tabindex]:focus-visible {
   outline: none;
 }
 

@@ -77,7 +77,10 @@ function apriEvento(slug: string) {
   $('iconaCondividi').className = 'fas fa-share-alt';
 
   history.replaceState(null, '', linkEvento(e));
-  if (!dialog.open) dialog.showModal();
+  if (!dialog.open) {
+    dialog.showModal();
+    dialog.focus();
+  }
   dialog.scrollTop = 0;
 }
 
@@ -99,6 +102,7 @@ $('dialogLocandinaBtn').addEventListener('click', () => {
   img.src = eventoCorrente.immagine;
   img.alt = `Locandina: ${eventoCorrente.titolo}`;
   dialogLocandina.showModal();
+  dialogLocandina.focus();
 });
 
 async function condividi() {

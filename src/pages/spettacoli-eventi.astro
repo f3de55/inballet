@@ -231,7 +231,7 @@ const og = aperto
         {schemaEventi.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(schemaEventi).replace(/</g, '\\u003c')} />}
 
     <Fragment slot="after-main">
-    <dialog class="dialogo evento-dialog" id="eventoDialog" aria-labelledby="dialogTitolo">
+    <dialog tabindex="-1" class="dialogo evento-dialog" id="eventoDialog" aria-labelledby="dialogTitolo">
         <div class="dialogo-barra">
             <button type="button" class="btn-icon evento-condividi" id="btnCondividi">
                 <i class="fas fa-share-alt" id="iconaCondividi" aria-hidden="true"></i>
@@ -265,7 +265,7 @@ const og = aperto
         </div>
     </dialog>
 
-    <dialog class="locandina-dialog" id="locandinaDialog" aria-label="Locandina">
+    <dialog tabindex="-1" class="locandina-dialog" id="locandinaDialog" aria-label="Locandina">
         <button type="button" class="btn-icon btn-icon--chiudi locandina-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
         <img id="locandinaGrande" src="data:," alt="">
     </dialog>

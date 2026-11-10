@@ -482,6 +482,10 @@ html:has(dialog[open]) {
   object-fit: contain;
 }
 
+.evento-locandina-cornice {
+  display: contents;
+}
+
 .evento-locandina-zoom {
   position: absolute;
   right: 0.6rem;
@@ -714,23 +718,57 @@ html:has(dialog[open]) {
     position: relative;
     top: auto;
     order: 1;
-    justify-self: center;
-    width: 14rem;
-    height: 11rem;
+    display: flex;
+    justify-content: center;
+    width: auto;
     aspect-ratio: auto;
-    margin-bottom: -3rem;
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
-    box-shadow: var(--shadow-card);
+    margin: calc(var(--onda-h) * -1) -3rem -3rem;
+    padding: calc(var(--onda-h) + 2rem) 3rem 3.25rem;
+    border-top: var(--onda-h) solid transparent;
+    border-radius: 0;
+    background: var(--bg-soft);
+    background-origin: border-box;
+    overflow: visible;
+    -webkit-mask:
+      var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
+      linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
+    mask:
+      var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
+      linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
+  }
+
+  .evento-locandina::before {
+    display: none;
+  }
+
+  .evento-locandina-cornice {
+    position: relative;
+    display: block;
+    isolation: isolate;
+    transition: transform var(--durata) var(--curva);
+  }
+
+  .evento-locandina-cornice::before {
+    content: '';
+    position: absolute;
+    inset: 1.75rem 1.75rem -1.25rem -1.25rem;
+    z-index: -1;
+    border: 2px solid var(--primary-blue);
+    border-radius: var(--radius-img);
+    pointer-events: none;
   }
 
   .evento-locandina img {
-    height: auto;
-    aspect-ratio: 4 / 5;
+    width: auto;
+    max-width: 100%;
+    height: 19rem;
+    border-radius: var(--radius-img);
+    box-shadow: 0 24px 60px rgb(var(--nero-rgb) / 0.14);
   }
 
-  .evento-locandina-zoom {
-    top: 0.6rem;
-    bottom: auto;
+  .evento-locandina:hover .evento-locandina-cornice,
+  .evento-locandina:focus-visible .evento-locandina-cornice {
+    transform: translateY(-4px);
   }
 }
 

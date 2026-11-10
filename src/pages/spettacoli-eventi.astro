@@ -1,25 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { heroPagina } from '../lib/hero-pagine';
-import {
-  datiStrutturati,
-  ETICHETTE_STATO,
-  eventiPubblici,
-  giornoBreve,
-  linkGoogleCalendar,
-  maiuscola,
-  MESI,
-  passato,
-  perMese,
-  quando,
-  sedeDi,
-  srcImmagine,
-  testoDescrizione,
-  trovaEvento,
-  urlEvento,
-  urlIcs,
-  type Evento,
-} from '../lib/eventi';
+import { datiStrutturati, ETICHETTE_STATO, eventiPubblici, giornoBreve, inCorso, linkGoogleCalendar, maiuscola, MESI, passato, perMese, quando, sedeDi, srcImmagine, testoDescrizione, trovaEvento, type Evento, urlEvento, urlIcs } from '../lib/eventi';
 import { romeDate } from '../lib/time';
 import HeroPagina from '../components/HeroPagina.astro';
 import Img from '../components/Img.astro';
@@ -58,10 +40,9 @@ const passati = eventi.filter((e) => passato(e, adesso)).reverse();
 function voce(e: Evento) {
   const [, m, d] = e.data.split('-').map(Number);
   const finito = passato(e, adesso);
-  const inCorso = !finito && e.data < oggi;
-  const vicino = e.data === oggi || inCorso ? (e.dataFine ? 'In corso' : 'Oggi') : e.data === domani ? 'Domani' : '';
+  const vicino = inCorso(e, adesso) ? 'In corso' : e.data === oggi ? 'Oggi' : e.data === domani ? 'Domani' : '';
   let fino = '';
-  if (e.dataFine) {
+  if (e.dataFine && e.dataFine !== e.data) {
     const [, mf, df] = e.dataFine.split('-').map(Number);
     fino = `Fino a ${giornoBreve(e.dataFine).toLowerCase()} ${df}${mf !== m ? ` ${MESI[mf - 1]}` : ''}`;
   }
@@ -92,6 +73,7 @@ const datiEventi = {
       data: e.data,
       dataFine: e.dataFine,
       passato: finito,
+      inCorso: inCorso(e, adesso),
       stato: e.stato,
       etichettaStato: ETICHETTE_STATO[e.stato],
       tipo: e.tipo,

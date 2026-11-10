@@ -5,6 +5,7 @@ interface EventoSito {
   data: string;
   dataFine: string;
   passato: boolean;
+  inCorso: boolean;
   stato: 'pubblicato' | 'annullato' | 'esaurito';
   etichettaStato: string;
   tipo: string;
@@ -41,7 +42,7 @@ function apriEvento(slug: string) {
   if (!e) return;
   eventoCorrente = e;
 
-  const stato = e.stato !== 'pubblicato' ? e.etichettaStato : e.passato ? 'Evento concluso' : '';
+  const stato = e.stato !== 'pubblicato' ? e.etichettaStato : e.passato ? 'Evento concluso' : e.inCorso ? 'In corso' : '';
   $('dialogEtichette').innerHTML =
     (e.tipo ? `<span>${escapeHtml(e.tipo)}</span>` : '') +
     (stato ? `<span class="evento-stato${e.stato === 'annullato' ? ' evento-stato--forte' : ''}">${escapeHtml(stato)}</span>` : '');

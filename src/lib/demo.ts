@@ -25,7 +25,7 @@ interface Modello {
   luogo: string;
   sede: string;
   ora: string;
-  oraFine?: string;
+  oraFine: string;
   dueGiorni?: boolean;
   descrizione: string;
   destinatari: string;
@@ -61,6 +61,7 @@ const MODELLI: Modello[] = [
     luogo: 'Teatro Civico di Rho',
     sede: 'Teatro di Rho',
     ora: '20:45',
+    oraFine: '22:45',
     weekend: true,
     foto: 'gallery-10',
     descrizione: 'Coreografie di <b>classica, modern e urban</b> per festeggiare insieme le feste.',
@@ -74,6 +75,7 @@ const MODELLI: Modello[] = [
     luogo: 'Teatro Comunale di Lainate',
     sede: 'Teatro di Lainate',
     ora: '16:00',
+    oraFine: '18:00',
     weekend: true,
     foto: 'hero-bg',
     descrizione: "Avviamento ed Educazione alla Danza portano in scena il lavoro dell'anno.<ul><li>Ingresso dalle 15:30</li><li>Posti non numerati</li></ul>",
@@ -87,6 +89,7 @@ const MODELLI: Modello[] = [
     luogo: RHO,
     sede: 'Sede di Rho',
     ora: '10:30',
+    oraFine: '13:00',
     foto: 'gallery-2',
     descrizione:
       'Tre ore di lavoro su <b>improvvisazione</b> e composizione con una coreografa ospite.<ul><li>Livello intermedio/avanzato</li><li>Abbigliamento comodo, piedi nudi</li></ul>',
@@ -100,6 +103,7 @@ const MODELLI: Modello[] = [
     luogo: RHO,
     sede: 'Sede di Rho',
     ora: '15:00',
+    oraFine: '18:00',
     foto: 'gallery-5',
     descrizione: 'Un pomeriggio dedicato alla cultura Hip-Hop: <b>Old School</b>, Popping e Krumping con un insegnante ospite.',
     destinatari: 'Ragazzi dai 10 anni',
@@ -112,6 +116,7 @@ const MODELLI: Modello[] = [
     luogo: LAINATE,
     sede: 'Sede di Lainate',
     ora: '18:30',
+    oraFine: '20:30',
     foto: 'gallery-3',
     descrizione: 'Portamento, linee e musicalità sui tacchi. Si consiglia una base di tecnica.<ul><li>Portare scarpe con tacco stabile</li></ul>',
     destinatari: 'Dai 16 anni',
@@ -124,6 +129,7 @@ const MODELLI: Modello[] = [
     luogo: LAINATE,
     sede: 'Sede di Lainate',
     ora: '10:00',
+    oraFine: '12:00',
     foto: 'gallery-9',
     descrizione: 'Il lavoro sulla <b>Power House</b> applicato alla danza: controllo, respiro e stabilità.',
     destinatari: 'Allievi e adulti di tutti i livelli',
@@ -136,6 +142,7 @@ const MODELLI: Modello[] = [
     luogo: LAINATE,
     sede: 'Sede di Lainate',
     ora: '18:30',
+    oraFine: '19:30',
     foto: 'ballerina',
     descrizione: 'Le famiglie assistono alla lezione: sbarra, centro e diagonali come in un giorno normale.',
     destinatari: 'Famiglie degli allievi',
@@ -148,6 +155,7 @@ const MODELLI: Modello[] = [
     luogo: LAINATE,
     sede: 'Sede di Lainate',
     ora: '17:00',
+    oraFine: '17:45',
     foto: 'gallery-8',
     descrizione: 'Le famiglie assistono alla lezione dei bimbi che hanno compiuto <b>3 anni</b>: gioco, musica e movimento.',
     destinatari: 'Bambini dai 3 ai 4 anni con un genitore',
@@ -160,6 +168,7 @@ const MODELLI: Modello[] = [
     luogo: RHO,
     sede: 'Sede di Rho',
     ora: '17:30',
+    oraFine: '18:30',
     foto: 'gallery-5',
     descrizione: 'Passi in piedi, lavoro al pavimento e il primo <b>freeze</b>. Classi a numero chiuso.',
     destinatari: 'Bambini e ragazzi dai 6 anni',
@@ -172,6 +181,7 @@ const MODELLI: Modello[] = [
     luogo: LAINATE,
     sede: 'Sede di Lainate',
     ora: '15:00',
+    oraFine: '19:00',
     weekend: true,
     foto: 'gallery-7',
     descrizione: 'Un pomeriggio per conoscere la scuola e incontrare le insegnanti. <b>Prenotazione consigliata.</b>',
@@ -185,6 +195,7 @@ const MODELLI: Modello[] = [
     luogo: RHO,
     sede: 'Sede di Rho',
     ora: '15:00',
+    oraFine: '19:00',
     weekend: true,
     foto: 'gallery-4',
     descrizione: 'Un pomeriggio per conoscere la scuola, vedere le sale e chiedere informazioni sulle iscrizioni.',
@@ -212,6 +223,7 @@ const MODELLI: Modello[] = [
     luogo: RHO,
     sede: 'Sede di Rho',
     ora: '14:00',
+    oraFine: '18:00',
     weekend: true,
     foto: 'hero-danza-contemporanea',
     descrizione: 'Contrazione e rilascio, linee e dinamiche dello stile <b>Modern</b> in un pomeriggio di studio.',
@@ -225,6 +237,7 @@ const MODELLI: Modello[] = [
     luogo: 'Villa Litta, Lainate',
     sede: 'Villa Litta',
     ora: '18:00',
+    oraFine: '21:00',
     weekend: true,
     foto: 'gallery-1',
     descrizione: "Scuole del territorio e allievi InBallet insieme in una serata all'aperto.",
@@ -238,6 +251,7 @@ const MODELLI: Modello[] = [
     luogo: 'Teatro Nuovo, Milano',
     sede: 'Milano',
     ora: '09:30',
+    oraFine: '19:00',
     weekend: true,
     foto: 'gallery-3',
     descrizione: "I gruppi di Modern e Contemporanea partecipano con le coreografie dell'anno.",
@@ -251,6 +265,7 @@ const MODELLI: Modello[] = [
     luogo: LAINATE,
     sede: 'Sede di Lainate',
     ora: '15:30',
+    oraFine: '18:30',
     weekend: true,
     foto: 'gallery-1',
     descrizione: 'Pomeriggio in maschera con giochi musicali e balli di gruppo.',
@@ -264,6 +279,7 @@ const MODELLI: Modello[] = [
     luogo: 'Piazza Vittorio Emanuele, Lainate',
     sede: 'Lainate',
     ora: '18:00',
+    oraFine: '22:00',
     weekend: true,
     foto: 'gallery-6',
     descrizione: 'Esibizioni in piazza e presentazione dei corsi del nuovo anno.',
@@ -277,6 +293,7 @@ const MODELLI: Modello[] = [
     luogo: LAINATE,
     sede: 'Sede di Lainate',
     ora: '20:00',
+    oraFine: '22:00',
     foto: 'gallery-9',
     descrizione: 'Una sessione per adulti, anche non danzatori: respiro, ascolto e <i>atto creativo</i>.',
     destinatari: 'Adulti dai 18 anni',
@@ -289,6 +306,7 @@ const MODELLI: Modello[] = [
     luogo: LAINATE,
     sede: 'Sede di Lainate',
     ora: '20:00',
+    oraFine: '21:30',
     lunedi: true,
     foto: 'gallery-8',
     descrizione: 'Chi vuole diventare volontario del progetto può partecipare a una lezione del lunedì sera.',
@@ -441,7 +459,7 @@ export async function generaEventi(quanti: number): Promise<number> {
     const nome = `demo-${data}-${hex(3)}.jpg`;
     await writeFile(filePath(nome), await creaLocandina(m, data, verticale));
     await creaMini(nome).catch(() => {});
-    const dataFine = m.dueGiorni ? new Date(Date.parse(`${data}T12:00:00Z`) + 86_400_000).toISOString().slice(0, 10) : '';
+    const dataFine = m.dueGiorni ? new Date(Date.parse(`${data}T12:00:00Z`) + 86_400_000).toISOString().slice(0, 10) : data;
 
     const adesso = romeIso();
     const evento: Evento = {
@@ -451,7 +469,7 @@ export async function generaEventi(quanti: number): Promise<number> {
       data,
       ora: m.ora,
       dataFine,
-      oraFine: m.oraFine ?? '',
+      oraFine: m.oraFine,
       stato: 'pubblicato',
       tipo: tipi.find((t) => t.toLowerCase() === m.tipo.toLowerCase()) ?? '',
       luogo: m.luogo,

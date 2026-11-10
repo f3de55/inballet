@@ -1,20 +1,32 @@
 ---
-import { fineEvento, giornoBreve, maiuscola, MESI, prossimiEventi, urlEvento } from '../lib/eventi';
+import { fineEvento, giornoBreve, inizioEvento, maiuscola, MESI, prossimiEventi, urlEvento } from '../lib/eventi';
 import { mbLen, mbSlice } from '../lib/text';
 import '../styles/components/banner.css';
 
 const eventi = (await prossimiEventi(12))
   .filter((e) => e.stato !== 'annullato')
   .map((evento) => {
-    const [, m, d] = evento.data.split('-').map(Number);
-    let quando = `${giornoBreve(evento.data)} ${d} ${maiuscola(MESI[m - 1].slice(0, 3))}`;
-    if (evento.ora) quando += ` • ${evento.ora}`;
+    const giorno = (data: string) => {
+      const [, m, d] = data.split('-').map(Number);
+      return `${giornoBreve(data)} ${d} ${maiuscola(MESI[m - 1].slice(0, 3))}`;
+    };
+    const quando = giorno(evento.data) + (evento.ora ? ` • ${evento.ora}` : '');
+    const fino = evento.dataFine && evento.dataFine !== evento.data ? giorno(evento.dataFine) + (evento.oraFine ? ` • ${evento.oraFine}` : '') : evento.oraFine;
     const titolo = mbLen(evento.titolo) > 20 ? mbSlice(evento.titolo, 20) + '…' : evento.titolo;
-    return { id: evento.id, ts: fineEvento(evento), titolo, quando, href: urlEvento(evento) };
+    return {
+      id: evento.id,
+      inizio: inizioEvento(evento),
+      ts: fineEvento(evento),
+      titolo,
+      quando,
+      inCorso: fino ? `In corso • fino a ${fino}` : 'In corso',
+      href: urlEvento(evento),
+    };
   })
   .sort((a, b) => a.ts - b.ts)
   .slice(0, 10);
 const primo = eventi[0];
+const iniziato = primo && primo.inizio <= Date.now();
 
 Astro.response.headers.set('Cache-Control', 'no-store');
 ---
@@ -27,7 +39,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
                 <div class="event-banner-info">
                     <p class="event-banner-title">{primo.titolo}</p>
                     <div class="event-banner-meta">
-                        <p class="event-banner-date">{primo.quando}</p>
+                        <p class="event-banner-date">{iniziato ? primo.inCorso : primo.quando}</p>
                         <a href={primo.href} class="event-banner-link">Scopri di più <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
                 </div>
@@ -42,9 +54,11 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 
     interface EventoBanner {
         id: string;
+        inizio: number;
         ts: number;
         titolo: string;
         quando: string;
+        inCorso: string;
         href: string;
     }
 
@@ -95,9 +109,13 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 
         #aggiorna() {
             clearTimeout(this.#timer);
-            const evento = this.#eventi.find((e) => e.ts >= Date.now());
+            const adesso = Date.now();
+            const evento = this.#eventi.find((e) => e.ts >= adesso);
             if (!evento) return this.remove();
-            this.#timer = window.setTimeout(() => this.#aggiorna(), Math.min(evento.ts - Date.now() + 1000, 2 ** 31 - 1));
+            const iniziato = evento.inizio <= adesso;
+            const prossimoCambio = iniziato ? evento.ts : evento.inizio;
+            this.#timer = window.setTimeout(() => this.#aggiorna(), Math.min(prossimoCambio - adesso + 1000, 2 ** 31 - 1));
+            this.querySelector('.event-banner-date')!.textContent = iniziato ? evento.inCorso : evento.quando;
             if (evento.id === this.#corrente) return;
             this.#corrente = evento.id;
 
@@ -105,7 +123,6 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 
             const banner = this.querySelector<HTMLElement>('.event-banner')!;
             this.querySelector('.event-banner-title')!.textContent = evento.titolo;
-            this.querySelector('.event-banner-date')!.textContent = evento.quando;
             this.querySelector<HTMLAnchorElement>('.event-banner-link')!.href = evento.href;
             banner.classList.add('visible');
             document.body.classList.add('has-event-banner');

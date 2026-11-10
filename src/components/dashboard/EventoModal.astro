@@ -29,28 +29,25 @@ const { tipi, sedi, luoghi, destinatari, costi } = Astro.props;
 
                 <div class="campi-2">
                     <div class="campo">
-                        <label for="data">Data <span class="nota">obbligatoria</span></label>
+                        <label for="data">Data di inizio <span class="nota">obbligatoria</span></label>
                         <input type="date" id="data" required>
                     </div>
                     <div class="campo">
-                        <label for="ora">Ora</label>
-                        <input type="time" id="ora">
+                        <label for="ora">Ora di inizio <span class="nota">obbligatoria</span></label>
+                        <input type="time" id="ora" required>
                     </div>
                 </div>
 
-                <details class="libreria" id="fineEvento">
-                    <summary>Fine dell’evento <span class="nota">facoltativa: ora di fine o più giorni</span></summary>
-                    <div class="campi-2">
-                        <div class="campo">
-                            <label for="dataFine">Ultimo giorno</label>
-                            <input type="date" id="dataFine">
-                        </div>
-                        <div class="campo">
-                            <label for="oraFine">Ora di fine</label>
-                            <input type="time" id="oraFine">
-                        </div>
+                <div class="campi-2">
+                    <div class="campo">
+                        <label for="dataFine">Data di fine <span class="nota">obbligatoria</span></label>
+                        <input type="date" id="dataFine" required>
                     </div>
-                </details>
+                    <div class="campo">
+                        <label for="oraFine">Ora di fine <span class="nota">obbligatoria</span></label>
+                        <input type="time" id="oraFine" required>
+                    </div>
+                </div>
 
                 <div class="campo">
                     <label for="luogo">Luogo</label>

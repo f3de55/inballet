@@ -64,6 +64,9 @@ const editor = createEditor($('descrizione'), modalEvento.querySelector<HTMLElem
   updateEditorCounter();
 });
 campi.titolo.addEventListener('input', () => aggiornaContatore(campi.titolo));
+campi.data.addEventListener('change', () => {
+  if (campi.data.value && (!campi.dataFine.value || campi.dataFine.value < campi.data.value)) campi.dataFine.value = campi.data.value;
+});
 form.addEventListener('input', () => (modificato = true));
 
 function apriModal(ev?: Evento) {
@@ -85,7 +88,6 @@ function apriModal(ev?: Evento) {
     campi.costo.value = ev.costo || '';
     campi.prenotazione.value = ev.prenotazione || '';
   }
-  $<HTMLDetailsElement>('fineEvento').open = !!(ev?.dataFine || ev?.oraFine);
   impostaLocandina(ev?.immagine ?? '');
   $<HTMLDetailsElement>('libreria').open = false;
   aggiornaContatore(campi.titolo);
@@ -135,7 +137,6 @@ form.addEventListener('submit', async (e) => {
     salva.textContent = 'Salva evento';
     if (isInputError(error)) {
       const [nome, messaggi] = Object.entries(error.fields).find(([, m]) => m?.length) ?? [];
-      if (nome === 'dataFine' || nome === 'oraFine') $<HTMLDetailsElement>('fineEvento').open = true;
       if (nome) campoDi(nome)?.focus();
       return toast(messaggi?.[0] || 'Controlla i campi del modulo', 'error');
     }

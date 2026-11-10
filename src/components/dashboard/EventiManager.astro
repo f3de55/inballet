@@ -1,5 +1,5 @@
 ---
-import { ETICHETTE_STATO, giornoBreve, leggiEventi, leggiTipi, passato, perInizio, perMese, urlEvento } from '../../lib/eventi';
+import { ETICHETTE_STATO, giornoBreve, inCorso, leggiEventi, leggiTipi, passato, perInizio, perMese, urlEvento } from '../../lib/eventi';
 import { romeDate } from '../../lib/time';
 import { sedi } from '../../data/scuola';
 import EventoModal from './EventoModal.astro';
@@ -76,8 +76,8 @@ const gruppi = [
                                 const g2 = giorno(ev.data);
                                 const titolo = ev.titolo;
                                 const luogo = ev.luogo;
-                                const vicino = g.passato ? '' : ev.data === oggi || ev.data < oggi ? (ev.dataFine ? 'In corso' : 'Oggi') : ev.data === domani ? 'Domani' : '';
-                                const fino = ev.dataFine ? `fino al ${giorno(ev.dataFine).numero}/${ev.dataFine.slice(5, 7)}` : '';
+                                const vicino = g.passato ? '' : inCorso(ev, adesso) ? 'In corso' : ev.data === oggi ? 'Oggi' : ev.data === domani ? 'Domani' : '';
+                                const fino = ev.dataFine && ev.dataFine !== ev.data ? `fino al ${giorno(ev.dataFine).numero}/${ev.dataFine.slice(5, 7)}` : '';
                                 const ore = ev.ora ? `${ev.ora}${ev.oraFine ? `–${ev.oraFine}` : ''}` : '';
                                 return (
                                     <li class:list={['ev', { passato: g.passato }]} data-id={ev.id} data-modifica={JSON.stringify(ev)}

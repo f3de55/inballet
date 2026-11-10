@@ -36,13 +36,7 @@ const dataValida = (s: string) => isDateFormat(s) && !Number.isNaN(romeTimestamp
 const ora2 = (s: string) => (s ? s.padStart(5, '0') : s);
 
 const testo = (max: number, messaggio: string) => z.string().trim().max(max, messaggio).default('');
-const ora = (messaggio: string) =>
-  z
-    .string()
-    .trim()
-    .default('')
-    .refine((s) => !s || isValidTime(s), messaggio)
-    .transform(ora2);
+const ora = (vuota: string, messaggio: string) => z.string().trim().min(1, vuota).refine(isValidTime, messaggio).transform(ora2);
 
 export const inputEvento = z
   .object({
@@ -56,14 +50,10 @@ export const inputEvento = z
       .min(1, 'Il titolo è obbligatorio')
       .min(3, 'Il titolo deve avere almeno 3 caratteri')
       .max(100, 'Il titolo non può superare i 100 caratteri'),
-    data: z.string().trim().min(1, 'La data è obbligatoria').refine(dataValida, 'Data non valida'),
-    ora: ora('Ora non valida (usa HH:MM)'),
-    dataFine: z
-      .string()
-      .trim()
-      .default('')
-      .refine((s) => !s || dataValida(s), 'Data di fine non valida'),
-    oraFine: ora('Ora di fine non valida (usa HH:MM)'),
+    data: z.string().trim().min(1, 'La data di inizio è obbligatoria').refine(dataValida, 'Data di inizio non valida'),
+    ora: ora('L’ora di inizio è obbligatoria', 'Ora di inizio non valida (usa HH:MM)'),
+    dataFine: z.string().trim().min(1, 'La data di fine è obbligatoria').refine(dataValida, 'Data di fine non valida'),
+    oraFine: ora('L’ora di fine è obbligatoria', 'Ora di fine non valida (usa HH:MM)'),
     stato: z.enum(STATI).default('pubblicato'),
     tipo: testo(30, 'Tipo troppo lungo'),
     luogo: testo(150, 'Il luogo non può superare i 150 caratteri'),
@@ -85,9 +75,8 @@ export const inputEvento = z
   })
   .superRefine((e, ctx) => {
     const errore = (path: string, message: string) => ctx.addIssue({ code: 'custom', path: [path], message });
-    if (e.oraFine && !e.ora) errore('ora', "Indica anche l'ora di inizio");
-    if (e.dataFine && e.dataFine < e.data) errore('dataFine', 'La fine è prima dell’inizio');
-    else if (e.ora && e.oraFine && (!e.dataFine || e.dataFine === e.data) && e.oraFine <= e.ora) errore('oraFine', 'L’ora di fine è prima dell’inizio');
+    if (e.dataFine < e.data) errore('dataFine', 'La fine è prima dell’inizio');
+    else if (e.dataFine === e.data && e.oraFine <= e.ora) errore('oraFine', 'L’ora di fine deve essere dopo l’inizio');
   });
 
 type InputEvento = z.output<typeof inputEvento>;
@@ -95,7 +84,11 @@ type InputEvento = z.output<typeof inputEvento>;
 export const fineEvento = (e: Pick<Evento, 'data' | 'ora' | 'dataFine' | 'oraFine'>) =>
   e.oraFine ? romeTimestamp(e.dataFine || e.data, e.oraFine) : e.dataFine ? romeTimestamp(e.dataFine) : romeTimestamp(e.data, e.ora || '23:59');
 
+export const inizioEvento = (e: Pick<Evento, 'data' | 'ora'>) => romeTimestamp(e.data, e.ora || '00:00');
+
 export const passato = (e: Evento, now = Date.now()) => fineEvento(e) < now;
+
+export const inCorso = (e: Evento, now = Date.now()) => inizioEvento(e) <= now && !passato(e, now);
 
 const pubblico = (e: Evento) => e.stato !== 'bozza';
 
@@ -311,11 +304,10 @@ function parti(data: string) {
 
 export function quando(e: Pick<Evento, 'data' | 'ora' | 'dataFine' | 'oraFine'>): string {
   const a = parti(e.data);
-  const ore = e.ora ? `, ore ${e.ora}${e.oraFine ? `–${e.oraFine}` : ''}` : '';
-  if (!e.dataFine || e.dataFine === e.data) return `${a.giorno} ${a.d} ${a.mese} ${a.y}${ore}`;
+  if (!e.dataFine || e.dataFine === e.data) return `${a.giorno} ${a.d} ${a.mese} ${a.y}${e.ora ? `, ore ${e.ora}${e.oraFine ? `–${e.oraFine}` : ''}` : ''}`;
   const b = parti(e.dataFine);
   const inizio = a.y !== b.y ? `${a.giorno} ${a.d} ${a.mese} ${a.y}` : a.m !== b.m ? `${a.giorno} ${a.d} ${a.mese}` : `${a.giorno} ${a.d}`;
-  return `da ${inizio} a ${b.giorno} ${b.d} ${b.mese} ${b.y}${ore}`;
+  return `da ${inizio}${e.ora ? ` ore ${e.ora}` : ''} a ${b.giorno} ${b.d} ${b.mese} ${b.y}${e.oraFine ? ` ore ${e.oraFine}` : ''}`;
 }
 
 export const maiuscola = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);

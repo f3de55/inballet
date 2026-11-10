@@ -30,7 +30,7 @@ Every new or edited line follows these rules; `npm run verifica:stile`, `npm run
 
 ## Architecture
 
-**Astro 7** with hybrid rendering. Default output is `static` (prerendered HTML), but pages with `export const prerender = false` are SSR. Currently SSR: `/login`, `/dashboard`, `/robots.txt`, `/llms.txt`, `/documenti`, `/spettacoli-eventi` (+ `/spettacoli-eventi/<slug>/calendario.ics`), and the image asset route. Server islands (`server:defer`, the page stays static): `Banner`, `RecensioniGoogle` (home), `OrariSegreteria` (`/contatti`).
+**Astro 7** with hybrid rendering. Default output is `static` (prerendered HTML), but pages with `export const prerender = false` are SSR. Currently SSR: `/login`, `/dashboard`, `/presentazione`, `/robots.txt`, `/llms.txt`, `/documenti`, `/spettacoli-eventi` (+ `/spettacoli-eventi/<slug>/calendario.ics`), and the image asset route. Server islands (`server:defer`, the page stays static): `Banner`, `RecensioniGoogle` (home), `OrariSegreteria` (`/contatti`).
 
 ### Request flow
 
@@ -48,6 +48,10 @@ Runs on every on-demand request (pages rendered on demand, Actions, server islan
 - POSTs to `/_actions/*` need an `Origin` header equal to the site origin (403 otherwise), so scripts and tests calling an Action must send it.
 - `/_image` (the Astro endpoint that resizes the photos of on-demand pages with sharp on every request) goes through `src/lib/immagini-ottimizzate.ts`: each variant is produced once and kept in memory (64 MB, least recently used out first, `immutable` + ETag); only the shapes the site generates are accepted (`href` in `/_astro/`, `w`/`h` up to 2560, `f` webp/jpg/png, `fit=cover`), at most 90 new variants a minute. Anything else, or a new variant over that ceiling, is redirected to the original file, so photos keep showing and nobody can make the server resize without end. A new `getImage` option (quality, another format…) must be added to `PARAMETRI` / `FORMATI` there.
 - Every response gets `X-Content-Type-Options`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy`; `/login` and `/dashboard` are `no-store`.
+
+### Presentazione (`/presentazione`)
+
+Page for the owner, behind the dashboard login (redirects to `/login`), `noindex`, `Disallow` in robots.txt and excluded from the sitemap (`astro.config.mjs` filter). Narrative on the left (28 steps in 5 chapters, content in `src/data/presentazione.ts`), live sites in iframes on the right: today's inballet.it (`SITO_ATTUALE`, numbered red notes) and the new site (a spotlight on the real element named by the step's `evidenzia` selector, so a renamed class or id needs the step updated; the dashboard steps find their element only when it has data). Script `scripts/presentazione.ts`, CSS `styles/admin/presentazione.css` (admin tokens, not loaded by the public site). Each step has its own address (`#passo-12`). `layouts/Admin.astro` sends `X-Frame-Options: SAMEORIGIN` / `frame-ancestors 'self'` so the real dashboard can be shown inside; other sites still cannot frame it. The dashboard shown is the real one: events created during a demo exist (use «Dati demo»). `src/data/` is in `.gitignore` (rule `data/`): a new file there needs `git add -f`, or the Railway build breaks. Until the domain points to the new site, the «sito di oggi» frame shows the old one; afterwards it will show the new one.
 
 ### Backend: Astro Actions
 

@@ -74,6 +74,7 @@ function apriEvento(slug: string) {
   $<HTMLAnchorElement>('btnGoogle').href = e.google || '#';
   $<HTMLAnchorElement>('btnApple').href = e.ics || '#';
   $('btnCondividiTesto').textContent = 'Condividi';
+  $('iconaCondividi').className = 'fas fa-share-alt';
 
   history.replaceState(null, '', linkEvento(e));
   if (!dialog.open) dialog.showModal();
@@ -108,13 +109,17 @@ async function condividi() {
     await navigator.share({ title: e.titolo, text: e.condividi, url }).catch(() => {});
     return;
   }
+  const esito = (testo: string, icona: string) => {
+    $('btnCondividiTesto').textContent = testo;
+    $('iconaCondividi').className = `fas ${icona}`;
+  };
   try {
     await navigator.clipboard.writeText(url);
-    $('btnCondividiTesto').textContent = 'Link copiato';
+    esito('Link copiato', 'fa-check');
   } catch {
-    $('btnCondividiTesto').textContent = 'Copia non riuscita';
+    esito('Copia non riuscita', 'fa-times');
   }
-  setTimeout(() => ($('btnCondividiTesto').textContent = 'Condividi'), 2500);
+  setTimeout(() => esito('Condividi', 'fa-share-alt'), 2500);
 }
 $('btnCondividi').addEventListener('click', () => void condividi());
 

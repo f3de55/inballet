@@ -129,7 +129,7 @@ function leggi(): Promise<void> {
 
 export async function datiGoogle(): Promise<DatiGoogle | null> {
   await leggi();
-  const scaduti = !dati || Math.abs(Date.now() - Date.parse(dati.aggiornato)) > DURATA;
+  const scaduti = !dati || Math.abs(Date.now() - Date.parse(dati.aggiornato)) > (completi(dati) ? DURATA : RIPROVA_MAX);
   if (scaduti && Date.now() >= prossimoTentativo) void aggiorna();
   if (!dati && aggiornamento) await aggiornamento;
   return dati;

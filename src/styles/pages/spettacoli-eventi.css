@@ -456,6 +456,10 @@ html:has(dialog[open]) {
   overflow: hidden;
 }
 
+.evento-dialog {
+  scrollbar-width: none;
+}
+
 .evento-dialog .btn-icon {
   border-color: var(--linea);
   background: var(--white);
@@ -504,12 +508,6 @@ html:has(dialog[open]) {
   mask:
     var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
     linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
-}
-
-@media (min-width: 1025px) {
-  .evento-dialog.decoro-onde {
-    background-attachment: local;
-  }
 }
 
 .evento-locandina {

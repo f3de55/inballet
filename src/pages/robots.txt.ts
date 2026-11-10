@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 
 export const prerender = false;
 
-const ufficiale = ['User-agent: *', 'Allow: /', 'Disallow: /login', 'Disallow: /dashboard', 'Disallow: /_actions/'];
+const ufficiale = ['User-agent: *', 'Allow: /', 'Disallow: /login', 'Disallow: /dashboard', 'Disallow: /presentazione', 'Disallow: /_actions/'];
 
 export const GET: APIRoute = ({ site, url }) => {
   const dominio = url.hostname.replace(/^www\./, '') === site!.hostname.replace(/^www\./, '');

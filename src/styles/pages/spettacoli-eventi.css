@@ -451,20 +451,27 @@ html:has(dialog[open]) {
   overflow: hidden;
 }
 
-.evento-dialog-corpo.con-locandina {
-  grid-template-columns: 17rem minmax(0, 1fr);
-  align-items: start;
+@media (min-width: 601px) {
+  .evento-dialog {
+    width: min(46rem, calc(100% - 3rem));
+  }
+}
+
+.evento-dialog-corpo {
+  --corpo-x: 3rem;
+  --corpo-y: 3rem;
+  padding: var(--corpo-y) var(--corpo-x);
 }
 
 .evento-locandina {
-  position: sticky;
-  top: 3rem;
+  position: relative;
   display: block;
-  width: 100%;
-  aspect-ratio: 4 / 5;
+  width: auto;
+  aspect-ratio: 16 / 10;
+  margin: 0 calc(var(--corpo-x) * -1) calc(var(--corpo-y) * -1);
   padding: 0;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: 0;
   background: var(--dark-navy);
   overflow: hidden;
   isolation: isolate;
@@ -530,11 +537,6 @@ html:has(dialog[open]) {
 .evento-dialog-titolo {
   margin: 0 3rem 1.75rem 0;
   color: var(--dark-navy);
-}
-
-.evento-dialog-corpo.con-locandina .evento-dialog-titolo,
-.evento-dialog-corpo.con-locandina .evento-etichette {
-  margin-right: 1.5rem;
 }
 
 .evento-dettagli {
@@ -717,44 +719,29 @@ html:has(dialog[open]) {
 
 @media (max-width: 900px) {
   .evento-dialog-corpo {
-    padding: 2.5rem 2rem 2rem;
-  }
-
-  .evento-dialog-corpo.con-locandina {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
+    --corpo-x: 2rem;
+    --corpo-y: 2rem;
+    padding-top: 2.5rem;
   }
 
   .evento-locandina {
-    position: relative;
-    top: auto;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
   }
 }
 
 @media (max-width: 600px) {
-  .evento-dialog-corpo,
-  .evento-dialog-corpo.con-locandina {
-    grid-template-columns: minmax(0, 1fr);
+  .evento-dialog-corpo {
+    --corpo-x: 1.5rem;
     gap: 1.75rem;
-    padding: 1.5rem 1.5rem 2rem;
+    padding-top: 1.5rem;
   }
 
   .evento-dialog-corpo:not(.con-locandina) {
     padding-top: 2rem;
   }
 
-  .evento-dialog-testo {
-    order: -1;
-  }
-
   .evento-locandina {
     aspect-ratio: 4 / 5;
-  }
-
-  .evento-dialog-corpo.con-locandina .evento-dialog-titolo,
-  .evento-dialog-corpo.con-locandina .evento-etichette {
-    margin-right: 2.5rem;
   }
 
   .evento-dialog-titolo {

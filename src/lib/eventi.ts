@@ -92,7 +92,8 @@ export const inputEvento = z
 
 type InputEvento = z.output<typeof inputEvento>;
 
-export const fineEvento = (e: Pick<Evento, 'data' | 'dataFine' | 'oraFine'>) => romeTimestamp(e.dataFine || e.data, e.oraFine || '23:59');
+export const fineEvento = (e: Pick<Evento, 'data' | 'ora' | 'dataFine' | 'oraFine'>) =>
+  e.oraFine ? romeTimestamp(e.dataFine || e.data, e.oraFine) : e.dataFine ? romeTimestamp(e.dataFine) : romeTimestamp(e.data, e.ora || '23:59');
 
 export const passato = (e: Evento, now = Date.now()) => fineEvento(e) < now;
 

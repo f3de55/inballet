@@ -5,14 +5,15 @@ import '../styles/components/banner.css';
 
 const eventi = (await prossimiEventi(12))
   .filter((e) => e.stato !== 'annullato')
-  .slice(0, 10)
   .map((evento) => {
     const [, m, d] = evento.data.split('-').map(Number);
     let quando = `${giornoBreve(evento.data)} ${d} ${maiuscola(MESI[m - 1].slice(0, 3))}`;
     if (evento.ora) quando += ` • ${evento.ora}`;
     const titolo = mbLen(evento.titolo) > 20 ? mbSlice(evento.titolo, 20) + '…' : evento.titolo;
     return { id: evento.id, ts: fineEvento(evento), titolo, quando, href: urlEvento(evento) };
-  });
+  })
+  .sort((a, b) => a.ts - b.ts)
+  .slice(0, 10);
 const primo = eventi[0];
 
 Astro.response.headers.set('Cache-Control', 'no-store');
@@ -57,7 +58,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
     };
 
     class EventBanner extends HTMLElement {
-        #interval = 0;
+        #timer = 0;
         #eventi: EventoBanner[] = [];
         #corrente: string | null = null;
         #observer = new ResizeObserver(() => this.#updateHeight());
@@ -76,18 +77,27 @@ Astro.response.headers.set('Cache-Control', 'no-store');
             this.querySelector('.event-banner-link')!.addEventListener('click', dismiss);
 
             this.#aggiorna();
-            if (this.isConnected) this.#interval = window.setInterval(() => this.#aggiorna(), 60000);
+            document.addEventListener('visibilitychange', this.#ricontrolla);
+            window.addEventListener('pageshow', this.#ricontrolla);
         }
 
         disconnectedCallback() {
-            clearInterval(this.#interval);
+            clearTimeout(this.#timer);
+            document.removeEventListener('visibilitychange', this.#ricontrolla);
+            window.removeEventListener('pageshow', this.#ricontrolla);
             this.#observer.disconnect();
             this.#hide();
         }
 
+        #ricontrolla = () => {
+            if (!document.hidden) this.#aggiorna();
+        };
+
         #aggiorna() {
+            clearTimeout(this.#timer);
             const evento = this.#eventi.find((e) => e.ts >= Date.now());
             if (!evento) return this.remove();
+            this.#timer = window.setTimeout(() => this.#aggiorna(), Math.min(evento.ts - Date.now() + 1000, 2 ** 31 - 1));
             if (evento.id === this.#corrente) return;
             this.#corrente = evento.id;
 

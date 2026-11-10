@@ -85,7 +85,8 @@ In Docker, this directory is a named volume (`inballet-data`) so data survives r
 - Model: `data`/`ora` start, optional `dataFine`/`oraFine`, `stato` (`pubblicato`, `bozza` = hidden from the site, `annullato`, `esaurito`), `prenotazione` link, `slug` (+ `alias` of old slugs).
 - No per-event pages on purpose: details open in a modal on `/spettacoli-eventi` (SSR list + `scripts/calendario.ts`). `?evento=<slug>` (or an old slug / the id) opens the modal and sets og:title/og:image to that event, so shared links preview the poster. The page also carries schema.org/Event JSON-LD for upcoming non-demo events (`datiStrutturati()`).
 - Text fields are stored as plain text and escaped when rendered.
-- One rule for "past" everywhere (site, banner, dashboard, chatbot): `passato()` = the end (`dataFine`/`oraFine`, default 23:59 Rome time) is over.
+- One rule for "past" everywhere (site, banner, dashboard, chatbot): `passato()` = `fineEvento()` is over, Rome time: the end time if set (`dataFine`/`oraFine`), otherwise the start time (`data` + `ora`, so an event at 11:19 is past from 11:19:01), 23:59 only for events without any time.
+- Event banner (`Banner.astro`, server island, `no-store`): the not-past events ordered by `fineEvento()`, so each one gets its turn before it ends; the page switches to the next one at the exact second (timer, re-checked on `visibilitychange` / `pageshow`). Closing it (or «Scopri di più») hides only that event (`banner_dismissed_<id>` in localStorage): the next event shows again to everyone.
 - Removing a type keeps it on the events that use it; deleting a poster clears it from the events that use it.
 
 ### Google (reviews and opening hours)

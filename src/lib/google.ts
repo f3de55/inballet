@@ -27,6 +27,7 @@ export interface DatiGoogle {
 
 const DURATA = 30 * 86400_000;
 const RIPROVA = 3600_000;
+const RIPROVA_MAX = 86400_000;
 const MAX_RECENSIONI = 5;
 const CAMPI = 'rating,userRatingCount,reviews,regularOpeningHours';
 

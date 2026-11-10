@@ -1,5 +1,8 @@
-import { mkdir, readFile, rename, stat, writeFile } from 'node:fs/promises';
+import { randomBytes } from 'node:crypto';
+import { createReadStream } from 'node:fs';
+import { mkdir, readFile, rename, stat, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { Readable } from 'node:stream';
 import { DATA_DIR } from 'astro:env/server';
 
 const dataDir = path.resolve(DATA_DIR);
@@ -23,18 +26,32 @@ export async function ensureDir(dir: string): Promise<void> {
 }
 
 export async function readJson<T>(file: string, fallback: T): Promise<T> {
+  let testo: string;
   try {
-    return (JSON.parse(await readFile(file, 'utf8')) ?? fallback) as T;
+    testo = await readFile(file, 'utf8');
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code === 'ENOENT') return fallback;
+    throw e;
+  }
+  try {
+    return (JSON.parse(testo) ?? fallback) as T;
   } catch {
+    console.error(`File dati illeggibile, messo da parte: ${file}.illeggibile`);
+    await rename(file, `${file}.illeggibile`).catch(() => {});
     return fallback;
   }
 }
 
 export async function writeJson(file: string, data: unknown): Promise<void> {
   await ensureDir(path.dirname(file));
-  const tmp = `${file}.${process.pid}.tmp`;
-  await writeFile(tmp, JSON.stringify(data, null, 4));
-  await rename(tmp, file);
+  const tmp = `${file}.${randomBytes(6).toString('hex')}.tmp`;
+  try {
+    await writeFile(tmp, JSON.stringify(data, null, 4));
+    await rename(tmp, file);
+  } catch (e) {
+    await unlink(tmp).catch(() => {});
+    throw e;
+  }
 }
 
 let queue: Promise<unknown> = Promise.resolve();
@@ -50,7 +67,9 @@ export async function serviFile(file: string, request: Request, headers: Record<
   const etag = `"${st.size.toString(16)}-${Math.floor(st.mtimeMs).toString(16)}"`;
   const tutti = { ...headers, 'Cache-Control': 'public, max-age=86400', 'X-Content-Type-Options': 'nosniff', ETag: etag };
   if (request.headers.get('if-none-match') === etag) return new Response(null, { status: 304, headers: tutti });
-  return new Response(await readFile(file), { headers: tutti });
+  const conPeso = { ...tutti, 'Content-Length': String(st.size) };
+  if (request.method === 'HEAD') return new Response(null, { headers: conPeso });
+  return new Response(Readable.toWeb(createReadStream(file)) as ReadableStream, { headers: conPeso });
 }
 
 export const nonTrovato = () => new Response('Not found', { status: 404 });

@@ -6,7 +6,7 @@ const dati = await datiGoogle();
 const settimana = dati?.orari.some((f) => f.length) ? dati.orari : null;
 const schema = settimana && { '@context': 'https://schema.org', '@type': 'DanceSchool', '@id': `${scuola.sito}/#scuola`, openingHoursSpecification: schemaOrari(settimana) };
 
-Astro.response.headers.set('Cache-Control', 'public, max-age=3600');
+Astro.response.headers.set('Cache-Control', settimana ? 'public, max-age=3600' : 'no-store');
 ---
 
 <orari-segreteria>

@@ -123,15 +123,11 @@ const og = aperto
         <section id="calendario" class="eventi-section decoro-onde" aria-labelledby="eventi-titolo" data-chatbot-escludi>
             <div class="container">
                 <header class="eventi-header">
-                    <div class="eventi-intro">
-                        <p class="eyebrow">Calendario</p>
-                        <h2 class="titolo-sezione" id="eventi-titolo">Prossimi <em>appuntamenti</em></h2>
-                        <p class="intro-sezione"><strong>Spettacoli, saggi, workshop e lezioni aperte</strong>: apri un evento per i dettagli e per aggiungerlo al tuo calendario.</p>
-                    </div>
+                    <h2 class="sr-only" id="eventi-titolo">Calendario degli eventi</h2>
                     {eventi.length > 0 && (
                         <div class="vista-switch" id="vistaSwitch" role="group" aria-label="Visualizzazione" hidden>
-                            <button type="button" data-vista="elenco" aria-pressed="true"><i class="fas fa-list" aria-hidden="true"></i> Elenco</button>
-                            <button type="button" data-vista="calendario" aria-pressed="false"><i class="fas fa-calendar-alt" aria-hidden="true"></i> Calendario</button>
+                            <button type="button" data-vista="calendario" aria-pressed="true"><i class="fas fa-calendar-alt" aria-hidden="true"></i> Calendario</button>
+                            <button type="button" data-vista="elenco" aria-pressed="false"><i class="fas fa-list" aria-hidden="true"></i> Elenco</button>
                         </div>
                     )}
                 </header>
@@ -148,7 +144,7 @@ const og = aperto
                     </div>
                 )}
 
-                <div class="vista-elenco" id="vistaElenco">
+                <div class="vista-elenco" id="vistaElenco" hidden={eventi.length > 0}>
                     {[{ gruppi: gruppiProssimi, passati: false }, { gruppi: gruppiPassati, passati: true }].map(({ gruppi, passati: sonoPassati }) => {
                         const elenco = gruppi.map((mese) => (
                             <div class="agenda-gruppo">
@@ -199,7 +195,7 @@ const og = aperto
                 </div>
 
                 {eventi.length > 0 && (
-                    <div class="vista-calendario" id="vistaCalendario" hidden>
+                    <div class="vista-calendario" id="vistaCalendario">
                         <div class="calendario-nav">
                             <h3 class="calendario-mese" id="meseCorrente" aria-live="polite"></h3>
                             <div class="calendario-frecce">

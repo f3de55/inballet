@@ -199,6 +199,7 @@ if (eventi.length) {
     if (vista === 'calendario') renderMese();
   };
 
+  mostraVista('calendario');
   $('vistaSwitch').hidden = false;
   $('vistaSwitch').addEventListener('click', (ev) => {
     const b = (ev.target as Element).closest<HTMLButtonElement>('button[data-vista]');

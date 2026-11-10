@@ -28,27 +28,22 @@
 
 .eventi-header {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.75rem;
-  margin-bottom: var(--spazio-intestazione);
-  text-align: center;
+  justify-content: center;
+  margin-bottom: 2.5rem;
 }
 
-.eventi-intro {
-  max-width: 34rem;
+.eventi-header:not(:has(.vista-switch)) {
+  display: contents;
 }
 
-.eventi-intro > .eyebrow {
-  margin-bottom: 1rem;
-}
+@media (scripting: none) {
+  .eventi-section .vista-elenco[hidden] {
+    display: block !important;
+  }
 
-.eventi-intro .titolo-sezione {
-  margin-bottom: 1.25rem;
-}
-
-.eventi-intro .intro-sezione {
-  margin: 0;
+  .eventi-section .vista-calendario {
+    display: none;
+  }
 }
 
 .vista-switch {

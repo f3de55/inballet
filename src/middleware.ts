@@ -20,7 +20,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
     }
   }
 
-  const risposta = request.method === 'GET' && url.pathname === '/_image' ? await immagineOttimizzata(request, url, () => next()) : await next();
+  const immagine = url.pathname === '/_image' && (request.method === 'GET' || request.method === 'HEAD');
+  const risposta = immagine ? await immagineOttimizzata(request, url, () => next()) : await next();
   risposta.headers.set('X-Content-Type-Options', 'nosniff');
   risposta.headers.set('X-Frame-Options', 'SAMEORIGIN');
   risposta.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');

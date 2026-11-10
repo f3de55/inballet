@@ -24,12 +24,12 @@ const anima = (d: HTMLDetailsElement) => {
   d.classList.add('footer-col--anima');
   const animazione = d.animate(
     { height: [`${da}px`, `${a}px`] },
-    { duration: parseFloat(stile.getPropertyValue('--durata-pannello')) * 1000, easing: stile.getPropertyValue('--curva') },
+    { duration: parseFloat(stile.getPropertyValue('--durata-pannello')) * 1000, easing: stile.getPropertyValue('--curva'), fill: 'forwards' },
   );
   animazioni.set(d, animazione);
   animazione.onfinish = () => {
     d.open = apri;
-    d.classList.remove('footer-col--anima', 'footer-col--chiude');
+    animazione.cancel();
   };
   animazione.oncancel = () => d.classList.remove('footer-col--anima', 'footer-col--chiude');
 };

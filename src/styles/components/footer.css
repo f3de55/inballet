@@ -410,6 +410,14 @@
     overflow: hidden;
   }
 
+  .footer-col > :not(summary) {
+    transition: opacity var(--durata-breve) ease;
+  }
+
+  .footer-col--chiude > :not(summary) {
+    opacity: 0;
+  }
+
   .footer-col .footer-titolo {
     margin: 0;
   }

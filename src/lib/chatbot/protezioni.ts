@@ -116,13 +116,9 @@ export const bloccato = (ipHash: string) => (visitatori.get(ipHash)?.bloccatoFin
 
 export function controllaLimiti(ipHash: string): string | null {
   const now = Date.now() / 1000;
-  let v = visitatori.get(ipHash);
-  if (!v) {
-    if (visitatori.size >= MAX_VISITATORI) pulisciLimiti();
-    if (visitatori.size >= MAX_VISITATORI) visitatori.delete(visitatori.keys().next().value!);
-    v = { accettati: [], tentativi: [], bloccatoFino: 0 };
-    visitatori.set(ipHash, v);
-  }
+  const v = visitatori.get(ipHash) ?? { accettati: [], tentativi: [], bloccatoFino: 0 };
+  if (!visitatori.has(ipHash) && visitatori.size >= MAX_VISITATORI) visitatori.delete(visitatori.keys().next().value!);
+  visitatori.set(ipHash, v);
   if (v.bloccatoFino > now) return `Troppe richieste. Riprova tra ${Math.ceil((v.bloccatoFino - now) / 60)} minuti. ⏳`;
 
   v.tentativi = [...v.tentativi.filter((t) => now - t < 3600), now];

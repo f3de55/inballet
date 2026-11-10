@@ -237,33 +237,33 @@ const og = aperto
     <Fragment slot="after-main">
     <dialog class="dialogo evento-dialog" id="eventoDialog" aria-labelledby="dialogTitolo">
         <div class="dialogo-barra">
+            <button type="button" class="evento-condividi" id="btnCondividi">
+                <i class="fas fa-share-alt" aria-hidden="true"></i>
+                <span id="btnCondividiTesto">Condividi</span>
+            </button>
             <button type="button" class="btn-icon btn-icon--chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
         </div>
         <div class="dialogo-corpo evento-dialog-corpo" id="dialogCorpo">
+            <div class="evento-testata">
+                <p class="evento-etichette titoletto" id="dialogEtichette"></p>
+                <h2 class="evento-dialog-titolo" id="dialogTitolo"></h2>
+                <div class="evento-descrizione" id="dialogDescrizione"></div>
+            </div>
             <button type="button" class="evento-locandina" id="dialogLocandinaBtn" aria-label="Ingrandisci la locandina" hidden>
                 <img id="dialogLocandina" src="data:," alt="">
                 <span class="evento-locandina-zoom" aria-hidden="true"><i class="fas fa-expand"></i></span>
             </button>
-            <div class="evento-dialog-testo">
-                <p class="evento-etichette titoletto" id="dialogEtichette"></p>
-                <h2 class="evento-dialog-titolo" id="dialogTitolo"></h2>
-                <dl class="evento-dettagli" id="dialogDettagli"></dl>
-                <div class="evento-descrizione" id="dialogDescrizione"></div>
-                <div class="evento-azioni">
-                    <a class="btn-primary" id="dialogPrenota" href="#" target="_blank" rel="noopener" hidden>
-                        Prenota <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    <span class="sr-only"> (si apre in una nuova scheda)</span></a>
-                    <div class="evento-azioni-calendario" id="dialogCalendario">
-                        <p class="evento-azioni-label titoletto">Aggiungi al calendario</p>
-                        <div class="evento-azioni-btn">
-                            <a class="evento-azione" id="btnGoogle" href="#" target="_blank" rel="noopener noreferrer">Google Calendar<span class="sr-only"> (si apre in una nuova scheda)</span></a>
-                            <a class="evento-azione" id="btnApple" href="#" download>Apple / Outlook</a>
-                        </div>
+            <dl class="evento-dettagli" id="dialogDettagli"></dl>
+            <div class="evento-azioni">
+                <a class="btn-primary" id="dialogPrenota" href="#" target="_blank" rel="noopener" hidden>
+                    Prenota <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                <span class="sr-only"> (si apre in una nuova scheda)</span></a>
+                <div class="evento-azioni-calendario" id="dialogCalendario">
+                    <p class="evento-azioni-label titoletto">Aggiungi al calendario</p>
+                    <div class="evento-azioni-btn">
+                        <a class="evento-azione" id="btnGoogle" href="#" target="_blank" rel="noopener noreferrer">Google Calendar<span class="sr-only"> (si apre in una nuova scheda)</span></a>
+                        <a class="evento-azione" id="btnApple" href="#" download>Apple / Outlook</a>
                     </div>
-                    <button type="button" class="evento-condividi" id="btnCondividi">
-                        <i class="fas fa-share-alt" aria-hidden="true"></i>
-                        <span id="btnCondividiTesto">Condividi</span>
-                    </button>
                 </div>
             </div>
         </div>

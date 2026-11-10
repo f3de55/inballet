@@ -451,19 +451,67 @@ html:has(dialog[open]) {
   overflow: hidden;
 }
 
+.evento-dialog .dialogo-barra {
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.evento-dialog-corpo {
+  --corpo-alto: 3rem;
+  --corpo-lato: 3rem;
+  gap: 2.5rem;
+  padding: var(--corpo-alto) var(--corpo-lato) 3rem;
+}
+
+.evento-testata {
+  position: relative;
+  isolation: isolate;
+  margin: calc(var(--corpo-alto) * -1) calc(var(--corpo-lato) * -1) 0;
+  padding: 4.75rem var(--corpo-lato) calc(var(--onda-h) + 2rem);
+}
+
+.con-locandina .evento-testata {
+  padding-bottom: calc(var(--onda-h) + 3.5rem);
+}
+
+.evento-testata::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg-soft);
+  transform: scaleY(-1);
+  -webkit-mask:
+    var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
+    linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
+  mask:
+    var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
+    linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
+}
+
 .evento-locandina {
-  position: sticky;
-  top: 3rem;
+  position: relative;
+  z-index: 1;
   display: block;
-  width: 100%;
+  justify-self: center;
+  width: min(15rem, 70%);
   aspect-ratio: 4 / 5;
+  margin-top: -6rem;
   padding: 0;
-  border: none;
+  border: 6px solid var(--white);
   border-radius: var(--radius-md);
   background: var(--dark-navy);
+  box-shadow: 0 24px 60px rgb(var(--nero-rgb) / 0.2);
   overflow: hidden;
   isolation: isolate;
   cursor: zoom-in;
+  transform: rotate(3deg);
+  transition: transform var(--durata) var(--curva);
+}
+
+.evento-locandina:hover,
+.evento-locandina:focus-visible {
+  transform: rotate(0deg) scale(1.03);
 }
 
 .evento-locandina::before {
@@ -501,7 +549,7 @@ html:has(dialog[open]) {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem 1rem;
-  margin: 0 3rem 0.75rem 0;
+  margin: 0 0 0.75rem;
 }
 
 .evento-etichette:empty {
@@ -523,23 +571,30 @@ html:has(dialog[open]) {
 }
 
 .evento-dialog-titolo {
-  margin: 0 3rem 1.75rem 0;
+  margin: 0;
   color: var(--dark-navy);
 }
 
+.evento-descrizione {
+  margin-top: 1rem;
+}
+
 .evento-dettagli {
-  margin: 0 0 1.75rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 2rem;
+  margin: 0;
 }
 
 .evento-dettagli div {
-  display: grid;
-  grid-template-columns: 6.5rem minmax(0, 1fr);
-  align-items: baseline;
-  padding: 0.8rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 0;
   background: var(--linea-basso);
 }
 
-.evento-dettagli div:first-child {
+.evento-dettagli div:nth-child(-n + 2) {
   padding-top: 0;
 }
 
@@ -600,7 +655,10 @@ html:has(dialog[open]) {
   justify-content: space-between;
   align-items: flex-end;
   gap: 1.25rem 2rem;
-  margin-top: 2rem;
+}
+
+.evento-azioni:not(:has(> :not([hidden]))) {
+  display: none;
 }
 
 .evento-azioni .btn-primary {
@@ -644,14 +702,17 @@ html:has(dialog[open]) {
   align-items: center;
   gap: 0.5rem;
   min-height: 44px;
-  padding: 0 0.25rem;
+  margin-top: 1rem;
+  padding: 0 1.1rem;
   border: none;
-  background: none;
+  border-radius: var(--radius-pill);
+  background: var(--grigio-100);
   font: inherit;
   font-size: var(--ui-size);
   font-weight: var(--ui-weight);
-  color: var(--primary-blue-dark);
+  color: var(--black);
   cursor: pointer;
+  transition: background-color var(--durata-breve) ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -661,7 +722,7 @@ html:has(dialog[open]) {
   }
 
   .evento-condividi:hover {
-    color: var(--dark-navy);
+    background: var(--grigio-300);
   }
 }
 
@@ -715,145 +776,73 @@ html:has(dialog[open]) {
   }
 
   .evento-dialog-corpo.con-locandina {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) 15rem;
-    gap: 0 2.5rem;
-    isolation: isolate;
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    column-gap: 2.5rem;
   }
 
-  .evento-dialog-corpo.con-locandina::before {
-    content: '';
-    grid-row: 1 / 4;
-    grid-column: 1 / -1;
-    z-index: -1;
-    margin: -3rem -3rem calc(var(--onda-h) * -1);
-    background: var(--bg-soft);
-    transform: scaleY(-1);
-    -webkit-mask:
-      var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
-      linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
-    mask:
-      var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
-      linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
+  .con-locandina .evento-testata {
+    grid-area: 1 / 1 / 2 / -1;
+    min-height: 20rem;
+    padding-right: calc(var(--corpo-lato) + 17.5rem);
+    padding-bottom: calc(var(--onda-h) + 2rem);
   }
 
-  .con-locandina .evento-dialog-testo {
-    display: contents;
-  }
-
-  .con-locandina .evento-etichette {
-    grid-area: 1 / 1 / 2 / 3;
-    margin: 0 0 1rem;
-  }
-
-  .con-locandina .evento-dialog-titolo {
-    grid-area: 2 / 1 / 3 / 3;
-    margin: 0 0 1.5rem;
+  .con-locandina .evento-locandina {
+    grid-area: 1 / 2;
+    align-self: end;
+    width: auto;
+    margin: 0 0 -5rem;
   }
 
   .con-locandina .evento-dettagli {
-    display: grid;
-    grid-area: 3 / 1 / 6 / 3;
-    grid-template-columns: subgrid;
-    grid-template-rows: subgrid;
-    margin: 0;
-  }
-
-  .con-locandina .evento-dettagli div {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    padding: 1rem 0;
-  }
-
-  .con-locandina .evento-dettagli div:first-child {
-    grid-column: 1 / -1;
-    padding: 0 0 2.75rem;
-    background: none;
-  }
-
-  .con-locandina .evento-dettagli div:is(:nth-child(2), :nth-child(3)) {
-    padding-top: 2.5rem;
-  }
-
-  .con-locandina .evento-descrizione {
-    grid-column: 1 / -1;
-    margin-top: 2rem;
+    grid-area: 2 / 1 / 3 / -1;
+    margin-top: 3rem;
   }
 
   .con-locandina .evento-azioni {
-    grid-column: 1 / -1;
-  }
-
-  .evento-locandina {
-    position: relative;
-    top: 0.5rem;
-    grid-area: 1 / 3 / 6;
-    align-self: start;
-    border: 6px solid var(--white);
-    box-shadow: 0 24px 60px rgb(var(--nero-rgb) / 0.2);
-    transform: rotate(3deg);
-    transition: transform var(--durata) var(--curva);
-  }
-
-  .evento-locandina:hover,
-  .evento-locandina:focus-visible {
-    transform: rotate(0deg) scale(1.03);
+    grid-area: 3 / 1 / 4 / -1;
   }
 }
 
 @media (max-width: 900px) {
   .evento-dialog-corpo {
-    padding: 2.5rem 2rem 2rem;
-  }
-
-  .evento-dialog-corpo.con-locandina .evento-dialog-titolo,
-  .evento-dialog-corpo.con-locandina .evento-etichette {
-    margin-right: 1.5rem;
-  }
-
-  .evento-dialog-corpo.con-locandina {
-    grid-template-columns: minmax(0, 1fr);
+    --corpo-alto: 2.5rem;
+    --corpo-lato: 2rem;
     gap: 2rem;
+    padding-bottom: 2rem;
   }
 
   .evento-locandina {
-    position: relative;
-    top: auto;
-    aspect-ratio: 16 / 9;
+    margin-top: -5.5rem;
   }
 }
 
 @media (max-width: 600px) {
-  .evento-dialog-corpo,
-  .evento-dialog-corpo.con-locandina {
-    grid-template-columns: minmax(0, 1fr);
+  .evento-dialog-corpo {
+    --corpo-alto: 1.5rem;
+    --corpo-lato: 1.5rem;
     gap: 1.75rem;
-    padding: 1.5rem 1.5rem 2rem;
   }
 
-  .evento-dialog-corpo:not(.con-locandina) {
-    padding-top: 2rem;
+  .evento-testata {
+    padding-top: 4.25rem;
   }
 
-  .evento-dialog-testo {
-    order: -1;
+  .evento-condividi {
+    margin-top: 0.75rem;
   }
 
   .evento-locandina {
-    aspect-ratio: 4 / 5;
+    width: min(12.5rem, 60%);
+    margin-top: -5.25rem;
   }
 
-  .evento-dialog-corpo.con-locandina .evento-dialog-titolo,
-  .evento-dialog-corpo.con-locandina .evento-etichette {
-    margin-right: 2.5rem;
+  .evento-dettagli {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .evento-dialog-titolo {
-    margin-bottom: 1.5rem;
-  }
-
-  .evento-dettagli div {
-    grid-template-columns: 5.5rem minmax(0, 1fr);
+  .evento-dettagli div:nth-child(2) {
+    padding-top: 1rem;
   }
 
   .evento-azioni {

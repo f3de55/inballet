@@ -27,7 +27,7 @@ const used = new Set();
 const extraCodepoints = new Set();
 for await (const file of sources(path.join(root, 'src'))) {
   const text = await readFile(file, 'utf8');
-  for (const [, name] of text.matchAll(/\bfa-([a-z0-9-]+)/g)) used.add(name);
+  for (const [, name] of text.matchAll(/(?<!-)\bfa-([a-z0-9-]+)/g)) used.add(name);
   for (const [, hex] of text.matchAll(/content:\s*['"]\\(f[0-9a-f]{3})['"]/gi)) extraCodepoints.add(parseInt(hex, 16));
 }
 

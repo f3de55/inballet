@@ -402,8 +402,12 @@
       color var(--durata-breve) ease;
   }
 
-  .footer-col[open] summary::after {
+  .footer-col[open]:not(.footer-col--chiude) summary::after {
     transform: translateY(-50%) rotate(45deg);
+  }
+
+  .footer-col--anima {
+    overflow: hidden;
   }
 
   .footer-col .footer-titolo {

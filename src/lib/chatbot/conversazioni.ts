@@ -30,7 +30,7 @@ const ID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const file = (id: string) => path.join(paths.conversazioni, `${id}.json`);
 
 export const nuovoId = () => randomUUID();
-const idValido = (id: unknown): id is string => typeof id === 'string' && ID_RE.test(id);
+export const idValido = (id: unknown): id is string => typeof id === 'string' && ID_RE.test(id);
 
 export async function leggiConversazione(id: unknown): Promise<Conversazione | null> {
   return idValido(id) ? readJson<Conversazione | null>(file(id), null) : null;

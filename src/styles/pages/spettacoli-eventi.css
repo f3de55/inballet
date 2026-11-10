@@ -699,6 +699,7 @@ html:has(dialog[open]) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   min-height: 44px;
   padding: 0 1.25rem;
   border: 1px solid rgb(var(--blu-scuro-rgb) / 0.35);
@@ -712,6 +713,10 @@ html:has(dialog[open]) {
     background-color var(--durata-breve) ease,
     border-color var(--durata-breve) ease,
     color var(--durata-breve) ease;
+}
+
+.evento-azione i {
+  font-size: var(--icona-in-testo);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -771,7 +776,7 @@ html:has(dialog[open]) {
   }
 
   .evento-dialog-corpo.con-locandina {
-    grid-template-columns: minmax(0, 1fr) 12rem;
+    grid-template-columns: minmax(0, 1fr) 10rem;
     column-gap: 2.5rem;
   }
 
@@ -780,21 +785,19 @@ html:has(dialog[open]) {
     flex-direction: column;
     justify-content: center;
     grid-area: 1 / 1 / 2 / -1;
-    min-height: 17rem;
-    padding-right: calc(var(--corpo-lato) + 14.5rem);
+    padding-right: calc(var(--corpo-lato) + 12.5rem);
     padding-bottom: calc(var(--onda-h) + 2rem);
   }
 
   .con-locandina .evento-locandina {
     grid-area: 1 / 2;
-    align-self: end;
+    align-self: center;
     width: auto;
-    margin: 0 0 -3.5rem;
+    margin: 1.75rem 0 calc(var(--onda-h) + 2rem);
   }
 
   .con-locandina .evento-dettagli {
     grid-area: 2 / 1 / 3 / -1;
-    margin-top: 1.5rem;
   }
 
   .con-locandina .evento-azioni {

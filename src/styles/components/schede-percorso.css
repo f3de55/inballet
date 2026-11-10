@@ -183,8 +183,12 @@
 
 @media (max-width: 600px) {
   .corsi-stile-elenco {
-    display: flex;
-    gap: 2rem;
+    grid-template-columns: none;
+    grid-template-rows: repeat(4, auto);
+    grid-auto-flow: column;
+    grid-auto-columns: 80%;
+    grid-auto-rows: auto;
+    gap: 0 2rem;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
@@ -195,8 +199,20 @@
   }
 
   .corsi-scheda {
-    flex: 0 0 80%;
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
     scroll-snap-align: start;
+  }
+
+  .corsi-scheda-link {
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 0.5rem;
+  }
+
+  .corsi-scheda-visual {
+    margin-bottom: 0.5rem;
   }
 
   .corsi-stile-elenco > .corsi-scheda::before {
@@ -210,7 +226,7 @@
   }
 
   .corsi-scheda-corpo {
-    --scheda-label-height: calc(2 * var(--label-size) * var(--label-lh));
+    display: contents;
   }
 }
 

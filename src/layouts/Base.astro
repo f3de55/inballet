@@ -82,7 +82,7 @@ const pagina = {
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <Font cssVariable="--font-rubik" preload={[{ style: 'normal', subset: 'latin' }]} />
     {preload.map((p) => <link rel="preload" as="image" href={p.href} media={p.media} fetchpriority="high">)}
-    <script type="application/ld+json" set:html={JSON.stringify(pagina)} />
+    <script type="application/ld+json" set:html={JSON.stringify(pagina).replace(/</g, '\\u003c')} />
     <slot name="head" />
 </head>
 <body>

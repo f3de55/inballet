@@ -597,14 +597,14 @@ body {
   height: 40px;
   border: none;
   border-radius: var(--radius-full);
-  background: none;
-  color: var(--text-muted);
+  background: var(--grigio-100);
+  color: var(--black);
   font-size: var(--text-sm);
   cursor: pointer;
+  transition: background-color var(--durata-breve) ease;
 }
 .modal-close:hover {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--grigio-300);
 }
 .modal-body {
   flex: 1;
@@ -675,6 +675,9 @@ body {
   outline: none;
   border-color: var(--primary-dark);
   box-shadow: var(--anello-focus);
+}
+input[list]::-webkit-calendar-picker-indicator {
+  display: none;
 }
 .campi-2 {
   display: grid;

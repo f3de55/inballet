@@ -133,6 +133,18 @@
   color: var(--dark-navy);
 }
 
+.btn-icon--chiudi {
+  border-color: transparent;
+  background: var(--grigio-100);
+  box-shadow: none;
+  color: var(--black);
+}
+
+.btn-icon--chiudi:hover {
+  background: var(--grigio-300);
+  color: var(--black);
+}
+
 .btn-icon--contorno {
   background: transparent;
   border-color: rgb(var(--navy-rgb) / 0.2);

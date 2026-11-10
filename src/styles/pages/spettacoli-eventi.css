@@ -451,25 +451,6 @@ html:has(dialog[open]) {
   overflow: hidden;
 }
 
-.evento-chiudi,
-.locandina-chiudi {
-  width: 40px;
-  height: 40px;
-  font-size: var(--text-sm);
-}
-
-.evento-chiudi {
-  margin: 1rem 1rem 0 0;
-  border: 2px solid var(--primary-blue-dark);
-  background: var(--primary-blue);
-  box-shadow: var(--shadow-blue);
-}
-
-.evento-chiudi:hover {
-  background: var(--primary-blue-dark);
-  color: var(--white);
-}
-
 .evento-dialog-corpo.con-locandina {
   grid-template-columns: 17rem minmax(0, 1fr);
   align-items: start;
@@ -752,16 +733,6 @@ html:has(dialog[open]) {
 }
 
 @media (max-width: 600px) {
-  .evento-chiudi {
-    margin: 0.75rem 0.75rem 0 0;
-  }
-
-  .evento-chiudi,
-  .locandina-chiudi {
-    width: 36px;
-    height: 36px;
-  }
-
   .evento-dialog-corpo,
   .evento-dialog-corpo.con-locandina {
     grid-template-columns: minmax(0, 1fr);

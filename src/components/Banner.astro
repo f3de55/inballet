@@ -3,7 +3,7 @@ import { fineEvento, giornoBreve, inizioEvento, maiuscola, MESI, prossimiEventi,
 import { mbLen, mbSlice } from '../lib/text';
 import '../styles/components/banner.css';
 
-const eventi = (await prossimiEventi(12))
+const eventi = (await prossimiEventi(Infinity))
   .filter((e) => e.stato !== 'annullato')
   .map((evento) => {
     const giorno = (data: string) => {
@@ -27,7 +27,7 @@ const eventi = (await prossimiEventi(12))
     };
   })
   .sort((a, b) => a.ts - b.ts)
-  .slice(0, 10);
+  .filter((e, i, tutti) => i < 10 || tutti.slice(0, 10).some((p) => p.data === e.data));
 const primo = eventi[0];
 
 Astro.response.headers.set('Cache-Control', 'no-store');

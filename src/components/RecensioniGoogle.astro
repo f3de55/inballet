@@ -16,7 +16,7 @@ const iniziali = (nome: string) =>
 const stelle = (voto: number) => Array.from({ length: 5 }, (_, i) => (i < voto ? 'fas' : 'far'));
 const voto = dati?.voto ?? 0;
 
-Astro.response.headers.set('Cache-Control', 'public, max-age=3600');
+Astro.response.headers.set('Cache-Control', recensioni.length ? 'public, max-age=3600' : 'no-store');
 ---
 
 <recensioni-google>

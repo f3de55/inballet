@@ -1,5 +1,5 @@
 @media (min-width: 1025px) {
-  section.decoro-onde {
+  :is(section, dialog).decoro-onde {
     background-image: var(--decoro-onde);
     background-position: right bottom;
     background-size: cover;

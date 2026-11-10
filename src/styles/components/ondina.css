@@ -1,8 +1,7 @@
 .voce::before,
 .recensioni-sintesi::before,
 .info-riga.sede + .info-riga.sede::before,
-.info-social::before,
-.evento-testata::after {
+.info-social::before {
   content: '';
   display: block;
   flex-shrink: 0;

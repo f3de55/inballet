@@ -15,6 +15,9 @@ const eventi = (await prossimiEventi(12))
     const titolo = mbLen(evento.titolo) > 20 ? mbSlice(evento.titolo, 20) + '…' : evento.titolo;
     return {
       id: evento.id,
+      data: evento.data,
+      giorno: giorno(evento.data),
+      ora: evento.ora,
       inizio: inizioEvento(evento),
       ts: fineEvento(evento),
       titolo,
@@ -26,7 +29,6 @@ const eventi = (await prossimiEventi(12))
   .sort((a, b) => a.ts - b.ts)
   .slice(0, 10);
 const primo = eventi[0];
-const iniziato = primo && primo.inizio <= Date.now();
 
 Astro.response.headers.set('Cache-Control', 'no-store');
 ---
@@ -39,7 +41,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
                 <div class="event-banner-info">
                     <p class="event-banner-title">{primo.titolo}</p>
                     <div class="event-banner-meta">
-                        <p class="event-banner-date">{iniziato ? primo.inCorso : primo.quando}</p>
+                        <p class="event-banner-date">{primo.quando}</p>
                         <a href={primo.href} class="event-banner-link">Scopri di più <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
                 </div>
@@ -54,6 +56,9 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 
     interface EventoBanner {
         id: string;
+        data: string;
+        giorno: string;
+        ora: string;
         inizio: number;
         ts: number;
         titolo: string;
@@ -74,16 +79,16 @@ Astro.response.headers.set('Cache-Control', 'no-store');
     class EventBanner extends HTMLElement {
         #timer = 0;
         #eventi: EventoBanner[] = [];
-        #corrente: string | null = null;
+        #corrente = '';
+        #ids: string[] = [];
         #observer = new ResizeObserver(() => this.#updateHeight());
 
         connectedCallback() {
             this.#eventi = JSON.parse(this.dataset.eventi ?? '[]');
 
             const dismiss = () => {
-                if (!this.#corrente) return;
                 try {
-                    localStorage.setItem(chiave(this.#corrente), '1');
+                    for (const id of this.#ids) localStorage.setItem(chiave(id), '1');
                 } catch {}
                 this.#hide();
             };
@@ -110,20 +115,33 @@ Astro.response.headers.set('Cache-Control', 'no-store');
         #aggiorna() {
             clearTimeout(this.#timer);
             const adesso = Date.now();
-            const evento = this.#eventi.find((e) => e.ts >= adesso);
+            const attivi = this.#eventi.filter((e) => e.ts >= adesso);
+            const evento = attivi[0];
             if (!evento) return this.remove();
-            const iniziato = evento.inizio <= adesso;
-            const prossimoCambio = iniziato ? evento.ts : evento.inizio;
+            const gruppo = attivi.filter((e) => e.data === evento.data);
+            const iniziati = gruppo.filter((e) => e.inizio <= adesso);
+            const prossimoCambio = Math.min(...gruppo.map((e) => (e.inizio > adesso ? e.inizio : e.ts)));
             this.#timer = window.setTimeout(() => this.#aggiorna(), Math.min(prossimoCambio - adesso + 1000, 2 ** 31 - 1));
-            this.querySelector('.event-banner-date')!.textContent = iniziato ? evento.inCorso : evento.quando;
-            if (evento.id === this.#corrente) return;
-            this.#corrente = evento.id;
+            const primo = gruppo.reduce((a, b) => (b.inizio < a.inizio ? b : a));
+            const voce =
+                gruppo.length > 1
+                    ? {
+                          titolo: `${gruppo.length} eventi in programma`,
+                          quando: iniziati.length ? `${evento.giorno} • in corso` : `${evento.giorno} • dalle ${primo.ora}`,
+                          href: '/spettacoli-eventi',
+                      }
+                    : { titolo: evento.titolo, quando: iniziati.length ? evento.inCorso : evento.quando, href: evento.href };
+            this.querySelector('.event-banner-date')!.textContent = voce.quando;
+            const ids = gruppo.map((e) => e.id);
+            if (ids.join() === this.#corrente) return;
+            this.#corrente = ids.join();
+            this.#ids = ids;
 
-            if (chiuso(evento.id)) return this.#hide();
+            if (ids.every(chiuso)) return this.#hide();
 
             const banner = this.querySelector<HTMLElement>('.event-banner')!;
-            this.querySelector('.event-banner-title')!.textContent = evento.titolo;
-            this.querySelector<HTMLAnchorElement>('.event-banner-link')!.href = evento.href;
+            this.querySelector('.event-banner-title')!.textContent = voce.titolo;
+            this.querySelector<HTMLAnchorElement>('.event-banner-link')!.href = voce.href;
             banner.classList.add('visible');
             document.body.classList.add('has-event-banner');
             this.#observer.observe(banner, { box: 'border-box' });

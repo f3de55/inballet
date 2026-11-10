@@ -64,9 +64,13 @@ const editor = createEditor($('descrizione'), modalEvento.querySelector<HTMLElem
   updateEditorCounter();
 });
 campi.titolo.addEventListener('input', () => aggiornaContatore(campi.titolo));
-campi.data.addEventListener('change', () => {
-  if (campi.data.value && (!campi.dataFine.value || campi.dataFine.value < campi.data.value)) campi.dataFine.value = campi.data.value;
-});
+const piuGiorni = $<HTMLInputElement>('piuGiorni');
+const mostraDataFine = () => {
+  $('campoDataFine').hidden = !piuGiorni.checked;
+  campi.dataFine.required = piuGiorni.checked;
+};
+piuGiorni.addEventListener('change', mostraDataFine);
+campi.data.addEventListener('change', () => (campi.dataFine.min = campi.data.value));
 form.addEventListener('input', () => (modificato = true));
 
 function apriModal(ev?: Evento) {
@@ -81,13 +85,16 @@ function apriModal(ev?: Evento) {
     campi.titolo.value = ev.titolo;
     campi.data.value = ev.data;
     campi.ora.value = ev.ora ? ev.ora.padStart(5, '0') : '';
-    campi.dataFine.value = ev.dataFine || '';
+    piuGiorni.checked = Boolean(ev.dataFine) && ev.dataFine !== ev.data;
+    if (piuGiorni.checked) campi.dataFine.value = ev.dataFine;
     campi.oraFine.value = ev.oraFine ? ev.oraFine.padStart(5, '0') : '';
     campi.luogo.value = ev.luogo || '';
     campi.destinatari.value = ev.destinatari || '';
     campi.costo.value = ev.costo || '';
     campi.prenotazione.value = ev.prenotazione || '';
   }
+  campi.dataFine.min = campi.data.value;
+  mostraDataFine();
   impostaLocandina(ev?.immagine ?? '');
   $<HTMLDetailsElement>('libreria').open = false;
   aggiornaContatore(campi.titolo);
@@ -121,7 +128,7 @@ form.addEventListener('submit', async (e) => {
     titolo: campi.titolo.value,
     data: campi.data.value,
     ora: campi.ora.value,
-    dataFine: campi.dataFine.value,
+    dataFine: piuGiorni.checked ? campi.dataFine.value : campi.data.value,
     oraFine: campi.oraFine.value,
     stato: campi.stato.value as Evento['stato'],
     tipo: campi.tipo.value,

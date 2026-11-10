@@ -29,7 +29,7 @@ const { tipi, sedi, luoghi, destinatari, costi } = Astro.props;
 
                 <div class="campi-2">
                     <div class="campo">
-                        <label for="data">Data di inizio <span class="nota">obbligatoria</span></label>
+                        <label for="data">Data <span class="nota">obbligatoria</span></label>
                         <input type="date" id="data" required>
                     </div>
                     <div class="campo">
@@ -40,14 +40,19 @@ const { tipi, sedi, luoghi, destinatari, costi } = Astro.props;
 
                 <div class="campi-2">
                     <div class="campo">
-                        <label for="dataFine">Data di fine <span class="nota">obbligatoria</span></label>
-                        <input type="date" id="dataFine" required>
-                    </div>
-                    <div class="campo">
                         <label for="oraFine">Ora di fine <span class="nota">obbligatoria</span></label>
                         <input type="time" id="oraFine" required>
                     </div>
+                    <div class="campo" id="campoDataFine" hidden>
+                        <label for="dataFine">Data di fine <span class="nota">obbligatoria</span></label>
+                        <input type="date" id="dataFine">
+                    </div>
                 </div>
+
+                <label class="spunta">
+                    <input type="checkbox" id="piuGiorni">
+                    <span>Finisce in un altro giorno</span>
+                </label>
 
                 <div class="campo">
                     <label for="luogo">Luogo</label>

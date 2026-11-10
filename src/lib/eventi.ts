@@ -50,7 +50,7 @@ export const inputEvento = z
       .min(1, 'Il titolo è obbligatorio')
       .min(3, 'Il titolo deve avere almeno 3 caratteri')
       .max(100, 'Il titolo non può superare i 100 caratteri'),
-    data: z.string().trim().min(1, 'La data di inizio è obbligatoria').refine(dataValida, 'Data di inizio non valida'),
+    data: z.string().trim().min(1, 'La data è obbligatoria').refine(dataValida, 'Data non valida'),
     ora: ora('L’ora di inizio è obbligatoria', 'Ora di inizio non valida (usa HH:MM)'),
     dataFine: z.string().trim().min(1, 'La data di fine è obbligatoria').refine(dataValida, 'Data di fine non valida'),
     oraFine: ora('L’ora di fine è obbligatoria', 'Ora di fine non valida (usa HH:MM)'),
@@ -76,7 +76,8 @@ export const inputEvento = z
   .superRefine((e, ctx) => {
     const errore = (path: string, message: string) => ctx.addIssue({ code: 'custom', path: [path], message });
     if (e.dataFine < e.data) errore('dataFine', 'La fine è prima dell’inizio');
-    else if (e.dataFine === e.data && e.oraFine <= e.ora) errore('oraFine', 'L’ora di fine deve essere dopo l’inizio');
+    else if (e.dataFine === e.data && e.oraFine <= e.ora)
+      errore('oraFine', 'L’ora di fine deve essere dopo l’inizio: se finisce in un altro giorno spunta la casella');
   });
 
 type InputEvento = z.output<typeof inputEvento>;

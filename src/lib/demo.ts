@@ -330,11 +330,11 @@ function dataDa(giorni: number, m: Pick<Modello, 'weekend' | 'lunedi' | 'dueGior
 
 const escapeMarkup = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-async function creaLocandina(m: Modello, data: string, verticale: boolean): Promise<Buffer> {
+async function creaLocandina(m: Modello, data: string): Promise<Buffer> {
   const { default: sharp } = await import('sharp');
-  const W = verticale ? 1080 : 1600;
-  const H = verticale ? 1350 : 900;
-  const pad = verticale ? 76 : 70;
+  const W = 1080;
+  const H = 1350;
+  const pad = 76;
   const font = path.join(DIR_FONT, 'Rubik.ttf');
   const corsivo = path.join(DIR_FONT, 'Rubik-Italic.ttf');
 
@@ -349,25 +349,15 @@ async function creaLocandina(m: Modello, data: string, verticale: boolean): Prom
   const tipo = await testo(
     `<span foreground="#87CEEB" font_weight="600" letter_spacing="${5 * 1024}">${escapeMarkup(m.tipo.toUpperCase())}</span>`,
     font,
-    `Rubik ${verticale ? 26 : 24}`,
+    'Rubik 26',
   );
-  const titolo = await testo(
-    `<span foreground="#ffffff" font_weight="700">${escapeMarkup(m.locandina)}</span>`,
-    font,
-    `Rubik ${verticale ? 104 : 92}`,
-    Math.floor(H * 0.5),
-  );
-  const info = await testo(
-    `<span foreground="#ffffffdd">${d} ${MESI[mm - 1]} ${y}  ·  ${escapeMarkup(m.sede)}</span>`,
-    font,
-    `Rubik ${verticale ? 30 : 28}`,
-    Math.floor(H * 0.15),
-  );
-  const firma = await testo('<span foreground="#ffffff">InBallet</span>', corsivo, `Rubik Italic ${verticale ? 34 : 32}`);
+  const titolo = await testo(`<span foreground="#ffffff" font_weight="700">${escapeMarkup(m.locandina)}</span>`, font, 'Rubik 104', Math.floor(H * 0.5));
+  const info = await testo(`<span foreground="#ffffffdd">${d} ${MESI[mm - 1]} ${y}  ·  ${escapeMarkup(m.sede)}</span>`, font, 'Rubik 30', Math.floor(H * 0.15));
+  const firma = await testo('<span foreground="#ffffff">InBallet</span>', corsivo, 'Rubik Italic 34');
 
   const sfumatura = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
     <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="${verticale ? 0.35 : 0.2}" stop-color="#0d0d0d" stop-opacity="0"/>
+      <stop offset="0.35" stop-color="#0d0d0d" stop-opacity="0"/>
       <stop offset="1" stop-color="#0d0d0d" stop-opacity="0.9"/>
     </linearGradient></defs>
     <rect width="100%" height="100%" fill="url(#g)"/></svg>`);
@@ -410,7 +400,6 @@ export function ripristinaLocandinaDemo(richiesto: string): Promise<boolean> {
       const locandina = await creaLocandina(
         { ...modello, tipo: evento.tipo || modello.tipo, locandina: evento.titolo, sede: evento.luogo || modello.sede },
         evento.data,
-        true,
       );
       const temporaneo = `${filePath(nome)}.${hex(6)}.tmp`;
       try {
@@ -455,9 +444,8 @@ export async function generaEventi(quanti: number): Promise<number> {
     }
     usati.add(m.titolo + data);
 
-    const verticale = Math.random() < 0.7;
     const nome = `demo-${data}-${hex(3)}.jpg`;
-    await writeFile(filePath(nome), await creaLocandina(m, data, verticale));
+    await writeFile(filePath(nome), await creaLocandina(m, data));
     await creaMini(nome).catch(() => {});
     const dataFine = m.dueGiorni ? new Date(Date.parse(`${data}T12:00:00Z`) + 86_400_000).toISOString().slice(0, 10) : data;
 

@@ -710,15 +710,19 @@ html:has(dialog[open]) {
     width: min(48rem, calc(100% - 3rem));
   }
 
+  .evento-dialog:has(.con-locandina) {
+    width: min(54rem, calc(100% - 3rem));
+  }
+
   .evento-dialog-corpo.con-locandina {
-    grid-template-columns: minmax(0, 1fr) 13rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) 15rem;
     gap: 0 2.5rem;
     isolation: isolate;
   }
 
   .evento-dialog-corpo.con-locandina::before {
     content: '';
-    grid-row: 1 / 3;
+    grid-row: 1 / 4;
     grid-column: 1 / -1;
     z-index: -1;
     margin: -3rem -3rem calc(var(--onda-h) * -1);
@@ -737,29 +741,53 @@ html:has(dialog[open]) {
   }
 
   .con-locandina .evento-etichette {
-    grid-area: 1 / 1;
-    margin-right: 0;
+    grid-area: 1 / 1 / 2 / 3;
+    margin: 0 0 1rem;
   }
 
   .con-locandina .evento-dialog-titolo {
-    grid-area: 2 / 1;
-    margin-right: 0;
+    grid-area: 2 / 1 / 3 / 3;
+    margin: 0 0 1.5rem;
   }
 
   .con-locandina .evento-dettagli {
-    grid-area: 3 / 1;
-    margin-top: 2.5rem;
+    display: grid;
+    grid-area: 3 / 1 / 6 / 3;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;
+    margin: 0;
   }
 
-  .con-locandina .evento-descrizione,
+  .con-locandina .evento-dettagli div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 1rem 0;
+  }
+
+  .con-locandina .evento-dettagli div:first-child {
+    grid-column: 1 / -1;
+    padding: 0 0 2.75rem;
+    background: none;
+  }
+
+  .con-locandina .evento-dettagli div:is(:nth-child(2), :nth-child(3)) {
+    padding-top: 2.5rem;
+  }
+
+  .con-locandina .evento-descrizione {
+    grid-column: 1 / -1;
+    margin-top: 2rem;
+  }
+
   .con-locandina .evento-azioni {
     grid-column: 1 / -1;
   }
 
   .evento-locandina {
     position: relative;
-    top: 1.75rem;
-    grid-area: 1 / 2 / 4;
+    top: 0.5rem;
+    grid-area: 1 / 3 / 6;
     align-self: start;
     border: 6px solid var(--white);
     box-shadow: 0 24px 60px rgb(var(--nero-rgb) / 0.2);

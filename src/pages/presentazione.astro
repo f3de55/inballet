@@ -1,0 +1,258 @@
+---
+import '../styles/components/linee.css';
+import '../styles/admin/presentazione.css';
+import { Image } from 'astro:assets';
+import Admin from '../layouts/Admin.astro';
+import { isLoggedIn } from '../lib/auth';
+import { enfatizza } from '../lib/text';
+import { passi } from '../data/presentazione';
+import logo from '../assets/images/logo.png';
+import foto from '../assets/images/gallery-6.jpg';
+
+export const prerender = false;
+
+if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login');
+
+const capitoli = passi.flatMap((p, i) => (i === 0 || passi[i - 1].capitolo !== p.capitolo ? [{ nome: p.capitolo, da: i }] : []));
+const sitoNuovo = Astro.url.host;
+---
+
+<Admin title="Presentazione del nuovo sito - InBallet">
+    <div class="pres" data-pres>
+        <main class="pres-racconto">
+            <header class="pres-testata">
+                <Image src={logo} alt="" width={180} format="webp" loading="eager" class="pres-logo" />
+                <h1 class="pres-titolo">Il nuovo sito di InBallet</h1>
+            </header>
+
+            <nav class="pres-capitoli" aria-label="Capitoli">
+                {capitoli.map((c) => (
+                    <button type="button" class="pres-capitolo-btn" data-vai={c.da}>{c.nome}</button>
+                ))}
+            </nav>
+
+            <div class="pres-passi">
+                {passi.map((p, i) => (
+                    <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} hidden={i > 0}>
+                        <p class="pres-etichetta">{p.capitolo}</p>
+                        <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
+                        {p.testo.map((t) => <p set:html={enfatizza(t, p.evidenzia ?? [])} />)}
+                        {p.punti && (
+                            <ul class="pres-punti">
+                                {p.punti.map((pt) => (
+                                    <li class:list={['pres-punto', `pres-punto--${pt.esito}`]}>
+                                        <i class:list={['fas', pt.esito === 'si' ? 'fa-check' : 'fa-times']} aria-hidden="true"></i>
+                                        <span class="sr-only">{pt.esito === 'si' ? 'Punto a favore: ' : 'Problema: '}</span>
+                                        {pt.testo}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                        {p.scelte && (
+                            <div class="pres-scelte" role="group" aria-label="Scegli un visitatore">
+                                {p.scelte.map((s, j) => (
+                                    <button type="button" class="pres-scelta" data-percorso={s.percorso} aria-pressed={j === 0 ? 'true' : 'false'}>
+                                        <strong>{s.etichetta}</strong>
+                                        «{s.domanda}»
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </article>
+                ))}
+            </div>
+
+            <div class="pres-comandi">
+                <button type="button" class="pres-btn" data-indietro><i class="fas fa-arrow-left" aria-hidden="true"></i> Indietro</button>
+                <p class="pres-contatore" aria-live="polite"><span data-numero>1</span> di {passi.length}</p>
+                <button type="button" class="pres-btn pres-btn--avanti" data-avanti>Avanti <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+            </div>
+            <div class="pres-avanzamento" aria-hidden="true"><div class="pres-avanzamento-barra" data-barra></div></div>
+        </main>
+
+        <section class="pres-palco" aria-label="I siti dal vivo" data-modo="pannello">
+            <div class="pres-dispositivi" role="group" aria-label="Schermo" data-dispositivi hidden>
+                <button type="button" data-dispositivo="pc" aria-pressed="true"><i class="fas fa-desktop" aria-hidden="true"></i> Computer</button>
+                <button type="button" data-dispositivo="telefono" aria-pressed="false"><i class="fas fa-mobile-alt" aria-hidden="true"></i> Telefono</button>
+            </div>
+
+            <div class="pres-schermi" data-schermi hidden>
+                {['a', 'b'].map((id) => (
+                    <figure class="pres-schermo" data-schermo={id}>
+                        <figcaption class="pres-barra">
+                            <strong data-sito></strong>
+                            <span class="pres-indirizzo" data-indirizzo></span>
+                            <span class="pres-dal-vivo">Dal vivo</span>
+                        </figcaption>
+                        <div class="pres-vista" data-vista>
+                            <div class="pres-scala" data-scala>
+                                <iframe data-frame title="Sito dal vivo"></iframe>
+                                <div class="pres-faro" data-faro hidden>
+                                    <p class="pres-faro-etichetta" data-faro-etichetta></p>
+                                </div>
+                                <ol class="pres-segni" data-segni></ol>
+                            </div>
+                            <p class="pres-bloccato" data-bloccato hidden>
+                                Questa pagina non si apre dentro la presentazione.
+                                <a href="/" target="_blank" rel="noopener" data-bloccato-link>Aprila in una nuova scheda<span class="sr-only"> (si apre in una nuova scheda)</span></a>
+                            </p>
+                        </div>
+                    </figure>
+                ))}
+            </div>
+
+            <div class="pres-pannello pres-copertina" data-pannello="copertina">
+                <Image src={foto} alt="Allieve di InBallet in scena durante uno spettacolo" widths={[960, 1600]} sizes="70vw" class="pres-copertina-foto" />
+                <div class="pres-copertina-testo">
+                    <p class="pres-etichetta">Proposta per Ilenia Nobile · Novembre 2026</p>
+                    <h2 class="pres-grande">Il nuovo sito di <em>InBallet</em></h2>
+                    <p>Perché rifarlo, cosa cambia per la scuola e cosa manca per andare online insieme.</p>
+                    <dl class="pres-siti">
+                        <div><dt>Sito di oggi</dt><dd>www.inballet.it</dd></div>
+                        <div><dt>Nuovo sito</dt><dd>{sitoNuovo}</dd></div>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="pres-pannello" data-pannello="parole" hidden>
+                <p class="pres-etichetta">Prima di iniziare</p>
+                <h2 class="pres-grande">Quattro parole, <em>in breve</em></h2>
+                <dl class="pres-parole">
+                    <div><dt>UX</dt><dd><strong>Esperienza d’uso.</strong> Quanto è facile, dal telefono, trovare il corso giusto e capire come contattarvi.</dd></div>
+                    <div><dt>UI</dt><dd><strong>L’aspetto.</strong> Foto, colori e pulsanti: l’impressione di cura che arriva prima di leggere una riga.</dd></div>
+                    <div><dt>SEO</dt><dd><strong>Farsi trovare.</strong> Come Google capisce il sito e lo mostra a chi cerca «danza bambini Lainate».</dd></div>
+                    <div><dt>Accessibilità</dt><dd><strong>Un sito per tutti.</strong> Leggibile anche da chi vede poco o usa un lettore vocale, come una scuola inclusiva.</dd></div>
+                </dl>
+            </div>
+
+            <div class="pres-pannello" data-pannello="google" hidden>
+                <p class="pres-etichetta">Come vi vede Google</p>
+                <h2 class="pres-grande">Il risultato di ricerca</h2>
+                <div class="pres-risultati">
+                    <div class="pres-risultato">
+                        <p class="pres-etichetta pres-etichetta--no">Sito di oggi</p>
+                        <small>www.inballet.it</small>
+                        <h3>Home</h3>
+                        <p>Nessuna descrizione: Google ne ricava una da sola dal testo della pagina.</p>
+                    </div>
+                    <div class="pres-risultato">
+                        <p class="pres-etichetta pres-etichetta--si">Nuovo sito, letto adesso</p>
+                        <small>www.inballet.it</small>
+                        <h3 data-google="titolo">Lettura in corso</h3>
+                        <p data-google="descrizione"></p>
+                    </div>
+                </div>
+                <table class="pres-tabella">
+                    <thead>
+                        <tr><th scope="col">Cosa legge Google</th><th scope="col">Sito di oggi</th><th scope="col">Nuovo sito</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th scope="row">Titolo della homepage</th><td class="pres-no">«Home»</td><td class="pres-si">Nome, città e età</td></tr>
+                        <tr><th scope="row">Descrizione</th><td class="pres-no">Assente</td><td class="pres-si">Scritta pagina per pagina</td></tr>
+                        <tr><th scope="row">Mappa del sito</th><td class="pres-no">Assente</td><td class="pres-si"><span data-google="pagine">…</span> pagine</td></tr>
+                        <tr><th scope="row">Scheda «scuola di danza»</th><td class="pres-no">Assente</td><td class="pres-si" data-google="scheda">Sedi, orari, domande frequenti</td></tr>
+                        <tr><th scope="row">Vecchi indirizzi</th><td>—</td><td class="pres-si">Portano alle pagine nuove</td></tr>
+                    </tbody>
+                </table>
+                <small class="pres-fonte">Sito di oggi: rilevato il 5 novembre 2026. Nuovo sito: letto dalle sue pagine all’apertura di questo passo.</small>
+            </div>
+
+            <div class="pres-pannello" data-pannello="zona" hidden>
+                <p class="pres-etichetta">Homepage delle scuole della zona · 5 novembre 2026</p>
+                <h2 class="pres-grande">Il confronto <em>con la zona</em></h2>
+                <table class="pres-tabella pres-tabella--zona">
+                    <thead>
+                        <tr><th scope="col">Scuola</th><th scope="col">Titolo chiaro</th><th scope="col">Descrizione</th><th scope="col">Scheda scuola</th><th scope="col">Foto descritte</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th scope="row">InBallet, sito di oggi</th><td class="pres-no">No</td><td class="pres-no">No</td><td class="pres-no">No</td><td>9 su 10</td></tr>
+                        <tr><th scope="row">Valentina Ponzone · Lainate</th><td class="pres-no">No</td><td class="pres-no">No</td><td class="pres-no">No</td><td>2 su 2</td></tr>
+                        <tr><th scope="row">Backstage · Lainate</th><td class="pres-no">No</td><td class="pres-no">No</td><td class="pres-no">No</td><td>2 su 4</td></tr>
+                        <tr><th scope="row">Spazio Dance On · Rho</th><td class="pres-si">Sì</td><td class="pres-si">Sì</td><td class="pres-si">Sì</td><td>63 su 77</td></tr>
+                        <tr><th scope="row">City Dance Academy · Rho</th><td class="pres-si">Sì</td><td class="pres-si">Sì</td><td class="pres-no">No</td><td>19 su 22</td></tr>
+                        <tr><th scope="row">Accademia Balletto Classico · Rho</th><td class="pres-si">Sì</td><td class="pres-no">No</td><td class="pres-no">No</td><td>8 su 36</td></tr>
+                        <tr class="pres-riga-nuovo"><th scope="row">InBallet, nuovo sito</th><td class="pres-si">Sì</td><td class="pres-si">Sì</td><td class="pres-si">Sì</td><td>Tutte</td></tr>
+                    </tbody>
+                </table>
+                <p>Il nuovo sito è l’unico dei sette a soddisfare tutti e quattro i punti. Non è una classifica delle scuole: misura solo come si presentano online.</p>
+            </div>
+
+            <div class="pres-pannello" data-pannello="mancano" hidden>
+                <p class="pres-etichetta">Prima della pubblicazione</p>
+                <h2 class="pres-grande">Cosa manca, <em>da fare insieme</em></h2>
+                <ol class="pres-elenco">
+                    <li><h3>Foto reali</h3><p>Alcune immagini sono rielaborate, altre generate con l’intelligenza artificiale come segnaposto: vanno sostituite con foto vere di corsi, sedi e insegnanti.</p><small class="pres-chi">Serve da te</small></li>
+                    <li><h3>Testi da confermare</h3><p>Alcuni testi sono provvisori: età, orari, corsi e storia della scuola vanno riletti insieme.</p><small class="pres-chi">Serve da te</small></li>
+                    <li><h3>Il team</h3><p>Per ogni insegnante servono nome, ruolo, una breve biografia e una foto.</p><small class="pres-chi">Serve da te</small></li>
+                    <li><h3>Assistente Étoile</h3><p>Lo completiamo e lo proviamo con le domande vere delle famiglie.</p><small class="pres-chi pres-chi--noi">Tocca a noi</small></li>
+                    <li><h3>Pubblicazione</h3><p>Il nuovo sito va su inballet.it, con i vecchi indirizzi già collegati alle pagine nuove.</p><small class="pres-chi pres-chi--noi">Tocca a noi</small></li>
+                </ol>
+            </div>
+
+            <div class="pres-pannello" data-pannello="costo" hidden>
+                <p class="pres-etichetta">Investimento</p>
+                <div class="pres-costo">
+                    <div>
+                        <p class="pres-cifra">€ 1.500</p>
+                        <p>Per il sito completo, modifiche concordate fino alla pubblicazione comprese.</p>
+                        <div class="pres-ripartizione" aria-hidden="true"><div class="pres-quota"></div><div class="pres-quota pres-quota--ritenuta"></div></div>
+                        <dl class="pres-ripartizione-voci">
+                            <div><dt>€ 1.200</dt><dd>a noi</dd></div>
+                            <div><dt>€ 300</dt><dd>ritenuta d’acconto del 20%, versata da InBallet con F24</dd></div>
+                        </dl>
+                    </div>
+                    <ul class="pres-punti">
+                        <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Progetto e realizzazione da zero, su misura</li>
+                        <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Tutte le pagine, assistente Étoile e dashboard</li>
+                        <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Modifiche a testi e foto fino alla pubblicazione</li>
+                        <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Pubblicazione su inballet.it con i vecchi link collegati</li>
+                    </ul>
+                </div>
+                <p><strong>Come funziona.</strong> Prestazione occasionale, senza IVA. <strong>Escluso</strong> il costo a consumo dei servizi esterni (assistente Étoile, Google Maps), da definire insieme prima di pubblicare.</p>
+                <small class="pres-fonte">Importi e adempimenti da confermare con il vostro commercialista.</small>
+            </div>
+
+            <div class="pres-pannello" data-pannello="dopo" hidden>
+                <p class="pres-etichetta">Dopo la pubblicazione</p>
+                <h2 class="pres-grande">Cosa possiamo fare, <em>e cosa no</em></h2>
+                <div class="pres-colonne">
+                    <div>
+                        <h3>Su cosa puoi contare</h3>
+                        <ul class="pres-punti">
+                            <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Eventi, documenti e insegnanti li aggiorni tu dalla dashboard, senza costi.</li>
+                            <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Fino alla firma, i ritocchi a grafica e testi sono inclusi.</li>
+                            <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Controllo annuale facoltativo, € 250: aggiorniamo il codice, verifichiamo che tutto funzioni, controlliamo dominio e DNS.</li>
+                            <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Il dominio resta di InBallet; se vuoi, ne seguiamo noi il rinnovo.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>I nostri limiti</h3>
+                        <ul class="pres-punti">
+                            <li class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Lavoriamo senza partita IVA, solo con prestazioni occasionali.</li>
+                            <li class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Non possiamo garantire assistenza continuativa né reperibilità.</li>
+                            <li class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Dopo la firma, una modifica grande è una nuova prestazione occasionale, ogni tanto.</li>
+                            <li class="pres-punto pres-punto--info"><i class="fas fa-key" aria-hidden="true"></i>Per pubblicare ci servono gli accessi all’hosting.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pres-pannello" data-pannello="fine" hidden>
+                <p class="pres-etichetta">Da qui in avanti</p>
+                <h2 class="pres-grande">I prossimi <em>passi</em></h2>
+                <ol class="pres-elenco pres-elenco--passi">
+                    <li><h3>Un incontro</h3><p>Rivediamo insieme testi, foto e schede degli insegnanti.</p></li>
+                    <li><h3>Le rifiniture</h3><p>Completiamo Étoile e ti accompagniamo nella dashboard.</p></li>
+                    <li><h3>Online</h3><p>Pubblichiamo su inballet.it e controlliamo che tutto funzioni.</p></li>
+                </ol>
+                <div class="pres-azioni">
+                    <a class="pres-btn pres-btn--avanti" href="/" target="_blank" rel="noopener">Apri il nuovo sito<span class="sr-only"> (si apre in una nuova scheda)</span></a>
+                    <a class="pres-btn" href="/dashboard" target="_blank" rel="noopener">Apri la dashboard<span class="sr-only"> (si apre in una nuova scheda)</span></a>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        import '../scripts/presentazione';
+    </script>
+</Admin>

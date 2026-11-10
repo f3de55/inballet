@@ -83,30 +83,53 @@ async function scarica(): Promise<DatiGoogle> {
   return dati;
 }
 
+function validi(d: unknown): d is DatiGoogle {
+  const x = d as Partial<DatiGoogle> | null;
+  return (
+    !!x &&
+    Number.isFinite(Date.parse(x.aggiornato ?? '')) &&
+    Array.isArray(x.recensioni) &&
+    Array.isArray(x.orari) &&
+    x.orari.length === GIORNI.length &&
+    x.orari.every(Array.isArray)
+  );
+}
+
 let dati: DatiGoogle | null = null;
-let letto = false;
+let lettura: Promise<void> | null = null;
 let aggiornamento: Promise<void> | null = null;
-let ultimoTentativo = 0;
+let fallimenti = 0;
+let prossimoTentativo = 0;
 
 function aggiorna(): Promise<void> {
-  ultimoTentativo = Date.now();
   aggiornamento ??= scarica()
-    .then(async (nuovi) => {
+    .then((nuovi) => {
       dati = nuovi;
-      await writeJson(paths.google, nuovi);
+      fallimenti = 0;
+      return writeJson(paths.google, nuovi);
     })
-    .catch((e) => console.error('Google Places:', (e as Error).message))
+    .catch((e) => {
+      prossimoTentativo = Date.now() + Math.min(RIPROVA * 2 ** fallimenti++, RIPROVA_MAX);
+      console.error('Google Places:', (e as Error).message);
+    })
     .finally(() => (aggiornamento = null));
   return aggiornamento;
 }
 
+function leggi(): Promise<void> {
+  lettura ??= readJson<unknown>(paths.google, null).then(
+    (salvati) => {
+      if (validi(salvati)) dati = salvati;
+    },
+    (e) => console.error('Google Places, lettura dei dati salvati:', (e as Error).message),
+  );
+  return lettura;
+}
+
 export async function datiGoogle(): Promise<DatiGoogle | null> {
-  if (!letto) {
-    dati = await readJson<DatiGoogle | null>(paths.google, null);
-    letto = true;
-  }
-  const scaduti = !dati || Date.now() - Date.parse(dati.aggiornato) > DURATA;
-  if (scaduti && Date.now() - ultimoTentativo > RIPROVA) void aggiorna();
+  await leggi();
+  const scaduti = !dati || Math.abs(Date.now() - Date.parse(dati.aggiornato)) > DURATA;
+  if (scaduti && Date.now() >= prossimoTentativo) void aggiorna();
   if (!dati && aggiornamento) await aggiornamento;
   return dati;
 }

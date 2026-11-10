@@ -96,6 +96,8 @@ function validi(d: unknown): d is DatiGoogle {
   );
 }
 
+const completi = (d: DatiGoogle) => d.recensioni.length > 0 && d.orari.some((f) => f.length);
+
 let dati: DatiGoogle | null = null;
 let lettura: Promise<void> | null = null;
 let aggiornamento: Promise<void> | null = null;

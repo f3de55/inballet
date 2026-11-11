@@ -32,51 +32,6 @@ const nomePannello = (i: number) => {
 <Admin title="Presentazione del nuovo sito - InBallet">
     <main class="pres-palco" data-pres data-modo="apertura" tabindex="-1">
         <h1 class="sr-only">Proposta di restyling del sito InBallet</h1>
-        <section class="pres-scheda" aria-label="Spiegazione">
-            <div class="pres-avanzamento" aria-hidden="true"><div class="pres-avanzamento-barra" data-barra></div></div>
-            <button type="button" class="pres-riduci" data-riduci aria-label="Riduci la spiegazione"><i class="fas fa-down-left-and-up-right-to-center" aria-hidden="true"></i></button>
-            {passi.map((p, i) => p.scena.tipo === 'siti' && (
-                <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-google={p.google ? "si" : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
-                    <p class="pres-etichetta">{p.capitolo}</p>
-                    <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
-                    <p set:html={enfatizza(p.testo, p.evidenzia ?? [])} />
-                    {p.scelte && (
-                        <div class="pres-scelte" role="group" aria-label="Scegli un visitatore">
-                            {p.scelte.map((s, j) => (
-                                <button type="button" class="pres-scelta" data-percorso={s.percorso} aria-pressed={j === 0 ? 'true' : 'false'}>
-                                    <strong>{s.etichetta}</strong>
-                                    «{s.domanda}»
-                                </button>
-                            ))}
-                        </div>
-                    )}
-                </article>
-            ))}
-            {passi.map((p, i) => p.scena.tipo === 'confronto' && p.confronto && (
-                <article class="pres-passo pres-confronto" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} hidden>
-                    <div class="pres-confronto-testa">
-                        <p class="pres-etichetta">{p.capitolo}</p>
-                        <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
-                    </div>
-                    <table class="pres-confronto-tabella">
-                        <thead>
-                            <tr><th scope="col">Il loro sito oggi</th><th scope="col">Il nuovo sito InBallet</th></tr>
-                        </thead>
-                        <tbody>
-                            {p.confronto.map((r) => (
-                                <tr>
-                                    <td class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>{r.loro}</td>
-                                    <td class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>{r.noi}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </article>
-            ))}
-        </section>
-
-        <button type="button" class="pres-riapri" data-riapri aria-label="Mostra la spiegazione"><i class="fas fa-up-right-and-down-left-from-center" aria-hidden="true"></i></button>
-
         <section class="pres-serp" data-serp aria-label="Il nuovo sito su Google" hidden>
             <div class="pres-serp-risultato">
                 <p class="pres-serp-nome"><img src="/favicon.ico" alt="" width="26" height="26" class="pres-serp-icona">InBallet<cite data-serp-url>https://www.inballet.it</cite></p>
@@ -106,6 +61,43 @@ const nomePannello = (i: number) => {
                 </figure>
             ))}
         </div>
+
+        <section class="pres-nota" data-nota aria-label="Spiegazione">
+            {passi.map((p, i) => p.scena.tipo === 'siti' && (
+                <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-google={p.google ? "si" : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
+                    <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
+                    <p set:html={enfatizza(p.testo, p.evidenzia ?? [])} />
+                    {p.scelte && (
+                        <div class="pres-scelte" role="group" aria-label="Scegli un visitatore">
+                            {p.scelte.map((s, j) => (
+                                <button type="button" class="pres-scelta" data-percorso={s.percorso} aria-pressed={j === 0 ? 'true' : 'false'}>
+                                    <strong>{s.etichetta}</strong>
+                                    «{s.domanda}»
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </article>
+            ))}
+            {passi.map((p, i) => p.scena.tipo === 'confronto' && p.confronto && (
+                <article class="pres-passo pres-confronto" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} hidden>
+                    <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
+                    <table class="pres-confronto-tabella">
+                        <thead>
+                            <tr><th scope="col">Il loro sito oggi</th><th scope="col">Il nuovo sito InBallet</th></tr>
+                        </thead>
+                        <tbody>
+                            {p.confronto.map((r) => (
+                                <tr>
+                                    <td class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>{r.loro}</td>
+                                    <td class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>{r.noi}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </article>
+            ))}
+        </section>
 
         {passi.map((p, i) => p.scena.tipo === 'apertura' && (
             <section class="pres-copertina" data-passo={i} data-scena={JSON.stringify(p.scena)} data-immagine={p.scena.immagine} aria-labelledby={`pres-passo-${i}`} hidden={i > 0}>

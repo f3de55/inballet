@@ -30,6 +30,7 @@ interface Schermo {
   ox: number;
   oy: number;
   bersaglio?: () => DOMRect;
+  radici: Element[];
   cerca: number;
 }
 
@@ -204,6 +205,7 @@ function bersaglio(doc: Document, s: Schermo): (() => DOMRect) | null {
   if (!s.selettore) return null;
   const elementi = [...doc.querySelectorAll<HTMLElement>(s.selettore)];
   if (!elementi.length) return null;
+  s.radici = elementi;
   if (s.frase) {
     const range = intervallo(elementi[0], ...s.frase);
     return range ? () => range.getBoundingClientRect() : null;
@@ -219,11 +221,11 @@ function bersaglio(doc: Document, s: Schermo): (() => DOMRect) | null {
 function porta(s: Schermo, doc: Document) {
   const r = s.bersaglio?.();
   const vista = doc.defaultView;
-  if (!r || !vista || s.fermo) return;
+  if (!r || !vista) return;
+  if (s.fermo) return vista.scrollTo({ top: 0, behavior: 'instant' });
   const testa = [...doc.querySelectorAll<HTMLElement>(FISSI)]
-    .map((f) => f.getBoundingClientRect())
-    .filter((f) => f.bottom <= r.top + 1)
-    .reduce((max, f) => Math.max(max, f.bottom), 0);
+    .filter((f) => !s.radici.some((el) => f.contains(el)))
+    .reduce((max, f) => Math.max(max, f.getBoundingClientRect().bottom), 0);
   const fondo = libero(s, r.left, r.right);
   doc.documentElement.style.paddingBottom = `${Math.max(0, s.altezza - fondo)}px`;
   const sopra = testa + Math.max(ARIA_SOPRA, (fondo - testa - r.height) / 2);
@@ -258,7 +260,16 @@ function evidenzia(s: Schermo) {
   prova();
 }
 
+function vuoto(s: Schermo) {
+  try {
+    return s.frame.contentWindow?.location.href === 'about:blank';
+  } catch {
+    return false;
+  }
+}
+
 function caricato(s: Schermo) {
+  if (vuoto(s)) return;
   if (!s.url.startsWith('/')) {
     const url = s.url;
     window.setTimeout(() => s.url === url && mostra(s), ASSESTAMENTO);
@@ -296,6 +307,7 @@ function crea(el: HTMLElement): Schermo {
     fattore: 1,
     ox: 0,
     oy: 0,
+    radici: [],
     cerca: 0,
   };
   s.frame.addEventListener('load', () => caricato(s));
@@ -344,16 +356,17 @@ async function leggiNuovoSito(radice: HTMLElement) {
   if (canonico) campo('url').textContent = canonico.replace(/\/$/, '');
 }
 
-function aggancio(schermi: Schermo[]) {
-  const s = schermi.find((x) => !x.el.hidden && !x.faro.hidden) ?? (schermi[0].dispositivo === 'telefono' ? schermi.filter((x) => !x.el.hidden).at(-1) : undefined);
-  if (!s) return null;
+function aggancio(schermi: Schermo[]): [DOMRect | null, boolean] {
+  const s =
+    schermi.find((x) => !x.el.hidden && !x.faro.hidden) ?? (schermi[0].dispositivo === 'telefono' ? schermi.filter((x) => !x.el.hidden).at(-1) : undefined);
+  if (!s) return [null, false];
   const faro = s.faro.hidden ? null : s.faro.getBoundingClientRect();
-  if (s.dispositivo === 'pc') return faro;
+  if (s.dispositivo === 'pc') return [faro, false];
   const telefono = s.scala.getBoundingClientRect();
-  return new DOMRect(telefono.left, faro?.top ?? telefono.top, telefono.width, faro?.height ?? telefono.height);
+  return [new DOMRect(telefono.left, faro?.top ?? telefono.top, telefono.width, faro?.height ?? telefono.height), true];
 }
 
-function colloca(nota: HTMLElement, palco: HTMLElement, a: DOMRect | null) {
+function colloca(nota: HTMLElement, palco: HTMLElement, [a, aiLati]: [DOMRect | null, boolean]) {
   const p = palco.getBoundingClientRect();
   const n = nota.getBoundingClientRect();
   const fine = (ostacolo?.offsetParent ? ostacolo.getBoundingClientRect().top : p.bottom) - p.top - BORDO_NOTA;
@@ -372,8 +385,13 @@ function colloca(nota: HTMLElement, palco: HTMLElement, a: DOMRect | null) {
     ['destra', r.right + DISTANZA_NOTA, y, r.right + DISTANZA_NOTA + n.width <= p.width - BORDO_NOTA],
     ['sinistra', r.left - DISTANZA_NOTA - n.width, y, r.left - DISTANZA_NOTA - n.width >= BORDO_NOTA],
   ];
-  if (r.height > r.width) posti.push(...posti.splice(0, 2));
-  const [posto, px, py] = posti.find((q) => q[3]) ?? ['dentro', r.right - n.width - DISTANZA_NOTA, entro(r.top + DISTANZA_NOTA, BORDO_NOTA, fine - n.height), true];
+  if (aiLati) posti.push(...posti.splice(0, 2));
+  const [posto, px, py] = posti.find((q) => q[3]) ?? [
+    'dentro',
+    r.right - n.width - DISTANZA_NOTA,
+    entro(r.top + DISTANZA_NOTA, BORDO_NOTA, fine - n.height),
+    true,
+  ];
   nota.dataset.posto = posto;
   nota.style.transform = `translate(${Math.round(entro(px, BORDO_NOTA, p.width - n.width - BORDO_NOTA))}px, ${Math.round(py)}px)`;
 }

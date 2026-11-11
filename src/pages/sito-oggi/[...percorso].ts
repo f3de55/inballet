@@ -19,6 +19,7 @@ export const GET: APIRoute = async ({ params, url, session }) => {
     if (valore) intestazioni.set(nome, valore);
   }
   if (!intestazioni.get('content-type')?.startsWith('text/html')) return new Response(risposta.body, { status: risposta.status, headers: intestazioni });
-  const html = (await risposta.text()).replace(/<head([^>]*)>/i, `<head$1><base href="${SITO_OGGI}/">`);
+  intestazioni.delete('etag');
+  const html = (await risposta.text()).replace(/<head(\s[^>]*)?>/i, (testa) => `${testa}<base href="${SITO_OGGI}/">`);
   return new Response(html, { status: risposta.status, headers: intestazioni });
 };

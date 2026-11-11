@@ -1,4 +1,5 @@
 export const SITO_ATTUALE = 'https://www.inballet.it';
+export const SITO_OGGI = '/sito-oggi';
 export const MISURATO = 1366;
 
 type Dispositivo = 'pc' | 'telefono';
@@ -8,8 +9,6 @@ interface Riquadro {
   y: number;
   w: number;
   h: number;
-  basso?: boolean;
-  destra?: boolean;
 }
 
 export interface Schermata {
@@ -17,8 +16,9 @@ export interface Schermata {
   url: string;
   dispositivo: Dispositivo;
   evidenzia?: string;
+  frase?: [string, string];
+  fermo?: boolean;
   larghezza?: number;
-  riquadro?: Riquadro;
   barrato?: Riquadro;
 }
 
@@ -70,9 +70,9 @@ const apertura = (immagine: Apertura, titolo: string, testo: string): Passo => (
 const SOTTO_1_MB = 'Homepage sotto 1 MB';
 const ORARI_RECENSIONI = 'Orari e recensioni da Google';
 
-const oggi = (percorso: string, dispositivo: Dispositivo, riquadro?: Riquadro): Scena => ({
+const oggi = (percorso: string, evidenzia?: string, altro: Partial<Schermata> = {}): Scena => ({
   tipo: 'siti',
-  schermi: [{ nome: 'Sito di oggi', url: `${SITO_ATTUALE}${percorso}`, dispositivo, riquadro }],
+  schermi: [{ nome: 'Sito di oggi', url: `${SITO_OGGI}${percorso}`, dispositivo: 'pc', evidenzia, ...altro }],
 });
 
 const nuovo = (percorso: string, evidenzia?: string): Scena => ({
@@ -93,63 +93,63 @@ export const passi: Passo[] = [
     titolo: 'Tutto in bianco e nero',
     testo: 'La pagina Modern, come la homepage e altri 6 corsi: solo foto in bianco e nero. Una scuola di danza vive di colore.',
     evidenzia: ['colore'],
-    scena: oggi('/modern.html#features2-1c', 'pc', { x: 124, y: 88, w: 1118, h: 260 }),
+    scena: oggi('/modern.html', '#features2-1c .card-img'),
   },
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Nessun pulsante',
     testo: 'La homepage finisce senza un «Contattaci» o un «Prenota una prova», e nei corsi mancano orari, giorni e costi.',
     evidenzia: ['orari, giorni e costi'],
-    scena: oggi('/#footer1-6i', 'pc', { x: 0, y: 480, w: MISURATO, h: 468, basso: true, destra: true }),
+    scena: oggi('', '#clients01-7m, #footer1-6i'),
   },
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Tutti nello stesso paragrafo',
     testo: 'Famiglie, adulti, professionisti e scuole cercano cose diverse, ma non c’è una strada per ciascuno.',
     evidenzia: ['una strada per ciascuno'],
-    scena: oggi('/', 'pc', { x: 112, y: 424, w: 1142, h: 186 }),
+    scena: oggi('', '#header9-7b .mbr-text', { frase: ['La scuola', 'esigenze professionali.'] }),
   },
   {
     capitolo: 'Il sito di oggi',
     titolo: '9 tendine, 43 voci',
     testo: '«Danza integrativa», «Atelier», «Altri servizi» non orientano, e 8 voci principali non hanno una pagina.',
     evidenzia: ['8 voci principali'],
-    scena: oggi('/', 'pc', { x: 292, y: 10, w: 1003, h: 93, destra: true }),
+    scena: oggi('', '#menu1-4k .navbar-nav'),
   },
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Un paragrafo di 286 parole',
     testo: 'Racconta la filosofia, ma non dice quale corso, dove, quando e quanto costa.',
     evidenzia: ['quanto costa'],
-    scena: oggi('/', 'pc', { x: 112, y: 140, w: 1142, h: 640 }),
+    scena: oggi('', '#header9-7b .mbr-text'),
   },
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Pagine in errore',
     testo: 'Danza Classica, dal menu, porta a un errore 404; altre 6 voci riaprono la homepage.',
     evidenzia: ['errore 404'],
-    scena: oggi('/danza_classica_accademica.html', 'pc'),
+    scena: oggi('/danza_classica_accademica.html'),
   },
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Dal telefono si legge male',
     testo: 'Il nome finisce sotto il menu, poi più di due schermate di solo testo.',
     evidenzia: ['sotto il menu'],
-    scena: oggi('/', 'telefono', { x: 6, y: 38, w: 378, h: 92 }),
+    scena: oggi('', '#header9-7b h1', { dispositivo: 'telefono', fermo: true }),
   },
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Foto non valorizzate',
     testo: 'Avviamento alla danza, per i più piccoli: tre foto piccole, in fondo, in bianco e nero.',
     evidenzia: ['tre foto piccole'],
-    scena: oggi('/avviamento_alla_danza.html#features2-l', 'pc', { x: 124, y: 88, w: 1118, h: 372 }),
+    scena: oggi('/avviamento_alla_danza.html', '#features2-l .card-img'),
   },
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Sostenitori quasi invisibili',
     testo: 'Loghi larghi 150 pixel, ritagliati da screenshot.',
     evidenzia: ['150 pixel'],
-    scena: oggi('/#footer1-6i', 'pc', { x: 24, y: 480, w: 1318, h: 179, basso: true }),
+    scena: oggi('', '#clients01-7m'),
   },
   apertura('nuovo-sito', 'Il nuovo sito', 'Lo stesso sito, pensato per chi cerca una scuola di danza.'),
   {
@@ -225,7 +225,7 @@ export const passi: Passo[] = [
     scena: {
       tipo: 'siti',
       schermi: [
-        { nome: 'Sito di oggi', url: `${SITO_ATTUALE}/`, dispositivo: 'telefono' },
+        { nome: 'Sito di oggi', url: SITO_OGGI, dispositivo: 'telefono' },
         { nome: 'Nuovo sito', url: '/', dispositivo: 'telefono' },
       ],
     },
@@ -245,7 +245,7 @@ export const passi: Passo[] = [
           url: 'https://www.google.com/search?igu=1&hl=it&gl=it&q=inballet+lainate',
           dispositivo: 'pc',
           larghezza: MISURATO,
-          barrato: { x: 122, y: 207, w: 82, h: 26 },
+          barrato: { x: 124, y: 212, w: 82, h: 26 },
         },
       ],
     },
@@ -258,7 +258,7 @@ export const passi: Passo[] = [
     scena: {
       tipo: 'siti',
       schermi: [
-        { nome: 'Sito di oggi', url: `${SITO_ATTUALE}/sitemap.xml`, dispositivo: 'pc' },
+        { nome: 'Sito di oggi', url: `${SITO_OGGI}/sitemap.xml`, dispositivo: 'pc' },
         { nome: 'Nuovo sito', url: '/sitemap.xml', dispositivo: 'pc' },
       ],
     },

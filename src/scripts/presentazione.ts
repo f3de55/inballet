@@ -255,7 +255,7 @@ function caricato(s: Schermo) {
       s.frame.src = url;
       window.setTimeout(() => {
         delete s.frame.dataset.riancora;
-        pronto(s);
+        if (s.url === url) pronto(s);
       }, 200);
     }, ASSESTAMENTO);
     return;

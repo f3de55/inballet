@@ -3,27 +3,80 @@
 }
 
 .pres-palco {
-  --body-size: var(--compatto-base);
-  --nav-spazio: 6.5rem;
+  --body-size: var(--compatto-2xl);
+  --serp-punto: 840px;
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: 1rem;
+  grid-template-rows: minmax(0, 1fr);
   height: 100dvh;
-  padding: 0.75rem 0.75rem calc(var(--scheda-h, 0px) / 2 + 1.25rem);
+  padding: 0.75rem;
   overflow: hidden;
   background: var(--footer-bg);
   color: var(--text);
 }
 
-.pres-palco:is([data-modo='pannello'], [data-modo='confronto']) {
-  padding-bottom: var(--nav-spazio);
+.pres-palco[data-modo='pannello'] {
+  padding-bottom: 6.5rem;
 }
 
-.pres-palco:not([data-modo='siti']) .pres-scheda,
-.pres-palco:is([data-modo='siti'], [data-modo='copertina']) .pres-navigazione {
+.pres-palco:is([data-modo='pannello'], [data-modo='apertura'], [data-ridotta]) .pres-scheda,
+.pres-palco:not([data-modo='pannello']) .pres-navigazione,
+.pres-palco:not([data-ridotta]) .pres-riapri,
+.pres-palco:is([data-modo='pannello'], [data-modo='apertura']) .pres-riapri {
   display: none;
+}
+
+.pres-riduci {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--grigio-50);
+  color: var(--dark-navy);
+  font-size: var(--icona-mini);
+  cursor: pointer;
+  transition: background-color var(--durata-breve) ease;
+}
+
+.pres-riduci:hover {
+  background: var(--grigio-100);
+}
+
+.pres-riapri {
+  position: absolute;
+  right: 1.75rem;
+  bottom: 1.75rem;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--primary-blue);
+  color: var(--dark-navy);
+  font-size: var(--text-base);
+  box-shadow: 0 10px 30px rgb(var(--nero-rgb) / 0.5);
+  cursor: pointer;
+  transition:
+    background-color var(--durata-breve) ease,
+    transform var(--durata-breve) ease;
+}
+
+.pres-riapri:hover {
+  background: var(--primary-blue-dark);
+  color: var(--white);
+}
+
+.pres-riapri:active {
+  transform: scale(0.94);
 }
 
 .pres-navigazione {
@@ -39,11 +92,6 @@
 
 .pres-navigazione .pres-contatore {
   color: var(--testo-su-scuro-debole);
-}
-
-.pres-navigazione .pres-freccia:not(.pres-freccia--avanti) {
-  background: rgb(var(--bianco-rgb) / 0.12);
-  color: var(--white);
 }
 
 .pres-avanzamento {
@@ -72,9 +120,9 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 1.5rem;
-  width: min(46rem, calc(100% - 2.5rem));
+  width: min(54rem, calc(100% - 2.5rem));
   height: var(--scheda-h, auto);
-  padding: 1rem 1.25rem 1rem 1.5rem;
+  padding: 1.5rem 1.5rem 1.25rem 2rem;
   overflow: hidden;
   border-radius: var(--radius-card);
   background: var(--white);
@@ -92,8 +140,13 @@
   animation: pres-entra var(--durata-pannello) var(--curva);
 }
 
+.pres-palco[data-modo='confronto'] .pres-scheda {
+  width: min(78rem, calc(100% - 2.5rem));
+  height: auto;
+}
+
 .pres-passo h2 {
-  font-size: var(--text-xl);
+  font-size: var(--text-3xl);
   font-weight: var(--heading-weight);
   line-height: var(--h2-lh);
   letter-spacing: var(--h2-ls);
@@ -252,7 +305,6 @@
 }
 
 .pres-schermi {
-  grid-row: 2;
   display: grid;
   grid-auto-rows: minmax(0, 1fr);
   gap: 1.25rem;
@@ -453,7 +505,6 @@
 }
 
 .pres-pannello {
-  grid-row: 1 / -1;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -488,6 +539,10 @@
   position: absolute;
   inset: 0;
   z-index: -1;
+  background: rgb(var(--scuro-rgb) / 0.6);
+}
+
+.pres-copertina[data-immagine='copertina']::before {
   background: rgb(var(--scuro-rgb) / 0.25);
 }
 
@@ -513,13 +568,23 @@
   text-wrap: balance;
 }
 
-.pres-copertina .pres-copertina-autori {
-  font-size: var(--text-xl);
+.pres-copertina .pres-copertina-testo {
+  max-width: 40rem;
+  font-size: var(--text-2xl);
   color: var(--testo-su-scuro);
 }
 
-.pres-copertina .pres-freccia--grande {
+.pres-copertina-comandi {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
   margin-top: 1.5rem;
+}
+
+.pres-copertina-comandi .pres-freccia:not(.pres-freccia--avanti),
+.pres-navigazione .pres-freccia:not(.pres-freccia--avanti) {
+  background: rgb(var(--bianco-rgb) / 0.12);
+  color: var(--white);
 }
 
 .pres-pannello-testa {
@@ -536,16 +601,65 @@
 }
 
 .pres-serp {
-  grid-row: 1;
+  position: absolute;
+  top: 7.5rem;
+  right: 2.5rem;
+  left: calc(0.75rem + var(--serp-punto) + 8rem);
+  z-index: 4;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  justify-self: center;
-  width: min(60rem, 100%);
-  padding: 1.25rem 1.75rem 1.5rem;
+  max-width: 36rem;
+  padding: 1.25rem 1.5rem 1.5rem;
   border-radius: var(--radius-card);
   background: var(--white);
-  box-shadow: 0 0 0 1px rgb(var(--blu-rgb) / 0.5);
+  box-shadow:
+    0 0 0 2px var(--primary-blue),
+    0 24px 60px rgb(var(--nero-rgb) / 0.45);
+  animation: pres-entra var(--durata-pannello) var(--curva);
+}
+
+.pres-serp::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: 8rem;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--primary-blue);
+}
+
+.pres-serp::after {
+  --respiro-da: 1;
+  --respiro-a: 1.35;
+  content: '';
+  position: absolute;
+  top: calc(50% - 0.75rem + 1.5px);
+  right: calc(100% + 8rem - 0.75rem);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--radius-full);
+  background: var(--primary-blue);
+  box-shadow: 0 0 0 0.5rem rgb(var(--blu-rgb) / 0.35);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pres-serp::after {
+    animation: respiro 1.6s var(--curva) infinite alternate;
+  }
+}
+
+@media (max-width: 1300px) {
+  .pres-serp {
+    left: auto;
+    width: min(32rem, calc(100% - 5rem));
+  }
+
+  .pres-serp::before,
+  .pres-serp::after {
+    display: none;
+  }
 }
 
 .pres-serp-risultato {
@@ -603,18 +717,11 @@
   -webkit-line-clamp: 2;
 }
 
-.pres-confronto {
-  grid-row: 3;
+.pres-scheda .pres-confronto:not([hidden]) {
   display: grid;
-  grid-template-columns: minmax(12rem, 18rem) minmax(0, 1fr);
+  grid-template-columns: minmax(10rem, 16rem) minmax(0, 1fr);
   gap: 2rem;
   align-items: center;
-  justify-self: center;
-  width: min(80rem, 100%);
-  padding: 1.25rem 1.75rem;
-  border-radius: var(--radius-card);
-  background: var(--white);
-  animation: pres-entra var(--durata-pannello) var(--curva);
 }
 
 .pres-confronto-testa {
@@ -624,7 +731,7 @@
 }
 
 .pres-confronto-testa h2 {
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
   font-weight: var(--heading-weight);
   line-height: var(--h4-lh);
   color: var(--heading-color);

@@ -20,7 +20,12 @@ export interface Schermata {
   etichetta?: string;
 }
 
-export type Scena = { tipo: 'siti' | 'confronto'; schermi: Schermata[] } | { tipo: 'pannello'; pannello: 'copertina' | 'mancano' | 'costo' | 'dopo' | 'fine' };
+export type Apertura = 'copertina' | 'sito-oggi' | 'nuovo-sito' | 'google' | 'scuole' | 'dashboard' | 'prossimi';
+
+export type Scena =
+  | { tipo: 'siti' | 'confronto'; schermi: Schermata[] }
+  | { tipo: 'apertura'; immagine: Apertura }
+  | { tipo: 'pannello'; pannello: 'mancano' | 'costo' | 'dopo' | 'fine' };
 
 interface Punto {
   esito: 'si' | 'no';
@@ -58,6 +63,14 @@ const scuola = (nome: string, url: string, confronto: Riga[]): Passo => ({
   scena: { tipo: 'confronto', schermi: [{ nome, url, dispositivo: 'pc' }] },
 });
 
+let capitoli = 0;
+const apertura = (immagine: Apertura, titolo: string, testo: string): Passo => ({
+  capitolo: `Capitolo ${++capitoli}`,
+  titolo,
+  testo: [testo],
+  scena: { tipo: 'apertura', immagine },
+});
+
 const MENO_DI_1_MB = 'Homepage sotto 1 MB: si apre subito anche con il telefono';
 
 const oggi = (percorso: string, dispositivo: Dispositivo, riquadro?: Riquadro, etichetta?: string): Scena => ({
@@ -75,15 +88,16 @@ export const passi: Passo[] = [
     capitolo: 'Proposta per InBallet',
     titolo: 'Restyling del sito',
     testo: ['di Federico Capuzzi e Samuele Max'],
-    scena: { tipo: 'pannello', pannello: 'copertina' },
+    scena: { tipo: 'apertura', immagine: 'copertina' },
   },
+  apertura('sito-oggi', 'Il sito di oggi', 'Cosa non funziona nel sito attuale, guardato dal vivo.'),
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Tutto in bianco e nero',
     testo: ['Il bianco e nero è elegante, ma una scuola di danza vive di colore.'],
     evidenzia: ['colore'],
     punti: [{ esito: 'no', testo: 'Tutte le foto misurate, homepage e 6 corsi, sono in bianco e nero.' }],
-    scena: oggi('/modern.html#features2-1c', 'pc', { x: 124, y: 88, w: 1118, h: 260 }, 'Pagina Modern'),
+    scena: oggi('/modern.html#features2-1c', 'pc', { x: 124, y: 88, w: 1118, h: 260 }, 'Modern'),
   },
   {
     capitolo: 'Il sito di oggi',
@@ -152,6 +166,7 @@ export const passi: Passo[] = [
     evidenzia: ['150 pixel'],
     scena: oggi('/#footer1-6i', 'pc', { x: 24, y: 480, w: 1318, h: 179, basso: true }, 'I nostri sostenitori'),
   },
+  apertura('nuovo-sito', 'Il nuovo sito', 'Lo stesso sito, pensato per chi cerca una scuola di danza.'),
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Si capisce subito',
@@ -220,7 +235,7 @@ export const passi: Passo[] = [
     capitolo: 'Il nuovo sito',
     titolo: 'Foto della scuola',
     testo: ['Gallerie di lezioni e spettacoli, a tutto schermo con un tocco.'],
-    scena: nuovo('/', '.gallery-section', 'Galleria'),
+    scena: nuovo('/', '.gallery-infinite', 'Galleria'),
   },
   {
     capitolo: 'Il nuovo sito',
@@ -241,6 +256,7 @@ export const passi: Passo[] = [
       ],
     },
   },
+  apertura('google', 'Su Google', 'Come il sito si presenta a chi lo cerca su Google.'),
   {
     capitolo: 'Su Google',
     titolo: 'Google, dal vivo',
@@ -265,6 +281,7 @@ export const passi: Passo[] = [
       ],
     },
   },
+  apertura('scuole', 'Le scuole della zona', 'I siti delle altre scuole di Lainate e Rho, accanto al nuovo sito InBallet.'),
   scuola('Valentina Ponzone Dance Academy · Lainate', 'https://www.valentinaponzonedanceacademy.it/', [
     { loro: 'Su Google si presenta come «Home - Valentina Ponzone», senza descrizione', noi: 'Titolo e descrizione scritti per Google: danza, Lainate e Rho' },
     { loro: 'La prima schermata dice «Benvenuti nella Dance Academy»: non dove, né per chi', noi: 'Subito: scuola di danza a Lainate e Rho, dai 3 anni all’età adulta' },
@@ -290,6 +307,7 @@ export const passi: Passo[] = [
     { loro: '«Home» nel menu è bianco su fondo chiaro: quasi non si legge', noi: 'Menu leggibile, con il contrasto verificato' },
     { loro: 'Nessun calendario degli eventi né orari', noi: 'Calendario eventi con locandine e orari della segreteria' },
   ]),
+  apertura('dashboard', 'La dashboard', 'L’area riservata per aggiornare il sito da sola, senza codice.'),
   {
     capitolo: 'La dashboard',
     titolo: 'La tua area riservata',
@@ -325,6 +343,7 @@ export const passi: Passo[] = [
     evidenzia: ['cosa cercano le famiglie'],
     scena: nuovo('/dashboard?s=bot', '#chartDaily', 'Domande al giorno'),
   },
+  apertura('prossimi', 'Prossimi passi', 'Cosa manca, quanto costa e come si va online.'),
   {
     capitolo: 'Prossimi passi',
     titolo: 'Cosa manca',

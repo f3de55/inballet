@@ -23,6 +23,10 @@ interface Schermo {
   riquadro?: Riquadro;
   larghezza: number;
   altezza: number;
+  fattore: number;
+  ox: number;
+  oy: number;
+  cima: number;
   bersaglio?: HTMLElement;
   cerca: number;
 }
@@ -33,8 +37,12 @@ const LARGHEZZA_TELEFONO = 390;
 const ALTEZZA_TELEFONO = 844;
 const CORNICE = 28;
 const ETICHETTA = 64;
+const SPAZIO_ETICHETTA = 90;
+const FISSI = '.main-header, .event-banner, .topbar';
 const MARGINE_FARO = 12;
 const BORDO_FARO = 20;
+
+let scheda: HTMLElement | null = null;
 
 const radice = document.querySelector<HTMLElement>('[data-pres]');
 if (radice) avvia(radice);
@@ -55,24 +63,42 @@ function documento(s: Schermo): Document | null {
   }
 }
 
+function cimaScheda(s: Schermo) {
+  if (!scheda?.offsetParent) return null;
+  return scheda.getBoundingClientRect().top - s.vista.getBoundingClientRect().top;
+}
+
 function misura(s: Schermo) {
   const cw = s.vista.clientWidth;
   const ch = s.vista.clientHeight;
   if (!cw || !ch) return;
+  const sotto = cimaScheda(s);
   let w = LARGHEZZA_TELEFONO;
   let h = ALTEZZA_TELEFONO;
   let scala = 1;
   let x = 0;
   let y = 0;
+  let cima = 0;
   if (s.dispositivo === 'pc') {
     w = Math.max(cw, s.minimo);
     scala = cw / w;
     h = ch / scala;
+    s.larghezza = w;
+    s.altezza = h;
+    const r = s.riquadro && sotto !== null ? rettangolo(s) : null;
+    const libero = (sotto ?? ch) / scala - BORDO_FARO;
+    if (r && s.riquadro?.basso) h = (sotto ?? ch) / scala;
+    else if (r && r.bottom + MARGINE_FARO > libero) {
+      cima = Math.max(0, Math.min(r.bottom + MARGINE_FARO - libero, r.top - MARGINE_FARO - BORDO_FARO - SPAZIO_ETICHETTA));
+      h += cima;
+      y = -cima * scala;
+    }
   } else {
-    scala = Math.min(1, (cw - CORNICE * 2) / w, (ch - CORNICE * 2 - ETICHETTA) / h);
+    const utile = Math.min(ch, sotto === null ? ch : sotto - BORDO_FARO);
+    scala = Math.min(1, (cw - CORNICE * 2) / w, (utile - CORNICE * 2 - ETICHETTA) / h);
     const larga = w * scala;
     x = s.allinea === 'destra' ? cw - larga - CORNICE : s.allinea === 'sinistra' ? CORNICE : (cw - larga) / 2;
-    y = (ch - ETICHETTA - h * scala) / 2 + ETICHETTA;
+    y = (utile - ETICHETTA - h * scala) / 2 + ETICHETTA;
   }
   s.el.style.setProperty('--w', `${w}px`);
   s.el.style.setProperty('--h', `${h}px`);
@@ -81,7 +107,28 @@ function misura(s: Schermo) {
   s.el.style.setProperty('--y', `${y}px`);
   s.larghezza = w;
   s.altezza = h;
+  s.fattore = scala;
+  s.ox = x;
+  s.oy = y;
+  s.cima = cima;
   posiziona(s);
+}
+
+function coperta(s: Schermo) {
+  if (!scheda?.offsetParent) return null;
+  const c = scheda.getBoundingClientRect();
+  const v = s.vista.getBoundingClientRect();
+  return {
+    x1: (c.left - v.left - s.ox) / s.fattore,
+    x2: (c.right - v.left - s.ox) / s.fattore,
+    y: (c.top - v.top - s.oy) / s.fattore,
+  };
+}
+
+function libero(s: Schermo, sinistra: number, destra: number) {
+  const z = coperta(s);
+  const fondo = s.altezza - BORDO_FARO;
+  return z && destra > z.x1 && sinistra < z.x2 ? Math.min(fondo, z.y - BORDO_FARO) : fondo;
 }
 
 function rettangolo(s: Schermo) {
@@ -102,13 +149,14 @@ function posiziona(s: Schermo) {
   const w = s.larghezza;
   const h = s.altezza;
   const x1 = Math.max(BORDO_FARO, r.left - MARGINE_FARO);
-  const y1 = Math.max(BORDO_FARO, r.top - MARGINE_FARO);
+  const y1 = Math.max(s.cima + BORDO_FARO, r.top - MARGINE_FARO);
   const x2 = Math.min(w - BORDO_FARO, r.right + MARGINE_FARO);
-  const y2 = Math.min(h - BORDO_FARO, r.bottom + MARGINE_FARO);
+  const fondo = libero(s, x1, x2);
+  const y2 = Math.min(fondo, r.bottom + MARGINE_FARO);
   s.faro.style.width = `${Math.max(0, x2 - x1)}px`;
   s.faro.style.height = `${Math.max(0, y2 - y1)}px`;
   s.faro.style.transform = `translate(${x1}px, ${y1}px)`;
-  s.faro.dataset.etichetta = y1 > 90 ? 'sopra' : h - y2 > 90 ? 'sotto' : 'dentro';
+  s.faro.dataset.etichetta = y1 - s.cima > SPAZIO_ETICHETTA ? 'sopra' : Math.min(h, fondo) - y2 > SPAZIO_ETICHETTA ? 'sotto' : 'dentro';
   s.faro.dataset.destra = String((x1 + x2) / 2 > w / 2);
 }
 
@@ -136,6 +184,18 @@ function accendi(s: Schermo) {
   segui(s);
 }
 
+function porta(s: Schermo, doc: Document, el: HTMLElement) {
+  const r = el.getBoundingClientRect();
+  const testa = [...doc.querySelectorAll<HTMLElement>(FISSI)]
+    .filter((f) => !f.contains(el))
+    .reduce((max, f) => Math.max(max, f.getBoundingClientRect().bottom), 0);
+  const fondo = libero(s, r.left, r.right);
+  const spazio = fondo - testa;
+  doc.documentElement.style.paddingBottom = `${Math.max(0, s.altezza - fondo)}px`;
+  el.style.scrollMarginTop = `${testa + Math.max(SPAZIO_ETICHETTA, (spazio - r.height) / 2)}px`;
+  el.scrollIntoView({ block: 'start', behavior: 'instant' });
+}
+
 function evidenzia(s: Schermo) {
   s.faro.hidden = true;
   s.bersaglio = undefined;
@@ -155,8 +215,9 @@ function evidenzia(s: Schermo) {
       return;
     }
     s.bersaglio = el;
-    el.scrollIntoView({ block: 'center', behavior: 'instant' });
+    porta(s, doc, el);
     accendi(s);
+    s.cerca = window.setTimeout(() => porta(s, doc, el), 800);
   };
   prova();
 }
@@ -191,6 +252,10 @@ function crea(el: HTMLElement): Schermo {
     url: '',
     larghezza: MISURATO,
     altezza: 0,
+    fattore: 1,
+    ox: 0,
+    oy: 0,
+    cima: 0,
     cerca: 0,
   };
   s.frame.addEventListener('load', () => caricato(s));
@@ -247,9 +312,12 @@ function avvia(radice: HTMLElement) {
   const barra = trova<HTMLElement>(radice, '[data-barra]');
   const avanti = [...radice.querySelectorAll<HTMLButtonElement>('[data-avanti]')];
   const indietro = [...radice.querySelectorAll<HTMLButtonElement>('[data-indietro]')];
-  const scheda = trova<HTMLElement>(radice, '.pres-scheda');
+  const foglio = trova<HTMLElement>(radice, '.pres-scheda');
+  scheda = foglio;
   const serp = trova<HTMLElement>(radice, '[data-serp]');
-  const nellaScheda = passi.filter((p) => scheda.contains(p));
+  const riduci = trova<HTMLButtonElement>(radice, '[data-riduci]');
+  const riapri = trova<HTMLButtonElement>(radice, '[data-riapri]');
+  const nellaScheda = passi.filter((p) => foglio.contains(p));
   const totale = passi.length - 1;
   let attuale = -1;
   let scena: Scena | undefined;
@@ -257,9 +325,9 @@ function avvia(radice: HTMLElement) {
 
   const mostra = (s: Scena) => {
     scena = s;
-    radice.dataset.modo = s.tipo === 'pannello' && s.pannello === 'copertina' ? 'copertina' : s.tipo;
-    contenitore.hidden = s.tipo === 'pannello';
-    if (s.tipo === 'pannello') return;
+    radice.dataset.modo = s.tipo;
+    contenitore.hidden = s.tipo === 'pannello' || s.tipo === 'apertura';
+    if (s.tipo === 'pannello' || s.tipo === 'apertura') return;
     contenitore.dataset.n = String(s.schermi.length);
     contenitore.dataset.dispositivo = s.schermi[0].dispositivo;
     schermi.forEach((sc, i) => {
@@ -294,12 +362,14 @@ function avvia(radice: HTMLElement) {
     const modo = radice.dataset.modo;
     radice.dataset.modo = 'siti';
     const massima = nellaScheda.reduce((max, p) => {
+      if (p.classList.contains('pres-confronto')) return max;
       nellaScheda.forEach((q) => (q.hidden = q !== p));
-      return Math.max(max, scheda.offsetHeight);
+      return Math.max(max, foglio.offsetHeight);
     }, 0);
     passi.forEach((p, j) => (p.hidden = j !== attuale));
     if (modo) radice.dataset.modo = modo;
     radice.style.setProperty('--scheda-h', `${massima}px`);
+    schermi.forEach(misura);
   };
   let larghezza = 0;
   new ResizeObserver(() => {
@@ -311,6 +381,14 @@ function avvia(radice: HTMLElement) {
   window.addEventListener('blur', () => {
     if (document.activeElement instanceof HTMLIFrameElement) spegni(schermi);
   });
+
+  const ridotta = (si: boolean) => {
+    radice.toggleAttribute('data-ridotta', si);
+    (si ? riapri : riduci).focus();
+    schermi.forEach(misura);
+  };
+  riduci.addEventListener('click', () => ridotta(true));
+  riapri.addEventListener('click', () => ridotta(false));
 
   avanti.forEach((b) => b.addEventListener('click', () => vai(attuale + 1)));
   indietro.forEach((b) => b.addEventListener('click', () => vai(attuale - 1)));

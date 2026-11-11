@@ -8,9 +8,11 @@ import '../styles/admin/login.css';
 
 export const prerender = false;
 
+const richiesta = Astro.url.searchParams.get('da') ?? '';
+const destinazione = /^\/[a-z]/.test(richiesta) ? richiesta : '/dashboard';
 const result = Astro.getActionResult(actions.auth.login);
-if (result && !result.error) return Astro.redirect('/dashboard');
-if (await isLoggedIn(Astro.session)) return Astro.redirect('/dashboard');
+if (result && !result.error) return Astro.redirect(destinazione);
+if (await isLoggedIn(Astro.session)) return Astro.redirect(destinazione);
 
 const error = result?.error?.message ?? '';
 if (result?.error) Astro.response.status = 401;
@@ -23,7 +25,7 @@ if (result?.error) Astro.response.status = 401;
                 <Image src={logo} alt="InBallet" width={300} format="webp" loading="eager" />
             </div>
 
-            <form class="login-form" method="POST" action={actions.auth.login}>
+            <form class="login-form" method="POST" action={richiesta ? `?da=${encodeURIComponent(destinazione)}&${actions.auth.login.toString().slice(1)}` : actions.auth.login}>
                 <h1>Area riservata</h1>
                 <p class="login-sotto">Accedi per gestire eventi e calendario del sito.</p>
 

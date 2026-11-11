@@ -1,19 +1,27 @@
 ---
 import '../styles/components/linee.css';
+import '../styles/components/movimento.css';
 import '../styles/admin/presentazione.css';
 import { Image } from 'astro:assets';
 import Admin from '../layouts/Admin.astro';
 import { isLoggedIn } from '../lib/auth';
 import { enfatizza } from '../lib/text';
-import { passi } from '../data/presentazione';
-import foto from '../assets/images/presentazione/copertina-inballet.webp';
+import { passi, type Apertura } from '../data/presentazione';
+import copertina from '../assets/images/presentazione/copertina-inballet.webp';
+import sitoOggi from '../assets/images/gallery-10.jpg';
+import nuovoSito from '../assets/images/gallery-3.jpg';
+import google from '../assets/images/gallery-4.jpg';
+import scuole from '../assets/images/ballerina.jpg';
+import dashboard from '../assets/images/gallery-1.jpg';
+import prossimi from '../assets/images/hero-danza-contemporanea.jpg';
 
 export const prerender = false;
 
-if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login');
+if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login?da=/presentazione');
 
-const schermi = Math.max(...passi.map((p) => (p.scena.tipo === 'pannello' ? 0 : p.scena.schermi.length)));
+const schermi = Math.max(...passi.map((p) => (p.scena.tipo === 'siti' || p.scena.tipo === 'confronto' ? p.scena.schermi.length : 0)));
 const totale = passi.length - 1;
+const immagini: Record<Apertura, ImageMetadata> = { copertina, 'sito-oggi': sitoOggi, 'nuovo-sito': nuovoSito, google, scuole, dashboard, prossimi };
 const nomePannello = (i: number) => {
     const scena = passi[i].scena;
     return scena.tipo === 'pannello' ? scena.pannello : '';
@@ -25,6 +33,7 @@ const nomePannello = (i: number) => {
         <h1 class="sr-only">Proposta di restyling del sito InBallet</h1>
         <section class="pres-scheda" aria-label="Spiegazione">
             <div class="pres-avanzamento" aria-hidden="true"><div class="pres-avanzamento-barra" data-barra></div></div>
+            <button type="button" class="pres-riduci" data-riduci aria-label="Riduci la spiegazione"><i class="fas fa-down-left-and-up-right-to-center" aria-hidden="true"></i></button>
             {passi.map((p, i) => p.scena.tipo === 'siti' && (
                 <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-google={p.google ? "si" : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
                     <p class="pres-etichetta">{p.capitolo}</p>
@@ -53,6 +62,27 @@ const nomePannello = (i: number) => {
                     )}
                 </article>
             ))}
+            {passi.map((p, i) => p.scena.tipo === 'confronto' && p.confronto && (
+                <article class="pres-passo pres-confronto" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} hidden>
+                    <div class="pres-confronto-testa">
+                        <p class="pres-etichetta">{p.capitolo}</p>
+                        <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
+                    </div>
+                    <table class="pres-confronto-tabella">
+                        <thead>
+                            <tr><th scope="col">Il loro sito oggi</th><th scope="col">Il nuovo sito InBallet</th></tr>
+                        </thead>
+                        <tbody>
+                            {p.confronto.map((r) => (
+                                <tr>
+                                    <td class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>{r.loro}</td>
+                                    <td class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>{r.noi}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </article>
+            ))}
             <div class="pres-comandi">
                 <button type="button" class="pres-freccia" data-indietro aria-label="Passo precedente"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
                 <p class="pres-contatore" aria-live="polite"><span data-numero>1</span> / {totale}</p>
@@ -60,8 +90,10 @@ const nomePannello = (i: number) => {
             </div>
         </section>
 
+        <button type="button" class="pres-riapri" data-riapri aria-label="Mostra la spiegazione"><i class="fas fa-up-right-and-down-left-from-center" aria-hidden="true"></i></button>
+
         <section class="pres-serp" data-serp aria-label="Il nuovo sito su Google" hidden>
-            <p class="pres-etichetta">Così il nuovo sito apparirà su Google</p>
+            <p class="pres-etichetta">Così apparirà il nuovo sito</p>
             <div class="pres-serp-risultato">
                 <div class="pres-serp-sito">
                     <img src="/favicon.ico" alt="" width="26" height="26" class="pres-serp-icona">
@@ -96,113 +128,94 @@ const nomePannello = (i: number) => {
             ))}
         </div>
 
-        {passi.map((p, i) => p.scena.tipo === 'confronto' && p.confronto && (
-            <section class="pres-confronto" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} hidden>
-                <div class="pres-confronto-testa">
-                    <p class="pres-etichetta">{p.capitolo}</p>
-                    <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
+        {passi.map((p, i) => p.scena.tipo === 'apertura' && (
+            <section class="pres-copertina" data-passo={i} data-scena={JSON.stringify(p.scena)} data-immagine={p.scena.immagine} aria-labelledby={`pres-passo-${i}`} hidden>
+                <Image src={immagini[p.scena.immagine]} alt="" widths={[960, 1600]} sizes="100vw" class="pres-copertina-foto" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
+                <p class="pres-etichetta">{p.capitolo}</p>
+                <h2 id={`pres-passo-${i}`} class="pres-copertina-titolo">{p.titolo}</h2>
+                {p.testo.map((t) => <p class="pres-copertina-testo">{t}</p>)}
+                <div class="pres-copertina-comandi">
+                    {i > 0 && <button type="button" class="pres-freccia" data-indietro aria-label="Passo precedente"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>}
+                    <button type="button" class="pres-freccia pres-freccia--avanti pres-freccia--grande" data-avanti aria-label={i === 0 ? 'Inizia la presentazione' : 'Passo successivo'}><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
                 </div>
-                <table class="pres-confronto-tabella">
-                    <thead>
-                        <tr><th scope="col">Il loro sito oggi</th><th scope="col">Il nuovo sito InBallet</th></tr>
-                    </thead>
-                    <tbody>
-                        {p.confronto.map((r) => (
-                            <tr>
-                                <td class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>{r.loro}</td>
-                                <td class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>{r.noi}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
             </section>
         ))}
 
         {passi.map((p, i) => p.scena.tipo === 'pannello' && (
-            nomePannello(i) === 'copertina' ? (
-                <section class="pres-copertina" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} hidden>
-                    <Image src={foto} alt="" widths={[960, 1600]} sizes="100vw" class="pres-copertina-foto" loading="eager" fetchpriority="high" />
+            <section class="pres-pannello" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} tabindex="0" hidden>
+                <div class="pres-pannello-testa">
                     <p class="pres-etichetta">{p.capitolo}</p>
-                    <h2 id={`pres-passo-${i}`} class="pres-copertina-titolo">{p.titolo}</h2>
-                    {p.testo.map((t) => <p class="pres-copertina-autori">{t}</p>)}
-                    <button type="button" class="pres-freccia pres-freccia--avanti pres-freccia--grande" data-avanti aria-label="Inizia la presentazione"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
-                </section>
-            ) : (
-                <section class="pres-pannello" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} tabindex="0" hidden>
-                    <div class="pres-pannello-testa">
-                        <p class="pres-etichetta">{p.capitolo}</p>
-                        <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
-                        {p.testo.map((t) => <p set:html={enfatizza(t, p.evidenzia ?? [])} />)}
-                    </div>
-                    {nomePannello(i) === 'mancano' && (
-            <ol class="pres-elenco">
-                            <li><h3>Foto reali</h3><p>Alcune immagini sono rielaborate, altre generate con l’intelligenza artificiale come segnaposto: vanno sostituite con foto vere di corsi, sedi e insegnanti.</p><small class="pres-chi">Serve da te</small></li>
-                            <li><h3>Testi da confermare</h3><p>Alcuni testi sono provvisori: età, orari, corsi e storia della scuola vanno riletti insieme.</p><small class="pres-chi">Serve da te</small></li>
-                            <li><h3>Il team</h3><p>Per ogni insegnante servono nome, ruolo, una breve biografia e una foto.</p><small class="pres-chi">Serve da te</small></li>
-                            <li><h3>Assistente Étoile</h3><p>Lo completiamo e lo proviamo con le domande vere delle famiglie.</p><small class="pres-chi pres-chi--noi">Tocca a noi</small></li>
-                            <li><h3>Pubblicazione</h3><p>Il nuovo sito va su inballet.it, con i vecchi indirizzi già collegati alle pagine nuove.</p><small class="pres-chi pres-chi--noi">Tocca a noi</small></li>
-                        </ol>
-                    )}
-                    {nomePannello(i) === 'costo' && (
-                        <Fragment>
-                            <div class="pres-costo">
-                                <div>
-                                    <p class="pres-cifra">€ 1.500</p>
-                                    <p>Per il sito completo, modifiche concordate fino alla pubblicazione comprese.</p>
-                                    <div class="pres-ripartizione" aria-hidden="true"><div class="pres-quota"></div><div class="pres-quota pres-quota--ritenuta"></div></div>
-                                    <dl class="pres-ripartizione-voci">
-                                        <div><dt>€ 1.200</dt><dd>a noi</dd></div>
-                                        <div><dt>€ 300</dt><dd>ritenuta d’acconto del 20%, versata da InBallet con F24</dd></div>
-                                    </dl>
-                                </div>
-                                <ul class="pres-punti">
-                                    <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Progetto e realizzazione da zero, su misura</li>
-                                    <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Tutte le pagine, assistente Étoile e dashboard</li>
-                                    <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Modifiche a testi e foto fino alla pubblicazione</li>
-                                    <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Pubblicazione su inballet.it con i vecchi link collegati</li>
-                                </ul>
-                            </div>
-                            <p><strong>Come funziona.</strong> Prestazione occasionale, senza IVA. <strong>Escluso</strong> il costo a consumo dei servizi esterni (assistente Étoile, Google Maps), da definire insieme prima di pubblicare.</p>
-                            <small class="pres-fonte">Importi e adempimenti da confermare con il vostro commercialista.</small>
-                        </Fragment>
-                    )}
-                    {nomePannello(i) === 'dopo' && (
-                        <div class="pres-colonne">
+                    <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
+                    {p.testo.map((t) => <p set:html={enfatizza(t, p.evidenzia ?? [])} />)}
+                </div>
+                {nomePannello(i) === 'mancano' && (
+        <ol class="pres-elenco">
+                        <li><h3>Foto reali</h3><p>Alcune immagini sono rielaborate, altre generate con l’intelligenza artificiale come segnaposto: vanno sostituite con foto vere di corsi, sedi e insegnanti.</p><small class="pres-chi">Serve da te</small></li>
+                        <li><h3>Testi da confermare</h3><p>Alcuni testi sono provvisori: età, orari, corsi e storia della scuola vanno riletti insieme.</p><small class="pres-chi">Serve da te</small></li>
+                        <li><h3>Il team</h3><p>Per ogni insegnante servono nome, ruolo, una breve biografia e una foto.</p><small class="pres-chi">Serve da te</small></li>
+                        <li><h3>Assistente Étoile</h3><p>Lo completiamo e lo proviamo con le domande vere delle famiglie.</p><small class="pres-chi pres-chi--noi">Tocca a noi</small></li>
+                        <li><h3>Pubblicazione</h3><p>Il nuovo sito va su inballet.it, con i vecchi indirizzi già collegati alle pagine nuove.</p><small class="pres-chi pres-chi--noi">Tocca a noi</small></li>
+                    </ol>
+                )}
+                {nomePannello(i) === 'costo' && (
+                    <Fragment>
+                        <div class="pres-costo">
                             <div>
-                                <h3>Su cosa puoi contare</h3>
-                                <ul class="pres-punti">
-                                    <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Eventi, documenti e insegnanti li aggiorni tu dalla dashboard, senza costi.</li>
-                                    <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Fino alla firma, i ritocchi a grafica e testi sono inclusi.</li>
-                                    <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Controllo annuale facoltativo, € 250: aggiorniamo il codice, verifichiamo che tutto funzioni, controlliamo dominio e DNS.</li>
-                                    <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Il dominio resta di InBallet; se vuoi, ne seguiamo noi il rinnovo.</li>
-                                </ul>
+                                <p class="pres-cifra">€ 1.500</p>
+                                <p>Per il sito completo, modifiche concordate fino alla pubblicazione comprese.</p>
+                                <div class="pres-ripartizione" aria-hidden="true"><div class="pres-quota"></div><div class="pres-quota pres-quota--ritenuta"></div></div>
+                                <dl class="pres-ripartizione-voci">
+                                    <div><dt>€ 1.200</dt><dd>a noi</dd></div>
+                                    <div><dt>€ 300</dt><dd>ritenuta d’acconto del 20%, versata da InBallet con F24</dd></div>
+                                </dl>
                             </div>
-                            <div>
-                                <h3>I nostri limiti</h3>
-                                <ul class="pres-punti">
-                                    <li class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Lavoriamo senza partita IVA, solo con prestazioni occasionali.</li>
-                                    <li class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Non possiamo garantire assistenza continuativa né reperibilità.</li>
-                                    <li class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Dopo la firma, una modifica grande è una nuova prestazione occasionale, ogni tanto.</li>
-                                    <li class="pres-punto pres-punto--info"><i class="fas fa-key" aria-hidden="true"></i>Per pubblicare ci servono gli accessi all’hosting.</li>
-                                </ul>
-                            </div>
+                            <ul class="pres-punti">
+                                <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Progetto e realizzazione da zero, su misura</li>
+                                <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Tutte le pagine, assistente Étoile e dashboard</li>
+                                <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Modifiche a testi e foto fino alla pubblicazione</li>
+                                <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Pubblicazione su inballet.it con i vecchi link collegati</li>
+                            </ul>
                         </div>
-                    )}
-                    {nomePannello(i) === 'fine' && (
-                        <Fragment>
-                            <ol class="pres-elenco pres-elenco--passi">
-                                <li><h3>Un incontro</h3><p>Rivediamo insieme testi, foto e schede degli insegnanti.</p></li>
-                                <li><h3>Le rifiniture</h3><p>Completiamo Étoile e ti accompagniamo nella dashboard.</p></li>
-                                <li><h3>Online</h3><p>Pubblichiamo su inballet.it e controlliamo che tutto funzioni.</p></li>
-                            </ol>
-                            <div class="pres-azioni">
-                                <a class="pres-btn pres-btn--avanti" href="/" target="_blank" rel="noopener">Apri il nuovo sito<span class="sr-only"> (si apre in una nuova scheda)</span></a>
-                                <a class="pres-btn" href="/dashboard" target="_blank" rel="noopener">Apri la dashboard<span class="sr-only"> (si apre in una nuova scheda)</span></a>
-                            </div>
-                        </Fragment>
-                    )}
-                </section>
-            )
+                        <p><strong>Come funziona.</strong> Prestazione occasionale, senza IVA. <strong>Escluso</strong> il costo a consumo dei servizi esterni (assistente Étoile, Google Maps), da definire insieme prima di pubblicare.</p>
+                        <small class="pres-fonte">Importi e adempimenti da confermare con il vostro commercialista.</small>
+                    </Fragment>
+                )}
+                {nomePannello(i) === 'dopo' && (
+                    <div class="pres-colonne">
+                        <div>
+                            <h3>Su cosa puoi contare</h3>
+                            <ul class="pres-punti">
+                                <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Eventi, documenti e insegnanti li aggiorni tu dalla dashboard, senza costi.</li>
+                                <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Fino alla firma, i ritocchi a grafica e testi sono inclusi.</li>
+                                <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Controllo annuale facoltativo, € 250: aggiorniamo il codice, verifichiamo che tutto funzioni, controlliamo dominio e DNS.</li>
+                                <li class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Il dominio resta di InBallet; se vuoi, ne seguiamo noi il rinnovo.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>I nostri limiti</h3>
+                            <ul class="pres-punti">
+                                <li class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Lavoriamo senza partita IVA, solo con prestazioni occasionali.</li>
+                                <li class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Non possiamo garantire assistenza continuativa né reperibilità.</li>
+                                <li class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Dopo la firma, una modifica grande è una nuova prestazione occasionale, ogni tanto.</li>
+                                <li class="pres-punto pres-punto--info"><i class="fas fa-key" aria-hidden="true"></i>Per pubblicare ci servono gli accessi all’hosting.</li>
+                            </ul>
+                        </div>
+                    </div>
+                )}
+                {nomePannello(i) === 'fine' && (
+                    <Fragment>
+                        <ol class="pres-elenco pres-elenco--passi">
+                            <li><h3>Un incontro</h3><p>Rivediamo insieme testi, foto e schede degli insegnanti.</p></li>
+                            <li><h3>Le rifiniture</h3><p>Completiamo Étoile e ti accompagniamo nella dashboard.</p></li>
+                            <li><h3>Online</h3><p>Pubblichiamo su inballet.it e controlliamo che tutto funzioni.</p></li>
+                        </ol>
+                        <div class="pres-azioni">
+                            <a class="pres-btn pres-btn--avanti" href="/" target="_blank" rel="noopener">Apri il nuovo sito<span class="sr-only"> (si apre in una nuova scheda)</span></a>
+                            <a class="pres-btn" href="/dashboard" target="_blank" rel="noopener">Apri la dashboard<span class="sr-only"> (si apre in una nuova scheda)</span></a>
+                        </div>
+                    </Fragment>
+                )}
+            </section>
         ))}
 
         <nav class="pres-navigazione" aria-label="Passi della presentazione">

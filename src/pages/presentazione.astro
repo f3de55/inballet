@@ -7,31 +7,33 @@ import { isLoggedIn } from '../lib/auth';
 import { enfatizza } from '../lib/text';
 import { passi } from '../data/presentazione';
 import logo from '../assets/images/logo.png';
-import foto from '../assets/images/gallery-6.jpg';
 
 export const prerender = false;
 
 if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login');
 
 const capitoli = passi.flatMap((p, i) => (i === 0 || passi[i - 1].capitolo !== p.capitolo ? [{ nome: p.capitolo, da: i }] : []));
-const sitoNuovo = Astro.url.host;
 ---
 
 <Admin title="Presentazione del nuovo sito - InBallet">
     <div class="pres" data-pres>
-        <main class="pres-racconto">
-            <header class="pres-testata">
-                <Image src={logo} alt="" width={180} format="webp" loading="eager" class="pres-logo" />
-                <h1 class="pres-titolo">Il nuovo sito di InBallet</h1>
-            </header>
-
+        <header class="pres-testata">
+            <Image src={logo} alt="" width={180} format="webp" loading="eager" class="pres-logo" />
+            <h1 class="pres-titolo">Il nuovo sito di InBallet</h1>
             <nav class="pres-capitoli" aria-label="Capitoli">
-                {capitoli.map((c) => (
-                    <button type="button" class="pres-capitolo-btn" data-vai={c.da}>{c.nome}</button>
+                {capitoli.map((c, i) => (
+                    <button type="button" class="pres-capitolo-btn" data-vai={c.da}><span class="pres-capitolo-n" aria-hidden="true">{i + 1}</span>{c.nome}</button>
                 ))}
             </nav>
+            <div class="pres-dispositivi" role="group" aria-label="Schermo" data-dispositivi>
+                <button type="button" data-dispositivo="pc" aria-pressed="true"><i class="fas fa-desktop" aria-hidden="true"></i> Computer</button>
+                <button type="button" data-dispositivo="telefono" aria-pressed="false"><i class="fas fa-mobile-alt" aria-hidden="true"></i> Telefono</button>
+            </div>
+            <div class="pres-avanzamento" aria-hidden="true"><div class="pres-avanzamento-barra" data-barra></div></div>
+        </header>
 
-            <div class="pres-passi">
+        <main class="pres-palco" data-modo="sito">
+            <section class="pres-scheda" aria-label="Spiegazione" data-scheda>
                 {passi.map((p, i) => (
                     <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} hidden={i > 0}>
                         <p class="pres-etichetta">{p.capitolo}</p>
@@ -60,25 +62,16 @@ const sitoNuovo = Astro.url.host;
                         )}
                     </article>
                 ))}
-            </div>
+                <div class="pres-comandi">
+                    <button type="button" class="pres-freccia" data-indietro aria-label="Passo precedente"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+                    <p class="pres-contatore" aria-live="polite"><span data-numero>1</span> / {passi.length}</p>
+                    <button type="button" class="pres-freccia pres-freccia--avanti" data-avanti aria-label="Passo successivo"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                </div>
+            </section>
 
-            <div class="pres-comandi">
-                <button type="button" class="pres-btn" data-indietro><i class="fas fa-arrow-left" aria-hidden="true"></i> Indietro</button>
-                <p class="pres-contatore" aria-live="polite"><span data-numero>1</span> di {passi.length}</p>
-                <button type="button" class="pres-btn pres-btn--avanti" data-avanti>Avanti <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
-            </div>
-            <div class="pres-avanzamento" aria-hidden="true"><div class="pres-avanzamento-barra" data-barra></div></div>
-        </main>
-
-        <section class="pres-palco" aria-label="I siti dal vivo" data-modo="pannello">
-            <div class="pres-dispositivi" role="group" aria-label="Schermo" data-dispositivi hidden>
-                <button type="button" data-dispositivo="pc" aria-pressed="true"><i class="fas fa-desktop" aria-hidden="true"></i> Computer</button>
-                <button type="button" data-dispositivo="telefono" aria-pressed="false"><i class="fas fa-mobile-alt" aria-hidden="true"></i> Telefono</button>
-            </div>
-
-            <div class="pres-schermi" data-schermi hidden>
+            <div class="pres-schermi" data-schermi>
                 {['a', 'b'].map((id) => (
-                    <figure class="pres-schermo" data-schermo={id}>
+                    <figure class="pres-schermo" data-schermo={id} hidden={id === 'b'}>
                         <figcaption class="pres-barra">
                             <strong data-sito></strong>
                             <span class="pres-indirizzo" data-indirizzo></span>
@@ -101,33 +94,7 @@ const sitoNuovo = Astro.url.host;
                 ))}
             </div>
 
-            <div class="pres-pannello pres-copertina" data-pannello="copertina">
-                <Image src={foto} alt="Allieve di InBallet in scena durante uno spettacolo" widths={[960, 1600]} sizes="70vw" class="pres-copertina-foto" />
-                <div class="pres-copertina-testo">
-                    <p class="pres-etichetta">Proposta per Ilenia Nobile · Novembre 2026</p>
-                    <h2 class="pres-grande">Il nuovo sito di <em>InBallet</em></h2>
-                    <p>Perché rifarlo, cosa cambia per la scuola e cosa manca per andare online insieme.</p>
-                    <dl class="pres-siti">
-                        <div><dt>Sito di oggi</dt><dd>www.inballet.it</dd></div>
-                        <div><dt>Nuovo sito</dt><dd>{sitoNuovo}</dd></div>
-                    </dl>
-                </div>
-            </div>
-
-            <div class="pres-pannello" data-pannello="parole" hidden>
-                <p class="pres-etichetta">Prima di iniziare</p>
-                <h2 class="pres-grande">Quattro parole, <em>in breve</em></h2>
-                <dl class="pres-parole">
-                    <div><dt>UX</dt><dd><strong>Esperienza d’uso.</strong> Quanto è facile, dal telefono, trovare il corso giusto e capire come contattarvi.</dd></div>
-                    <div><dt>UI</dt><dd><strong>L’aspetto.</strong> Foto, colori e pulsanti: l’impressione di cura che arriva prima di leggere una riga.</dd></div>
-                    <div><dt>SEO</dt><dd><strong>Farsi trovare.</strong> Come Google capisce il sito e lo mostra a chi cerca «danza bambini Lainate».</dd></div>
-                    <div><dt>Accessibilità</dt><dd><strong>Un sito per tutti.</strong> Leggibile anche da chi vede poco o usa un lettore vocale, come una scuola inclusiva.</dd></div>
-                </dl>
-            </div>
-
             <div class="pres-pannello" data-pannello="google" hidden>
-                <p class="pres-etichetta">Come vi vede Google</p>
-                <h2 class="pres-grande">Il risultato di ricerca</h2>
                 <div class="pres-risultati">
                     <div class="pres-risultato">
                         <p class="pres-etichetta pres-etichetta--no">Sito di oggi</p>
@@ -158,8 +125,6 @@ const sitoNuovo = Astro.url.host;
             </div>
 
             <div class="pres-pannello" data-pannello="zona" hidden>
-                <p class="pres-etichetta">Homepage delle scuole della zona · 5 novembre 2026</p>
-                <h2 class="pres-grande">Il confronto <em>con la zona</em></h2>
                 <table class="pres-tabella pres-tabella--zona">
                     <thead>
                         <tr><th scope="col">Scuola</th><th scope="col">Titolo chiaro</th><th scope="col">Descrizione</th><th scope="col">Scheda scuola</th><th scope="col">Foto descritte</th></tr>
@@ -175,11 +140,10 @@ const sitoNuovo = Astro.url.host;
                     </tbody>
                 </table>
                 <p>Il nuovo sito è l’unico dei sette a soddisfare tutti e quattro i punti. Non è una classifica delle scuole: misura solo come si presentano online.</p>
+                <small class="pres-fonte">Homepage delle scuole della zona, rilevate il 5 novembre 2026.</small>
             </div>
 
             <div class="pres-pannello" data-pannello="mancano" hidden>
-                <p class="pres-etichetta">Prima della pubblicazione</p>
-                <h2 class="pres-grande">Cosa manca, <em>da fare insieme</em></h2>
                 <ol class="pres-elenco">
                     <li><h3>Foto reali</h3><p>Alcune immagini sono rielaborate, altre generate con l’intelligenza artificiale come segnaposto: vanno sostituite con foto vere di corsi, sedi e insegnanti.</p><small class="pres-chi">Serve da te</small></li>
                     <li><h3>Testi da confermare</h3><p>Alcuni testi sono provvisori: età, orari, corsi e storia della scuola vanno riletti insieme.</p><small class="pres-chi">Serve da te</small></li>
@@ -190,7 +154,6 @@ const sitoNuovo = Astro.url.host;
             </div>
 
             <div class="pres-pannello" data-pannello="costo" hidden>
-                <p class="pres-etichetta">Investimento</p>
                 <div class="pres-costo">
                     <div>
                         <p class="pres-cifra">€ 1.500</p>
@@ -213,8 +176,6 @@ const sitoNuovo = Astro.url.host;
             </div>
 
             <div class="pres-pannello" data-pannello="dopo" hidden>
-                <p class="pres-etichetta">Dopo la pubblicazione</p>
-                <h2 class="pres-grande">Cosa possiamo fare, <em>e cosa no</em></h2>
                 <div class="pres-colonne">
                     <div>
                         <h3>Su cosa puoi contare</h3>
@@ -238,8 +199,6 @@ const sitoNuovo = Astro.url.host;
             </div>
 
             <div class="pres-pannello" data-pannello="fine" hidden>
-                <p class="pres-etichetta">Da qui in avanti</p>
-                <h2 class="pres-grande">I prossimi <em>passi</em></h2>
                 <ol class="pres-elenco pres-elenco--passi">
                     <li><h3>Un incontro</h3><p>Rivediamo insieme testi, foto e schede degli insegnanti.</p></li>
                     <li><h3>Le rifiniture</h3><p>Completiamo Étoile e ti accompagniamo nella dashboard.</p></li>
@@ -250,7 +209,8 @@ const sitoNuovo = Astro.url.host;
                     <a class="pres-btn" href="/dashboard" target="_blank" rel="noopener">Apri la dashboard<span class="sr-only"> (si apre in una nuova scheda)</span></a>
                 </div>
             </div>
-        </section>
+
+        </main>
     </div>
     <script>
         import '../scripts/presentazione';

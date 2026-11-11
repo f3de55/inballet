@@ -27,7 +27,9 @@ const LARGHEZZA = { pc: 1366, telefono: 390 };
 const ALTEZZA_TELEFONO = 844;
 const CORNICE = 28;
 const MARGINE_FARO = 12;
+const MARGINE_SCHEDA = 24;
 const ridotto = matchMedia('(prefers-reduced-motion: reduce)');
+let dopoFaro = () => {};
 
 const radice = document.querySelector<HTMLElement>('[data-pres]');
 if (radice) avvia(radice);
@@ -82,6 +84,7 @@ function posiziona(s: Schermo) {
   s.faro.style.height = `${r.height + MARGINE_FARO * 2}px`;
   s.faro.style.transform = `translate(${r.left - MARGINE_FARO}px, ${r.top - MARGINE_FARO}px)`;
   s.faro.dataset.sotto = String(r.top < 90);
+  s.faro.dataset.destra = String(r.left + r.width / 2 > LARGHEZZA[s.dispositivo] / 2);
 }
 
 function segui(s: Schermo) {
@@ -89,6 +92,7 @@ function segui(s: Schermo) {
   const passo = () => {
     posiziona(s);
     if (performance.now() < fine) requestAnimationFrame(passo);
+    else dopoFaro();
   };
   requestAnimationFrame(passo);
 }
@@ -133,6 +137,7 @@ function disegnaSegni(s: Schermo, segni: Segni = []) {
 }
 
 function caricato(s: Schermo) {
+  delete s.el.dataset.carica;
   if (!s.url.startsWith('/')) return;
   const doc = documento(s);
   s.bloccato.hidden = !!doc;
@@ -186,6 +191,7 @@ function apri(s: Schermo, sito: 'attuale' | 'nuovo', percorso: string, dispositi
   s.faro.hidden = true;
   s.bloccato.hidden = true;
   s.frame.dataset.url = url;
+  s.el.dataset.carica = '';
   s.frame.src = url;
 }
 
@@ -211,9 +217,18 @@ async function leggiNuovoSito(radice: HTMLElement) {
   if (scheda && !tipi.includes('DanceSchool')) scheda.textContent = 'Da verificare';
 }
 
+function sovrapposizione(x: number, y: number, w: number, h: number, ostacoli: DOMRect[]) {
+  return ostacoli.reduce((totale, r) => {
+    const ox = Math.max(0, Math.min(x + w, r.right + 40) - Math.max(x, r.left - 40));
+    const oy = Math.max(0, Math.min(y + h, r.bottom + 40) - Math.max(y, r.top - 80));
+    return totale + ox * oy;
+  }, 0);
+}
+
 function avvia(radice: HTMLElement) {
   const passi = [...radice.querySelectorAll<HTMLElement>('[data-passo]')];
   const palco = trova<HTMLElement>(radice, '.pres-palco');
+  const scheda = trova<HTMLElement>(radice, '[data-scheda]');
   const contenitore = trova<HTMLElement>(radice, '[data-schermi]');
   const pannelli = [...radice.querySelectorAll<HTMLElement>('[data-pannello]')];
   const [a, b] = [...radice.querySelectorAll<HTMLElement>('[data-schermo]')].map(crea);
@@ -225,8 +240,48 @@ function avvia(radice: HTMLElement) {
   const capitoli = [...radice.querySelectorAll<HTMLButtonElement>('[data-vai]')];
   let attuale = -1;
   let nuovoLetto = false;
+  let laterale = false;
 
   const visibili = () => [a, b].filter((s) => !s.el.hidden);
+
+  const disponiScheda = (decidi = false) => {
+    const p = palco.getBoundingClientRect();
+    const ancora = palco.dataset.modo === 'sito' && p.width >= 900 && !laterale ? 'libera' : p.width >= 1100 ? 'lato' : 'basso';
+    palco.dataset.ancora = ancora;
+    const w = scheda.offsetWidth;
+    const h = scheda.offsetHeight;
+    palco.style.setProperty('--riserva', ancora === 'basso' ? `${h + MARGINE_SCHEDA}px` : '0px');
+    palco.style.setProperty('--riserva-sx', ancora === 'lato' ? `${w + MARGINE_SCHEDA}px` : '0px');
+    let x = ancora === 'lato' ? MARGINE_SCHEDA : (p.width - w) / 2;
+    let y = ancora === 'lato' ? (p.height - h) / 2 : p.height - h - MARGINE_SCHEDA;
+    if (ancora === 'libera') {
+      const v = a.vista.getBoundingClientRect();
+      const ostacoli = [...(a.faro.hidden ? [] : [a.faro]), ...a.segni.children].map((el) => el.getBoundingClientRect());
+      const sx = v.left + MARGINE_SCHEDA;
+      const dx = v.right - w - MARGINE_SCHEDA;
+      const su = v.top + MARGINE_SCHEDA;
+      const giu = v.bottom - h - MARGINE_SCHEDA;
+      const [bx, by, coperto] = [
+        [dx, giu],
+        [sx, giu],
+        [dx, su],
+        [sx, su],
+      ]
+        .map(([cx, cy]) => [cx, cy, sovrapposizione(cx, cy, w, h, ostacoli)])
+        .reduce((meglio, c) => (c[2] < meglio[2] ? c : meglio));
+      if (decidi && coperto > w * h * 0.08 && p.width >= 1100) {
+        laterale = true;
+        return disponiScheda();
+      }
+      x = bx - p.left;
+      y = by - p.top;
+    }
+    scheda.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
+    scheda.dataset.pronta = '';
+  };
+  dopoFaro = () => disponiScheda(true);
+  new ResizeObserver(() => disponiScheda()).observe(scheda);
+  new ResizeObserver(() => disponiScheda()).observe(palco);
 
   const segnaDispositivo = () => {
     const d = visibili()[0]?.dispositivo ?? 'pc';
@@ -236,6 +291,7 @@ function avvia(radice: HTMLElement) {
   };
 
   const mostra = (scena: Scena) => {
+    laterale = false;
     palco.dataset.modo = scena.tipo;
     pannelli.forEach((p) => (p.hidden = scena.tipo !== 'pannello' || p.dataset.pannello !== scena.pannello));
     contenitore.hidden = scena.tipo === 'pannello';
@@ -251,6 +307,7 @@ function avvia(radice: HTMLElement) {
       leggiNuovoSito(radice).catch(() => (nuovoLetto = false));
     }
     segnaDispositivo();
+    requestAnimationFrame(() => disponiScheda());
   };
 
   const vai = (i: number) => {
@@ -291,6 +348,7 @@ function avvia(radice: HTMLElement) {
       evidenzia(s);
     });
     segnaDispositivo();
+    requestAnimationFrame(() => disponiScheda());
   });
 
   document.addEventListener('keydown', (e) => {

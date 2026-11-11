@@ -539,10 +539,6 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgb(var(--scuro-rgb) / 0.6);
-}
-
-.pres-copertina[data-immagine='copertina']::before {
   background: rgb(var(--scuro-rgb) / 0.25);
 }
 

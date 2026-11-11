@@ -28,6 +28,7 @@ const LARGHEZZA = { pc: 1366, telefono: 390 };
 const ALTEZZA = { pc: 800, telefono: 844 };
 const CORNICE = 28;
 const MARGINE_FARO = 12;
+const BORDO_FARO = 20;
 const ridotto = matchMedia('(prefers-reduced-motion: reduce)');
 
 const radice = document.querySelector<HTMLElement>('[data-pres]');
@@ -76,11 +77,24 @@ function rettangolo(s: Schermo) {
 function posiziona(s: Schermo) {
   const r = rettangolo(s);
   if (!r || s.faro.hidden) return;
-  s.faro.style.width = `${r.width + MARGINE_FARO * 2}px`;
-  s.faro.style.height = `${r.height + MARGINE_FARO * 2}px`;
-  s.faro.style.transform = `translate(${r.left - MARGINE_FARO}px, ${r.top - MARGINE_FARO}px)`;
-  s.faro.dataset.sotto = String(r.top < 90);
-  s.faro.dataset.destra = String(r.left + r.width / 2 > LARGHEZZA[s.dispositivo] / 2);
+  const w = LARGHEZZA[s.dispositivo];
+  const h = s.altezza;
+  const x1 = Math.max(BORDO_FARO, r.left - MARGINE_FARO);
+  const y1 = Math.max(BORDO_FARO, r.top - MARGINE_FARO);
+  const x2 = Math.min(w - BORDO_FARO, r.right + MARGINE_FARO);
+  const y2 = Math.min(h - BORDO_FARO, r.bottom + MARGINE_FARO);
+  s.faro.style.width = `${Math.max(0, x2 - x1)}px`;
+  s.faro.style.height = `${Math.max(0, y2 - y1)}px`;
+  s.faro.style.transform = `translate(${x1}px, ${y1}px)`;
+  s.faro.dataset.etichetta = y1 > 90 ? 'sopra' : h - y2 > 90 ? 'sotto' : 'dentro';
+  s.faro.dataset.destra = String((x1 + x2) / 2 > w / 2);
+}
+
+function spegni(schermi: Schermo[]) {
+  schermi.forEach((s) => {
+    clearTimeout(s.cerca);
+    s.faro.hidden = true;
+  });
 }
 
 function segui(s: Schermo) {
@@ -206,6 +220,7 @@ function avvia(radice: HTMLElement) {
   const numero = trova<HTMLElement>(radice, '[data-numero]');
   const barra = trova<HTMLElement>(radice, '[data-barra]');
   const avanti = trova<HTMLButtonElement>(radice, '[data-avanti]');
+  const scheda = trova<HTMLElement>(radice, '.pres-scheda');
   const indietro = trova<HTMLButtonElement>(radice, '[data-indietro]');
   let attuale = -1;
   let scena: Scena | undefined;
@@ -243,6 +258,26 @@ function avvia(radice: HTMLElement) {
     }
     mostra(JSON.parse(passo.dataset.scena ?? '{}') as Scena);
   };
+
+  const misuraScheda = () => {
+    scheda.style.removeProperty('--scheda-h');
+    const massima = passi.reduce((max, p) => {
+      passi.forEach((q) => (q.hidden = q !== p));
+      return Math.max(max, scheda.offsetHeight);
+    }, 0);
+    passi.forEach((p, j) => (p.hidden = j !== attuale));
+    scheda.style.setProperty('--scheda-h', `${massima}px`);
+  };
+  let larghezza = 0;
+  new ResizeObserver(() => {
+    if (radice.clientWidth === larghezza) return;
+    larghezza = radice.clientWidth;
+    misuraScheda();
+  }).observe(radice);
+
+  window.addEventListener('blur', () => {
+    if (document.activeElement instanceof HTMLIFrameElement) spegni(schermi);
+  });
 
   avanti.addEventListener('click', () => vai(attuale + 1));
   indietro.addEventListener('click', () => vai(attuale - 1));

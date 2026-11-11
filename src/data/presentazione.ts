@@ -185,13 +185,13 @@ export const passi: Passo[] = [
     titolo: 'Orari da Google Maps',
     testo: ['Gli orari arrivano dalla scheda Google e il sito dice se la segreteria è aperta adesso.'],
     evidenzia: ['aperta adesso'],
-    scena: nuovo('/contatti', 'orari-segreteria', 'Orari segreteria'),
+    scena: nuovo('/contatti', '.info-blocco:has(orari-segreteria)', 'Orari segreteria'),
   },
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Recensioni di Google',
     testo: ['Voto e ultime recensioni, aggiornati da soli.'],
-    scena: nuovo('/', 'recensioni-google', 'Recensioni'),
+    scena: nuovo('/', '.recensioni-layout', 'Recensioni'),
   },
   {
     capitolo: 'Il nuovo sito',

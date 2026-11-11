@@ -54,7 +54,7 @@
                       <xsl:for-each select="s:sitemapindex/s:sitemap">
                         <tr>
                           <td class="numero"><xsl:value-of select="position()"/></td>
-                          <td><a href="{substring-after(s:loc, '.it')}"><xsl:value-of select="s:loc"/></a></td>
+                          <td><a class="indirizzo" href="{substring-after(s:loc, '.it')}"><xsl:value-of select="substring-after(s:loc, '.it')"/></a></td>
                         </tr>
                       </xsl:for-each>
                     </tbody>
@@ -71,7 +71,7 @@
                       <xsl:for-each select="s:urlset/s:url">
                         <tr>
                           <td class="numero"><xsl:value-of select="position()"/></td>
-                          <td><a href="{s:loc}"><xsl:value-of select="s:loc"/></a></td>
+                          <td><a class="indirizzo" href="{substring-after(s:loc, '.it')}"><xsl:value-of select="substring-after(s:loc, '.it')"/></a></td>
                         </tr>
                       </xsl:for-each>
                     </tbody>
@@ -79,9 +79,12 @@
                 </xsl:otherwise>
               </xsl:choose>
             </div>
-            <footer>Generata in automatico a ogni pubblicazione del sito.</footer>
+            <footer>Generata in automatico a ogni pubblicazione del sito. Per Google le pagine sono registrate sul dominio ufficiale www.inballet.it.</footer>
           </div>
         </main>
+        <script>
+          document.querySelectorAll('a.indirizzo').forEach(function (a) { a.textContent = a.href; });
+        </script>
       </body>
     </html>
   </xsl:template>

@@ -244,19 +244,13 @@ function pronto(s: Schermo) {
 
 function caricato(s: Schermo) {
   if (!s.url.startsWith('/')) {
-    if (!s.url.includes('#') || 'riancora' in s.frame.dataset) {
-      delete s.frame.dataset.riancora;
-      return pronto(s);
-    }
+    if (!s.url.includes('#')) return pronto(s);
     const url = s.url;
     window.setTimeout(() => {
       if (s.url !== url || !('carica' in s.el.dataset)) return;
-      s.frame.dataset.riancora = '';
+      s.frame.src = `${url.split('#')[0]}#`;
       s.frame.src = url;
-      window.setTimeout(() => {
-        delete s.frame.dataset.riancora;
-        if (s.url === url) pronto(s);
-      }, 200);
+      window.setTimeout(() => s.url === url && pronto(s), 200);
     }, ASSESTAMENTO);
     return;
   }

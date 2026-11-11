@@ -71,7 +71,8 @@ const apertura = (immagine: Apertura, titolo: string, testo: string): Passo => (
   scena: { tipo: 'apertura', immagine },
 });
 
-const MENO_DI_1_MB = 'Homepage sotto 1 MB: si apre subito anche con il telefono';
+const SOTTO_1_MB = 'Homepage sotto 1 MB';
+const ORARI_RECENSIONI = 'Orari e recensioni da Google';
 
 const oggi = (percorso: string, dispositivo: Dispositivo, riquadro?: Riquadro, etichetta?: string): Scena => ({
   tipo: 'siti',
@@ -239,13 +240,6 @@ export const passi: Passo[] = [
   },
   {
     capitolo: 'Il nuovo sito',
-    titolo: 'Nessun link perso',
-    testo: ['Il vecchio indirizzo di Danza Classica ora porta al corso. Vale per tutte le vecchie pagine.'],
-    evidenzia: ['tutte le vecchie pagine'],
-    scena: nuovo('/danza_classica_accademica.html', '.corso-intro-meta', 'Età e frequenza'),
-  },
-  {
-    capitolo: 'Il nuovo sito',
     titolo: 'Stesso telefono, due siti',
     testo: ['A sinistra oggi, a destra il nuovo sito, pensato prima di tutto per il telefono.'],
     scena: {
@@ -256,9 +250,9 @@ export const passi: Passo[] = [
       ],
     },
   },
-  apertura('google', 'Su Google', 'Come il sito si presenta a chi lo cerca su Google.'),
+  apertura('google', 'Motori di ricerca e AI', 'Come il sito si presenta a chi lo cerca su Google o lo chiede a un assistente AI.'),
   {
-    capitolo: 'Su Google',
+    capitolo: 'Motori di ricerca e AI',
     titolo: 'Google, dal vivo',
     testo: ['La ricerca vera, adesso. Oggi la homepage si presenta a Google come «Home», senza descrizione.'],
     evidenzia: ['«Home»'],
@@ -269,7 +263,7 @@ export const passi: Passo[] = [
     },
   },
   {
-    capitolo: 'Su Google',
+    capitolo: 'Motori di ricerca e AI',
     titolo: 'La mappa del sito',
     testo: ['L’elenco delle pagine da consegnare a Google: oggi non esiste, nel nuovo sito si aggiorna da sola.'],
     evidenzia: ['non esiste'],
@@ -277,35 +271,35 @@ export const passi: Passo[] = [
       tipo: 'siti',
       schermi: [
         { nome: 'Sito di oggi', url: `${SITO_ATTUALE}/sitemap.xml`, dispositivo: 'pc' },
-        { nome: 'Nuovo sito', url: '/sitemap-0.xml', dispositivo: 'pc' },
+        { nome: 'Nuovo sito', url: '/sitemap.xml', dispositivo: 'pc' },
       ],
     },
   },
   apertura('scuole', 'Le scuole della zona', 'I siti delle altre scuole di Lainate e Rho, accanto al nuovo sito InBallet.'),
-  scuola('Valentina Ponzone Dance Academy · Lainate', 'https://www.valentinaponzonedanceacademy.it/', [
-    { loro: 'Su Google si presenta come «Home - Valentina Ponzone», senza descrizione', noi: 'Titolo e descrizione scritti per Google: danza, Lainate e Rho' },
-    { loro: 'La prima schermata dice «Benvenuti nella Dance Academy»: non dove, né per chi', noi: 'Subito: scuola di danza a Lainate e Rho, dai 3 anni all’età adulta' },
-    { loro: 'Homepage da 4,2 MB e numero di telefono non cliccabile', noi: MENO_DI_1_MB },
+  scuola('Valentina Ponzone · Lainate', 'https://www.valentinaponzonedanceacademy.it/', [
+    { loro: 'Su Google: «Home», senza descrizione', noi: 'Titolo e descrizione per Google' },
+    { loro: 'Non dice dove né per chi', noi: 'Lainate e Rho, dai 3 anni' },
+    { loro: 'Homepage da 4,2 MB', noi: SOTTO_1_MB },
   ]),
   scuola('Backstage · Lainate', 'https://www.backstage-danza.it/', [
-    { loro: 'La pagina non ha un titolo: la scheda del browser resta vuota e Google lo deve inventare', noi: 'Ogni pagina ha titolo e descrizione propri' },
-    { loro: 'I numeri di telefono sono scritti ma non si chiamano con un tocco', noi: 'Dal telefono si chiama la segreteria con un tocco' },
-    { loro: 'Niente orari della segreteria né recensioni', noi: 'Orari e recensioni da Google, aggiornati da soli' },
+    { loro: 'Pagina senza titolo', noi: 'Titolo e descrizione per Google' },
+    { loro: 'Telefoni non cliccabili', noi: 'Si chiama con un tocco' },
+    { loro: 'Niente orari né recensioni', noi: ORARI_RECENSIONI },
   ]),
   scuola('Spazio Dance On · Rho', 'https://www.spaziodanceon.it/', [
-    { loro: 'Homepage da 8,5 MB: dal telefono si carica lentamente', noi: MENO_DI_1_MB },
-    { loro: 'Foto in bianco e nero', noi: 'Foto a colori di lezioni e spettacoli' },
-    { loro: 'Il titolo principale della pagina, per Google, è «homepage»', noi: 'Il titolo principale dice cosa e dove: «Scuola di Danza a Lainate e Rho»' },
+    { loro: 'Homepage da 8,5 MB', noi: SOTTO_1_MB },
+    { loro: 'Foto in bianco e nero', noi: 'Foto a colori' },
+    { loro: 'Titolo principale «homepage»', noi: 'Titolo con cosa e dove' },
   ]),
   scuola('City Dance Academy · Rho', 'https://www.citydanceacademy.club/', [
-    { loro: 'In homepage c’è ancora il workshop del 16 giugno 2021', noi: 'Gli eventi passati si chiudono da soli' },
-    { loro: 'Una voce «Altro» nasconde parte del menu', noi: '4 voci chiare e «Contattaci» sempre visibile' },
-    { loro: 'Niente orari della segreteria né recensioni', noi: 'Orari e recensioni da Google, aggiornati da soli' },
+    { loro: 'In homepage un evento del 2021', noi: 'Eventi passati chiusi da soli' },
+    { loro: 'Menu con la voce «Altro»', noi: '4 voci chiare' },
+    { loro: 'Niente orari né recensioni', noi: ORARI_RECENSIONI },
   ]),
   scuola('Accademia Balletto Classico · Rho', 'https://www.accademiaballettoclassico.it/', [
-    { loro: 'Nessuna descrizione per Google', noi: 'Titolo e descrizione scritti per Google' },
-    { loro: '«Home» nel menu è bianco su fondo chiaro: quasi non si legge', noi: 'Menu leggibile, con il contrasto verificato' },
-    { loro: 'Nessun calendario degli eventi né orari', noi: 'Calendario eventi con locandine e orari della segreteria' },
+    { loro: 'Nessuna descrizione per Google', noi: 'Titolo e descrizione per Google' },
+    { loro: '«Home» nel menu quasi invisibile', noi: 'Menu leggibile' },
+    { loro: 'Niente calendario eventi né orari', noi: 'Calendario eventi e orari' },
   ]),
   apertura('dashboard', 'La dashboard', 'L’area riservata per aggiornare il sito da sola, senza codice.'),
   {

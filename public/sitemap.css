@@ -8,7 +8,12 @@
   counter-reset: voci;
   background: #eef7fa;
   color: #444;
-  font: 15px/1.6 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font:
+    15px/1.6 system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
 }
 
 :root::before {
@@ -23,7 +28,7 @@
 }
 
 :root::after {
-  content: counter(voci) ' indirizzi consegnati a Google, registrati sul dominio ufficiale www.inballet.it. Il file si aggiorna da solo a ogni pubblicazione.';
+  content: counter(voci) ' pagine consegnate a Google. L’elenco si aggiorna da solo.';
   display: block;
   margin-top: 24px;
   color: #666;
@@ -31,8 +36,7 @@
   text-align: center;
 }
 
-url,
-sitemap {
+url {
   display: block;
   padding: 12px 24px;
   counter-increment: voci;
@@ -40,23 +44,19 @@ sitemap {
   border-top: 1px solid rgba(26, 26, 26, 0.08);
 }
 
-url:nth-child(even),
-sitemap:nth-child(even) {
+url:nth-child(even) {
   background: #f7fbfd;
 }
 
-url:first-child,
-sitemap:first-child {
+url:first-child {
   border-radius: 16px 16px 0 0;
 }
 
-url:last-child,
-sitemap:last-child {
+url:last-child {
   border-radius: 0 0 16px 16px;
 }
 
-url::before,
-sitemap::before {
+url::before {
   content: counter(voci);
   display: inline-block;
   width: 48px;

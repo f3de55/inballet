@@ -9,6 +9,7 @@ interface Schermo {
   scala: HTMLElement;
   frame: HTMLIFrameElement;
   faro: HTMLElement;
+  tocco: HTMLElement;
   etichetta: HTMLElement;
   sito: HTMLElement;
   indirizzo: HTMLElement;
@@ -167,6 +168,7 @@ function spegni(schermi: Schermo[]) {
   schermi.forEach((s) => {
     clearTimeout(s.cerca);
     s.faro.hidden = true;
+    s.tocco.hidden = true;
   });
 }
 
@@ -183,6 +185,7 @@ function accendi(s: Schermo) {
   s.etichetta.textContent = s.nota ?? '';
   s.etichetta.hidden = !s.nota;
   s.faro.hidden = false;
+  s.tocco.hidden = s.url.startsWith('/');
   posiziona(s);
   segui(s);
 }
@@ -225,8 +228,14 @@ function evidenzia(s: Schermo) {
   prova();
 }
 
-function caricato(s: Schermo) {
+function pronto(s: Schermo) {
+  if (!('carica' in s.el.dataset)) return;
   delete s.el.dataset.carica;
+  if (!s.url.startsWith('/')) evidenzia(s);
+}
+
+function caricato(s: Schermo) {
+  pronto(s);
   if (!s.url.startsWith('/')) return;
   const doc = documento(s);
   s.bloccato.hidden = !!doc;
@@ -234,6 +243,7 @@ function caricato(s: Schermo) {
   if (!doc) return;
   s.indirizzo.textContent = `${location.host}${doc.location.pathname}${doc.location.search}`;
   doc.defaultView?.addEventListener('scroll', () => posiziona(s), { passive: true });
+  for (const tipo of ['wheel', 'touchmove']) doc.addEventListener(tipo, () => spegni([s]), { passive: true });
   evidenzia(s);
 }
 
@@ -244,6 +254,7 @@ function crea(el: HTMLElement): Schermo {
     scala: trova(el, '[data-scala]'),
     frame: trova(el, '[data-frame]'),
     faro: trova(el, '[data-faro]'),
+    tocco: trova(el, '[data-tocco]'),
     etichetta: trova(el, '[data-faro-etichetta]'),
     sito: trova(el, '[data-sito]'),
     indirizzo: trova(el, '[data-indirizzo]'),
@@ -262,6 +273,7 @@ function crea(el: HTMLElement): Schermo {
     cerca: 0,
   };
   s.frame.addEventListener('load', () => caricato(s));
+  for (const tipo of ['wheel', 'pointerdown']) s.tocco.addEventListener(tipo, () => spegni([s]), { passive: true });
   new ResizeObserver(() => misura(s)).observe(s.vista);
   return s;
 }
@@ -292,10 +304,9 @@ function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
   s.bloccato.hidden = true;
   s.frame.dataset.url = url;
   s.frame.src = url;
-  if (soloAncora || !interno) evidenzia(s);
-  if (soloAncora) return;
+  if (soloAncora) return evidenzia(s);
   s.el.dataset.carica = '';
-  window.setTimeout(() => delete s.el.dataset.carica, 4000);
+  window.setTimeout(() => pronto(s), 4000);
 }
 
 async function leggiNuovoSito(radice: HTMLElement) {
@@ -326,9 +337,17 @@ function avvia(radice: HTMLElement) {
   let scena: Scena | undefined;
   let nuovoLetto = false;
 
+  let chiave = '';
   const mostra = (s: Scena) => {
     scena = s;
     radice.dataset.modo = s.tipo;
+    const nuova = s.tipo === 'siti' || s.tipo === 'confronto' ? s.schermi.map((x) => x.url.split('#')[0]).join(' ') : '';
+    if (nuova && nuova !== chiave) {
+      contenitore.removeAttribute('data-entra');
+      void contenitore.offsetWidth;
+      contenitore.setAttribute('data-entra', '');
+    }
+    chiave = nuova;
     contenitore.hidden = s.tipo === 'pannello' || s.tipo === 'apertura';
     if (s.tipo === 'pannello' || s.tipo === 'apertura') return;
     contenitore.dataset.n = String(s.schermi.length);
@@ -381,8 +400,21 @@ function avvia(radice: HTMLElement) {
     misuraScheda();
   }).observe(radice);
 
+  let sulSito = false;
+  const riprendi = () => {
+    if (document.activeElement instanceof HTMLIFrameElement) radice.focus({ preventScroll: true });
+  };
+  schermi.forEach((s) => {
+    s.vista.addEventListener('pointerenter', () => (sulSito = true));
+    s.vista.addEventListener('pointerleave', () => {
+      sulSito = false;
+      riprendi();
+    });
+  });
   window.addEventListener('blur', () => {
-    if (document.activeElement instanceof HTMLIFrameElement) spegni(schermi);
+    if (!(document.activeElement instanceof HTMLIFrameElement)) return;
+    if (sulSito) spegni(schermi);
+    else window.setTimeout(riprendi);
   });
 
   const ridotta = (si: boolean) => {

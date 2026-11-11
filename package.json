@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
-    "@astrojs/sitemap": "^3.7.4",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@types/node": "^24.19.2",
     "chart.js": "^4.6.1",

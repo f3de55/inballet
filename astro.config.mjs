@@ -1,33 +1,12 @@
 // @ts-check
 import { defineConfig, envField, fontProviders, sessionDrivers } from 'astro/config';
 import node from '@astrojs/node';
-import sitemap from '@astrojs/sitemap';
-import { readdir, readFile, writeFile } from 'node:fs/promises';
 
 export default defineConfig({
   site: 'https://www.inballet.it',
 
   output: 'static',
   adapter: node({ mode: 'standalone' }),
-
-  integrations: [
-    sitemap({
-      filter: (page) => !/\/(login|dashboard|presentazione|404)/.test(page),
-    }),
-    {
-      name: 'sitemap-stile',
-      hooks: {
-        'astro:build:done': async ({ dir }) => {
-          const mappe = (await readdir(dir)).filter((f) => /^sitemap-.*\.xml$/.test(f));
-          for (const f of mappe) {
-            const file = new URL(f, dir);
-            const xml = await readFile(file, 'utf8');
-            await writeFile(file, xml.replace('?>', '?><?xml-stylesheet type="text/css" href="/sitemap.css"?>'));
-          }
-        },
-      },
-    },
-  ],
 
   trailingSlash: 'never',
   build: { format: 'file' },

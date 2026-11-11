@@ -6,6 +6,6 @@ const ufficiale = ['User-agent: *', 'Allow: /', 'Disallow: /login', 'Disallow: /
 
 export const GET: APIRoute = ({ site, url }) => {
   const dominio = url.hostname.replace(/^www\./, '') === site!.hostname.replace(/^www\./, '');
-  const righe = dominio ? [...ufficiale, '', `Sitemap: ${new URL('/sitemap-index.xml', site)}`] : ['User-agent: *', 'Disallow: /'];
+  const righe = dominio ? [...ufficiale, '', `Sitemap: ${new URL('/sitemap.xml', site)}`] : ['User-agent: *', 'Disallow: /'];
   return new Response(righe.join('\n') + '\n', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 };

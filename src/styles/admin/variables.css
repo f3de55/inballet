@@ -22,6 +22,14 @@
   --su-scuro-ok: #6fcf97;
   --su-scuro-avviso: #ffcc66;
   --su-scuro-errore: #ff8a80;
+  --google-font: Arial, sans-serif;
+  --google-blu: #1a0dab;
+  --google-nome: #202124;
+  --google-testo: #4d5156;
+  --google-icona: #f1f3f4;
+  --google-titolo-size: 1.25rem;
+  --google-testo-size: 0.875rem;
+  --google-url-size: 0.75rem;
   --anello-focus: 0 0 0 3px rgb(var(--blu-rgb) / 0.35);
   --text-3xl: var(--compatto-3xl);
   --text-2xl: var(--compatto-2xl);

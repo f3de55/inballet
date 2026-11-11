@@ -8,6 +8,7 @@ interface Riquadro {
   w: number;
   h: number;
   basso?: boolean;
+  destra?: boolean;
 }
 
 export interface Schermata {
@@ -19,7 +20,7 @@ export interface Schermata {
   etichetta?: string;
 }
 
-export type Scena = { tipo: 'siti'; schermi: Schermata[] } | { tipo: 'pannello'; pannello: 'copertina' | 'mancano' | 'costo' | 'dopo' | 'fine' };
+export type Scena = { tipo: 'siti' | 'confronto'; schermi: Schermata[] } | { tipo: 'pannello'; pannello: 'copertina' | 'mancano' | 'costo' | 'dopo' | 'fine' };
 
 interface Punto {
   esito: 'si' | 'no';
@@ -32,6 +33,11 @@ interface Scelta {
   percorso: string;
 }
 
+interface Riga {
+  loro: string;
+  noi: string;
+}
+
 interface Passo {
   capitolo: string;
   titolo: string;
@@ -40,8 +46,19 @@ interface Passo {
   punti?: Punto[];
   scelte?: Scelta[];
   google?: boolean;
+  confronto?: Riga[];
   scena: Scena;
 }
+
+const scuola = (nome: string, url: string, confronto: Riga[]): Passo => ({
+  capitolo: 'Le scuole della zona',
+  titolo: nome,
+  testo: [],
+  confronto,
+  scena: { tipo: 'confronto', schermi: [{ nome, url, dispositivo: 'pc' }] },
+});
+
+const MENO_DI_1_MB = 'Homepage sotto 1 MB: si apre subito anche con il telefono';
 
 const oggi = (percorso: string, dispositivo: Dispositivo, riquadro?: Riquadro, etichetta?: string): Scena => ({
   tipo: 'siti',
@@ -55,10 +72,9 @@ const nuovo = (percorso: string, evidenzia?: string, etichetta?: string, disposi
 
 export const passi: Passo[] = [
   {
-    capitolo: 'Proposta',
-    titolo: 'Restyling del sito InBallet',
-    testo: ['Cosa non funziona oggi, il nuovo sito dal vivo, la dashboard e i prossimi passi.', 'Si avanza con le frecce, anche da tastiera.'],
-    evidenzia: ['le frecce'],
+    capitolo: 'Proposta per InBallet',
+    titolo: 'Restyling del sito',
+    testo: ['di Federico Capuzzi e Samuele Max'],
     scena: { tipo: 'pannello', pannello: 'copertina' },
   },
   {
@@ -91,10 +107,10 @@ export const passi: Passo[] = [
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Menu troppo lungo',
-    testo: ['Due righe, 9 tendine, 43 voci. «Danza integrativa», «Atelier», «Altri servizi» non orientano.'],
+    testo: ['9 tendine, 43 voci. «Danza integrativa», «Atelier», «Altri servizi» non orientano.'],
     evidenzia: ['9 tendine, 43 voci'],
     punti: [{ esito: 'no', testo: '8 voci principali non hanno una pagina.' }],
-    scena: oggi('/', 'pc', { x: 292, y: 10, w: 1003, h: 93 }, '9 tendine'),
+    scena: oggi('/', 'pc', { x: 292, y: 10, w: 1003, h: 93, destra: true }, '9 tendine'),
   },
   {
     capitolo: 'Il sito di oggi',
@@ -249,22 +265,31 @@ export const passi: Passo[] = [
       ],
     },
   },
-  {
-    capitolo: 'Su Google',
-    titolo: 'Le scuole della zona',
-    testo: ['Le homepage delle scuole di Lainate e Rho, dal vivo, accanto a InBallet oggi.'],
-    scena: {
-      tipo: 'siti',
-      schermi: [
-        { nome: 'InBallet oggi', url: `${SITO_ATTUALE}/`, dispositivo: 'pc' },
-        { nome: 'Valentina Ponzone · Lainate', url: 'https://www.valentinaponzonedanceacademy.it/', dispositivo: 'pc' },
-        { nome: 'Backstage · Lainate', url: 'https://www.backstage-danza.it/', dispositivo: 'pc' },
-        { nome: 'Spazio Dance On · Rho', url: 'https://www.spaziodanceon.it/', dispositivo: 'pc' },
-        { nome: 'City Dance Academy · Rho', url: 'https://www.citydanceacademy.club/', dispositivo: 'pc' },
-        { nome: 'Accademia Balletto Classico · Rho', url: 'https://www.accademiaballettoclassico.it/', dispositivo: 'pc' },
-      ],
-    },
-  },
+  scuola('Valentina Ponzone Dance Academy · Lainate', 'https://www.valentinaponzonedanceacademy.it/', [
+    { loro: 'Su Google si presenta come «Home - Valentina Ponzone», senza descrizione', noi: 'Titolo e descrizione scritti per Google: danza, Lainate e Rho' },
+    { loro: 'La prima schermata dice «Benvenuti nella Dance Academy»: non dove, né per chi', noi: 'Subito: scuola di danza a Lainate e Rho, dai 3 anni all’età adulta' },
+    { loro: 'Homepage da 4,2 MB e numero di telefono non cliccabile', noi: MENO_DI_1_MB },
+  ]),
+  scuola('Backstage · Lainate', 'https://www.backstage-danza.it/', [
+    { loro: 'La pagina non ha un titolo: la scheda del browser resta vuota e Google lo deve inventare', noi: 'Ogni pagina ha titolo e descrizione propri' },
+    { loro: 'I numeri di telefono sono scritti ma non si chiamano con un tocco', noi: 'Dal telefono si chiama la segreteria con un tocco' },
+    { loro: 'Niente orari della segreteria né recensioni', noi: 'Orari e recensioni da Google, aggiornati da soli' },
+  ]),
+  scuola('Spazio Dance On · Rho', 'https://www.spaziodanceon.it/', [
+    { loro: 'Homepage da 8,5 MB: dal telefono si carica lentamente', noi: MENO_DI_1_MB },
+    { loro: 'Foto in bianco e nero', noi: 'Foto a colori di lezioni e spettacoli' },
+    { loro: 'Il titolo principale della pagina, per Google, è «homepage»', noi: 'Il titolo principale dice cosa e dove: «Scuola di Danza a Lainate e Rho»' },
+  ]),
+  scuola('City Dance Academy · Rho', 'https://www.citydanceacademy.club/', [
+    { loro: 'In homepage c’è ancora il workshop del 16 giugno 2021', noi: 'Gli eventi passati si chiudono da soli' },
+    { loro: 'Una voce «Altro» nasconde parte del menu', noi: '4 voci chiare e «Contattaci» sempre visibile' },
+    { loro: 'Niente orari della segreteria né recensioni', noi: 'Orari e recensioni da Google, aggiornati da soli' },
+  ]),
+  scuola('Accademia Balletto Classico · Rho', 'https://www.accademiaballettoclassico.it/', [
+    { loro: 'Nessuna descrizione per Google', noi: 'Titolo e descrizione scritti per Google' },
+    { loro: '«Home» nel menu è bianco su fondo chiaro: quasi non si legge', noi: 'Menu leggibile, con il contrasto verificato' },
+    { loro: 'Nessun calendario degli eventi né orari', noi: 'Calendario eventi con locandine e orari della segreteria' },
+  ]),
   {
     capitolo: 'La dashboard',
     titolo: 'La tua area riservata',

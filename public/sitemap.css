@@ -1,0 +1,76 @@
+@namespace url(http://www.sitemaps.org/schemas/sitemap/0.9);
+
+:root {
+  display: block;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+  counter-reset: voci;
+  background: #eef7fa;
+  color: #444;
+  font: 15px/1.6 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+:root::before {
+  content: 'InBallet · Mappa del sito XML';
+  display: block;
+  margin: 0 -100vw 32px;
+  padding: 40px 100vw;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+:root::after {
+  content: counter(voci) ' indirizzi consegnati a Google, registrati sul dominio ufficiale www.inballet.it. Il file si aggiorna da solo a ogni pubblicazione.';
+  display: block;
+  margin-top: 24px;
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+}
+
+url,
+sitemap {
+  display: block;
+  padding: 12px 24px;
+  counter-increment: voci;
+  background: #fff;
+  border-top: 1px solid rgba(26, 26, 26, 0.08);
+}
+
+url:nth-child(even),
+sitemap:nth-child(even) {
+  background: #f7fbfd;
+}
+
+url:first-child,
+sitemap:first-child {
+  border-radius: 16px 16px 0 0;
+}
+
+url:last-child,
+sitemap:last-child {
+  border-radius: 0 0 16px 16px;
+}
+
+url::before,
+sitemap::before {
+  content: counter(voci);
+  display: inline-block;
+  width: 48px;
+  color: #666;
+  font-variant-numeric: tabular-nums;
+}
+
+loc {
+  color: #1a1a1a;
+  word-break: break-all;
+}
+
+lastmod,
+changefreq,
+priority {
+  display: none;
+}

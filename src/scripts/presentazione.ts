@@ -15,18 +15,24 @@ interface Schermo {
   bloccato: HTMLElement;
   bloccatoLink: HTMLAnchorElement;
   dispositivo: Dispositivo;
+  minimo: number;
+  allinea: string;
   url: string;
   selettore?: string;
   nota?: string;
   riquadro?: Riquadro;
+  larghezza: number;
   altezza: number;
   bersaglio?: HTMLElement;
   cerca: number;
 }
 
-const LARGHEZZA = { pc: 1366, telefono: 390 };
+const MISURATO = 1366;
+const MINIMO_PC = 1280;
+const LARGHEZZA_TELEFONO = 390;
 const ALTEZZA_TELEFONO = 844;
 const CORNICE = 28;
+const ETICHETTA = 64;
 const MARGINE_FARO = 12;
 const BORDO_FARO = 20;
 
@@ -53,15 +59,27 @@ function misura(s: Schermo) {
   const cw = s.vista.clientWidth;
   const ch = s.vista.clientHeight;
   if (!cw || !ch) return;
-  const w = LARGHEZZA[s.dispositivo];
-  const pc = s.dispositivo === 'pc';
-  const scala = pc ? cw / w : Math.min((cw - CORNICE * 2) / w, (ch - CORNICE * 2) / ALTEZZA_TELEFONO);
-  const h = pc ? ch / scala : ALTEZZA_TELEFONO;
-  s.scala.style.setProperty('--w', `${w}px`);
-  s.scala.style.setProperty('--h', `${h}px`);
-  s.scala.style.setProperty('--s', String(scala));
-  s.scala.style.setProperty('--x', `${(cw - w * scala) / 2}px`);
-  s.scala.style.setProperty('--y', `${(ch - h * scala) / 2}px`);
+  let w = LARGHEZZA_TELEFONO;
+  let h = ALTEZZA_TELEFONO;
+  let scala = 1;
+  let x = 0;
+  let y = 0;
+  if (s.dispositivo === 'pc') {
+    w = Math.max(cw, s.minimo);
+    scala = cw / w;
+    h = ch / scala;
+  } else {
+    scala = Math.min(1, (cw - CORNICE * 2) / w, (ch - CORNICE * 2 - ETICHETTA) / h);
+    const larga = w * scala;
+    x = s.allinea === 'destra' ? cw - larga - CORNICE : s.allinea === 'sinistra' ? CORNICE : (cw - larga) / 2;
+    y = (ch - ETICHETTA - h * scala) / 2 + ETICHETTA;
+  }
+  s.el.style.setProperty('--w', `${w}px`);
+  s.el.style.setProperty('--h', `${h}px`);
+  s.el.style.setProperty('--s', String(scala));
+  s.el.style.setProperty('--x', `${x}px`);
+  s.el.style.setProperty('--y', `${y}px`);
+  s.larghezza = w;
   s.altezza = h;
   posiziona(s);
 }
@@ -69,14 +87,19 @@ function misura(s: Schermo) {
 function rettangolo(s: Schermo) {
   if (s.bersaglio) return s.bersaglio.getBoundingClientRect();
   if (!s.riquadro) return null;
-  const { x, y, w, h, basso } = s.riquadro;
-  return new DOMRect(x, basso ? s.altezza - y : y, w, h);
+  const { x, y, w, h, basso, destra } = s.riquadro;
+  const top = basso ? s.altezza - y : y;
+  if (s.dispositivo !== 'pc') return new DOMRect(x, top, w, h);
+  const margine = MISURATO - x - w;
+  const sinistra = x + margine < MISURATO / 10 ? x : x + (s.larghezza - MISURATO) / 2;
+  const fine = destra || sinistra === x ? s.larghezza - margine : sinistra + w;
+  return new DOMRect(sinistra, top, fine - sinistra, h);
 }
 
 function posiziona(s: Schermo) {
   const r = rettangolo(s);
   if (!r || s.faro.hidden) return;
-  const w = LARGHEZZA[s.dispositivo];
+  const w = s.larghezza;
   const h = s.altezza;
   const x1 = Math.max(BORDO_FARO, r.left - MARGINE_FARO);
   const y1 = Math.max(BORDO_FARO, r.top - MARGINE_FARO);
@@ -163,7 +186,10 @@ function crea(el: HTMLElement): Schermo {
     bloccato: trova(el, '[data-bloccato]'),
     bloccatoLink: trova(el, '[data-bloccato-link]'),
     dispositivo: 'pc',
+    minimo: MINIMO_PC,
+    allinea: '',
     url: '',
+    larghezza: MISURATO,
     altezza: 0,
     cerca: 0,
   };
@@ -172,7 +198,7 @@ function crea(el: HTMLElement): Schermo {
   return s;
 }
 
-function apri(s: Schermo, schermata: Schermata) {
+function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
   const { url, nome, dispositivo, evidenzia: selettore, etichetta, riquadro } = schermata;
   const interno = url.startsWith('/');
   s.el.hidden = false;
@@ -183,6 +209,8 @@ function apri(s: Schermo, schermata: Schermata) {
   s.nota = etichetta;
   s.riquadro = riquadro;
   s.dispositivo = dispositivo;
+  s.minimo = quanti > 1 ? 0 : MINIMO_PC;
+  s.allinea = quanti === 2 ? (posto === 0 ? 'destra' : 'sinistra') : '';
   s.el.dataset.dispositivo = dispositivo;
   misura(s);
   const doc = documento(s);
@@ -204,54 +232,57 @@ function apri(s: Schermo, schermata: Schermata) {
 
 async function leggiNuovoSito(radice: HTMLElement) {
   const doc = new DOMParser().parseFromString(await fetch('/').then((r) => r.text()), 'text/html');
-  const campo = (nome: string) => radice.querySelector<HTMLElement>(`[data-google="${nome}"]`);
-  const titolo = campo('titolo');
-  const descrizione = campo('descrizione');
-  if (titolo) titolo.textContent = doc.title;
-  if (descrizione) descrizione.textContent = doc.querySelector('meta[name="description"]')?.getAttribute('content') ?? '';
+  const campo = (nome: string) => trova<HTMLElement>(radice, `[data-serp-${nome}]`);
+  campo('titolo').textContent = doc.title;
+  campo('descrizione').textContent = doc.querySelector('meta[name="description"]')?.getAttribute('content') ?? '';
+  const canonico = doc.querySelector('link[rel="canonical"]')?.getAttribute('href');
+  if (canonico) campo('url').textContent = canonico.replace(/\/$/, '');
 }
 
 function avvia(radice: HTMLElement) {
-  const passi = [...radice.querySelectorAll<HTMLElement>('[data-passo]')];
-  const pannelli = [...radice.querySelectorAll<HTMLElement>('[data-pannello]')];
+  const passi = [...radice.querySelectorAll<HTMLElement>('[data-passo]')].sort((a, b) => Number(a.dataset.passo) - Number(b.dataset.passo));
   const contenitore = trova<HTMLElement>(radice, '[data-schermi]');
   const schermi = [...radice.querySelectorAll<HTMLElement>('[data-schermo]')].map(crea);
-  const numero = trova<HTMLElement>(radice, '[data-numero]');
+  const numeri = [...radice.querySelectorAll<HTMLElement>('[data-numero]')];
   const barra = trova<HTMLElement>(radice, '[data-barra]');
-  const avanti = trova<HTMLButtonElement>(radice, '[data-avanti]');
+  const avanti = [...radice.querySelectorAll<HTMLButtonElement>('[data-avanti]')];
+  const indietro = [...radice.querySelectorAll<HTMLButtonElement>('[data-indietro]')];
   const scheda = trova<HTMLElement>(radice, '.pres-scheda');
-  const indietro = trova<HTMLButtonElement>(radice, '[data-indietro]');
+  const serp = trova<HTMLElement>(radice, '[data-serp]');
+  const nellaScheda = passi.filter((p) => scheda.contains(p));
+  const totale = passi.length - 1;
   let attuale = -1;
   let scena: Scena | undefined;
   let nuovoLetto = false;
 
   const mostra = (s: Scena) => {
     scena = s;
-    radice.dataset.modo = s.tipo;
-    pannelli.forEach((p) => (p.hidden = s.tipo !== 'pannello' || p.dataset.pannello !== s.pannello));
-    contenitore.hidden = s.tipo !== 'siti';
-    if (s.tipo !== 'siti') return;
+    radice.dataset.modo = s.tipo === 'pannello' && s.pannello === 'copertina' ? 'copertina' : s.tipo;
+    contenitore.hidden = s.tipo === 'pannello';
+    if (s.tipo === 'pannello') return;
     contenitore.dataset.n = String(s.schermi.length);
+    contenitore.dataset.dispositivo = s.schermi[0].dispositivo;
     schermi.forEach((sc, i) => {
       const schermata = s.schermi[i];
-      if (schermata) apri(sc, schermata);
+      if (schermata) apri(sc, schermata, s.schermi.length, i);
       else sc.el.hidden = true;
     });
   };
 
   const vai = (i: number) => {
-    const n = Math.max(0, Math.min(passi.length - 1, i));
+    const n = Math.max(0, Math.min(totale, i));
     if (n === attuale) return;
     attuale = n;
     passi.forEach((p, j) => (p.hidden = j !== n));
-    numero.textContent = String(n + 1);
-    barra.style.transform = `scaleX(${(n + 1) / passi.length})`;
-    indietro.disabled = n === 0;
-    avanti.disabled = n === passi.length - 1;
-    history.replaceState(null, '', `#passo-${n + 1}`);
+    numeri.forEach((el) => (el.textContent = String(n)));
+    barra.style.transform = `scaleX(${n / totale})`;
+    indietro.forEach((b) => (b.disabled = n === 0));
+    avanti.forEach((b) => (b.disabled = n === totale));
+    history.replaceState(null, '', n ? `#passo-${n}` : location.pathname);
     const passo = passi[n];
     passo.querySelectorAll<HTMLButtonElement>('[data-percorso]').forEach((btn, j) => btn.setAttribute('aria-pressed', String(j === 0)));
-    if (passo.querySelector('[data-google]') && !nuovoLetto) {
+    serp.hidden = !passo.hasAttribute('data-google');
+    if (!serp.hidden && !nuovoLetto) {
       nuovoLetto = true;
       leggiNuovoSito(radice).catch(() => (nuovoLetto = false));
     }
@@ -260,11 +291,14 @@ function avvia(radice: HTMLElement) {
 
   const misuraScheda = () => {
     radice.style.removeProperty('--scheda-h');
-    const massima = passi.reduce((max, p) => {
-      passi.forEach((q) => (q.hidden = q !== p));
+    const modo = radice.dataset.modo;
+    radice.dataset.modo = 'siti';
+    const massima = nellaScheda.reduce((max, p) => {
+      nellaScheda.forEach((q) => (q.hidden = q !== p));
       return Math.max(max, scheda.offsetHeight);
     }, 0);
     passi.forEach((p, j) => (p.hidden = j !== attuale));
+    if (modo) radice.dataset.modo = modo;
     radice.style.setProperty('--scheda-h', `${massima}px`);
   };
   let larghezza = 0;
@@ -278,8 +312,8 @@ function avvia(radice: HTMLElement) {
     if (document.activeElement instanceof HTMLIFrameElement) spegni(schermi);
   });
 
-  avanti.addEventListener('click', () => vai(attuale + 1));
-  indietro.addEventListener('click', () => vai(attuale - 1));
+  avanti.forEach((b) => b.addEventListener('click', () => vai(attuale + 1)));
+  indietro.forEach((b) => b.addEventListener('click', () => vai(attuale - 1)));
 
   radice.addEventListener('click', (e) => {
     const scelta = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-percorso]');
@@ -299,7 +333,7 @@ function avvia(radice: HTMLElement) {
 
   const dalPasso = () => {
     const n = location.hash.match(/^#passo-(\d+)$/);
-    vai(n ? Number(n[1]) - 1 : 0);
+    vai(n ? Number(n[1]) : 0);
   };
   window.addEventListener('hashchange', dalPasso);
   dalPasso();

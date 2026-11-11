@@ -13,17 +13,16 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) => !/\/(login|dashboard|presentazione|404)/.test(page),
-      xslURL: '/sitemap.xsl',
     }),
     {
-      name: 'sitemap-stile-relativo',
+      name: 'sitemap-stile',
       hooks: {
         'astro:build:done': async ({ dir }) => {
           const mappe = (await readdir(dir)).filter((f) => /^sitemap-.*\.xml$/.test(f));
           for (const f of mappe) {
             const file = new URL(f, dir);
             const xml = await readFile(file, 'utf8');
-            await writeFile(file, xml.replace(/href="https?:\/\/[^"/]+\/sitemap\.xsl"/, 'href="/sitemap.xsl"'));
+            await writeFile(file, xml.replace('?>', '?><?xml-stylesheet type="text/css" href="/sitemap.css"?>'));
           }
         },
       },

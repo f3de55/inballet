@@ -249,8 +249,11 @@ function caricato(s: Schermo) {
     window.setTimeout(() => {
       if (s.url !== url || !('carica' in s.el.dataset)) return;
       s.frame.src = `${url.split('#')[0]}#`;
-      s.frame.src = url;
-      window.setTimeout(() => s.url === url && pronto(s), 200);
+      window.setTimeout(() => {
+        if (s.url !== url) return;
+        s.frame.src = url;
+        window.setTimeout(() => s.url === url && pronto(s), 200);
+      }, 100);
     }, ASSESTAMENTO);
     return;
   }

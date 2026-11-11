@@ -25,11 +25,10 @@ interface Schermo {
 }
 
 const LARGHEZZA = { pc: 1366, telefono: 390 };
-const ALTEZZA = { pc: 800, telefono: 844 };
+const ALTEZZA_TELEFONO = 844;
 const CORNICE = 28;
 const MARGINE_FARO = 12;
 const BORDO_FARO = 20;
-const ridotto = matchMedia('(prefers-reduced-motion: reduce)');
 
 const radice = document.querySelector<HTMLElement>('[data-pres]');
 if (radice) avvia(radice);
@@ -55,9 +54,9 @@ function misura(s: Schermo) {
   const ch = s.vista.clientHeight;
   if (!cw || !ch) return;
   const w = LARGHEZZA[s.dispositivo];
-  const h = ALTEZZA[s.dispositivo];
-  const cornice = s.dispositivo === 'pc' ? 0 : CORNICE;
-  const scala = Math.min((cw - cornice * 2) / w, (ch - cornice * 2) / h);
+  const pc = s.dispositivo === 'pc';
+  const scala = pc ? cw / w : Math.min((cw - CORNICE * 2) / w, (ch - CORNICE * 2) / ALTEZZA_TELEFONO);
+  const h = pc ? ch / scala : ALTEZZA_TELEFONO;
   s.scala.style.setProperty('--w', `${w}px`);
   s.scala.style.setProperty('--h', `${h}px`);
   s.scala.style.setProperty('--s', String(scala));
@@ -119,7 +118,7 @@ function evidenzia(s: Schermo) {
   s.bersaglio = undefined;
   clearTimeout(s.cerca);
   if (s.riquadro) {
-    s.cerca = window.setTimeout(() => accendi(s), 400);
+    accendi(s);
     return;
   }
   const doc = documento(s);
@@ -133,7 +132,7 @@ function evidenzia(s: Schermo) {
       return;
     }
     s.bersaglio = el;
-    el.scrollIntoView({ block: 'center', behavior: ridotto.matches ? 'instant' : 'smooth' });
+    el.scrollIntoView({ block: 'center', behavior: 'instant' });
     accendi(s);
   };
   prova();
@@ -260,13 +259,13 @@ function avvia(radice: HTMLElement) {
   };
 
   const misuraScheda = () => {
-    scheda.style.removeProperty('--scheda-h');
+    radice.style.removeProperty('--scheda-h');
     const massima = passi.reduce((max, p) => {
       passi.forEach((q) => (q.hidden = q !== p));
       return Math.max(max, scheda.offsetHeight);
     }, 0);
     passi.forEach((p, j) => (p.hidden = j !== attuale));
-    scheda.style.setProperty('--scheda-h', `${massima}px`);
+    radice.style.setProperty('--scheda-h', `${massima}px`);
   };
   let larghezza = 0;
   new ResizeObserver(() => {

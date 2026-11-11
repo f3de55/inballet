@@ -4,12 +4,12 @@
 
 .pres-palco {
   --body-size: var(--compatto-xl);
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr) auto;
-  gap: 1rem;
+  grid-template-rows: minmax(0, 1fr);
   height: 100dvh;
-  padding: 1.25rem;
+  padding: 0.75rem 0.75rem calc(var(--scheda-h, 0px) / 2 + 1.25rem);
   background: var(--footer-bg);
   color: var(--text);
 }
@@ -32,21 +32,25 @@
 }
 
 .pres-scheda {
-  position: relative;
-  order: 1;
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  z-index: 5;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 2rem;
-  justify-self: center;
-  width: min(60rem, 100%);
+  width: min(60rem, calc(100% - 2.5rem));
   height: var(--scheda-h, auto);
   padding: 1.25rem 1.5rem 1.25rem 1.75rem;
   overflow: hidden;
   border-radius: var(--radius-card);
   background: var(--white);
-  box-shadow: 0 0 0 1px rgb(var(--blu-rgb) / 0.45);
-  scrollbar-width: thin;
+  box-shadow:
+    0 0 0 1px rgb(var(--blu-rgb) / 0.5),
+    0 24px 60px rgb(var(--nero-rgb) / 0.55),
+    0 0 120px 40px rgb(var(--nero-rgb) / 0.45);
+  transform: translateX(-50%);
 }
 
 .pres-passo {
@@ -157,8 +161,8 @@
 .pres-scelta {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  padding: 0.9rem 1.1rem;
+  gap: 0.1rem;
+  padding: 0.55rem 0.9rem;
   border: 0;
   border-radius: var(--radius-md);
   background: var(--grigio-50);
@@ -171,7 +175,7 @@
 }
 
 .pres-scelta strong {
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   color: var(--dark-navy);
 }
 
@@ -359,7 +363,6 @@
     0 0 0 14px rgb(var(--blu-rgb) / 0.3),
     0 0 0 200vmax rgb(var(--scuro-rgb) / 0.82);
   pointer-events: none;
-  transition: transform var(--durata) var(--curva);
 }
 
 .pres-faro-etichetta {

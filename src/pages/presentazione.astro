@@ -6,7 +6,7 @@ import Admin from '../layouts/Admin.astro';
 import { isLoggedIn } from '../lib/auth';
 import { enfatizza } from '../lib/text';
 import { passi } from '../data/presentazione';
-import foto from '../assets/images/gallery-6.jpg';
+import foto from '../assets/images/presentazione/copertina-inballet.webp';
 
 export const prerender = false;
 
@@ -121,7 +121,7 @@ const nomePannello = (i: number) => {
         {passi.map((p, i) => p.scena.tipo === 'pannello' && (
             nomePannello(i) === 'copertina' ? (
                 <section class="pres-copertina" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} hidden>
-                    <Image src={foto} alt="" widths={[960, 1600, 2400]} sizes="100vw" class="pres-copertina-foto" />
+                    <Image src={foto} alt="" widths={[960, 1600]} sizes="100vw" class="pres-copertina-foto" loading="eager" fetchpriority="high" />
                     <p class="pres-etichetta">{p.capitolo}</p>
                     <h2 id={`pres-passo-${i}`} class="pres-copertina-titolo">{p.titolo}</h2>
                     {p.testo.map((t) => <p class="pres-copertina-autori">{t}</p>)}

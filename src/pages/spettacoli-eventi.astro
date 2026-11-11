@@ -6,6 +6,7 @@ import { romeDate } from '../lib/time';
 import HeroPagina from '../components/HeroPagina.astro';
 import Img from '../components/Img.astro';
 import '../styles/components/dialogo.css';
+import '../styles/components/zoom-foto.css';
 import '../styles/pages/spettacoli-eventi.css';
 
 export const prerender = false;
@@ -247,7 +248,7 @@ const og = aperto
             </div>
             <button type="button" class="evento-locandina" id="dialogLocandinaBtn" aria-label="Ingrandisci la locandina" hidden>
                 <img id="dialogLocandina" src="data:," alt="">
-                <span class="evento-locandina-zoom" aria-hidden="true"><i class="fas fa-expand"></i></span>
+                <span class="zoom-icona" aria-hidden="true"><i class="fas fa-expand"></i></span>
             </button>
             <dl class="evento-dettagli" id="dialogDettagli"></dl>
             <div class="evento-azioni">
@@ -265,8 +266,8 @@ const og = aperto
         </div>
     </dialog>
 
-    <dialog tabindex="-1" class="locandina-dialog" id="locandinaDialog" aria-label="Locandina">
-        <button type="button" class="btn-icon btn-icon--chiudi locandina-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+    <dialog tabindex="-1" class="zoom-dialog" id="locandinaDialog" aria-label="Locandina">
+        <button type="button" class="btn-icon btn-icon--chiudi zoom-chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
         <img id="locandinaGrande" src="data:," alt="">
     </dialog>
     </Fragment>

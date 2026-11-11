@@ -2,6 +2,7 @@
 import type { SezioneInsegnanti } from '../lib/insegnanti';
 import { grassettoDaTesto } from '../lib/text';
 import '../styles/components/dialogo.css';
+import '../styles/components/zoom-foto.css';
 import '../styles/components/insegnanti-dialoghi.css';
 
 interface Props {
@@ -17,7 +18,12 @@ const { insegnanti } = Astro.props.dati;
       <button type="button" class="btn-icon btn-icon--chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
     </div>
     <div class:list={['dialogo-corpo', 'ins-dialog-corpo', { 'con-foto': p.foto }]}>
-      {p.foto && <img class="ins-dialog-foto" src={p.foto} alt={p.nome} width="800" height="1000" loading="lazy" decoding="async" />}
+      {p.foto && (
+        <button type="button" class="ins-dialog-foto-btn" data-zoom-foto={p.foto} aria-label={`Ingrandisci la foto di ${p.nome}`}>
+          <img class="ins-dialog-foto" src={p.foto} alt={p.nome} width="800" height="1000" loading="lazy" decoding="async" />
+          <span class="zoom-icona" aria-hidden="true"><i class="fas fa-expand"></i></span>
+        </button>
+      )}
       <div class="ins-dialog-testo">
         <h2 class="ins-dialog-nome" id={`insegnante-${p.id}-nome`}>{p.nome}</h2>
         {p.ruolo && <p class="ins-dialog-ruolo titoletto">{p.ruolo}</p>}
@@ -35,6 +41,13 @@ const { insegnanti } = Astro.props.dati;
   </dialog>
 ))}
 
+{insegnanti.some((p) => p.foto) && (
+  <dialog tabindex="-1" class="zoom-dialog" id="insegnanteFoto" aria-label="Foto dell'insegnante">
+    <button type="button" class="btn-icon btn-icon--chiudi zoom-chiudi" aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+    <img src="data:," alt="">
+  </dialog>
+)}
+
 <script>
   document.addEventListener('click', (e) => {
     const t = e.target as Element;
@@ -48,6 +61,17 @@ const { insegnanti } = Astro.props.dati;
       }
       return;
     }
+    const zoom = document.getElementById('insegnanteFoto') as HTMLDialogElement | null;
+    const foto = t.closest<HTMLElement>('[data-zoom-foto]');
+    if (foto && zoom) {
+      const img = zoom.querySelector('img')!;
+      img.src = foto.dataset.zoomFoto!;
+      img.alt = foto.querySelector('img')!.alt;
+      zoom.showModal();
+      zoom.focus();
+      return;
+    }
+    if (zoom && t.closest('#insegnanteFoto')) return zoom.close();
     const dlg = t.closest<HTMLDialogElement>('dialog.ins-dialog');
     if (dlg && (t === dlg || t.closest('[data-chiudi]'))) dlg.close();
   });

@@ -3,9 +3,18 @@
   align-items: start;
 }
 
-.ins-dialog-foto {
+.ins-dialog-foto-btn {
   position: sticky;
   top: 3rem;
+  display: block;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background: none;
+  cursor: zoom-in;
+}
+
+.ins-dialog-foto {
   display: block;
   width: 100%;
   height: auto;
@@ -80,9 +89,12 @@
     gap: 2rem;
   }
 
-  .ins-dialog-foto {
+  .ins-dialog-foto-btn {
     position: relative;
     top: auto;
+  }
+
+  .ins-dialog-foto {
     aspect-ratio: 16 / 10;
     object-position: 50% 25%;
   }

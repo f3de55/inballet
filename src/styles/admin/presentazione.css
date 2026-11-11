@@ -1,128 +1,26 @@
-.pres {
-  --body-size: var(--compatto-xl);
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  height: 100dvh;
-  background: var(--footer-bg);
-  color: var(--text);
-}
-
-.pres [hidden] {
+.pres-palco [hidden] {
   display: none;
 }
 
-.pres-testata {
+.pres-palco {
+  --body-size: var(--compatto-xl);
   position: relative;
   display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 0.75rem 1.5rem;
-  background: var(--header-dark);
-}
-
-.pres-logo {
-  flex: none;
-  width: 4.5rem;
-  height: auto;
-}
-
-.pres-titolo {
-  flex: none;
-  font-size: var(--label-size);
-  font-weight: var(--label-weight);
-  letter-spacing: var(--label-ls);
-  text-transform: uppercase;
-  color: var(--testo-su-scuro-debole);
-}
-
-.pres-capitoli {
-  display: flex;
-  gap: 0.35rem;
-  margin: 0 auto;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.pres-capitolo-btn {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.4rem 1rem 0.4rem 0.4rem;
-  border: 0;
-  border-radius: var(--radius-pill);
-  background: rgb(var(--bianco-rgb) / 0.06);
-  color: var(--testo-su-scuro-debole);
-  font: inherit;
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
-  cursor: pointer;
-  transition:
-    background-color var(--durata-breve) ease,
-    color var(--durata-breve) ease;
-}
-
-.pres-capitolo-btn:hover {
-  color: var(--white);
-}
-
-.pres-capitolo-n {
-  display: grid;
-  place-items: center;
-  width: 1.6rem;
-  height: 1.6rem;
-  border-radius: var(--radius-full);
-  background: rgb(var(--bianco-rgb) / 0.12);
-  font-size: var(--text-2xs);
-  font-weight: var(--font-bold);
-}
-
-.pres-capitolo-btn[aria-current] {
-  background: var(--primary-blue);
-  color: var(--dark-navy);
-}
-
-.pres-capitolo-btn[aria-current] .pres-capitolo-n {
-  background: var(--dark-navy);
-  color: var(--white);
-}
-
-.pres-dispositivi {
-  display: flex;
-  flex: none;
-  gap: 0.25rem;
-  padding: 0.25rem;
-  border-radius: var(--radius-pill);
-  background: rgb(var(--bianco-rgb) / 0.08);
-}
-
-.pres-dispositivi button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.45rem 0.95rem;
-  border: 0;
-  border-radius: var(--radius-pill);
-  background: transparent;
-  color: var(--testo-su-scuro-debole);
-  font: inherit;
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
-  cursor: pointer;
-}
-
-.pres-dispositivi button[aria-pressed='true'] {
-  background: var(--white);
-  color: var(--dark-navy);
+  flex-direction: column;
+  height: 100dvh;
+  min-width: 0;
+  background: var(--footer-bg);
+  color: var(--text);
+  padding: 1rem 1.25rem calc(1rem + var(--riserva, 0px)) calc(1.25rem + var(--riserva-sx, 0px));
 }
 
 .pres-avanzamento {
   position: absolute;
+  top: 0;
   right: 0;
-  bottom: 0;
   left: 0;
-  height: 3px;
-  background: rgb(var(--bianco-rgb) / 0.08);
+  height: 4px;
+  background: var(--grigio-100);
 }
 
 .pres-avanzamento-barra {
@@ -133,18 +31,7 @@
   transition: transform var(--durata-pannello) var(--curva);
 }
 
-.pres-palco {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 0;
-  padding: 1rem 1.25rem calc(1rem + var(--riserva, 0px)) calc(1.25rem + var(--riserva-sx, 0px));
-}
-
 .pres-scheda {
-  --lc: var(--primary-blue);
-  --ls: 4px;
   position: absolute;
   top: 0;
   left: 0;
@@ -157,8 +44,7 @@
   padding: 1.75rem 1.75rem 1.25rem;
   overflow-y: auto;
   border-radius: var(--radius-card);
-  background: var(--linea-alto);
-  background-color: var(--white);
+  background: var(--white);
   box-shadow:
     0 0 0 1px rgb(var(--blu-rgb) / 0.45),
     0 30px 80px rgb(var(--nero-rgb) / 0.5);
@@ -491,53 +377,6 @@
   }
 }
 
-.pres-segni {
-  list-style: none;
-  pointer-events: none;
-}
-
-.pres-segno {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 1.25rem 0.5rem 0.5rem;
-  border-radius: var(--radius-pill);
-  font-size: var(--numero-medio-size);
-  font-weight: var(--font-semibold);
-  white-space: nowrap;
-  color: var(--white);
-  background: var(--esito-errore);
-  box-shadow: 0 0 0 6px rgb(var(--bianco-rgb) / 0.35);
-  transform: translate(calc(var(--sx) - 50%), calc(var(--sy) - 50%));
-  animation: pres-appare var(--durata-pannello) var(--curva) both;
-}
-
-.pres-segno:nth-child(2) {
-  animation-delay: 0.15s;
-}
-
-.pres-segno:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-.pres-segno:nth-child(4) {
-  animation-delay: 0.45s;
-}
-
-.pres-segno::before {
-  content: attr(data-n);
-  display: grid;
-  place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: var(--radius-full);
-  color: var(--esito-errore);
-  background: var(--white);
-}
-
 .pres-bloccato {
   position: absolute;
   inset: 0;
@@ -820,12 +659,6 @@
   color: var(--white);
 }
 
-@keyframes pres-appare {
-  from {
-    opacity: 0;
-  }
-}
-
 @keyframes pres-entra {
   from {
     opacity: 0;
@@ -841,25 +674,6 @@
 }
 
 @media (max-width: 900px) {
-  .pres-testata {
-    flex-wrap: wrap;
-    gap: 0.75rem 1rem;
-  }
-
-  .pres-titolo {
-    display: none;
-  }
-
-  .pres-capitoli {
-    order: 3;
-    width: 100%;
-    margin: 0;
-  }
-
-  .pres-dispositivi {
-    margin-left: auto;
-  }
-
   .pres-risultati,
   .pres-costo,
   .pres-colonne,

@@ -2,10 +2,12 @@ export const SITO_ATTUALE = 'https://www.inballet.it';
 
 type Dispositivo = 'pc' | 'telefono';
 
-interface Segno {
+interface Riquadro {
   x: number;
   y: number;
-  testo: string;
+  w: number;
+  h: number;
+  basso?: boolean;
 }
 
 interface Scelta {
@@ -16,7 +18,15 @@ interface Scelta {
 }
 
 export type Scena =
-  | { tipo: 'sito'; sito: 'attuale' | 'nuovo'; percorso: string; dispositivo: Dispositivo; evidenzia?: string; etichetta?: string; segni?: Segno[] }
+  | {
+      tipo: 'sito';
+      sito: 'attuale' | 'nuovo';
+      percorso: string;
+      dispositivo: Dispositivo;
+      evidenzia?: string;
+      riquadro?: Riquadro;
+      etichetta?: string;
+    }
   | { tipo: 'confronto'; attuale: string; nuovo: string; dispositivo: Dispositivo }
   | { tipo: 'pannello'; pannello: 'google' | 'zona' | 'mancano' | 'costo' | 'dopo' | 'fine' };
 
@@ -37,13 +47,181 @@ interface Passo {
 
 export const passi: Passo[] = [
   {
+    capitolo: 'Il sito di oggi',
+    titolo: 'Tutto in bianco e nero',
+    testo: [
+      'Questo è inballet.it di oggi, dal vivo. Il bianco e nero comunica eleganza, ma una scuola di danza vive di colore: costumi, luci, bambini che sorridono. Chi arriva deve sentire una scuola viva.',
+      'Si avanza con le frecce, anche da tastiera. I siti si possono usare: cliccare, scorrere, aprire le pagine.',
+    ],
+    evidenzia: ['colore', 'le frecce'],
+    punti: [{ esito: 'no', testo: 'Tutte le foto che abbiamo misurato, in homepage e in sei pagine dei corsi, sono in bianco e nero.' }],
+    scena: {
+      tipo: 'sito',
+      sito: 'attuale',
+      percorso: '/modern.html#features2-1c',
+      dispositivo: 'pc',
+      riquadro: { x: 124, y: 88, w: 1118, h: 260 },
+      etichetta: 'Pagina Modern: foto in bianco e nero',
+    },
+  },
+  {
+    capitolo: 'Il sito di oggi',
+    titolo: 'Nessun invito all’azione',
+    testo: [
+      'Una CTA (dall’inglese «call to action», invito all’azione) è il pulsante che dice al visitatore cosa fare adesso: «Contattaci», «Prenota una prova», «Scopri i corsi». È ciò che trasforma una visita in una telefonata.',
+      'Sul sito di oggi non ce n’è nessuna: la homepage finisce qui, senza un pulsante.',
+    ],
+    evidenzia: ['call to action', 'nessuna'],
+    punti: [
+      { esito: 'no', testo: 'In homepage nessun pulsante: telefono e email solo in fondo alla pagina.' },
+      { esito: 'no', testo: 'Nelle pagine dei corsi nessun invito a provare, né orari, giorni o costi.' },
+    ],
+    scena: {
+      tipo: 'sito',
+      sito: 'attuale',
+      percorso: '/#footer1-6i',
+      dispositivo: 'pc',
+      riquadro: { x: 100, y: 600, w: 1166, h: 124, basso: true },
+      etichetta: 'Fine della homepage: nessun pulsante',
+    },
+  },
+  {
+    capitolo: 'Il sito di oggi',
+    titolo: 'Chi cerca, non trova la sua strada',
+    testo: [
+      'Famiglie, ragazzi, adulti, professionisti e scuole cercano cose diverse. Qui sono tutti nello stesso paragrafo: nessuno trova una porta pensata per sé, e quindi non è invogliato a cercare oltre.',
+    ],
+    evidenzia: ['nello stesso paragrafo'],
+    punti: [
+      { esito: 'no', testo: 'Bambini, adulti, professionisti e disabilità raccontati in un unico blocco.' },
+      { esito: 'no', testo: 'Le voci di Atelier (Prima infanzia, Seconda infanzia, Bambini, Ragazzi, Adulti), le uniche pensate per età, riaprono la homepage.' },
+    ],
+    scena: {
+      tipo: 'sito',
+      sito: 'attuale',
+      percorso: '/',
+      dispositivo: 'pc',
+      riquadro: { x: 112, y: 424, w: 1142, h: 186 },
+      etichetta: 'Tutti i pubblici in un paragrafo',
+    },
+  },
+  {
+    capitolo: 'Il sito di oggi',
+    titolo: 'Voci di menu troppe e a caso',
+    testo: [
+      'Il menu occupa due righe, con 9 tendine e 43 voci. Nomi come «Danza integrativa», «Atelier» o «Altri servizi» non dicono a un genitore dove trovare il corso per suo figlio.',
+    ],
+    evidenzia: ['9 tendine e 43 voci'],
+    punti: [
+      { esito: 'no', testo: '8 voci principali non hanno una pagina: aprono solo una tendina.' },
+      { esito: 'no', testo: 'La voce Classi riporta alla homepage.' },
+    ],
+    scena: {
+      tipo: 'sito',
+      sito: 'attuale',
+      percorso: '/',
+      dispositivo: 'pc',
+      riquadro: { x: 292, y: 10, w: 1003, h: 93 },
+      etichetta: '9 tendine su due righe',
+    },
+  },
+  {
+    capitolo: 'Il sito di oggi',
+    titolo: 'Testi lunghi, non pensati per convincere',
+    testo: [
+      'La homepage è un unico paragrafo di 286 parole. Racconta la filosofia della scuola, ma non risponde alle domande di chi arriva: che corso fa per me, dove, quando, quanto costa, come inizio.',
+    ],
+    evidenzia: ['286 parole'],
+    punti: [
+      { esito: 'no', testo: 'Nelle pagine dei corsi un paragrafo e tre parole astratte (per Modern: Definizione, Leggerezza, Contrasti).' },
+      { esito: 'no', testo: 'Nessun titolo che dica alla famiglia cosa troverà.' },
+    ],
+    scena: {
+      tipo: 'sito',
+      sito: 'attuale',
+      percorso: '/',
+      dispositivo: 'pc',
+      riquadro: { x: 112, y: 140, w: 1142, h: 640 },
+      etichetta: 'Un solo paragrafo, 286 parole',
+    },
+  },
+  {
+    capitolo: 'Il sito di oggi',
+    titolo: 'Pagine in errore',
+    testo: ['Nel menu Danza, la voce Danza Classica apre questo indirizzo. È quello che trova oggi un genitore che cerca il corso.'],
+    evidenzia: ['Danza Classica'],
+    punti: [
+      { esito: 'no', testo: 'Errore 404: la pagina non esiste.' },
+      { esito: 'no', testo: 'Altre 6 voci del menu riportano alla homepage: le 5 di Atelier e Classi.' },
+    ],
+    scena: { tipo: 'sito', sito: 'attuale', percorso: '/danza_classica_accademica.html', dispositivo: 'pc' },
+  },
+  {
+    capitolo: 'Il sito di oggi',
+    titolo: 'Dal telefono si legge male',
+    testo: [
+      'Oggi la maggior parte delle famiglie cerca dal telefono. Qui il nome della scuola finisce in parte sotto il menu e, prima dei contatti, ci sono più di due schermate di solo testo centrato.',
+    ],
+    evidenzia: ['dal telefono'],
+    punti: [
+      { esito: 'no', testo: 'Il titolo I.N. BALLET è coperto in parte dalla barra in alto.' },
+      { esito: 'no', testo: 'L’apertura della homepage, solo testo, è alta 1.745 pixel sul telefono.' },
+    ],
+    scena: {
+      tipo: 'sito',
+      sito: 'attuale',
+      percorso: '/',
+      dispositivo: 'telefono',
+      riquadro: { x: 6, y: 38, w: 378, h: 92 },
+      etichetta: 'Titolo coperto',
+    },
+  },
+  {
+    capitolo: 'Il sito di oggi',
+    titolo: 'Foto non pensate per chi guarda',
+    testo: [
+      'Nella pagina per i più piccoli le foto sono tre, piccole e in fondo, dopo il testo. Le descrizioni per Google e per chi non vede sono parole astratte, non quello che la foto mostra.',
+    ],
+    evidenzia: ['tre, piccole e in fondo'],
+    punti: [
+      { esito: 'no', testo: 'Foto di 338 × 225 pixel, in bianco e nero.' },
+      { esito: 'no', testo: 'Descrizioni: «coinvolgimento», «educazione», «divertimento».' },
+      { esito: 'no', testo: 'In homepage la foto è solo uno sfondo coperto dal testo.' },
+    ],
+    scena: {
+      tipo: 'sito',
+      sito: 'attuale',
+      percorso: '/avviamento_alla_danza.html#features2-l',
+      dispositivo: 'pc',
+      riquadro: { x: 124, y: 88, w: 1118, h: 372 },
+      etichetta: 'Avviamento alla danza, dai 3 anni',
+    },
+  },
+  {
+    capitolo: 'Il sito di oggi',
+    titolo: 'I loghi dei sostenitori quasi non si vedono',
+    testo: [
+      'Chi sostiene la scuola merita visibilità. Oggi i loghi sono larghi 150 pixel, scorrono in una fila e sono immagini ritagliate da screenshot.',
+    ],
+    evidenzia: ['150 pixel'],
+    punti: [
+      { esito: 'no', testo: 'Clifford Chance è alto 40 pixel.' },
+      { esito: 'no', testo: 'I file si chiamano «screenshot-2026-06-19…».' },
+    ],
+    scena: {
+      tipo: 'sito',
+      sito: 'attuale',
+      percorso: '/#footer1-6i',
+      dispositivo: 'pc',
+      riquadro: { x: 24, y: 480, w: 1318, h: 179, basso: true },
+      etichetta: 'I nostri sostenitori',
+    },
+  },
+  {
     capitolo: 'Il nuovo sito',
     titolo: 'Il nuovo sito, dal vivo',
-    testo: [
-      'Questa è la homepage del nuovo sito, caricata adesso. Al primo sguardo si capisce cosa siete, dove siete e per chi.',
-      'Si avanza con le frecce, anche da tastiera. Il sito si può usare: cliccare, scorrere, aprire le pagine.',
-    ],
-    evidenzia: ['caricata adesso', 'le frecce'],
+    testo: ['Questa è la homepage del nuovo sito, caricata adesso. Al primo sguardo si capisce cosa siete, dove siete, per chi e cosa fare.'],
+    evidenzia: ['caricata adesso'],
     punti: [
       { esito: 'si', testo: 'Cosa: una scuola di danza.' },
       { esito: 'si', testo: 'Dove: Lainate e Rho.' },
@@ -125,53 +303,7 @@ export const passi: Passo[] = [
     scena: { tipo: 'sito', sito: 'nuovo', percorso: '/', dispositivo: 'pc', evidenzia: '.gallery-section', etichetta: 'Galleria' },
   },
   {
-    capitolo: 'Prima e dopo',
-    titolo: 'Il sito di oggi: non si capisce dove cliccare',
-    testo: ['Questa è la homepage di inballet.it di oggi, caricata adesso su uno schermo da computer.'],
-    evidenzia: ['inballet.it di oggi'],
-    punti: [
-      { esito: 'no', testo: 'Il nome I.N. BALLET finisce sotto il menu.' },
-      { esito: 'no', testo: 'Il menu occupa due righe, con 9 tendine.' },
-      { esito: 'no', testo: 'Età, sedi e corsi sono dentro un unico blocco di testo.' },
-      { esito: 'no', testo: 'Nessun pulsante per contattarvi: i recapiti sono in fondo alla pagina.' },
-    ],
-    scena: {
-      tipo: 'sito',
-      sito: 'attuale',
-      percorso: '/',
-      dispositivo: 'pc',
-      segni: [
-        { x: 150, y: 128, testo: 'Nome coperto' },
-        { x: 1200, y: 56, testo: '9 tendine' },
-        { x: 1200, y: 420, testo: 'Solo testo' },
-        { x: 683, y: 740, testo: 'Contatti in fondo' },
-      ],
-    },
-  },
-  {
-    capitolo: 'Prima e dopo',
-    titolo: 'Sei voci del menu riportano alla homepage',
-    testo: [
-      'Le voci di Atelier (Prima infanzia, Seconda infanzia, Bambini, Ragazzi, Adulti) e la voce Classi riaprono la homepage. Si può provare qui.',
-      'Abbiamo controllato tutti i link del menu uno per uno il 5 novembre.',
-    ],
-    evidenzia: ['Atelier', 'Classi'],
-    punti: [
-      { esito: 'no', testo: '6 voci riportano alla homepage.' },
-      { esito: 'no', testo: '8 voci del menu principale non hanno una pagina: aprono solo una tendina.' },
-    ],
-    scena: { tipo: 'sito', sito: 'attuale', percorso: '/', dispositivo: 'pc', segni: [{ x: 350, y: 75, testo: 'Atelier' }] },
-  },
-  {
-    capitolo: 'Prima e dopo',
-    titolo: 'Danza Classica porta a una pagina che non esiste',
-    testo: ['Nel menu Danza, la voce Danza Classica apre questo indirizzo. È quello che trova oggi un genitore che cerca il corso.'],
-    evidenzia: ['Danza Classica'],
-    punti: [{ esito: 'no', testo: 'Errore 404: la pagina non esiste più.' }],
-    scena: { tipo: 'sito', sito: 'attuale', percorso: '/danza_classica_accademica.html', dispositivo: 'pc' },
-  },
-  {
-    capitolo: 'Prima e dopo',
+    capitolo: 'Il nuovo sito',
     titolo: 'Sul nuovo sito lo stesso indirizzo porta al corso',
     testo: [
       'Lo stesso indirizzo che oggi dà errore, sul nuovo sito porta da solo alla pagina di Danza Classica.',
@@ -189,14 +321,14 @@ export const passi: Passo[] = [
     },
   },
   {
-    capitolo: 'Prima e dopo',
+    capitolo: 'Il nuovo sito',
     titolo: 'Lo stesso telefono, due siti',
     testo: ['A sinistra inballet.it di oggi, a destra il nuovo sito, tutti e due alla misura di uno smartphone. Il nuovo sito è pensato prima di tutto per il telefono.'],
     evidenzia: ['per il telefono'],
     scena: { tipo: 'confronto', attuale: '/', nuovo: '/', dispositivo: 'telefono' },
   },
   {
-    capitolo: 'Prima e dopo',
+    capitolo: 'Su Google',
     titolo: 'Su Google la homepage si chiama “Home”',
     testo: [
       'Nei risultati di ricerca Google mostra il titolo e la descrizione che il sito gli fornisce. Quello del nuovo sito è letto adesso dalle sue pagine: se cambiamo un testo, cambia anche qui.',
@@ -205,7 +337,7 @@ export const passi: Passo[] = [
     scena: { tipo: 'pannello', pannello: 'google' },
   },
   {
-    capitolo: 'Prima e dopo',
+    capitolo: 'Su Google',
     titolo: 'La mappa del sito per Google',
     testo: [
       'La mappa del sito è l’elenco delle pagine che il sito consegna a Google. A sinistra il sito di oggi, a destra il nuovo, aperti adesso allo stesso indirizzo.',
@@ -218,7 +350,7 @@ export const passi: Passo[] = [
     scena: { tipo: 'confronto', attuale: '/sitemap.xml', nuovo: '/sitemap-0.xml', dispositivo: 'telefono' },
   },
   {
-    capitolo: 'Prima e dopo',
+    capitolo: 'Su Google',
     titolo: 'Le scuole qui intorno',
     testo: ['Abbiamo guardato come si presentano online le scuole di danza della zona. Molte hanno già un sito curato: oggi InBallet parte indietro.'],
     evidenzia: ['parte indietro'],

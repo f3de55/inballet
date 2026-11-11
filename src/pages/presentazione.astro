@@ -39,18 +39,7 @@ const nomePannello = (i: number) => {
                 <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-google={p.google ? "si" : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
                     <p class="pres-etichetta">{p.capitolo}</p>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
-                    {p.testo.map((t) => <p set:html={enfatizza(t, p.evidenzia ?? [])} />)}
-                    {p.punti && (
-                        <ul class="pres-punti">
-                            {p.punti.map((pt) => (
-                                <li class:list={['pres-punto', `pres-punto--${pt.esito}`]}>
-                                    <i class:list={['fas', pt.esito === 'si' ? 'fa-check' : 'fa-times']} aria-hidden="true"></i>
-                                    <span class="sr-only">{pt.esito === 'si' ? 'Punto a favore: ' : 'Problema: '}</span>
-                                    {pt.testo}
-                                </li>
-                            ))}
-                        </ul>
-                    )}
+                    <p set:html={enfatizza(p.testo, p.evidenzia ?? [])} />
                     {p.scelte && (
                         <div class="pres-scelte" role="group" aria-label="Scegli un visitatore">
                             {p.scelte.map((s, j) => (
@@ -84,21 +73,11 @@ const nomePannello = (i: number) => {
                     </table>
                 </article>
             ))}
-            <div class="pres-comandi">
-                <button type="button" class="pres-freccia" data-indietro aria-label="Passo precedente"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
-                <p class="pres-contatore" aria-live="polite"><span data-numero>1</span> / {totale}</p>
-                <button type="button" class="pres-freccia pres-freccia--avanti" data-avanti aria-label="Passo successivo"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
-            </div>
         </section>
 
         <button type="button" class="pres-riapri" data-riapri aria-label="Mostra la spiegazione"><i class="fas fa-up-right-and-down-left-from-center" aria-hidden="true"></i></button>
 
-        <section class="pres-serp" data-serp aria-label="Il sito su Google, oggi e con il nuovo sito" hidden>
-            <div class="pres-serp-risultato pres-serp-risultato--oggi">
-                <p class="pres-serp-nome"><span class="pres-serp-icona"><i class="fas fa-globe" aria-hidden="true"></i></span>inballet.it<cite>https://www.inballet.it</cite></p>
-                <h3 class="pres-serp-titolo">Home</h3>
-                <small class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Oggi: titolo «Home» e nessuna descrizione</small>
-            </div>
+        <section class="pres-serp" data-serp aria-label="Il nuovo sito su Google" hidden>
             <div class="pres-serp-risultato">
                 <p class="pres-serp-nome"><img src="/favicon.ico" alt="" width="26" height="26" class="pres-serp-icona">InBallet<cite data-serp-url>https://www.inballet.it</cite></p>
                 <h3 class="pres-serp-titolo" data-serp-titolo>Lettura in corso</h3>
@@ -110,18 +89,13 @@ const nomePannello = (i: number) => {
         <div class="pres-schermi" data-schermi>
             {Array.from({ length: schermi }, () => (
                 <figure class="pres-schermo" data-schermo hidden>
-                    <figcaption class="pres-barra">
-                        <strong data-sito></strong>
-                        <span class="pres-indirizzo" data-indirizzo></span>
-                        <span class="pres-dal-vivo">Dal vivo</span>
-                    </figcaption>
+                    <figcaption class="pres-nome" data-sito></figcaption>
                     <div class="pres-vista" data-vista>
                         <img class="pres-telefono" src={telefono.src} width={telefono.width} height={telefono.height} alt="" aria-hidden="true" />
                         <div class="pres-scala" data-scala>
                             <iframe data-frame title="Sito dal vivo"></iframe>
-                            <div class="pres-faro" data-faro hidden>
-                                <p class="pres-faro-etichetta" data-faro-etichetta></p>
-                            </div>
+                            <div class="pres-faro" data-faro hidden></div>
+                            <div class="pres-barrato" data-barrato hidden></div>
                             <div class="pres-tocco" data-tocco hidden></div>
                         </div>
                         <p class="pres-bloccato" data-bloccato hidden>
@@ -138,7 +112,7 @@ const nomePannello = (i: number) => {
                 <Image src={immagini[p.scena.immagine]} alt="" widths={[960, 1600]} sizes="100vw" class="pres-copertina-foto" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
                 <p class="pres-etichetta">{p.capitolo}</p>
                 <h2 id={`pres-passo-${i}`} class="pres-copertina-titolo">{p.titolo}</h2>
-                {p.testo.map((t) => <p class="pres-copertina-testo">{t}</p>)}
+                <p class="pres-copertina-testo">{p.testo}</p>
                 <div class="pres-copertina-comandi">
                     {i > 0 && <button type="button" class="pres-freccia" data-indietro aria-label="Passo precedente"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>}
                     <button type="button" class="pres-freccia pres-freccia--avanti pres-freccia--grande" data-avanti aria-label={i === 0 ? 'Inizia la presentazione' : 'Passo successivo'}><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
@@ -151,7 +125,7 @@ const nomePannello = (i: number) => {
                 <div class="pres-pannello-testa">
                     <p class="pres-etichetta">{p.capitolo}</p>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
-                    {p.testo.map((t) => <p set:html={enfatizza(t, p.evidenzia ?? [])} />)}
+                    <p set:html={enfatizza(p.testo, p.evidenzia ?? [])} />
                 </div>
                 {nomePannello(i) === 'mancano' && (
         <ol class="pres-elenco">

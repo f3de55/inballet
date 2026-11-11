@@ -8,7 +8,8 @@
 
 .pres-palco {
   --body-size: var(--compatto-2xl);
-  --serp-punto: 840px;
+  --fascia: 6.5rem;
+  --scheda-lato: min(30rem, 34vw);
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -20,12 +21,12 @@
   color: var(--text);
 }
 
-.pres-palco[data-modo='pannello'] {
-  padding-bottom: 6.5rem;
+.pres-palco:not([data-modo='apertura']) {
+  padding-bottom: var(--fascia);
 }
 
 .pres-palco:is([data-modo='pannello'], [data-modo='apertura'], [data-ridotta]) .pres-scheda,
-.pres-palco:not([data-modo='pannello']) .pres-navigazione,
+.pres-palco[data-modo='apertura'] .pres-navigazione,
 .pres-palco:not([data-ridotta]) .pres-riapri,
 .pres-palco:is([data-modo='pannello'], [data-modo='apertura']) .pres-riapri {
   display: none;
@@ -91,17 +92,25 @@
 
 .pres-navigazione {
   position: absolute;
-  bottom: 1.25rem;
+  bottom: 1rem;
   left: 50%;
   z-index: 5;
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.5rem;
   transform: translateX(-50%);
 }
 
+.pres-navigazione .pres-freccia:not(.pres-freccia--avanti) {
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: var(--text-xl);
+}
+
 .pres-navigazione .pres-contatore {
-  color: var(--testo-su-scuro-debole);
+  min-width: 4.5rem;
+  text-align: center;
+  color: var(--testo-su-scuro);
 }
 
 .pres-avanzamento {
@@ -123,16 +132,14 @@
 
 .pres-scheda {
   position: absolute;
-  bottom: 1.25rem;
+  bottom: calc(var(--fascia) + 1.25rem);
   left: 50%;
   z-index: 5;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 1.5rem;
-  width: min(54rem, calc(100% - 2.5rem));
+  width: min(48rem, calc(100% - 2.5rem));
   height: var(--scheda-h, auto);
-  padding: 1.5rem 1.5rem 1.25rem 2rem;
+  padding: 1.5rem 4rem 1.5rem 2rem;
   overflow: hidden;
   border-radius: var(--radius-card);
   background: var(--white);
@@ -252,16 +259,6 @@
   box-shadow: inset 0 0 0 2px var(--primary-blue);
 }
 
-.pres-comandi {
-  --lc: var(--linea);
-  --ls: var(--linea-sp);
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding-left: 1.25rem;
-  background: var(--linea-sx);
-}
-
 .pres-contatore {
   font-size: var(--ui-size);
   font-weight: var(--ui-weight);
@@ -326,7 +323,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.pres-schermi[data-n='2'][data-dispositivo='telefono'] {
+.pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] {
   gap: 2.5rem;
 }
 
@@ -339,67 +336,32 @@
   min-height: 0;
 }
 
-.pres-barra {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  min-width: 0;
-  font-size: var(--text-xs);
-  color: var(--testo-su-scuro-debole);
-}
-
-.pres-barra strong {
-  flex: none;
-  padding: 0.25rem 0.7rem;
+.pres-nome {
+  align-self: center;
+  padding: 0.5rem 1.4rem;
   border-radius: var(--radius-pill);
+  font-size: var(--text-base);
   font-weight: var(--font-semibold);
   color: var(--dark-navy);
   background: var(--primary-blue);
+  box-shadow: 0 10px 30px rgb(var(--nero-rgb) / 0.35);
 }
 
-.pres-schermo:not([data-sito='nuovo']) .pres-barra strong {
+.pres-schermi:not([data-n='2']) .pres-nome {
+  display: none;
+}
+
+.pres-schermo:not([data-sito='nuovo']) .pres-nome {
   color: var(--white);
   background: var(--esito-errore);
 }
 
-.pres-schermo[data-dispositivo='telefono'] .pres-barra {
+.pres-schermo[data-dispositivo='telefono'] .pres-nome {
   position: absolute;
   top: calc(var(--y) - 74px * var(--s) - 4rem);
   left: calc(var(--x) + var(--w) * var(--s) / 2);
   z-index: 2;
   transform: translateX(-50%);
-}
-
-.pres-schermo[data-dispositivo='telefono'] .pres-barra strong {
-  padding: 0.6rem 1.5rem;
-  font-size: var(--text-base);
-  box-shadow: 0 10px 30px rgb(var(--nero-rgb) / 0.35);
-}
-
-.pres-schermo[data-dispositivo='telefono'] :is(.pres-indirizzo, .pres-dal-vivo) {
-  display: none;
-}
-
-.pres-indirizzo {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.pres-dal-vivo {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-left: auto;
-  flex: none;
-}
-
-.pres-dal-vivo::before {
-  content: '';
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: var(--radius-full);
-  background: var(--su-scuro-ok);
 }
 
 .pres-vista {
@@ -470,38 +432,16 @@
   pointer-events: none;
 }
 
-.pres-faro-etichetta {
+.pres-barrato {
   position: absolute;
-  bottom: calc(100% + 1.5rem);
+  top: -2px;
   left: 0;
-  padding: 0.5rem 1.25rem;
+  height: 4px;
   border-radius: var(--radius-pill);
-  font-size: var(--numero-medio-size);
-  font-weight: var(--font-semibold);
-  white-space: nowrap;
-  color: var(--dark-navy);
-  background: var(--primary-blue);
-}
-
-.pres-faro[data-destra='true'] .pres-faro-etichetta {
-  right: 0;
-  left: auto;
-}
-
-.pres-faro[data-etichetta='sotto'] .pres-faro-etichetta {
-  top: calc(100% + 1.5rem);
-  bottom: auto;
-}
-
-.pres-faro[data-etichetta='dentro'] .pres-faro-etichetta {
-  top: 1rem;
-  bottom: auto;
-  left: 1rem;
-}
-
-.pres-faro[data-etichetta='dentro'][data-destra='true'] .pres-faro-etichetta {
-  right: 1rem;
-  left: auto;
+  background: var(--esito-errore);
+  box-shadow: 0 0 0 2px var(--white);
+  transform-origin: 0 50%;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -627,9 +567,8 @@
   position: absolute;
   top: 7.5rem;
   right: 2.5rem;
-  left: calc(0.75rem + var(--serp-punto) + 8rem);
   z-index: 4;
-  max-width: 36rem;
+  width: min(36rem, calc(100% - 5rem));
   padding: 0.25rem 1.5rem;
   border-radius: var(--radius-card);
   background: var(--white);
@@ -639,59 +578,11 @@
   animation: pres-entra var(--durata-pannello) var(--curva);
 }
 
-.pres-serp::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  width: 8rem;
-  height: 3px;
-  border-radius: var(--radius-pill);
-  background: var(--primary-blue);
-}
-
-.pres-serp::after {
-  --respiro-da: 1;
-  --respiro-a: 1.35;
-  content: '';
-  position: absolute;
-  top: calc(50% - 0.75rem + 1.5px);
-  right: calc(100% + 8rem - 0.75rem);
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: var(--radius-full);
-  background: var(--primary-blue);
-  box-shadow: 0 0 0 0.5rem rgb(var(--blu-rgb) / 0.35);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .pres-serp::after {
-    animation: respiro 1.6s var(--curva) infinite alternate;
-  }
-}
-
-@media (max-width: 1300px) {
-  .pres-serp {
-    left: auto;
-    width: min(32rem, calc(100% - 5rem));
-  }
-
-  .pres-serp::before,
-  .pres-serp::after {
-    display: none;
-  }
-}
-
 .pres-serp-risultato {
-  --lc: var(--linea);
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
   padding: 1rem 0;
-}
-
-.pres-serp-risultato + .pres-serp-risultato {
-  background: var(--linea-alto);
 }
 
 .pres-serp-nome {
@@ -733,10 +624,6 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   color: var(--google-blu);
-}
-
-.pres-serp-risultato--oggi .pres-serp-titolo {
-  text-decoration: line-through 3px var(--esito-errore);
 }
 
 .pres-serp-descrizione {
@@ -1000,18 +887,23 @@
   }
 }
 
+@media (min-width: 901px) {
+  .pres-palco[data-dispositivo='telefono'] .pres-scheda {
+    top: 50%;
+    right: 2rem;
+    bottom: auto;
+    left: auto;
+    width: var(--scheda-lato);
+    height: auto;
+    transform: translateY(calc(-50% - var(--fascia) / 2));
+  }
+
+  .pres-palco[data-dispositivo='telefono']:not([data-ridotta]) .pres-schermi {
+    margin-right: calc(var(--scheda-lato) + 2rem);
+  }
+}
+
 @media (max-width: 900px) {
-  .pres-scheda {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-  }
-
-  .pres-comandi {
-    justify-content: space-between;
-    padding: 0.75rem 0 0;
-    background: var(--linea-alto);
-  }
-
   .pres-scelte {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

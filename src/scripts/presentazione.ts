@@ -41,7 +41,8 @@ const TELEFONO_SOPRA = 74;
 const TELEFONO_SOTTO = 34;
 const ETICHETTA = 64;
 const ARIA_SOPRA = 48;
-const ASSESTAMENTO = 1500;
+const ASSESTAMENTO = 400;
+const ATTESA_MASSIMA = 15000;
 const FISSI = '.main-header, .event-banner, .topbar';
 const MARGINE_FARO = 12;
 const BORDO_FARO = 20;
@@ -318,7 +319,7 @@ function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
   s.frame.src = url;
   if (soloAncora) return evidenzia(s);
   s.el.dataset.carica = '';
-  window.setTimeout(() => s.url === url && pronto(s), 8000);
+  window.setTimeout(() => s.url === url && pronto(s), ATTESA_MASSIMA);
 }
 
 async function leggiNuovoSito(radice: HTMLElement) {

@@ -1,4 +1,5 @@
 export const SITO_ATTUALE = 'https://www.inballet.it';
+export const MISURATO = 1366;
 
 type Dispositivo = 'pc' | 'telefono';
 
@@ -16,8 +17,9 @@ export interface Schermata {
   url: string;
   dispositivo: Dispositivo;
   evidenzia?: string;
+  larghezza?: number;
   riquadro?: Riquadro;
-  etichetta?: string;
+  barrato?: Riquadro;
 }
 
 export type Apertura = 'copertina' | 'sito-oggi' | 'nuovo-sito' | 'google' | 'scuole' | 'dashboard' | 'prossimi';
@@ -26,11 +28,6 @@ export type Scena =
   | { tipo: 'siti' | 'confronto'; schermi: Schermata[] }
   | { tipo: 'apertura'; immagine: Apertura }
   | { tipo: 'pannello'; pannello: 'mancano' | 'costo' | 'dopo' | 'fine' };
-
-interface Punto {
-  esito: 'si' | 'no';
-  testo: string;
-}
 
 interface Scelta {
   etichetta: string;
@@ -46,9 +43,8 @@ interface Riga {
 interface Passo {
   capitolo: string;
   titolo: string;
-  testo: string[];
+  testo: string;
   evidenzia?: string[];
-  punti?: Punto[];
   scelte?: Scelta[];
   google?: boolean;
   confronto?: Riga[];
@@ -58,7 +54,7 @@ interface Passo {
 const scuola = (nome: string, url: string, confronto: Riga[]): Passo => ({
   capitolo: 'Le scuole della zona',
   titolo: nome,
-  testo: [],
+  testo: '',
   confronto,
   scena: { tipo: 'confronto', schermi: [{ nome, url, dispositivo: 'pc' }] },
 });
@@ -67,136 +63,120 @@ let capitoli = 0;
 const apertura = (immagine: Apertura, titolo: string, testo: string): Passo => ({
   capitolo: `Capitolo ${++capitoli}`,
   titolo,
-  testo: [testo],
+  testo,
   scena: { tipo: 'apertura', immagine },
 });
 
 const SOTTO_1_MB = 'Homepage sotto 1 MB';
 const ORARI_RECENSIONI = 'Orari e recensioni da Google';
 
-const oggi = (percorso: string, dispositivo: Dispositivo, riquadro?: Riquadro, etichetta?: string): Scena => ({
+const oggi = (percorso: string, dispositivo: Dispositivo, riquadro?: Riquadro): Scena => ({
   tipo: 'siti',
-  schermi: [{ nome: 'Sito di oggi', url: `${SITO_ATTUALE}${percorso}`, dispositivo, riquadro, etichetta }],
+  schermi: [{ nome: 'Sito di oggi', url: `${SITO_ATTUALE}${percorso}`, dispositivo, riquadro }],
 });
 
-const nuovo = (percorso: string, evidenzia?: string, etichetta?: string, dispositivo: Dispositivo = 'pc'): Scena => ({
+const nuovo = (percorso: string, evidenzia?: string): Scena => ({
   tipo: 'siti',
-  schermi: [{ nome: 'Nuovo sito', url: percorso, dispositivo, evidenzia, etichetta }],
+  schermi: [{ nome: 'Nuovo sito', url: percorso, dispositivo: 'pc', evidenzia }],
 });
 
 export const passi: Passo[] = [
   {
     capitolo: 'Proposta per InBallet',
     titolo: 'Restyling del sito',
-    testo: ['di Federico Capuzzi e Samuele Max'],
+    testo: 'di Federico Capuzzi e Samuele Max',
     scena: { tipo: 'apertura', immagine: 'copertina' },
   },
   apertura('sito-oggi', 'Il sito di oggi', 'Cosa non funziona nel sito attuale, guardato dal vivo.'),
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Tutto in bianco e nero',
-    testo: ['Il bianco e nero è elegante, ma una scuola di danza vive di colore.'],
+    testo: 'La pagina Modern, come la homepage e altri 6 corsi: solo foto in bianco e nero. Una scuola di danza vive di colore.',
     evidenzia: ['colore'],
-    punti: [{ esito: 'no', testo: 'Tutte le foto misurate, homepage e 6 corsi, sono in bianco e nero.' }],
-    scena: oggi('/modern.html#features2-1c', 'pc', { x: 124, y: 88, w: 1118, h: 260 }, 'Modern'),
+    scena: oggi('/modern.html#features2-1c', 'pc', { x: 124, y: 88, w: 1118, h: 260 }),
   },
   {
     capitolo: 'Il sito di oggi',
-    titolo: 'Nessuna CTA',
-    testo: ['La CTA («call to action») è il pulsante che dice cosa fare: «Contattaci», «Prenota una prova».'],
-    evidenzia: ['call to action'],
-    punti: [
-      { esito: 'no', testo: 'In homepage non ce n’è nessuna.' },
-      { esito: 'no', testo: 'Nei corsi mancano orari, giorni e costi.' },
-    ],
-    scena: oggi('/#footer1-6i', 'pc', { x: 24, y: 480, w: 1318, h: 468, basso: true }, 'Fine della homepage: nessun pulsante'),
+    titolo: 'Nessun pulsante',
+    testo: 'La homepage finisce senza un «Contattaci» o un «Prenota una prova», e nei corsi mancano orari, giorni e costi.',
+    evidenzia: ['orari, giorni e costi'],
+    scena: oggi('/#footer1-6i', 'pc', { x: 0, y: 480, w: MISURATO, h: 468, basso: true, destra: true }),
   },
   {
     capitolo: 'Il sito di oggi',
-    titolo: 'Nessuna strada per chi cerca',
-    testo: ['Famiglie, ragazzi, adulti, professionisti e scuole cercano cose diverse. Qui stanno in un solo paragrafo.'],
-    evidenzia: ['un solo paragrafo'],
-    punti: [{ esito: 'no', testo: 'Le voci per età di Atelier riaprono la homepage.' }],
-    scena: oggi('/', 'pc', { x: 112, y: 424, w: 1142, h: 186 }, 'Tutti nello stesso paragrafo'),
+    titolo: 'Tutti nello stesso paragrafo',
+    testo: 'Famiglie, adulti, professionisti e scuole cercano cose diverse, ma non c’è una strada per ciascuno.',
+    evidenzia: ['una strada per ciascuno'],
+    scena: oggi('/', 'pc', { x: 112, y: 424, w: 1142, h: 186 }),
   },
   {
     capitolo: 'Il sito di oggi',
-    titolo: 'Menu troppo lungo',
-    testo: ['9 tendine, 43 voci. «Danza integrativa», «Atelier», «Altri servizi» non orientano.'],
-    evidenzia: ['9 tendine, 43 voci'],
-    punti: [{ esito: 'no', testo: '8 voci principali non hanno una pagina.' }],
-    scena: oggi('/', 'pc', { x: 292, y: 10, w: 1003, h: 93, destra: true }, '9 tendine'),
+    titolo: '9 tendine, 43 voci',
+    testo: '«Danza integrativa», «Atelier», «Altri servizi» non orientano, e 8 voci principali non hanno una pagina.',
+    evidenzia: ['8 voci principali'],
+    scena: oggi('/', 'pc', { x: 292, y: 10, w: 1003, h: 93, destra: true }),
   },
   {
     capitolo: 'Il sito di oggi',
-    titolo: 'Testi che non convincono',
-    testo: ['Un paragrafo di 286 parole. Racconta la filosofia, ma non dice quale corso, dove, quando e quanto costa.'],
-    evidenzia: ['286 parole'],
-    scena: oggi('/', 'pc', { x: 112, y: 140, w: 1142, h: 640 }, 'Un solo paragrafo'),
+    titolo: 'Un paragrafo di 286 parole',
+    testo: 'Racconta la filosofia, ma non dice quale corso, dove, quando e quanto costa.',
+    evidenzia: ['quanto costa'],
+    scena: oggi('/', 'pc', { x: 112, y: 140, w: 1142, h: 640 }),
   },
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Pagine in errore',
-    testo: ['Danza Classica, dal menu, porta qui.'],
-    evidenzia: ['Danza Classica'],
-    punti: [
-      { esito: 'no', testo: 'Errore 404.' },
-      { esito: 'no', testo: 'Altre 6 voci riaprono la homepage.' },
-    ],
+    testo: 'Danza Classica, dal menu, porta a un errore 404; altre 6 voci riaprono la homepage.',
+    evidenzia: ['errore 404'],
     scena: oggi('/danza_classica_accademica.html', 'pc'),
   },
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Dal telefono si legge male',
-    testo: ['Il nome finisce sotto il menu, poi più di due schermate di solo testo.'],
+    testo: 'Il nome finisce sotto il menu, poi più di due schermate di solo testo.',
     evidenzia: ['sotto il menu'],
-    scena: oggi('/', 'telefono', { x: 6, y: 38, w: 378, h: 92 }, 'Titolo coperto'),
+    scena: oggi('/', 'telefono', { x: 6, y: 38, w: 378, h: 92 }),
   },
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Foto non valorizzate',
-    testo: ['Nella pagina per i più piccoli: tre foto piccole, in fondo, in bianco e nero.'],
+    testo: 'Avviamento alla danza, per i più piccoli: tre foto piccole, in fondo, in bianco e nero.',
     evidenzia: ['tre foto piccole'],
-    punti: [{ esito: 'no', testo: 'Descritte con parole astratte: «coinvolgimento», «educazione».' }],
-    scena: oggi('/avviamento_alla_danza.html#features2-l', 'pc', { x: 124, y: 88, w: 1118, h: 372 }, 'Avviamento alla danza'),
+    scena: oggi('/avviamento_alla_danza.html#features2-l', 'pc', { x: 124, y: 88, w: 1118, h: 372 }),
   },
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Sostenitori quasi invisibili',
-    testo: ['Loghi larghi 150 pixel, ritagliati da screenshot.'],
+    testo: 'Loghi larghi 150 pixel, ritagliati da screenshot.',
     evidenzia: ['150 pixel'],
-    scena: oggi('/#footer1-6i', 'pc', { x: 24, y: 480, w: 1318, h: 179, basso: true }, 'I nostri sostenitori'),
+    scena: oggi('/#footer1-6i', 'pc', { x: 24, y: 480, w: 1318, h: 179, basso: true }),
   },
   apertura('nuovo-sito', 'Il nuovo sito', 'Lo stesso sito, pensato per chi cerca una scuola di danza.'),
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Si capisce subito',
-    testo: ['Al primo sguardo: cosa, dove, per chi e cosa fare.'],
-    punti: [
-      { esito: 'si', testo: 'Scuola di danza a Lainate e Rho.' },
-      { esito: 'si', testo: 'Dai 3 anni all’età adulta.' },
-      { esito: 'si', testo: 'Scopri i corsi · Contattaci.' },
-    ],
-    scena: nuovo('/', '.hero-content', 'Apertura'),
+    testo: 'Scuola di danza a Lainate e Rho, dai 3 anni all’età adulta, con «Scopri i corsi» e «Contattaci» subito a portata.',
+    evidenzia: ['Lainate e Rho'],
+    scena: nuovo('/', '.hero-content'),
   },
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Il prossimo evento in vista',
-    testo: ['Una fascia su ogni pagina annuncia il prossimo appuntamento e si aggiorna da sola.'],
+    testo: 'Una fascia su ogni pagina annuncia il prossimo appuntamento e si aggiorna da sola.',
     evidenzia: ['si aggiorna da sola'],
-    scena: nuovo('/', '.event-banner', 'Prossimo evento'),
+    scena: nuovo('/', '.event-banner'),
   },
   {
     capitolo: 'Il nuovo sito',
     titolo: '4 voci al posto di 9 tendine',
-    testo: ['Corsi, La Scuola, Progetti, Formazione. Contattaci sempre visibile.'],
+    testo: 'Corsi, La Scuola, Progetti, Formazione. Contattaci sempre visibile.',
     evidenzia: ['Contattaci'],
-    scena: nuovo('/', '.nav-menu', 'Menu'),
+    scena: nuovo('/', '.nav-menu'),
   },
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Una porta per ogni visitatore',
-    testo: ['Scegline una:'],
+    testo: 'Scegline una:',
     scelte: [
       { etichetta: 'Famiglie', domanda: 'Un corso per mio figlio?', percorso: '/prima-infanzia' },
       { etichetta: 'Adulti', domanda: 'Posso iniziare adesso?', percorso: '/contemporanea-adulti' },
@@ -208,40 +188,40 @@ export const passi: Passo[] = [
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Calendario degli eventi',
-    testo: ['Ogni evento ha locandina e dettagli, si aggiunge al calendario del telefono e si condivide su WhatsApp.'],
+    testo: 'Ogni evento ha locandina e dettagli, va nel calendario del telefono e si condivide su WhatsApp.',
     evidenzia: ['WhatsApp'],
-    scena: nuovo('/spettacoli-eventi', '#vistaCalendario', 'Calendario'),
+    scena: nuovo('/spettacoli-eventi', '#vistaCalendario'),
   },
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Orari da Google Maps',
-    testo: ['Gli orari arrivano dalla scheda Google e il sito dice se la segreteria è aperta adesso.'],
+    testo: 'Gli orari arrivano dalla scheda Google e il sito dice se la segreteria è aperta adesso.',
     evidenzia: ['aperta adesso'],
-    scena: nuovo('/contatti', '.info-blocco:has(orari-segreteria)', 'Orari segreteria'),
+    scena: nuovo('/contatti', '.info-blocco:has(orari-segreteria)'),
   },
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Recensioni di Google',
-    testo: ['Voto e ultime recensioni, aggiornati da soli.'],
-    scena: nuovo('/', '.recensioni-layout', 'Recensioni'),
+    testo: 'Voto e ultime recensioni, aggiornati da soli.',
+    scena: nuovo('/', '.recensioni-layout'),
   },
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Étoile, l’assistente',
-    testo: ['Risponde a ogni ora su corsi, età, sedi e orari. Provalo.'],
+    testo: 'Risponde a ogni ora su corsi, età, sedi e orari. Provalo.',
     evidenzia: ['a ogni ora'],
-    scena: nuovo('/', '#cb-toggle', 'Apri la chat'),
+    scena: nuovo('/', '#cb-toggle'),
   },
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Foto della scuola',
-    testo: ['Gallerie di lezioni e spettacoli, a tutto schermo con un tocco.'],
-    scena: nuovo('/', '.gallery-infinite', 'Galleria'),
+    testo: 'Gallerie di lezioni e spettacoli, a tutto schermo con un tocco.',
+    scena: nuovo('/', '.gallery-infinite'),
   },
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Stesso telefono, due siti',
-    testo: ['A sinistra oggi, a destra il nuovo sito, pensato prima di tutto per il telefono.'],
+    testo: 'A sinistra oggi, a destra il nuovo sito, pensato prima di tutto per il telefono.',
     scena: {
       tipo: 'siti',
       schermi: [
@@ -254,18 +234,26 @@ export const passi: Passo[] = [
   {
     capitolo: 'Motori di ricerca e AI',
     titolo: 'Google, dal vivo',
-    testo: ['La ricerca vera, adesso. Oggi la homepage si presenta a Google come «Home», senza descrizione.'],
-    evidenzia: ['«Home»'],
+    testo: 'Oggi il sito non dà a Google né titolo né descrizione: Google li ricava da solo dalla pagina.',
+    evidenzia: ['né titolo né descrizione'],
     google: true,
     scena: {
       tipo: 'siti',
-      schermi: [{ nome: 'Google', url: 'https://www.google.com/search?igu=1&hl=it&gl=it&q=inballet+lainate', dispositivo: 'pc' }],
+      schermi: [
+        {
+          nome: 'Google',
+          url: 'https://www.google.com/search?igu=1&hl=it&gl=it&q=inballet+lainate',
+          dispositivo: 'pc',
+          larghezza: MISURATO,
+          barrato: { x: 122, y: 207, w: 82, h: 26 },
+        },
+      ],
     },
   },
   {
     capitolo: 'Motori di ricerca e AI',
     titolo: 'La mappa del sito',
-    testo: ['L’elenco delle pagine da consegnare a Google: oggi non esiste, nel nuovo sito si aggiorna da sola.'],
+    testo: 'L’elenco delle pagine da consegnare a Google: oggi non esiste, nel nuovo sito si aggiorna da sola.',
     evidenzia: ['non esiste'],
     scena: {
       tipo: 'siti',
@@ -305,61 +293,61 @@ export const passi: Passo[] = [
   {
     capitolo: 'La dashboard',
     titolo: 'La tua area riservata',
-    testo: ['Con una password aggiorni il sito da sola, senza codice. Questa è la dashboard vera.'],
+    testo: 'Con una password aggiorni il sito da sola, senza codice. Questa è la dashboard vera.',
     evidenzia: ['da sola'],
-    scena: nuovo('/dashboard', '.topbar-nav', 'Quattro sezioni'),
+    scena: nuovo('/dashboard', '.topbar-nav'),
   },
   {
     capitolo: 'La dashboard',
     titolo: 'Eventi',
-    testo: ['Crei l’evento, carichi la locandina, scegli lo stato. Compare subito sul sito.'],
+    testo: 'Crei l’evento, carichi la locandina, scegli lo stato. Compare subito sul sito.',
     evidenzia: ['locandina'],
-    scena: nuovo('/dashboard', '[data-nuovo-evento]', 'Nuovo evento'),
+    scena: nuovo('/dashboard', '[data-nuovo-evento]'),
   },
   {
     capitolo: 'La dashboard',
     titolo: 'Documenti',
-    testo: ['Moduli e regolamenti in PDF, con i testi della pagina Documenti.'],
+    testo: 'Moduli e regolamenti in PDF, con i testi della pagina Documenti.',
     evidenzia: ['PDF'],
-    scena: nuovo('/dashboard?s=documenti', '#docLista', 'I tuoi documenti'),
+    scena: nuovo('/dashboard?s=documenti', '#docLista'),
   },
   {
     capitolo: 'La dashboard',
     titolo: 'Insegnanti',
-    testo: ['Foto, ruolo, biografia e competenze: compaiono in Chi siamo.'],
+    testo: 'Foto, ruolo, biografia e competenze: compaiono in Chi siamo.',
     evidenzia: ['Chi siamo'],
-    scena: nuovo('/dashboard?s=insegnanti', '#insLista', 'Il team'),
+    scena: nuovo('/dashboard?s=insegnanti', '#insLista'),
   },
   {
     capitolo: 'La dashboard',
     titolo: 'Le domande delle famiglie',
-    testo: ['Quante domande riceve Étoile, quando, e cosa cercano le famiglie.'],
+    testo: 'Quante domande riceve Étoile, quando, e cosa cercano le famiglie.',
     evidenzia: ['cosa cercano le famiglie'],
-    scena: nuovo('/dashboard?s=bot', '#chartDaily', 'Domande al giorno'),
+    scena: nuovo('/dashboard?s=bot', '#chartDaily'),
   },
   apertura('prossimi', 'Prossimi passi', 'Cosa manca, quanto costa e come si va online.'),
   {
     capitolo: 'Prossimi passi',
     titolo: 'Cosa manca',
-    testo: ['Una versione di lavoro: tre punti dipendono dalla scuola, due da noi.'],
+    testo: 'Una versione di lavoro: tre punti dipendono dalla scuola, due da noi.',
     scena: { tipo: 'pannello', pannello: 'mancano' },
   },
   {
     capitolo: 'Prossimi passi',
     titolo: 'Un costo unico',
-    testo: ['Sito completo e modifiche fino alla pubblicazione.'],
+    testo: 'Sito completo e modifiche fino alla pubblicazione.',
     scena: { tipo: 'pannello', pannello: 'costo' },
   },
   {
     capitolo: 'Prossimi passi',
     titolo: 'Dopo la pubblicazione',
-    testo: ['Cosa fai da sola, cosa facciamo noi e i nostri limiti.'],
+    testo: 'Cosa fai da sola, cosa facciamo noi e i nostri limiti.',
     scena: { tipo: 'pannello', pannello: 'dopo' },
   },
   {
     capitolo: 'Prossimi passi',
     titolo: 'Proviamolo insieme',
-    testo: ['Sito da computer e da telefono, poi la dashboard passo per passo.'],
+    testo: 'Sito da computer e da telefono, poi la dashboard passo per passo.',
     scena: { tipo: 'pannello', pannello: 'fine' },
   },
 ];

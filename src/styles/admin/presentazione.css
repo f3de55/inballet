@@ -354,7 +354,7 @@
 
 .pres-schermo[data-dispositivo='telefono'] .pres-barra {
   position: absolute;
-  top: calc(var(--y) - 4rem);
+  top: calc(var(--y) - 74px * var(--s) - 4rem);
   left: calc(var(--x) + var(--w) * var(--s) / 2);
   z-index: 2;
   transform: translateX(-50%);
@@ -412,11 +412,25 @@
   transform-origin: 0 0;
 }
 
+.pres-telefono {
+  display: none;
+}
+
+.pres-schermo[data-dispositivo='telefono'] .pres-telefono {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 677.37px;
+  height: 952px;
+  max-width: none;
+  transform: translate(calc(var(--x) - 144.89px * var(--s)), calc(var(--y) - 74.69px * var(--s))) scale(var(--s));
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
 .pres-schermo[data-dispositivo='telefono'] .pres-scala {
-  border-radius: 3rem;
-  box-shadow:
-    0 0 0 14px var(--header-dark),
-    0 0 0 16px var(--linea-su-scuro);
+  border-radius: 0.75rem 0.75rem 2.25rem 2.25rem;
 }
 
 .pres-schermo[data-carica] .pres-scala iframe {

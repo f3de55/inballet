@@ -14,6 +14,7 @@ import google from '../assets/images/presentazione/google.webp';
 import scuole from '../assets/images/presentazione/scuole.webp';
 import dashboard from '../assets/images/presentazione/dashboard.webp';
 import prossimi from '../assets/images/presentazione/prossimi.webp';
+import telefono from '../assets/images/presentazione/telefono-realistico.webp';
 
 export const prerender = false;
 
@@ -113,6 +114,7 @@ const nomePannello = (i: number) => {
                         <span class="pres-dal-vivo">Dal vivo</span>
                     </figcaption>
                     <div class="pres-vista" data-vista>
+                        <img class="pres-telefono" src={telefono.src} width={telefono.width} height={telefono.height} alt="" aria-hidden="true" />
                         <div class="pres-scala" data-scala>
                             <iframe data-frame title="Sito dal vivo"></iframe>
                             <div class="pres-faro" data-faro hidden>

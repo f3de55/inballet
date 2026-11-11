@@ -36,6 +36,8 @@ const MINIMO_PC = 1280;
 const LARGHEZZA_TELEFONO = 390;
 const ALTEZZA_TELEFONO = 844;
 const CORNICE = 28;
+const TELEFONO_SOPRA = 74;
+const TELEFONO_SOTTO = 34;
 const ETICHETTA = 64;
 const SPAZIO_ETICHETTA = 90;
 const FISSI = '.main-header, .event-banner, .topbar';
@@ -95,10 +97,11 @@ function misura(s: Schermo) {
     }
   } else {
     const utile = Math.min(ch, sotto === null ? ch : sotto - BORDO_FARO);
-    scala = Math.min(1, (cw - CORNICE * 2) / w, (utile - CORNICE * 2 - ETICHETTA) / h);
+    const telefono = h + TELEFONO_SOPRA + TELEFONO_SOTTO;
+    scala = Math.min(1, (cw - CORNICE * 2) / (w + 40), (utile - CORNICE * 2 - ETICHETTA) / telefono);
     const larga = w * scala;
     x = s.allinea === 'destra' ? cw - larga - CORNICE : s.allinea === 'sinistra' ? CORNICE : (cw - larga) / 2;
-    y = (utile - ETICHETTA - h * scala) / 2 + ETICHETTA;
+    y = (utile - ETICHETTA - telefono * scala) / 2 + ETICHETTA + TELEFONO_SOPRA * scala;
   }
   s.el.style.setProperty('--w', `${w}px`);
   s.el.style.setProperty('--h', `${h}px`);

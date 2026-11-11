@@ -2,6 +2,7 @@
 import { defineConfig, envField, fontProviders, sessionDrivers } from 'astro/config';
 import node from '@astrojs/node';
 import sitemap from '@astrojs/sitemap';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
 
 export default defineConfig({
   site: 'https://www.inballet.it',
@@ -12,7 +13,21 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) => !/\/(login|dashboard|presentazione|404)/.test(page),
+      xslURL: '/sitemap.xsl',
     }),
+    {
+      name: 'sitemap-stile-relativo',
+      hooks: {
+        'astro:build:done': async ({ dir }) => {
+          const mappe = (await readdir(dir)).filter((f) => /^sitemap-.*\.xml$/.test(f));
+          for (const f of mappe) {
+            const file = new URL(f, dir);
+            const xml = await readFile(file, 'utf8');
+            await writeFile(file, xml.replace(/href="https?:\/\/[^"/]+\/sitemap\.xsl"/, 'href="/sitemap.xsl"'));
+          }
+        },
+      },
+    },
   ],
 
   trailingSlash: 'never',

@@ -1,26 +1,37 @@
 ---
 import '../styles/components/linee.css';
 import '../styles/admin/presentazione.css';
+import { Image } from 'astro:assets';
 import Admin from '../layouts/Admin.astro';
 import { isLoggedIn } from '../lib/auth';
 import { enfatizza } from '../lib/text';
 import { passi } from '../data/presentazione';
+import foto from '../assets/images/gallery-6.jpg';
 
 export const prerender = false;
 
 if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login');
+
+const schermi = Math.max(...passi.map((p) => (p.scena.tipo === 'siti' ? p.scena.schermi.length : 0)));
 ---
 
 <Admin title="Presentazione del nuovo sito - InBallet">
-    <main class="pres-palco" data-pres data-modo="sito">
-        <section class="pres-scheda" aria-label="Spiegazione" data-scheda>
-            <h1 class="sr-only">Il nuovo sito di InBallet</h1>
+    <main class="pres-palco" data-pres data-modo="siti">
+        <section class="pres-scheda" aria-label="Spiegazione">
+            <h1 class="sr-only">Proposta di restyling del sito InBallet</h1>
             <div class="pres-avanzamento" aria-hidden="true"><div class="pres-avanzamento-barra" data-barra></div></div>
             {passi.map((p, i) => (
                 <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} hidden={i > 0}>
                     <p class="pres-etichetta">{p.capitolo}</p>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
                     {p.testo.map((t) => <p set:html={enfatizza(t, p.evidenzia ?? [])} />)}
+                    {p.google && (
+                        <dl class="pres-google">
+                            <dt>Il nuovo sito dirà a Google</dt>
+                            <dd><strong data-google="titolo">Lettura in corso</strong></dd>
+                            <dd data-google="descrizione"></dd>
+                        </dl>
+                    )}
                     {p.punti && (
                         <ul class="pres-punti">
                             {p.punti.map((pt) => (
@@ -52,8 +63,8 @@ if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login');
         </section>
 
         <div class="pres-schermi" data-schermi>
-            {['a', 'b'].map((id) => (
-                <figure class="pres-schermo" data-schermo={id} hidden={id === 'b'}>
+            {Array.from({ length: schermi }, () => (
+                <figure class="pres-schermo" data-schermo hidden>
                     <figcaption class="pres-barra">
                         <strong data-sito></strong>
                         <span class="pres-indirizzo" data-indirizzo></span>
@@ -75,53 +86,13 @@ if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login');
             ))}
         </div>
 
-        <div class="pres-pannello" data-pannello="google" hidden>
-            <div class="pres-risultati">
-                <div class="pres-risultato">
-                    <p class="pres-etichetta pres-etichetta--no">Sito di oggi</p>
-                    <small>www.inballet.it</small>
-                    <h3>Home</h3>
-                    <p>Nessuna descrizione: Google ne ricava una da sola dal testo della pagina.</p>
-                </div>
-                <div class="pres-risultato">
-                    <p class="pres-etichetta pres-etichetta--si">Nuovo sito, letto adesso</p>
-                    <small>www.inballet.it</small>
-                    <h3 data-google="titolo">Lettura in corso</h3>
-                    <p data-google="descrizione"></p>
-                </div>
+        <div class="pres-pannello pres-copertina" data-pannello="copertina" hidden>
+            <Image src={foto} alt="Allieve di InBallet in scena durante uno spettacolo" widths={[960, 1600]} sizes="70vw" class="pres-copertina-foto" />
+            <div class="pres-copertina-testo">
+                <p class="pres-etichetta">Proposta per InBallet</p>
+                <p class="pres-copertina-titolo">Restyling del sito</p>
+                <p class="pres-copertina-autori">di Federico Capuzzi e Samuele Max</p>
             </div>
-            <table class="pres-tabella">
-                <thead>
-                    <tr><th scope="col">Cosa legge Google</th><th scope="col">Sito di oggi</th><th scope="col">Nuovo sito</th></tr>
-                </thead>
-                <tbody>
-                    <tr><th scope="row">Titolo della homepage</th><td class="pres-no">«Home»</td><td class="pres-si">Nome, città e età</td></tr>
-                    <tr><th scope="row">Descrizione</th><td class="pres-no">Assente</td><td class="pres-si">Scritta pagina per pagina</td></tr>
-                    <tr><th scope="row">Mappa del sito</th><td class="pres-no">Assente</td><td class="pres-si"><span data-google="pagine">…</span> pagine</td></tr>
-                    <tr><th scope="row">Scheda «scuola di danza»</th><td class="pres-no">Assente</td><td class="pres-si" data-google="scheda">Sedi, orari, domande frequenti</td></tr>
-                    <tr><th scope="row">Vecchi indirizzi</th><td>—</td><td class="pres-si">Portano alle pagine nuove</td></tr>
-                </tbody>
-            </table>
-            <small class="pres-fonte">Sito di oggi: rilevato il 5 novembre 2026. Nuovo sito: letto dalle sue pagine all’apertura di questo passo.</small>
-        </div>
-
-        <div class="pres-pannello" data-pannello="zona" hidden>
-            <table class="pres-tabella pres-tabella--zona">
-                <thead>
-                    <tr><th scope="col">Scuola</th><th scope="col">Titolo chiaro</th><th scope="col">Descrizione</th><th scope="col">Scheda scuola</th><th scope="col">Foto descritte</th></tr>
-                </thead>
-                <tbody>
-                    <tr><th scope="row">InBallet, sito di oggi</th><td class="pres-no">No</td><td class="pres-no">No</td><td class="pres-no">No</td><td>9 su 10</td></tr>
-                    <tr><th scope="row">Valentina Ponzone · Lainate</th><td class="pres-no">No</td><td class="pres-no">No</td><td class="pres-no">No</td><td>2 su 2</td></tr>
-                    <tr><th scope="row">Backstage · Lainate</th><td class="pres-no">No</td><td class="pres-no">No</td><td class="pres-no">No</td><td>2 su 4</td></tr>
-                    <tr><th scope="row">Spazio Dance On · Rho</th><td class="pres-si">Sì</td><td class="pres-si">Sì</td><td class="pres-si">Sì</td><td>63 su 77</td></tr>
-                    <tr><th scope="row">City Dance Academy · Rho</th><td class="pres-si">Sì</td><td class="pres-si">Sì</td><td class="pres-no">No</td><td>19 su 22</td></tr>
-                    <tr><th scope="row">Accademia Balletto Classico · Rho</th><td class="pres-si">Sì</td><td class="pres-no">No</td><td class="pres-no">No</td><td>8 su 36</td></tr>
-                    <tr class="pres-riga-nuovo"><th scope="row">InBallet, nuovo sito</th><td class="pres-si">Sì</td><td class="pres-si">Sì</td><td class="pres-si">Sì</td><td>Tutte</td></tr>
-                </tbody>
-            </table>
-            <p>Il nuovo sito è l’unico dei sette a soddisfare tutti e quattro i punti. Non è una classifica delle scuole: misura solo come si presentano online.</p>
-            <small class="pres-fonte">Homepage delle scuole della zona, rilevate il 5 novembre 2026.</small>
         </div>
 
         <div class="pres-pannello" data-pannello="mancano" hidden>
@@ -190,7 +161,6 @@ if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login');
                 <a class="pres-btn" href="/dashboard" target="_blank" rel="noopener">Apri la dashboard<span class="sr-only"> (si apre in una nuova scheda)</span></a>
             </div>
         </div>
-
     </main>
     <script>
         import '../scripts/presentazione';

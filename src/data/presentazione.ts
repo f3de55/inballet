@@ -4,8 +4,8 @@ export const QUERY_GOOGLE = 'inballet lainate';
 export const RICERCA_GOOGLE = `https://www.google.com/search?igu=1&hl=it&gl=it&q=${encodeURIComponent(QUERY_GOOGLE)}`;
 export const DOMANDA_AI = 'Mi consigli una scuola di danza a Lainate?';
 export const ASSISTENTI = {
-  chatgpt: { nome: 'ChatGPT', apri: 'https://chatgpt.com/?q=' },
-  claude: { nome: 'Claude', apri: 'https://claude.ai/new?q=' },
+  chatgpt: { nome: 'ChatGPT' },
+  claude: { nome: 'Claude' },
 } as const;
 export type Assistente = keyof typeof ASSISTENTI;
 

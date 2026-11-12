@@ -49,8 +49,7 @@ body:has(.ai-chat) {
   font-weight: var(--font-semibold);
 }
 
-.ai-risposta a,
-.ai-piede a {
+.ai-risposta a {
   color: var(--primary-blue-dark);
   text-decoration: underline;
   text-underline-offset: 0.2em;
@@ -76,10 +75,6 @@ body:has(.ai-chat) {
 
 .ai-piede {
   --lc: var(--linea);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0.5rem 1.5rem;
   margin-top: auto;
   padding-top: 1rem;
   font-size: var(--small-size);

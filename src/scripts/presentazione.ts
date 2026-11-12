@@ -502,6 +502,7 @@ function avvia(radice: HTMLElement) {
   const contenitore = trova<HTMLElement>(radice, '[data-schermi]');
   const schermi = [...radice.querySelectorAll<HTMLElement>('[data-schermo]')].map(crea);
   const numeri = [...radice.querySelectorAll<HTMLElement>('[data-numero]')];
+  const fondali = [...radice.querySelectorAll<HTMLElement>('[data-fondale-foto]')];
   const avanti = [...radice.querySelectorAll<HTMLButtonElement>('[data-avanti]')];
   const indietro = [...radice.querySelectorAll<HTMLButtonElement>('[data-indietro]')];
   const nota = trova<HTMLElement>(radice, '[data-nota]');
@@ -562,6 +563,7 @@ function avvia(radice: HTMLElement) {
     avanti.forEach((b) => (b.disabled = n === totale));
     history.replaceState(null, '', n ? `#passo-${n}` : location.pathname);
     const passo = passi[n];
+    fondali.forEach((foto) => (foto.hidden = foto.dataset.fondaleFoto !== passo.dataset.fondale));
     passo.querySelectorAll<HTMLButtonElement>('[data-percorso]').forEach((btn, j) => btn.setAttribute('aria-pressed', String(j === 0)));
     serp.hidden = risultati.hidden = !passo.hasAttribute('data-google');
     if (!serp.hidden && !nuovoLetto) {

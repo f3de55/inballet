@@ -20,6 +20,10 @@ import famiglie from '../assets/images/presentazione/famiglie-danza.webp';
 import adulti from '../assets/images/presentazione/adulti-danza.webp';
 import insegnanti from '../assets/images/presentazione/insegnanti-danza.webp';
 import scuoleAziende from '../assets/images/presentazione/scuole-aziende-danza.webp';
+import sfondoTelefono from '../assets/images/presentazione/fondale-telefono.webp';
+import sfondoMancano from '../assets/images/presentazione/fondale-mancano.webp';
+import sfondoCosto from '../assets/images/presentazione/fondale-costo.webp';
+import sfondoDopo from '../assets/images/presentazione/fondale-dopo.webp';
 
 export const prerender = false;
 
@@ -29,6 +33,7 @@ const schermi = Math.max(...passi.map((p) => (p.scena.tipo === 'siti' || p.scena
 const totale = passi.length - 1;
 const immagini: Record<Apertura, ImageMetadata> = { copertina, 'sito-oggi': sitoOggi, 'nuovo-sito': nuovoSito, google, scuole, dashboard, prossimi };
 const immaginiVisitatori: Record<string, ImageMetadata> = { Famiglie: famiglie, Adulti: adulti, Insegnanti: insegnanti, 'Scuole e aziende': scuoleAziende };
+const fondali = { telefono: sfondoTelefono, mancano: sfondoMancano, costo: sfondoCosto, dopo: sfondoDopo };
 const LARGO = 1600;
 const onda = (y: number, ampiezza: number, onde: number) => {
     const mezza = LARGO / onde / 2;
@@ -45,6 +50,9 @@ const nomePannello = (i: number) => {
 <Admin title="Presentazione del nuovo sito - InBallet">
     <main class="pres-palco" data-pres data-modo="apertura" tabindex="-1">
         <h1 class="sr-only">Proposta di restyling del sito InBallet</h1>
+        {Object.entries(fondali).map(([nome, immagine]) => (
+            <Image src={immagine} alt="" widths={[960, 1600, 1920]} sizes="100vw" class="pres-fondale" data-fondale-foto={nome} aria-hidden="true" loading="lazy" hidden />
+        ))}
         <div class="pres-schermi" data-schermi>
             {Array.from({ length: schermi }, (_, n) => (
                 <figure class="pres-schermo" data-schermo hidden>
@@ -83,7 +91,7 @@ const nomePannello = (i: number) => {
         <section class="pres-nota" data-nota aria-label="Spiegazione">
             <button type="button" class="pres-chiudi" data-chiudi-nota aria-label="Chiudi la spiegazione"><i class="fas fa-xmark" aria-hidden="true"></i></button>
             {passi.map((p, i) => p.scena.tipo === 'siti' && (
-                <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-google={p.google ? "si" : undefined} data-riapri={p.scelte ? 'Riapri la scelta' : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
+                <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-fondale={p.scena.schermi.length === 1 && p.scena.schermi[0].dispositivo === 'telefono' ? 'telefono' : undefined} data-google={p.google ? "si" : undefined} data-riapri={p.scelte ? 'Riapri la scelta' : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
                     {p.testo && <p set:html={enfatizza(p.testo, p.evidenzia ?? [])} />}
                     {p.google && <a class="pres-link" href={RICERCA_GOOGLE} target="_blank" rel="noopener">Apri la ricerca vera su Google<span class="sr-only"> (si apre in una nuova scheda)</span></a>}
@@ -128,7 +136,7 @@ const nomePannello = (i: number) => {
         ))}
 
         {passi.map((p, i) => p.scena.tipo === 'pannello' && (
-            <section class="pres-pannello" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} tabindex="0" hidden>
+            <section class="pres-pannello" data-passo={i} data-scena={JSON.stringify(p.scena)} data-fondale={nomePannello(i)} aria-labelledby={`pres-passo-${i}`} tabindex="0" hidden>
                 <div class="pres-pannello-testa">
                     <p class="pres-etichetta">{p.capitolo}</p>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>

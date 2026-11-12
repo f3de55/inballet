@@ -32,17 +32,8 @@ const nomePannello = (i: number) => {
 <Admin title="Presentazione del nuovo sito - InBallet">
     <main class="pres-palco" data-pres data-modo="apertura" tabindex="-1">
         <h1 class="sr-only">Proposta di restyling del sito InBallet</h1>
-        <section class="pres-serp" data-serp aria-label="Il nuovo sito su Google" hidden>
-            <div class="pres-serp-risultato">
-                <p class="pres-serp-nome"><img src="/favicon.ico" alt="" width="26" height="26" class="pres-serp-icona">InBallet<cite data-serp-url>https://www.inballet.it</cite></p>
-                <h3 class="pres-serp-titolo" data-serp-titolo>Lettura in corso</h3>
-                <p class="pres-serp-descrizione" data-serp-descrizione></p>
-                <small class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Così apparirà il nuovo sito</small>
-            </div>
-        </section>
-
         <div class="pres-schermi" data-schermi>
-            {Array.from({ length: schermi }, () => (
+            {Array.from({ length: schermi }, (_, n) => (
                 <figure class="pres-schermo" data-schermo hidden>
                     <figcaption class="pres-nome" data-sito></figcaption>
                     <div class="pres-vista" data-vista>
@@ -52,6 +43,16 @@ const nomePannello = (i: number) => {
                             <div class="pres-faro" data-faro hidden></div>
                             <div class="pres-barrato" data-barrato hidden></div>
                             <div class="pres-tocco" data-tocco hidden></div>
+                            {n === 0 && (
+                                <section class="pres-serp" data-serp aria-label="Il nuovo sito su Google" hidden>
+                                    <div class="pres-serp-risultato">
+                                        <p class="pres-serp-nome"><img src="/favicon.ico" alt="" width="26" height="26" class="pres-serp-icona">InBallet<cite data-serp-url>https://www.inballet.it</cite></p>
+                                        <h3 class="pres-serp-titolo" data-serp-titolo>Lettura in corso</h3>
+                                        <p class="pres-serp-descrizione" data-serp-descrizione></p>
+                                        <small class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Così apparirà il nuovo sito</small>
+                                    </div>
+                                </section>
+                            )}
                         </div>
                         <p class="pres-bloccato" data-bloccato hidden>
                             Questa pagina non si apre dentro la presentazione.

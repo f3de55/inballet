@@ -19,7 +19,6 @@ import famiglie from '../assets/images/presentazione/famiglie-danza.webp';
 import adulti from '../assets/images/presentazione/adulti-danza.webp';
 import insegnanti from '../assets/images/presentazione/insegnanti-danza.webp';
 import scuoleAziende from '../assets/images/presentazione/scuole-aziende-danza.webp';
-import risultatiGoogle from '../assets/images/presentazione/google-risultati.webp';
 
 export const prerender = false;
 
@@ -54,9 +53,6 @@ const nomePannello = (i: number) => {
                         <div class="pres-scala" data-scala>
                             <div class="pres-faro" data-faro hidden></div>
                             <div class="pres-tocco" data-tocco hidden></div>
-                            {n === 0 && (
-                                <img class="pres-google" data-risultati-google src={risultatiGoogle.src} width={risultatiGoogle.width / 2} height={risultatiGoogle.height / 2} alt="Risultati di Google per «inballet lainate»" hidden />
-                            )}
                             {n === 0 && (
                                 <section class="pres-serp" data-serp aria-label="Il sito su Google, oggi e con il nuovo sito" hidden>
                                     <div class="pres-serp-oggi">
@@ -122,10 +118,6 @@ const nomePannello = (i: number) => {
                 <p class="pres-etichetta">{p.capitolo}</p>
                 <h2 id={`pres-passo-${i}`} class="pres-copertina-titolo">{p.titolo}</h2>
                 <p class="pres-copertina-testo">{p.testo}</p>
-                <div class="pres-copertina-comandi">
-                    {i > 0 && <button type="button" class="pres-freccia" data-indietro aria-label="Passo precedente"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>}
-                    <button type="button" class="pres-freccia pres-freccia--avanti pres-freccia--grande" data-avanti aria-label={i === 0 ? 'Inizia la presentazione' : 'Passo successivo'}><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
-                </div>
             </section>
         ))}
 
@@ -136,51 +128,51 @@ const nomePannello = (i: number) => {
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
                 </div>
                 {nomePannello(i) === 'mancano' && (
-                    <div class="pres-blocchi">
-                        <div class="pres-blocco">
-                            <h3>Da voi</h3>
-                            <ul class="pres-voci">
-                                <li><i class="fas fa-camera" aria-hidden="true"></i>Foto reali</li>
-                                <li><i class="fas fa-pen" aria-hidden="true"></i>Testi da confermare</li>
-                                <li><i class="fas fa-user" aria-hidden="true"></i>Schede insegnanti</li>
+                    <div class="pres-colonne">
+                        <div>
+                            <h3>Da parte vostra</h3>
+                            <ul class="pres-righe">
+                                <li>Le foto vere di lezioni, spettacoli e sedi</li>
+                                <li>Una rilettura dei testi: età, orari, storia</li>
+                                <li>Nome, foto e due righe per ogni insegnante</li>
                             </ul>
                         </div>
-                        <div class="pres-blocco">
-                            <h3>Da noi</h3>
-                            <ul class="pres-voci">
-                                <li><i class="fas fa-comments" aria-hidden="true"></i>Étoile completo</li>
-                                <li><i class="fas fa-rocket" aria-hidden="true"></i>Pubblicazione su inballet.it</li>
+                        <div>
+                            <h3>Da parte nostra</h3>
+                            <ul class="pres-righe">
+                                <li>Finire Étoile e provarlo con domande vere</li>
+                                <li>Mettere il sito online su inballet.it</li>
                             </ul>
                         </div>
                     </div>
                 )}
                 {nomePannello(i) === 'costo' && (
                     <Fragment>
-                        <div class="pres-blocchi">
-                            <div class="pres-blocco">
-                                <p class="pres-cifra">€ 1.500</p>
-                                <small class="pres-fonte">Una volta sola: € 1.200 a noi + € 300 di ritenuta (F24)</small>
+                        <div class="pres-colonne">
+                            <div>
+                                <p class="pres-cifra">1.500 €</p>
+                                <p>Una volta sola, per tutto il sito.</p>
                             </div>
-                            <div class="pres-blocco">
-                                <h3>Incluso</h3>
-                                <ul class="pres-voci">
-                                    <li><i class="fas fa-check" aria-hidden="true"></i>Sito su misura</li>
-                                    <li><i class="fas fa-check" aria-hidden="true"></i>Étoile e dashboard</li>
-                                    <li><i class="fas fa-check" aria-hidden="true"></i>Modifiche fino al lancio</li>
+                            <div>
+                                <h3>Cosa comprende</h3>
+                                <ul class="pres-righe">
+                                    <li>Il sito, fatto su misura</li>
+                                    <li>Étoile e la dashboard</li>
+                                    <li>Le modifiche fino al lancio</li>
                                 </ul>
                             </div>
                         </div>
-                        <small class="pres-fonte">Esclusi i servizi esterni a consumo. Importi da confermare con il commercialista.</small>
+                        <small class="pres-fonte">1.200 € a noi e 300 € di ritenuta d’acconto, che versate voi con l’F24. Restano fuori i costi a consumo dei servizi esterni.</small>
                     </Fragment>
                 )}
                 {nomePannello(i) === 'dopo' && (
                     <Fragment>
-                        <div class="pres-blocchi pres-blocchi--tre">
-                            <div class="pres-blocco"><i class="fas fa-pen-to-square pres-blocco-icona" aria-hidden="true"></i><h3>Aggiorni tu</h3><p>Eventi, documenti, insegnanti. Gratis.</p></div>
-                            <div class="pres-blocco"><i class="fas fa-shield-halved pres-blocco-icona" aria-hidden="true"></i><h3>€ 250 l’anno</h3><p>Controllo facoltativo.</p></div>
-                            <div class="pres-blocco"><i class="fas fa-globe pres-blocco-icona" aria-hidden="true"></i><h3>Il dominio</h3><p>Resta di InBallet.</p></div>
-                        </div>
-                        <small class="pres-fonte">Prestazioni occasionali: niente partita IVA né reperibilità continua.</small>
+                        <ul class="pres-righe">
+                            <li>Eventi, documenti e insegnanti li aggiornate voi dalla dashboard, <strong>senza costi</strong>.</li>
+                            <li>Se volete, una volta l’anno controlliamo che tutto funzioni: <strong>250 €</strong>.</li>
+                            <li>Il dominio inballet.it <strong>resta vostro</strong>.</li>
+                        </ul>
+                        <small class="pres-fonte">Lavoriamo con prestazioni occasionali: niente partita IVA e nessuna reperibilità continua.</small>
                     </Fragment>
                 )}
             </section>

@@ -421,15 +421,7 @@ function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
   s.minimo = quanti > 1 ? 0 : MINIMO_PC;
   s.allinea = quanti === 2 ? (posto === 0 ? 'destra' : 'sinistra') : '';
   s.el.dataset.dispositivo = dispositivo;
-  s.url = url ?? '';
-  if (!url) {
-    s.frame.removeAttribute('data-attiva');
-    s.frame = document.createElement('iframe');
-    misura(s);
-    s.faro.hidden = true;
-    s.bloccato.hidden = true;
-    return evidenzia(s, 0);
-  }
+  s.url = url;
   const f = cornice(s, url);
   if (f !== s.frame) {
     s.frame.removeAttribute('data-attiva');
@@ -503,7 +495,6 @@ function avvia(radice: HTMLElement) {
   const indietro = [...radice.querySelectorAll<HTMLButtonElement>('[data-indietro]')];
   const nota = trova<HTMLElement>(radice, '[data-nota]');
   const serp = trova<HTMLElement>(radice, '[data-serp]');
-  const risultati = trova<HTMLElement>(radice, '[data-risultati-google]');
   ostacolo = trova<HTMLElement>(radice, '.pres-navigazione');
   const scene = passi.map((p) => JSON.parse(p.dataset.scena ?? '{}') as Scena);
   const totale = passi.length - 1;
@@ -519,13 +510,13 @@ function avvia(radice: HTMLElement) {
   const precarica = (n: number) => {
     const scena = scene[n];
     if (scena?.tipo !== 'siti' && scena?.tipo !== 'confronto') return;
-    scena.schermi.forEach((x, i) => x.url && cornice(schermi[i], x.url));
+    scena.schermi.forEach((x, i) => cornice(schermi[i], x.url));
   };
 
   let chiave = '';
   const mostraScena = (s: Scena) => {
     radice.dataset.modo = s.tipo;
-    const nuova = s.tipo === 'siti' || s.tipo === 'confronto' ? s.schermi.map((x) => x.url ?? x.nome).join(' ') : '';
+    const nuova = s.tipo === 'siti' || s.tipo === 'confronto' ? s.schermi.map((x) => x.url).join(' ') : '';
     if (nuova && nuova !== chiave) {
       contenitore.removeAttribute('data-entra');
       void contenitore.offsetWidth;
@@ -556,7 +547,7 @@ function avvia(radice: HTMLElement) {
     history.replaceState(null, '', n ? `#passo-${n}` : location.pathname);
     const passo = passi[n];
     passo.querySelectorAll<HTMLButtonElement>('[data-percorso]').forEach((btn, j) => btn.setAttribute('aria-pressed', String(j === 0)));
-    serp.hidden = risultati.hidden = !passo.hasAttribute('data-google');
+    serp.hidden = !passo.hasAttribute('data-google');
     if (!serp.hidden && !nuovoLetto) {
       nuovoLetto = true;
       leggiNuovoSito(radice).catch(() => (nuovoLetto = false));

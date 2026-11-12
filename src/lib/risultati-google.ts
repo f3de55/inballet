@@ -1,7 +1,8 @@
 import { SERPAPI_KEY } from 'astro:env/server';
 import { QUERY_GOOGLE } from '../data/presentazione';
 import { paths, readJson, writeJson } from './storage';
-const DURATA = 12 * 3600_000;
+const DURATA = 30 * 86400_000;
+const RIPROVA = 86400_000;
 const MAX_RISULTATI = 4;
 
 export interface RisultatoGoogle {
@@ -63,6 +64,7 @@ const valida = (d: unknown): d is RicercaGoogle => {
 let ricerca: RicercaGoogle | null = null;
 let lettura: Promise<void> | null = null;
 let aggiornamento: Promise<void> | null = null;
+let prossimoTentativo = 0;
 
 export async function ricercaGoogle(): Promise<RicercaGoogle | null> {
   if (!SERPAPI_KEY) return null;
@@ -72,12 +74,16 @@ export async function ricercaGoogle(): Promise<RicercaGoogle | null> {
   });
   await lettura;
   if (ricerca && Date.now() - Date.parse(ricerca.aggiornato) < DURATA) return ricerca;
+  if (Date.now() < prossimoTentativo) return ricerca;
   aggiornamento ??= scarica(chiave)
     .then((nuova) => {
       ricerca = nuova;
       return writeJson(paths.ricercaGoogle, nuova);
     })
-    .catch((e) => console.error('Risultati di Google:', (e as Error).message))
+    .catch((e) => {
+      prossimoTentativo = Date.now() + RIPROVA;
+      console.error('Risultati di Google:', (e as Error).message);
+    })
     .finally(() => (aggiornamento = null));
   await aggiornamento;
   return ricerca;

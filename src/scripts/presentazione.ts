@@ -1,19 +1,19 @@
 import type { Scena, Schermata } from '../data/presentazione';
 
 type Dispositivo = Schermata['dispositivo'];
-type Riquadro = NonNullable<Schermata['barrato']>;
 
 interface Schermo {
   el: HTMLElement;
   vista: HTMLElement;
   scala: HTMLElement;
   frame: HTMLIFrameElement;
+  cornici: Map<string, HTMLIFrameElement>;
   faro: HTMLElement;
-  barrato: HTMLElement;
   tocco: HTMLElement;
   sito: HTMLElement;
   bloccato: HTMLElement;
   bloccatoLink: HTMLAnchorElement;
+  serp: HTMLElement | null;
   dispositivo: Dispositivo;
   minimo: number;
   fissa?: number;
@@ -23,9 +23,7 @@ interface Schermo {
   selettore?: string;
   frase?: [string, string];
   fermo: boolean;
-  barra?: Riquadro;
   snippet?: Schermata['snippet'];
-  serp: HTMLElement | null;
   larghezza: number;
   altezza: number;
   fattore: number;
@@ -34,6 +32,7 @@ interface Schermo {
   bersaglio?: () => DOMRect;
   radici: Element[];
   cerca: number;
+  attesa: number;
 }
 
 const MINIMO_PC = 1280;
@@ -44,16 +43,19 @@ const TELEFONO_SOPRA = 74;
 const TELEFONO_SOTTO = 34;
 const ETICHETTA = 64;
 const ARIA_SOPRA = 48;
-const ASSESTAMENTO = 900;
+const ASSESTAMENTO = 250;
 const ATTESA_MASSIMA = 15000;
+const CORNICI = 4;
 const FISSI = '.main-header, .event-banner, .topbar, .navbar-fixed-top';
-const MARGINE_FARO = 12;
-const BORDO_FARO = 20;
+const BORDO_FARO = 8;
 const DISTANZA_NOTA = 24;
 const BORDO_NOTA = 16;
+const TASTI_AVANTI = ['ArrowRight', 'PageDown'];
+const TASTI_INDIETRO = ['ArrowLeft', 'PageUp'];
 
 let ostacolo: HTMLElement | null = null;
 let collocaNota: () => void = () => {};
+let tasto: (e: KeyboardEvent) => void = () => {};
 
 const radice = document.querySelector<HTMLElement>('[data-pres]');
 if (radice) avvia(radice);
@@ -64,14 +66,17 @@ function trova<T extends Element>(dentro: ParentNode, selettore: string): T {
   return el;
 }
 
-function documento(s: Schermo): Document | null {
-  if (!s.url.startsWith('/')) return null;
+function interno(f: HTMLIFrameElement): Document | null {
   try {
-    const doc = s.frame.contentDocument;
+    const doc = f.contentDocument;
     return doc && doc.location.href !== 'about:blank' ? doc : null;
   } catch {
     return null;
   }
+}
+
+function documento(s: Schermo) {
+  return s.url.startsWith('/') ? interno(s.frame) : null;
 }
 
 function coperta(s: Schermo) {
@@ -124,17 +129,11 @@ function misura(s: Schermo) {
   s.fattore = scala;
   s.ox = x;
   s.oy = y;
+  if (s.serp && s.snippet) {
+    s.serp.style.transform = `translate(${s.snippet.x}px, ${s.snippet.y}px)`;
+    s.serp.style.setProperty('--oggi-h', `${s.snippet.h}px`);
+  }
   posiziona(s);
-  barra(s);
-}
-
-function barra(s: Schermo) {
-  if (s.serp && s.snippet) s.serp.style.transform = `translate(${s.snippet.x}px, ${s.snippet.y}px)`;
-  s.barrato.hidden = !s.barra;
-  if (!s.barra) return;
-  const { x, y, w, h } = s.barra;
-  s.barrato.style.width = `${w}px`;
-  s.barrato.style.transform = `translate(${x}px, ${y + h / 2}px)`;
 }
 
 function posiziona(s: Schermo) {
@@ -142,26 +141,24 @@ function posiziona(s: Schermo) {
   if (!r || s.faro.hidden) return;
   const w = s.larghezza;
   const pieno = r.left <= 1 && r.right >= w - 1;
-  const x1 = pieno ? -BORDO_FARO : Math.max(BORDO_FARO, r.left - MARGINE_FARO);
-  const y1 = Math.max(BORDO_FARO, r.top - MARGINE_FARO);
-  const x2 = pieno ? w + BORDO_FARO : Math.min(w - BORDO_FARO, r.right + MARGINE_FARO);
-  const y2 = Math.min(libero(s, x1, x2), r.bottom + MARGINE_FARO);
+  const x1 = pieno ? -BORDO_FARO : Math.max(BORDO_FARO, r.left);
+  const y1 = Math.max(BORDO_FARO, r.top);
+  const x2 = pieno ? w + BORDO_FARO : Math.min(w - BORDO_FARO, r.right);
+  const y2 = Math.min(libero(s, x1, x2), r.bottom);
   s.faro.style.width = `${Math.max(0, x2 - x1)}px`;
   s.faro.style.height = `${Math.max(0, y2 - y1)}px`;
   s.faro.style.transform = `translate(${x1}px, ${y1}px)`;
   collocaNota();
 }
 
-function spegni(schermi: Schermo[]) {
-  schermi.forEach((s) => {
-    clearTimeout(s.cerca);
-    s.faro.hidden = true;
-    s.tocco.hidden = true;
-  });
+function spegni(s: Schermo) {
+  clearTimeout(s.cerca);
+  s.faro.hidden = true;
+  s.tocco.hidden = true;
 }
 
 function segui(s: Schermo) {
-  const fine = performance.now() + 1200;
+  const fine = performance.now() + 600;
   const passo = () => {
     posiziona(s);
     if (performance.now() < fine) requestAnimationFrame(passo);
@@ -170,6 +167,7 @@ function segui(s: Schermo) {
 }
 
 function mostra(s: Schermo) {
+  clearTimeout(s.attesa);
   delete s.el.dataset.carica;
   collocaNota();
 }
@@ -206,7 +204,7 @@ function intervallo(el: Element, da: string, a: string) {
 
 function bersaglio(doc: Document, s: Schermo): (() => DOMRect) | null {
   if (!s.selettore) return null;
-  const elementi = [...doc.querySelectorAll<HTMLElement>(s.selettore)];
+  const elementi = [...doc.querySelectorAll<HTMLElement>(s.selettore)].filter((el) => el.getClientRects().length);
   if (!elementi.length) return null;
   s.radici = elementi;
   if (s.frase) {
@@ -235,12 +233,11 @@ function porta(s: Schermo, doc: Document) {
   vista.scrollTo({ top: vista.scrollY + r.top - sopra, behavior: 'instant' });
 }
 
-function evidenzia(s: Schermo) {
+function evidenzia(s: Schermo, attesa: number) {
   s.faro.hidden = true;
   s.bersaglio = undefined;
   clearTimeout(s.cerca);
   const doc = documento(s);
-  const attesa = 'carica' in s.el.dataset ? ASSESTAMENTO : 0;
   if (!s.selettore || !doc) {
     s.cerca = window.setTimeout(() => mostra(s), attesa);
     return;
@@ -249,42 +246,70 @@ function evidenzia(s: Schermo) {
   const prova = () => {
     const trovato = bersaglio(doc, s);
     if (!trovato) {
-      if (++tentativi < 15) s.cerca = window.setTimeout(prova, 300);
+      if (++tentativi < 15) s.cerca = window.setTimeout(prova, 200);
       else mostra(s);
       return;
     }
     s.bersaglio = trovato;
     porta(s, doc);
-    s.cerca = window.setTimeout(() => {
+    const finale = () => {
       porta(s, doc);
       accendi(s);
-    }, attesa);
+    };
+    if (attesa) s.cerca = window.setTimeout(finale, attesa);
+    else finale();
   };
   prova();
 }
 
-function vuoto(s: Schermo) {
-  try {
-    return s.frame.contentWindow?.location.href === 'about:blank';
-  } catch {
-    return false;
-  }
+function ascolta(s: Schermo, f: HTMLIFrameElement) {
+  const doc = interno(f);
+  if (!doc) return;
+  const attiva = () => f === s.frame;
+  doc.defaultView?.addEventListener('scroll', () => attiva() && posiziona(s), { passive: true });
+  for (const tipo of ['wheel', 'touchmove', 'pointerdown']) doc.addEventListener(tipo, () => attiva() && spegni(s), { passive: true });
+  doc.addEventListener('keydown', (e) => tasto(e));
 }
 
-function caricato(s: Schermo) {
-  if (vuoto(s)) return;
-  if (!s.url.startsWith('/')) {
-    const url = s.url;
-    window.setTimeout(() => s.url === url && mostra(s), ASSESTAMENTO);
-    return;
-  }
-  const doc = documento(s);
-  s.bloccato.hidden = !!doc;
+function caricata(s: Schermo, f: HTMLIFrameElement) {
+  if (f.contentWindow && (() => {
+    try {
+      return f.contentWindow.location.href === 'about:blank';
+    } catch {
+      return false;
+    }
+  })()) return;
+  f.dataset.caricata = '';
+  ascolta(s, f);
+  if (f !== s.frame || !('carica' in s.el.dataset)) return;
+  const interna = f.dataset.url?.startsWith('/');
+  s.bloccato.hidden = !interna || !!interno(f);
   s.bloccatoLink.href = s.url;
-  if (!doc) return mostra(s);
-  doc.defaultView?.addEventListener('scroll', () => posiziona(s), { passive: true });
-  for (const tipo of ['wheel', 'touchmove']) doc.addEventListener(tipo, () => spegni([s]), { passive: true });
-  evidenzia(s);
+  evidenzia(s, ASSESTAMENTO);
+}
+
+function cornice(s: Schermo, url: string) {
+  let f = s.cornici.get(url);
+  if (f) {
+    s.cornici.delete(url);
+    s.cornici.set(url, f);
+    return f;
+  }
+  f = document.createElement('iframe');
+  f.title = 'Sito dal vivo';
+  f.dataset.url = url;
+  f.src = url;
+  const nuova = f;
+  f.addEventListener('load', () => caricata(s, nuova));
+  s.scala.prepend(f);
+  s.cornici.set(url, f);
+  for (const [chiave, vecchia] of s.cornici) {
+    if (s.cornici.size <= CORNICI) break;
+    if (vecchia === s.frame || vecchia === f) continue;
+    vecchia.remove();
+    s.cornici.delete(chiave);
+  }
+  return f;
 }
 
 function crea(el: HTMLElement): Schermo {
@@ -292,9 +317,9 @@ function crea(el: HTMLElement): Schermo {
     el,
     vista: trova(el, '[data-vista]'),
     scala: trova(el, '[data-scala]'),
-    frame: trova(el, '[data-frame]'),
+    frame: document.createElement('iframe'),
+    cornici: new Map(),
     faro: trova(el, '[data-faro]'),
-    barrato: trova(el, '[data-barrato]'),
     tocco: trova(el, '[data-tocco]'),
     sito: trova(el, '[data-sito]'),
     bloccato: trova(el, '[data-bloccato]'),
@@ -313,24 +338,21 @@ function crea(el: HTMLElement): Schermo {
     oy: 0,
     radici: [],
     cerca: 0,
+    attesa: 0,
   };
-  s.frame.addEventListener('load', () => caricato(s));
-  for (const tipo of ['wheel', 'pointerdown']) s.tocco.addEventListener(tipo, () => spegni([s]), { passive: true });
+  for (const tipo of ['wheel', 'pointerdown']) s.tocco.addEventListener(tipo, () => spegni(s), { passive: true });
   new ResizeObserver(() => misura(s)).observe(s.vista);
   return s;
 }
 
 function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
-  const { url, nome, dispositivo, evidenzia: selettore, frase, fermo, barrato, snippet, larghezza } = schermata;
-  const interno = url.startsWith('/');
+  const { url, nome, dispositivo, evidenzia: selettore, frase, fermo, snippet, larghezza } = schermata;
   s.el.hidden = false;
   s.sito.textContent = nome;
-  s.frame.title = `${nome}, dal vivo`;
   s.el.dataset.sito = nome === 'Nuovo sito' ? 'nuovo' : 'oggi';
   s.selettore = selettore;
   s.frase = frase;
   s.fermo = !!fermo;
-  s.barra = barrato;
   s.snippet = snippet;
   s.fissa = larghezza;
   s.nome = quanti > 1;
@@ -338,18 +360,27 @@ function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
   s.minimo = quanti > 1 ? 0 : MINIMO_PC;
   s.allinea = quanti === 2 ? (posto === 0 ? 'destra' : 'sinistra') : '';
   s.el.dataset.dispositivo = dispositivo;
-  misura(s);
-  const doc = documento(s);
-  const giaAperto = interno && doc && `${doc.location.pathname}${doc.location.search}` === url;
   s.url = url;
-  if (giaAperto || (!interno && s.frame.dataset.url === url)) return evidenzia(s);
+  const f = cornice(s, url);
+  if (f !== s.frame) {
+    s.frame.removeAttribute('data-attiva');
+    f.dataset.attiva = '';
+    f.title = `${nome}, dal vivo`;
+    s.frame = f;
+  }
+  misura(s);
   s.faro.hidden = true;
   s.bersaglio = undefined;
-  s.bloccato.hidden = true;
-  s.frame.dataset.url = url;
+  clearTimeout(s.cerca);
+  clearTimeout(s.attesa);
+  if ('caricata' in f.dataset) {
+    delete s.el.dataset.carica;
+    s.bloccato.hidden = !url.startsWith('/') || !!interno(f);
+    return evidenzia(s, 0);
+  }
   s.el.dataset.carica = '';
-  s.frame.src = url;
-  window.setTimeout(() => s.url === url && mostra(s), ATTESA_MASSIMA);
+  s.bloccato.hidden = true;
+  s.attesa = window.setTimeout(() => s.url === url && mostra(s), ATTESA_MASSIMA);
 }
 
 async function leggiNuovoSito(radice: HTMLElement) {
@@ -362,8 +393,7 @@ async function leggiNuovoSito(radice: HTMLElement) {
 }
 
 function aggancio(schermi: Schermo[]): [DOMRect | null, boolean] {
-  const s =
-    schermi.find((x) => !x.el.hidden && !x.faro.hidden) ?? (schermi[0].dispositivo === 'telefono' ? schermi.filter((x) => !x.el.hidden).at(-1) : undefined);
+  const s = schermi.find((x) => !x.el.hidden && !x.faro.hidden) ?? (schermi[0].dispositivo === 'telefono' ? schermi.filter((x) => !x.el.hidden).at(-1) : undefined);
   if (!s) return [null, false];
   const faro = s.faro.hidden ? null : s.faro.getBoundingClientRect();
   if (s.dispositivo === 'pc') return [faro, false];
@@ -376,7 +406,6 @@ function colloca(nota: HTMLElement, palco: HTMLElement, [a, aiLati]: [DOMRect | 
   const n = nota.getBoundingClientRect();
   const fine = (ostacolo?.offsetParent ? ostacolo.getBoundingClientRect().top : p.bottom) - p.top - BORDO_NOTA;
   if (!a) {
-    nota.dataset.posto = 'angolo';
     nota.style.transform = `translate(${BORDO_NOTA}px, ${fine - n.height}px)`;
     return;
   }
@@ -384,20 +413,14 @@ function colloca(nota: HTMLElement, palco: HTMLElement, [a, aiLati]: [DOMRect | 
   const entro = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
   const x = entro(r.left, BORDO_NOTA, p.width - n.width - BORDO_NOTA);
   const y = entro(r.top, BORDO_NOTA, fine - n.height);
-  const posti: [string, number, number, boolean][] = [
-    ['sotto', x, r.bottom + DISTANZA_NOTA, r.bottom + DISTANZA_NOTA + n.height <= fine],
-    ['sopra', x, r.top - DISTANZA_NOTA - n.height, r.top - DISTANZA_NOTA - n.height >= BORDO_NOTA],
-    ['destra', r.right + DISTANZA_NOTA, y, r.right + DISTANZA_NOTA + n.width <= p.width - BORDO_NOTA],
-    ['sinistra', r.left - DISTANZA_NOTA - n.width, y, r.left - DISTANZA_NOTA - n.width >= BORDO_NOTA],
+  const posti: [number, number, boolean][] = [
+    [x, r.bottom + DISTANZA_NOTA, r.bottom + DISTANZA_NOTA + n.height <= fine],
+    [x, r.top - DISTANZA_NOTA - n.height, r.top - DISTANZA_NOTA - n.height >= BORDO_NOTA],
+    [r.right + DISTANZA_NOTA, y, r.right + DISTANZA_NOTA + n.width <= p.width - BORDO_NOTA],
+    [r.left - DISTANZA_NOTA - n.width, y, r.left - DISTANZA_NOTA - n.width >= BORDO_NOTA],
   ];
   if (aiLati) posti.push(...posti.splice(0, 2));
-  const [posto, px, py] = posti.find((q) => q[3]) ?? [
-    'dentro',
-    r.right - n.width - DISTANZA_NOTA,
-    entro(r.top + DISTANZA_NOTA, BORDO_NOTA, fine - n.height),
-    true,
-  ];
-  nota.dataset.posto = posto;
+  const [px, py] = posti.find((q) => q[2]) ?? [r.right - n.width - DISTANZA_NOTA, entro(r.top + DISTANZA_NOTA, BORDO_NOTA, fine - n.height)];
   nota.style.transform = `translate(${Math.round(entro(px, BORDO_NOTA, p.width - n.width - BORDO_NOTA))}px, ${Math.round(py)}px)`;
 }
 
@@ -411,9 +434,9 @@ function avvia(radice: HTMLElement) {
   const nota = trova<HTMLElement>(radice, '[data-nota]');
   const serp = trova<HTMLElement>(radice, '[data-serp]');
   ostacolo = trova<HTMLElement>(radice, '.pres-navigazione');
+  const scene = passi.map((p) => JSON.parse(p.dataset.scena ?? '{}') as Scena);
   const totale = passi.length - 1;
   let attuale = -1;
-  let scena: Scena | undefined;
   let nuovoLetto = false;
 
   collocaNota = () => {
@@ -422,9 +445,14 @@ function avvia(radice: HTMLElement) {
     if (pronta) colloca(nota, radice, aggancio(schermi));
   };
 
+  const precarica = (n: number) => {
+    const scena = scene[n];
+    if (scena?.tipo !== 'siti' && scena?.tipo !== 'confronto') return;
+    scena.schermi.forEach((x, i) => cornice(schermi[i], x.url));
+  };
+
   let chiave = '';
   const mostraScena = (s: Scena) => {
-    scena = s;
     radice.dataset.modo = s.tipo;
     const nuova = s.tipo === 'siti' || s.tipo === 'confronto' ? s.schermi.map((x) => x.url).join(' ') : '';
     if (nuova && nuova !== chiave) {
@@ -462,29 +490,35 @@ function avvia(radice: HTMLElement) {
       nuovoLetto = true;
       leggiNuovoSito(radice).catch(() => (nuovoLetto = false));
     }
-    mostraScena(JSON.parse(passo.dataset.scena ?? '{}') as Scena);
+    mostraScena(scene[n]);
+    window.setTimeout(() => {
+      if (attuale !== n) return;
+      precarica(n + 1);
+      precarica(n + 2);
+      precarica(n - 1);
+    }, 300);
   };
+
+  tasto = (e: KeyboardEvent) => {
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    if ((e.target as Element | null)?.closest?.('input, textarea, select, [contenteditable]')) return;
+    if (TASTI_AVANTI.includes(e.key)) vai(attuale + 1);
+    else if (TASTI_INDIETRO.includes(e.key)) vai(attuale - 1);
+    else return;
+    e.preventDefault();
+  };
+  document.addEventListener('keydown', tasto);
 
   new ResizeObserver(() => {
     schermi.forEach(misura);
     collocaNota();
   }).observe(radice);
 
-  let sulSito = false;
-  const riprendi = () => {
-    if (document.activeElement instanceof HTMLIFrameElement) radice.focus({ preventScroll: true });
-  };
-  schermi.forEach((s) => {
-    s.vista.addEventListener('pointerenter', () => (sulSito = true));
-    s.vista.addEventListener('pointerleave', () => {
-      sulSito = false;
-      riprendi();
-    });
-  });
   window.addEventListener('blur', () => {
-    if (!(document.activeElement instanceof HTMLIFrameElement)) return;
-    if (sulSito) spegni(schermi);
-    else window.setTimeout(riprendi);
+    window.setTimeout(() => {
+      const attivo = document.activeElement;
+      if (attivo instanceof HTMLIFrameElement && !interno(attivo)) radice.focus({ preventScroll: true });
+    });
   });
 
   avanti.forEach((b) => b.addEventListener('click', () => vai(attuale + 1)));
@@ -492,18 +526,10 @@ function avvia(radice: HTMLElement) {
 
   radice.addEventListener('click', (e) => {
     const scelta = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-percorso]');
+    const scena = scene[attuale];
     if (!scelta || scena?.tipo !== 'siti') return;
     scelta.parentElement?.querySelectorAll('[data-percorso]').forEach((btn) => btn.setAttribute('aria-pressed', String(btn === scelta)));
     apri(schermi[0], { ...scena.schermi[0], url: scelta.dataset.percorso ?? '/' });
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
-    if ((e.target as HTMLElement).closest('input, textarea, select, [contenteditable]')) return;
-    if (e.key === 'ArrowRight' || e.key === 'PageDown') vai(attuale + 1);
-    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') vai(attuale - 1);
-    else return;
-    e.preventDefault();
   });
 
   const dalPasso = () => {

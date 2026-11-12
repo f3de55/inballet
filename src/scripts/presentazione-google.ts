@@ -1,8 +1,14 @@
 import { QUERY_GOOGLE } from '../data/presentazione';
+import type { PanoramicaAI } from '../lib/risultati-google';
 
 const IMMAGINI = /var s='(data:image\/[^']+)';var ii=\[([^\]]+)\]/g;
 const SNIPPET = '.VwiC3b, [data-sncf], [style*="line-clamp"]';
-const SOPRA = 150;
+const TITOLI_AI = /^(Panoramica AI|AI Overview|Panoramica creata con l'AI)$/i;
+const DATI_PER_AI = [
+  'Corsi, età e sedi come dati strutturati (schema.org) su ogni pagina',
+  'Orari della segreteria e contatti ufficiali, sempre aggiornati',
+  'Una scheda riassuntiva della scuola pensata per gli assistenti AI (/llms.txt)',
+];
 
 interface Nuovo {
   titolo: string;
@@ -77,19 +83,88 @@ function copia(doc: Document, oggi: HTMLElement, n: Nuovo) {
   return nuovo;
 }
 
+function elemento(doc: Document, tag: string, testo?: string) {
+  const el = doc.createElement(tag);
+  if (testo) el.textContent = testo;
+  return el;
+}
+
+function panoramica(doc: Document, ai: PanoramicaAI) {
+  const box = elemento(doc, 'div');
+  box.dataset.presAi = '';
+  box.append(elemento(doc, 'p', '✦ Panoramica AI'));
+  for (const b of ai.text_blocks ?? []) {
+    if (b.type === 'list') {
+      const ul = elemento(doc, 'ul');
+      for (const v of b.list ?? []) ul.append(elemento(doc, 'li', [v.title, v.snippet].filter(Boolean).join(': ')));
+      box.append(ul);
+    } else if (b.snippet) box.append(elemento(doc, b.type === 'heading' ? 'h3' : 'p', b.snippet));
+  }
+  const fonti = (ai.references ?? []).filter((f) => f.source || f.title);
+  if (fonti.length) {
+    const riga = elemento(doc, 'p');
+    riga.dataset.presFonti = '';
+    for (const f of fonti) {
+      const fonte = elemento(doc, 'span', f.source || f.title);
+      if (/(^|\.)inballet\.it$/.test(destinazione(f.link ?? ''))) fonte.dataset.presNostra = '';
+      riga.append(fonte);
+    }
+    box.append(riga);
+  }
+  return box;
+}
+
+function intelligenza(doc: Document, ai: PanoramicaAI | null) {
+  const inizio = doc.getElementById('rso');
+  if (!inizio) return;
+  const titolo = Array.from(doc.querySelectorAll('h1, h2, div, span, strong')).find((el) => TITOLI_AI.test(el.textContent?.trim() ?? ''));
+  let oggi: HTMLElement;
+  if (titolo) {
+    let el = titolo as HTMLElement;
+    while (el.parentElement && !el.parentElement.contains(inizio)) el = el.parentElement;
+    oggi = el;
+  } else {
+    oggi = ai ? panoramica(doc, ai) : elemento(doc, 'p', `Oggi Google non mostra una panoramica AI per «${QUERY_GOOGLE}».`);
+    oggi.dataset.presAi = '';
+    inizio.before(oggi);
+  }
+  const citata = (ai?.references ?? []).some((f) => /(^|\.)inballet\.it$/.test(destinazione(f.link ?? '')));
+  oggi.dataset.presOggi = '';
+  oggi.dataset.presEsito = ai && !citata ? '✗ AI di Google oggi: inballet.it non è tra le fonti' : '✗ AI di Google oggi';
+  const nuovo = elemento(doc, 'div');
+  nuovo.dataset.presAi = '';
+  nuovo.dataset.presNuovo = '';
+  nuovo.dataset.presEsito = '✓ Cosa il nuovo sito dà all’AI di Google';
+  const ul = elemento(doc, 'ul');
+  for (const voce of DATI_PER_AI) ul.append(elemento(doc, 'li', voce));
+  nuovo.append(ul);
+  oggi.after(nuovo);
+  const sinistra = `${inizio.getBoundingClientRect().left - (inizio.parentElement?.getBoundingClientRect().left ?? 0)}px`;
+  for (const box of [oggi, nuovo]) if (!titolo || box === nuovo) box.style.setProperty('--pres-sinistra', sinistra);
+}
+
 function stile(doc: Document) {
   const token = (nome: string) => getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
   const css = doc.createElement('style');
   css.textContent = `[data-pres-esito]{position:relative;margin:2.25rem -1rem 1.5rem!important;padding:1.25rem 1rem .5rem!important;border-radius:16px;box-shadow:0 0 0 3px var(--pres-colore)}
 [data-pres-esito]::before{content:attr(data-pres-esito);position:absolute;top:0;left:1rem;transform:translateY(-50%);padding:.3rem .9rem;border-radius:999px;font:600 14px/1.3 Arial,sans-serif;color:var(--pres-testo);background:var(--pres-colore)}
 [data-pres-oggi]{--pres-colore:${token('--esito-errore')};--pres-testo:${token('--white')}}
-[data-pres-nuovo]{--pres-colore:${token('--primary-blue')};--pres-testo:${token('--dark-navy')}}`;
+[data-pres-nuovo]{--pres-colore:${token('--primary-blue')};--pres-testo:${token('--dark-navy')}}
+[data-pres-ai][data-pres-esito]{margin-left:calc(var(--pres-sinistra,0px) - 1rem)!important}
+[data-pres-ai]{max-width:652px;font:14px/1.6 Arial,sans-serif;color:${token('--dark-navy')}}
+[data-pres-ai]>p:first-child{margin:0 0 .5rem;font-size:16px;font-weight:600}
+[data-pres-ai] p,[data-pres-ai] ul{margin:0 0 .6rem}
+[data-pres-ai] h3{margin:.4rem 0;font-size:16px;font-weight:600}
+[data-pres-fonti]{display:flex;flex-wrap:wrap;gap:.4rem}
+[data-pres-fonti] span{padding:.2rem .7rem;border-radius:999px;background:${token('--grigio-100')}}
+[data-pres-fonti] [data-pres-nostra]{background:${token('--primary-blue')}}`;
   doc.head.append(css);
 }
 
 export async function segnaGoogle(doc: Document) {
   immagini(doc);
   stile(doc);
+  intelligenza(doc, JSON.parse(doc.getElementById('pres-panoramica-ai')?.textContent || 'null') as PanoramicaAI | null);
   const n = await nuovoSito();
   const link = Array.from(doc.querySelectorAll('#rso a[href]')).find((a) => /(^|\.)inballet\.it$/.test(destinazione(a.getAttribute('href') ?? '')));
   const oggi = link ? blocco(doc, link) : null;
@@ -102,5 +177,4 @@ export async function segnaGoogle(doc: Document) {
   oggi.dataset.presOggi = '';
   oggi.dataset.presEsito = '✗ Così è oggi';
   oggi.after(nuovo);
-  doc.defaultView?.scrollTo({ top: oggi.getBoundingClientRect().top + (doc.defaultView?.scrollY ?? 0) - SOPRA, behavior: 'instant' });
 }

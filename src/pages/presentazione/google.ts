@@ -17,7 +17,8 @@ export const GET: APIRoute = async ({ session }) => {
   const html = pagina
     ? pagina.html.replace(
         /<head([^>]*)>/i,
-        `<head$1><base href="https://www.google.com/" target="_blank"><meta name="aggiornato" content="${pagina.aggiornato}">`,
+        (_, attributi: string) =>
+          `<head${attributi}><base href="https://www.google.com/" target="_blank"><script type="application/json" id="pres-panoramica-ai">${JSON.stringify(pagina.ai).replace(/</g, '\\u003c')}</script>`,
       )
     : '<!doctype html><html lang="it"><meta charset="utf-8"><title>Google</title><p>Pagina di Google non disponibile: manca la chiave SERPAPI_KEY o SerpApi non risponde.</p></html>';
   return new Response(html, { headers: INTESTAZIONI });

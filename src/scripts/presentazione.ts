@@ -1,5 +1,5 @@
-import type { Scena, Schermata } from '../data/presentazione';
-import { mostraGoogle } from './presentazione-google';
+import { PAGINA_GOOGLE, type Scena, type Schermata } from '../data/presentazione';
+import { segnaGoogle } from './presentazione-google';
 
 type Dispositivo = Schermata['dispositivo'];
 
@@ -402,6 +402,7 @@ function caricata(s: Schermo, f: HTMLIFrameElement) {
   f.dataset.caricata = '';
   const doc = interno(f);
   if (doc && f.dataset.dispositivo === 'telefono') telefono(doc);
+  if (doc && f.dataset.url === PAGINA_GOOGLE) void segnaGoogle(doc);
   ascolta(s, f);
   if (f !== s.frame || !('carica' in s.el.dataset)) return;
   const interna = f.dataset.url?.startsWith('/');
@@ -550,7 +551,6 @@ function avvia(radice: HTMLElement) {
   const scene = passi.map((p) => JSON.parse(p.dataset.scena ?? '{}') as Scena);
   const totale = passi.length - 1;
   let attuale = -1;
-  let googleLetto = false;
 
   collocaNota = () => {
     const pronta = schermi.every((s) => s.el.hidden || !('carica' in s.el.dataset));
@@ -601,10 +601,7 @@ function avvia(radice: HTMLElement) {
     const passo = passi[n];
     fondali.forEach((foto) => (foto.hidden = foto.dataset.fondaleFoto !== passo.dataset.fondale));
     passo.querySelectorAll<HTMLButtonElement>('[data-percorso]').forEach((btn, j) => btn.setAttribute('aria-pressed', String(j === 0)));
-    if (passo.hasAttribute('data-google') && !googleLetto) {
-      googleLetto = true;
-      mostraGoogle(radice).catch(() => (googleLetto = false));
-    }
+    radice.toggleAttribute('data-senza-nota', passo.hasAttribute('data-senza-nota'));
     mostraScena(scene[n]);
     window.setTimeout(() => {
       if (attuale !== n) return;

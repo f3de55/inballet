@@ -1,7 +1,7 @@
 export const SITO_ATTUALE = 'https://www.inballet.it';
 export const SITO_OGGI = '/sito-oggi';
 export const QUERY_GOOGLE = 'inballet lainate';
-export const RICERCA_GOOGLE = `https://www.google.com/search?hl=it&gl=it&q=${encodeURIComponent(QUERY_GOOGLE)}`;
+export const PAGINA_GOOGLE = '/presentazione/google';
 
 type Dispositivo = 'pc' | 'telefono';
 
@@ -19,7 +19,7 @@ export type Apertura = 'copertina' | 'sito-oggi' | 'nuovo-sito' | 'google' | 'sc
 export type Scena =
   | { tipo: 'siti' | 'confronto'; schermi: Schermata[] }
   | { tipo: 'apertura'; immagine: Apertura }
-  | { tipo: 'pannello'; pannello: 'google' | 'mancano' | 'costo' | 'dopo' };
+  | { tipo: 'pannello'; pannello: 'mancano' | 'costo' | 'dopo' };
 
 interface Scelta {
   etichetta: string;
@@ -33,7 +33,7 @@ interface Passo {
   testo?: string;
   evidenzia?: string[];
   scelte?: Scelta[];
-  google?: boolean;
+  senzaNota?: boolean;
   difetti?: string[];
   scena: Scena;
 }
@@ -218,8 +218,8 @@ export const passi: Passo[] = [
   {
     capitolo: 'Motori di ricerca e AI',
     titolo: 'Il sito su Google',
-    google: true,
-    scena: { tipo: 'pannello', pannello: 'google' },
+    senzaNota: true,
+    scena: { tipo: 'siti', schermi: [{ nome: 'Google', url: PAGINA_GOOGLE, dispositivo: 'pc' }] },
   },
   {
     capitolo: 'Motori di ricerca e AI',

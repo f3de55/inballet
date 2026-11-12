@@ -6,7 +6,7 @@ import { Image } from 'astro:assets';
 import Admin from '../layouts/Admin.astro';
 import { isLoggedIn } from '../lib/auth';
 import { enfatizza } from '../lib/text';
-import { passi, QUERY_GOOGLE, RICERCA_GOOGLE, type Apertura } from '../data/presentazione';
+import { passi, type Apertura } from '../data/presentazione';
 import copertina from '../assets/images/presentazione/copertina-inballet.webp';
 import sitoOggi from '../assets/images/presentazione/sito-oggi.webp';
 import nuovoSito from '../assets/images/presentazione/nuovo-sito.webp';
@@ -76,7 +76,7 @@ const nomePannello = (i: number) => {
         <section class="pres-nota" data-nota aria-label="Spiegazione">
             <button type="button" class="pres-chiudi" data-chiudi-nota aria-label="Chiudi la spiegazione"><i class="fas fa-xmark" aria-hidden="true"></i></button>
             {passi.map((p, i) => p.scena.tipo === 'siti' && (
-                <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-fondale={p.scena.schermi[0]?.dispositivo === 'telefono' ? (p.scena.schermi.length === 1 ? 'telefono' : 'telefoni') : undefined} data-google={p.google ? "si" : undefined} data-riapri={p.scelte ? 'Riapri la scelta' : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
+                <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-fondale={p.scena.schermi[0]?.dispositivo === 'telefono' ? (p.scena.schermi.length === 1 ? 'telefono' : 'telefoni') : undefined} data-senza-nota={p.senzaNota ? "si" : undefined} data-riapri={p.scelte ? 'Riapri la scelta' : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
                     {p.testo && <p set:html={enfatizza(p.testo, p.evidenzia ?? [])} />}
                     {p.scelte && (
@@ -119,29 +119,7 @@ const nomePannello = (i: number) => {
             </section>
         ))}
 
-        {passi.map((p, i) => p.google && (
-            <section class="pres-g-pagina" data-passo={i} data-scena={JSON.stringify(p.scena)} data-google="si" data-pagina-google aria-labelledby={`pres-passo-${i}`} tabindex="0" hidden>
-                <h2 id={`pres-passo-${i}`} class="sr-only">{p.titolo}</h2>
-                <div class="pres-g-testa">
-                    <img class="pres-g-logo" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google" width="92" height="30">
-                    <p class="pres-g-cerca"><span>{QUERY_GOOGLE}</span><i class="fas fa-xmark" aria-hidden="true"></i><i class="fas fa-microphone" aria-hidden="true"></i><i class="fas fa-camera" aria-hidden="true"></i><i class="fas fa-magnifying-glass" aria-hidden="true"></i></p>
-                    <p class="pres-g-utente" aria-hidden="true"><i class="fas fa-gear"></i><i class="fas fa-grip"></i><span class="pres-g-avatar">I</span></p>
-                </div>
-                <ul class="pres-g-schede" aria-hidden="true">
-                    <li class="pres-g-attiva">Tutti</li><li>Immagini</li><li>Video</li><li>Notizie</li><li>Maps</li><li>Shopping</li><li>Altro</li>
-                </ul>
-                <div class="pres-g-corpo">
-                    <div class="pres-g-colonna">
-                        <small class="pres-g-stato" data-stato-google aria-live="polite">Lettura della pagina di Google…</small>
-                        <ol class="pres-g-risultati" data-risultati-google></ol>
-                        <a class="pres-g-vera" href={RICERCA_GOOGLE} target="_blank" rel="noopener">Apri la ricerca vera su Google<span class="sr-only"> (si apre in una nuova scheda)</span></a>
-                    </div>
-                    <div class="pres-g-laterale" data-laterale-google></div>
-                </div>
-            </section>
-        ))}
-
-        {passi.map((p, i) => p.scena.tipo === 'pannello' && !p.google && (
+        {passi.map((p, i) => p.scena.tipo === 'pannello' && (
             <section class="pres-pannello" data-passo={i} data-scena={JSON.stringify(p.scena)} data-fondale={nomePannello(i)} aria-labelledby={`pres-passo-${i}`} tabindex="0" hidden>
                 <div class="pres-pannello-testa">
                     <p class="pres-etichetta">{p.capitolo}</p>

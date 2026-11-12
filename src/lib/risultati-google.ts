@@ -1,103 +1,82 @@
+import { readFile, writeFile } from 'node:fs/promises';
 import { SERPAPI_KEY } from 'astro:env/server';
 import { QUERY_GOOGLE } from '../data/presentazione';
-import { paths, readJson, writeJson } from './storage';
+import { ensureDir, paths, readJson, writeJson } from './storage';
 
 const DURATA = 30 * 86400_000;
 const RIPROVA = 86400_000;
 const LUOGO = 'Lainate,Lombardy,Italy';
-const RICHIESTA = `${QUERY_GOOGLE} · ${LUOGO} · pagina intera`;
-const SCARTATI = ['search_metadata', 'search_parameters', 'serpapi_pagination', 'pagination'];
+const RICHIESTA = `${QUERY_GOOGLE} · ${LUOGO} · html`;
 
-export interface Organico {
-  position?: number;
-  title?: string;
-  link?: string;
-  source?: string;
-  displayed_link?: string;
-  favicon?: string;
-  snippet?: string;
-  snippet_highlighted_words?: string[];
-  date?: string;
-  sitelinks?: { inline?: { title?: string }[]; expanded?: { title?: string; snippet?: string }[] };
-  rich_snippet?: { top?: { detected_extensions?: { rating?: number; reviews?: number } } };
-}
-
-export interface Luogo {
-  title?: string;
-  rating?: number;
-  reviews?: number;
-  type?: string;
-  address?: string;
-  hours?: string;
-  thumbnail?: string;
+interface Ricerca {
+  richiesta: string;
+  aggiornato: string;
 }
 
 export interface PaginaGoogle {
-  organic_results?: Organico[];
-  local_results?: { places?: Luogo[] } | Luogo[];
-  local_map?: { image?: string };
-  knowledge_graph?: {
-    title?: string;
-    type?: string;
-    description?: string;
-    address?: string;
-    phone?: string;
-    hours?: Record<string, { opens?: string; closes?: string }>;
-    rating?: number;
-    review_count?: number;
-    header_images?: { image?: string }[];
-  };
-  related_questions?: { question?: string }[];
-  related_searches?: { query?: string }[];
-}
-
-export interface RicercaGoogle {
-  richiesta: string;
   aggiornato: string;
-  pagina: PaginaGoogle;
+  html: string;
 }
 
-async function scarica(chiave: string): Promise<RicercaGoogle> {
+interface RispostaSerpApi {
+  error?: string;
+  search_metadata?: { id?: string; raw_html_file?: string };
+}
+
+async function testo(url: string) {
+  const res = await fetch(url, { signal: AbortSignal.timeout(20_000) });
+  const corpo = await res.text();
+  return res.ok && /<html/i.test(corpo) ? corpo : null;
+}
+
+async function scarica(chiave: string): Promise<PaginaGoogle> {
   const url = new URL('https://serpapi.com/search.json');
   const parametri = { engine: 'google', q: QUERY_GOOGLE, location: LUOGO, hl: 'it', gl: 'it', google_domain: 'google.it', api_key: chiave };
   for (const [nome, valore] of Object.entries(parametri)) url.searchParams.set(nome, valore);
   const res = await fetch(url, { signal: AbortSignal.timeout(20_000) });
-  const risposta = (await res.json()) as PaginaGoogle & { error?: string };
-  if (!res.ok || risposta.error) throw new Error(risposta.error ?? `HTTP ${res.status}`);
-  if (!risposta.organic_results?.length) throw new Error('nessun risultato');
-  const pagina = Object.fromEntries(Object.entries(risposta).filter(([nome]) => !SCARTATI.includes(nome))) as PaginaGoogle;
-  return { richiesta: RICHIESTA, aggiornato: new Date().toISOString(), pagina };
+  const r = (await res.json()) as RispostaSerpApi;
+  if (!res.ok || r.error) throw new Error(r.error ?? `HTTP ${res.status}`);
+  const { id, raw_html_file: grezzo } = r.search_metadata ?? {};
+  const archivio = id ? `https://serpapi.com/searches/${encodeURIComponent(id)}.html?api_key=${encodeURIComponent(chiave)}` : '';
+  const html = (archivio && (await testo(archivio))) || (grezzo && (await testo(grezzo)));
+  if (!html) throw new Error('pagina HTML di Google non disponibile');
+  const pagina = { aggiornato: new Date().toISOString(), html };
+  await ensureDir(paths.data);
+  await writeFile(paths.paginaGoogle, html);
+  await writeJson(paths.ricercaGoogle, { richiesta: RICHIESTA, aggiornato: pagina.aggiornato } satisfies Ricerca);
+  return pagina;
 }
 
-const valida = (d: unknown): d is RicercaGoogle => {
-  const x = d as Partial<RicercaGoogle> | null;
-  return !!x && x.richiesta === RICHIESTA && Number.isFinite(Date.parse(x.aggiornato ?? '')) && !!x.pagina;
-};
+async function salvata(): Promise<PaginaGoogle | null> {
+  const r = await readJson<Partial<Ricerca> | null>(paths.ricercaGoogle, null);
+  if (r?.richiesta !== RICHIESTA || !Number.isFinite(Date.parse(r.aggiornato ?? ''))) return null;
+  const html = await readFile(paths.paginaGoogle, 'utf8').catch(() => null);
+  return html ? { aggiornato: r.aggiornato ?? '', html } : null;
+}
 
-let ricerca: RicercaGoogle | null = null;
+let pagina: PaginaGoogle | null = null;
 let lettura: Promise<void> | null = null;
 let aggiornamento: Promise<void> | null = null;
 let prossimoTentativo = 0;
 
-export async function ricercaGoogle(): Promise<RicercaGoogle | null> {
+export async function paginaGoogle(): Promise<PaginaGoogle | null> {
   if (!SERPAPI_KEY) return null;
   const chiave = SERPAPI_KEY;
-  lettura ??= readJson<unknown>(paths.ricercaGoogle, null).then((salvata) => {
-    if (valida(salvata)) ricerca = salvata;
+  lettura ??= salvata().then((p) => {
+    pagina = p;
   });
   await lettura;
-  if (ricerca && Date.now() - Date.parse(ricerca.aggiornato) < DURATA) return ricerca;
-  if (Date.now() < prossimoTentativo) return ricerca;
+  if (pagina && Date.now() - Date.parse(pagina.aggiornato) < DURATA) return pagina;
+  if (Date.now() < prossimoTentativo) return pagina;
   aggiornamento ??= scarica(chiave)
     .then((nuova) => {
-      ricerca = nuova;
-      return writeJson(paths.ricercaGoogle, nuova);
+      pagina = nuova;
     })
     .catch((e) => {
       prossimoTentativo = Date.now() + RIPROVA;
-      console.error('Risultati di Google:', (e as Error).message);
+      console.error('Pagina di Google:', (e as Error).message);
     })
     .finally(() => (aggiornamento = null));
   await aggiornamento;
-  return ricerca;
+  return pagina;
 }

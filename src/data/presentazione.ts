@@ -28,11 +28,6 @@ interface Scelta {
   percorso: string;
 }
 
-interface Riga {
-  loro: string;
-  noi: string;
-}
-
 interface Passo {
   capitolo: string;
   titolo: string;
@@ -40,14 +35,14 @@ interface Passo {
   evidenzia?: string[];
   scelte?: Scelta[];
   google?: boolean;
-  confronto?: Riga[];
+  difetti?: string[];
   scena: Scena;
 }
 
-const scuola = (nome: string, url: string, confronto: Riga[]): Passo => ({
+const scuola = (nome: string, url: string, difetti: string[]): Passo => ({
   capitolo: 'Le scuole della zona',
   titolo: nome,
-  confronto,
+  difetti,
   scena: { tipo: 'confronto', schermi: [{ nome, url, dispositivo: 'pc' }] },
 });
 
@@ -59,8 +54,6 @@ const apertura = (immagine: Apertura, titolo: string, testo: string): Passo => (
   scena: { tipo: 'apertura', immagine },
 });
 
-const SOTTO_1_MB = 'Homepage sotto 1 MB';
-const ORARI_RECENSIONI = 'Orari e recensioni da Google';
 
 const oggi = (percorso: string, evidenzia?: string, altro: Partial<Schermata> = {}): Scena => ({
   tipo: 'siti',
@@ -254,31 +247,41 @@ export const passi: Passo[] = [
       ],
     },
   },
-  apertura('scuole', 'Le scuole della zona', 'I siti delle altre scuole di Lainate e Rho, accanto al nuovo sito InBallet.'),
+  apertura('scuole', 'Le scuole della zona', 'I siti delle altre scuole di Lainate e Rho, uno per uno.'),
   scuola('Valentina Ponzone · Lainate', 'https://www.valentinaponzonedanceacademy.it/', [
-    { loro: 'Su Google: «Home», senza descrizione', noi: 'Titolo e descrizione per Google' },
-    { loro: 'Non dice dove né per chi', noi: 'Lainate e Rho, dai 3 anni' },
-    { loro: 'Homepage da 4,2 MB', noi: SOTTO_1_MB },
+    'Su Google si chiama «Home», senza descrizione',
+    'Homepage pesante: 4,4 MB',
+    'Nessun titolo principale nella pagina',
+    'Il telefono non si chiama con un tocco',
+    'Banner cookie tradotto male, copre mezzo telefono',
   ]),
   scuola('Backstage · Lainate', 'https://www.backstage-danza.it/', [
-    { loro: 'Pagina senza titolo', noi: 'Titolo e descrizione per Google' },
-    { loro: 'Telefoni non cliccabili', noi: 'Si chiama con un tocco' },
-    { loro: 'Niente orari né recensioni', noi: ORARI_RECENSIONI },
+    'Pagina senza titolo: su Google compare l’indirizzo',
+    'Nessuna descrizione per Google',
+    'Due telefoni scritti, nessuno cliccabile',
+    'Sul telefono la pagina scorre di lato',
+    'I primi titoli sono numeri: «2009», «1000+»',
   ]),
   scuola('Spazio Dance On · Rho', 'https://www.spaziodanceon.it/', [
-    { loro: 'Homepage da 8,5 MB', noi: SOTTO_1_MB },
-    { loro: 'Foto in bianco e nero', noi: 'Foto a colori' },
-    { loro: 'Titolo principale «homepage»', noi: 'Titolo con cosa e dove' },
+    'Homepage da 5,8 MB, con 12 video',
+    'Video di apertura in bianco e nero',
+    'Il primo titolo della pagina è «homepage»',
+    '14 immagini senza descrizione',
+    'Sul telefono il titolo si legge a metà',
   ]),
   scuola('City Dance Academy · Rho', 'https://www.citydanceacademy.club/', [
-    { loro: 'In homepage un evento del 2021', noi: 'Eventi passati chiusi da soli' },
-    { loro: 'Menu con la voce «Altro»', noi: '4 voci chiare' },
-    { loro: 'Niente orari né recensioni', noi: ORARI_RECENSIONI },
+    'Sul telefono è il sito da computer rimpicciolito',
+    'Menu con voci tagliate: «Acc…», «Altro»',
+    'Fermo al 2020: copyright e workshop del 2021',
+    'Nessun numero di telefono in homepage',
+    'Testi da modello: «lezioni che non troverai altrove»',
   ]),
   scuola('Accademia Balletto Classico · Rho', 'https://www.accademiaballettoclassico.it/', [
-    { loro: 'Nessuna descrizione per Google', noi: 'Titolo e descrizione per Google' },
-    { loro: '«Home» nel menu quasi invisibile', noi: 'Menu leggibile' },
-    { loro: 'Niente calendario eventi né orari', noi: 'Calendario eventi e orari' },
+    'Nessuna descrizione per Google',
+    '«Home» nel menu bianco su bianco',
+    '28 immagini su 36 senza descrizione',
+    'Il titolo non dice né danza né Rho',
+    'Il telefono non si chiama con un tocco',
   ]),
   apertura('dashboard', 'La dashboard', 'L’area riservata per aggiornare il sito da sola, senza codice.'),
   {

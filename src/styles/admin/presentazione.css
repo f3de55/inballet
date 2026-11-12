@@ -78,7 +78,31 @@
 }
 
 .pres-palco[data-modo='confronto'] .pres-nota {
-  width: min(36rem, calc(100% - 2rem));
+  width: min(34rem, calc(100% - 2rem));
+  padding: 1.75rem 2rem 2rem;
+}
+
+.pres-difetti {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  list-style: none;
+}
+
+.pres-difetti li {
+  --lc: var(--linea);
+  align-items: center;
+  padding: 0.8rem 0;
+  line-height: 1.35;
+  background: var(--linea-alto);
+}
+
+.pres-difetti li:first-child {
+  background: none;
+}
+
+.pres-difetti li i {
+  margin-top: 0;
 }
 
 .pres-nota[data-attesa] {
@@ -588,50 +612,6 @@
   margin-top: 0;
 }
 
-.pres-confronto-tabella {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
-.pres-confronto-tabella th {
-  padding: 0 0 0.5rem;
-  font-size: var(--label-size);
-  font-weight: var(--label-weight);
-  letter-spacing: var(--label-ls);
-  text-align: left;
-  text-transform: uppercase;
-  color: var(--label-color);
-}
-
-.pres-confronto-tabella th + th {
-  padding-left: 1.25rem;
-}
-
-.pres-confronto-tabella td {
-  --lc: var(--linea);
-  position: relative;
-  display: table-cell;
-  padding: 0.5rem 0 0.5rem 2.25rem;
-  font-size: var(--small-size);
-  vertical-align: top;
-  background: var(--linea-alto);
-}
-
-.pres-confronto-tabella td + td {
-  padding-left: 3.5rem;
-}
-
-.pres-confronto-tabella td i {
-  position: absolute;
-  top: 0.65rem;
-  left: 0;
-}
-
-.pres-confronto-tabella td + td i {
-  left: 1.25rem;
-}
-
 .pres-pannello p,
 .pres-pannello li {
   max-width: 62ch;
@@ -759,4 +739,120 @@
   width: 100%;
   height: auto;
   max-width: none;
+}
+
+.pres-nastri {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pres-copertina {
+  --nastro: var(--primary-blue);
+}
+
+.pres-copertina[data-immagine='sito-oggi'] {
+  --nastro: var(--esito-errore);
+}
+
+.pres-nastro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  overflow: visible;
+}
+
+.pres-nastro path {
+  fill: none;
+  stroke: var(--nastro);
+  stroke-width: 2;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.pres-nastro:nth-child(1) {
+  opacity: 0.55;
+}
+
+.pres-nastro:nth-child(2) {
+  opacity: 0.35;
+}
+
+.pres-nastro:nth-child(3) {
+  opacity: 0.45;
+}
+
+.pres-nastro:nth-child(4) {
+  opacity: 0.25;
+}
+
+.pres-nastro:nth-child(5) {
+  opacity: 0.4;
+}
+
+.pres-nastro:nth-child(odd) path {
+  stroke-width: 3;
+}
+
+.pres-copertina::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: min(60rem, 90vw);
+  aspect-ratio: 2;
+  border-radius: var(--radius-full);
+  background: radial-gradient(closest-side, rgb(var(--blu-rgb) / 0.22), transparent);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.pres-copertina[data-immagine='sito-oggi']::after {
+  background: radial-gradient(closest-side, rgb(var(--nero-rgb) / 0.45), transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pres-nastro {
+    animation: pres-scorre 26s linear infinite;
+  }
+
+  .pres-nastro:nth-child(2) {
+    animation-duration: 38s;
+    animation-direction: reverse;
+  }
+
+  .pres-nastro:nth-child(3) {
+    animation-duration: 20s;
+  }
+
+  .pres-nastro:nth-child(4) {
+    animation-duration: 46s;
+    animation-direction: reverse;
+  }
+
+  .pres-nastro:nth-child(5) {
+    animation-duration: 32s;
+  }
+
+  .pres-copertina::after {
+    animation: pres-respira 6s var(--curva) infinite alternate;
+  }
+}
+
+@keyframes pres-scorre {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pres-respira {
+  from {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
 }

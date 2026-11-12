@@ -13,17 +13,14 @@ interface Schermo {
   sito: HTMLElement;
   bloccato: HTMLElement;
   bloccatoLink: HTMLAnchorElement;
-  serp: HTMLElement | null;
   dispositivo: Dispositivo;
   minimo: number;
-  fissa?: number;
   allinea: string;
   nome: boolean;
   url: string;
   selettore?: string;
   frase?: [string, string];
   fermo: boolean;
-  snippet?: Schermata['snippet'];
   larghezza: number;
   altezza: number;
   fattore: number;
@@ -56,7 +53,6 @@ const TASTI_AVANTI = ['ArrowRight', 'PageDown'];
 const TASTI_INDIETRO = ['ArrowLeft', 'PageUp'];
 
 let ostacolo: HTMLElement | null = null;
-let notaAperta: HTMLElement | null = null;
 let collocaNota: () => void = () => {};
 let tasto: (e: KeyboardEvent) => void = () => {};
 let interazione = () => {};
@@ -110,19 +106,16 @@ function misura(s: Schermo) {
   let x = 0;
   let y = 0;
   if (s.dispositivo === 'pc') {
-    w = s.fissa ?? Math.max(cw, s.minimo);
+    w = Math.max(cw, s.minimo);
     scala = cw / w;
     h = ch / scala;
   } else {
-    const nav = ostacolo?.offsetParent ? ostacolo.getBoundingClientRect().top - s.vista.getBoundingClientRect().top : ch;
-    const nota = notaAperta?.offsetHeight ? notaAperta.offsetHeight + BORDO_NOTA * 2 : 0;
-    const utile = Math.min(ch, nav - nota);
     const telefono = h + TELEFONO_SOPRA + TELEFONO_SOTTO;
     const nome = s.nome ? ETICHETTA : 0;
-    scala = Math.min(1, (cw - CORNICE * 2) / (w + 40), (utile - CORNICE * 2 - nome) / telefono);
+    scala = Math.min((cw - CORNICE * 2) / (w + 40), (ch - CORNICE * 2 - nome) / telefono);
     const larga = w * scala;
     x = s.allinea === 'destra' ? cw - larga - CORNICE : s.allinea === 'sinistra' ? CORNICE : (cw - larga) / 2;
-    y = (utile - nome - telefono * scala) / 2 + nome + TELEFONO_SOPRA * scala;
+    y = (ch - nome - telefono * scala) / 2 + nome + TELEFONO_SOPRA * scala;
   }
   s.el.style.setProperty('--w', `${w}px`);
   s.el.style.setProperty('--h', `${h}px`);
@@ -134,10 +127,6 @@ function misura(s: Schermo) {
   s.fattore = scala;
   s.ox = x;
   s.oy = y;
-  if (s.serp && s.snippet) {
-    s.serp.style.transform = `translate(${s.snippet.x}px, ${s.snippet.y}px)`;
-    s.serp.style.setProperty('--oggi-h', `${s.snippet.h}px`);
-  }
   posiziona(s);
 }
 
@@ -400,7 +389,6 @@ function crea(el: HTMLElement): Schermo {
     sito: trova(el, '[data-sito]'),
     bloccato: trova(el, '[data-bloccato]'),
     bloccatoLink: trova(el, '[data-bloccato-link]'),
-    serp: el.querySelector<HTMLElement>('[data-serp]'),
     dispositivo: 'pc',
     minimo: MINIMO_PC,
     allinea: '',
@@ -422,29 +410,19 @@ function crea(el: HTMLElement): Schermo {
 }
 
 function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
-  const { url, nome, dispositivo, evidenzia: selettore, frase, fermo, snippet, larghezza } = schermata;
+  const { url, nome, dispositivo, evidenzia: selettore, frase, fermo } = schermata;
   s.el.hidden = false;
   s.sito.textContent = nome;
   s.el.dataset.sito = nome === 'Nuovo sito' ? 'nuovo' : 'oggi';
   s.selettore = selettore;
   s.frase = frase;
   s.fermo = !!fermo;
-  s.snippet = snippet;
-  s.fissa = larghezza;
   s.nome = quanti > 1;
   s.dispositivo = dispositivo;
   s.minimo = quanti > 1 ? 0 : MINIMO_PC;
   s.allinea = quanti === 2 ? (posto === 0 ? 'destra' : 'sinistra') : '';
   s.el.dataset.dispositivo = dispositivo;
-  s.url = url ?? '';
-  if (!url) {
-    s.frame.removeAttribute('data-attiva');
-    s.frame = document.createElement('iframe');
-    misura(s);
-    s.faro.hidden = true;
-    s.bloccato.hidden = true;
-    return evidenzia(s, 0);
-  }
+  s.url = url;
   const f = cornice(s, url);
   if (f !== s.frame) {
     s.frame.removeAttribute('data-attiva');
@@ -512,10 +490,7 @@ function avvia(radice: HTMLElement) {
   const avanti = [...radice.querySelectorAll<HTMLButtonElement>('[data-avanti]')];
   const indietro = [...radice.querySelectorAll<HTMLButtonElement>('[data-indietro]')];
   const nota = trova<HTMLElement>(radice, '[data-nota]');
-  notaAperta = nota;
   const riapri = trova<HTMLButtonElement>(radice, '[data-riapri-nota]');
-  const serp = trova<HTMLElement>(radice, '[data-serp]');
-  const risultati = trova<HTMLElement>(radice, '[data-risultati-google]');
   ostacolo = trova<HTMLElement>(radice, '.pres-navigazione');
   const scene = passi.map((p) => JSON.parse(p.dataset.scena ?? '{}') as Scena);
   const totale = passi.length - 1;
@@ -531,13 +506,13 @@ function avvia(radice: HTMLElement) {
   const precarica = (n: number) => {
     const scena = scene[n];
     if (scena?.tipo !== 'siti' && scena?.tipo !== 'confronto') return;
-    scena.schermi.forEach((x, i) => x.url && cornice(schermi[i], x.url));
+    scena.schermi.forEach((x, i) => cornice(schermi[i], x.url));
   };
 
   let chiave = '';
   const mostraScena = (s: Scena) => {
     radice.dataset.modo = s.tipo;
-    const nuova = s.tipo === 'siti' || s.tipo === 'confronto' ? s.schermi.map((x) => x.url ?? x.nome).join(' ') : '';
+    const nuova = s.tipo === 'siti' || s.tipo === 'confronto' ? s.schermi.map((x) => x.url).join(' ') : '';
     if (nuova && nuova !== chiave) {
       contenitore.removeAttribute('data-entra');
       void contenitore.offsetWidth;
@@ -571,10 +546,11 @@ function avvia(radice: HTMLElement) {
     const passo = passi[n];
     fondali.forEach((foto) => (foto.hidden = foto.dataset.fondaleFoto !== passo.dataset.fondale));
     passo.querySelectorAll<HTMLButtonElement>('[data-percorso]').forEach((btn, j) => btn.setAttribute('aria-pressed', String(j === 0)));
-    serp.hidden = risultati.hidden = !passo.hasAttribute('data-google');
-    if (!serp.hidden && !nuovoLetto) {
+    if (passo.hasAttribute('data-google') && !nuovoLetto) {
       nuovoLetto = true;
-      leggiNuovoSito(radice).catch(() => (nuovoLetto = false));
+      leggiNuovoSito(radice)
+        .then(() => collocaNota())
+        .catch(() => (nuovoLetto = false));
     }
     mostraScena(scene[n]);
     window.setTimeout(() => {

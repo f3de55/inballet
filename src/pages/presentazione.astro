@@ -77,6 +77,7 @@ const nomePannello = (i: number) => {
         </div>
 
         <section class="pres-nota" data-nota aria-label="Spiegazione">
+            <button type="button" class="pres-chiudi" data-chiudi-nota aria-label="Chiudi la spiegazione"><i class="fas fa-xmark" aria-hidden="true"></i></button>
             {passi.map((p, i) => p.scena.tipo === 'siti' && (
                 <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-google={p.google ? "si" : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
@@ -115,6 +116,7 @@ const nomePannello = (i: number) => {
                         <svg class="pres-nastro" viewBox={`0 0 ${LARGO * 2} 900`} preserveAspectRatio="none"><path d={d} /></svg>
                     ))}
                 </div>
+                <div class="pres-velo" aria-hidden="true"></div>
                 <p class="pres-etichetta">{p.capitolo}</p>
                 <h2 id={`pres-passo-${i}`} class="pres-copertina-titolo">{p.titolo}</h2>
                 <p class="pres-copertina-testo">{p.testo}</p>
@@ -177,6 +179,8 @@ const nomePannello = (i: number) => {
                 )}
             </section>
         ))}
+
+        <button type="button" class="pres-riapri" data-riapri-nota aria-label="Mostra la spiegazione"><i class="fas fa-circle-info" aria-hidden="true"></i></button>
 
         <nav class="pres-navigazione" aria-label="Passi della presentazione">
             <button type="button" class="pres-freccia" data-indietro aria-label="Passo precedente"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>

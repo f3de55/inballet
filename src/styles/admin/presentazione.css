@@ -23,7 +23,8 @@
   padding: 0.75rem 0.75rem var(--fascia);
 }
 
-.pres-palco:is([data-modo='pannello'], [data-modo='apertura']) .pres-nota {
+.pres-palco:is([data-modo='pannello'], [data-modo='apertura'], [data-nota-chiusa]) .pres-nota,
+.pres-palco:is([data-modo='pannello'], [data-modo='apertura'], :not([data-nota-chiusa])) .pres-riapri {
   display: none;
 }
 
@@ -831,4 +832,60 @@
     opacity: 0.55;
     transform: translate(-50%, -50%) scale(0.92);
   }
+}
+
+.pres-chiudi {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--grigio-50);
+  color: var(--dark-navy);
+  font-size: var(--text-xl);
+  cursor: pointer;
+  transition: background-color var(--durata-breve) ease;
+}
+
+.pres-chiudi:hover {
+  background: var(--grigio-100);
+}
+
+.pres-nota .pres-passo {
+  padding-right: 2rem;
+}
+
+.pres-riapri {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 7;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: rgb(var(--scuro-rgb) / 0.88);
+  color: var(--white);
+  font-size: var(--text-xl);
+  box-shadow: 0 12px 40px rgb(var(--nero-rgb) / 0.5);
+  cursor: pointer;
+  transition: background-color var(--durata-breve) ease;
+}
+
+.pres-riapri:hover {
+  background: var(--primary-blue-dark);
+}
+
+.pres-velo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgb(var(--nero-rgb) / 0.55);
+  pointer-events: none;
 }

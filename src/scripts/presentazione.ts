@@ -540,6 +540,7 @@ function avvia(radice: HTMLElement) {
     const n = Math.max(0, Math.min(totale, i));
     if (n === attuale) return;
     attuale = n;
+    radice.removeAttribute('data-nota-chiusa');
     passi.forEach((p, j) => (p.hidden = j !== n));
     numeri.forEach((el) => (el.textContent = String(n)));
     indietro.forEach((b) => (b.disabled = n === 0));
@@ -584,11 +585,21 @@ function avvia(radice: HTMLElement) {
   avanti.forEach((b) => b.addEventListener('click', () => vai(attuale + 1)));
   indietro.forEach((b) => b.addEventListener('click', () => vai(attuale - 1)));
 
+  const riapri = trova<HTMLButtonElement>(radice, '[data-riapri-nota]');
+  const chiudiNota = (chiusa: boolean) => {
+    radice.toggleAttribute('data-nota-chiusa', chiusa);
+    if (chiusa) riapri.focus({ preventScroll: true });
+    else collocaNota();
+  };
+  trova(radice, '[data-chiudi-nota]').addEventListener('click', () => chiudiNota(true));
+  riapri.addEventListener('click', () => chiudiNota(false));
+
   radice.addEventListener('click', (e) => {
     const scelta = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-percorso]');
     const scena = scene[attuale];
     if (!scelta || scena?.tipo !== 'siti') return;
     scelta.parentElement?.querySelectorAll('[data-percorso]').forEach((btn) => btn.setAttribute('aria-pressed', String(btn === scelta)));
+    chiudiNota(true);
     apri(schermi[0], { ...scena.schermi[0], url: scelta.dataset.percorso ?? '/' });
   });
 

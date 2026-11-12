@@ -6,7 +6,7 @@ import { Image } from 'astro:assets';
 import Admin from '../layouts/Admin.astro';
 import { isLoggedIn } from '../lib/auth';
 import { enfatizza } from '../lib/text';
-import { passi, type Apertura } from '../data/presentazione';
+import { passi, RICERCA_GOOGLE, type Apertura } from '../data/presentazione';
 import copertina from '../assets/images/presentazione/copertina-inballet.webp';
 import sitoOggi from '../assets/images/presentazione/sito-oggi.webp';
 import nuovoSito from '../assets/images/presentazione/nuovo-sito.webp';
@@ -55,7 +55,7 @@ const nomePannello = (i: number) => {
         ))}
         <div class="pres-schermi" data-schermi>
             <span class="pres-vs" aria-hidden="true">VS</span>
-            {Array.from({ length: schermi }, (_, n) => (
+            {Array.from({ length: schermi }, () => (
                 <figure class="pres-schermo" data-schermo hidden>
                     <figcaption class="pres-nome" data-sito></figcaption>
                     <div class="pres-vista" data-vista>
@@ -63,14 +63,6 @@ const nomePannello = (i: number) => {
                         <div class="pres-scala" data-scala>
                             <div class="pres-faro" data-faro hidden></div>
                             <div class="pres-tocco" data-tocco hidden></div>
-                            {n === 0 && (
-                                <section class="pres-serp" data-serp aria-label="Così apparirà il nuovo sito su Google" hidden>
-                                    <p class="pres-serp-nome"><img src="/favicon.ico" alt="" width="26" height="26" class="pres-serp-icona">InBallet<cite data-serp-url>https://www.inballet.it</cite></p>
-                                    <p class="pres-serp-titolo" data-serp-titolo>Lettura in corso</p>
-                                    <p class="pres-serp-descrizione" data-serp-descrizione></p>
-                                    <small class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Così apparirà il nuovo sito</small>
-                                </section>
-                            )}
                         </div>
                         <p class="pres-bloccato" data-bloccato hidden>
                             Questa pagina non si apre dentro la presentazione.
@@ -84,7 +76,7 @@ const nomePannello = (i: number) => {
         <section class="pres-nota" data-nota aria-label="Spiegazione">
             <button type="button" class="pres-chiudi" data-chiudi-nota aria-label="Chiudi la spiegazione"><i class="fas fa-xmark" aria-hidden="true"></i></button>
             {passi.map((p, i) => p.scena.tipo === 'siti' && (
-                <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-fondale={p.scena.schermi[0]?.dispositivo === 'telefono' ? (p.scena.schermi.length === 1 ? 'telefono' : 'telefoni') : undefined} data-google={p.google ? "si" : undefined} data-senza-nota={p.senzaNota ? "si" : undefined} data-riapri={p.scelte ? 'Riapri la scelta' : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
+                <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-fondale={p.scena.schermi[0]?.dispositivo === 'telefono' ? (p.scena.schermi.length === 1 ? 'telefono' : 'telefoni') : undefined} data-google={p.google ? "si" : undefined} data-riapri={p.scelte ? 'Riapri la scelta' : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
                     {p.testo && <p set:html={enfatizza(p.testo, p.evidenzia ?? [])} />}
                     {p.scelte && (
@@ -128,11 +120,31 @@ const nomePannello = (i: number) => {
         ))}
 
         {passi.map((p, i) => p.scena.tipo === 'pannello' && (
-            <section class="pres-pannello" data-passo={i} data-scena={JSON.stringify(p.scena)} data-fondale={nomePannello(i)} aria-labelledby={`pres-passo-${i}`} tabindex="0" hidden>
+            <section class="pres-pannello" data-passo={i} data-scena={JSON.stringify(p.scena)} data-fondale={nomePannello(i)} data-google={p.google ? 'si' : undefined} aria-labelledby={`pres-passo-${i}`} tabindex="0" hidden>
                 <div class="pres-pannello-testa">
                     <p class="pres-etichetta">{p.capitolo}</p>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
                 </div>
+                {nomePannello(i) === 'google' && (
+                    <div class="pres-ricerca">
+                        <p class="pres-ricerca-barra"><span>inballet lainate</span><i class="fas fa-magnifying-glass" aria-hidden="true"></i></p>
+                        <ol class="pres-ricerca-risultati">
+                            <li class="pres-ricerca-risultato pres-ricerca-risultato--oggi">
+                                <small class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Così è oggi</small>
+                                <p class="pres-serp-nome"><span class="pres-serp-icona"><i class="fas fa-globe" aria-hidden="true"></i></span>in ballet<cite>https://www.inballet.it</cite></p>
+                                <p class="pres-serp-titolo">in ballet</p>
+                                <p class="pres-serp-descrizione"><strong>In Ballet Lainate</strong>. SEDE CENTRALE. Via Puccini, 14 - Lainate (MI). ALTRE SEDI. Via Tevere 19, Rho (MI). CONTATTI. Tel.: +39 393 780 2996. E-mail: info@inballet.</p>
+                            </li>
+                            <li class="pres-ricerca-risultato pres-ricerca-risultato--nuovo">
+                                <small class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Così apparirà il nuovo sito</small>
+                                <p class="pres-serp-nome"><img src="/favicon.ico" alt="" width="26" height="26" class="pres-serp-icona">InBallet<cite data-serp-url>https://www.inballet.it</cite></p>
+                                <p class="pres-serp-titolo" data-serp-titolo>Lettura in corso</p>
+                                <p class="pres-serp-descrizione" data-serp-descrizione></p>
+                            </li>
+                        </ol>
+                        <a class="pres-ricerca-vera" href={RICERCA_GOOGLE} target="_blank" rel="noopener">Apri la ricerca vera su Google<span class="sr-only"> (si apre in una nuova scheda)</span></a>
+                    </div>
+                )}
                 {nomePannello(i) === 'mancano' && (
                     <div class="pres-colonne">
                         <div>

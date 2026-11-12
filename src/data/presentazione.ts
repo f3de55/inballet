@@ -1,6 +1,6 @@
 export const SITO_ATTUALE = 'https://www.inballet.it';
 export const SITO_OGGI = '/sito-oggi';
-const GOOGLE_DAL_VIVO = 'https://www.google.com/search?igu=1&hl=it&gl=it&q=inballet+lainate';
+export const RICERCA_GOOGLE = 'https://www.google.com/search?hl=it&gl=it&q=inballet+lainate';
 
 type Dispositivo = 'pc' | 'telefono';
 
@@ -11,8 +11,6 @@ export interface Schermata {
   evidenzia?: string;
   frase?: [string, string];
   fermo?: boolean;
-  larghezza?: number;
-  riquadro?: { x: number; y: number; w: number; h: number };
 }
 
 export type Apertura = 'copertina' | 'sito-oggi' | 'nuovo-sito' | 'google' | 'scuole' | 'dashboard' | 'prossimi';
@@ -20,7 +18,7 @@ export type Apertura = 'copertina' | 'sito-oggi' | 'nuovo-sito' | 'google' | 'sc
 export type Scena =
   | { tipo: 'siti' | 'confronto'; schermi: Schermata[] }
   | { tipo: 'apertura'; immagine: Apertura }
-  | { tipo: 'pannello'; pannello: 'mancano' | 'costo' | 'dopo' };
+  | { tipo: 'pannello'; pannello: 'google' | 'mancano' | 'costo' | 'dopo' };
 
 interface Scelta {
   etichetta: string;
@@ -35,7 +33,6 @@ interface Passo {
   evidenzia?: string[];
   scelte?: Scelta[];
   google?: boolean;
-  senzaNota?: boolean;
   difetti?: string[];
   scena: Scena;
 }
@@ -220,16 +217,8 @@ export const passi: Passo[] = [
   {
     capitolo: 'Motori di ricerca e AI',
     titolo: 'Il sito su Google',
-    testo: 'La ricerca vera, adesso. Oggi la homepage si presenta come «Home», senza descrizione.',
-    evidenzia: ['senza descrizione'],
     google: true,
-    senzaNota: true,
-    scena: {
-      tipo: 'siti',
-      schermi: [
-        { nome: 'Google', url: GOOGLE_DAL_VIVO, dispositivo: 'pc', larghezza: 1864, riquadro: { x: 256, y: 156, w: 652, h: 142 } },
-      ],
-    },
+    scena: { tipo: 'pannello', pannello: 'google' },
   },
   {
     capitolo: 'Motori di ricerca e AI',

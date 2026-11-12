@@ -6,7 +6,7 @@ import { Image } from 'astro:assets';
 import Admin from '../layouts/Admin.astro';
 import { isLoggedIn } from '../lib/auth';
 import { enfatizza } from '../lib/text';
-import { passi, type Apertura } from '../data/presentazione';
+import { passi, RICERCA_GOOGLE, type Apertura } from '../data/presentazione';
 import copertina from '../assets/images/presentazione/copertina-inballet.webp';
 import sitoOggi from '../assets/images/presentazione/sito-oggi.webp';
 import nuovoSito from '../assets/images/presentazione/nuovo-sito.webp';
@@ -15,6 +15,7 @@ import scuole from '../assets/images/presentazione/scuole.webp';
 import dashboard from '../assets/images/presentazione/dashboard.webp';
 import prossimi from '../assets/images/presentazione/prossimi.webp';
 import telefono from '../assets/images/presentazione/telefono-realistico.webp';
+import risultatiGoogle from '../assets/images/presentazione/google-risultati.webp';
 import famiglie from '../assets/images/presentazione/famiglie-danza.webp';
 import adulti from '../assets/images/presentazione/adulti-danza.webp';
 import insegnanti from '../assets/images/presentazione/insegnanti-danza.webp';
@@ -54,6 +55,9 @@ const nomePannello = (i: number) => {
                             <div class="pres-faro" data-faro hidden></div>
                             <div class="pres-tocco" data-tocco hidden></div>
                             {n === 0 && (
+                                <img class="pres-google" data-risultati-google src={risultatiGoogle.src} width={risultatiGoogle.width / 2} height={risultatiGoogle.height / 2} alt="Risultati di Google per «inballet lainate»" hidden />
+                            )}
+                            {n === 0 && (
                                 <section class="pres-serp" data-serp aria-label="Il sito su Google, oggi e con il nuovo sito" hidden>
                                     <div class="pres-serp-oggi">
                                         <small class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Così è il sito attuale</small>
@@ -82,6 +86,7 @@ const nomePannello = (i: number) => {
                 <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-google={p.google ? "si" : undefined} data-riapri={p.scelte ? 'Riapri la scelta' : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
                     {p.testo && <p set:html={enfatizza(p.testo, p.evidenzia ?? [])} />}
+                    {p.google && <a class="pres-link" href={RICERCA_GOOGLE} target="_blank" rel="noopener">Apri la ricerca vera su Google<span class="sr-only"> (si apre in una nuova scheda)</span></a>}
                     {p.scelte && (
                         <div class="pres-scelte" role="group" aria-label="Scegli un visitatore">
                             {p.scelte.map((s, j) => (
@@ -116,7 +121,6 @@ const nomePannello = (i: number) => {
                         <svg class="pres-nastro" viewBox={`0 0 ${LARGO * 2} 900`} preserveAspectRatio="none"><path d={d} /></svg>
                     ))}
                 </div>
-                <div class="pres-velo" aria-hidden="true"></div>
                 <p class="pres-etichetta">{p.capitolo}</p>
                 <h2 id={`pres-passo-${i}`} class="pres-copertina-titolo">{p.titolo}</h2>
                 <p class="pres-copertina-testo">{p.testo}</p>

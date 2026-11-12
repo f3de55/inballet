@@ -25,6 +25,13 @@ if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login?da=/presen
 const schermi = Math.max(...passi.map((p) => (p.scena.tipo === 'siti' || p.scena.tipo === 'confronto' ? p.scena.schermi.length : 0)));
 const totale = passi.length - 1;
 const immagini: Record<Apertura, ImageMetadata> = { copertina, 'sito-oggi': sitoOggi, 'nuovo-sito': nuovoSito, google, scuole, dashboard, prossimi };
+const LARGO = 1600;
+const onda = (y: number, ampiezza: number, onde: number) => {
+    const mezza = LARGO / onde / 2;
+    const tratti = Array.from({ length: onde * 4 - 1 }, (_, k) => `T ${(k + 2) * mezza} ${y}`).join(' ');
+    return `M 0 ${y} Q ${mezza / 2} ${y - ampiezza} ${mezza} ${y} ${tratti}`;
+};
+const nastri = [onda(560, 90, 2), onda(620, 140, 1), onda(500, 60, 3), onda(700, 110, 2), onda(430, 50, 4)];
 const nomePannello = (i: number) => {
     const scena = passi[i].scena;
     return scena.tipo === 'pannello' ? scena.pannello : '';
@@ -87,22 +94,15 @@ const nomePannello = (i: number) => {
                     )}
                 </article>
             ))}
-            {passi.map((p, i) => p.scena.tipo === 'confronto' && p.confronto && (
+            {passi.map((p, i) => p.scena.tipo === 'confronto' && p.difetti && (
                 <article class="pres-passo pres-confronto" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} hidden>
+                    <p class="pres-etichetta">Cosa non va</p>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
-                    <table class="pres-confronto-tabella">
-                        <thead>
-                            <tr><th scope="col">Il loro sito oggi</th><th scope="col">Il nuovo sito InBallet</th></tr>
-                        </thead>
-                        <tbody>
-                            {p.confronto.map((r) => (
-                                <tr>
-                                    <td class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>{r.loro}</td>
-                                    <td class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>{r.noi}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <ul class="pres-difetti">
+                        {p.difetti.map((d) => (
+                            <li class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>{d}</li>
+                        ))}
+                    </ul>
                 </article>
             ))}
         </section>
@@ -110,6 +110,11 @@ const nomePannello = (i: number) => {
         {passi.map((p, i) => p.scena.tipo === 'apertura' && (
             <section class="pres-copertina" data-passo={i} data-scena={JSON.stringify(p.scena)} data-immagine={p.scena.immagine} aria-labelledby={`pres-passo-${i}`} hidden={i > 0}>
                 <Image src={immagini[p.scena.immagine]} alt="" widths={[960, 1600]} sizes="100vw" class="pres-copertina-foto" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
+                <div class="pres-nastri" aria-hidden="true">
+                    {nastri.map((d) => (
+                        <svg class="pres-nastro" viewBox={`0 0 ${LARGO * 2} 900`} preserveAspectRatio="none"><path d={d} /></svg>
+                    ))}
+                </div>
                 <p class="pres-etichetta">{p.capitolo}</p>
                 <h2 id={`pres-passo-${i}`} class="pres-copertina-titolo">{p.titolo}</h2>
                 <p class="pres-copertina-testo">{p.testo}</p>

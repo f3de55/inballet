@@ -73,7 +73,7 @@ export const passi: Passo[] = [
     testo: 'di Federico Capuzzi e Samuele Max',
     scena: { tipo: 'apertura', immagine: 'copertina' },
   },
-  apertura('sito-oggi', 'Il sito di oggi', 'Cosa non funziona nel sito attuale, guardato dal vivo.'),
+  apertura('sito-oggi', 'Il sito di oggi', 'Cosa non funziona nel sito attuale.'),
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Tutto in bianco e nero',
@@ -133,7 +133,7 @@ export const passi: Passo[] = [
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Sostenitori quasi invisibili',
-    testo: 'Loghi larghi 150 pixel, ritagliati da screenshot.',
+    testo: 'Loghi piccoli, larghi appena 150 pixel.',
     evidenzia: ['150 pixel'],
     scena: oggi('', '#clients01-7m'),
   },
@@ -194,7 +194,7 @@ export const passi: Passo[] = [
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Étoile, l’assistente',
-    testo: 'Risponde a ogni ora su corsi, età, sedi e orari. Provalo.',
+    testo: 'Risponde a ogni ora su corsi, età, sedi e orari. Ricorda la conversazione, filtra le parolacce e parla solo di InBallet, con i contenuti del sito sempre aggiornati.',
     evidenzia: ['a ogni ora'],
     scena: nuovo('/', '#cb-toggle'),
   },
@@ -207,7 +207,7 @@ export const passi: Passo[] = [
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Stesso telefono, due siti',
-    testo: 'A sinistra oggi, a destra il nuovo sito, pensato prima di tutto per il telefono.',
+    testo: 'Il confronto tra il sito di oggi e il nuovo, pensato prima di tutto per il telefono.',
     scena: {
       tipo: 'siti',
       schermi: [
@@ -265,7 +265,7 @@ export const passi: Passo[] = [
   scuola('Spazio Dance On · Rho', 'https://www.spaziodanceon.it/', [
     'Quasi ottimizzato per i motori di ricerca',
     'Design ricercato, ma confusionario al massimo',
-    'Il bianco e nero snatura la danza',
+    'Quasi tutto in bianco e nero',
     'Animazioni messe a caso',
     'Nessun evento',
     'Menu disordinato',
@@ -290,7 +290,7 @@ export const passi: Passo[] = [
   {
     capitolo: 'La dashboard',
     titolo: 'La tua area riservata',
-    testo: 'Con una password aggiorni il sito da sola, senza codice. Questa è la dashboard vera.',
+    testo: 'Con una password aggiorni il sito da sola, senza codice.',
     evidenzia: ['da sola'],
     scena: nuovo('/dashboard', '.topbar-nav'),
   },

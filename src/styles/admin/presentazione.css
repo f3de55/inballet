@@ -128,7 +128,7 @@
 }
 
 .pres-passo h2 {
-  font-size: var(--text-2xl);
+  font-size: var(--text-3xl);
   font-weight: var(--heading-weight);
   line-height: var(--h2-lh);
   letter-spacing: var(--h2-ls);

@@ -158,6 +158,7 @@ function posiziona(s: Schermo) {
 }
 
 function tocca(s: Schermo) {
+  s.frame.dataset.toccata = '';
   spegni(s);
   interazione();
 }
@@ -363,6 +364,11 @@ function cornice(s: Schermo, url: string) {
   if (f) {
     s.cornici.delete(url);
     s.cornici.set(url, f);
+    if ('toccata' in f.dataset) {
+      delete f.dataset.toccata;
+      delete f.dataset.caricata;
+      f.src = url;
+    }
     return f;
   }
   f = document.createElement('iframe');
@@ -596,7 +602,9 @@ function avvia(radice: HTMLElement) {
 
   window.setInterval(() => {
     const attivo = document.activeElement;
-    if (attivo instanceof HTMLIFrameElement && !interno(attivo)) radice.focus({ preventScroll: true });
+    if (!(attivo instanceof HTMLIFrameElement) || interno(attivo)) return;
+    attivo.dataset.toccata = '';
+    radice.focus({ preventScroll: true });
   }, CONTROLLO_FOCUS);
 
   avanti.forEach((b) => b.addEventListener('click', () => vai(attuale + 1)));
@@ -604,8 +612,10 @@ function avvia(radice: HTMLElement) {
 
   const chiudiNota = (chiusa: boolean) => {
     radice.toggleAttribute('data-nota-chiusa', chiusa);
-    if (chiusa) riapri.focus({ preventScroll: true });
-    else collocaNota();
+    if (chiusa) {
+      schermi.forEach(spegni);
+      riapri.focus({ preventScroll: true });
+    } else collocaNota();
   };
   trova(radice, '[data-chiudi-nota]').addEventListener('click', () => chiudiNota(true));
   interazione = () => radice.setAttribute('data-nota-chiusa', '');

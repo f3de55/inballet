@@ -1,6 +1,5 @@
-import { actions } from 'astro:actions';
-import { QUERY_GOOGLE, type Scena, type Schermata } from '../data/presentazione';
-import type { RisultatoGoogle } from '../lib/risultati-google';
+import type { Scena, Schermata } from '../data/presentazione';
+import { mostraGoogle } from './presentazione-google';
 
 type Dispositivo = Schermata['dispositivo'];
 
@@ -508,69 +507,6 @@ function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
   s.el.dataset.carica = '';
   s.bloccato.hidden = true;
   s.attesa = window.setTimeout(() => s.url === url && mostra(s), ATTESA_MASSIMA);
-}
-
-async function nuovoSito(): Promise<RisultatoGoogle> {
-  const doc = new DOMParser().parseFromString(await fetch('/').then((r) => r.text()), 'text/html');
-  const canonico = doc.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? location.origin;
-  return {
-    posizione: 0,
-    titolo: doc.title,
-    link: canonico,
-    sito: doc.querySelector('meta[property="og:site_name"]')?.getAttribute('content') ?? '',
-    indirizzo: canonico.replace(/\/$/, ''),
-    icona: '/favicon.ico',
-    testo: doc.querySelector('meta[name="description"]')?.getAttribute('content') ?? '',
-    evidenze: QUERY_GOOGLE.split(' '),
-  };
-}
-
-function grassetto(el: HTMLElement, testo: string, parole: string[]) {
-  const voci = parole.filter(Boolean).map((p) => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  if (!voci.length) return (el.textContent = testo);
-  testo.split(new RegExp(`(${voci.join('|')})`, 'gi')).forEach((pezzo, i) => {
-    if (i % 2) el.append(Object.assign(document.createElement('strong'), { textContent: pezzo }));
-    else el.append(pezzo);
-  });
-}
-
-function risultato(modello: HTMLTemplateElement, r: RisultatoGoogle | null, esito: 'si' | 'no', testo: string) {
-  const li = modello.content.firstElementChild?.cloneNode(true) as HTMLElement;
-  const campo = <T extends HTMLElement>(nome: string) => trova<T>(li, `[data-${nome}]`);
-  li.classList.add(`pres-ricerca-risultato--${esito === 'no' ? 'oggi' : 'nuovo'}`);
-  const segno = campo('esito');
-  segno.classList.add(`pres-punto--${esito}`);
-  trova(segno, 'i').classList.add(esito === 'no' ? 'fa-times' : 'fa-check');
-  campo('esito-testo').textContent = testo;
-  if (!r) {
-    li.querySelectorAll('p').forEach((p) => p.remove());
-    return li;
-  }
-  campo('sito').textContent = r.sito;
-  campo('indirizzo').textContent = r.indirizzo;
-  campo('titolo').textContent = r.titolo;
-  grassetto(campo('testo'), r.testo, r.evidenze);
-  const icona = campo<HTMLImageElement>('icona');
-  if (r.icona) icona.src = r.icona;
-  icona.hidden = !r.icona;
-  campo('globo').hidden = !!r.icona;
-  return li;
-}
-
-async function mostraGoogle(radice: HTMLElement) {
-  const lista = trova<HTMLElement>(radice, '[data-risultati-google]');
-  const stato = trova<HTMLElement>(radice, '[data-stato-google]');
-  const modello = trova<HTMLTemplateElement>(radice, '[data-risultato-google]');
-  const [nuovo, { data, error }] = await Promise.all([nuovoSito(), actions.presentazione.google()]);
-  const oggi = data?.risultati.find((r) => new URL(r.link).hostname.endsWith('inballet.it')) ?? null;
-  const testoOggi = oggi ? `Così è oggi: ${oggi.posizione}° risultato su Google` : 'Oggi inballet.it non compare nella prima pagina di Google';
-  lista.replaceChildren(...(data ? [risultato(modello, oggi, 'no', testoOggi)] : []), risultato(modello, nuovo, 'si', 'Così apparirà il nuovo sito'));
-  const quando = data && new Date(data.aggiornato).toLocaleString('it-IT', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
-  stato.textContent = quando
-    ? `Risultato vero di Google per «${QUERY_GOOGLE}», cercato da Lainate il ${quando}`
-    : error
-      ? 'Risultati di Google non raggiungibili in questo momento'
-      : 'Risultati di Google non disponibili: manca la chiave SERPAPI_KEY';
 }
 
 function aggancio(schermi: Schermo[]) {

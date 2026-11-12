@@ -30,6 +30,12 @@
   --google-titolo-size: 1.25rem;
   --google-testo-size: 0.875rem;
   --google-url-size: 0.75rem;
+  --google-cerca-size: 1rem;
+  --google-luogo-size: 1rem;
+  --google-grande-size: 1.375rem;
+  --google-linea: #dadce0;
+  --google-attivo: #1a73e8;
+  --google-stella: #fbbc04;
   --anello-focus: 0 0 0 3px rgb(var(--blu-rgb) / 0.35);
   --text-3xl: var(--compatto-3xl);
   --text-2xl: var(--compatto-2xl);

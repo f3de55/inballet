@@ -167,7 +167,7 @@
   padding: 1rem;
   overflow-y: auto;
   overscroll-behavior: contain;
-  background: var(--grigio-50);
+  background: var(--decoro-onde) right bottom / cover no-repeat var(--grigio-50);
   scrollbar-width: thin;
   scrollbar-color: var(--linea) transparent;
 }

@@ -58,6 +58,7 @@ const TASTI_INDIETRO = ['ArrowLeft', 'PageUp'];
 let ostacolo: HTMLElement | null = null;
 let collocaNota: () => void = () => {};
 let tasto: (e: KeyboardEvent) => void = () => {};
+let interazione = () => {};
 
 const radice = document.querySelector<HTMLElement>('[data-pres]');
 if (radice) avvia(radice);
@@ -152,6 +153,11 @@ function posiziona(s: Schermo) {
   s.faro.style.height = `${Math.max(0, y2 - y1)}px`;
   s.faro.style.transform = `translate(${x1}px, ${y1}px)`;
   collocaNota();
+}
+
+function tocca(s: Schermo) {
+  spegni(s);
+  interazione();
 }
 
 function spegni(s: Schermo) {
@@ -327,7 +333,7 @@ function ascolta(s: Schermo, f: HTMLIFrameElement) {
   if (!doc) return;
   const attiva = () => f === s.frame;
   doc.defaultView?.addEventListener('scroll', () => attiva() && posiziona(s), { passive: true });
-  for (const tipo of ['wheel', 'touchmove', 'pointerdown']) doc.addEventListener(tipo, () => attiva() && spegni(s), { passive: true });
+  for (const tipo of ['wheel', 'touchmove', 'pointerdown']) doc.addEventListener(tipo, () => attiva() && tocca(s), { passive: true });
   doc.addEventListener('keydown', (e) => tasto(e));
 }
 
@@ -402,7 +408,7 @@ function crea(el: HTMLElement): Schermo {
     cerca: 0,
     attesa: 0,
   };
-  for (const tipo of ['wheel', 'pointerdown']) s.tocco.addEventListener(tipo, () => spegni(s), { passive: true });
+  for (const tipo of ['wheel', 'pointerdown']) s.tocco.addEventListener(tipo, () => tocca(s), { passive: true });
   new ResizeObserver(() => misura(s)).observe(s.vista);
   return s;
 }
@@ -603,6 +609,7 @@ function avvia(radice: HTMLElement) {
     else collocaNota();
   };
   trova(radice, '[data-chiudi-nota]').addEventListener('click', () => chiudiNota(true));
+  interazione = () => radice.setAttribute('data-nota-chiusa', '');
   riapri.addEventListener('click', () => chiudiNota(false));
 
   radice.addEventListener('click', (e) => {

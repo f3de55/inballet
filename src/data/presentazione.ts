@@ -1,6 +1,6 @@
 export const SITO_ATTUALE = 'https://www.inballet.it';
 export const SITO_OGGI = '/sito-oggi';
-export const MISURATO = 1366;
+const LARGHEZZA_GOOGLE = 1864;
 
 type Dispositivo = 'pc' | 'telefono';
 
@@ -20,6 +20,7 @@ export interface Schermata {
   fermo?: boolean;
   larghezza?: number;
   barrato?: Riquadro;
+  snippet?: { x: number; y: number };
 }
 
 export type Apertura = 'copertina' | 'sito-oggi' | 'nuovo-sito' | 'google' | 'scuole' | 'dashboard' | 'prossimi';
@@ -244,8 +245,9 @@ export const passi: Passo[] = [
           nome: 'Google',
           url: 'https://www.google.com/search?igu=1&hl=it&gl=it&q=inballet+lainate',
           dispositivo: 'pc',
-          larghezza: MISURATO,
-          barrato: { x: 124, y: 212, w: 82, h: 26 },
+          larghezza: LARGHEZZA_GOOGLE,
+          barrato: { x: 280, y: 213, w: 76, h: 26 },
+          snippet: { x: 256, y: 292 },
         },
       ],
     },

@@ -1,4 +1,4 @@
-import { MISURATO, type Scena, type Schermata } from '../data/presentazione';
+import type { Scena, Schermata } from '../data/presentazione';
 
 type Dispositivo = Schermata['dispositivo'];
 type Riquadro = NonNullable<Schermata['barrato']>;
@@ -24,6 +24,8 @@ interface Schermo {
   frase?: [string, string];
   fermo: boolean;
   barra?: Riquadro;
+  snippet?: Schermata['snippet'];
+  serp: HTMLElement | null;
   larghezza: number;
   altezza: number;
   fattore: number;
@@ -127,6 +129,7 @@ function misura(s: Schermo) {
 }
 
 function barra(s: Schermo) {
+  if (s.serp && s.snippet) s.serp.style.transform = `translate(${s.snippet.x}px, ${s.snippet.y}px)`;
   s.barrato.hidden = !s.barra;
   if (!s.barra) return;
   const { x, y, w, h } = s.barra;
@@ -296,13 +299,14 @@ function crea(el: HTMLElement): Schermo {
     sito: trova(el, '[data-sito]'),
     bloccato: trova(el, '[data-bloccato]'),
     bloccatoLink: trova(el, '[data-bloccato-link]'),
+    serp: el.querySelector<HTMLElement>('[data-serp]'),
     dispositivo: 'pc',
     minimo: MINIMO_PC,
     allinea: '',
     nome: false,
     fermo: false,
     url: '',
-    larghezza: MISURATO,
+    larghezza: MINIMO_PC,
     altezza: 0,
     fattore: 1,
     ox: 0,
@@ -317,7 +321,7 @@ function crea(el: HTMLElement): Schermo {
 }
 
 function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
-  const { url, nome, dispositivo, evidenzia: selettore, frase, fermo, barrato, larghezza } = schermata;
+  const { url, nome, dispositivo, evidenzia: selettore, frase, fermo, barrato, snippet, larghezza } = schermata;
   const interno = url.startsWith('/');
   s.el.hidden = false;
   s.sito.textContent = nome;
@@ -327,6 +331,7 @@ function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
   s.frase = frase;
   s.fermo = !!fermo;
   s.barra = barrato;
+  s.snippet = snippet;
   s.fissa = larghezza;
   s.nome = quanti > 1;
   s.dispositivo = dispositivo;

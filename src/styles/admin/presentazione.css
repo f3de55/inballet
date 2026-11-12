@@ -340,7 +340,7 @@
   background: var(--footer-bg);
 }
 
-.pres-schermo[data-carica] :is(.pres-scala iframe, .pres-faro, .pres-barrato) {
+.pres-schermo[data-carica] :is(.pres-scala iframe, .pres-faro, .pres-barrato, .pres-serp) {
   opacity: 0;
 }
 

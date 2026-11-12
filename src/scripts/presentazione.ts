@@ -21,6 +21,8 @@ interface Schermo {
   selettore?: string;
   frase?: [string, string];
   fermo: boolean;
+  fissa?: number;
+  riquadro?: Schermata['riquadro'];
   larghezza: number;
   altezza: number;
   fattore: number;
@@ -36,6 +38,7 @@ const MINIMO_PC = 1280;
 const LARGHEZZA_TELEFONO = 390;
 const ALTEZZA_TELEFONO = 844;
 const CORNICE = 28;
+const SPAZIO_VS = 76;
 const TELEFONO_SOPRA = 74;
 const TELEFONO_SOTTO = 34;
 const ETICHETTA = 64;
@@ -106,7 +109,7 @@ function misura(s: Schermo) {
   let x = 0;
   let y = 0;
   if (s.dispositivo === 'pc') {
-    w = Math.max(cw, s.minimo);
+    w = s.fissa ?? Math.max(cw, s.minimo);
     scala = cw / w;
     h = ch / scala;
   } else {
@@ -114,7 +117,7 @@ function misura(s: Schermo) {
     const nome = s.nome ? ETICHETTA : 0;
     scala = Math.min((cw - CORNICE * 2) / (w + 40), (ch - CORNICE * 2 - nome) / telefono);
     const larga = w * scala;
-    x = s.allinea === 'destra' ? cw - larga - CORNICE : s.allinea === 'sinistra' ? CORNICE : (cw - larga) / 2;
+    x = s.allinea === 'destra' ? cw - larga - SPAZIO_VS : s.allinea === 'sinistra' ? SPAZIO_VS : (cw - larga) / 2;
     y = (ch - nome - telefono * scala) / 2 + nome + TELEFONO_SOPRA * scala;
   }
   s.el.style.setProperty('--w', `${w}px`);
@@ -294,6 +297,12 @@ function evidenzia(s: Schermo, attesa: number) {
   s.faro.hidden = true;
   s.bersaglio = undefined;
   clearTimeout(s.cerca);
+  const q = s.riquadro;
+  if (q) {
+    s.bersaglio = () => new DOMRect(q.x, q.y, q.w, q.h);
+    s.cerca = window.setTimeout(() => accendi(s), attesa);
+    return;
+  }
   const doc = documento(s);
   if (!s.selettore || !doc) {
     s.cerca = window.setTimeout(() => mostra(s), attesa);
@@ -410,13 +419,15 @@ function crea(el: HTMLElement): Schermo {
 }
 
 function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
-  const { url, nome, dispositivo, evidenzia: selettore, frase, fermo } = schermata;
+  const { url, nome, dispositivo, evidenzia: selettore, frase, fermo, larghezza, riquadro } = schermata;
   s.el.hidden = false;
   s.sito.textContent = nome;
   s.el.dataset.sito = nome === 'Nuovo sito' ? 'nuovo' : 'oggi';
   s.selettore = selettore;
   s.frase = frase;
   s.fermo = !!fermo;
+  s.fissa = larghezza;
+  s.riquadro = riquadro;
   s.nome = quanti > 1;
   s.dispositivo = dispositivo;
   s.minimo = quanti > 1 ? 0 : MINIMO_PC;
@@ -490,6 +501,7 @@ function avvia(radice: HTMLElement) {
   const avanti = [...radice.querySelectorAll<HTMLButtonElement>('[data-avanti]')];
   const indietro = [...radice.querySelectorAll<HTMLButtonElement>('[data-indietro]')];
   const nota = trova<HTMLElement>(radice, '[data-nota]');
+  const serp = trova<HTMLElement>(radice, '[data-serp]');
   const riapri = trova<HTMLButtonElement>(radice, '[data-riapri-nota]');
   ostacolo = trova<HTMLElement>(radice, '.pres-navigazione');
   const scene = passi.map((p) => JSON.parse(p.dataset.scena ?? '{}') as Scena);
@@ -546,7 +558,11 @@ function avvia(radice: HTMLElement) {
     const passo = passi[n];
     fondali.forEach((foto) => (foto.hidden = foto.dataset.fondaleFoto !== passo.dataset.fondale));
     passo.querySelectorAll<HTMLButtonElement>('[data-percorso]').forEach((btn, j) => btn.setAttribute('aria-pressed', String(j === 0)));
-    if (passo.hasAttribute('data-google') && !nuovoLetto) {
+    const q = scene[n].tipo === 'siti' ? scene[n].schermi[0].riquadro : undefined;
+    serp.hidden = !passo.hasAttribute('data-google') || !q;
+    if (q) serp.style.transform = `translate(${q.x}px, ${q.y + q.h + DISTANZA_NOTA}px)`;
+    radice.toggleAttribute('data-senza-nota', passo.hasAttribute('data-senza-nota'));
+    if (!serp.hidden && !nuovoLetto) {
       nuovoLetto = true;
       leggiNuovoSito(radice)
         .then(() => collocaNota())

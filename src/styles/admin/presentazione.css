@@ -297,30 +297,96 @@
 }
 
 .pres-nome {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   align-self: center;
   z-index: 2;
-  margin: 0.9rem 0;
-  padding: 0.5rem 1.4rem;
+  margin: 1rem 0;
+  padding: 0.55rem 1.3rem 0.55rem 1rem;
   border-radius: var(--radius-pill);
   font-size: var(--text-base);
   font-weight: var(--font-semibold);
-  color: var(--dark-navy);
+  letter-spacing: var(--label-ls);
+  text-transform: uppercase;
+  color: var(--white);
+  background: rgb(var(--scuro-rgb) / 0.9);
+  box-shadow:
+    0 0 0 1px rgb(var(--bianco-rgb) / 0.14),
+    0 12px 32px rgb(var(--nero-rgb) / 0.45);
+}
+
+.pres-nome::before {
+  content: '';
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: var(--radius-full);
   background: var(--primary-blue);
-  box-shadow: 0 10px 30px rgb(var(--nero-rgb) / 0.35);
+  box-shadow: 0 0 12px var(--primary-blue);
+}
+
+.pres-vs {
+  display: none;
+}
+
+.pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] {
+  position: relative;
+}
+
+.pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] .pres-vs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  font-style: italic;
+  letter-spacing: var(--label-ls);
+  color: var(--white);
+  background: var(--dark-navy);
+  box-shadow:
+    0 0 0 3px var(--primary-blue),
+    0 0 40px 6px rgb(var(--blu-rgb) / 0.55);
+  transform: translate(-50%, -50%);
+}
+
+.pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] .pres-vs::before,
+.pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] .pres-vs::after {
+  content: '';
+  position: absolute;
+  left: calc(50% - 1px);
+  width: 2px;
+  height: 9rem;
+  border-radius: var(--radius-pill);
+}
+
+.pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] .pres-vs::before {
+  bottom: calc(100% + 0.75rem);
+  background: linear-gradient(transparent, var(--primary-blue));
+}
+
+.pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] .pres-vs::after {
+  top: calc(100% + 0.75rem);
+  background: linear-gradient(var(--primary-blue), transparent);
 }
 
 .pres-schermi:not([data-n='2']) .pres-nome {
   display: none;
 }
 
-.pres-schermo:not([data-sito='nuovo']) .pres-nome {
-  color: var(--white);
+.pres-schermo:not([data-sito='nuovo']) .pres-nome::before {
   background: var(--esito-errore);
+  box-shadow: 0 0 12px var(--esito-errore);
 }
 
 .pres-schermo[data-dispositivo='telefono'] .pres-nome {
   position: absolute;
-  top: calc(var(--y) - 74px * var(--s) - 4rem);
+  top: calc(var(--y) - 74px * var(--s) - 3.75rem);
   left: calc(var(--x) + var(--w) * var(--s) / 2);
   margin: 0;
   transform: translateX(-50%);
@@ -521,25 +587,30 @@
 }
 
 .pres-serp {
-  display: flex;
-  flex-direction: column;
-  margin-top: 0.75rem;
-}
-
-.pres-serp-risultato {
-  --lc: var(--linea);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  padding: 0.85rem 0;
+  width: 652px;
+  padding: 1rem 1.5rem 1.1rem;
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow:
+    0 0 0 4px var(--primary-blue),
+    0 24px 60px rgb(var(--nero-rgb) / 0.45);
+  pointer-events: none;
+  animation: pres-dissolvi var(--durata-pannello) var(--curva);
 }
 
-.pres-serp-risultato + .pres-serp-risultato {
-  background: var(--linea-alto);
+.pres-faro[hidden] ~ .pres-serp {
+  display: none;
 }
 
-.pres-serp-risultato--oggi .pres-serp-titolo {
-  text-decoration: line-through 3px var(--esito-errore);
+.pres-palco[data-senza-nota] :is(.pres-nota, .pres-riapri) {
+  display: none;
 }
 
 .pres-serp-nome {
@@ -844,13 +915,4 @@
 
 .pres-riapri:hover {
   background: var(--primary-blue-dark);
-}
-
-.pres-link {
-  align-self: flex-start;
-  margin-top: 0.5rem;
-  font-size: var(--ui-size);
-  font-weight: var(--ui-weight);
-  color: var(--primary-blue-dark);
-  text-underline-offset: 0.2em;
 }

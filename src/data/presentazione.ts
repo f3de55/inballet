@@ -1,6 +1,6 @@
 export const SITO_ATTUALE = 'https://www.inballet.it';
 export const SITO_OGGI = '/sito-oggi';
-export const RICERCA_GOOGLE = 'https://www.google.com/search?hl=it&gl=it&q=inballet+lainate';
+const GOOGLE_DAL_VIVO = 'https://www.google.com/search?igu=1&hl=it&gl=it&q=inballet+lainate';
 
 type Dispositivo = 'pc' | 'telefono';
 
@@ -11,6 +11,8 @@ export interface Schermata {
   evidenzia?: string;
   frase?: [string, string];
   fermo?: boolean;
+  larghezza?: number;
+  riquadro?: { x: number; y: number; w: number; h: number };
 }
 
 export type Apertura = 'copertina' | 'sito-oggi' | 'nuovo-sito' | 'google' | 'scuole' | 'dashboard' | 'prossimi';
@@ -33,6 +35,7 @@ interface Passo {
   evidenzia?: string[];
   scelte?: Scelta[];
   google?: boolean;
+  senzaNota?: boolean;
   difetti?: string[];
   scena: Scena;
 }
@@ -220,10 +223,11 @@ export const passi: Passo[] = [
     testo: 'La ricerca vera, adesso. Oggi la homepage si presenta come «Home», senza descrizione.',
     evidenzia: ['senza descrizione'],
     google: true,
+    senzaNota: true,
     scena: {
       tipo: 'siti',
       schermi: [
-        { nome: 'Google', url: `${RICERCA_GOOGLE}&igu=1`, dispositivo: 'pc' },
+        { nome: 'Google', url: GOOGLE_DAL_VIVO, dispositivo: 'pc', larghezza: 1864, riquadro: { x: 256, y: 156, w: 652, h: 142 } },
       ],
     },
   },

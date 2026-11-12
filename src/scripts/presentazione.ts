@@ -1,5 +1,4 @@
-import { PAGINA_GOOGLE, type Scena, type Schermata } from '../data/presentazione';
-import { segnaGoogle } from './presentazione-google';
+import type { Scena, Schermata } from '../data/presentazione';
 
 type Dispositivo = Schermata['dispositivo'];
 
@@ -115,8 +114,10 @@ function misura(s: Schermo) {
     const telefono = h + TELEFONO_SOPRA + TELEFONO_SOTTO;
     const nome = s.nome ? ETICHETTA : 0;
     scala = Math.min((cw - CORNICE * 2) / (w + 40), (ch - CORNICE * 2 - nome) / telefono);
+    const spazio = s.allinea ? Math.min(SPAZIO_VS, cw * 0.14) : 0;
+    if (spazio) scala = Math.min(scala, (cw - spazio - CORNICE) / (w + 40));
     const larga = w * scala;
-    x = s.allinea === 'destra' ? cw - larga - SPAZIO_VS : s.allinea === 'sinistra' ? SPAZIO_VS : (cw - larga) / 2;
+    x = s.allinea === 'destra' ? cw - larga - spazio : s.allinea === 'sinistra' ? spazio : (cw - larga) / 2;
     y = (ch - nome - telefono * scala) / 2 + nome + TELEFONO_SOPRA * scala;
   }
   s.el.style.setProperty('--w', `${w}px`);
@@ -402,7 +403,6 @@ function caricata(s: Schermo, f: HTMLIFrameElement) {
   f.dataset.caricata = '';
   const doc = interno(f);
   if (doc && f.dataset.dispositivo === 'telefono') telefono(doc);
-  if (doc && f.dataset.url === PAGINA_GOOGLE) void segnaGoogle(doc);
   ascolta(s, f);
   if (f !== s.frame || !('carica' in s.el.dataset)) return;
   const interna = f.dataset.url?.startsWith('/');
@@ -648,7 +648,7 @@ function avvia(radice: HTMLElement) {
   radice.addEventListener(
     'wheel',
     (e) => {
-      const s = schermi.find((x) => !x.el.hidden);
+      const s = schermi.find((x) => !x.el.hidden && x.el.contains(e.target as Node)) ?? schermi.find((x) => !x.el.hidden);
       if (!s || contenitore.hidden || (e.target as Element).closest('.pres-navigazione')) return;
       tocca(s);
       interno(s.frame)?.defaultView?.scrollBy({ top: e.deltaY });

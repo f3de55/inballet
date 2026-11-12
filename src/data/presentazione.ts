@@ -1,7 +1,13 @@
 export const SITO_ATTUALE = 'https://www.inballet.it';
 export const SITO_OGGI = '/sito-oggi';
 export const QUERY_GOOGLE = 'inballet lainate';
-export const PAGINA_GOOGLE = '/presentazione/google';
+export const RICERCA_GOOGLE = `https://www.google.com/search?igu=1&hl=it&gl=it&q=${encodeURIComponent(QUERY_GOOGLE)}`;
+export const DOMANDA_AI = 'Mi consigli una scuola di danza a Lainate?';
+export const ASSISTENTI = {
+  chatgpt: { nome: 'ChatGPT', apri: 'https://chatgpt.com/?q=' },
+  claude: { nome: 'Claude', apri: 'https://claude.ai/new?q=' },
+} as const;
+export type Assistente = keyof typeof ASSISTENTI;
 
 type Dispositivo = 'pc' | 'telefono';
 
@@ -217,9 +223,16 @@ export const passi: Passo[] = [
   apertura('google', 'Motori di ricerca e AI', 'Come il sito si presenta a chi lo cerca su Google o lo chiede a un assistente AI.'),
   {
     capitolo: 'Motori di ricerca e AI',
-    titolo: 'Il sito su Google',
+    titolo: 'Google, ChatGPT e Claude',
     senzaNota: true,
-    scena: { tipo: 'siti', schermi: [{ nome: 'Google', url: PAGINA_GOOGLE, dispositivo: 'pc' }] },
+    scena: {
+      tipo: 'siti',
+      schermi: [
+        { nome: 'Google', url: RICERCA_GOOGLE, dispositivo: 'pc' },
+        { nome: 'ChatGPT', url: '/presentazione/chatgpt', dispositivo: 'pc' },
+        { nome: 'Claude', url: '/presentazione/claude', dispositivo: 'pc' },
+      ],
+    },
   },
   {
     capitolo: 'Motori di ricerca e AI',

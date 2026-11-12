@@ -280,8 +280,16 @@
   min-height: 0;
 }
 
-.pres-schermi[data-n='2'] {
+.pres-schermi:is([data-n='2'], [data-n='3']) {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pres-schermi[data-n='3'] {
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.pres-schermi[data-n='3'] .pres-schermo:first-of-type {
+  grid-row: span 2;
 }
 
 .pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] {
@@ -309,6 +317,7 @@
   font-weight: var(--font-semibold);
   letter-spacing: var(--label-ls);
   text-transform: uppercase;
+  white-space: nowrap;
   color: var(--white);
   background: rgb(var(--scuro-rgb) / 0.9);
   box-shadow:
@@ -375,7 +384,7 @@
   background: linear-gradient(var(--primary-blue), transparent);
 }
 
-.pres-schermi:not([data-n='2']) .pres-nome {
+.pres-schermi[data-n='1'] .pres-nome {
   display: none;
 }
 
@@ -392,12 +401,12 @@
   transform: translateX(-50%);
 }
 
-.pres-palco[data-dispositivo='pc'] .pres-schermi[data-n='2'] {
+.pres-palco[data-dispositivo='pc'] .pres-schermi:not([data-n='1']) {
   gap: 1rem;
   padding: 0 1rem;
 }
 
-.pres-schermi[data-n='2'] .pres-schermo[data-dispositivo='pc'] .pres-vista {
+.pres-schermi:not([data-n='1']) .pres-schermo[data-dispositivo='pc'] .pres-vista {
   border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
 
@@ -666,6 +675,23 @@
   }
 }
 
+@media (max-width: 600px) {
+  .pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] {
+    gap: 0;
+  }
+
+  .pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] .pres-vs {
+    width: 3rem;
+    height: 3rem;
+    font-size: var(--text-base);
+  }
+
+  .pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] .pres-vs::before,
+  .pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] .pres-vs::after {
+    height: 5rem;
+  }
+}
+
 @keyframes pres-dissolvi {
   from {
     opacity: 0;
@@ -686,8 +712,15 @@
 }
 
 @media (max-width: 900px) {
-  .pres-schermi[data-n] {
+  .pres-palco[data-dispositivo='pc'] .pres-schermi[data-n] {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+
+  .pres-nome {
+    margin: 0.5rem 0;
+    padding: 0.4rem 1rem 0.4rem 0.8rem;
+    font-size: var(--text-xs);
   }
 
   .pres-colonne {

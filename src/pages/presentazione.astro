@@ -6,7 +6,8 @@ import { Image } from 'astro:assets';
 import Admin from '../layouts/Admin.astro';
 import { isLoggedIn } from '../lib/auth';
 import { enfatizza } from '../lib/text';
-import { passi, type Apertura } from '../data/presentazione';
+import { ASSISTENTI, passi, type Apertura, type Assistente } from '../data/presentazione';
+import { rispostaAI } from '../lib/risposte-ai';
 import copertina from '../assets/images/presentazione/copertina-inballet.webp';
 import sitoOggi from '../assets/images/presentazione/sito-oggi.webp';
 import nuovoSito from '../assets/images/presentazione/nuovo-sito.webp';
@@ -28,6 +29,7 @@ import sfondoDopo from '../assets/images/presentazione/fondale-dopo.webp';
 export const prerender = false;
 
 if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login?da=/presentazione');
+for (const nome of Object.keys(ASSISTENTI) as Assistente[]) void rispostaAI(nome);
 
 const schermi = Math.max(...passi.map((p) => (p.scena.tipo === 'siti' || p.scena.tipo === 'confronto' ? p.scena.schermi.length : 0)));
 const totale = passi.length - 1;

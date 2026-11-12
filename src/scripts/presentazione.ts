@@ -56,6 +56,7 @@ const TASTI_AVANTI = ['ArrowRight', 'PageDown'];
 const TASTI_INDIETRO = ['ArrowLeft', 'PageUp'];
 
 let ostacolo: HTMLElement | null = null;
+let notaAperta: HTMLElement | null = null;
 let collocaNota: () => void = () => {};
 let tasto: (e: KeyboardEvent) => void = () => {};
 let interazione = () => {};
@@ -114,7 +115,8 @@ function misura(s: Schermo) {
     h = ch / scala;
   } else {
     const nav = ostacolo?.offsetParent ? ostacolo.getBoundingClientRect().top - s.vista.getBoundingClientRect().top : ch;
-    const utile = Math.min(ch, nav);
+    const nota = notaAperta?.offsetHeight ? notaAperta.offsetHeight + BORDO_NOTA * 2 : 0;
+    const utile = Math.min(ch, nav - nota);
     const telefono = h + TELEFONO_SOPRA + TELEFONO_SOTTO;
     const nome = s.nome ? ETICHETTA : 0;
     scala = Math.min(1, (cw - CORNICE * 2) / (w + 40), (utile - CORNICE * 2 - nome) / telefono);
@@ -468,17 +470,12 @@ async function leggiNuovoSito(radice: HTMLElement) {
   if (canonico) campo('url').textContent = canonico.replace(/\/$/, '');
 }
 
-function aggancio(schermi: Schermo[]): [DOMRect | null, boolean] {
-  const s =
-    schermi.find((x) => !x.el.hidden && !x.faro.hidden) ?? (schermi[0].dispositivo === 'telefono' ? schermi.filter((x) => !x.el.hidden).at(-1) : undefined);
-  if (!s) return [null, false];
-  const faro = s.faro.hidden ? null : s.faro.getBoundingClientRect();
-  if (s.dispositivo === 'pc') return [faro, false];
-  const telefono = s.scala.getBoundingClientRect();
-  return [new DOMRect(telefono.left, faro?.top ?? telefono.top, telefono.width, faro?.height ?? telefono.height), true];
+function aggancio(schermi: Schermo[]) {
+  const s = schermi.find((x) => !x.el.hidden && !x.faro.hidden);
+  return s?.dispositivo === 'pc' ? s.faro.getBoundingClientRect() : null;
 }
 
-function colloca(nota: HTMLElement, palco: HTMLElement, [a, aiLati]: [DOMRect | null, boolean]) {
+function colloca(nota: HTMLElement, palco: HTMLElement, a: DOMRect | null) {
   const p = palco.getBoundingClientRect();
   const n = nota.getBoundingClientRect();
   const fine = (ostacolo?.offsetParent ? ostacolo.getBoundingClientRect().top : p.bottom) - p.top - BORDO_NOTA;
@@ -496,7 +493,6 @@ function colloca(nota: HTMLElement, palco: HTMLElement, [a, aiLati]: [DOMRect | 
     [r.right + DISTANZA_NOTA, y, r.right + DISTANZA_NOTA + n.width <= p.width - BORDO_NOTA],
     [r.left - DISTANZA_NOTA - n.width, y, r.left - DISTANZA_NOTA - n.width >= BORDO_NOTA],
   ];
-  if (aiLati) posti.push(...posti.splice(0, 2));
   const [px, py] = posti.find((q) => q[2]) ?? [r.right - n.width - DISTANZA_NOTA, entro(r.top + DISTANZA_NOTA, BORDO_NOTA, fine - n.height)];
   nota.style.transform = `translate(${Math.round(entro(px, BORDO_NOTA, p.width - n.width - BORDO_NOTA))}px, ${Math.round(py)}px)`;
 }
@@ -509,6 +505,7 @@ function avvia(radice: HTMLElement) {
   const avanti = [...radice.querySelectorAll<HTMLButtonElement>('[data-avanti]')];
   const indietro = [...radice.querySelectorAll<HTMLButtonElement>('[data-indietro]')];
   const nota = trova<HTMLElement>(radice, '[data-nota]');
+  notaAperta = nota;
   const riapri = trova<HTMLButtonElement>(radice, '[data-riapri-nota]');
   const serp = trova<HTMLElement>(radice, '[data-serp]');
   const risultati = trova<HTMLElement>(radice, '[data-risultati-google]');
@@ -610,6 +607,16 @@ function avvia(radice: HTMLElement) {
   };
   trova(radice, '[data-chiudi-nota]').addEventListener('click', () => chiudiNota(true));
   interazione = () => radice.setAttribute('data-nota-chiusa', '');
+  radice.addEventListener(
+    'wheel',
+    (e) => {
+      const s = schermi.find((x) => !x.el.hidden);
+      if (!s || contenitore.hidden || (e.target as Element).closest('.pres-navigazione')) return;
+      tocca(s);
+      interno(s.frame)?.defaultView?.scrollBy({ top: e.deltaY });
+    },
+    { passive: true },
+  );
   riapri.addEventListener('click', () => chiudiNota(false));
 
   radice.addEventListener('click', (e) => {

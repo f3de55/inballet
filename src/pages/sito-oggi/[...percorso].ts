@@ -7,7 +7,7 @@ export const prerender = false;
 interface Copia {
   stato: number;
   tipo: string;
-  corpo: Uint8Array;
+  corpo: Blob;
   scade: number;
 }
 
@@ -22,15 +22,15 @@ const inCorso = new Map<string, Promise<Copia | null>>();
 let peso = 0;
 
 function conserva(chiave: string, copia: Copia) {
-  if (copia.corpo.byteLength > FILE_MASSIMO) return;
+  if (copia.corpo.size > FILE_MASSIMO) return;
   const vecchia = copie.get(chiave);
-  if (vecchia) peso -= vecchia.corpo.byteLength;
+  if (vecchia) peso -= vecchia.corpo.size;
   copie.set(chiave, copia);
-  peso += copia.corpo.byteLength;
+  peso += copia.corpo.size;
   for (const [altra, c] of copie) {
     if (peso <= PESO_MASSIMO) break;
     copie.delete(altra);
-    peso -= c.corpo.byteLength;
+    peso -= c.corpo.size;
   }
 }
 
@@ -38,10 +38,10 @@ async function scarica(indirizzo: URL): Promise<Copia | null> {
   const risposta = await fetch(indirizzo, { headers: { accept: '*/*' } }).catch(() => null);
   if (!risposta || new URL(risposta.url).host !== ORIGINE.host) return null;
   const tipo = risposta.headers.get('content-type') ?? 'application/octet-stream';
-  let corpo = new Uint8Array(await risposta.arrayBuffer());
+  let corpo = await risposta.blob();
   if (tipo.startsWith('text/html')) {
-    const html = new TextDecoder().decode(corpo).replace(/<head(\s[^>]*)?>/i, (testa) => `${testa}<base href="${SITO_OGGI}/">${FERMO}`);
-    corpo = new TextEncoder().encode(html);
+    const html = (await corpo.text()).replace(/<head(\s[^>]*)?>/i, (testa) => `${testa}<base href="${SITO_OGGI}/">${FERMO}`);
+    corpo = new Blob([html], { type: tipo });
   }
   return { stato: risposta.status, tipo, corpo, scade: Date.now() + DURATA };
 }

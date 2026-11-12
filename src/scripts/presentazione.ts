@@ -46,6 +46,7 @@ const ARIA_SOPRA = 48;
 const ASSESTAMENTO = 250;
 const ATTESA_MASSIMA = 15000;
 const CORNICI = 4;
+const CONTROLLO_FOCUS = 250;
 const FISSI = '.main-header, .event-banner, .topbar, .navbar-fixed-top';
 const BORDO_FARO = 8;
 const DISTANZA_NOTA = 24;
@@ -137,8 +138,9 @@ function misura(s: Schermo) {
 }
 
 function posiziona(s: Schermo) {
+  if (s.faro.hidden) return;
   const r = s.bersaglio?.();
-  if (!r || s.faro.hidden) return;
+  if (!r) return;
   const w = s.larghezza;
   const pieno = r.left <= 1 && r.right >= w - 1;
   const x1 = pieno ? -BORDO_FARO : Math.max(BORDO_FARO, r.left);
@@ -202,6 +204,55 @@ function intervallo(el: Element, da: string, a: string) {
   return range;
 }
 
+const SOSTANZA = 'img, svg, video, canvas, picture, iframe, input, select, textarea';
+
+function visibile(st: CSSStyleDeclaration) {
+  return (
+    st.backgroundImage !== 'none' ||
+    !/rgba\(.*, 0\)|transparent/.test(st.backgroundColor) ||
+    st.boxShadow !== 'none' ||
+    ['Top', 'Right', 'Bottom', 'Left'].some(
+      (l) => parseFloat(st.getPropertyValue(`border-${l.toLowerCase()}-width`)) > 0 && st.getPropertyValue(`border-${l.toLowerCase()}-style`) !== 'none',
+    )
+  );
+}
+
+function contenuto(el: Element): DOMRect {
+  const box = el.getBoundingClientRect();
+  const vista = el.ownerDocument.defaultView;
+  if (!vista || visibile(vista.getComputedStyle(el))) return box;
+  const rects: DOMRect[] = [];
+  const giro = el.ownerDocument.createTreeWalker(el, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, {
+    acceptNode: (n) => {
+      if (n.nodeType === Node.TEXT_NODE) return n.textContent?.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      const st = vista.getComputedStyle(n as Element);
+      if (st.display === 'none' || st.visibility === 'hidden' || st.opacity === '0') return NodeFilter.FILTER_REJECT;
+      return (n as Element).matches(SOSTANZA) || visibile(st) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+    },
+  });
+  const range = el.ownerDocument.createRange();
+  while (giro.nextNode()) {
+    const n = giro.currentNode;
+    if (n.nodeType === Node.TEXT_NODE) {
+      range.selectNodeContents(n);
+      rects.push(...range.getClientRects());
+    } else rects.push((n as Element).getBoundingClientRect());
+  }
+  const pieni = rects.filter((r) => r.width && r.height);
+  if (!pieni.length) return box;
+  const left = Math.max(box.left, Math.min(...pieni.map((r) => r.left)));
+  const top = Math.max(box.top, Math.min(...pieni.map((r) => r.top)));
+  const right = Math.min(box.right, Math.max(...pieni.map((r) => r.right)));
+  const bottom = Math.min(box.bottom, Math.max(...pieni.map((r) => r.bottom)));
+  return new DOMRect(left, top, right - left, bottom - top);
+}
+
+function unione(r: DOMRect[]) {
+  const left = Math.min(...r.map((x) => x.left));
+  const top = Math.min(...r.map((x) => x.top));
+  return new DOMRect(left, top, Math.max(...r.map((x) => x.right)) - left, Math.max(...r.map((x) => x.bottom)) - top);
+}
+
 function bersaglio(doc: Document, s: Schermo): (() => DOMRect) | null {
   if (!s.selettore) return null;
   const elementi = [...doc.querySelectorAll<HTMLElement>(s.selettore)].filter((el) => el.getClientRects().length);
@@ -209,14 +260,21 @@ function bersaglio(doc: Document, s: Schermo): (() => DOMRect) | null {
   s.radici = elementi;
   if (s.frase) {
     const range = intervallo(elementi[0], ...s.frase);
-    return range ? () => range.getBoundingClientRect() : null;
+    return range ? () => unione([...range.getClientRects()].filter((r) => r.width)) : null;
   }
-  return () => {
-    const r = elementi.map((el) => el.getBoundingClientRect());
-    const left = Math.min(...r.map((x) => x.left));
-    const top = Math.min(...r.map((x) => x.top));
-    return new DOMRect(left, top, Math.max(...r.map((x) => x.right)) - left, Math.max(...r.map((x) => x.bottom)) - top);
-  };
+  const margini = elementi.map((el) => {
+    const box = el.getBoundingClientRect();
+    const c = contenuto(el);
+    return [c.left - box.left, c.top - box.top, box.right - c.right, box.bottom - c.bottom];
+  });
+  return () =>
+    unione(
+      elementi.map((el, i) => {
+        const r = el.getBoundingClientRect();
+        const [sx, su, dx, gi] = margini[i];
+        return new DOMRect(r.left + sx, r.top + su, r.width - sx - dx, r.height - su - gi);
+      }),
+    );
 }
 
 function porta(s: Schermo, doc: Document) {
@@ -253,6 +311,7 @@ function evidenzia(s: Schermo, attesa: number) {
     s.bersaglio = trovato;
     porta(s, doc);
     const finale = () => {
+      s.bersaglio = bersaglio(doc, s) ?? trovato;
       porta(s, doc);
       accendi(s);
     };
@@ -271,14 +330,16 @@ function ascolta(s: Schermo, f: HTMLIFrameElement) {
   doc.addEventListener('keydown', (e) => tasto(e));
 }
 
+function vuota(f: HTMLIFrameElement) {
+  try {
+    return f.contentWindow?.location.href === 'about:blank';
+  } catch {
+    return false;
+  }
+}
+
 function caricata(s: Schermo, f: HTMLIFrameElement) {
-  if (f.contentWindow && (() => {
-    try {
-      return f.contentWindow.location.href === 'about:blank';
-    } catch {
-      return false;
-    }
-  })()) return;
+  if (vuota(f)) return;
   f.dataset.caricata = '';
   ascolta(s, f);
   if (f !== s.frame || !('carica' in s.el.dataset)) return;
@@ -393,7 +454,8 @@ async function leggiNuovoSito(radice: HTMLElement) {
 }
 
 function aggancio(schermi: Schermo[]): [DOMRect | null, boolean] {
-  const s = schermi.find((x) => !x.el.hidden && !x.faro.hidden) ?? (schermi[0].dispositivo === 'telefono' ? schermi.filter((x) => !x.el.hidden).at(-1) : undefined);
+  const s =
+    schermi.find((x) => !x.el.hidden && !x.faro.hidden) ?? (schermi[0].dispositivo === 'telefono' ? schermi.filter((x) => !x.el.hidden).at(-1) : undefined);
   if (!s) return [null, false];
   const faro = s.faro.hidden ? null : s.faro.getBoundingClientRect();
   if (s.dispositivo === 'pc') return [faro, false];
@@ -514,12 +576,10 @@ function avvia(radice: HTMLElement) {
     collocaNota();
   }).observe(radice);
 
-  window.addEventListener('blur', () => {
-    window.setTimeout(() => {
-      const attivo = document.activeElement;
-      if (attivo instanceof HTMLIFrameElement && !interno(attivo)) radice.focus({ preventScroll: true });
-    });
-  });
+  window.setInterval(() => {
+    const attivo = document.activeElement;
+    if (attivo instanceof HTMLIFrameElement && !interno(attivo)) radice.focus({ preventScroll: true });
+  }, CONTROLLO_FOCUS);
 
   avanti.forEach((b) => b.addEventListener('click', () => vai(attuale + 1)));
   indietro.forEach((b) => b.addEventListener('click', () => vai(attuale - 1)));

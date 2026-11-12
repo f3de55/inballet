@@ -4,13 +4,6 @@ const LARGHEZZA_GOOGLE = 1864;
 
 type Dispositivo = 'pc' | 'telefono';
 
-interface Riquadro {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-}
-
 export interface Schermata {
   nome: string;
   url: string;
@@ -19,8 +12,7 @@ export interface Schermata {
   frase?: [string, string];
   fermo?: boolean;
   larghezza?: number;
-  barrato?: Riquadro;
-  snippet?: { x: number; y: number };
+  snippet?: { x: number; y: number; h: number };
 }
 
 export type Apertura = 'copertina' | 'sito-oggi' | 'nuovo-sito' | 'google' | 'scuole' | 'dashboard' | 'prossimi';
@@ -28,7 +20,7 @@ export type Apertura = 'copertina' | 'sito-oggi' | 'nuovo-sito' | 'google' | 'sc
 export type Scena =
   | { tipo: 'siti' | 'confronto'; schermi: Schermata[] }
   | { tipo: 'apertura'; immagine: Apertura }
-  | { tipo: 'pannello'; pannello: 'mancano' | 'costo' | 'dopo' | 'fine' };
+  | { tipo: 'pannello'; pannello: 'mancano' | 'costo' | 'dopo' };
 
 interface Scelta {
   etichetta: string;
@@ -44,7 +36,7 @@ interface Riga {
 interface Passo {
   capitolo: string;
   titolo: string;
-  testo: string;
+  testo?: string;
   evidenzia?: string[];
   scelte?: Scelta[];
   google?: boolean;
@@ -55,7 +47,6 @@ interface Passo {
 const scuola = (nome: string, url: string, confronto: Riga[]): Passo => ({
   capitolo: 'Le scuole della zona',
   titolo: nome,
-  testo: '',
   confronto,
   scena: { tipo: 'confronto', schermi: [{ nome, url, dispositivo: 'pc' }] },
 });
@@ -235,8 +226,8 @@ export const passi: Passo[] = [
   {
     capitolo: 'Motori di ricerca e AI',
     titolo: 'Google, dal vivo',
-    testo: 'Oggi il sito non dà a Google né titolo né descrizione: Google li ricava da solo dalla pagina.',
-    evidenzia: ['né titolo né descrizione'],
+    testo: 'In rosso il risultato di oggi: senza titolo né descrizione, Google li ricava dalla pagina. Sotto, il nuovo sito.',
+    evidenzia: ['senza titolo né descrizione'],
     google: true,
     scena: {
       tipo: 'siti',
@@ -246,8 +237,7 @@ export const passi: Passo[] = [
           url: 'https://www.google.com/search?igu=1&hl=it&gl=it&q=inballet+lainate',
           dispositivo: 'pc',
           larghezza: LARGHEZZA_GOOGLE,
-          barrato: { x: 280, y: 213, w: 76, h: 26 },
-          snippet: { x: 256, y: 292 },
+          snippet: { x: 256, y: 156, h: 132 },
         },
       ],
     },
@@ -304,7 +294,7 @@ export const passi: Passo[] = [
     titolo: 'Eventi',
     testo: 'Crei l’evento, carichi la locandina, scegli lo stato. Compare subito sul sito.',
     evidenzia: ['locandina'],
-    scena: nuovo('/dashboard', '[data-nuovo-evento]'),
+    scena: nuovo('/dashboard', '.pagina-azioni [data-nuovo-evento]'),
   },
   {
     capitolo: 'La dashboard',
@@ -327,29 +317,8 @@ export const passi: Passo[] = [
     evidenzia: ['cosa cercano le famiglie'],
     scena: nuovo('/dashboard?s=bot', '#chartDaily'),
   },
-  apertura('prossimi', 'Prossimi passi', 'Cosa manca, quanto costa e come si va online.'),
-  {
-    capitolo: 'Prossimi passi',
-    titolo: 'Cosa manca',
-    testo: 'Una versione di lavoro: tre punti dipendono dalla scuola, due da noi.',
-    scena: { tipo: 'pannello', pannello: 'mancano' },
-  },
-  {
-    capitolo: 'Prossimi passi',
-    titolo: 'Un costo unico',
-    testo: 'Sito completo e modifiche fino alla pubblicazione.',
-    scena: { tipo: 'pannello', pannello: 'costo' },
-  },
-  {
-    capitolo: 'Prossimi passi',
-    titolo: 'Dopo la pubblicazione',
-    testo: 'Cosa fai da sola, cosa facciamo noi e i nostri limiti.',
-    scena: { tipo: 'pannello', pannello: 'dopo' },
-  },
-  {
-    capitolo: 'Prossimi passi',
-    titolo: 'Proviamolo insieme',
-    testo: 'Sito da computer e da telefono, poi la dashboard passo per passo.',
-    scena: { tipo: 'pannello', pannello: 'fine' },
-  },
+  apertura('prossimi', 'Prossimi passi', 'Cosa manca, quanto costa e cosa succede dopo.'),
+  { capitolo: 'Prossimi passi', titolo: 'Cosa manca', scena: { tipo: 'pannello', pannello: 'mancano' } },
+  { capitolo: 'Prossimi passi', titolo: 'Un costo unico', scena: { tipo: 'pannello', pannello: 'costo' } },
+  { capitolo: 'Prossimi passi', titolo: 'Dopo la pubblicazione', scena: { tipo: 'pannello', pannello: 'dopo' } },
 ];

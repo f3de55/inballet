@@ -173,6 +173,13 @@
   color: var(--dark-navy);
 }
 
+.pres-scelta-illustrazione {
+  align-self: center;
+  width: min(10rem, 100%);
+  height: auto;
+  margin-bottom: 0.35rem;
+}
+
 .pres-scelta[aria-pressed='true'] {
   background: var(--bg-soft);
   box-shadow: inset 0 0 0 2px var(--primary-blue);

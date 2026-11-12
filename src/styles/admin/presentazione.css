@@ -597,6 +597,10 @@
   max-width: none;
 }
 
+.pres-ricerca .pres-ricerca-risultato [hidden] {
+  display: none;
+}
+
 .pres-ricerca-barra {
   display: flex;
   align-items: center;
@@ -631,6 +635,9 @@
   gap: 0.25rem;
   padding: 0.9rem 1.25rem 1rem;
   border-radius: var(--radius-card);
+}
+
+.pres-ricerca-risultato--nuovo {
   box-shadow: 0 0 0 3px var(--primary-blue);
 }
 
@@ -652,6 +659,12 @@
 
 .pres-ricerca .pres-serp-descrizione strong {
   font-weight: var(--font-bold);
+}
+
+.pres-ricerca-stato {
+  font-family: var(--google-font);
+  font-size: var(--google-url-size);
+  color: var(--google-testo);
 }
 
 .pres-ricerca-vera {

@@ -6,7 +6,7 @@ import { Image } from 'astro:assets';
 import Admin from '../layouts/Admin.astro';
 import { isLoggedIn } from '../lib/auth';
 import { enfatizza } from '../lib/text';
-import { passi, RICERCA_GOOGLE, type Apertura } from '../data/presentazione';
+import { passi, QUERY_GOOGLE, RICERCA_GOOGLE, type Apertura } from '../data/presentazione';
 import copertina from '../assets/images/presentazione/copertina-inballet.webp';
 import sitoOggi from '../assets/images/presentazione/sito-oggi.webp';
 import nuovoSito from '../assets/images/presentazione/nuovo-sito.webp';
@@ -127,21 +127,17 @@ const nomePannello = (i: number) => {
                 </div>
                 {nomePannello(i) === 'google' && (
                     <div class="pres-ricerca">
-                        <p class="pres-ricerca-barra"><span>inballet lainate</span><i class="fas fa-magnifying-glass" aria-hidden="true"></i></p>
-                        <ol class="pres-ricerca-risultati">
-                            <li class="pres-ricerca-risultato pres-ricerca-risultato--oggi">
-                                <small class="pres-punto pres-punto--no"><i class="fas fa-times" aria-hidden="true"></i>Così è oggi</small>
-                                <p class="pres-serp-nome"><span class="pres-serp-icona"><i class="fas fa-globe" aria-hidden="true"></i></span>in ballet<cite>https://www.inballet.it</cite></p>
-                                <p class="pres-serp-titolo">in ballet</p>
-                                <p class="pres-serp-descrizione"><strong>In Ballet Lainate</strong>. SEDE CENTRALE. Via Puccini, 14 - Lainate (MI). ALTRE SEDI. Via Tevere 19, Rho (MI). CONTATTI. Tel.: +39 393 780 2996. E-mail: info@inballet.</p>
+                        <p class="pres-ricerca-barra"><span>{QUERY_GOOGLE}</span><i class="fas fa-magnifying-glass" aria-hidden="true"></i></p>
+                        <small class="pres-ricerca-stato" data-stato-google aria-live="polite">Lettura dei risultati di Google…</small>
+                        <ol class="pres-ricerca-risultati" data-risultati-google></ol>
+                        <template data-risultato-google>
+                            <li class="pres-ricerca-risultato">
+                                <small class="pres-punto" data-esito hidden><i class="fas" aria-hidden="true"></i><span data-esito-testo></span></small>
+                                <p class="pres-serp-nome"><img class="pres-serp-icona" src="/favicon.ico" alt="" width="26" height="26" data-icona><span class="pres-serp-icona" data-globo hidden><i class="fas fa-globe" aria-hidden="true"></i></span><span data-sito></span><cite data-indirizzo></cite></p>
+                                <p class="pres-serp-titolo" data-titolo></p>
+                                <p class="pres-serp-descrizione" data-testo></p>
                             </li>
-                            <li class="pres-ricerca-risultato pres-ricerca-risultato--nuovo">
-                                <small class="pres-punto pres-punto--si"><i class="fas fa-check" aria-hidden="true"></i>Così apparirà il nuovo sito</small>
-                                <p class="pres-serp-nome"><img src="/favicon.ico" alt="" width="26" height="26" class="pres-serp-icona">InBallet<cite data-serp-url>https://www.inballet.it</cite></p>
-                                <p class="pres-serp-titolo" data-serp-titolo>Lettura in corso</p>
-                                <p class="pres-serp-descrizione" data-serp-descrizione></p>
-                            </li>
-                        </ol>
+                        </template>
                         <a class="pres-ricerca-vera" href={RICERCA_GOOGLE} target="_blank" rel="noopener">Apri la ricerca vera su Google<span class="sr-only"> (si apre in una nuova scheda)</span></a>
                     </div>
                 )}

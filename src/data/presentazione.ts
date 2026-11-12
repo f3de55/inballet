@@ -1,6 +1,7 @@
 export const SITO_ATTUALE = 'https://www.inballet.it';
 export const SITO_OGGI = '/sito-oggi';
-export const RICERCA_GOOGLE = 'https://www.google.com/search?hl=it&gl=it&q=inballet+lainate';
+export const QUERY_GOOGLE = 'inballet lainate';
+export const RICERCA_GOOGLE = `https://www.google.com/search?hl=it&gl=it&q=${encodeURIComponent(QUERY_GOOGLE)}`;
 
 type Dispositivo = 'pc' | 'telefono';
 

@@ -10,6 +10,7 @@ import { generaChat, generaEventi, generaInsegnanti, MAX_EVENTI, MAX_INSEGNANTI_
 import { eliminaTutto, PAROLA_CONFERMA } from '../lib/pulizia';
 import { eliminaDocumento, ErroreDocumenti, ordinaDocumenti, salvaDocumento, salvaTesti } from '../lib/documenti';
 import * as insegnanti from '../lib/insegnanti';
+import { ricercaGoogle } from '../lib/risultati-google';
 
 function admin<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O>) {
   return async (input: I, context: ActionAPIContext): Promise<O> => {
@@ -178,6 +179,11 @@ export const server = {
     }),
   },
 
+  presentazione: {
+    google: defineAction({
+      handler: admin(async () => ricercaGoogle()),
+    }),
+  },
   demo: {
     eventi: defineAction({
       input: z.object({ quanti: z.number().int().min(1).max(MAX_EVENTI) }),

@@ -1,4 +1,5 @@
-import type { Scena, Schermata } from '../data/presentazione';
+import { actions } from 'astro:actions';
+import { QUERY_GOOGLE, type Scena, type Schermata } from '../data/presentazione';
 
 type Dispositivo = Schermata['dispositivo'];
 
@@ -508,13 +509,76 @@ function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
   s.attesa = window.setTimeout(() => s.url === url && mostra(s), ATTESA_MASSIMA);
 }
 
-async function leggiNuovoSito(radice: HTMLElement) {
+interface RisultatoGoogle {
+  titolo: string;
+  link: string;
+  sito: string;
+  indirizzo: string;
+  icona: string;
+  testo: string;
+  evidenze: string[];
+}
+
+async function nuovoSito(): Promise<RisultatoGoogle> {
   const doc = new DOMParser().parseFromString(await fetch('/').then((r) => r.text()), 'text/html');
-  const campo = (nome: string) => trova<HTMLElement>(radice, `[data-serp-${nome}]`);
-  campo('titolo').textContent = doc.title;
-  campo('descrizione').textContent = doc.querySelector('meta[name="description"]')?.getAttribute('content') ?? '';
-  const canonico = doc.querySelector('link[rel="canonical"]')?.getAttribute('href');
-  if (canonico) campo('url').textContent = canonico.replace(/\/$/, '');
+  const canonico = doc.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? location.origin;
+  return {
+    titolo: doc.title,
+    link: canonico,
+    sito: doc.querySelector('meta[property="og:site_name"]')?.getAttribute('content') ?? '',
+    indirizzo: canonico.replace(/\/$/, ''),
+    icona: '/favicon.ico',
+    testo: doc.querySelector('meta[name="description"]')?.getAttribute('content') ?? '',
+    evidenze: QUERY_GOOGLE.split(' '),
+  };
+}
+
+function grassetto(el: HTMLElement, testo: string, parole: string[]) {
+  const voci = parole.filter(Boolean).map((p) => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  if (!voci.length) return (el.textContent = testo);
+  testo.split(new RegExp(`(${voci.join('|')})`, 'gi')).forEach((pezzo, i) => {
+    if (i % 2) el.append(Object.assign(document.createElement('strong'), { textContent: pezzo }));
+    else el.append(pezzo);
+  });
+}
+
+function risultato(modello: HTMLTemplateElement, r: RisultatoGoogle, esito?: 'si' | 'no') {
+  const li = modello.content.firstElementChild?.cloneNode(true) as HTMLElement;
+  const campo = <T extends HTMLElement>(nome: string) => trova<T>(li, `[data-${nome}]`);
+  campo('sito').textContent = r.sito;
+  campo('indirizzo').textContent = r.indirizzo;
+  campo('titolo').textContent = r.titolo;
+  grassetto(campo('testo'), r.testo, r.evidenze);
+  const icona = campo<HTMLImageElement>('icona');
+  if (r.icona) icona.src = r.icona;
+  icona.hidden = !r.icona;
+  campo('globo').hidden = !!r.icona;
+  if (!esito) return li;
+  li.classList.add(`pres-ricerca-risultato--${esito === 'no' ? 'oggi' : 'nuovo'}`);
+  const segno = campo('esito');
+  segno.hidden = false;
+  segno.classList.add(`pres-punto--${esito}`);
+  trova(segno, 'i').classList.add(esito === 'no' ? 'fa-times' : 'fa-check');
+  campo('esito-testo').textContent = esito === 'no' ? 'Così è oggi' : 'Così apparirà il nuovo sito';
+  return li;
+}
+
+async function mostraGoogle(radice: HTMLElement) {
+  const lista = trova<HTMLElement>(radice, '[data-risultati-google]');
+  const stato = trova<HTMLElement>(radice, '[data-stato-google]');
+  const modello = trova<HTMLTemplateElement>(radice, '[data-risultato-google]');
+  const [nuovo, { data, error }] = await Promise.all([nuovoSito(), actions.presentazione.google()]);
+  const veri = data?.risultati ?? [];
+  const oggi = veri.findIndex((r) => new URL(r.link).hostname.endsWith('inballet.it'));
+  lista.replaceChildren(...veri.map((r, i) => risultato(modello, r, i === oggi ? 'no' : undefined)));
+  if (oggi < 0) lista.prepend(risultato(modello, nuovo, 'si'));
+  else lista.children[oggi].after(risultato(modello, nuovo, 'si'));
+  const quando = data && new Date(data.aggiornato).toLocaleString('it-IT', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+  stato.textContent = quando
+    ? `Risultati veri di Google per «${QUERY_GOOGLE}», letti il ${quando}`
+    : error
+      ? 'Risultati di Google non raggiungibili in questo momento'
+      : 'Risultati di Google non disponibili: manca la chiave SERPAPI_KEY';
 }
 
 function aggancio(schermi: Schermo[]) {
@@ -558,7 +622,7 @@ function avvia(radice: HTMLElement) {
   const scene = passi.map((p) => JSON.parse(p.dataset.scena ?? '{}') as Scena);
   const totale = passi.length - 1;
   let attuale = -1;
-  let nuovoLetto = false;
+  let googleLetto = false;
 
   collocaNota = () => {
     const pronta = schermi.every((s) => s.el.hidden || !('carica' in s.el.dataset));
@@ -609,11 +673,9 @@ function avvia(radice: HTMLElement) {
     const passo = passi[n];
     fondali.forEach((foto) => (foto.hidden = foto.dataset.fondaleFoto !== passo.dataset.fondale));
     passo.querySelectorAll<HTMLButtonElement>('[data-percorso]').forEach((btn, j) => btn.setAttribute('aria-pressed', String(j === 0)));
-    if (passo.hasAttribute('data-google') && !nuovoLetto) {
-      nuovoLetto = true;
-      leggiNuovoSito(radice)
-        .then(() => collocaNota())
-        .catch(() => (nuovoLetto = false));
+    if (passo.hasAttribute('data-google') && !googleLetto) {
+      googleLetto = true;
+      mostraGoogle(radice).catch(() => (googleLetto = false));
     }
     mostraScena(scene[n]);
     window.setTimeout(() => {

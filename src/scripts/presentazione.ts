@@ -1,5 +1,6 @@
 import { actions } from 'astro:actions';
 import { QUERY_GOOGLE, type Scena, type Schermata } from '../data/presentazione';
+import type { RisultatoGoogle } from '../lib/risultati-google';
 
 type Dispositivo = Schermata['dispositivo'];
 
@@ -509,20 +510,11 @@ function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
   s.attesa = window.setTimeout(() => s.url === url && mostra(s), ATTESA_MASSIMA);
 }
 
-interface RisultatoGoogle {
-  titolo: string;
-  link: string;
-  sito: string;
-  indirizzo: string;
-  icona: string;
-  testo: string;
-  evidenze: string[];
-}
-
 async function nuovoSito(): Promise<RisultatoGoogle> {
   const doc = new DOMParser().parseFromString(await fetch('/').then((r) => r.text()), 'text/html');
   const canonico = doc.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? location.origin;
   return {
+    posizione: 0,
     titolo: doc.title,
     link: canonico,
     sito: doc.querySelector('meta[property="og:site_name"]')?.getAttribute('content') ?? '',
@@ -542,9 +534,18 @@ function grassetto(el: HTMLElement, testo: string, parole: string[]) {
   });
 }
 
-function risultato(modello: HTMLTemplateElement, r: RisultatoGoogle, esito?: 'si' | 'no') {
+function risultato(modello: HTMLTemplateElement, r: RisultatoGoogle | null, esito: 'si' | 'no', testo: string) {
   const li = modello.content.firstElementChild?.cloneNode(true) as HTMLElement;
   const campo = <T extends HTMLElement>(nome: string) => trova<T>(li, `[data-${nome}]`);
+  li.classList.add(`pres-ricerca-risultato--${esito === 'no' ? 'oggi' : 'nuovo'}`);
+  const segno = campo('esito');
+  segno.classList.add(`pres-punto--${esito}`);
+  trova(segno, 'i').classList.add(esito === 'no' ? 'fa-times' : 'fa-check');
+  campo('esito-testo').textContent = testo;
+  if (!r) {
+    li.querySelectorAll('p').forEach((p) => p.remove());
+    return li;
+  }
   campo('sito').textContent = r.sito;
   campo('indirizzo').textContent = r.indirizzo;
   campo('titolo').textContent = r.titolo;
@@ -553,13 +554,6 @@ function risultato(modello: HTMLTemplateElement, r: RisultatoGoogle, esito?: 'si
   if (r.icona) icona.src = r.icona;
   icona.hidden = !r.icona;
   campo('globo').hidden = !!r.icona;
-  if (!esito) return li;
-  li.classList.add(`pres-ricerca-risultato--${esito === 'no' ? 'oggi' : 'nuovo'}`);
-  const segno = campo('esito');
-  segno.hidden = false;
-  segno.classList.add(`pres-punto--${esito}`);
-  trova(segno, 'i').classList.add(esito === 'no' ? 'fa-times' : 'fa-check');
-  campo('esito-testo').textContent = esito === 'no' ? 'Così è oggi' : 'Così apparirà il nuovo sito';
   return li;
 }
 
@@ -568,14 +562,12 @@ async function mostraGoogle(radice: HTMLElement) {
   const stato = trova<HTMLElement>(radice, '[data-stato-google]');
   const modello = trova<HTMLTemplateElement>(radice, '[data-risultato-google]');
   const [nuovo, { data, error }] = await Promise.all([nuovoSito(), actions.presentazione.google()]);
-  const veri = data?.risultati ?? [];
-  const oggi = veri.findIndex((r) => new URL(r.link).hostname.endsWith('inballet.it'));
-  lista.replaceChildren(...veri.map((r, i) => risultato(modello, r, i === oggi ? 'no' : undefined)));
-  if (oggi < 0) lista.prepend(risultato(modello, nuovo, 'si'));
-  else lista.children[oggi].after(risultato(modello, nuovo, 'si'));
+  const oggi = data?.risultati.find((r) => new URL(r.link).hostname.endsWith('inballet.it')) ?? null;
+  const testoOggi = oggi ? `Così è oggi: ${oggi.posizione}° risultato su Google` : 'Oggi inballet.it non compare nella prima pagina di Google';
+  lista.replaceChildren(...(data ? [risultato(modello, oggi, 'no', testoOggi)] : []), risultato(modello, nuovo, 'si', 'Così apparirà il nuovo sito'));
   const quando = data && new Date(data.aggiornato).toLocaleString('it-IT', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
   stato.textContent = quando
-    ? `Risultati veri di Google per «${QUERY_GOOGLE}», letti il ${quando}`
+    ? `Risultato vero di Google per «${QUERY_GOOGLE}», cercato da Lainate il ${quando}`
     : error
       ? 'Risultati di Google non raggiungibili in questo momento'
       : 'Risultati di Google non disponibili: manca la chiave SERPAPI_KEY';

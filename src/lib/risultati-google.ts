@@ -3,9 +3,11 @@ import { QUERY_GOOGLE } from '../data/presentazione';
 import { paths, readJson, writeJson } from './storage';
 const DURATA = 30 * 86400_000;
 const RIPROVA = 86400_000;
-const MAX_RISULTATI = 4;
+const LUOGO = 'Lainate,Lombardy,Italy';
+const RICHIESTA = `${QUERY_GOOGLE} · ${LUOGO}`;
 
 export interface RisultatoGoogle {
+  posizione: number;
   titolo: string;
   link: string;
   sito: string;
@@ -16,6 +18,7 @@ export interface RisultatoGoogle {
 }
 
 export interface RicercaGoogle {
+  richiesta: string;
   aggiornato: string;
   risultati: RisultatoGoogle[];
 }
@@ -23,6 +26,7 @@ export interface RicercaGoogle {
 interface RispostaSerpApi {
   error?: string;
   organic_results?: {
+    position?: number;
     title?: string;
     link?: string;
     source?: string;
@@ -35,15 +39,15 @@ interface RispostaSerpApi {
 
 async function scarica(chiave: string): Promise<RicercaGoogle> {
   const url = new URL('https://serpapi.com/search.json');
-  const parametri = { engine: 'google', q: QUERY_GOOGLE, hl: 'it', gl: 'it', google_domain: 'google.it', api_key: chiave };
+  const parametri = { engine: 'google', q: QUERY_GOOGLE, location: LUOGO, hl: 'it', gl: 'it', google_domain: 'google.it', api_key: chiave };
   for (const [nome, valore] of Object.entries(parametri)) url.searchParams.set(nome, valore);
   const res = await fetch(url, { signal: AbortSignal.timeout(20_000) });
   const r = (await res.json()) as RispostaSerpApi;
   if (!res.ok || r.error) throw new Error(r.error ?? `HTTP ${res.status}`);
   const risultati = (r.organic_results ?? [])
     .filter((x) => x.title && x.link)
-    .slice(0, MAX_RISULTATI)
-    .map((x) => ({
+    .map((x, i) => ({
+      posizione: x.position ?? i + 1,
       titolo: x.title ?? '',
       link: x.link ?? '',
       sito: x.source ?? new URL(x.link ?? '').hostname,
@@ -53,12 +57,12 @@ async function scarica(chiave: string): Promise<RicercaGoogle> {
       evidenze: x.snippet_highlighted_words ?? [],
     }));
   if (!risultati.length) throw new Error('nessun risultato');
-  return { aggiornato: new Date().toISOString(), risultati };
+  return { richiesta: RICHIESTA, aggiornato: new Date().toISOString(), risultati };
 }
 
 const valida = (d: unknown): d is RicercaGoogle => {
   const x = d as Partial<RicercaGoogle> | null;
-  return !!x && Number.isFinite(Date.parse(x.aggiornato ?? '')) && Array.isArray(x.risultati);
+  return !!x && x.richiesta === RICHIESTA && Number.isFinite(Date.parse(x.aggiornato ?? '')) && Array.isArray(x.risultati);
 };
 
 let ricerca: RicercaGoogle | null = null;

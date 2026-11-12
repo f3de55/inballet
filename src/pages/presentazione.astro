@@ -79,7 +79,7 @@ const nomePannello = (i: number) => {
         <section class="pres-nota" data-nota aria-label="Spiegazione">
             <button type="button" class="pres-chiudi" data-chiudi-nota aria-label="Chiudi la spiegazione"><i class="fas fa-xmark" aria-hidden="true"></i></button>
             {passi.map((p, i) => p.scena.tipo === 'siti' && (
-                <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-google={p.google ? "si" : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
+                <article class="pres-passo" data-passo={i} data-scena={JSON.stringify(p.scena)} data-google={p.google ? "si" : undefined} data-riapri={p.scelte ? 'Riapri la scelta' : undefined} aria-labelledby={`pres-passo-${i}`} hidden>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
                     {p.testo && <p set:html={enfatizza(p.testo, p.evidenzia ?? [])} />}
                     {p.scelte && (
@@ -96,7 +96,7 @@ const nomePannello = (i: number) => {
                 </article>
             ))}
             {passi.map((p, i) => p.scena.tipo === 'confronto' && p.difetti && (
-                <article class="pres-passo pres-confronto" data-passo={i} data-scena={JSON.stringify(p.scena)} aria-labelledby={`pres-passo-${i}`} hidden>
+                <article class="pres-passo pres-confronto" data-passo={i} data-scena={JSON.stringify(p.scena)} data-riapri="Rivedi cosa non va" aria-labelledby={`pres-passo-${i}`} hidden>
                     <p class="pres-etichetta">Cosa non va</p>
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
                     <ul class="pres-difetti">
@@ -180,7 +180,7 @@ const nomePannello = (i: number) => {
             </section>
         ))}
 
-        <button type="button" class="pres-riapri" data-riapri-nota aria-label="Mostra la spiegazione"><i class="fas fa-circle-info" aria-hidden="true"></i></button>
+        <button type="button" class="pres-riapri" data-riapri-nota>Riapri la spiegazione</button>
 
         <nav class="pres-navigazione" aria-label="Passi della presentazione">
             <button type="button" class="pres-freccia" data-indietro aria-label="Passo precedente"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>

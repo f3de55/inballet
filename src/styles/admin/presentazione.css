@@ -861,19 +861,18 @@
 
 .pres-riapri {
   position: absolute;
-  bottom: 1.5rem;
-  left: 1.5rem;
+  bottom: 7.25rem;
+  left: 50%;
   z-index: 7;
-  display: grid;
-  place-items: center;
-  width: 3.5rem;
-  height: 3.5rem;
+  padding: 0.85rem 1.6rem;
   border: 0;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background: rgb(var(--scuro-rgb) / 0.88);
   color: var(--white);
-  font-size: var(--text-xl);
+  font-size: var(--ui-size);
+  font-weight: var(--ui-weight);
   box-shadow: 0 12px 40px rgb(var(--nero-rgb) / 0.5);
+  transform: translateX(-50%);
   cursor: pointer;
   transition: background-color var(--durata-breve) ease;
 }

@@ -47,6 +47,7 @@ const ASSESTAMENTO = 250;
 const ATTESA_MASSIMA = 15000;
 const CORNICI = 4;
 const CONTROLLO_FOCUS = 250;
+const RIAPRI = 'Riapri la spiegazione';
 const FISSI = '.main-header, .event-banner, .topbar, .navbar-fixed-top';
 const BORDO_FARO = 8;
 const DISTANZA_NOTA = 24;
@@ -494,6 +495,7 @@ function avvia(radice: HTMLElement) {
   const avanti = [...radice.querySelectorAll<HTMLButtonElement>('[data-avanti]')];
   const indietro = [...radice.querySelectorAll<HTMLButtonElement>('[data-indietro]')];
   const nota = trova<HTMLElement>(radice, '[data-nota]');
+  const riapri = trova<HTMLButtonElement>(radice, '[data-riapri-nota]');
   const serp = trova<HTMLElement>(radice, '[data-serp]');
   ostacolo = trova<HTMLElement>(radice, '.pres-navigazione');
   const scene = passi.map((p) => JSON.parse(p.dataset.scena ?? '{}') as Scena);
@@ -541,6 +543,7 @@ function avvia(radice: HTMLElement) {
     if (n === attuale) return;
     attuale = n;
     radice.removeAttribute('data-nota-chiusa');
+    riapri.textContent = passi[n].dataset.riapri ?? RIAPRI;
     passi.forEach((p, j) => (p.hidden = j !== n));
     numeri.forEach((el) => (el.textContent = String(n)));
     indietro.forEach((b) => (b.disabled = n === 0));
@@ -585,7 +588,6 @@ function avvia(radice: HTMLElement) {
   avanti.forEach((b) => b.addEventListener('click', () => vai(attuale + 1)));
   indietro.forEach((b) => b.addEventListener('click', () => vai(attuale - 1)));
 
-  const riapri = trova<HTMLButtonElement>(radice, '[data-riapri-nota]');
   const chiudiNota = (chiusa: boolean) => {
     radice.toggleAttribute('data-nota-chiusa', chiusa);
     if (chiusa) riapri.focus({ preventScroll: true });

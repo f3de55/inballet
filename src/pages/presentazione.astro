@@ -15,6 +15,7 @@ import scuole from '../assets/images/presentazione/scuole.webp';
 import dashboard from '../assets/images/presentazione/dashboard.webp';
 import prossimi from '../assets/images/presentazione/prossimi.webp';
 import telefono from '../assets/images/presentazione/telefono-realistico.webp';
+import risultatiGoogle from '../assets/images/presentazione/google-risultati.webp';
 
 export const prerender = false;
 
@@ -41,6 +42,9 @@ const nomePannello = (i: number) => {
                         <div class="pres-scala" data-scala>
                             <div class="pres-faro" data-faro hidden></div>
                             <div class="pres-tocco" data-tocco hidden></div>
+                            {n === 0 && (
+                                <img class="pres-google" data-risultati-google src={risultatiGoogle.src} width={risultatiGoogle.width / 2} height={risultatiGoogle.height / 2} alt="Risultati di Google per «inballet lainate»" hidden />
+                            )}
                             {n === 0 && (
                                 <section class="pres-serp" data-serp aria-label="Il sito su Google, oggi e con il nuovo sito" hidden>
                                     <div class="pres-serp-oggi">

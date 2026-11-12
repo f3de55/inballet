@@ -421,7 +421,15 @@ function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
   s.minimo = quanti > 1 ? 0 : MINIMO_PC;
   s.allinea = quanti === 2 ? (posto === 0 ? 'destra' : 'sinistra') : '';
   s.el.dataset.dispositivo = dispositivo;
-  s.url = url;
+  s.url = url ?? '';
+  if (!url) {
+    s.frame.removeAttribute('data-attiva');
+    s.frame = document.createElement('iframe');
+    misura(s);
+    s.faro.hidden = true;
+    s.bloccato.hidden = true;
+    return evidenzia(s, 0);
+  }
   const f = cornice(s, url);
   if (f !== s.frame) {
     s.frame.removeAttribute('data-attiva');
@@ -468,12 +476,12 @@ function colloca(nota: HTMLElement, palco: HTMLElement, [a, aiLati]: [DOMRect | 
   const n = nota.getBoundingClientRect();
   const fine = (ostacolo?.offsetParent ? ostacolo.getBoundingClientRect().top : p.bottom) - p.top - BORDO_NOTA;
   if (!a) {
-    nota.style.transform = `translate(${BORDO_NOTA}px, ${fine - n.height}px)`;
+    nota.style.transform = `translate(${Math.round((p.width - n.width) / 2)}px, ${Math.round(fine - n.height)}px)`;
     return;
   }
   const r = new DOMRect(a.left - p.left, a.top - p.top, a.width, a.height);
   const entro = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
-  const x = entro(r.left, BORDO_NOTA, p.width - n.width - BORDO_NOTA);
+  const x = entro(r.left + (r.width - n.width) / 2, BORDO_NOTA, p.width - n.width - BORDO_NOTA);
   const y = entro(r.top, BORDO_NOTA, fine - n.height);
   const posti: [number, number, boolean][] = [
     [x, r.bottom + DISTANZA_NOTA, r.bottom + DISTANZA_NOTA + n.height <= fine],
@@ -495,6 +503,7 @@ function avvia(radice: HTMLElement) {
   const indietro = [...radice.querySelectorAll<HTMLButtonElement>('[data-indietro]')];
   const nota = trova<HTMLElement>(radice, '[data-nota]');
   const serp = trova<HTMLElement>(radice, '[data-serp]');
+  const risultati = trova<HTMLElement>(radice, '[data-risultati-google]');
   ostacolo = trova<HTMLElement>(radice, '.pres-navigazione');
   const scene = passi.map((p) => JSON.parse(p.dataset.scena ?? '{}') as Scena);
   const totale = passi.length - 1;
@@ -510,13 +519,13 @@ function avvia(radice: HTMLElement) {
   const precarica = (n: number) => {
     const scena = scene[n];
     if (scena?.tipo !== 'siti' && scena?.tipo !== 'confronto') return;
-    scena.schermi.forEach((x, i) => cornice(schermi[i], x.url));
+    scena.schermi.forEach((x, i) => x.url && cornice(schermi[i], x.url));
   };
 
   let chiave = '';
   const mostraScena = (s: Scena) => {
     radice.dataset.modo = s.tipo;
-    const nuova = s.tipo === 'siti' || s.tipo === 'confronto' ? s.schermi.map((x) => x.url).join(' ') : '';
+    const nuova = s.tipo === 'siti' || s.tipo === 'confronto' ? s.schermi.map((x) => x.url ?? x.nome).join(' ') : '';
     if (nuova && nuova !== chiave) {
       contenitore.removeAttribute('data-entra');
       void contenitore.offsetWidth;
@@ -547,7 +556,7 @@ function avvia(radice: HTMLElement) {
     history.replaceState(null, '', n ? `#passo-${n}` : location.pathname);
     const passo = passi[n];
     passo.querySelectorAll<HTMLButtonElement>('[data-percorso]').forEach((btn, j) => btn.setAttribute('aria-pressed', String(j === 0)));
-    serp.hidden = !passo.hasAttribute('data-google');
+    serp.hidden = risultati.hidden = !passo.hasAttribute('data-google');
     if (!serp.hidden && !nuovoLetto) {
       nuovoLetto = true;
       leggiNuovoSito(radice).catch(() => (nuovoLetto = false));

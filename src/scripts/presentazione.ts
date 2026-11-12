@@ -346,9 +346,69 @@ function vuota(f: HTMLIFrameElement) {
   }
 }
 
+const DITO =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='14' cy='14' r='12' fill='rgba(0,0,0,.28)' stroke='rgba(255,255,255,.9)' stroke-width='2'/%3E%3C/svg%3E\") 14 14, pointer";
+const SCAMBIO: Record<string, string> = { hover: 'none', none: 'hover', fine: 'coarse', coarse: 'fine' };
+
+function daTelefono(testo: string) {
+  return testo.replace(/\((any-)?(hover|pointer):\s*(hover|none|fine|coarse)\)/g, (_, tutti = '', chiave, valore) => `(${tutti}${chiave}: ${SCAMBIO[valore]})`);
+}
+
+function regole(lista: CSSRuleList) {
+  for (const regola of Array.from(lista)) {
+    if (regola instanceof CSSMediaRule) regola.media.mediaText = daTelefono(regola.media.mediaText);
+    if (regola instanceof CSSGroupingRule) regole(regola.cssRules);
+  }
+}
+
+function telefono(doc: Document) {
+  const win = doc.defaultView;
+  if (!win) return;
+  for (const foglio of Array.from(doc.styleSheets)) {
+    try {
+      regole(foglio.cssRules);
+    } catch {
+      continue;
+    }
+  }
+  const originale = win.matchMedia.bind(win);
+  win.matchMedia = (query: string) => originale(daTelefono(query));
+  const stile = doc.createElement('style');
+  stile.textContent = `html{scrollbar-width:none}html::-webkit-scrollbar{display:none}*,*::before,*::after{cursor:${DITO}!important;-webkit-tap-highlight-color:transparent}`;
+  doc.head.append(stile);
+  let inizio: { y: number; x: number; ultimo: number } | null = null;
+  let trascinato = false;
+  doc.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    inizio = { x: e.clientX, y: e.clientY, ultimo: e.clientY };
+    trascinato = false;
+  });
+  doc.addEventListener('mousemove', (e) => {
+    if (!inizio || !(e.buttons & 1)) return (inizio = null);
+    if (!trascinato && Math.abs(e.clientY - inizio.y) > 6 && Math.abs(e.clientY - inizio.y) > Math.abs(e.clientX - inizio.x)) trascinato = true;
+    if (!trascinato) return;
+    e.preventDefault();
+    win.scrollBy({ top: inizio.ultimo - e.clientY, behavior: 'instant' });
+    inizio.ultimo = e.clientY;
+  });
+  doc.addEventListener('mouseup', () => (inizio = null));
+  doc.addEventListener(
+    'click',
+    (e) => {
+      if (!trascinato) return;
+      trascinato = false;
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    true,
+  );
+}
+
 function caricata(s: Schermo, f: HTMLIFrameElement) {
   if (vuota(f)) return;
   f.dataset.caricata = '';
+  const doc = interno(f);
+  if (doc && f.dataset.dispositivo === 'telefono') telefono(doc);
   ascolta(s, f);
   if (f !== s.frame || !('carica' in s.el.dataset)) return;
   const interna = f.dataset.url?.startsWith('/');
@@ -357,11 +417,12 @@ function caricata(s: Schermo, f: HTMLIFrameElement) {
   evidenzia(s, ASSESTAMENTO);
 }
 
-function cornice(s: Schermo, url: string) {
-  let f = s.cornici.get(url);
+function cornice(s: Schermo, url: string, dispositivo: Dispositivo) {
+  const chiave = `${dispositivo} ${url}`;
+  let f = s.cornici.get(chiave);
   if (f) {
-    s.cornici.delete(url);
-    s.cornici.set(url, f);
+    s.cornici.delete(chiave);
+    s.cornici.set(chiave, f);
     if ('toccata' in f.dataset) {
       delete f.dataset.toccata;
       delete f.dataset.caricata;
@@ -372,16 +433,17 @@ function cornice(s: Schermo, url: string) {
   f = document.createElement('iframe');
   f.title = 'Sito dal vivo';
   f.dataset.url = url;
+  f.dataset.dispositivo = dispositivo;
   f.src = url;
   const nuova = f;
   f.addEventListener('load', () => caricata(s, nuova));
   s.scala.prepend(f);
-  s.cornici.set(url, f);
-  for (const [chiave, vecchia] of s.cornici) {
+  s.cornici.set(chiave, f);
+  for (const [vecchiaChiave, vecchia] of s.cornici) {
     if (s.cornici.size <= CORNICI) break;
     if (vecchia === s.frame || vecchia === f) continue;
     vecchia.remove();
-    s.cornici.delete(chiave);
+    s.cornici.delete(vecchiaChiave);
   }
   return f;
 }
@@ -434,7 +496,7 @@ function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
   s.allinea = quanti === 2 ? (posto === 0 ? 'destra' : 'sinistra') : '';
   s.el.dataset.dispositivo = dispositivo;
   s.url = url;
-  const f = cornice(s, url);
+  const f = cornice(s, url, dispositivo);
   if (f !== s.frame) {
     s.frame.removeAttribute('data-attiva');
     f.dataset.attiva = '';
@@ -518,7 +580,7 @@ function avvia(radice: HTMLElement) {
   const precarica = (n: number) => {
     const scena = scene[n];
     if (scena?.tipo !== 'siti' && scena?.tipo !== 'confronto') return;
-    scena.schermi.forEach((x, i) => cornice(schermi[i], x.url));
+    scena.schermi.forEach((x, i) => cornice(schermi[i], x.url, x.dispositivo));
   };
 
   let chiave = '';

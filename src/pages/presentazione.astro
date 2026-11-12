@@ -16,6 +16,9 @@ import dashboard from '../assets/images/presentazione/dashboard.webp';
 import prossimi from '../assets/images/presentazione/prossimi.webp';
 import telefono from '../assets/images/presentazione/telefono-realistico.webp';
 import famiglie from '../assets/images/presentazione/famiglie-danza.webp';
+import adulti from '../assets/images/presentazione/adulti-danza.webp';
+import insegnanti from '../assets/images/presentazione/insegnanti-danza.webp';
+import scuoleAziende from '../assets/images/presentazione/scuole-aziende-danza.webp';
 import risultatiGoogle from '../assets/images/presentazione/google-risultati.webp';
 
 export const prerender = false;
@@ -25,6 +28,7 @@ if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login?da=/presen
 const schermi = Math.max(...passi.map((p) => (p.scena.tipo === 'siti' || p.scena.tipo === 'confronto' ? p.scena.schermi.length : 0)));
 const totale = passi.length - 1;
 const immagini: Record<Apertura, ImageMetadata> = { copertina, 'sito-oggi': sitoOggi, 'nuovo-sito': nuovoSito, google, scuole, dashboard, prossimi };
+const immaginiVisitatori: Record<string, ImageMetadata> = { Famiglie: famiglie, Adulti: adulti, Insegnanti: insegnanti, 'Scuole e aziende': scuoleAziende };
 const LARGO = 1600;
 const onda = (y: number, ampiezza: number, onde: number) => {
     const mezza = LARGO / onde / 2;
@@ -85,7 +89,7 @@ const nomePannello = (i: number) => {
                         <div class="pres-scelte" role="group" aria-label="Scegli un visitatore">
                             {p.scelte.map((s, j) => (
                                 <button type="button" class="pres-scelta" data-percorso={s.percorso} aria-pressed={j === 0 ? 'true' : 'false'}>
-                                    {s.etichetta === 'Famiglie' && <Image class="pres-scelta-illustrazione" src={famiglie} alt="" aria-hidden="true" widths={[160, 320]} sizes="160px" loading="eager" decoding="async" />}
+                                    <Image class="pres-scelta-illustrazione" src={immaginiVisitatori[s.etichetta]} alt="" aria-hidden="true" widths={[160, 320]} sizes="160px" loading="eager" decoding="async" />
                                     <strong>{s.etichetta}</strong>
                                     «{s.domanda}»
                                 </button>

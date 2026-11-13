@@ -1,7 +1,7 @@
 export const SITO_ATTUALE = 'https://www.inballet.it';
 export const SITO_OGGI = '/sito-oggi';
 export const DOMANDA_AI = 'Mi consigli una scuola di danza a Lainate?';
-export const RICERCA_GOOGLE = `https://www.google.com/search?igu=1&hl=it&gl=it&udm=50&q=${encodeURIComponent(DOMANDA_AI)}`;
+export const RICERCA_GOOGLE = `https://www.google.com/search?igu=1&hl=it&gl=it&q=${encodeURIComponent(DOMANDA_AI)}`;
 
 interface RispostaAI {
   nome: string;
@@ -11,7 +11,48 @@ interface RispostaAI {
   fonti: { titolo: string; url: string }[];
 }
 
-export const ASSISTENTI: Record<'chatgpt' | 'claude', RispostaAI> = {
+export const ASSISTENTI: Record<'google' | 'chatgpt' | 'claude', RispostaAI> = {
+  google: {
+    nome: 'Google AI',
+    modello: 'l’Overview dell’AI di Google',
+    chiesta: '2026-11-14',
+    testo: `A Lainate sono presenti diverse scuole di danza e accademie con proposte per tutte le età e discipline:
+
+## Principali Scuole di Danza a Lainate
+
+**Valentina Ponzone Dance Academy**
+- Corsi: Danza classica, danza moderna, hip hop, propedeutica alla danza, danza gioco, danza aerea sul cerchio, pilates e sbarra per adulti.
+- Sito ufficiale: Valentina Ponzone Dance Academy
+
+**Movin'up Progetto Danza ASD**
+- Corsi: Attiva da oltre 30 anni, offre danza classica, modern, contemporaneo, giocodanza, acrodance, hip hop, dance tone up e pilates.
+- Dettagli: Comune di Lainate - Movin'up Progetto Danza
+
+**DSP | School of Dance & Performing Arts (Studio Pro)**
+- Indirizzo: Spaziolabs60, Via E. Caldara 18A, Lainate (MI)
+- Corsi: Classical Ballet, Modern Jazz, Musical, Hip Hop, Contemporaneo, Breakdance, Commercial, Heels, Pilates, Country e Yoga.
+- Instagram: DSP Studio Pro
+
+**Be Art Studio**
+- Corsi: Discipline aeree (pole dance, tessuti e cerchi aerei), arti circensi, danza classica e moderna.
+- Sito ufficiale: Be Art Studio
+
+**Wanna Dance Asd**
+- Indirizzo: Via Campania 6, Lainate (MI)
+- Corsi: Hip hop, danza moderna, danza classica, gioco danza dai 3 anni e fitness.
+- Pagina social: Wanna Dance Asd
+
+**Alma y Giada**
+- Corsi: Scuola specializzata in liscio da sala e balli di coppia.
+- Sito ufficiale: Alma y Giada
+
+Se mi indichi quale genere di danza ti interessa (es. classica, hip hop, aerea, balli di coppia) o per chi è il corso (bambini, ragazzi o adulti), posso darti informazioni più specifiche su orari o lezioni di prova.`,
+    fonti: [
+      { titolo: 'Be Art Studio', url: 'https://www.beartstudio.eu/' },
+      { titolo: 'Valentina Ponzone', url: 'https://www.valentinaponzonedanceacademy.it/' },
+      { titolo: 'DSP Studio Pro su Instagram', url: 'https://www.instagram.com/studiopro.lainate/' },
+    ],
+  },
   chatgpt: {
     nome: 'ChatGPT',
     modello: 'ChatGPT',
@@ -319,7 +360,8 @@ export const passi: Passo[] = [
     scena: {
       tipo: 'siti',
       schermi: [
-        { nome: 'Google AI', url: RICERCA_GOOGLE, dispositivo: 'pc' },
+        { nome: 'Google', url: RICERCA_GOOGLE, dispositivo: 'pc' },
+        { nome: 'Google AI', url: '/presentazione/google', dispositivo: 'pc' },
         { nome: 'ChatGPT', url: '/presentazione/chatgpt', dispositivo: 'pc' },
         { nome: 'Claude', url: '/presentazione/claude', dispositivo: 'pc' },
       ],

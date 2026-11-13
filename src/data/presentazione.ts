@@ -1,12 +1,103 @@
 export const SITO_ATTUALE = 'https://www.inballet.it';
 export const SITO_OGGI = '/sito-oggi';
-export const QUERY_GOOGLE = 'inballet lainate';
-export const RICERCA_GOOGLE = `https://www.google.com/search?igu=1&hl=it&gl=it&q=${encodeURIComponent(QUERY_GOOGLE)}`;
 export const DOMANDA_AI = 'Mi consigli una scuola di danza a Lainate?';
-export const ASSISTENTI = {
-  chatgpt: { nome: 'ChatGPT' },
-  claude: { nome: 'Claude' },
-} as const;
+export const RICERCA_GOOGLE = `https://www.google.com/search?igu=1&hl=it&gl=it&udm=50&q=${encodeURIComponent(DOMANDA_AI)}`;
+
+interface RispostaAI {
+  nome: string;
+  modello: string;
+  chiesta: string;
+  testo: string;
+  fonti: { titolo: string; url: string }[];
+}
+
+export const ASSISTENTI: Record<'chatgpt' | 'claude', RispostaAI> = {
+  chatgpt: {
+    nome: 'ChatGPT',
+    modello: 'ChatGPT',
+    chiesta: '2026-11-14',
+    testo: `A Lainate ci sono diverse scuole di danza interessanti. Ho confrontato l'offerta formativa, le recensioni e le informazioni disponibili sui siti ufficiali.
+
+La mia prima scelta sarebbe **I.N. Ballet**, soprattutto se cerchi una scuola con diversi stili di danza, percorsi per bambini e adulti e attenzione sia alla tecnica sia all'espressione artistica.
+
+## Le 4 scuole che ti consiglio
+
+**1. I.N. Ballet**
+Via Puccini, Lainate
+Danza classica, moderna, contemporanea, urban e benessere. Dai 3 anni, con corsi anche per adulti e un progetto dedicato all'inclusione.
+
+**2. A.S.D. Backstage Arte in Movimento**
+Viale De Gasperi 1, Lainate
+Interessante per modern jazz, contemporaneo e percorsi tecnici. Organizza lezioni a numero chiuso, differenziate per età e livello.
+
+**3. Valentina Ponzone dance academy**
+Via Puccini 13, Lainate
+Ottima candidata per chi cerca classica, propedeutica, moderna e hip-hop. Offre anche danza aerea sul cerchio e Pilates.
+
+**4. Studio Pro - School of Dance & Performing Arts**
+Via Caldara 18A, Lainate
+Particolarmente interessante per chi vuole combinare danza, musical, formazione artistica e spettacoli.
+
+## Dove si trovano
+
+- I.N. Ballet · 4,9
+- A.S.D. Backstage Arte in Movimento · 5,0
+- Valentina Ponzone dance academy · 4,9
+- Studio Pro - School of Dance & Performing Arts · 5,0
+
+La mia scelta dipenderebbe soprattutto dall'obiettivo: **I.N. Ballet** per un percorso multidisciplinare, **Backstage** per modern e contemporaneo, **Valentina Ponzone** per classica e propedeutica, **Studio Pro** per musical e spettacolo.
+
+**Ti chiedo una cosa:** stai cercando una scuola di danza per te, per un bambino o per un ragazzo? E quale stile ti interessa? Così posso consigliarti quella più adatta, non semplicemente la più conosciuta.`,
+    fonti: [
+      { titolo: 'inballet.it', url: 'https://www.inballet.it/' },
+      { titolo: 'backstage-danza.it', url: 'https://www.backstage-danza.it/' },
+      { titolo: 'valentinaponzonedanceacademy.it', url: 'https://www.valentinaponzonedanceacademy.it/' },
+      { titolo: 'Comune di Lainate', url: 'https://comune.lainate.mi.it/associazioni/associazioni-sportive/danzarte-asd/' },
+    ],
+  },
+  claude: {
+    nome: 'Claude',
+    modello: 'Claude Sonnet 5.5',
+    chiesta: '2026-11-14',
+    testo: `## Scuole di danza a Lainate
+
+- **I.N. Ballet** · 4,9 (31) · Scuola multidisciplinare, Via Puccini 13
+- **Valentina Ponzone dance academy** · 4,9 (15) · Via Puccini 13
+- **Wanna Dance** · 4,6 (47) · Danza per bambini e adulti, Via Campania 6
+- **A.S.D. Backstage Arte in Movimento** · 5,0 (25) · Classica, contemporaneo, modern jazz, hip hop
+- **Studio Pro - School of Dance & Performing Arts** · 5,0 (27) · Via Caldara 18A, anche corsi per adulti
+- **SCHOOL OF DANCE Almalatina A.S.D.** · 4,7 (21) · Ballo (latino/coppia), Via Rubicone 16
+- **Scuola di ballo - GDS Giada / Alma Y Giada** · 4,8 (19) · Ballo latino-americano, Via Milano 23
+
+Non posso dirti qual è “la migliore” senza sapere per chi è (bambino, adulto) e che stile cerchi. Ti dico quali scuole ci sono e per cosa si distinguono. Le informazioni vengono da Google Maps e dalle sue recensioni, non da siti ufficiali delle scuole. Le valutazioni sono alte per tutte, tra 4,6 e 5 su 5.
+
+**Danza classica, moderna, contemporanea (bambini e ragazzi)**
+
+- **A.S.D. Backstage Arte in Movimento** (Viale De Gasperi 1, tel. 347 841 1541): classica, contemporanea, modern jazz e hip hop. Le recensioni parlano di corsi dai 3 anni in su e di un gruppo di modern jazz per adulte.
+- **I.N. Ballet** (Via Puccini 13, tel. 393 780 2996): scuola multidisciplinare, con direzione artistica di Ilenia Nobile. Ha 31 recensioni e tiene aperto anche il sabato.
+- **Wanna Dance** (Via Campania 6): corsi per bambini e adulti. Propone anche gioco danza per i più piccoli e corsi di TRX e Pilates. Ha il maggior numero di recensioni (47). Su Google non risultano orari né telefono.
+- **Valentina Ponzone dance academy** (Via Puccini 13, tel. 02 9392 0039): ha orari ampi, dal lunedì al venerdì dalle 9 alle 21 e il sabato mattina.
+
+**Adulti, anche principianti**
+
+- **Studio Pro – School of Dance & Performing Arts** (Via Caldara 18A, tel. 339 813 2329): le recensioni citano corsi per bambini e per adulti.
+
+**Ballo di coppia / latino-americano**
+
+- **Almalatina A.S.D.** (Via Rubicone 16, tel. 333 607 0669)
+- **GDS Giada / Alma Y Giada** (Via Milano 23, tel. 339 471 2581)
+
+**Da verificare**
+
+- I.N. Ballet e Valentina Ponzone risultano allo stesso indirizzo (Via Puccini 13). Un elenco online (Virgilio) riporta allo stesso civico anche l’ASD Champion’s Touch. Chiama per capire se sono realtà separate.
+- Orari, prezzi e disponibilità di posti non li ho trovati su fonti ufficiali. Per iscrizione e prova gratuita contatta direttamente la scuola.
+
+Se mi dici età e stile (classica, hip hop, adulti, ballo di coppia), ti restringo la scelta.
+
+Fonti: Google Maps (schede e recensioni delle scuole); Virgilio Aziende – Champion’s Touch`,
+    fonti: [],
+  },
+};
 export type Assistente = keyof typeof ASSISTENTI;
 
 type Dispositivo = 'pc' | 'telefono';
@@ -228,7 +319,7 @@ export const passi: Passo[] = [
     scena: {
       tipo: 'siti',
       schermi: [
-        { nome: 'Google', url: RICERCA_GOOGLE, dispositivo: 'pc' },
+        { nome: 'Google AI', url: RICERCA_GOOGLE, dispositivo: 'pc' },
         { nome: 'ChatGPT', url: '/presentazione/chatgpt', dispositivo: 'pc' },
         { nome: 'Claude', url: '/presentazione/claude', dispositivo: 'pc' },
       ],
@@ -242,8 +333,8 @@ export const passi: Passo[] = [
     scena: {
       tipo: 'siti',
       schermi: [
-        { nome: 'Sito di oggi', url: `${SITO_OGGI}/sitemap.xml`, dispositivo: 'pc' },
-        { nome: 'Nuovo sito', url: '/sitemap.xml', dispositivo: 'pc' },
+        { nome: 'Sito di oggi', url: '/presentazione/mappa/oggi', dispositivo: 'pc' },
+        { nome: 'Nuovo sito', url: '/presentazione/mappa/nuovo', dispositivo: 'pc' },
       ],
     },
   },

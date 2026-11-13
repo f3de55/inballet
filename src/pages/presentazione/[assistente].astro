@@ -4,7 +4,7 @@ import '../../styles/admin/assistente.css';
 import Admin from '../../layouts/Admin.astro';
 import { isLoggedIn } from '../../lib/auth';
 import { ASSISTENTI, DOMANDA_AI, type Assistente } from '../../data/presentazione';
-import { formattaRisposta, rispostaAI } from '../../lib/risposte-ai';
+import { formattaRisposta } from '../../lib/risposte-ai';
 
 export const prerender = false;
 
@@ -12,37 +12,30 @@ const nome = Astro.params.assistente ?? '';
 if (!Object.hasOwn(ASSISTENTI, nome)) return new Response(null, { status: 404 });
 if (!(await isLoggedIn(Astro.session))) return new Response(null, { status: 401 });
 
-const assistente = ASSISTENTI[nome as Assistente];
-const risposta = await rispostaAI(nome as Assistente);
-const giorno = risposta && new Intl.DateTimeFormat('it-IT', { dateStyle: 'long', timeZone: 'Europe/Rome' }).format(new Date(risposta.aggiornato));
+const risposta = ASSISTENTI[nome as Assistente];
+const giorno = new Intl.DateTimeFormat('it-IT', { dateStyle: 'long', timeZone: 'Europe/Rome' }).format(new Date(risposta.chiesta));
 Astro.response.headers.set('X-Robots-Tag', 'noindex');
 ---
 
-<Admin title={`${assistente.nome} - Presentazione InBallet`}>
+<Admin title={`${risposta.nome} - Presentazione InBallet`}>
     <main class="ai-chat">
-        <h1 class="sr-only">La risposta di {assistente.nome}</h1>
+        <h1 class="sr-only">La risposta di {risposta.nome}</h1>
         <p class="ai-domanda">{DOMANDA_AI}</p>
-        {risposta ? (
-            <article class="ai-risposta">
-                <Fragment set:html={formattaRisposta(risposta.testo)} />
-                {risposta.fonti.length > 0 && (
-                    <Fragment>
-                        <h2 class="ai-titoletto">Fonti</h2>
-                        <ol class="ai-fonti">
-                            {risposta.fonti.map((f) => (
-                                <li><a href={f.url} target="_blank" rel="noopener">{f.titolo}<span class="sr-only"> (si apre in una nuova scheda)</span></a></li>
-                            ))}
-                        </ol>
-                    </Fragment>
-                )}
-            </article>
-        ) : (
-            <p class="ai-vuota">La risposta di {assistente.nome} non è ancora disponibile: manca la chiave API sul server o il servizio non ha risposto.</p>
-        )}
-        {risposta && (
-            <footer class="ai-piede">
-                <small>Risposta vera di {risposta.modello} con ricerca sul web, chiesta dal server il {giorno}.</small>
-            </footer>
-        )}
+        <article class="ai-risposta">
+            <Fragment set:html={formattaRisposta(risposta.testo)} />
+            {risposta.fonti.length > 0 && (
+                <Fragment>
+                    <h2 class="ai-titoletto">Fonti</h2>
+                    <ol class="ai-fonti">
+                        {risposta.fonti.map((f) => (
+                            <li><a href={f.url} target="_blank" rel="noopener">{f.titolo}<span class="sr-only"> (si apre in una nuova scheda)</span></a></li>
+                        ))}
+                    </ol>
+                </Fragment>
+            )}
+        </article>
+        <footer class="ai-piede">
+            <small>Risposta vera di {risposta.modello} con ricerca sul web, ricopiata parola per parola dalla chat del {giorno}.</small>
+        </footer>
     </main>
 </Admin>

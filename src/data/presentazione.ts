@@ -14,7 +14,7 @@ interface RispostaAI {
 export const ASSISTENTI: Record<'google' | 'chatgpt' | 'claude', RispostaAI> = {
   google: {
     nome: 'Google AI',
-    modello: 'l’Overview dell’AI di Google',
+    modello: 'Overview dell’AI di Google',
     chiesta: '2026-11-14',
     testo: `A Lainate sono presenti diverse scuole di danza e accademie con proposte per tutte le età e discipline:
 
@@ -55,7 +55,7 @@ Se mi indichi quale genere di danza ti interessa (es. classica, hip hop, aerea, 
   },
   chatgpt: {
     nome: 'ChatGPT',
-    modello: 'ChatGPT',
+    modello: 'ChatGPT con ricerca sul web',
     chiesta: '2026-11-14',
     testo: `A Lainate ci sono diverse scuole di danza interessanti. Ho confrontato l'offerta formativa, le recensioni e le informazioni disponibili sui siti ufficiali.
 
@@ -98,7 +98,7 @@ La mia scelta dipenderebbe soprattutto dall'obiettivo: **I.N. Ballet** per un pe
   },
   claude: {
     nome: 'Claude',
-    modello: 'Claude Sonnet 5.5',
+    modello: 'Claude Sonnet 5.5 con ricerca sul web',
     chiesta: '2026-11-14',
     testo: `## Scuole di danza a Lainate
 

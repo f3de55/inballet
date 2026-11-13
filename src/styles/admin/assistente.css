@@ -69,10 +69,6 @@ body:has(.ai-chat) {
   font-size: var(--small-size);
 }
 
-.ai-vuota {
-  color: var(--text-muted);
-}
-
 .ai-piede {
   --lc: var(--linea);
   margin-top: auto;

@@ -6,8 +6,7 @@ import { Image } from 'astro:assets';
 import Admin from '../layouts/Admin.astro';
 import { isLoggedIn } from '../lib/auth';
 import { enfatizza } from '../lib/text';
-import { ASSISTENTI, passi, type Apertura, type Assistente } from '../data/presentazione';
-import { rispostaAI } from '../lib/risposte-ai';
+import { passi, type Apertura } from '../data/presentazione';
 import copertina from '../assets/images/presentazione/copertina-inballet.webp';
 import sitoOggi from '../assets/images/presentazione/sito-oggi.webp';
 import nuovoSito from '../assets/images/presentazione/nuovo-sito.webp';
@@ -29,7 +28,6 @@ import sfondoDopo from '../assets/images/presentazione/fondale-dopo.webp';
 export const prerender = false;
 
 if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login?da=/presentazione');
-for (const nome of Object.keys(ASSISTENTI) as Assistente[]) void rispostaAI(nome);
 
 const schermi = Math.max(...passi.map((p) => (p.scena.tipo === 'siti' || p.scena.tipo === 'confronto' ? p.scena.schermi.length : 0)));
 const totale = passi.length - 1;
@@ -132,15 +130,15 @@ const nomePannello = (i: number) => {
                         <div>
                             <h3>Da parte vostra</h3>
                             <ul class="pres-righe">
-                                <li>Le foto vere di lezioni, spettacoli e sedi</li>
-                                <li>Una rilettura dei testi: età, orari, storia</li>
-                                <li>Nome, foto e due righe per ogni insegnante</li>
+                                <li>Le foto vere per tutto il sito</li>
+                                <li>Il controllo di tutti i testi, pagina per pagina</li>
                             </ul>
                         </div>
                         <div>
                             <h3>Da parte nostra</h3>
                             <ul class="pres-righe">
                                 <li>Finire Étoile e provarlo con domande vere</li>
+                                <li>Chiedervi l’hosting su cui pubblicarlo</li>
                                 <li>Mettere il sito online su inballet.it</li>
                             </ul>
                         </div>
@@ -150,29 +148,30 @@ const nomePannello = (i: number) => {
                     <Fragment>
                         <div class="pres-colonne">
                             <div>
-                                <p class="pres-cifra">1.500 €</p>
+                                <p class="pres-cifra">1.500 € <small class="pres-cifra-unita">netti</small></p>
+                                <p><strong>1.875 € lordi</strong>, con la ritenuta d’acconto del 20% (375 €) che versate voi con l’F24.</p>
                                 <p>Una volta sola, per tutto il sito.</p>
                             </div>
                             <div>
                                 <h3>Cosa comprende</h3>
                                 <ul class="pres-righe">
-                                    <li>Il sito, fatto su misura</li>
-                                    <li>Étoile e la dashboard</li>
+                                    <li>Tutto il sito, fatto su misura</li>
+                                    <li>La dashboard</li>
+                                    <li>Étoile, il chatbot</li>
                                     <li>Le modifiche fino al lancio</li>
                                 </ul>
                             </div>
                         </div>
-                        <small class="pres-fonte">1.200 € a noi e 300 € di ritenuta d’acconto, che versate voi con l’F24. Restano fuori i costi a consumo dei servizi esterni.</small>
+                        <small class="pres-fonte">Lavoriamo con prestazioni occasionali: niente partita IVA. Restano fuori i costi a consumo dei servizi esterni.</small>
                     </Fragment>
                 )}
                 {nomePannello(i) === 'dopo' && (
                     <Fragment>
                         <ul class="pres-righe">
                             <li>Eventi, documenti e insegnanti li aggiornate voi dalla dashboard, <strong>senza costi</strong>.</li>
-                            <li>Se volete, una volta l’anno controlliamo che tutto funzioni: <strong>250 €</strong>.</li>
-                            <li>Il dominio inballet.it <strong>resta vostro</strong>.</li>
+                            <li>Se volete, una volta l’anno facciamo la <strong>manutenzione</strong>: aggiornamenti e controllo che tutto funzioni, <strong>250 €</strong>.</li>
                         </ul>
-                        <small class="pres-fonte">Lavoriamo con prestazioni occasionali: niente partita IVA e nessuna reperibilità continua.</small>
+                        <small class="pres-fonte">Nessuna reperibilità continua.</small>
                     </Fragment>
                 )}
             </section>

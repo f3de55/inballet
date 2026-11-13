@@ -1,0 +1,55 @@
+---
+import '../../../styles/components/linee.css';
+import '../../../styles/admin/mappa.css';
+import Admin from '../../../layouts/Admin.astro';
+import { isLoggedIn } from '../../../lib/auth';
+import { indirizziSitemap } from '../../../lib/sitemap';
+import { SITO_ATTUALE } from '../../../data/presentazione';
+
+export const prerender = false;
+
+const sito = Astro.params.sito;
+if (sito !== 'oggi' && sito !== 'nuovo') return new Response(null, { status: 404 });
+if (!(await isLoggedIn(Astro.session))) return new Response(null, { status: 401 });
+
+const file = `${SITO_ATTUALE}/sitemap.xml`;
+let stato = 200;
+let voci: string[] = [];
+if (sito === 'nuovo') {
+  voci = await indirizziSitemap(Astro.site!, Astro.site!);
+} else {
+  try {
+    const res = await fetch(file, { signal: AbortSignal.timeout(8000) });
+    stato = res.status;
+    if (res.ok) voci = [...(await res.text()).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]);
+  } catch {
+    stato = 0;
+  }
+}
+const percorso = (indirizzo: string) => new URL(indirizzo).pathname;
+Astro.response.headers.set('X-Robots-Tag', 'noindex');
+---
+
+<Admin title="Mappa del sito - Presentazione InBallet">
+    <main class="mappa" data-sito={sito}>
+        <header class="mappa-testa">
+            <p class="mappa-titoletto">Mappa del sito · {sito === 'oggi' ? 'oggi' : 'nuovo sito'}</p>
+            <h1>{file.replace(/^https?:\/\//, '')}</h1>
+            {voci.length > 0 ? (
+                <small class="mappa-stato mappa-stato--si"><i class="fas fa-check" aria-hidden="true"></i>{voci.length} pagine consegnate a Google</small>
+            ) : (
+                <small class="mappa-stato mappa-stato--no"><i class="fas fa-times" aria-hidden="true"></i>{stato ? `Errore ${stato}: la mappa non esiste` : 'Il sito non risponde'}</small>
+            )}
+        </header>
+        {voci.length > 0 ? (
+            <ol class="mappa-voci">
+                {voci.map((v) => <li>{percorso(v)}</li>)}
+            </ol>
+        ) : (
+            <div class="mappa-vuota">
+                <strong class="mappa-codice">{stato || '—'}</strong>
+                <p>Google non riceve l’elenco delle pagine: deve scoprirle da solo, un link dopo l’altro, e quelle che nessuno collega restano fuori.</p>
+            </div>
+        )}
+    </main>
+</Admin>

@@ -280,12 +280,16 @@
   min-height: 0;
 }
 
-.pres-schermi:is([data-n='2'], [data-n='3']) {
+.pres-schermi:not([data-n='1']) {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.pres-schermi[data-n='3'] {
+.pres-schermi:is([data-n='3'], [data-n='4']) {
   grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.pres-schermi[data-n='4'] {
+  grid-auto-flow: column;
 }
 
 .pres-schermi[data-n='3'] .pres-schermo:first-of-type {
@@ -667,6 +671,13 @@
   color: var(--dark-navy);
 }
 
+.pres-pannello .pres-cifra-unita {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-medium);
+  letter-spacing: 0;
+  color: var(--text-muted);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .pres-schermi[data-entra],
   .pres-copertina,
@@ -715,6 +726,7 @@
   .pres-palco[data-dispositivo='pc'] .pres-schermi[data-n] {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: none;
+    grid-auto-flow: row;
   }
 
   .pres-nome {

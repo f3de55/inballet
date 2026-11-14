@@ -671,6 +671,10 @@
   align-items: start;
 }
 
+.pres-colonne:has(> :only-child) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .pres-colonne > div {
   display: flex;
   flex-direction: column;

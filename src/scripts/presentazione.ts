@@ -475,10 +475,10 @@ function crea(el: HTMLElement): Schermo {
 }
 
 function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
-  const { url, nome, dispositivo, evidenzia: selettore, frase, fermo } = schermata;
+  const { url, nome, dispositivo, evidenzia: selettore, frase, fermo, nostro } = schermata;
   s.el.hidden = false;
   s.sito.textContent = nome;
-  s.el.dataset.sito = nome === 'Nuovo sito' ? 'nuovo' : 'oggi';
+  s.el.dataset.sito = nome === 'Nuovo sito' || nostro ? 'nuovo' : 'oggi';
   s.selettore = selettore;
   s.frase = frase;
   s.fermo = !!fermo;
@@ -511,8 +511,8 @@ function apri(s: Schermo, schermata: Schermata, quanti = 1, posto = 0) {
 }
 
 function aggancio(schermi: Schermo[]) {
-  const s = schermi.find((x) => !x.el.hidden && !x.faro.hidden);
-  return s?.dispositivo === 'pc' ? s.faro.getBoundingClientRect() : null;
+  const accesi = schermi.filter((x) => !x.el.hidden && !x.faro.hidden);
+  return accesi.length === 1 && accesi[0].dispositivo === 'pc' ? accesi[0].faro.getBoundingClientRect() : null;
 }
 
 function colloca(nota: HTMLElement, palco: HTMLElement, a: DOMRect | null) {

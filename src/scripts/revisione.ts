@@ -157,14 +157,17 @@ input.addEventListener('change', () => {
   errore(scartati.length ? `Non aggiunti (solo immagini o video fino a 50 MB): ${scartati.map((f) => f.name).join(', ')}` : '');
 });
 
-apri.addEventListener('click', () => {
+const mostraDialog = () => {
   etichettaPagina.textContent = `Modalità revisione · ${nomePagina()}`;
   doveTesto.riempi();
   doveFile.riempi();
   errore('');
   dialog.showModal();
   dialog.focus();
-});
+};
+
+apri.addEventListener('click', mostraDialog);
+if (new URLSearchParams(location.search).get('revisione') === 'apri') mostraDialog();
 chiudi.addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', (e) => {
   if (e.target === dialog) dialog.close();

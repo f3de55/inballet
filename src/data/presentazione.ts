@@ -150,6 +150,7 @@ export interface Schermata {
   evidenzia?: string;
   frase?: [string, string];
   fermo?: boolean;
+  nostro?: boolean;
 }
 
 export type Apertura = 'copertina' | 'sito-oggi' | 'nuovo-sito' | 'google' | 'scuole' | 'dashboard' | 'prossimi';
@@ -456,6 +457,19 @@ export const passi: Passo[] = [
   },
   apertura('prossimi', 'Prossimi passi', 'Cosa manca, quanto costa e cosa succede dopo.'),
   { capitolo: 'Prossimi passi', titolo: 'Cosa manca', scena: { tipo: 'pannello', pannello: 'mancano' } },
+  {
+    capitolo: 'Prossimi passi',
+    titolo: 'Testi e foto, da parte vostra',
+    testo: 'Accendete la modalità revisione nelle Impostazioni: su ogni pagina, con Proponi un testo, ci mandate testi, foto e video, sezione per sezione.',
+    evidenzia: ['modalità revisione', 'Proponi un testo'],
+    scena: {
+      tipo: 'siti',
+      schermi: [
+        { nome: 'Impostazioni', url: '/dashboard?impostazioni=revisione', dispositivo: 'pc', evidenzia: '#modalImpostazioni .modal-box', nostro: true },
+        { nome: 'Proponi un testo', url: '/chi-siamo?revisione=apri', dispositivo: 'pc', evidenzia: '.revisione-dialog', nostro: true },
+      ],
+    },
+  },
   { capitolo: 'Prossimi passi', titolo: 'Un costo unico', scena: { tipo: 'pannello', pannello: 'costo' } },
   { capitolo: 'Prossimi passi', titolo: 'Dopo la pubblicazione', scena: { tipo: 'pannello', pannello: 'dopo' } },
 ];

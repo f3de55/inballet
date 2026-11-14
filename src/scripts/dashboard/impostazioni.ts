@@ -35,6 +35,13 @@ if (modal && form) {
     if (revisione.checked && !foglio.value) foglio.focus();
   });
 
+  const richiesta = new URLSearchParams(location.search).get('impostazioni');
+  if (richiesta !== null) {
+    mostraModal(modal);
+    if (richiesta === 'revisione') revisione.checked = true;
+    mostraCampi();
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     salva.disabled = true;

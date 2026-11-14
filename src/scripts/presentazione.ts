@@ -636,14 +636,12 @@ function avvia(radice: HTMLElement) {
   avanti.forEach((b) => b.addEventListener('click', () => vai(attuale + 1)));
   indietro.forEach((b) => b.addEventListener('click', () => vai(attuale - 1)));
 
-  const chiudiNota = (chiusa: boolean) => {
-    radice.toggleAttribute('data-nota-chiusa', chiusa);
-    if (chiusa) {
-      schermi.forEach(spegni);
-      riapri.focus({ preventScroll: true });
-    } else collocaNota();
+  const chiudiNota = () => {
+    radice.setAttribute('data-nota-chiusa', '');
+    schermi.forEach(spegni);
+    riapri.focus({ preventScroll: true });
   };
-  trova(radice, '[data-chiudi-nota]').addEventListener('click', () => chiudiNota(true));
+  trova(radice, '[data-chiudi-nota]').addEventListener('click', chiudiNota);
   interazione = () => radice.setAttribute('data-nota-chiusa', '');
   radice.addEventListener(
     'wheel',
@@ -655,14 +653,19 @@ function avvia(radice: HTMLElement) {
     },
     { passive: true },
   );
-  riapri.addEventListener('click', () => chiudiNota(false));
+  riapri.addEventListener('click', () => {
+    const n = attuale;
+    attuale = -1;
+    vai(n);
+    radice.focus({ preventScroll: true });
+  });
 
   radice.addEventListener('click', (e) => {
     const scelta = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-percorso]');
     const scena = scene[attuale];
     if (!scelta || scena?.tipo !== 'siti') return;
     scelta.parentElement?.querySelectorAll('[data-percorso]').forEach((btn) => btn.setAttribute('aria-pressed', String(btn === scelta)));
-    chiudiNota(true);
+    chiudiNota();
     apri(schermi[0], { ...scena.schermi[0], url: scelta.dataset.percorso ?? '/' });
   });
 

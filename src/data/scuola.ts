@@ -181,7 +181,7 @@ export const faq = [
   },
   {
     domanda: 'InBallet forma anche insegnanti di danza?',
-    risposta: "Sì. Dal 2023 InBallet è ente formativo riconosciuto per il titolo di Insegnante di Danza, valido CSEN e CONI a livello nazionale: un corso biennale con specializzazione Modern e sei master a seguire. Propone anche formazioni su misura per educatori, terapeuti, scuole ed enti.",
+    risposta: "Sì. Dal 2023 InBallet è ente formativo riconosciuto per il titolo di Insegnante di Danza, valido CSEN e CONI a livello nazionale: un corso biennale con specializzazione Modern e la possibilità di proseguire con sei master. Propone anche formazioni su misura per educatori, terapeuti, scuole ed enti.",
     evidenzia: ['Dal 2023', 'CSEN e CONI', 'corso biennale'],
   },
   {

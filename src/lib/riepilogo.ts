@@ -75,7 +75,7 @@ ${categorieCorsi.map((c) => `### ${c.nome}\n\n${strip(c.descrizione)}\n\n${c.cor
 
 ## Formazione
 
-- [Corso di formazione per insegnanti di danza](${url('/formazione-insegnanti')}): ente formativo dal 2023; percorso biennale con specializzazione Modern e sei master successivi, titolo di Insegnante di Danza riconosciuto CSEN e CONI a valenza nazionale
+- [Corso di formazione per insegnanti di danza](${url('/formazione-insegnanti')}): ente formativo dal 2023; percorso biennale con specializzazione Modern e fino a sei master successivi, titolo di Insegnante di Danza riconosciuto CSEN e CONI a valenza nazionale
 - [Formazioni personalizzate](${url('/formazioni-personalizzate')}): corsi su misura per professionisti dell'ambito educativo e terapeutico, pedagogisti e insegnanti, tra linguaggi espressivi, corporeità, motricità ed esplorazione del sé
 
 ## Iscrizioni ${iscrizioni.anno}

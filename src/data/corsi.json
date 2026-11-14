@@ -562,7 +562,7 @@
   },
   "danza-classica": {
     "title": "Danza Classica a Lainate e Rho | InBallet",
-    "description": "Danza Classica a Lainate e Rho per bambini, ragazzi e adulti: sbarra, centro, port de bras, salti e giri, in classi per livello. La base di ogni stile.",
+    "description": "Danza Classica a Lainate e Rho: sbarra, diagonali, centro e salti in classi per livello ed esperienza, per postura, tonicità e costanza. La base di ogni stile.",
     "ogTitle": "Danza Classica | InBallet",
     "ogDescription": "La tecnica accademica dalla sbarra al centro, per bambini, ragazzi e adulti.",
     "badge": "Tutti i livelli",
@@ -584,40 +584,40 @@
       "tablet": "50% 50%",
       "mobile": "50% 50%"
     },
-    "intro": "<p>La <strong>Danza Classica</strong> è la tecnica accademica alla base di quasi tutti gli stili. A InBallet la studiano bambini, ragazzi e adulti nelle sedi di <strong>Lainate e Rho</strong>, in <strong>classi divise per livello</strong>: in base all'età, ma soprattutto all'esperienza.</p>\n<p>La lezione ha una struttura precisa: <strong>sbarra</strong>, poi <strong>diagonali</strong> e centro, con port de bras, salti e giri, fino al <strong>saluto all'insegnante</strong>. Ogni fase prepara la successiva: per questo gli allievi arrivano qualche minuto prima, per scaldare le articolazioni e preparare il corpo all'allungamento.</p>\n<p>Quando l'insegnante e la Direttrice Artistica ritengono il corso pronto, il lavoro prosegue con una <strong>coreografia</strong>. Una base classica è consigliata anche a chi vuole studiare <a href=\"/modern\">Modern</a>.</p>",
+    "intro": "<p>La <strong>Danza Classica</strong> è la tecnica accademica alla base di quasi tutti gli stili. A InBallet la studiano bambini, ragazzi e adulti nelle sedi di <strong>Lainate e Rho</strong>, in <strong>classi divise per livello</strong>: in base all'età, ma soprattutto all'esperienza.</p>\n<p>La lezione ha una struttura precisa: <strong>sbarra</strong>, poi <strong>diagonali</strong>, esercizi al centro e salti, fino al <strong>saluto all'insegnante</strong>. Ogni fase prepara la successiva: per questo gli allievi arrivano qualche minuto prima, per scaldare le articolazioni e preparare il corpo all'allungamento. Con un buon lavoro iniziale le combinazioni diventano sempre più autonome e l'equilibrio si rafforza.</p>\n<p>Quando l'insegnante e la Direttrice Artistica ritengono il corso pronto, il lavoro prosegue con una <strong>coreografia</strong>. Una base classica è consigliata anche a chi vuole studiare <a href=\"/modern\">Modern</a>.</p>",
     "eta": "Bambini, ragazzi e adulti, per livelli",
     "frequenza": "2-3 lezioni a settimana",
-    "metodoTitolo": "Sbarra, centro e musicalità",
+    "metodoTitolo": "Portamento, dettagli e costanza",
     "metodo": [
       {
-        "titolo": "Sbarra",
-        "testo": "Gli esercizi fondamentali per <strong>forza, equilibrio e allineamento</strong>: ogni lezione comincia da qui."
+        "titolo": "Portamento",
+        "testo": "Una postura più curata nasce da una <strong>conoscenza più profonda del proprio corpo</strong>."
       },
       {
-        "titolo": "Centro",
-        "testo": "Al centro della sala gli esercizi diventano <strong>adagio, salti, giri e combinazioni</strong>, senza l'appoggio della sbarra."
+        "titolo": "Dettagli",
+        "testo": "Consolidare la <strong>resistenza agli esercizi</strong> porta un risultato migliore in ogni parte del corpo."
       },
       {
-        "titolo": "Musicalità",
-        "testo": "<strong>Il movimento segue la musica</strong>: tempi, accenti e respiro rendono la tecnica espressiva."
+        "titolo": "Costanza",
+        "testo": "Esercizi eseguiti con assiduità e correttezza danno <strong>tonicità e uno sviluppo muscolare armonico</strong>."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
     "imparaTitoli": [
-      "Posizioni fondamentali",
-      "Allineamento",
-      "Sbarra e centro",
-      "Uso delle braccia",
-      "Salti e giri",
-      "Musicalità"
+      "Sbarra",
+      "Diagonali e centro",
+      "Salti",
+      "Equilibrio",
+      "Postura",
+      "Coreografia"
     ],
     "impara": [
-      "Le <strong>cinque posizioni</strong> fondamentali",
-      "<strong>Postura</strong> e allineamento del corpo",
-      "Esercizi alla <strong>sbarra</strong> e al centro",
-      "<strong>Port de bras</strong> e uso delle braccia",
-      "<strong>Salti</strong>, <strong>giri</strong> e combinazioni",
-      "<strong>Musicalità</strong> ed espressività"
+      "Gli esercizi fondamentali alla <strong>sbarra</strong>",
+      "<strong>Diagonali</strong> ed esercizi al centro",
+      "<strong>Salti</strong> e combinazioni",
+      "<strong>Equilibrio</strong> e autonomia nelle combinazioni",
+      "<strong>Postura</strong> e tonicità muscolare",
+      "La <strong>coreografia</strong>, quando il corso è pronto"
     ],
     "ctaTema": "danza"
   },

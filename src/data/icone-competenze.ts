@@ -8,7 +8,7 @@ export const iconeCompetenze: Record<string, readonly string[]> = {
   contaminato: ['fa-shuffle', 'fa-compass', 'fa-fingerprint', 'fa-arrow-trend-up', 'fa-layer-group', 'fa-feather'],
   'contemporanea-adulti': ['fa-dumbbell', 'fa-arrow-down', 'fa-grip-lines', 'fa-arrows-left-right', 'fa-shoe-prints', 'fa-brain'],
   'danza-acrobatica': ['fa-dumbbell', 'fa-person', 'fa-scale-balanced', 'fa-bullseye', 'fa-star', 'fa-heart'],
-  'danza-classica': ['fa-shoe-prints', 'fa-person', 'fa-grip-lines', 'fa-hands', 'fa-arrows-rotate', 'fa-music'],
+  'danza-classica': ['fa-grip-lines', 'fa-shuffle', 'fa-arrow-up', 'fa-scale-balanced', 'fa-person', 'fa-masks-theater'],
   'danza-contemporanea': ['fa-shoe-prints', 'fa-expand', 'fa-scale-balanced', 'fa-shuffle', 'fa-lightbulb', 'fa-layer-group'],
   'educazione-danza': ['fa-music', 'fa-person', 'fa-arrows-rotate', 'fa-layer-group', 'fa-compass', 'fa-ear-listen'],
   heels: ['fa-person', 'fa-ruler-combined', 'fa-arrows-up-down-left-right', 'fa-wind', 'fa-shuffle', 'fa-masks-theater'],

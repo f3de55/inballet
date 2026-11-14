@@ -147,8 +147,22 @@ const nomePannello = (i: number) => {
                     <Fragment>
                         <div class="pres-colonne">
                             <div>
+                                <h3>Il compenso</h3>
                                 <p class="pres-cifra">1.500 € <small class="pres-cifra-unita">netti</small></p>
-                                <p><strong>1.875 € lordi</strong>, con la ritenuta d’acconto del 20% (375 €) che versate voi con l’F24.</p>
+                                <dl class="pres-conto">
+                                    <div>
+                                        <dt>Lordo</dt>
+                                        <dd>1.875 €</dd>
+                                    </div>
+                                    <div>
+                                        <dt>Ritenuta d’acconto 20%<small>la versate voi con l’F24</small></dt>
+                                        <dd>− 375 €</dd>
+                                    </div>
+                                    <div>
+                                        <dt>Netto a noi</dt>
+                                        <dd>1.500 €</dd>
+                                    </div>
+                                </dl>
                             </div>
                             <div>
                                 <h3>Cosa comprende</h3>
@@ -158,17 +172,14 @@ const nomePannello = (i: number) => {
                                 </ul>
                             </div>
                         </div>
-                        <small class="pres-fonte">Lavoriamo con prestazioni occasionali: niente partita IVA. Restano fuori i costi a consumo dei servizi esterni.</small>
+                        <small class="pres-fonte">Lavoriamo con prestazioni occasionali: niente partita IVA e nessuna reperibilità continua. Restano fuori i costi a consumo dei servizi esterni.</small>
                     </Fragment>
                 )}
                 {nomePannello(i) === 'dopo' && (
-                    <Fragment>
-                        <ul class="pres-righe">
-                            <li>Eventi, documenti e insegnanti li aggiornate voi dalla dashboard, <strong>senza costi</strong>.</li>
-                            <li>Se volete, una volta l’anno facciamo la <strong>manutenzione</strong>: aggiornamenti e controllo che tutto funzioni, <strong>250 €</strong>.</li>
-                        </ul>
-                        <small class="pres-fonte">Nessuna reperibilità continua.</small>
-                    </Fragment>
+                    <ul class="pres-righe">
+                        <li>Eventi, documenti e insegnanti li aggiornate voi dalla dashboard, <strong>senza costi</strong>.</li>
+                        <li>Se volete, una volta l’anno facciamo la <strong>manutenzione</strong>: aggiornamenti e controllo che tutto funzioni, <strong>250 €</strong>.</li>
+                    </ul>
                 )}
             </section>
         ))}

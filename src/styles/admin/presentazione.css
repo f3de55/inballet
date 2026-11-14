@@ -740,6 +740,10 @@
   gap: 0.75rem;
 }
 
+.pres-colonne > div > h3:not(:first-child) {
+  margin-top: 1.25rem;
+}
+
 .pres-pannello .pres-colonne h3 {
   font-size: var(--label-size);
   font-weight: var(--label-weight);

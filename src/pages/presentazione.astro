@@ -158,7 +158,7 @@ const nomePannello = (i: number) => {
                                         <dt>Ritenuta d’acconto 20%<small>la versate voi con l’F24</small></dt>
                                         <dd>− 375 €</dd>
                                     </div>
-                                    <div>
+                                    <div class="pres-totale">
                                         <dt>Netto a noi</dt>
                                         <dd>1.500 €</dd>
                                     </div>
@@ -176,18 +176,16 @@ const nomePannello = (i: number) => {
                     </Fragment>
                 )}
                 {nomePannello(i) === 'dopo' && (
-                    <div class="pres-colonne">
+                    <dl class="pres-conto">
                         <div>
-                            <h3>Ogni giorno</h3>
-                            <p class="pres-cifra">Senza costi</p>
-                            <p>Eventi, documenti e insegnanti li aggiornate voi dalla dashboard.</p>
+                            <dt>Eventi, documenti e insegnanti<small>li aggiornate voi dalla dashboard</small></dt>
+                            <dd>Senza costi</dd>
                         </div>
                         <div>
-                            <h3>Se volete, una volta l’anno</h3>
-                            <p class="pres-cifra">250 €</p>
-                            <p>Manutenzione: controlliamo che tutto funzioni.</p>
+                            <dt>Manutenzione, se volete<small>una volta l’anno controlliamo che tutto funzioni</small></dt>
+                            <dd>250 €</dd>
                         </div>
-                    </div>
+                    </dl>
                 )}
             </section>
         ))}

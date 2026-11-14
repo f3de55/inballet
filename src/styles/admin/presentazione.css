@@ -509,7 +509,7 @@
   background: var(--linea-alto);
 }
 
-.pres-conto > div:last-child {
+.pres-conto > .pres-totale {
   --lc: var(--dark-navy);
   font-weight: var(--font-semibold);
 }

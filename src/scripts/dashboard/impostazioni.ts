@@ -16,13 +16,19 @@ if (modal && form) {
     campi.hidden = !revisione.checked;
   };
 
+  const chiudi = () => {
+    nascondiModal(modal);
+    form.reset();
+    mostraCampi();
+  };
+
   document.addEventListener('click', (e) => {
     const t = e.target as Element;
     if (t.closest('[data-apri-impostazioni]')) return mostraModal(modal);
-    if (t.closest('[data-chiudi-impostazioni]') || t === modal) return nascondiModal(modal);
+    if (t.closest('[data-chiudi-impostazioni]') || t === modal) return chiudi();
   });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) nascondiModal(modal);
+    if (e.key === 'Escape' && modal.classList.contains('open')) chiudi();
   });
   revisione.addEventListener('change', () => {
     mostraCampi();
@@ -37,6 +43,9 @@ if (modal && form) {
     salva.disabled = false;
     salva.textContent = 'Salva';
     if (error) return toast(error.message || 'Impostazioni non salvate', 'error');
+    revisione.defaultChecked = revisione.checked;
+    foglio.defaultValue = foglio.value;
+    cartella.defaultValue = cartella.value;
     if (data.avviso) return toast(data.avviso, 'warning');
     if (!revisione.checked) return toast('Modalità revisione spenta', 'success');
     const dove = data.cartella ? ` · file in «${data.cartella}»` : '';

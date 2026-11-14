@@ -10,6 +10,9 @@ import { generaChat, generaEventi, generaInsegnanti, MAX_EVENTI, MAX_INSEGNANTI_
 import { eliminaTutto, PAROLA_CONFERMA } from '../lib/pulizia';
 import { eliminaDocumento, ErroreDocumenti, ordinaDocumenti, salvaDocumento, salvaTesti } from '../lib/documenti';
 import * as insegnanti from '../lib/insegnanti';
+import { ErroreImpostazioni, leggiImpostazioni, salvaImpostazioni, segnaRevisione } from '../lib/impostazioni';
+import { caricaPezzo, ErroreRevisione, iniziaCaricamento, inviaRevisione, preparaTabella, revisioneCollegata } from '../lib/revisione';
+import { MAX_TESTO_REVISIONE } from '../lib/revisione-comune';
 
 function admin<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O>) {
   return async (input: I, context: ActionAPIContext): Promise<O> => {
@@ -19,7 +22,13 @@ function admin<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O
     try {
       return await handler(input, context);
     } catch (e) {
-      if (e instanceof ErroreEvento || e instanceof ErroreDocumenti || e instanceof insegnanti.ErroreInsegnanti) {
+      if (
+        e instanceof ErroreEvento ||
+        e instanceof ErroreDocumenti ||
+        e instanceof insegnanti.ErroreInsegnanti ||
+        e instanceof ErroreImpostazioni ||
+        e instanceof ErroreRevisione
+      ) {
         throw new ActionError({ code: 'BAD_REQUEST', message: e.message });
       }
       throw e;
@@ -216,6 +225,48 @@ export const server = {
     }),
   },
 
+  impostazioni: {
+    salva: defineAction({
+      input: z.object({ revisione: z.boolean(), foglio: z.string().max(500), cartella: z.string().max(500) }),
+      handler: admin(async (input, context): Promise<{ avviso?: string; foglio?: string; cartella?: string }> => {
+        const imp = await salvaImpostazioni(input);
+        segnaRevisione(context.cookies, context.url, imp.revisione);
+        if (!imp.revisione) return {};
+        if (!revisioneCollegata())
+          return {
+            avviso: 'Salvato, ma il collegamento a Google non è configurato: i testi non partono finché mancano GOOGLE_REVISIONE_URL e GOOGLE_REVISIONE_CHIAVE',
+          };
+        return preparaTabella(imp.foglio, imp.cartella);
+      }),
+    }),
+  },
+
+  revisione: {
+    inizia: defineAction({
+      input: z.object({ pagina: z.string().max(200), nome: z.string().max(200), tipo: z.string().max(100), peso: z.number().int().min(0) }),
+      handler: admin((input) => iniziaCaricamento(input)),
+    }),
+
+    pezzo: defineAction({
+      accept: 'form',
+      input: z.object({ id: z.string().max(40), inizio: z.coerce.number().int().min(0), pezzo: z.instanceof(File) }),
+      handler: admin(({ id, inizio, pezzo }) => caricaPezzo(id, inizio, pezzo)),
+    }),
+
+    invia: defineAction({
+      input: z.object({
+        pagina: z.string().max(200),
+        indirizzo: z.string().max(500),
+        testo: z.string().max(MAX_TESTO_REVISIONE),
+        caricamenti: z.array(z.string().max(40)).max(50),
+      }),
+      handler: admin(({ pagina, indirizzo, testo, caricamenti }, context) => {
+        if (!/^\/(?!\/)/.test(indirizzo)) throw richiesta('Pagina non valida');
+        return inviaRevisione({ pagina: pagina.trim() || indirizzo, indirizzo: new URL(indirizzo, context.url.origin).href, testo, caricamenti });
+      }),
+    }),
+  },
+
   auth: {
     login: defineAction({
       accept: 'form',
@@ -225,6 +276,7 @@ export const server = {
         if (esito === 'bloccato') throw new ActionError({ code: 'TOO_MANY_REQUESTS', message: 'Troppi tentativi: riprova tra 15 minuti' });
         if (esito === 'errata') throw new ActionError({ code: 'UNAUTHORIZED', message: 'Password non corretta' });
         await login(context.session);
+        segnaRevisione(context.cookies, context.url, (await leggiImpostazioni()).revisione);
       },
     }),
 
@@ -232,6 +284,7 @@ export const server = {
       accept: 'form',
       handler: async (_, context) => {
         logout(context.session);
+        segnaRevisione(context.cookies, context.url, false);
       },
     }),
   },

@@ -2,7 +2,7 @@ import { defineMiddleware } from 'astro:middleware';
 import { isLoggedIn } from './lib/auth';
 import { immagineOttimizzata } from './lib/immagini-ottimizzate';
 
-const CARICAMENTI = /^\/_actions\/(?:immagini\.carica|documenti\.salva|insegnanti\.salva)\/?$/;
+const CARICAMENTI = /^\/_actions\/(?:immagini\.carica|documenti\.salva|insegnanti\.salva|revisione\.pezzo)\/?$/;
 const CORPO_MASSIMO = 256 * 1024;
 const RISERVATE = /^\/(?:dashboard|login)(?:\/|$)/;
 

@@ -44,7 +44,7 @@ Old site URLs (`/danza_classica_accademica.html` …) are redirected (301) by `s
 
 Runs on every on-demand request (pages rendered on demand, Actions, server islands, `/_image`, asset routes), never on prerendered pages:
 
-- POST bodies over 256 KB (`Content-Length`) are refused with 413 before they are read; only the three upload Actions (`immagini.carica`, `documenti.salva`, `insegnanti.salva`) accept more, and only with a logged-in session.
+- POST bodies over 256 KB (`Content-Length`) are refused with 413 before they are read; only the four upload Actions (`immagini.carica`, `documenti.salva`, `insegnanti.salva`, `revisione.pezzo`) accept more, and only with a logged-in session.
 - POSTs to `/_actions/*` need an `Origin` header equal to the site origin (403 otherwise), so scripts and tests calling an Action must send it.
 - `/_image` (the Astro endpoint that resizes the photos of on-demand pages with sharp on every request) goes through `src/lib/immagini-ottimizzate.ts`: each variant is produced once and kept in memory (64 MB, least recently used out first, `immutable` + ETag); only the shapes the site generates are accepted (`href` in `/_astro/`, `w`/`h` up to 2560, `f` webp/jpg/png, `fit=cover`), at most 90 new variants a minute. Anything else, or a new variant over that ceiling, is redirected to the original file, so photos keep showing and nobody can make the server resize without end. A new `getImage` option (quality, another format…) must be added to `PARAMETRI` / `FORMATI` there.
 - Every response gets `X-Content-Type-Options`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy`; `/login` and `/dashboard` are `no-store`.
@@ -55,7 +55,7 @@ Page for the owner, behind the dashboard login (redirects to `/login?da=/present
 
 ### Backend: Astro Actions
 
-All backend logic lives in `src/actions/index.ts` — no separate API routes. Actions are grouped: `chatbot`, `eventi`, `tipi`, `immagini`, `documenti`, `insegnanti`, `demo`, `auth`. Admin actions guard themselves with `soloAdmin()` (checks session). Called from the browser via `import { actions } from 'astro:actions'` or as `<form>` action.
+All backend logic lives in `src/actions/index.ts` — no separate API routes. Actions are grouped: `chatbot`, `eventi`, `tipi`, `immagini`, `documenti`, `insegnanti`, `demo`, `impostazioni`, `revisione`, `auth`. Admin actions guard themselves with `soloAdmin()` (checks session). Called from the browser via `import { actions } from 'astro:actions'` or as `<form>` action.
 
 ### Data layer
 
@@ -74,6 +74,7 @@ File layout in `data/`:
 - `insegnanti.json` — header and teacher cards (name, role, bio, competenze list, photo) of the «Insegnanti» carousel in `/chi-siamo` (dashboard › Insegnanti; defaults in `src/data/insegnanti.ts`, no teachers by default: the section is hidden while the list is empty). `/chi-siamo` is therefore rendered on demand. Demo teachers (dashboard › Insegnanti › Dati demo, `generaInsegnanti` in `src/lib/demo.ts`) carry `demo: true` and are removed with their photos in one click; their portraits come from `demo/insegnanti` (vertical photos named `donna-*` / `uomo-*`, the prefix picks the name), without photos they get initials
 - `uploads/insegnanti/` — teacher photos, cropped 4:5 (800x1000) and converted to WebP on upload, served on `/assets/images/insegnanti/<file>`
 - `conversazioni/` — chatbot conversations, one `<uuid>.json` per chat (deleted after 30 days)
+- `impostazioni.json` — dashboard settings (`revisione` on/off, Google Sheets and Drive folder addresses), see Impostazioni below
 - `google.json` — Google Places cache (rating, review count, 5 latest reviews, opening hours), see Google below
 
 In Docker, this directory is a named volume (`inballet-data`) so data survives rebuilds.
@@ -97,6 +98,14 @@ In Docker, this directory is a named volume (`inballet-data`) so data survives r
 - Home «Dicono di noi»: `<RecensioniGoogle server:defer>` (static page, the island is rendered on demand, `Cache-Control` 1h); `scripts/recensioni.ts` (`<recensioni-google>` custom element) only drives the carousel and «Leggi tutto».
 - `/contatti` «Orari segreteria»: `<OrariSegreteria server:defer>` with the week and the openingHoursSpecification JSON-LD of `#scuola`; `scripts/orari.ts` (`<orari-segreteria>`) marks today and «Aperto/Chiuso ora» in the visitor's browser (Rome time).
 - The same data feed `riepilogoScuola()` (opening hours and rating for `/llms.txt` and the chatbot).
+
+### Impostazioni e modalità revisione
+
+The dashboard top bar has «Impostazioni» (`fa-gear`, `components/dashboard/ImpostazioniModal.astro`, `scripts/dashboard/impostazioni.ts`): first «Elimina tutto» (opens the existing `EliminaTuttoModal`), then the «Abilita modalità revisione» checkbox with the Google Sheets address and the Drive folder address (`src/lib/impostazioni.ts`, saved in `data/impostazioni.json`). Saving with revision on calls the Google script, which creates the «Revisione» tab of the sheet if missing (header Data · Pagina · Testo · Immagini e video · Inserito, frozen header, banded rows, a checkbox per row for the developers to tick once the text is on the site).
+
+While revision is on, a logged-in admin sees «Proponi un testo» (bottom left) on every public page: a dialog with a text, images and videos (`scripts/revisione.ts`, CSS `components/revisione.css`, built in JS). Visitors never load it: login, the dashboard and saving the settings set the readable cookie `inballet-revisione=1` (24h, `segnaRevisione()`; logout and revision off remove it), and `scripts/revisione-avvio.ts` (in `Base.astro`) imports the widget only when that cookie is there and the page is not inside a frame (so the presentation never shows it); every Action still checks the session. Files never touch the site: each one goes to Google Drive in a resumable upload, the browser sends 8 MB pieces to `revisione.pezzo` and the server forwards them to the Drive session (any size up to 2 GB, low memory), inside a subfolder named after the page; then `revisione.invia` appends one row: date, page name (breadcrumb, linked to the page address), text, the file names linked to Drive.
+
+Google is reached only through the Apps Script web app `google/revisione.gs`, run as the owner of the sheet and folder (a personal Drive cannot receive files from a service account). Setup once: script.google.com › new project › paste the file › Project settings › Script properties `CHIAVE` = a long random string › Deploy › New deployment › Web app, Execute as «Me», Who has access «Anyone» › authorise › copy the `/exec` URL into `GOOGLE_REVISIONE_URL` and the same key into `GOOGLE_REVISIONE_CHIAVE`. The owner account must be able to edit the sheet and the folder. After editing the script, deploy a new version of the same deployment (the URL stays). The server accepts upload sessions only on `https://www.googleapis.com/`.
 
 ### Chatbot (Étoile)
 
@@ -125,6 +134,7 @@ All server env vars are `access: 'secret'` on purpose: read at runtime, so they 
 | `CHATBOT_BUDGET_GIORNO` | daily spend cap in dollars, then FAQ-only answers (0 = no cap) |
 | `CHATBOT_IP_HEADER` | header with the real visitor IP behind a proxy (e.g. `cf-connecting-ip`); spoofable, leave empty if unsure. Empty on Railway: its edge drops the `X-Forwarded-For` sent by the client (checked on the live site), so Astro's `clientAddress` is the real address; chatbot and login limits both use it |
 | `GOOGLE_PLACES_API_KEY` | server key for the monthly Places call (reviews, opening hours) |
+| `GOOGLE_REVISIONE_URL`, `GOOGLE_REVISIONE_CHIAVE` | Apps Script web app of the revision mode (`google/revisione.gs`) and its shared key |
 | `PUBLIC_GOOGLE_PLACE_ID` | the school's Google place (also the «Vedi tutte» reviews link) |
 
 ### Content collections

@@ -55,6 +55,8 @@ export default defineConfig({
       DASHBOARD_PASSWORD: envField.string({ context: 'server', access: 'secret', optional: true }),
       DATA_DIR: envField.string({ context: 'server', access: 'secret', default: './data' }),
       GOOGLE_PLACES_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      GOOGLE_REVISIONE_URL: envField.string({ context: 'server', access: 'secret', optional: true }),
+      GOOGLE_REVISIONE_CHIAVE: envField.string({ context: 'server', access: 'secret', optional: true }),
       PUBLIC_GOOGLE_PLACE_ID: envField.string({ context: 'client', access: 'public', default: 'ChIJMTLpHKeUhkcR23yEdflvQRQ' }),
     },
   },

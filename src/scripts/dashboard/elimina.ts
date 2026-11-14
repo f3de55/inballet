@@ -16,7 +16,7 @@ if (modal && form) {
   };
 
   const apri = () => {
-    document.getElementById('modalDemo')?.classList.remove('open');
+    document.querySelectorAll('#modalDemo, #modalImpostazioni').forEach((m) => m.classList.remove('open'));
     form.reset();
     aggiorna();
     mostraModal(modal);

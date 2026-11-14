@@ -1,0 +1,61 @@
+---
+import type { Impostazioni } from '../../lib/impostazioni';
+import { revisioneCollegata } from '../../lib/revisione';
+
+interface Props {
+  impostazioni: Impostazioni;
+}
+
+const { impostazioni } = Astro.props;
+const collegata = revisioneCollegata();
+---
+
+<div class="modal modal--piccola" id="modalImpostazioni" role="dialog" aria-modal="true" aria-labelledby="impostazioniTitolo">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2 id="impostazioniTitolo">Impostazioni</h2>
+            <button type="button" class="modal-close" data-chiudi-impostazioni aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body">
+            <section class="impostazioni-blocco" aria-labelledby="impostazioniElimina">
+                <h3 id="impostazioniElimina">Elimina tutto</h3>
+                <p>Cancella eventi, locandine e dati del chatbot, <strong>anche quelli veri</strong>.</p>
+                <button type="button" class="btn btn-danger" data-apri-elimina><i class="fas fa-trash-alt" aria-hidden="true"></i> Elimina tutto…</button>
+            </section>
+
+            <form class="impostazioni-blocco" id="formImpostazioni" aria-labelledby="impostazioniRevisioneTitolo" novalidate>
+                <h3 id="impostazioniRevisioneTitolo">Modalità revisione</h3>
+                <label class="spunta">
+                    <input type="checkbox" name="revisione" id="impRevisione" checked={impostazioni.revisione} aria-controls="impCampiRevisione">
+                    <span>Abilita modalità revisione</span>
+                </label>
+                <p>Mentre sei collegato alla dashboard, ogni pagina del sito mostra <strong>Proponi un testo</strong>: testi, immagini e video finiscono in una tabella di Google Fogli, pagina per pagina, e non sul sito.</p>
+
+                <div id="impCampiRevisione" class="impostazioni-campi" hidden={!impostazioni.revisione}>
+                    <div class="campo">
+                        <label for="impFoglio">Indirizzo di Google Fogli</label>
+                        <input type="url" id="impFoglio" name="foglio" value={impostazioni.foglio} placeholder="https://docs.google.com/spreadsheets/d/…" autocomplete="off" spellcheck="false">
+                        <small class="nota">La scheda «Revisione» con la tabella viene creata al salvataggio, se non c’è.</small>
+                    </div>
+                    <div class="campo">
+                        <label for="impCartella">Cartella di Google Drive per immagini e video</label>
+                        <input type="url" id="impCartella" name="cartella" value={impostazioni.cartella} placeholder="https://drive.google.com/drive/folders/…" autocomplete="off" spellcheck="false">
+                        <small class="nota">Dentro, una sottocartella per ogni pagina; nella tabella il collegamento a ogni file.</small>
+                    </div>
+                    {!collegata && (
+                        <p class="impostazioni-avviso">
+                            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                            <span>Collegamento a Google da configurare sul server: <code>GOOGLE_REVISIONE_URL</code> e <code>GOOGLE_REVISIONE_CHIAVE</code>.</span>
+                        </p>
+                    )}
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-pieno" id="impSalva">Salva</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    import '../../scripts/dashboard/impostazioni';
+</script>

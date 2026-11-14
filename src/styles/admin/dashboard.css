@@ -88,9 +88,6 @@ body {
 .topbar-azioni button:hover {
   color: var(--white);
 }
-.topbar-azioni .topbar-elimina:hover {
-  color: var(--su-scuro-errore);
-}
 
 .main {
   max-width: 1100px;
@@ -1057,6 +1054,49 @@ input[list]::-webkit-calendar-picker-indicator {
 }
 .elimina-resta {
   margin: -0.25rem 0 1.5rem;
+}
+
+.impostazioni-blocco {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+}
+.impostazioni-blocco + .impostazioni-blocco {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.impostazioni-blocco h3 {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+}
+.impostazioni-blocco p {
+  color: var(--text-muted);
+}
+.impostazioni-blocco .spunta {
+  margin-bottom: 0;
+  font-weight: var(--font-semibold);
+}
+.impostazioni-campi {
+  justify-self: stretch;
+}
+.impostazioni-campi .nota {
+  margin-top: 0.4rem;
+}
+.impostazioni-blocco .impostazioni-avviso {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.35rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--warning-soft);
+  color: var(--warning-scuro);
+}
+.impostazioni-avviso i {
+  margin-top: 0.35rem;
+}
+.impostazioni-avviso code {
+  overflow-wrap: anywhere;
 }
 
 .tipi-list {

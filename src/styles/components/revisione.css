@@ -1,0 +1,139 @@
+.revisione-apri {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 997;
+}
+
+.revisione-dialog {
+  width: min(44rem, calc(100% - 3rem));
+}
+
+.revisione-corpo {
+  gap: 1.75rem;
+}
+
+.revisione-testata h2 {
+  margin-bottom: 0.75rem;
+}
+
+.revisione-campo {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.revisione-campo textarea,
+.revisione-campo input[type='file'] {
+  width: 100%;
+  border: 1px solid var(--grigio-300);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  font: inherit;
+  font-size: var(--body-size);
+  line-height: var(--body-lh);
+  color: var(--text-body);
+}
+
+.revisione-campo textarea {
+  min-height: 10rem;
+  padding: 0.9rem 1rem;
+  resize: vertical;
+}
+
+.revisione-campo input[type='file'] {
+  padding: 0.5rem;
+  font-size: var(--small-size);
+  color: var(--small-color);
+  cursor: pointer;
+}
+
+.revisione-campo input[type='file']::file-selector-button {
+  margin-right: 1rem;
+  padding: 0.6rem 1.25rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--bg-soft);
+  font: inherit;
+  font-weight: var(--ui-weight);
+  color: var(--dark-navy);
+  cursor: pointer;
+  transition: background-color var(--durata-breve) ease;
+}
+
+.revisione-campo input[type='file']:hover::file-selector-button {
+  background: var(--primary-blue);
+}
+
+.revisione-elenco {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.revisione-elenco:empty {
+  display: none;
+}
+
+.revisione-elenco li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0.4rem 0.4rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--grigio-50);
+  font-size: var(--small-size);
+  color: var(--text-body);
+}
+
+.revisione-elenco li > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.revisione-elenco i {
+  color: var(--primary-blue-dark);
+  font-size: var(--icona-in-testo);
+}
+
+.revisione-elenco .btn-icon i {
+  color: inherit;
+}
+
+.revisione-esito:empty {
+  display: none;
+}
+
+.revisione-esito[data-esito='ok'] {
+  color: var(--esito-ok);
+}
+
+.revisione-esito[data-esito='errore'] {
+  color: var(--esito-errore);
+}
+
+.revisione-corpo .btn-primary {
+  justify-self: start;
+}
+
+@media (max-width: 600px) {
+  .revisione-apri {
+    left: 16px;
+    bottom: 16px;
+  }
+
+  .revisione-dialog {
+    width: 100%;
+  }
+
+  .revisione-corpo {
+    padding: 4rem 1.25rem 2rem;
+  }
+
+  .revisione-corpo .btn-primary {
+    justify-self: stretch;
+  }
+}

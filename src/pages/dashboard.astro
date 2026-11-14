@@ -8,11 +8,16 @@ import DocumentiManager from '../components/dashboard/DocumentiManager.astro';
 import InsegnantiManager from '../components/dashboard/InsegnantiManager.astro';
 import Conferma from '../components/dashboard/Conferma.astro';
 import EliminaTuttoModal from '../components/dashboard/EliminaTuttoModal.astro';
+import ImpostazioniModal from '../components/dashboard/ImpostazioniModal.astro';
 import { isLoggedIn } from '../lib/auth';
+import { leggiImpostazioni, segnaRevisione } from '../lib/impostazioni';
 
 export const prerender = false;
 
 if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login');
+
+const impostazioni = await leggiImpostazioni();
+segnaRevisione(Astro.cookies, Astro.url, impostazioni.revisione);
 
 const s = Astro.url.searchParams.get('s');
 const sezione = s === 'bot' || s === 'documenti' || s === 'insegnanti' ? s : 'eventi';
@@ -30,5 +35,6 @@ const titoli = { eventi: 'Eventi', documenti: 'Documenti', insegnanti: 'Insegnan
     </main>
 
     <Conferma />
+    <ImpostazioniModal impostazioni={impostazioni} />
     <EliminaTuttoModal />
 </Admin>

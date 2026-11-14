@@ -1,14 +1,24 @@
 import { randomUUID } from 'node:crypto';
 import { GOOGLE_REVISIONE_CHIAVE, GOOGLE_REVISIONE_URL } from 'astro:env/server';
 import { idCartella, idFoglio, leggiImpostazioni } from './impostazioni';
+import { MAX_FILE_REVISIONE } from './revisione-comune';
 
 export class ErroreRevisione extends Error {}
 
 export const PEZZO = 8 * 1024 * 1024;
-const MAX_FILE = 2 * 1024 * 1024 * 1024;
 const DURATA_CARICAMENTO = 24 * 60 * 60 * 1000;
 const ATTESA_GOOGLE = 90_000;
 const SESSIONE_DRIVE = /^https:\/\/www\.googleapis\.com\//;
+
+const COLONNE = [
+  { nome: 'Data', tipo: 'data', larghezza: 130 },
+  { nome: 'Pagina', tipo: 'testo', larghezza: 200 },
+  { nome: 'Sezione del testo', tipo: 'testo', larghezza: 240 },
+  { nome: 'Testo', tipo: 'testo', larghezza: 480 },
+  { nome: 'Sezione di immagini e video', tipo: 'testo', larghezza: 240 },
+  { nome: 'Immagini e video', tipo: 'testo', larghezza: 280 },
+  { nome: 'Inserito', tipo: 'casella', larghezza: 90 },
+];
 
 interface FileDrive {
   nome: string;
@@ -60,7 +70,7 @@ async function impostazioniAttive() {
 }
 
 export function preparaTabella(foglio: string, cartella: string) {
-  return google<{ foglio: string; cartella?: string }>({ azione: 'prepara', foglio: idFoglio(foglio), cartella: idCartella(cartella) });
+  return google<{ foglio: string; cartella?: string }>({ azione: 'prepara', foglio: idFoglio(foglio), cartella: idCartella(cartella), colonne: COLONNE });
 }
 
 function pulisci() {
@@ -72,7 +82,7 @@ export async function iniziaCaricamento(input: { pagina: string; nome: string; t
   const imp = await impostazioniAttive();
   if (!idCartella(imp.cartella)) throw new ErroreRevisione('Manca la cartella di Google Drive: aggiungila da Impostazioni nella dashboard');
   if (!/^(image|video)\//.test(input.tipo)) throw new ErroreRevisione(`«${input.nome}» non è un’immagine né un video`);
-  if (input.peso < 1 || input.peso > MAX_FILE) throw new ErroreRevisione(`«${input.nome}» è vuoto o supera 2 GB`);
+  if (input.peso < 1 || input.peso > MAX_FILE_REVISIONE) throw new ErroreRevisione(`«${input.nome}» è vuoto o supera 50 MB`);
   const { sessione } = await google<{ sessione: string }>({
     azione: 'sessione',
     cartella: idCartella(imp.cartella),
@@ -118,19 +128,34 @@ export async function caricaPezzo(id: string, inizio: number, pezzo: File) {
   return { fatto: true };
 }
 
-export async function inviaRevisione(input: { pagina: string; indirizzo: string; testo: string; caricamenti: string[] }) {
+export async function inviaRevisione(input: {
+  pagina: string;
+  indirizzo: string;
+  testo: string;
+  sezioneTesto: string;
+  sezioneFile: string;
+  caricamenti: string[];
+}) {
   const imp = await impostazioniAttive();
   const file = input.caricamenti.map((id) => caricamenti.get(id)?.file);
   if (file.some((f) => !f)) throw new ErroreRevisione('Un file non è arrivato su Google Drive: riprova');
-  if (!input.testo.trim() && !file.length) throw new ErroreRevisione('Scrivi un testo o aggiungi un’immagine o un video');
-  const { riga } = await google<{ riga: number }>({
+  const testo = input.testo.trim();
+  if (!testo && !file.length) throw new ErroreRevisione('Scrivi un testo o aggiungi un’immagine o un video');
+  if (testo && !input.sezioneTesto.trim()) throw new ErroreRevisione('Scegli in che sezione va inserito il testo');
+  if (file.length && !input.sezioneFile.trim()) throw new ErroreRevisione('Scegli dove vanno inseriti immagini e video');
+  await google({
     azione: 'riga',
     foglio: idFoglio(imp.foglio),
-    pagina: input.pagina,
-    indirizzo: input.indirizzo,
-    testo: input.testo.trim(),
-    file,
+    colonne: COLONNE,
+    valori: [
+      {},
+      { collegamenti: [{ nome: input.pagina, url: input.indirizzo }] },
+      { testo: testo ? input.sezioneTesto.trim() : '' },
+      { testo },
+      { testo: file.length ? input.sezioneFile.trim() : '' },
+      { collegamenti: file },
+      {},
+    ],
   });
   for (const id of input.caricamenti) caricamenti.delete(id);
-  return { riga };
 }

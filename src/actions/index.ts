@@ -12,7 +12,7 @@ import { eliminaDocumento, ErroreDocumenti, ordinaDocumenti, salvaDocumento, sal
 import * as insegnanti from '../lib/insegnanti';
 import { ErroreImpostazioni, leggiImpostazioni, salvaImpostazioni, segnaRevisione } from '../lib/impostazioni';
 import { caricaPezzo, ErroreRevisione, iniziaCaricamento, inviaRevisione, preparaTabella, revisioneCollegata } from '../lib/revisione';
-import { MAX_TESTO_REVISIONE } from '../lib/revisione-comune';
+import { MAX_SEZIONE_REVISIONE, MAX_TESTO_REVISIONE } from '../lib/revisione-comune';
 
 function admin<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O>) {
   return async (input: I, context: ActionAPIContext): Promise<O> => {
@@ -258,11 +258,13 @@ export const server = {
         pagina: z.string().max(200),
         indirizzo: z.string().max(500),
         testo: z.string().max(MAX_TESTO_REVISIONE),
+        sezioneTesto: z.string().max(MAX_SEZIONE_REVISIONE),
+        sezioneFile: z.string().max(MAX_SEZIONE_REVISIONE),
         caricamenti: z.array(z.string().max(40)).max(50),
       }),
-      handler: admin(({ pagina, indirizzo, testo, caricamenti }, context) => {
+      handler: admin(({ pagina, indirizzo, ...resto }, context) => {
         if (!/^\/(?!\/)/.test(indirizzo)) throw richiesta('Pagina non valida');
-        return inviaRevisione({ pagina: pagina.trim() || indirizzo, indirizzo: new URL(indirizzo, context.url.origin).href, testo, caricamenti });
+        return inviaRevisione({ ...resto, pagina: pagina.trim() || indirizzo, indirizzo: new URL(indirizzo, context.url.origin).href });
       }),
     }),
   },

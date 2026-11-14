@@ -1,6 +1,4 @@
 const SCHEDA = 'Revisione';
-const COLONNE = ['Data', 'Pagina', 'Testo', 'Immagini e video', 'Inserito'];
-const LARGHEZZE = [130, 220, 520, 300, 90];
 
 function doPost(e) {
   try {
@@ -30,25 +28,40 @@ function conBlocco(lavoro) {
   }
 }
 
-function tabella(idFoglio) {
+function tabella(idFoglio, colonne) {
   const file = SpreadsheetApp.openById(idFoglio);
   let scheda = file.getSheetByName(SCHEDA);
-  if (scheda) return { file, scheda };
-  scheda = file.insertSheet(SCHEDA, 0);
-  const n = COLONNE.length;
-  if (scheda.getMaxColumns() > n) scheda.deleteColumns(n + 1, scheda.getMaxColumns() - n);
-  scheda.getRange(1, 1, 1, n).setValues([COLONNE]).setFontWeight('bold');
-  scheda.setFrozenRows(1);
-  LARGHEZZE.forEach((larghezza, i) => scheda.setColumnWidth(i + 1, larghezza));
-  scheda.getRange(1, 1, scheda.getMaxRows(), n).setVerticalAlignment('top').setWrap(true);
-  scheda.getRange(1, n, scheda.getMaxRows(), 1).setHorizontalAlignment('center');
-  scheda.getRange(1, 1, scheda.getMaxRows(), n).applyRowBanding(SpreadsheetApp.BandingTheme.LIGHT_GREY, true, false);
+  if (!scheda) {
+    scheda = file.insertSheet(SCHEDA, 0);
+    if (scheda.getMaxColumns() > colonne.length) scheda.deleteColumns(colonne.length + 1, scheda.getMaxColumns() - colonne.length);
+    scheda.setFrozenRows(1);
+    scheda.getRange(1, 1, scheda.getMaxRows(), colonne.length).setVerticalAlignment('top').setWrap(true);
+    scheda.getRange(1, 1, scheda.getMaxRows(), colonne.length).applyRowBanding(SpreadsheetApp.BandingTheme.LIGHT_GREY, true, false);
+  }
+  allinea(scheda, colonne);
   return { file, scheda };
+}
+
+function allinea(scheda, colonne) {
+  colonne.forEach((colonna, i) => {
+    const n = i + 1;
+    if (n <= scheda.getMaxColumns() && scheda.getRange(1, n).getValue() === colonna.nome) return;
+    if (n <= scheda.getLastColumn()) scheda.insertColumnBefore(n);
+    else if (n > scheda.getMaxColumns()) scheda.insertColumnAfter(scheda.getMaxColumns());
+    const intera = scheda.getRange(1, n, scheda.getMaxRows(), 1);
+    intera.clearDataValidations().setVerticalAlignment('top').setWrap(true);
+    if (colonna.tipo === 'casella') intera.setHorizontalAlignment('center');
+    scheda.getRange(1, n).setValue(colonna.nome);
+    scheda.setColumnWidth(n, colonna.larghezza);
+  });
+  scheda.getRange(1, 1, 1, colonne.length).setFontWeight('bold');
+  const fasce = scheda.getBandings()[0];
+  if (fasce) fasce.setRange(scheda.getRange(1, 1, scheda.getMaxRows(), colonne.length));
 }
 
 function prepara(dati) {
   return conBlocco(() => {
-    const { file } = tabella(dati.foglio);
+    const { file } = tabella(dati.foglio, dati.colonne);
     const esito = { foglio: file.getName() };
     if (dati.cartella) esito.cartella = DriveApp.getFolderById(dati.cartella).getName();
     return esito;
@@ -78,32 +91,32 @@ function sessione(dati) {
   return { sessione: intestazioni.Location || intestazioni.location };
 }
 
-function testoSemplice(testo) {
-  return SpreadsheetApp.newRichTextValue().setText(testo).build();
-}
-
-function conCollegamenti(voci) {
-  const testo = voci.map((v) => v.nome).join('\n');
-  const valore = SpreadsheetApp.newRichTextValue().setText(testo);
+function testoRicco(valore) {
+  const voci = valore.collegamenti || [];
+  const testo = valore.collegamenti ? voci.map((v) => v.nome).join('\n') : valore.testo || '';
+  const ricco = SpreadsheetApp.newRichTextValue().setText(testo);
   let inizio = 0;
   voci.forEach((v) => {
-    valore.setLinkUrl(inizio, inizio + v.nome.length, v.url);
+    ricco.setLinkUrl(inizio, inizio + v.nome.length, v.url);
     inizio += v.nome.length + 1;
   });
-  return valore.build();
+  return ricco.build();
 }
 
 function riga(dati) {
   return conBlocco(() => {
-    const { scheda } = tabella(dati.foglio);
-    const n = COLONNE.length;
+    const { scheda } = tabella(dati.foglio, dati.colonne);
     const r = scheda.getLastRow() + 1;
-    if (r > scheda.getMaxRows()) scheda.insertRowsAfter(scheda.getMaxRows(), 100);
-    const fasce = scheda.getBandings()[0];
-    if (fasce) fasce.setRange(scheda.getRange(1, 1, scheda.getMaxRows(), n));
-    scheda.getRange(r, 1).setValue(new Date()).setNumberFormat('dd/mm/yyyy hh:mm');
-    scheda.getRange(r, 2, 1, 3).setRichTextValues([[conCollegamenti([{ nome: dati.pagina, url: dati.indirizzo }]), testoSemplice(dati.testo), conCollegamenti(dati.file)]]);
-    scheda.getRange(r, n).insertCheckboxes();
+    if (r > scheda.getMaxRows()) {
+      scheda.insertRowsAfter(scheda.getMaxRows(), 100);
+      allinea(scheda, dati.colonne);
+    }
+    dati.colonne.forEach((colonna, i) => {
+      const cella = scheda.getRange(r, i + 1);
+      if (colonna.tipo === 'data') cella.setValue(new Date()).setNumberFormat('dd/mm/yyyy hh:mm');
+      else if (colonna.tipo === 'casella') cella.insertCheckboxes();
+      else cella.setRichTextValue(testoRicco(dati.valori[i] || {}));
+    });
     return { riga: r };
   });
 }

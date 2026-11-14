@@ -8,6 +8,7 @@ export class ErroreRevisione extends Error {}
 export const PEZZO = 8 * 1024 * 1024;
 const DURATA_CARICAMENTO = 24 * 60 * 60 * 1000;
 const ATTESA_GOOGLE = 90_000;
+const VERSIONE_SCRIPT = 2;
 const SESSIONE_DRIVE = /^https:\/\/www\.googleapis\.com\//;
 
 const COLONNE = [
@@ -53,11 +54,16 @@ async function google<T>(dati: Record<string, unknown>): Promise<T> {
   } catch {
     throw new ErroreRevisione('Google non risponde: riprova tra poco');
   }
-  let json: T & { errore?: string };
+  let json: T & { errore?: string; versione?: number };
   try {
     json = JSON.parse(testo);
   } catch {
     throw new ErroreRevisione('Lo script Google non risponde come previsto: deve essere pubblicato come app web, eseguito come te e accessibile a «Chiunque»');
+  }
+  if (json.versione !== VERSIONE_SCRIPT) {
+    throw new ErroreRevisione(
+      'Lo script Google è una versione vecchia: su script.google.com incolla di nuovo google/revisione.gs, salva e pubblica una nuova versione (Gestisci deployment › modifica › Nuova versione)',
+    );
   }
   if (json.errore) throw new ErroreRevisione(json.errore);
   return json;

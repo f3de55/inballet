@@ -1,10 +1,12 @@
 const SCHEDA = 'Revisione';
+const VERSIONE = 2;
 
 function doPost(e) {
   try {
     const dati = JSON.parse(e.postData.contents);
     const chiave = PropertiesService.getScriptProperties().getProperty('CHIAVE');
     if (!chiave || dati.chiave !== chiave) return risposta({ errore: 'Chiave non valida: CHIAVE nelle proprietà dello script deve essere uguale a GOOGLE_REVISIONE_CHIAVE' });
+    if (dati.azione === 'versione') return risposta({});
     if (dati.azione === 'prepara') return risposta(prepara(dati));
     if (dati.azione === 'sessione') return risposta(sessione(dati));
     if (dati.azione === 'riga') return risposta(riga(dati));
@@ -15,7 +17,7 @@ function doPost(e) {
 }
 
 function risposta(oggetto) {
-  return ContentService.createTextOutput(JSON.stringify(oggetto)).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify({ ...oggetto, versione: VERSIONE })).setMimeType(ContentService.MimeType.JSON);
 }
 
 function conBlocco(lavoro) {

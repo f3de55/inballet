@@ -730,6 +730,23 @@
   max-height: none;
 }
 
+.pres-tappe {
+  --body-size: var(--text-xl);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem 4rem;
+  list-style: none;
+}
+
+.pres-tappe li {
+  --lc: var(--linea);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 1.25rem;
+  background: var(--linea-alto);
+}
+
 .pres-colonne:has(> :only-child) {
   grid-template-columns: minmax(0, 1fr);
 }
@@ -846,7 +863,8 @@
   }
 
   .pres-colonne,
-  .pres-costo {
+  .pres-costo,
+  .pres-tappe {
     grid-template-columns: minmax(0, 1fr);
   }
 }

@@ -158,7 +158,7 @@ export type Apertura = 'copertina' | 'sito-oggi' | 'nuovo-sito' | 'google' | 'sc
 export type Scena =
   | { tipo: 'siti' | 'confronto'; schermi: Schermata[] }
   | { tipo: 'apertura'; immagine: Apertura }
-  | { tipo: 'pannello'; pannello: 'mancano' | 'costo' | 'dopo' };
+  | { tipo: 'pannello'; pannello: 'mancano' | 'costo' | 'pagamento' | 'dopo' };
 
 interface Scelta {
   etichetta: string;
@@ -471,5 +471,6 @@ export const passi: Passo[] = [
     },
   },
   { capitolo: 'Prossimi passi', titolo: 'Un costo unico', scena: { tipo: 'pannello', pannello: 'costo' } },
+  { capitolo: 'Prossimi passi', titolo: 'Come funziona il pagamento', scena: { tipo: 'pannello', pannello: 'pagamento' } },
   { capitolo: 'Prossimi passi', titolo: 'Dopo la pubblicazione', scena: { tipo: 'pannello', pannello: 'dopo' } },
 ];

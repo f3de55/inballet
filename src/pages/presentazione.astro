@@ -36,7 +36,7 @@ const schermi = Math.max(...passi.map((p) => (p.scena.tipo === 'siti' || p.scena
 const totale = passi.length - 1;
 const immagini: Record<Apertura, ImageMetadata> = { copertina, 'sito-oggi': sitoOggi, 'nuovo-sito': nuovoSito, google, scuole, dashboard, prossimi };
 const immaginiVisitatori: Record<string, ImageMetadata> = { Famiglie: famiglie, Adulti: adulti, Insegnanti: insegnanti, 'Scuole e aziende': scuoleAziende };
-const fondali = { telefono: sfondoTelefono, telefoni: sfondoTelefoni, mancano: sfondoMancano, costo: sfondoCosto, dopo: sfondoDopo };
+const fondali = { telefono: sfondoTelefono, telefoni: sfondoTelefoni, mancano: sfondoMancano, costo: sfondoCosto, pagamento: sfondoCosto, dopo: sfondoDopo };
 const LARGO = 1600;
 const onda = (y: number, ampiezza: number, onde: number) => {
     const mezza = LARGO / onde / 2;
@@ -183,6 +183,29 @@ const nomePannello = (i: number) => {
                             </figure>
                         </div>
                         <small class="pres-fonte">Lavoriamo con prestazioni occasionali: niente partita IVA e nessuna reperibilità continua.</small>
+                    </Fragment>
+                )}
+                {nomePannello(i) === 'pagamento' && (
+                    <Fragment>
+                        <ol class="pres-tappe">
+                            <li>
+                                <p class="pres-etichetta">1 · A sito finito</p>
+                                <p>Vi consegniamo la <strong>ricevuta</strong> firmata, con la <strong>marca da bollo da 2 €</strong> sull’originale: causale «Realizzazione del sito web», lordo, ritenuta d’acconto del 20%, netto e IBAN.</p>
+                            </li>
+                            <li>
+                                <p class="pres-etichetta">2 · Il pagamento</p>
+                                <p>Ci fate il <strong>bonifico del netto</strong>: 1.500 €. Senza IVA, perché è una prestazione occasionale (art. 5 del D.P.R. 633/72).</p>
+                            </li>
+                            <li>
+                                <p class="pres-etichetta">3 · Entro il 16 del mese dopo</p>
+                                <p>Versate voi la <strong>ritenuta d’acconto</strong>, 375 €, con il modello <strong>F24</strong> (codice tributo 1040): sono le tasse che pagate al posto nostro.</p>
+                            </li>
+                            <li>
+                                <p class="pres-etichetta">4 · Entro il 16 marzo dell’anno dopo</p>
+                                <p>Ci inviate la <strong>Certificazione Unica</strong> (CU), che attesta il compenso e la ritenuta versata.</p>
+                            </li>
+                        </ol>
+                        <small class="pres-fonte">Nessun contributo INPS: i nostri compensi occasionali restano sotto i 5.000 € l’anno, come dichiarato nella ricevuta.</small>
                     </Fragment>
                 )}
                 {nomePannello(i) === 'dopo' && (

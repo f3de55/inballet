@@ -45,6 +45,9 @@ const colonne: { titolo: string; voci: Voce[] }[] = [
       <ul>
         <li class="footer-dato"><i class="fas fa-phone" aria-hidden="true"></i><a href={scuola.telefonoHref}>{scuola.telefono}</a></li>
         <li class="footer-dato"><i class="fas fa-envelope" aria-hidden="true"></i><a href={`mailto:${scuola.email}`}>{scuola.email}</a></li>
+        {sedi.map((s) => (
+          <li class="footer-dato"><i class="fas fa-location-dot" aria-hidden="true"></i><a href={s.maps} target="_blank" rel="noopener">{s.via}, {s.citta}<span class="sr-only"> (si apre in una nuova scheda)</span></a></li>
+        ))}
       </ul>
       <a href="/contatti" class="footer-link" aria-current={attiva('/contatti') ? 'page' : undefined}>Altre informazioni <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
     </details>

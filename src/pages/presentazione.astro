@@ -176,10 +176,18 @@ const nomePannello = (i: number) => {
                     </Fragment>
                 )}
                 {nomePannello(i) === 'dopo' && (
-                    <ul class="pres-righe">
-                        <li>Eventi, documenti e insegnanti li aggiornate voi dalla dashboard, <strong>senza costi</strong>.</li>
-                        <li>Se volete, una volta l’anno facciamo la <strong>manutenzione</strong>: aggiornamenti e controllo che tutto funzioni, <strong>250 €</strong>.</li>
-                    </ul>
+                    <div class="pres-colonne">
+                        <div>
+                            <h3>Ogni giorno</h3>
+                            <p class="pres-cifra">Senza costi</p>
+                            <p>Eventi, documenti e insegnanti li aggiornate voi dalla dashboard.</p>
+                        </div>
+                        <div>
+                            <h3>Se volete, una volta l’anno</h3>
+                            <p class="pres-cifra">250 €</p>
+                            <p>Manutenzione: controlliamo che tutto funzioni.</p>
+                        </div>
+                    </div>
                 )}
             </section>
         ))}

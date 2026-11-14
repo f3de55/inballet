@@ -547,6 +547,7 @@ function avvia(radice: HTMLElement) {
   const indietro = [...radice.querySelectorAll<HTMLButtonElement>('[data-indietro]')];
   const nota = trova<HTMLElement>(radice, '[data-nota]');
   const riapri = trova<HTMLButtonElement>(radice, '[data-riapri-nota]');
+  const ricevuta = trova<HTMLDialogElement>(radice, '[data-ricevuta]');
   ostacolo = trova<HTMLElement>(radice, '.pres-navigazione');
   const scene = passi.map((p) => JSON.parse(p.dataset.scena ?? '{}') as Scena);
   const totale = passi.length - 1;
@@ -612,7 +613,7 @@ function avvia(radice: HTMLElement) {
   };
 
   tasto = (e: KeyboardEvent) => {
-    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    if (ricevuta.open || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
     if ((e.target as Element | null)?.closest?.('input, textarea, select, [contenteditable]')) return;
     if (TASTI_AVANTI.includes(e.key)) vai(attuale + 1);
     else if (TASTI_INDIETRO.includes(e.key)) vai(attuale - 1);
@@ -668,6 +669,14 @@ function avvia(radice: HTMLElement) {
     chiudiNota();
     apri(schermi[0], { ...scena.schermi[0], url: scelta.dataset.percorso ?? '/' });
   });
+
+  radice.addEventListener('click', (e) => {
+    if (!(e.target as Element).closest('[data-apri-ricevuta]')) return;
+    ricevuta.showModal();
+    ricevuta.scrollTop = 0;
+    ricevuta.focus();
+  });
+  ricevuta.addEventListener('click', () => ricevuta.close());
 
   const dalPasso = () => {
     const n = location.hash.match(/^#passo-(\d+)$/);

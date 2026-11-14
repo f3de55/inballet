@@ -1,6 +1,8 @@
 ---
 import '../styles/components/linee.css';
 import '../styles/components/movimento.css';
+import '../styles/components/buttons.css';
+import '../styles/components/zoom-foto.css';
 import '../styles/admin/presentazione.css';
 import { Image } from 'astro:assets';
 import Admin from '../layouts/Admin.astro';
@@ -24,6 +26,7 @@ import sfondoTelefoni from '../assets/images/presentazione/fondale-telefoni.webp
 import sfondoMancano from '../assets/images/presentazione/fondale-mancano.webp';
 import sfondoCosto from '../assets/images/presentazione/fondale-costo.webp';
 import sfondoDopo from '../assets/images/presentazione/fondale-dopo.webp';
+import ricevuta from '../assets/images/presentazione/ricevuta-prestazione-occasionale.webp';
 
 export const prerender = false;
 
@@ -138,32 +141,41 @@ const nomePannello = (i: number) => {
                 )}
                 {nomePannello(i) === 'costo' && (
                     <Fragment>
-                        <div class="pres-colonne">
-                            <div>
-                                <h3>Il compenso</h3>
-                                <p class="pres-cifra">1.500 € <small class="pres-cifra-unita">netti</small></p>
-                                <dl class="pres-conto">
-                                    <div>
-                                        <dt>Lordo</dt>
-                                        <dd>1.875 €</dd>
-                                    </div>
-                                    <div>
-                                        <dt>Ritenuta d’acconto 20%<small>la versate voi con l’F24</small></dt>
-                                        <dd>− 375 €</dd>
-                                    </div>
-                                    <div class="pres-totale">
-                                        <dt>Netto a noi</dt>
-                                        <dd>1.500 €</dd>
-                                    </div>
-                                </dl>
+                        <div class="pres-costo">
+                            <div class="pres-colonne">
+                                <div>
+                                    <h3>Il compenso</h3>
+                                    <p class="pres-cifra">1.500 € <small class="pres-cifra-unita">netti</small></p>
+                                    <dl class="pres-conto">
+                                        <div>
+                                            <dt>Lordo</dt>
+                                            <dd>1.875 €</dd>
+                                        </div>
+                                        <div>
+                                            <dt>Ritenuta d’acconto 20%<small>la versate voi con l’F24</small></dt>
+                                            <dd>− 375 €</dd>
+                                        </div>
+                                        <div class="pres-totale">
+                                            <dt>Netto a noi</dt>
+                                            <dd>1.500 €</dd>
+                                        </div>
+                                    </dl>
+                                </div>
+                                <div>
+                                    <h3>Cosa comprende</h3>
+                                    <ul class="pres-righe">
+                                        <li>Tutto il sito, fatto su misura (dashboard, chatbot, eventi e tutto il resto)</li>
+                                        <li>Le modifiche fino al lancio</li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div>
-                                <h3>Cosa comprende</h3>
-                                <ul class="pres-righe">
-                                    <li>Tutto il sito, fatto su misura (dashboard, chatbot, eventi e tutto il resto)</li>
-                                    <li>Le modifiche fino al lancio</li>
-                                </ul>
-                            </div>
+                            <figure class="pres-ricevuta">
+                                <button type="button" class="pres-ricevuta-foglio" data-apri-ricevuta aria-label="Ingrandisci il modello di ricevuta per prestazione occasionale">
+                                    <Image src={ricevuta} alt="" widths={[240, 480]} sizes="12rem" loading="lazy" />
+                                    <span class="zoom-icona" aria-hidden="true"><i class="fas fa-expand"></i></span>
+                                </button>
+                                <figcaption><small>La ricevuta per prestazione occasionale</small></figcaption>
+                            </figure>
                         </div>
                         <small class="pres-fonte">Lavoriamo con prestazioni occasionali: niente partita IVA e nessuna reperibilità continua. Restano fuori i costi a consumo dei servizi esterni.</small>
                     </Fragment>
@@ -182,6 +194,17 @@ const nomePannello = (i: number) => {
                 )}
             </section>
         ))}
+
+        <dialog class="zoom-dialog pres-ricevuta-zoom" data-ricevuta tabindex="-1" aria-label="Modello di ricevuta per prestazione occasionale">
+            <button type="button" class="btn-icon btn-icon--chiudi zoom-chiudi" aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+            <Image
+                src={ricevuta}
+                alt="Modello di ricevuta per prestazione occasionale: dati di chi riceve il lavoro, compenso lordo, ritenuta d'acconto del 20% e netto a pagare, coordinate per il bonifico, esonero dalla fattura e marca da bollo da 2 euro"
+                widths={[900, 1656]}
+                sizes="min(56rem, 100vw)"
+                loading="lazy"
+            />
+        </dialog>
 
         <button type="button" class="pres-riapri" data-riapri-nota>Riapri la spiegazione</button>
 

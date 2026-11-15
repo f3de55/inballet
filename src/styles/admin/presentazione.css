@@ -759,42 +759,10 @@
   list-style: none;
 }
 
-.pres-pannello .pres-riga-avanti {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 1.5rem;
-}
-
-.pres-avanti {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.45rem 1rem;
-  border: 0;
-  border-radius: var(--radius-pill);
-  background: var(--primary-blue);
-  font: inherit;
-  font-size: var(--ui-size);
-  font-weight: var(--ui-weight);
-  color: var(--dark-navy);
+.pres-rimando {
+  font-size: var(--small-size);
+  color: var(--small-color);
   white-space: nowrap;
-  cursor: pointer;
-  transition: background-color var(--durata-breve) ease;
-}
-
-.pres-avanti:hover {
-  background: var(--primary-blue-dark);
-  color: var(--white);
-}
-
-.pres-avanti i {
-  transition: transform var(--durata) var(--curva);
-}
-
-.pres-avanti:hover i {
-  transform: translateX(4px);
 }
 
 .pres-pannello .pres-righe li {

@@ -675,11 +675,10 @@
   align-items: start;
 }
 
-.pres-ricevuta-foglio {
+.pres-ricevuta-foglio,
+.pres-anteprima {
   position: relative;
   display: block;
-  width: 7.5rem;
-  margin: 1.25rem 0 0 0.5rem;
   padding: 0;
   border: 1px solid var(--grigio-100);
   border-radius: var(--radius-sm);
@@ -691,15 +690,43 @@
   transition: transform var(--durata) var(--curva);
 }
 
+.pres-ricevuta-foglio {
+  width: 7.5rem;
+  margin: 1.25rem 0 0 0.5rem;
+}
+
 .pres-ricevuta-foglio:hover,
 .pres-ricevuta-foglio:focus-visible {
   transform: rotate(0deg) scale(1.04);
 }
 
-.pres-ricevuta-foglio img {
+.pres-ricevuta-foglio img,
+.pres-anteprima img {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.pres-pannello .pres-da-completare li:has(.pres-anteprima) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 11rem;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem 0.5rem 1rem 0;
+}
+
+.pres-anteprima {
+  width: 100%;
+  transform: rotate(-3deg);
+}
+
+.pres-da-completare li:nth-child(3) .pres-anteprima {
+  transform: rotate(3deg);
+}
+
+.pres-da-completare .pres-anteprima:hover,
+.pres-da-completare .pres-anteprima:focus-visible {
+  transform: rotate(0deg) scale(1.04);
 }
 
 .zoom-dialog.pres-ricevuta-zoom[open] {
@@ -803,6 +830,11 @@
 }
 
 @media (max-width: 600px) {
+  .pres-pannello .pres-da-completare li:has(.pres-anteprima) {
+    grid-template-columns: minmax(0, 1fr) 7.5rem;
+    gap: 1rem;
+  }
+
   .pres-palco[data-dispositivo='telefono'] .pres-schermi[data-n='2'] {
     gap: 0;
   }

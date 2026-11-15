@@ -26,6 +26,9 @@ import sfondoTelefoni from '../assets/images/presentazione/fondale-telefoni.webp
 import sfondoMancano from '../assets/images/presentazione/fondale-mancano.webp';
 import sfondoCosto from '../assets/images/presentazione/fondale-costo.webp';
 import ricevuta from '../assets/images/presentazione/ricevuta-prestazione-occasionale.webp';
+import accessoHosting from '../assets/images/presentazione/accesso-hosting-aruba.webp';
+import passaggioSito from '../assets/images/presentazione/passaggio-nuovo-sito.webp';
+import collegamentiUrl from '../assets/images/presentazione/collegamenti-vecchi-url.webp';
 
 export const prerender = false;
 
@@ -36,6 +39,11 @@ const totale = passi.length - 1;
 const immagini: Record<Apertura, ImageMetadata> = { copertina, 'sito-oggi': sitoOggi, 'nuovo-sito': nuovoSito, google, scuole, dashboard, prossimi };
 const immaginiVisitatori: Record<string, ImageMetadata> = { Famiglie: famiglie, Adulti: adulti, Insegnanti: insegnanti, 'Scuole e aziende': scuoleAziende };
 const fondali = { telefono: sfondoTelefono, telefoni: sfondoTelefoni, mancano: sfondoMancano, costo: sfondoCosto, pagamento: sfondoCosto };
+const daCompletare = [
+    { id: 'hosting', testo: 'Le credenziali dell’hosting Aruba, per pubblicare il sito', immagine: accessoHosting, nome: 'Accesso all’hosting Aruba', alt: 'Pagina ufficiale di accesso all’hosting Aruba, con i campi username e password vuoti' },
+    { id: 'passaggio', testo: 'Sostituire il vecchio sito con il nuovo su inballet.it', immagine: passaggioSito, nome: 'Passaggio al nuovo sito', alt: 'Tavola del passaggio: il vecchio e il nuovo sito InBallet, con le loro fotografie e lo stesso dominio www.inballet.it' },
+    { id: 'url', testo: 'Collegare i vecchi URL alle nuove pagine', immagine: collegamentiUrl, nome: 'Collegamenti dai vecchi URL', alt: 'Redirect 301 di InBallet: danza_classica_accademica.html a /danza-classica, avviamento_alla_danza.html a /avviamento-danza, spettacoli_ed_eventi.html a /spettacoli-eventi' },
+];
 const LARGO = 1600;
 const onda = (y: number, ampiezza: number, onde: number) => {
     const mezza = LARGO / onde / 2;
@@ -128,11 +136,17 @@ const nomePannello = (i: number) => {
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
                 </div>
                 {nomePannello(i) === 'mancano' && (
-                    <ul class="pres-righe">
+                    <ul class="pres-righe pres-da-completare">
                         <li>Testi, icone e immagini da rivedere <small class="pres-rimando">(ve lo mostriamo subito dopo)</small></li>
-                        <li>Le credenziali dell’hosting, per pubblicare il sito</li>
-                        <li>Sostituire il vecchio sito con il nuovo su inballet.it</li>
-                        <li>Collegare i vecchi URL alle nuove pagine</li>
+                        {daCompletare.map((voce) => (
+                            <li>
+                                <span>{voce.testo}</span>
+                                <button type="button" class="pres-anteprima" data-apri-documento={voce.id} aria-label={`Ingrandisci: ${voce.nome}`}>
+                                    <Image src={voce.immagine} alt="" widths={[352, 704]} sizes="(max-width: 600px) 7.5rem, 11rem" loading="lazy" />
+                                    <span class="zoom-icona" aria-hidden="true"><i class="fas fa-expand"></i></span>
+                                </button>
+                            </li>
+                        ))}
                     </ul>
                 )}
                 {nomePannello(i) === 'costo' && (
@@ -156,7 +170,7 @@ const nomePannello = (i: number) => {
                                         <dd>1.500 €</dd>
                                     </div>
                                 </dl>
-                                <button type="button" class="pres-ricevuta-foglio" data-apri-ricevuta aria-label="Ingrandisci il modello di ricevuta per prestazione occasionale">
+                                <button type="button" class="pres-ricevuta-foglio" data-apri-documento="ricevuta" aria-label="Ingrandisci il modello di ricevuta per prestazione occasionale">
                                     <Image src={ricevuta} alt="" widths={[240, 480]} sizes="9rem" loading="lazy" />
                                     <span class="zoom-icona" aria-hidden="true"><i class="fas fa-expand"></i></span>
                                 </button>
@@ -200,7 +214,7 @@ const nomePannello = (i: number) => {
             </section>
         ))}
 
-        <dialog class="zoom-dialog pres-ricevuta-zoom" data-ricevuta tabindex="-1" aria-label="Modello di ricevuta per prestazione occasionale">
+        <dialog class="zoom-dialog pres-ricevuta-zoom" data-documento="ricevuta" tabindex="-1" aria-label="Modello di ricevuta per prestazione occasionale">
             <button type="button" class="btn-icon btn-icon--chiudi zoom-chiudi" aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
             <Image
                 src={ricevuta}
@@ -210,6 +224,13 @@ const nomePannello = (i: number) => {
                 loading="lazy"
             />
         </dialog>
+
+        {daCompletare.map((voce) => (
+            <dialog class="zoom-dialog" data-documento={voce.id} tabindex="-1" aria-label={voce.nome}>
+                <button type="button" class="btn-icon btn-icon--chiudi zoom-chiudi" aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+                <Image src={voce.immagine} alt={voce.alt} widths={[900, 1440]} sizes="min(90rem, 100vw)" loading="lazy" />
+            </dialog>
+        ))}
 
         <button type="button" class="pres-riapri" data-riapri-nota>Riapri la spiegazione</button>
 

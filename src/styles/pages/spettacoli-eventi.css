@@ -93,6 +93,10 @@
   text-align: center;
 }
 
+.eventi-section:has(.vista-calendario) .eventi-vuoto {
+  margin-bottom: 3rem;
+}
+
 .eventi-vuoto-illustrazione {
   display: block;
   width: min(10rem, 100%);
@@ -400,7 +404,8 @@
 }
 
 .calendario-grid .cal-giorno.passato .cal-numero {
-  color: var(--grigio-400);
+  color: var(--text-muted);
+  font-weight: var(--font-normal);
 }
 
 .calendario-grid .cal-giorno.oggi .cal-numero {
@@ -422,9 +427,11 @@
   line-height: 1.35;
   color: var(--dark-navy);
   text-decoration: none;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
   transition: background-color var(--durata-breve) ease;
 }
 
@@ -444,7 +451,9 @@
   }
 }
 
-.calendario-grid .cal-punti {
+.calendario-grid .cal-punti,
+.calendario-grid .cal-tocco,
+.cal-giorno-elenco {
   display: none;
 }
 
@@ -847,20 +856,47 @@ html:has(dialog[open]) {
     display: none;
   }
 
+  .calendario-grid .cal-giorno.ha-eventi {
+    position: relative;
+  }
+
   .calendario-grid .cal-punti {
-    display: block;
+    display: flex;
+    gap: 3px;
+  }
+
+  .calendario-grid .cal-punti span {
     width: 6px;
     height: 6px;
     border-radius: var(--radius-full);
     background: var(--primary-blue-dark);
   }
 
-  .calendario-grid .cal-giorno.passato .cal-punti {
+  .calendario-grid .cal-giorno.passato .cal-punti span {
     background: var(--grigio-300);
   }
 
-  .calendario-grid .cal-giorno.ha-eventi {
+  .calendario-grid .cal-tocco {
+    display: block;
+    position: absolute;
+    inset: 0;
+    border: none;
+    background: none;
     cursor: pointer;
+  }
+
+  .calendario-grid .cal-tocco:focus-visible {
+    outline-offset: -3px;
+  }
+
+  .calendario-grid .cal-giorno.selezionato {
+    background: var(--bg-soft);
+  }
+
+  .cal-giorno-elenco {
+    display: block;
+    margin-top: 1.5rem;
+    scroll-margin-block: calc(var(--header-h) + 1rem) 1rem;
   }
 }
 

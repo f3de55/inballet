@@ -2,7 +2,6 @@ import { conoscenza, contesto } from './conoscenza';
 import { aggiungiScambio, eliminaConversazioniVecchie, idValido, leggiConversazione, MAX_SCAMBI, MEMORIA, nuovoId } from './conversazioni';
 import { formatta } from './formato';
 import { chiediAlModello } from './fornitori';
-import { rispostaOffline } from './offline';
 import { bloccato, controllaContenuto, controllaLimiti, hashIP, pulisciLimiti, sanitizza, tetto } from './protezioni';
 import { budgetEsaurito, calcolaCosto, registra } from './registro';
 import { scuola } from '../../data/scuola';
@@ -63,6 +62,9 @@ export async function prepara(origine: string): Promise<void> {
 const IN_VOLO_MAX = 6;
 let inVolo = 0;
 
+type Esito = Awaited<ReturnType<typeof chiediAlModello>>;
+const inAttesa = new Map<string, Promise<Esito | string>>();
+
 export async function rispondi({ testo, conversazione, ip, userAgent, origine }: Messaggio): Promise<Risposta> {
   avviaManutenzione();
   const ipHash = hashIP(ip);
@@ -100,7 +102,7 @@ export async function rispondi({ testo, conversazione, ip, userAgent, origine }:
   }
 
   const storia = (conv?.scambi ?? []).slice(-MEMORIA).map((s) => ({ domanda: s.domanda, risposta: s.risposta }));
-  const salva = (risposta: string, tipo: 'success' | 'cached' | 'offline', modello?: { fornitore: string; modello: string }) =>
+  const salva = (risposta: string, tipo: 'success' | 'cached', modello?: { fornitore: string; modello: string }) =>
     aggiungiScambio(id, ipHash, { domanda: msg, risposta, tipo, ...modello }).catch((e) => console.error('Salvataggio conversazione:', e));
 
   const s = await conoscenza(origine);
@@ -112,18 +114,32 @@ export async function rispondi({ testo, conversazione, ip, userAgent, origine }:
     return { html: formatta(inCache), conversazione: id };
   }
 
-  const offline = async (errore: string, fallback: number) => {
-    const risposta = await rispostaOffline(msg);
+  const offline = (errore: string, fallback: number) => {
+    const risposta = `In questo momento non riesco a rispondere: riprova tra qualche minuto, oppure chiama la segreteria al ${scuola.telefono}, scrivici su WhatsApp o a ${scuola.email}.`;
     registra({ ...base, message: msg, risposta, type: 'offline', errore, fallback });
-    await salva(risposta, 'offline');
     return { html: formatta(risposta), conversazione: id };
   };
 
-  if (await budgetEsaurito()) return offline('tetto di spesa giornaliero raggiunto', 0);
-  if (inVolo >= IN_VOLO_MAX || !tetto.modello()) return offline('tetto di richieste al modello raggiunto', 0);
-
-  inVolo++;
-  const esito = await chiediAlModello({ sistema: s, storia, domanda: msg, contesto: contesto(s, msg, storia) }).finally(() => inVolo--);
+  const chiedi = async (): Promise<Esito | string> => {
+    if (await budgetEsaurito()) return 'tetto di spesa giornaliero raggiunto';
+    if (inVolo >= IN_VOLO_MAX || !tetto.modello()) return 'tetto di richieste al modello raggiunto';
+    inVolo++;
+    return chiediAlModello({ sistema: s, storia, domanda: msg, contesto: contesto(s, msg, storia) }).finally(() => inVolo--);
+  };
+  const condivisa = kCache ? inAttesa.get(kCache) : undefined;
+  const attesa = condivisa ?? chiedi();
+  if (kCache && !condivisa) {
+    inAttesa.set(kCache, attesa);
+    const libera = () => inAttesa.delete(kCache);
+    attesa.then(libera, libera);
+  }
+  const esito = await attesa;
+  if (typeof esito === 'string') return offline(esito, 0);
+  if (condivisa && esito.ok) {
+    registra({ ...base, message: msg, risposta: esito.testo, type: 'cached' });
+    await salva(esito.testo, 'cached');
+    return { html: formatta(esito.testo), conversazione: id };
+  }
   const ultimoErrore = esito.tentativi.at(-1);
   const errore = ultimoErrore && `${ultimoErrore.fornitore}: ${ultimoErrore.errore}`;
   if (!esito.ok) return offline(errore ?? 'nessun fornitore configurato', esito.tentativi.length);

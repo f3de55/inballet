@@ -38,7 +38,7 @@ export default defineConfig({
       CHATBOT_MODELLI: envField.string({
         context: 'server',
         access: 'secret',
-        default: 'gemini:gemini-flash-lite-latest,gemini:gemini-flash-latest,mistral:mistral-small-latest',
+        default: 'gemini:gemini-flash-lite-latest,mistral:mistral-small-latest,gemini:gemini-flash-latest',
       }),
       CHATBOT_GRATUITI: envField.string({ context: 'server', access: 'secret', default: '' }),
       CHATBOT_BUDGET_GIORNO: envField.number({ context: 'server', access: 'secret', default: 1 }),

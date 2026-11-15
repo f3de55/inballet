@@ -556,7 +556,7 @@ export async function generaChat(quanti: number, giorni: number): Promise<number
       let type: LogEntry['type'];
       if (r < 0.04) [message, risposta, type] = [casuale(FILTRATI), 'Messaggio non valido. Scrivi una domanda sulla scuola.', 'filtered'];
       else if (r < 0.06) [message, risposta, type] = [casuale(DOMANDE)[0], 'Troppi messaggi in poco tempo. Riprova tra qualche minuto.', 'blocked'];
-      else if (r < 0.07) [message, risposta, type] = [casuale(DOMANDE)[0], 'In questo momento posso darti solo informazioni di base.', 'offline'];
+      else if (r < 0.07) [message, risposta, type] = [casuale(DOMANDE)[0], 'In questo momento non riesco a rispondere: riprova tra qualche minuto.', 'offline'];
       else {
         [message, risposta] = casuale(DOMANDE);
         type = Math.random() < 0.3 ? 'cached' : 'success';

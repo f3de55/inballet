@@ -93,7 +93,7 @@ const datiEventi = {
   }),
 };
 
-const schemaEventi = prossimi.filter((e) => !e.demo).map((e) => datiStrutturati(e, site));
+const schemaEventi = prossimi.filter((e) => !e.demo && e.luogo).map((e) => datiStrutturati(e, site));
 
 const descrizioneAperto = aperto ? testoDescrizione(aperto.descrizione).replace(/\s+/g, ' ') : '';
 const og = aperto
@@ -205,6 +205,10 @@ const og = aperto
                             </div>
                         </div>
                         <div class="calendario-grid" id="calendarioGrid"></div>
+                        <div class="agenda-gruppo cal-giorno-elenco" id="calGiorno" hidden>
+                            <p class="agenda-mese titoletto" id="calGiornoTitolo"></p>
+                            <ul class="agenda" id="calGiornoLista"></ul>
+                        </div>
                     </div>
                 )}
             </div>

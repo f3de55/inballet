@@ -134,14 +134,39 @@ $('calendario').addEventListener('click', (ev) => {
     ev.preventDefault();
     return apriEvento(evento.dataset.evento!);
   }
-  const giorno = t.closest<HTMLElement>('.cal-giorno.ha-eventi');
-  if (giorno?.dataset.primo) apriEvento(giorno.dataset.primo);
+  const tocco = t.closest<HTMLElement>('.cal-tocco');
+  if (tocco) mostraGiorno(tocco);
 });
+
+const eventiDel = (data: string) => eventi.filter((e) => e.data <= data && data <= (e.dataFine || e.data));
+
+const giornoLungo = (data: string) => {
+  const testo = new Date(`${data}T12:00:00Z`).toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
+  return testo.charAt(0).toUpperCase() + testo.slice(1);
+};
+
+function mostraGiorno(tocco: HTMLElement) {
+  const data = tocco.dataset.giorno!;
+  const delGiorno = eventiDel(data);
+  if (delGiorno.length === 1) return apriEvento(delGiorno[0].slug);
+  document.querySelectorAll('.cal-giorno.selezionato').forEach((c) => c.classList.remove('selezionato'));
+  tocco.closest('.cal-giorno')?.classList.add('selezionato');
+  $('calGiornoTitolo').textContent = `${giornoLungo(data)} · ${delGiorno.length} eventi`;
+  $('calGiornoLista').replaceChildren(
+    ...delGiorno.flatMap((e) => {
+      const voce = document.querySelector(`#vistaElenco [data-evento="${CSS.escape(e.slug)}"]`)?.closest('li');
+      return voce ? [voce.cloneNode(true)] : [];
+    }),
+  );
+  const pannello = $('calGiorno');
+  pannello.hidden = false;
+  $('calGiornoLista').querySelector<HTMLElement>('a')?.focus({ preventScroll: true });
+  pannello.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+}
 
 if (aperto) apriEvento(aperto);
 
 if (eventi.length) {
-  const eventiDel = (data: string) => eventi.filter((e) => e.data <= data && data <= (e.dataFine || e.data));
   const meseOggi = oggi.slice(0, 7);
 
   function elencoMesi(): string[] {
@@ -157,9 +182,9 @@ if (eventi.length) {
   }
 
   const mesi = elencoMesi();
-  const corrente = mesi.indexOf(meseOggi);
-  const futuro = mesi.findIndex((m) => m >= meseOggi);
-  let meseIndex = corrente >= 0 ? corrente : futuro >= 0 ? futuro : mesi.length - 1;
+  const prossimo = eventi.find((e) => !e.passato)?.data.slice(0, 7);
+  const iniziale = mesi.indexOf(prossimo && prossimo > meseOggi ? prossimo : meseOggi);
+  let meseIndex = iniziale >= 0 ? iniziale : mesi.length - 1;
 
   const renderMese = () => {
     const [anno, m] = mesi[meseIndex].split('-').map(Number);
@@ -179,16 +204,18 @@ if (eventi.length) {
       if (evG.length) cls.push('ha-eventi');
 
       const link = (e: EventoSito) =>
-        `<a class="cal-evento${e.passato ? ' passato' : ''}${e.stato === 'annullato' ? ' annullato' : ''}" href="${linkEvento(e)}" data-evento="${escapeHtml(e.slug)}">${escapeHtml(e.titolo)}</a>`;
-      html += `<div class="${cls.join(' ')}"${evG.length ? ` data-primo="${escapeHtml(evG[0].slug)}"` : ''}>
+        `<a class="cal-evento${e.passato ? ' passato' : ''}${e.stato === 'annullato' ? ' annullato' : ''}" href="${linkEvento(e)}" data-evento="${escapeHtml(e.slug)}" title="${escapeHtml(e.titolo)}">${escapeHtml(e.titolo)}</a>`;
+      const nome = `${g} ${MESI[m - 1].toLowerCase()}: ${evG.length === 1 ? evG[0].titolo : `${evG.length} eventi`}`;
+      html += `<div class="${cls.join(' ')}">
         <span class="cal-numero">${g}</span>
         ${evG.map(link).join('')}
-        ${evG.length ? '<span class="cal-punti" aria-hidden="true"></span>' : ''}
+        ${evG.length ? `<span class="cal-punti" aria-hidden="true">${'<span></span>'.repeat(Math.min(evG.length, 3))}</span><button type="button" class="cal-tocco" data-giorno="${data}" aria-label="${escapeHtml(nome)}"></button>` : ''}
       </div>`;
     }
     const resto = (7 - ((inizio + giorni) % 7)) % 7;
     html += '<div class="cal-giorno vuoto" aria-hidden="true"></div>'.repeat(resto);
     $('calendarioGrid').innerHTML = html;
+    $('calGiorno').hidden = true;
 
     $<HTMLButtonElement>('btnMesePrev').disabled = meseIndex <= 0;
     $<HTMLButtonElement>('btnMeseNext').disabled = meseIndex >= mesi.length - 1;

@@ -1,8 +1,9 @@
 import { createHash } from 'node:crypto';
 import { leggiDocumenti } from '../documenti';
-import { ETICHETTE_STATO, prossimiEventi, quando, testoDescrizione, urlEvento, type Evento } from '../eventi';
+import { ETICHETTE_STATO, inCorso, prossimiEventi, quando, testoDescrizione, urlEvento, type Evento } from '../eventi';
 import { riepilogoScuola } from '../riepilogo';
 import { mbSlice } from '../text';
+import { romeDate } from '../time';
 import { faq, scuola } from '../../data/scuola';
 import { leggiSito, type Pagina } from './pagine';
 import { cerca, creaIndice, dividi, type Indice, type Passaggio } from './ricerca';
@@ -19,6 +20,8 @@ COME RISPONDI
 - Indica la pagina giusta del sito scrivendo solo il suo percorso, senza parentesi: per esempio /hip-hop o /documenti.
 - Testo semplice: niente titoli né tabelle; grassetto solo per un nome o un dato importante. Al massimo un'emoji, solo se è naturale.
 - Orari, date, età e cifre vanno riportati esatti, senza arrotondare né raggruppare giorni con orari diversi.
+- Gli orari della segreteria si scrivono giorno per giorno, uno per riga, esattamente come nei DATI UFFICIALI.
+- Se chiedono i prossimi eventi, elencali in ordine di data partendo dal primo di PROSSIMI EVENTI (anche quelli di oggi o in corso), al massimo 5, poi indica /spettacoli-eventi.
 - Non parlare delle tue fonti ("secondo i dati", "nei passaggi"): rispondi e basta.
 
 REGOLE
@@ -32,7 +35,8 @@ REGOLE
 const dataLunga = new Intl.DateTimeFormat('it-IT', { timeZone: 'Europe/Rome', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
 const campo = (etichetta: string, valore?: string) => (valore ? `; ${etichetta}: ${valore}` : '');
-const stato = (e: Evento) => (e.stato === 'pubblicato' ? '' : ` [${ETICHETTE_STATO[e.stato].toUpperCase()}]`);
+const stato = (e: Evento) => (e.stato === 'pubblicato' ? '' : ` (${ETICHETTE_STATO[e.stato].toLowerCase()})`);
+const vicino = (e: Evento) => (inCorso(e) ? ' (in corso adesso)' : e.data === romeDate() ? ' (oggi)' : '');
 
 const passaggioEvento = (e: Evento): Passaggio => {
   const descrizione = mbSlice(testoDescrizione(e.descrizione).replace(/\s+/g, ' '), 600);
@@ -128,7 +132,7 @@ async function costruisci(elenco: Pagina[]): Promise<Conoscenza> {
     `# PROSSIMI EVENTI (pagina /spettacoli-eventi)\n\n${
       eventi
         .slice(0, 10)
-        .map((e) => `- ${e.titolo}${stato(e)}: ${quando(e)}${campo('luogo', e.luogo)}; pagina: ${urlEvento(e)}`)
+        .map((e) => `- ${e.titolo}${stato(e)}: ${quando(e)}${vicino(e)}${campo('luogo', e.luogo)}; pagina: ${urlEvento(e)}`)
         .join('\n') || '- Nessun evento in programma al momento'
     }`,
   ].join('\n\n');

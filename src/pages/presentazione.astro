@@ -25,7 +25,6 @@ import sfondoTelefono from '../assets/images/presentazione/fondale-telefono.webp
 import sfondoTelefoni from '../assets/images/presentazione/fondale-telefoni.webp';
 import sfondoMancano from '../assets/images/presentazione/fondale-mancano.webp';
 import sfondoCosto from '../assets/images/presentazione/fondale-costo.webp';
-import sfondoDopo from '../assets/images/presentazione/fondale-dopo.webp';
 import ricevuta from '../assets/images/presentazione/ricevuta-prestazione-occasionale.webp';
 
 export const prerender = false;
@@ -36,7 +35,7 @@ const schermi = Math.max(...passi.map((p) => (p.scena.tipo === 'siti' || p.scena
 const totale = passi.length - 1;
 const immagini: Record<Apertura, ImageMetadata> = { copertina, 'sito-oggi': sitoOggi, 'nuovo-sito': nuovoSito, google, scuole, dashboard, prossimi };
 const immaginiVisitatori: Record<string, ImageMetadata> = { Famiglie: famiglie, Adulti: adulti, Insegnanti: insegnanti, 'Scuole e aziende': scuoleAziende };
-const fondali = { telefono: sfondoTelefono, telefoni: sfondoTelefoni, mancano: sfondoMancano, costo: sfondoCosto, pagamento: sfondoCosto, dopo: sfondoDopo };
+const fondali = { telefono: sfondoTelefono, telefoni: sfondoTelefoni, mancano: sfondoMancano, costo: sfondoCosto, pagamento: sfondoCosto };
 const LARGO = 1600;
 const onda = (y: number, ampiezza: number, onde: number) => {
     const mezza = LARGO / onde / 2;
@@ -129,100 +128,76 @@ const nomePannello = (i: number) => {
                     <h2 id={`pres-passo-${i}`}>{p.titolo}</h2>
                 </div>
                 {nomePannello(i) === 'mancano' && (
-                    <div class="pres-colonne">
-                        <div>
-                            <h3>Da parte nostra</h3>
-                            <ul class="pres-righe">
-                                <li>Chiedervi l’hosting su cui pubblicarlo</li>
-                                <li>Mettere il sito online su inballet.it</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <ul class="pres-righe">
+                        <li class="pres-riga-avanti">
+                            Le modifiche ai contenuti esistenti: testi, icone e immagini
+                            <button type="button" class="pres-avanti" data-avanti>Slide successiva <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                        </li>
+                        <li>Darci le credenziali dell’hosting</li>
+                        <li>Mettere il sito online su inballet.it</li>
+                    </ul>
                 )}
                 {nomePannello(i) === 'costo' && (
                     <Fragment>
-                        <div class="pres-costo">
-                            <div class="pres-colonne">
-                                <div>
-                                    <h3>Il compenso</h3>
-                                    <p class="pres-cifra">1.500 € <small class="pres-cifra-unita">netti</small></p>
-                                    <dl class="pres-conto">
-                                        <div>
-                                            <dt>Lordo</dt>
-                                            <dd>1.875 €</dd>
-                                        </div>
-                                        <div>
-                                            <dt>Ritenuta d’acconto 20%<small>la versate voi con l’F24</small></dt>
-                                            <dd>− 375 €</dd>
-                                        </div>
-                                        <div class="pres-totale">
-                                            <dt>Netto a noi</dt>
-                                            <dd>1.500 €</dd>
-                                        </div>
-                                    </dl>
-                                </div>
-                                <div>
-                                    <h3>Cosa comprende</h3>
-                                    <ul class="pres-righe">
-                                        <li>Tutto il sito, fatto su misura (dashboard, chatbot, eventi e tutto il resto)</li>
-                                        <li>Le modifiche fino al lancio</li>
-                                    </ul>
-                                    <h3>A carico vostro</h3>
-                                    <ul class="pres-righe">
-                                        <li>L’hosting su cui gira il sito e il dominio inballet.it</li>
-                                        <li>I servizi esterni a consumo: l’assistente AI Étoile e i dati di Google (recensioni e orari)</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <figure class="pres-ricevuta">
+                        <p class="pres-premessa">Lavoriamo con <strong>prestazioni occasionali</strong>: niente partita IVA e nessuna reperibilità continua.</p>
+                        <div class="pres-colonne">
+                            <div>
+                                <h3>Il compenso</h3>
+                                <p class="pres-cifra">1.500 € <small class="pres-cifra-unita">netti</small></p>
+                                <dl class="pres-conto">
+                                    <div>
+                                        <dt>Lordo</dt>
+                                        <dd>1.875 €</dd>
+                                    </div>
+                                    <div>
+                                        <dt>Ritenuta d’acconto 20%<small>la versate voi con l’F24</small></dt>
+                                        <dd>− 375 €</dd>
+                                    </div>
+                                    <div class="pres-totale">
+                                        <dt>Netto a noi</dt>
+                                        <dd>1.500 €</dd>
+                                    </div>
+                                </dl>
                                 <button type="button" class="pres-ricevuta-foglio" data-apri-ricevuta aria-label="Ingrandisci il modello di ricevuta per prestazione occasionale">
-                                    <Image src={ricevuta} alt="" widths={[240, 480]} sizes="12rem" loading="lazy" />
+                                    <Image src={ricevuta} alt="" widths={[240, 480]} sizes="9rem" loading="lazy" />
                                     <span class="zoom-icona" aria-hidden="true"><i class="fas fa-expand"></i></span>
                                 </button>
-                                <figcaption><small>La ricevuta per prestazione occasionale</small></figcaption>
-                            </figure>
+                            </div>
+                            <div>
+                                <h3>Cosa comprende</h3>
+                                <ul class="pres-righe">
+                                    <li>Tutto il sito, fatto su misura (dashboard, chatbot, eventi e tutto il resto)</li>
+                                    <li>Le modifiche fino al lancio</li>
+                                </ul>
+                                <h3>Cosa non comprende</h3>
+                                <ul class="pres-righe">
+                                    <li>L’hosting e il dominio inballet.it</li>
+                                    <li>I servizi esterni a consumo: l’assistente AI e i dati di Google</li>
+                                    <li>La manutenzione, se volete: 250 € l’anno</li>
+                                </ul>
+                            </div>
                         </div>
-                        <small class="pres-fonte">Lavoriamo con prestazioni occasionali: niente partita IVA e nessuna reperibilità continua.</small>
                     </Fragment>
                 )}
                 {nomePannello(i) === 'pagamento' && (
-                    <Fragment>
-                        <ol class="pres-tappe">
-                            <li>
-                                <p class="pres-etichetta">1 · A sito finito</p>
-                                <p>Vi consegniamo la <strong>ricevuta</strong> firmata, con la <strong>marca da bollo da 2 €</strong> sull’originale: causale «Realizzazione del sito web», lordo, ritenuta d’acconto del 20%, netto e IBAN.</p>
-                            </li>
-                            <li>
-                                <p class="pres-etichetta">2 · Il pagamento</p>
-                                <p>Ci fate il <strong>bonifico del netto</strong>: 1.500 €. Senza IVA, perché è una prestazione occasionale (art. 5 del D.P.R. 633/72).</p>
-                            </li>
-                            <li>
-                                <p class="pres-etichetta">3 · Entro il 16 del mese dopo</p>
-                                <p>Versate voi la <strong>ritenuta d’acconto</strong>, 375 €, con il modello <strong>F24</strong> (codice tributo 1040): sono le tasse che pagate al posto nostro.</p>
-                            </li>
-                            <li>
-                                <p class="pres-etichetta">4 · Entro il 16 marzo dell’anno dopo</p>
-                                <p>Ci inviate la <strong>Certificazione Unica</strong> (CU), che attesta il compenso e la ritenuta versata.</p>
-                            </li>
-                        </ol>
-                        <small class="pres-fonte">Nessun contributo INPS: i nostri compensi occasionali restano sotto i 5.000 € l’anno, come dichiarato nella ricevuta.</small>
-                    </Fragment>
-                )}
-                {nomePannello(i) === 'dopo' && (
-                    <dl class="pres-conto">
-                        <div>
-                            <dt>Eventi, documenti e insegnanti<small>li aggiornate voi dalla dashboard</small></dt>
-                            <dd>Senza costi</dd>
-                        </div>
-                        <div>
-                            <dt>Hosting, dominio e servizi esterni a consumo<small>li pagate voi direttamente ai fornitori</small></dt>
-                            <dd>A carico vostro</dd>
-                        </div>
-                        <div>
-                            <dt>Manutenzione, se volete<small>una volta l’anno controlliamo che tutto funzioni</small></dt>
-                            <dd>250 €</dd>
-                        </div>
-                    </dl>
+                    <ol class="pres-tappe">
+                        <li>
+                            <p class="pres-etichetta">1 · A sito finito</p>
+                            <p>Vi consegniamo la <strong>ricevuta</strong> firmata in <strong>doppia copia</strong>: a voi l’originale con la <strong>marca da bollo da 2 €</strong>, a noi la copia.</p>
+                        </li>
+                        <li>
+                            <p class="pres-etichetta">2 · Il pagamento</p>
+                            <p>Ci fate il <strong>bonifico del netto</strong>: 1.500 €. Senza IVA, perché è una prestazione occasionale (art. 5 del D.P.R. 633/72).</p>
+                        </li>
+                        <li>
+                            <p class="pres-etichetta">3 · Entro il 16 del mese dopo</p>
+                            <p>Versate voi la <strong>ritenuta d’acconto</strong>, 375 €, con il modello <strong>F24</strong> (codice tributo 1040): sono le tasse che pagate al posto nostro.</p>
+                        </li>
+                        <li>
+                            <p class="pres-etichetta">4 · Entro il 16 marzo dell’anno dopo</p>
+                            <p>Ci inviate la <strong>Certificazione Unica</strong> (CU), che attesta il compenso e la ritenuta versata.</p>
+                        </li>
+                    </ol>
                 )}
             </section>
         ))}

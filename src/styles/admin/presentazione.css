@@ -659,9 +659,13 @@
   color: var(--heading-color);
 }
 
-.pres-fonte {
-  font-size: var(--small-size);
-  color: var(--small-color);
+.pres-pannello .pres-premessa {
+  --body-size: var(--text-xl);
+  max-width: none;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-soft);
+  color: var(--dark-navy);
 }
 
 .pres-colonne {
@@ -671,24 +675,11 @@
   align-items: start;
 }
 
-.pres-costo {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 2rem 3.5rem;
-}
-
-.pres-ricevuta {
-  display: grid;
-  justify-items: center;
-  gap: 1rem;
-  margin: 0;
-}
-
 .pres-ricevuta-foglio {
   position: relative;
   display: block;
-  width: 11rem;
+  width: 7.5rem;
+  margin: 1.25rem 0 0 0.5rem;
   padding: 0;
   border: 1px solid var(--grigio-100);
   border-radius: var(--radius-sm);
@@ -709,14 +700,6 @@
   display: block;
   width: 100%;
   height: auto;
-}
-
-.pres-ricevuta figcaption {
-  max-width: 11rem;
-  font-size: var(--small-size);
-  line-height: var(--small-lh);
-  text-align: center;
-  color: var(--small-color);
 }
 
 .zoom-dialog.pres-ricevuta-zoom[open] {
@@ -774,6 +757,44 @@
   display: flex;
   flex-direction: column;
   list-style: none;
+}
+
+.pres-pannello .pres-riga-avanti {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+}
+
+.pres-avanti {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--primary-blue);
+  font: inherit;
+  font-size: var(--ui-size);
+  font-weight: var(--ui-weight);
+  color: var(--dark-navy);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--durata-breve) ease;
+}
+
+.pres-avanti:hover {
+  background: var(--primary-blue-dark);
+  color: var(--white);
+}
+
+.pres-avanti i {
+  transition: transform var(--durata) var(--curva);
+}
+
+.pres-avanti:hover i {
+  transform: translateX(4px);
 }
 
 .pres-pannello .pres-righe li {
@@ -863,7 +884,6 @@
   }
 
   .pres-colonne,
-  .pres-costo,
   .pres-tappe {
     grid-template-columns: minmax(0, 1fr);
   }

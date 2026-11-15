@@ -158,7 +158,7 @@ export type Apertura = 'copertina' | 'sito-oggi' | 'nuovo-sito' | 'google' | 'sc
 export type Scena =
   | { tipo: 'siti' | 'confronto'; schermi: Schermata[] }
   | { tipo: 'apertura'; immagine: Apertura }
-  | { tipo: 'pannello'; pannello: 'mancano' | 'costo' | 'pagamento' | 'dopo' };
+  | { tipo: 'pannello'; pannello: 'mancano' | 'costo' | 'pagamento' };
 
 interface Scelta {
   etichetta: string;
@@ -455,7 +455,7 @@ export const passi: Passo[] = [
     evidenzia: ['cosa cercano le famiglie'],
     scena: nuovo('/dashboard?s=bot', '#chartDaily'),
   },
-  apertura('prossimi', 'Prossimi passi', 'Quanto costa, come si paga, cosa manca e cosa succede dopo.'),
+  apertura('prossimi', 'Prossimi passi', 'Quanto costa, come si paga e cosa manca per andare online.'),
   { capitolo: 'Prossimi passi', titolo: 'Un costo unico', scena: { tipo: 'pannello', pannello: 'costo' } },
   { capitolo: 'Prossimi passi', titolo: 'Come funziona il pagamento', scena: { tipo: 'pannello', pannello: 'pagamento' } },
   { capitolo: 'Prossimi passi', titolo: 'Cosa manca', scena: { tipo: 'pannello', pannello: 'mancano' } },
@@ -472,5 +472,4 @@ export const passi: Passo[] = [
       ],
     },
   },
-  { capitolo: 'Prossimi passi', titolo: 'Dopo la pubblicazione', scena: { tipo: 'pannello', pannello: 'dopo' } },
 ];

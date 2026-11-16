@@ -61,7 +61,7 @@
 
 .perso-tipo-item {
   display: grid;
-  grid-template-columns: 2.25rem 1fr;
+  grid-template-columns: var(--icona-editoriale-compatta) 1fr;
   gap: 1rem;
   padding-bottom: 2rem;
   --lc: rgb(var(--blu-rgb) / 0.3);
@@ -75,7 +75,7 @@
 
 .perso-tipo-num {
   padding-top: 0.2rem;
-  font-size: var(--text-xl);
+  font-size: var(--icona-editoriale-compatta);
   color: var(--primary-blue-dark);
 }
 
@@ -88,6 +88,14 @@
 }
 
 @media (max-width: 768px) {
+  .perso-tipo-item {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .perso-tipo-num {
+    font-size: var(--icona-editoriale);
+  }
+
   .perso-tipo-grid {
     grid-template-columns: 1fr;
     grid-auto-rows: auto;

@@ -220,7 +220,7 @@
   height: 4rem;
   margin: 0 auto 1.25rem;
   color: var(--primary-blue-dark);
-  font-size: var(--text-2xl);
+  font-size: var(--icona-editoriale-compatta);
 }
 
 .impara-simbolo::before {
@@ -378,7 +378,6 @@
   .impara-simbolo {
     width: 3.5rem;
     height: 3.5rem;
-    font-size: var(--text-xl);
     margin: 0 0 1rem;
   }
 }

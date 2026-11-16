@@ -20,6 +20,8 @@ I nomi `fas`, `far`, `fab` e `fa-*` restano compatibili con i componenti esisten
 
 Per nuovi usi, preferire SVG inline o sprite. Le icone decorative sono nascoste agli screen reader; il nome accessibile è sul pulsante o sul link. Mantenere un'area interattiva di almeno 44 × 44 px, indipendente dalle dimensioni del disegno. Usare i token di colore e dimensione del sito.
 
+Le icone che introducono un blocco di contenuto usano `--icona-editoriale` (48 px), anche su mobile. Le righe e le competenze con supporto grafico usano `--icona-editoriale-compatta` (32 px). I simboli dentro link e pulsanti seguono invece il testo: la griglia di disegno da 24 unità non determina la dimensione visualizzata. Per il team building usare `users`, per le scuole `school`, per la formazione `chalkboard-user`.
+
 ## Pacchetto SVG
 
 Le singole icone sono scalabili e modificabili in un editor vettoriale. I simboli social e di pagamento restano riconoscibili; i rispettivi marchi appartengono ai loro titolari. Il set è realizzato per il progetto InBallet.

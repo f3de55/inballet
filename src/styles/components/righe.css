@@ -13,7 +13,7 @@
 
 .riga {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   gap: 1rem;
   min-height: 4.25rem;
   padding: 1.25rem 0;
@@ -22,9 +22,9 @@
 }
 
 .riga-icona {
-  flex: 0 0 1.5rem;
-  width: 1.5rem;
-  font-size: var(--icona-in-testo);
+  flex: 0 0 var(--icona-editoriale-compatta);
+  width: var(--icona-editoriale-compatta);
+  font-size: var(--icona-editoriale-compatta);
   text-align: center;
   color: var(--primary-blue-dark);
 }

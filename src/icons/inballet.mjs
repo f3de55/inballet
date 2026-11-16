@@ -51,7 +51,8 @@ export const icons = {
   'paper-plane': solid('M2 9.8 22 2l-7.8 20-4-8Zm9 2.8L19.7 4 8.6 11.5Z'),
   'share-alt': dot(18, 4.5, 3) + dot(5.5, 12, 3) + dot(18, 19.5, 3) + path('m8 10.5 7.5-4.5M8 13.5l7.5 4.5'),
   'location-dot': solid('M12 1.5A8 8 0 0 0 4 9.5C4 15 12 23 12 23s8-8 8-13.5a8 8 0 0 0-8-8Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z'),
-  'map-location-dot': path('m3 7 6-2 6 2 6-2v15l-6 2-6-2-6 2ZM9 5v15m6-9v11') + path('M19 5c0 3-4 6-4 6s-4-3-4-6a4 4 0 1 1 8 0Z'),
+  'map-location-dot':
+    path('m10 5-7 2v14l6-2 6 2 6-2v-5M9 7v12m6-4v6') + solid('M17 1a5 5 0 0 0-5 5c0 3.5 5 8 5 8s5-4.5 5-8a5 5 0 0 0-5-5Zm0 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z'),
   clock: circle(12, 12, 9) + path('M12 6.5V12l4 2.5'),
   'calendar-days': calendar + solid('M3.5 9h17v3h-17Z') + dot(8, 15, 1) + dot(12, 15, 1) + dot(16, 15, 1) + dot(8, 18, 1) + dot(12, 18, 1),
   download: path('M12 3v12m-5-5 5 5 5-5M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3'),
@@ -82,20 +83,21 @@ export const icons = {
   'hand-holding-heart':
     path('M3 15h4l3 3h5a1.5 1.5 0 0 0 0-3h-3l-3-3H5m-2 0v9m4-1h9l5-5') + path('M15 11s-4-2.5-4-5a2.3 2.3 0 0 1 4-1.3A2.3 2.3 0 0 1 19 6c0 2.5-4 5-4 5Z'),
   'hands-holding': path('M3 10v7l5 4h8l5-4v-7M7 9v6l3 2m7-8v6l-3 2M3 10a2 2 0 0 1 4 0m10 0a2 2 0 0 1 4 0M10 17h4') + path('m9 7 3-4 3 4'),
-  handshake: path('m2.5 8 4-4 4 1 4-1 7 5-4 8-4 4-6-4-5-7M6.5 4l4 1-3 4 2 2 4-3 5 4m-5 4 3 2m-6-4 3 2'),
+  handshake: solid('M1 7h3v10H1Zm19 0h3v10h-3Z') + path('M4 8h3l3-3h5l5 4v7l-6 5-10-6m3-7 3-3-3 6 2 2 4-3 6 6m-6 1 3 2m-6-4 3 2'),
   person,
   child: dot(12, 4.5, 2.7) + path('m4 9 8 3 8-3m-8 3v3m0 0-4 6m4-6 4 6'),
   baby: circle(12, 12, 8) + path('M12 4c3-3 5 1 2 2M4 11a2 2 0 0 0 0 4m16-4a2 2 0 0 1 0 4M9 11v.1m6-.1v.1m-6 4c2 2 4 2 6 0'),
-  users: dot(8, 6.5, 3) + dot(18, 7.5, 2.5) + solid('M1.5 21v-3.5a6.5 6.5 0 0 1 13 0V21Zm14-7c5-1 7 1.5 7 4V21h-6v-3.5c0-1-.3-2.5-1-3.5Z'),
+  users: dot(8, 6, 3.5) + dot(18.5, 7, 2.75) + solid('M1 22v-4a7 7 0 0 1 14 0v4Zm15.5-8.5a5.5 5.5 0 0 1 6.5 5V22h-5.5v-4c0-1.7-.3-3.1-1-4.5Z'),
   'universal-access': circle(12, 12, 9) + circle(12, 7, 1.2) + path('m6.5 10 5.5 1 5.5-1M12 11v4m0 0-3 4m3-4 3 4'),
-  school: path('M3 21V10h5m8 0h5v11M8 21V7l4-4 4 4v14M10 21v-5h4v5M11 9h2M5 14v2m14-2v2M2 21h20'),
+  school: solid('m12 1 6 5v4h4v12H2V10h4V6Zm0 5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-1.5 11v5h3v-5ZM5 13v3h2v-3Zm12 0v3h2v-3Z'),
   'graduation-cap': path('m2 8 10-5 10 5-10 5ZM6 10v7c4 3 8 3 12 0v-7m4-2v9'),
-  'chalkboard-user': rect(7, 3, 14, 13) + circle(7, 12, 3) + path('M2 21v-1a5 5 0 0 1 10 0v1M12 7h5m-4 4h4m-2 5v5m-2 0h4'),
+  'chalkboard-user':
+    path('M10 3h11v13H11m2-9h4m-4 4h2m1 5v5m-2 0h4') + dot(4.5, 10, 3) + solid('M.5 22v-4a4 4 0 0 1 4-4h2c2.5 0 4-2 6-5l2 1.5c-1.5 2.8-3 5.1-6 6.2V22Z'),
   'house-user': path('m2.5 11 9.5-8 9.5 8M5 9v12h14V9') + circle(12, 12, 2) + path('M8.5 20a3.5 3.5 0 0 1 7 0'),
-  'masks-theater': path(
-    'M3 4c4 1.5 7 1.5 11 0v6c0 4-5.5 7-5.5 7S3 14 3 10Zm2.5 4h.1m5-.1h.1M6 11c1.5 1.5 3.5 1.5 5 0M15 8l6-1v6c0 4-5.5 8-5.5 8l-3-2m3.5-8h.1m2.5 5c-1-1-2-1-3 0',
-  ),
-  'champagne-glasses': path('m4 3 6 2-2 6a3 3 0 0 1-6-2Zm1 10-2 6m-2-1 4 1M20 3l-6 2 2 6a3 3 0 0 0 6-2Zm-1 10 2 6m-2 1 4-1M11 3l1 2 1-2'),
+  'masks-theater':
+    solid('M1 2c5 2 10 2 15 0v8c0 5-7.5 9-7.5 9S1 15 1 10Zm3 5v2h3V7Zm6 0v2h3V7Zm-5 4a3.5 3.5 0 0 0 7 0Z') + path('M19 7h3v7c0 4-6 8-6 8l-3-2m4-6h2'),
+  'champagne-glasses':
+    solid('M2 3h7v7a3.5 3.5 0 0 1-7 0Zm13 0h7v7a3.5 3.5 0 0 1-7 0ZM4 5v4h3V5Zm13 0v4h3V5Z') + path('M5.5 13.5V21M2 21h7m9.5-7.5V21M15 21h7M12 1v3'),
   'shoe-prints': solid('M8 2C3 1 1 8 3 12l5 2 3-7c1-2.5-.7-4.5-3-5ZM3 15l5 2-1.5 5L1 20ZM18 4c5 0 6 7 3 11h-5l-1-7c-.5-2.5 1-4 3-4Zm-2 14h5v5h-5Z'),
   dumbbell: path('M7 12h10') + solid('M1 9h3v6H1Zm4-4h4v14H5Zm10 0h4v14h-4Zm5 4h3v6h-3Z'),
   spa: path('M12 21C5 20 3 15 3 10c4 0 7 2 9 5 2-3 5-5 9-5 0 5-2 10-9 11Zm0-6C7 10 9 6 12 3c3 3 5 7 0 12Z'),

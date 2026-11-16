@@ -10,7 +10,7 @@
 
 .voce-icona {
   display: block;
-  font-size: var(--text-xl);
+  font-size: var(--icona-editoriale);
   line-height: 1;
   color: var(--primary-blue-dark);
   margin-bottom: 1.1rem;

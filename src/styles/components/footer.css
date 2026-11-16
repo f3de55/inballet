@@ -363,13 +363,15 @@
     grid-row: auto;
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
-    --lc: var(--velo-chiaro);
-    background: var(--linea-alto);
   }
 
   .footer-col {
     --lc: var(--velo-chiaro);
     background: var(--linea-basso);
+  }
+
+  .footer-col:has(+ .footer-contatti) {
+    background: none;
   }
 
   .footer-contatti {

@@ -7,10 +7,9 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  background: var(--linea-alto);
 }
 
-.documenti-lista li {
+.documenti-lista li:not(:last-child) {
   background: var(--linea-basso);
 }
 
@@ -76,10 +75,6 @@
 
 .statuto-intro > p:last-child {
   margin: 0;
-}
-
-.statuto-documento {
-  background: var(--linea-alto), var(--linea-basso);
 }
 
 .statuto-documento {

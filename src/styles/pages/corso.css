@@ -74,6 +74,9 @@
   column-gap: var(--meta-spazio);
   min-width: 0;
   padding: 1rem 0;
+}
+
+.corso-meta-card:not(:first-child) {
   background: var(--linea-alto);
 }
 

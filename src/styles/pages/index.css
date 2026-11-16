@@ -821,6 +821,10 @@ recensioni-google {
   background: var(--linea-alto);
 }
 
+.oltre-elemento:nth-child(-n + 2) {
+  background: none;
+}
+
 .oltre-elemento::after {
   content: '';
   position: absolute;
@@ -865,6 +869,11 @@ recensioni-google {
 
   .oltre-elemento:nth-child(4n + 1)::after {
     content: none;
+  }
+
+  .oltre-elemento:nth-child(3),
+  .oltre-elemento:nth-child(4) {
+    background: none;
   }
 }
 
@@ -1042,11 +1051,7 @@ recensioni-google {
   margin-bottom: 1.5rem;
 }
 
-.faq-list {
-  background: var(--linea-alto);
-}
-
-.faq-item {
+.faq-item:not(:last-child) {
   background: var(--linea-basso);
 }
 

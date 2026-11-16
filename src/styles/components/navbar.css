@@ -453,6 +453,10 @@ html.menu-aperto {
   background: var(--linea-basso);
 }
 
+.mobile-nav-item:has(+ .mobile-cta) {
+  background: none;
+}
+
 .mobile-nav-toggle {
   display: flex;
   justify-content: space-between;

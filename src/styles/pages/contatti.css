@@ -162,7 +162,7 @@
   display: block;
   width: 1em;
   flex-shrink: 0;
-  font-size: var(--icona-editoriale);
+  font-size: var(--icona-in-testo);
   line-height: 1;
   text-align: center;
   color: var(--primary-blue-dark);
@@ -185,8 +185,6 @@
 
 .sede a .fa-arrow-up-right-from-square {
   margin-inline-start: 0.4em;
-  font-size: var(--icona-mini);
-  vertical-align: 0.08em;
 }
 
 .sede-indirizzo {
@@ -194,6 +192,10 @@
   margin: 0.2rem auto 0;
   font-style: normal;
   text-wrap: pretty;
+}
+
+.sede-indirizzo-finale {
+  white-space: nowrap;
 }
 
 .sede-indirizzo .sede-mappa {

@@ -87,7 +87,7 @@
 
 .sedi-mappa-punto::after {
   --respiro-da: 1.05;
-  --respiro-a: 1.45;
+  --respiro-a: 1.25;
   content: '';
   position: absolute;
   inset: 6px;
@@ -100,15 +100,15 @@
 @media (prefers-reduced-motion: no-preference) {
   .sedi-mappa-scia {
     display: inline;
-    animation: scia 3.2s linear infinite paused;
+    animation: scia 6s linear infinite paused;
   }
 
   .sedi-mappa-punto::after {
-    animation: respiro 2.4s var(--curva) infinite alternate paused;
+    animation: respiro 4.8s var(--curva-morbida) infinite alternate paused;
   }
 
   .sedi-mappa-punto[data-sede='rho']::after {
-    animation-delay: -1.2s;
+    animation-delay: -2.4s;
   }
 
   .sedi-mappa-tavola.in-vista .sedi-mappa-scia,
@@ -128,14 +128,26 @@
   box-shadow: var(--shadow-card);
   text-decoration: none;
   color: var(--dark-navy);
-  transition:
-    transform var(--durata) var(--curva),
-    box-shadow var(--durata) var(--curva);
+  transition: transform var(--durata-lenta) var(--curva-morbida);
+}
+
+.sedi-mappa-foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--shadow-blue);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--durata-lenta) var(--curva-morbida);
+}
+
+.sedi-mappa-foto.sedi-mappa-attiva::after {
+  opacity: 1;
 }
 
 .sedi-mappa-foto.sedi-mappa-attiva {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-blue);
+  transform: translateY(-2px);
 }
 
 .sedi-mappa-foto--lainate {
@@ -186,11 +198,12 @@
   margin-top: 0.25rem;
   color: var(--primary-blue-dark);
   font-size: var(--label-size);
+  transition: color var(--durata-pannello) var(--curva-morbida);
 }
 
 .sedi-mappa-azione i {
-  font-size: var(--icona-in-testo);
-  transition: transform var(--durata) var(--curva);
+  font-size: var(--icona-mini);
+  transition: transform var(--durata-lenta) var(--curva-morbida);
 }
 
 .sedi-mappa-foto.sedi-mappa-attiva .sedi-mappa-azione {
@@ -198,7 +211,7 @@
 }
 
 .sedi-mappa-foto.sedi-mappa-attiva .sedi-mappa-azione i {
-  transform: translate(3px, -3px);
+  transform: translate(1px, -1px);
 }
 
 .sedi-mappa-popup {
@@ -236,12 +249,12 @@
   line-height: 1;
   box-shadow: var(--shadow-sm);
   transition:
-    transform var(--durata) var(--curva),
-    background-color var(--durata-breve) ease;
+    transform var(--durata-lenta) var(--curva-morbida),
+    background-color var(--durata-pannello) var(--curva-morbida);
 }
 
 .sedi-mappa-punto.sedi-mappa-attiva span {
-  transform: scale(1.12);
+  transform: scale(1.04);
   background-color: var(--dark-navy);
 }
 

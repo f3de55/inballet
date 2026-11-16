@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN npm run build
+RUN npm run verifica:stile && npm run format:check && npm run check && npm test && npm run build
 
 FROM node:24-alpine AS deps
 WORKDIR /app

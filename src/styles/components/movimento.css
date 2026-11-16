@@ -28,8 +28,7 @@
       .numero,
       .timeline > li,
       .sostenitori-loghi li,
-      .info-blocco,
-      .sedi-mappa-foto
+      .info-blocco
     ) {
       animation-name: rivela;
       animation-fill-mode: both;

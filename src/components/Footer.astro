@@ -43,8 +43,8 @@ const colonne: { titolo: string; voci: Voce[] }[] = [
     <details class="footer-col footer-contatti" open>
       <summary><h2 class="footer-titolo titoletto">Contatti</h2></summary>
       <ul>
-        <li class="footer-dato"><i class="fas fa-phone" aria-hidden="true"></i><a href={scuola.telefonoHref}>{scuola.telefono}</a></li>
-        <li class="footer-dato"><i class="fas fa-envelope" aria-hidden="true"></i><a href={`mailto:${scuola.email}`}>{scuola.email}</a></li>
+        <li class="footer-dato"><a href={scuola.telefonoHref}><i class="fas fa-phone" aria-hidden="true"></i>{scuola.telefono}</a></li>
+        <li class="footer-dato"><a href={`mailto:${scuola.email}`}><i class="fas fa-envelope" aria-hidden="true"></i>{scuola.email}</a></li>
       </ul>
       <a href="/contatti" class="footer-link" aria-current={attiva('/contatti') ? 'page' : undefined}>Altre informazioni <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
     </details>

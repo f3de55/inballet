@@ -203,25 +203,20 @@
   outline-offset: 2px;
 }
 
-.footer-dato {
-  display: grid;
-  grid-template-columns: var(--icona-in-testo) minmax(0, 1fr);
-  justify-items: start;
-  column-gap: 0.6rem;
+.footer-dato > a {
+  display: inline-flex;
   align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
 }
 
-.footer-dato > i {
+.footer-dato i {
   display: block;
   width: 1em;
   font-size: var(--icona-in-testo);
   line-height: 1;
   text-align: center;
-  color: var(--primary-blue);
-}
-
-.footer-dato > a {
-  white-space: nowrap;
+  color: var(--white);
 }
 
 .footer-link {
@@ -408,14 +403,6 @@
 
   .footer-col--anima {
     overflow: hidden;
-  }
-
-  .footer-col > :not(summary) {
-    transition: opacity var(--durata-breve) ease;
-  }
-
-  .footer-col--chiude > :not(summary) {
-    opacity: 0;
   }
 
   .footer-col .footer-titolo {

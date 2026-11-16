@@ -251,3 +251,8 @@ a:is(:hover, :focus-visible) .link-cta i,
   outline-offset: 5px;
   border-radius: var(--radius-xs);
 }
+
+a .fa-arrow-up-right-from-square {
+  font-size: var(--icona-mini);
+  vertical-align: -0.125em;
+}

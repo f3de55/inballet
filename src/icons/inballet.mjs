@@ -45,8 +45,8 @@ export const icons = {
     monochrome: true,
   },
   'arrow-up-right-from-square': {
-    outline: '<path d="M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/>',
-    accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6m-.5-5.5L11 13"/></g>',
+    outline: '<path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3M12.5 4H20v7.5m-.5-7-9 9"/>',
+    accent: '',
     monochrome: true,
   },
   'arrows-left-right': {
@@ -133,12 +133,14 @@ export const icons = {
     accent: '<g opacity=".32"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></g>',
   },
   phone: {
-    outline: '<path d="m5.5 3.5 4 4-2 3c1.2 2.7 3.3 4.8 6 6l3-2 4 4-1.8 2a3 3 0 0 1-3 .5A21 21 0 0 1 3 8.3a3 3 0 0 1 .5-3Z"/>',
-    accent: '<g opacity=".32"><path d="m5.5 3.5 4 4-2 3c1.2 2.7 3.3 4.8 6 6l3-2 4 4-1.8 2a3 3 0 0 1-3 .5A21 21 0 0 1 3 8.3a3 3 0 0 1 .5-3Z"/></g>',
+    outline: '<path d="M7.5 3.5h-2a2 2 0 0 0-2 2 15 15 0 0 0 15 15 2 2 0 0 0 2-2v-2l-4-1.5-1.8 2a12 12 0 0 1-8.2-8.2l2-1.8Z"/>',
+    accent: '',
+    monochrome: true,
   },
   envelope: {
-    outline: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 6.5 7 6a2.3 2.3 0 0 0 3 0l7-6"/>',
-    accent: '<g opacity=".32"><rect x="3" y="5" width="18" height="14" rx="2.5"/></g>',
+    outline: '<rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="m4 6 6.5 5.3a2.4 2.4 0 0 0 3 0L20 6"/>',
+    accent: '',
+    monochrome: true,
   },
   comments: {
     outline: '<path d="M20.5 11.5A8.5 8.5 0 0 1 8 19l-5 1.5 1.5-5a8.5 8.5 0 1 1 16-4Z"/><path d="M8 10h8m-8 4h5"/>',
@@ -153,8 +155,9 @@ export const icons = {
     accent: '<g opacity=".32"><circle cx="18" cy="5" r="2.5"/></g>',
   },
   'location-dot': {
-    outline: '<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.3"/>',
-    accent: '<g opacity=".32"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/></g>',
+    outline: '<path d="M18.5 9.5c0 4.5-6.5 11-6.5 11S5.5 14 5.5 9.5a6.5 6.5 0 1 1 13 0Z"/><circle cx="12" cy="9.5" r="2.25"/>',
+    accent: '',
+    monochrome: true,
   },
   'map-location-dot': {
     outline:
@@ -427,17 +430,21 @@ export const icons = {
       '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a8 8 0 0 1 16 0v3m-16 1v3"/></g>',
   },
   instagram: {
-    outline: '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.8"/>',
-    accent: '<g opacity=".32"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/></g>',
+    outline:
+      '<rect x="3" y="3" width="18" height="18" rx="5.25"/><circle cx="12" cy="12" r="3.75"/><circle cx="17.25" cy="6.75" r="1" fill="currentColor" stroke="none"/>',
+    accent: '',
+    monochrome: true,
   },
   facebook: {
-    outline: '<path d="M14.5 21V12h4l.5-4h-4.5V6c0-1.5.5-2 2-2H19V1.5h-3c-3.5 0-5.5 2-5.5 5.5v1H7v4h3.5v9Z"/>',
-    accent: '<g opacity=".32"><path d="M11 12h3v9h-3Z"/></g>',
+    outline: '<path d="M14 21v-8h3l.5-4H14V6.8c0-1.1.5-1.8 1.8-1.8H18V2h-3.2C11.5 2 10 4 10 7v2H7v4h3v8Z"/>',
+    accent: '',
+    monochrome: true,
   },
   whatsapp: {
     outline:
-      '<path d="M20.5 11.5A8.5 8.5 0 0 1 8 19l-5 1.5 1.5-5a8.5 8.5 0 1 1 16-4Z"/><path d="m9 7.5-1.5 1c-.5 3 2 5.5 5 6l1.5-1.5-2-1.5-1 1c-1.5-.5-2.5-1.5-3-3l1-1Z"/>',
-    accent: '<g opacity=".32"><path d="M20.5 11.5A8.5 8.5 0 0 1 8 19l-5 1.5 1.5-5a8.5 8.5 0 1 1 16-4Z"/></g>',
+      '<path d="M20.5 11.7a8.5 8.5 0 0 1-12.4 7.6L3 20.7l1.4-5.1A8.5 8.5 0 1 1 20.5 11.7Z"/><path d="M8 7.5h2l1 2.5-1.3 1.1a7 7 0 0 0 3.2 3.2l1.1-1.3 2.5 1v2c-4.8.4-9.4-4.2-9-9Z"/>',
+    accent: '',
+    monochrome: true,
   },
   google: {
     outline: '<path d="M20 7a8.5 8.5 0 1 0 1 5"/>',

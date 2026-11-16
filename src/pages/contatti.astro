@@ -84,7 +84,7 @@ const fondamenti = [
                                     <p class="info-valore">{sede.citta}</p>
                                     <address class="sede-indirizzo">
                                         <a class="sede-mappa" href={sede.maps} target="_blank" rel="noopener noreferrer" aria-label={`${sede.via}, ${sede.cap} ${sede.citta} (${sede.provincia}): apri la mappa (si apre in una nuova scheda)`}>
-                                            <span class="info-link-testo">{sede.via}, {sede.cap} {sede.citta} ({sede.provincia})</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                                            <span class="info-link-testo">{sede.via}, {sede.cap} {sede.citta} <span class="sede-indirizzo-finale">({sede.provincia})<i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span></span>
                                         </a>
                                     </address>
                                 </div>

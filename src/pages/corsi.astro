@@ -9,6 +9,7 @@ import { categorieCorsi } from '../data/scuola';
 import { enfatizza, etichettaEta, nomeBreve } from '../lib/text';
 import { immaginiSottocorsi } from '../data/immagini-sottocorsi';
 import '../styles/components/dialogo.css';
+import '../styles/components/scelta.css';
 import '../styles/pages/corsi.css';
 
 const pagineCorsi = new Map((await getCollection('corsi')).map((c) => [`/${c.id}`, c.data]));
@@ -83,19 +84,19 @@ const hero = await heroPagina('corsi');
     </section>
 
     <Fragment slot="after-main">
-        <dialog tabindex="-1" class="dialogo trova-popup" id="trova-popup" aria-labelledby="trova-popup-titolo" aria-describedby="trova-popup-intro">
+        <dialog tabindex="-1" class="dialogo scelta-popup trova-popup" id="trova-popup" aria-labelledby="trova-popup-titolo" aria-describedby="trova-popup-intro">
             <div class="dialogo-barra">
                 <button type="button" class="btn-icon btn-icon--chiudi" data-chiudi aria-label="Chiudi la scelta del percorso"><i class="fas fa-times" aria-hidden="true"></i></button>
             </div>
-            <div class="dialogo-corpo trova-popup-corpo">
-            <h2 id="trova-popup-titolo">Da dove iniziamo?</h2>
-            <p id="trova-popup-intro" class="trova-popup-intro">Scegli un percorso e scopri i suoi corsi.</p>
-            <ul class="trova-opzioni">
+            <div class="dialogo-corpo scelta-corpo">
+            <h2 class="scelta-titolo" id="trova-popup-titolo">Da dove iniziamo?</h2>
+            <p id="trova-popup-intro" class="scelta-intro">Scegli un percorso e scopri i suoi corsi.</p>
+            <ul class="scelta-opzioni">
                 {percorsi.map((cat) => (
                     <li>
-                        <a href={`#${cat.id}`} class="trova-opzione" data-percorso={cat.nome}>
-                            <span class="trova-opzione-testo">
-                                <span class="trova-opzione-nome valore">{cat.nome}</span>
+                        <a href={`#${cat.id}`} class="scelta-opzione" data-percorso={cat.nome}>
+                            <span class="scelta-opzione-testo">
+                                <span class="scelta-opzione-nome valore">{cat.nome}</span>
                                 <span class="testo-piccolo">{cat.corsi.length} corsi</span>
                             </span>
                             <i class="fas fa-arrow-right" aria-hidden="true"></i>

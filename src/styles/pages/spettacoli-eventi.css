@@ -452,8 +452,7 @@
 }
 
 .calendario-grid .cal-punti,
-.calendario-grid .cal-tocco,
-.cal-giorno-elenco {
+.calendario-grid .cal-tocco {
   display: none;
 }
 
@@ -887,16 +886,6 @@ html:has(dialog[open]) {
 
   .calendario-grid .cal-tocco:focus-visible {
     outline-offset: -3px;
-  }
-
-  .calendario-grid .cal-giorno.selezionato {
-    background: var(--bg-soft);
-  }
-
-  .cal-giorno-elenco {
-    display: block;
-    margin-top: 1.5rem;
-    scroll-margin-block: calc(var(--header-h) + 1rem) 1rem;
   }
 }
 

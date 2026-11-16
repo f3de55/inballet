@@ -10,6 +10,7 @@ interface EventoSito {
   etichettaStato: string;
   tipo: string;
   quando: string;
+  orario: string;
   luogo: string;
   mappa: string;
   destinatari: string;
@@ -33,7 +34,10 @@ const { oggi, aperto, eventi } = JSON.parse($('datiEventi').textContent || '{}')
 
 const dialog = $<HTMLDialogElement>('eventoDialog');
 const dialogLocandina = $<HTMLDialogElement>('locandinaDialog');
+const dialogGiorno = $<HTMLDialogElement>('giornoDialog');
 let eventoCorrente: EventoSito | null = null;
+let toccoGiorno: HTMLElement | null = null;
+let ritorno: HTMLElement | null = null;
 
 const riga = (label: string, valore: string) => `<div><dt class="titoletto">${label}</dt><dd>${valore}</dd></div>`;
 
@@ -86,10 +90,12 @@ function apriEvento(slug: string) {
 
 dialog.addEventListener('close', () => {
   eventoCorrente = null;
+  ritorno?.focus({ preventScroll: true });
+  ritorno = null;
   history.replaceState(null, '', location.pathname);
 });
 
-for (const dlg of [dialog, dialogLocandina]) {
+for (const dlg of [dialog, dialogLocandina, dialogGiorno]) {
   dlg.addEventListener('click', (ev) => {
     const t = ev.target as Element;
     if (t === dlg || t.closest('[data-chiudi]') || dlg === dialogLocandina) dlg.close();
@@ -145,24 +151,34 @@ const giornoLungo = (data: string) => {
   return testo.charAt(0).toUpperCase() + testo.slice(1);
 };
 
+const statoBreve = (e: EventoSito) => (e.stato !== 'pubblicato' ? e.etichettaStato : e.passato ? 'Evento concluso' : e.inCorso ? 'In corso' : '');
+
 function mostraGiorno(tocco: HTMLElement) {
   const data = tocco.dataset.giorno!;
   const delGiorno = eventiDel(data);
   if (delGiorno.length === 1) return apriEvento(delGiorno[0].slug);
-  document.querySelectorAll('.cal-giorno.selezionato').forEach((c) => c.classList.remove('selezionato'));
-  tocco.closest('.cal-giorno')?.classList.add('selezionato');
-  $('calGiornoTitolo').textContent = `${giornoLungo(data)} · ${delGiorno.length} eventi`;
-  $('calGiornoLista').replaceChildren(
-    ...delGiorno.flatMap((e) => {
-      const voce = document.querySelector(`#vistaElenco [data-evento="${CSS.escape(e.slug)}"]`)?.closest('li');
-      return voce ? [voce.cloneNode(true)] : [];
-    }),
-  );
-  const pannello = $('calGiorno');
-  pannello.hidden = false;
-  $('calGiornoLista').querySelector<HTMLElement>('a')?.focus({ preventScroll: true });
-  pannello.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  toccoGiorno = tocco;
+  $('giornoTitolo').textContent = giornoLungo(data);
+  $('giornoIntro').textContent = `${delGiorno.length} eventi: scegli quale vedere.`;
+  $('giornoOpzioni').innerHTML = delGiorno
+    .map((e) => {
+      const dettagli = [statoBreve(e), e.orario, e.luogo].filter(Boolean).map(escapeHtml).join(' · ');
+      return `<li><a href="${linkEvento(e)}" class="scelta-opzione" data-evento="${escapeHtml(e.slug)}"><span class="scelta-opzione-testo"><span class="scelta-opzione-nome valore">${escapeHtml(e.titolo)}</span>${dettagli ? `<small class="testo-piccolo">${dettagli}</small>` : ''}</span><i class="fas fa-arrow-right" aria-hidden="true"></i></a></li>`;
+    })
+    .join('');
+  dialogGiorno.showModal();
+  dialogGiorno.focus();
+  $('giornoOpzioni').querySelector<HTMLElement>('a')?.focus({ preventScroll: true });
 }
+
+dialogGiorno.addEventListener('click', (ev) => {
+  const opzione = (ev.target as Element).closest<HTMLElement>('[data-evento]');
+  if (!opzione) return;
+  ev.preventDefault();
+  ritorno = toccoGiorno;
+  dialogGiorno.close();
+  apriEvento(opzione.dataset.evento!);
+});
 
 if (aperto) apriEvento(aperto);
 
@@ -215,7 +231,6 @@ if (eventi.length) {
     const resto = (7 - ((inizio + giorni) % 7)) % 7;
     html += '<div class="cal-giorno vuoto" aria-hidden="true"></div>'.repeat(resto);
     $('calendarioGrid').innerHTML = html;
-    $('calGiorno').hidden = true;
 
     $<HTMLButtonElement>('btnMesePrev').disabled = meseIndex <= 0;
     $<HTMLButtonElement>('btnMeseNext').disabled = meseIndex >= mesi.length - 1;

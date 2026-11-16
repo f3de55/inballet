@@ -5,7 +5,7 @@ const scelta = document.getElementById('trova-scelta');
 const popup = document.getElementById('trova-popup') as HTMLDialogElement | null;
 
 if (apri && scelta && popup) {
-  const opzioni = [...popup.querySelectorAll<HTMLAnchorElement>('.trova-opzione')];
+  const opzioni = [...popup.querySelectorAll<HTMLAnchorElement>('.scelta-opzione')];
 
   const seleziona = (opzione?: HTMLAnchorElement) => {
     for (const voce of opzioni) voce.removeAttribute('aria-current');

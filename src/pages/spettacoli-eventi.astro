@@ -6,6 +6,7 @@ import { romeDate } from '../lib/time';
 import HeroPagina from '../components/HeroPagina.astro';
 import Img from '../components/Img.astro';
 import '../styles/components/dialogo.css';
+import '../styles/components/scelta.css';
 import '../styles/components/zoom-foto.css';
 import '../styles/pages/spettacoli-eventi.css';
 
@@ -79,6 +80,7 @@ const datiEventi = {
       etichettaStato: ETICHETTE_STATO[e.stato],
       tipo: e.tipo,
       quando: maiuscola(quando(e)),
+      orario: e.dataFine && e.dataFine !== e.data ? maiuscola(quando(e)) : voce(e).ora,
       luogo: e.luogo,
       mappa: sedeDi(e.luogo)?.maps ?? '',
       destinatari: e.destinatari,
@@ -205,10 +207,6 @@ const og = aperto
                             </div>
                         </div>
                         <div class="calendario-grid" id="calendarioGrid"></div>
-                        <div class="agenda-gruppo cal-giorno-elenco" id="calGiorno" hidden>
-                            <p class="agenda-mese titoletto" id="calGiornoTitolo"></p>
-                            <ul class="agenda" id="calGiornoLista"></ul>
-                        </div>
                     </div>
                 )}
             </div>
@@ -267,6 +265,17 @@ const og = aperto
                     </div>
                 </div>
             </div>
+        </div>
+    </dialog>
+
+    <dialog tabindex="-1" class="dialogo scelta-popup" id="giornoDialog" aria-labelledby="giornoTitolo" aria-describedby="giornoIntro">
+        <div class="dialogo-barra">
+            <button type="button" class="btn-icon btn-icon--chiudi" data-chiudi aria-label="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+        </div>
+        <div class="dialogo-corpo scelta-corpo">
+            <h2 class="scelta-titolo" id="giornoTitolo"></h2>
+            <p class="scelta-intro" id="giornoIntro"></p>
+            <ul class="scelta-opzioni" id="giornoOpzioni"></ul>
         </div>
     </dialog>
 

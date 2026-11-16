@@ -154,7 +154,8 @@ export const icons = {
     accent: '<g opacity=".32"><circle cx="18" cy="5" r="2.5"/></g>',
   },
   'location-dot': {
-    outline: '<path d="M19 9.5c0 4.5-7 12-7 12S5 14 5 9.5a7 7 0 1 1 14 0Z"/><circle cx="12" cy="9.5" r="2.25"/>',
+    outline:
+      '<path d="M12 18.5C10 18.5 2.5 13.5 2.5 9a9.5 7.5 0 0 1 19 0c0 4.5-7.5 9.5-9.5 9.5Z"/><rect x="9.25" y="6.25" width="5.5" height="5.5" rx="1.75" transform="rotate(45 12 9)"/><path d="M7 21c2.5 1.3 7.5 1.3 10 0"/>',
     accent: '',
     monochrome: true,
   },
@@ -435,7 +436,7 @@ export const icons = {
     monochrome: true,
   },
   facebook: {
-    outline: '<rect x="3" y="3" width="18" height="18" rx="5.25"/><path d="M12 18V9.8a3.3 3.3 0 0 1 3.3-3.3H17M9 11.5h7"/>',
+    outline: '<circle cx="12" cy="12" r="9"/><path d="M11.5 18V9.5a3 3 0 0 1 3-3H16m-7.5 5h7"/>',
     accent: '',
     monochrome: true,
   },

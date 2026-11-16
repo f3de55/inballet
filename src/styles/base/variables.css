@@ -113,7 +113,7 @@
   --icona-in-testo: max(1.5rem, 1em);
   --icona-mini: 1.25rem;
   --icona-punto: 0.5em;
-  --icona-stato: 0.75rem;
+  --icona-stato: 0.875rem;
   --icona-editoriale: 3rem;
   --icona-editoriale-compatta: 2.25rem;
   --icona-comando: 1.5rem;
@@ -122,8 +122,8 @@
   --icona-secondario: var(--primary-blue);
   --icona-link: var(--icona-mini);
   --link-gap: 0.625rem;
-  --link-segno-h: 0.5rem;
-  --link-segno: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 12' preserveAspectRatio='none'%3E%3Cpath d='M3 7C48 2.5 112 10.5 157 5' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  --link-segno-h: 0.625rem;
+  --link-segno: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20160%2012'%20preserveAspectRatio%3D'none'%3E%3Cpath%20d%3D'M3%206Q12.625%200%2022.25%206T41.5%206T60.75%206T80%206T99.25%206T118.5%206T137.75%206T157%206'%20fill%3D'none'%20stroke%3D'%23000'%20stroke-width%3D'2.5'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%2F%3E%3C%2Fsvg%3E");
   --glifo-citazione: 5.5rem;
 
   --durata-breve: 0.15s;

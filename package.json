@@ -32,11 +32,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
-    "@fortawesome/fontawesome-free": "^6.7.2",
     "@types/node": "^24.19.2",
     "chart.js": "^4.6.1",
     "prettier": "^3.9.10",
-    "subset-font": "^2.9.0",
     "typescript": "^6.0.3"
   },
   "prettier": {

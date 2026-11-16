@@ -13,5 +13,6 @@ Thumbs.db
 
 src/styles/icons.css
 src/assets/fonts/
+public/assets/icons/
 
 .claude/

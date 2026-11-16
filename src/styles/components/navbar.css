@@ -114,14 +114,13 @@ html.menu-aperto {
 }
 
 .nav-item:hover .nav-link.attiva,
-.nav-item[data-menu]:hover .nav-link.attiva::after,
+.nav-item[data-menu]:hover .nav-link.attiva .nav-chevron,
 .nav-item:has(.mega-menu.active) .nav-link.attiva,
-.nav-item[data-menu]:has(.mega-menu.active) .nav-link.attiva::after {
+.nav-item[data-menu]:has(.mega-menu.active) .nav-link.attiva .nav-chevron {
   color: var(--white);
 }
 
-.nav-item[data-menu] .nav-link::after {
-  content: '▼';
+.nav-item[data-menu] .nav-link .nav-chevron {
   margin-left: 0.5rem;
   font-size: var(--icona-mini);
   transition: transform var(--transition-base);
@@ -132,7 +131,7 @@ html.menu-aperto {
   color: var(--primary-blue);
 }
 
-.nav-item[data-menu] .nav-link.attiva::after {
+.nav-item[data-menu] .nav-link.attiva .nav-chevron {
   color: var(--primary-blue);
 }
 
@@ -140,7 +139,7 @@ html.menu-aperto {
   color: var(--white);
 }
 
-.nav-item[data-menu]:hover .nav-link::after {
+.nav-item[data-menu]:hover .nav-link .nav-chevron {
   transform: rotate(180deg);
 }
 

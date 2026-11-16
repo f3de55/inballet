@@ -26,7 +26,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
                         aria-current={m.href && attiva(m.href) ? 'page' : undefined}
                         aria-expanded="false"
                         aria-haspopup="true"
-                    >{m.label}</LinkTag>
+                    >{m.label}<i class="fas fa-chevron-down nav-chevron" aria-hidden="true"></i></LinkTag>
                     <div class:list={['mega-menu', { 'mega-menu--compatto': m.compatto }]} id={`mega-menu-${m.id}`} role="region" aria-label={`Menu ${m.label}`}>
                         <div class="mega-menu-content">
                             {m.sezioni.map((s) => (
@@ -65,7 +65,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
         <div class="mobile-nav-item">
             <button type="button" class:list={['mobile-nav-toggle', { attiva: menuAttivo(m) }]} data-target={`${m.id}-submenu`} aria-expanded="false" aria-controls={`${m.id}-submenu`}>
                 <span>{m.label}</span>
-                <span class="mobile-nav-freccia" aria-hidden="true">▼</span>
+                <i class="fas fa-chevron-down mobile-nav-freccia" aria-hidden="true"></i>
             </button>
             <div class="mobile-submenu" id={`${m.id}-submenu`}>
                 <div class="mobile-submenu-inner">

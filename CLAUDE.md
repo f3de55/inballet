@@ -11,7 +11,7 @@ npm start          # run dist/ reading .env
 npm run check      # TypeScript type check
 npm test           # unit tests (carousel, chatbot search and protections); test:demo / test:statuto run against the Docker image
 npm run format     # Prettier (TS, CSS, MJS, JSON; .astro files are formatted by hand)
-npm run icons      # regenerate Font Awesome icon subset (run after using a new fa-… icon)
+npm run icons      # generate the custom InBallet SVG icon set
 ```
 
 `predev`, `prebuild`, `precheck` auto-run `npm run icons` — no need to run it manually before those.
@@ -191,7 +191,7 @@ Shared classes and tokens: every content section uses them.
 
 ### Icons
 
-`scripts/icons.mjs` generates a Font Awesome subset from `@fortawesome/fontawesome-free`. It scans source files for `fa-*` class usage and builds a minimal subset (Font Awesome 6.7 format, `--fa` per icon); it stops the build if a used class does not exist or no icon is extracted. Run `npm run icons` after adding any new Font Awesome icon class.
+`src/icons/inballet.mjs` is the custom InBallet icon pack: 24×24 viewBox, 1.65-unit rounded strokes, monochrome currentColor. `scripts/icons.mjs` scans every source (including data) and generates `styles/icons.css` with inline SVG masks, plus `public/assets/icons/inballet.svg` for `<use>` consumers. Existing `fas` / `far` / `fab` and `fa-*` names are compatibility aliases only; no Font Awesome artwork or icon font is loaded. Unknown names stop the build. Filled and empty review stars stay distinct; the status dot stays solid. Navigation chevrons use the same pack. Add new paths and aliases to the pack, then run `npm run icons`.
 
 ### Session & Auth
 

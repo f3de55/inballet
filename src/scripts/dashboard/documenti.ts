@@ -6,15 +6,7 @@ import type { Documento } from '../../data/documenti';
 
 const formTesti = $<HTMLFormElement>('formTesti');
 
-function aggiornaAnteprimaTitolo() {
-  const titolo = $<HTMLInputElement>('titolo').value.trim();
-  const accento = $<HTMLInputElement>('accento').value.trim();
-  $('anteprimaTitolo').textContent = [titolo, accento].filter(Boolean).join(' ') || '—';
-}
-
 attivaContatori();
-formTesti.addEventListener('input', aggiornaAnteprimaTitolo);
-aggiornaAnteprimaTitolo();
 
 formTesti.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -23,10 +15,6 @@ formTesti.addEventListener('submit', async (e) => {
     $('heroTitolo').focus();
     return toast('Manca il titolo della pagina', 'error');
   }
-  if (!valore('titolo')) {
-    $('titolo').focus();
-    return toast('Manca il titolo della sezione', 'error');
-  }
 
   const salva = $<HTMLButtonElement>('btnSalvaTesti');
   salva.disabled = true;
@@ -34,10 +22,6 @@ formTesti.addEventListener('submit', async (e) => {
   const { error } = await actions.documenti.salvaTesti({
     heroTitolo: valore('heroTitolo'),
     heroTesto: valore('heroTesto'),
-    eyebrow: valore('eyebrow'),
-    titolo: valore('titolo'),
-    accento: valore('accento'),
-    intro: valore('intro'),
   });
   salva.disabled = false;
   salva.textContent = 'Salva i testi';

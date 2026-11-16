@@ -16,10 +16,6 @@ const MAX_DOCUMENTI = 20;
 const LIMITI = {
   heroTitolo: 80,
   heroTesto: 250,
-  eyebrow: 40,
-  titolo: 60,
-  accento: 40,
-  intro: 600,
   docTitolo: 100,
   docNota: 150,
 } as const;
@@ -29,35 +25,25 @@ export async function leggiDocumenti(): Promise<PaginaDocumenti> {
   const base = documentiPredefiniti;
   return {
     hero: { ...base.hero, ...salvato?.hero },
-    sezione: { ...base.sezione, ...salvato?.sezione },
     documenti: Array.isArray(salvato?.documenti) ? salvato.documenti : base.documenti,
   };
 }
 
-type TestiInput = Partial<Record<'heroTitolo' | 'heroTesto' | 'eyebrow' | 'titolo' | 'accento' | 'intro', string>>;
+type TestiInput = Partial<Record<'heroTitolo' | 'heroTesto', string>>;
 
 export async function salvaTesti(input: TestiInput): Promise<PaginaDocumenti> {
   const v = {
     heroTitolo: str(input.heroTitolo),
     heroTesto: str(input.heroTesto),
-    eyebrow: str(input.eyebrow),
-    titolo: str(input.titolo),
-    accento: str(input.accento),
-    intro: str(input.intro),
   };
   const errors: string[] = [];
   controllaLunghezza(errors, 'Titolo della pagina', v.heroTitolo, LIMITI.heroTitolo, true);
   controllaLunghezza(errors, 'Testo sotto il titolo', v.heroTesto, LIMITI.heroTesto);
-  controllaLunghezza(errors, 'Etichetta', v.eyebrow, LIMITI.eyebrow);
-  controllaLunghezza(errors, 'Titolo della sezione', v.titolo, LIMITI.titolo, true);
-  controllaLunghezza(errors, 'Parola in evidenza', v.accento, LIMITI.accento);
-  controllaLunghezza(errors, 'Introduzione', v.intro, LIMITI.intro);
   if (errors.length) throw new ErroreDocumenti(errors.join('. '));
 
   return serialized(async () => {
     const pagina = await leggiDocumenti();
     pagina.hero = { titolo: v.heroTitolo, testo: v.heroTesto };
-    pagina.sezione = { eyebrow: v.eyebrow, titolo: v.titolo, accento: v.accento, intro: v.intro };
     await writeJson(paths.documenti, pagina);
     return pagina;
   });

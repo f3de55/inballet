@@ -125,7 +125,7 @@ export const server = {
 
   documenti: {
     salvaTesti: defineAction({
-      input: z.object({ heroTitolo: campo, heroTesto: campo, eyebrow: campo, titolo: campo, accento: campo, intro: campo }),
+      input: z.object({ heroTitolo: campo, heroTesto: campo }),
       handler: admin(async (input) => {
         await salvaTesti(input);
       }),

@@ -12,10 +12,10 @@ export const prerender = false;
 const bg = {
   hero: await heroPagina('documenti'),
 };
-const { hero, sezione, documenti } = await leggiDocumenti();
+const { hero, documenti } = await leggiDocumenti();
 const moduli = documenti.filter((d) => d.categoria !== 'statuto');
 const statuto = documenti.find((d) => d.categoria === 'statuto');
-const base = senzaGrassetto(hero.testo || sezione.intro);
+const base = senzaGrassetto(hero.testo) || 'Moduli di iscrizione e documenti da scaricare.';
 const luogo = ' InBallet, scuola di danza a Lainate e Rho (MI).';
 const description = base.length + luogo.length <= 160 ? base + luogo : base;
 ---
@@ -33,11 +33,7 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
     </HeroPagina>
 
     <section id="documenti" class="documenti-section decoro-onde" aria-labelledby="documenti-titolo">
-        <div class="intro-editoriale">
-            {sezione.eyebrow && <p class="eyebrow">{sezione.eyebrow}</p>}
-            <h2 class="titolo-sezione" id="documenti-titolo">{sezione.titolo}{sezione.accento && <>{' '}<em>{sezione.accento}</em></>}</h2>
-            {sezione.intro && <p set:html={grassettoDaTesto(sezione.intro)} />}
-        </div>
+        <h2 class="sr-only" id="documenti-titolo">Moduli da scaricare</h2>
         <div class="container">
             {moduli.length > 0 && (
             <ul class="documenti-lista">

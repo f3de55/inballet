@@ -79,7 +79,7 @@ File layout in `data/`:
 - `analytics.json` — chatbot logs (capped at 10000 entries)
 - `sessions/` — fsLite session driver
 - `uploads/eventi/` — event posters: uploads are resized (1600px) and converted to WebP, plus a `<name>.mini.webp` thumbnail for the dashboard library
-- `documenti.json` — texts and PDF list of `/documenti` (defaults in `src/data/documenti.ts` until first save)
+- `documenti.json` — hero texts and PDF list of `/documenti`, which shows the download list right under the hero with no section heading of its own (defaults in `src/data/documenti.ts` until first save)
 - `uploads/documenti/` — PDFs uploaded from the dashboard, served on `/assets/documenti/<file>`
 - `insegnanti.json` — header and teacher cards (name, role, bio, competenze list, photo) of the «Insegnanti» carousel in `/chi-siamo` (dashboard › Insegnanti; defaults in `src/data/insegnanti.ts`, no teachers by default: the section is hidden while the list is empty). `/chi-siamo` is therefore rendered on demand. Demo teachers (dashboard › Insegnanti › Dati demo, `generaInsegnanti` in `src/lib/demo.ts`) carry `demo: true` and are removed with their photos in one click; their portraits come from `demo/insegnanti` (vertical photos named `donna-*` / `uomo-*`, the prefix picks the name), without photos they get initials
 - `uploads/insegnanti/` — teacher photos, cropped 4:5 (800x1000) and converted to WebP on upload, served on `/assets/images/insegnanti/<file>`

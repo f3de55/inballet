@@ -191,7 +191,7 @@ Shared classes and tokens: every content section uses them.
 
 ### Icons
 
-`src/icons/inballet.mjs` is the custom InBallet icon pack: 24×24 viewBox, 1.65-unit rounded strokes, monochrome currentColor. `scripts/icons.mjs` scans every source (including data) and generates `styles/icons.css` with inline SVG masks, plus `public/assets/icons/inballet.svg` for `<use>` consumers. Existing `fas` / `far` / `fab` and `fa-*` names are compatibility aliases only; no Font Awesome artwork or icon font is loaded. Unknown names stop the build. Filled and empty review stars stay distinct; the status dot stays solid. Navigation chevrons use the same pack. Add new paths and aliases to the pack, then run `npm run icons`.
+`src/icons/inballet.mjs` is the custom InBallet icon pack: 24×24 viewBox, 2.25-unit rounded strokes and filled silhouettes, monochrome currentColor. `scripts/icons.mjs` scans every source (including data) and generates `styles/icons.css` with inline SVG masks, plus `public/assets/icons/inballet.svg` for `<use>` consumers. Existing `fas` / `far` / `fab` and `fa-*` names are compatibility aliases only; no Font Awesome artwork or icon font is loaded. Unknown names stop the build. Filled and empty review stars stay distinct; the status dot stays solid. Navigation chevrons use the same pack. Add new paths and aliases to the pack, then run `npm run icons`.
 
 ### Session & Auth
 

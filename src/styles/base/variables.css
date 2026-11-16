@@ -102,8 +102,8 @@
   --small-color-su-scuro: var(--testo-su-scuro-debole);
   --label-color-su-scuro: var(--primary-blue);
 
-  --icona-in-testo: 0.85em;
-  --icona-mini: 0.7em;
+  --icona-in-testo: 1em;
+  --icona-mini: 0.85em;
   --icona-punto: 0.5em;
   --glifo-citazione: 5.5rem;
 

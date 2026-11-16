@@ -1,8 +1,8 @@
 # InBallet Icons
 
-Set vettoriale originale per InBallet: 100 disegni, 106 nomi usati dal sito.
+Set vettoriale originale per InBallet: 116 disegni, con simboli specifici per danza e benessere.
 
-Griglia 24 × 24, tratto 1,65, terminali e raccordi arrotondati. Colore ereditato dal testo. Le forme restano essenziali, leggibili e coerenti con il tono accogliente della scuola. Nessuna illustrazione o decorazione incorporata nelle icone.
+Griglia 24 × 24, tratto 2,25, terminali e raccordi arrotondati. Colore ereditato dal testo. Sagome più piene, ingombro ottico ampio e dettagli essenziali rendono le forme leggibili e coerenti con il tono accogliente della scuola. Nessuna illustrazione o decorazione incorporata nelle icone.
 
 ## Sul sito
 

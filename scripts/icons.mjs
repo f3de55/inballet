@@ -29,9 +29,11 @@ const base = `:is(.fas,.far,.fab){display:inline-block;flex-shrink:0;width:1em;h
 await writeFile(output, `${base}\n${rules.join('\n')}\n.fas.fa-star{--ib-icon:${image('star', true)}}\n`);
 const exports = path.join(root, 'public/assets/icons');
 await mkdir(exports, { recursive: true });
-const symbols = names.map(
-  (name) =>
-    `<symbol id="${name}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">${icons[name]}</symbol>`,
-);
+const symbols = Object.keys(icons)
+  .sort()
+  .map(
+    (name) =>
+      `<symbol id="${name}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">${icons[name]}</symbol>`,
+  );
 await writeFile(path.join(exports, 'inballet.svg'), `<svg xmlns="http://www.w3.org/2000/svg">${symbols.join('')}</svg>\n`);
-console.log(`[icons] InBallet: ${names.length} disegni SVG, ${used.size} nomi coperti, nessun font`);
+console.log(`[icons] InBallet: ${Object.keys(icons).length} disegni SVG, ${used.size} nomi usati, nessun font`);

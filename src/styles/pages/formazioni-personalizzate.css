@@ -1,6 +1,6 @@
 .perso-intro-section {
   padding: var(--section-y) 0;
-  background: var(--white);
+  background: var(--sfondo);
 }
 
 .perso-intro-label {
@@ -76,7 +76,7 @@
 .perso-tipo-num {
   padding-top: 0.2rem;
   font-size: var(--icona-editoriale-compatta);
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .perso-tipo-content h3 {

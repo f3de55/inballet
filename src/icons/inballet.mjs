@@ -539,6 +539,16 @@ export const icons = {
       '<circle cx="12" cy="4" r="2"/><path d="M12 8v7m0-6-5 3-3-4m8 1 5 3 3-4m-8 7-4 2-3 4m7-6 4 2 3 4"/><rect x="3" y="6" width="2" height="2" rx=".6"/><rect x="19" y="6" width="2" height="2" rx=".6"/>',
     accent: '<g opacity=".32"><circle cx="12" cy="4" r="2"/></g>',
   },
+  moon: {
+    outline: '<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.75 6.75 0 0 0 10.5 10.5Z"/>',
+    accent: '',
+    monochrome: true,
+  },
+  sun: {
+    outline: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2m0 15v2M2.5 12h2m15 0h2M5.3 5.3l1.4 1.4m10.6 10.6 1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>',
+    accent: '',
+    monochrome: true,
+  },
 };
 
 export const aliases = {

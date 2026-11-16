@@ -75,6 +75,7 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 0;
+  white-space: nowrap;
   border: none;
   background: none;
   color: var(--testo-su-scuro-debole);
@@ -159,10 +160,10 @@ body {
 }
 .btn-primary {
   background: var(--primary);
-  color: var(--text);
+  color: var(--dark-navy);
 }
 .btn-primary:hover:not(:disabled) {
-  background: var(--primary-dark);
+  background: var(--primary-blue-dark);
   color: var(--white);
 }
 .btn-secondary {
@@ -194,7 +195,7 @@ body {
   cursor: wait;
 }
 .btn-danger {
-  background: var(--danger);
+  background: var(--danger-pieno);
   color: var(--white);
 }
 .btn-danger:hover:not(:disabled) {
@@ -247,7 +248,7 @@ body {
 }
 .filtro.attivo {
   background: var(--text);
-  color: var(--white);
+  color: var(--surface);
 }
 .cerca {
   position: relative;
@@ -371,6 +372,7 @@ body {
   padding: 0.1rem 0.5rem;
   border-radius: var(--radius-pill);
   background: var(--primary);
+  color: var(--dark-navy);
   font-size: var(--text-2xs);
   font-weight: var(--font-bold);
   letter-spacing: 0.5px;
@@ -563,7 +565,7 @@ body {
   overflow: hidden;
   border-radius: var(--radius-md);
   background: var(--surface);
-  box-shadow: 0 24px 60px rgb(var(--nero-rgb) / 0.2);
+  box-shadow: var(--ombra-modale);
 }
 .modal--piccola .modal-box {
   max-width: 440px;
@@ -596,7 +598,7 @@ body {
   border: none;
   border-radius: var(--radius-full);
   background: var(--grigio-100);
-  color: var(--black);
+  color: var(--text);
   font-size: var(--text-sm);
   cursor: pointer;
   transition: background-color var(--durata-breve) ease;
@@ -649,7 +651,7 @@ body {
   padding: 0.65rem 0.9rem;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
-  background: var(--white);
+  background: var(--surface);
   font: inherit;
   font-size: var(--text-sm);
   color: var(--text);
@@ -657,7 +659,7 @@ body {
 .campo select {
   appearance: none;
   padding-right: 2.5rem;
-  background: var(--white)
+  background: var(--surface)
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%236a6f75' stroke-width='1.6'/%3E%3C/svg%3E")
     right 1rem center no-repeat;
 }
@@ -709,7 +711,7 @@ input[list]::-webkit-calendar-picker-indicator {
   padding: 0.3rem 0.85rem;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-pill);
-  background: var(--white);
+  background: var(--surface);
   font: inherit;
   font-size: var(--text-xs);
   color: var(--text);
@@ -727,7 +729,7 @@ input[list]::-webkit-calendar-picker-indicator {
   overflow: hidden;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
-  background: var(--white);
+  background: var(--surface);
 }
 .editor-wrapper:focus-within {
   border-color: var(--primary-dark);
@@ -894,7 +896,7 @@ input[list]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 .delete-img:hover {
-  background: var(--danger);
+  background: var(--danger-pieno);
 }
 @media (hover: hover) {
   .delete-img {
@@ -915,7 +917,7 @@ input[list]::-webkit-calendar-picker-indicator {
   border-radius: var(--radius-md);
   background: var(--surface);
   color: var(--text);
-  box-shadow: 0 24px 60px rgb(var(--nero-rgb) / 0.25);
+  box-shadow: var(--ombra-modale);
 }
 .conferma::backdrop {
   background: rgb(var(--navy-rgb) / 0.45);
@@ -960,7 +962,7 @@ input[list]::-webkit-calendar-picker-indicator {
   overflow: hidden;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
-  background: var(--white);
+  background: var(--surface);
 }
 .quantita:focus-within {
   border-color: var(--primary-dark);
@@ -1203,7 +1205,7 @@ input[list]::-webkit-calendar-picker-indicator {
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
-  background: var(--white);
+  background: var(--surface);
   font: inherit;
   font-size: var(--text-sm);
   color: var(--text);
@@ -1484,7 +1486,7 @@ input[list]::-webkit-calendar-picker-indicator {
   gap: 0.7rem;
   padding: 0.85rem 1.15rem;
   border-radius: var(--radius-sm);
-  background: var(--dark-navy);
+  background: var(--bar);
   color: var(--white);
   font-size: var(--text-xs);
   box-shadow: 0 8px 24px rgb(var(--nero-rgb) / 0.2);
@@ -1512,6 +1514,57 @@ input[list]::-webkit-calendar-picker-indicator {
   }
 }
 
+@media (max-width: 1100px) {
+  .topbar-azioni {
+    gap: 0;
+  }
+  .topbar-azioni a,
+  .topbar-azioni button {
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    font-size: var(--text-sm);
+  }
+  .topbar-azioni span:not(.tema-icone) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 860px) {
+  .topbar-inner {
+    flex-wrap: wrap;
+    height: auto;
+    gap: 0;
+    padding: 0 0.5rem 0 1rem;
+  }
+  .topbar-logo {
+    flex: 1;
+    padding: 0.6rem 0;
+  }
+  .topbar-logo img {
+    width: 80px;
+  }
+  .topbar-nav {
+    order: 3;
+    flex: 0 0 100%;
+    margin: 0 -0.5rem 0 -1rem;
+    border-top: 1px solid rgb(var(--bianco-rgb) / 0.08);
+  }
+  .topbar-nav a {
+    flex: 1 1 auto;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 0.4rem;
+    font-size: var(--text-xs);
+    white-space: nowrap;
+  }
+}
+
 @media (max-width: 900px) {
   .pannelli {
     grid-template-columns: minmax(0, 1fr);
@@ -1529,51 +1582,6 @@ input[list]::-webkit-calendar-picker-indicator {
   .imp-campi {
     grid-template-columns: minmax(0, 1fr);
     padding: 1rem 1rem 0;
-  }
-  .topbar-inner {
-    flex-wrap: wrap;
-    height: auto;
-    gap: 0;
-    padding: 0 0.5rem 0 1rem;
-  }
-  .topbar-logo {
-    flex: 1;
-    padding: 0.6rem 0;
-  }
-  .topbar-logo img {
-    width: 80px;
-  }
-  .topbar-azioni {
-    gap: 0;
-  }
-  .topbar-azioni a,
-  .topbar-azioni button {
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    font-size: var(--text-sm);
-  }
-  .topbar-azioni span {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-  .topbar-nav {
-    order: 3;
-    flex: 0 0 100%;
-    margin: 0 -0.5rem 0 -1rem;
-    border-top: 1px solid rgb(var(--bianco-rgb) / 0.08);
-  }
-  .topbar-nav a {
-    flex: 1 1 auto;
-    justify-content: center;
-    min-height: 46px;
-    padding: 0 0.4rem;
-    font-size: var(--text-xs);
-    white-space: nowrap;
   }
 
   .main {

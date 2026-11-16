@@ -8,7 +8,7 @@
   font-size: var(--body-size);
   line-height: var(--body-lh);
   font-weight: var(--font-semibold);
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   text-decoration: none;
   overflow-wrap: anywhere;
 }

@@ -294,15 +294,11 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
 
     Chart.register(LineController, BarController, LineElement, BarElement, PointElement, CategoryScale, LinearScale, Filler);
     const token = (nome: string) => getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
-    Chart.defaults.color = token('--text-muted');
-    Chart.defaults.borderColor = token('--grigio-100');
     Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
-
-    type Serie = { labels: string[]; data: number[] };
-    const container = document.querySelector<HTMLElement>('[data-charts]');
-    if (container) {
-        const { daily, hourly } = JSON.parse(container.dataset.charts!) as { daily: Serie; hourly: Serie };
-        const options = {
+    const opzioni = () => {
+        Chart.defaults.color = token('--text-muted');
+        Chart.defaults.borderColor = token('--grigio-100');
+        return {
             responsive: true,
             maintainAspectRatio: false,
             plugins: { legend: { display: false } },
@@ -311,16 +307,31 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
                 x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkipPadding: 12 } },
             },
         };
+    };
 
-        new Chart(document.querySelector<HTMLCanvasElement>('#chartDaily')!, {
+    type Serie = { labels: string[]; data: number[] };
+    const container = document.querySelector<HTMLElement>('[data-charts]');
+    if (container) {
+        const { daily, hourly } = JSON.parse(container.dataset.charts!) as { daily: Serie; hourly: Serie };
+        const options = opzioni();
+        const giornaliero = new Chart(document.querySelector<HTMLCanvasElement>('#chartDaily')!, {
             type: 'line',
-            data: { labels: daily.labels, datasets: [{ label: 'Messaggi', data: daily.data, borderColor: token('--primary-blue-dark'), backgroundColor: `rgb(${token('--blu-rgb')} / 0.25)`, fill: true, cubicInterpolationMode: 'monotone', pointRadius: 2 }] },
+            data: { labels: daily.labels, datasets: [{ label: 'Messaggi', data: daily.data, borderColor: token('--accento'), backgroundColor: `rgb(${token('--blu-rgb')} / 0.25)`, fill: true, cubicInterpolationMode: 'monotone', pointRadius: 2 }] },
             options,
         });
-        new Chart(document.querySelector<HTMLCanvasElement>('#chartHourly')!, {
+        const orario = new Chart(document.querySelector<HTMLCanvasElement>('#chartHourly')!, {
             type: 'bar',
             data: { labels: hourly.labels, datasets: [{ label: 'Messaggi', data: hourly.data, backgroundColor: token('--primary-blue'), borderRadius: 3 }] },
             options,
+        });
+
+        document.addEventListener('tema', () => {
+            const nuove = opzioni();
+            giornaliero.options = nuove;
+            orario.options = nuove;
+            giornaliero.data.datasets[0].borderColor = token('--accento');
+            giornaliero.update('none');
+            orario.update('none');
         });
     }
 </script>

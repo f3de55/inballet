@@ -5,7 +5,7 @@
   padding: 0;
   border: none;
   border-radius: var(--radius-card);
-  background: var(--white);
+  background: var(--superficie);
   color: var(--text-body);
   clip-path: inset(0 round var(--radius-card));
   overflow-y: auto;

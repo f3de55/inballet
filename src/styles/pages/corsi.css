@@ -25,7 +25,7 @@
 
 .corsi-stile {
   padding: calc(var(--section-y) * 0.75) 0;
-  background: var(--white);
+  background: var(--sfondo);
 }
 
 .corsi-stile--soft {
@@ -44,7 +44,7 @@
   gap: 1.5rem 3rem;
   padding: 2.5rem 3rem;
   border-radius: var(--radius-card);
-  background: var(--white);
+  background: var(--superficie);
 }
 
 .corsi-fine-titolo {

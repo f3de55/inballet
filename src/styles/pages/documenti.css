@@ -1,6 +1,6 @@
 .documenti-section {
   padding: var(--section-y) 0;
-  background: var(--white);
+  background: var(--sfondo);
 }
 
 .documenti-lista {
@@ -26,7 +26,7 @@
 
 .documento-icona {
   font-size: var(--icona-editoriale);
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .documento-testo {
@@ -36,7 +36,7 @@
 }
 
 .documento-nome {
-  color: var(--dark-navy);
+  color: var(--testo-forte);
   transition: color var(--durata-breve) ease;
 }
 
@@ -96,15 +96,15 @@
 @media (hover: hover) and (pointer: fine) {
   .documento:hover .documento-nome,
   .documento:hover .documento-scarica {
-    color: var(--primary-blue-dark);
+    color: var(--accento);
   }
 
   .documento:hover .documento-scarica {
-    border-color: var(--primary-blue-dark);
+    border-color: var(--accento);
   }
 
   .documento:hover .documento-scarica i {
-    color: var(--primary-blue-dark);
+    color: var(--accento);
     transform: translateY(3px);
   }
 }

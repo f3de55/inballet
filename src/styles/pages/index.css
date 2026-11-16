@@ -88,7 +88,7 @@
 .chi-siamo-section {
   position: relative;
   padding: var(--section-y) 0;
-  background: var(--white);
+  background: var(--sfondo);
 }
 
 .chi-siamo-header {
@@ -304,7 +304,7 @@
 }
 
 .corsi-stile:focus-visible {
-  outline: 2px solid var(--primary-blue-dark);
+  outline: 2px solid var(--accento);
   outline-offset: 4px;
 }
 
@@ -320,9 +320,14 @@
   }
 
   .corsi-stile--grafica {
+    --bg-soft: var(--azzurrino);
+    --testo-forte: var(--dark-navy);
+    --heading-color: var(--dark-navy);
+    --text-body: var(--testo-corpo-chiaro);
+    --accento: var(--primary-blue-dark);
     align-items: stretch;
     background: var(--bg-soft);
-    color: var(--dark-navy);
+    color: var(--testo-forte);
     padding-block: 1.25rem;
     overflow: visible;
   }
@@ -396,7 +401,7 @@
   .corsi-stile--grafica:hover .corsi-stile-link,
   .corsi-stile--grafica .corsi-stile-link i,
   .corsi-stile--grafica:hover .corsi-stile-link i {
-    color: var(--dark-navy);
+    color: var(--testo-forte);
     border-color: currentColor;
   }
 }
@@ -447,7 +452,7 @@
     overflow: hidden;
     border: 2px solid var(--primary-blue);
     border-radius: var(--radius-card);
-    background: var(--white);
+    background: var(--superficie);
     box-shadow: none;
     color: var(--heading-color);
     text-align: left;
@@ -514,11 +519,11 @@
     padding: 0 0 calc(var(--link-segno-h) + 0.15rem);
     border: 0;
     background: none;
-    color: var(--primary-blue-dark);
+    color: var(--accento);
   }
 
   .corsi-indice .corsi-stile .corsi-stile-link i {
-    color: var(--primary-blue-dark);
+    color: var(--accento);
   }
 
   .corsi-cta {
@@ -531,13 +536,13 @@
 }
 
 .corsi-indice:focus-visible {
-  outline: 2px solid var(--primary-blue-dark);
+  outline: 2px solid var(--accento);
   outline-offset: 4px;
 }
 
 .dicono-di-noi-section {
   padding: var(--section-y) 0;
-  background: var(--white);
+  background: var(--sfondo);
 }
 
 .recensioni-layout {
@@ -585,7 +590,7 @@ recensioni-google {
   font-size: var(--numero-grande-size);
   font-weight: var(--font-light);
   line-height: 1;
-  color: var(--dark-navy);
+  color: var(--testo-forte);
 }
 
 .sintesi-google .sintesi-stelle {
@@ -663,7 +668,7 @@ recensioni-google {
   font: inherit;
   font-size: var(--ui-size);
   font-weight: var(--ui-weight);
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   cursor: pointer;
 }
 
@@ -684,13 +689,13 @@ recensioni-google {
   background: var(--bg-soft);
   font-size: var(--text-xs);
   font-weight: var(--font-bold);
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .recensioni-carousel .recensione-autore strong {
   display: block;
   font-weight: var(--font-semibold);
-  color: var(--dark-navy);
+  color: var(--testo-forte);
 }
 
 .recensioni-carousel .recensione-fonte {
@@ -726,7 +731,7 @@ recensioni-google {
 
 .carousel-indicators .indicator.active {
   width: 2rem;
-  background-color: var(--primary-blue-dark);
+  background-color: var(--accento);
 }
 
 @media (max-width: 900px) {
@@ -760,7 +765,7 @@ recensioni-google {
   }
 
   .recensioni-carousel .author-avatar {
-    background: var(--white);
+    background: var(--superficie);
   }
 
   .recensioni-controlli {
@@ -880,17 +885,17 @@ recensioni-google {
 .oltre-nome {
   display: block;
   margin: 0;
-  color: var(--dark-navy);
+  color: var(--testo-forte);
 }
 
 .oltre-desc {
   display: block;
   margin-top: 0.75rem;
-  color: var(--dark-navy);
+  color: var(--testo-forte);
 }
 
 .oltre-voce:focus-visible {
-  outline: 2px solid var(--primary-blue-dark);
+  outline: 2px solid var(--accento);
   outline-offset: -4px;
 }
 
@@ -1049,7 +1054,7 @@ recensioni-google {
   font-size: var(--text-base);
   font-weight: var(--font-semibold);
   line-height: 1.4;
-  color: var(--dark-navy);
+  color: var(--testo-forte);
   cursor: pointer;
   list-style: none;
   transition: color var(--durata-breve) ease;
@@ -1066,7 +1071,7 @@ recensioni-google {
   height: 2rem;
   border-radius: var(--radius-full);
   border: 1px solid var(--linea);
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   background: var(--piu);
   transition:
     transform var(--durata) var(--curva),
@@ -1076,7 +1081,7 @@ recensioni-google {
 }
 
 .faq-item[open] summary {
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .faq-item[open] summary::after {
@@ -1088,7 +1093,7 @@ recensioni-google {
 
 @media (hover: hover) and (pointer: fine) {
   .faq-item summary:hover {
-    color: var(--primary-blue-dark);
+    color: var(--accento);
   }
 }
 

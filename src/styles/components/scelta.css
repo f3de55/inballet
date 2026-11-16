@@ -45,7 +45,7 @@
 }
 
 .scelta-opzione[aria-current='location'] .scelta-opzione-nome {
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .scelta-opzione-testo {
@@ -54,7 +54,7 @@
 }
 
 .scelta-opzione > i {
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   font-size: var(--icona-in-testo);
 }
 

@@ -25,12 +25,12 @@
 
 .ins-dialog-ruolo {
   margin: 0 3rem 1.5rem 0;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .ins-dialog-nome {
   margin: 0 3rem 0.6rem 0;
-  color: var(--dark-navy);
+  color: var(--testo-forte);
 }
 
 .ins-dialog-nome:not(:has(+ .ins-dialog-ruolo)) {
@@ -49,7 +49,7 @@
 
 .ins-competenze-titolo {
   margin: 0 0 0.75rem;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .ins-competenze-lista {
@@ -60,7 +60,7 @@
   padding: 0;
   list-style: none;
   font-weight: var(--font-semibold);
-  color: var(--dark-navy);
+  color: var(--testo-forte);
 }
 
 .ins-competenze-lista li {
@@ -72,7 +72,7 @@
 .ins-competenze-lista i {
   flex: none;
   font-size: var(--icona-mini);
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .ins-dialog-bio {

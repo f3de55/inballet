@@ -30,7 +30,7 @@ const percorso = (indirizzo: string) => new URL(indirizzo).pathname;
 Astro.response.headers.set('X-Robots-Tag', 'noindex');
 ---
 
-<Admin title="Mappa del sito - Presentazione InBallet">
+<Admin title="Mappa del sito - Presentazione InBallet" tema={false}>
     <main class="mappa" data-sito={sito}>
         <header class="mappa-testa">
             <p class="mappa-titoletto">Mappa del sito · {sito === 'oggi' ? 'oggi' : 'nuovo sito'}</p>

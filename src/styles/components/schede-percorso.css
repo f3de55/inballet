@@ -73,7 +73,7 @@
 }
 
 .corsi-scheda-link:focus-visible {
-  outline: 3px solid var(--primary-blue-dark);
+  outline: 3px solid var(--accento);
   outline-offset: 6px;
 }
 
@@ -128,7 +128,7 @@
 .corsi-scheda-frequenza i {
   flex-shrink: 0;
   margin-block-start: calc((var(--body-size) * var(--body-lh) - var(--icona-mini)) / 2);
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   font-size: var(--icona-mini);
   line-height: 1;
 }
@@ -143,7 +143,7 @@
   flex-shrink: 0;
   width: 2.75rem;
   height: 2.75rem;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   font-size: var(--icona-comando);
   transition: transform var(--transition-base);
 }
@@ -237,6 +237,6 @@
 }
 
 .corsi-stile-elenco:focus-visible {
-  outline: 2px solid var(--primary-blue-dark);
+  outline: 2px solid var(--accento);
   outline-offset: 4px;
 }

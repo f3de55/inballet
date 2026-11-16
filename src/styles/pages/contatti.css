@@ -1,6 +1,6 @@
 .contatti {
   padding: var(--section-y) 0;
-  background: var(--white);
+  background: var(--sfondo);
 }
 
 .contatti-intro {
@@ -47,7 +47,7 @@
   padding: 2rem 1.25rem 1.5rem;
   border: 1px solid rgb(var(--blu-rgb) / 0.4);
   border-radius: var(--radius-card);
-  background: var(--white);
+  background: var(--superficie);
   text-align: center;
 }
 
@@ -165,7 +165,7 @@
   font-size: var(--icona-in-testo);
   line-height: 1;
   text-align: center;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .info-valore {
@@ -173,12 +173,12 @@
   font-size: inherit;
   line-height: var(--body-lh);
   font-weight: var(--font-semibold);
-  color: var(--dark-navy);
+  color: var(--testo-forte);
   overflow-wrap: anywhere;
 }
 
 .info a {
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   text-decoration: none;
   background: none;
 }
@@ -215,7 +215,7 @@ orari-segreteria {
   gap: 0.45rem;
   margin: -0.5rem 0 0.75rem;
   font-size: var(--body-size);
-  color: var(--dark-navy);
+  color: var(--testo-forte);
 }
 
 .orari-status:empty {
@@ -278,7 +278,7 @@ orari-segreteria {
 
 .orario-item.oggi .orario-day,
 .orario-item.oggi .orario-time {
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .info-whatsapp,
@@ -290,7 +290,7 @@ orari-segreteria {
   gap: 0.4rem;
   min-height: 44px;
   max-width: 100%;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   font-size: inherit;
   font-weight: var(--font-medium);
   text-decoration: none;
@@ -415,7 +415,7 @@ orari-segreteria {
 
 .fondamenti {
   padding: 0 0 calc(var(--section-y) * 0.5);
-  background: var(--white);
+  background: var(--sfondo);
 }
 
 .fondamenti-layout {
@@ -458,12 +458,12 @@ orari-segreteria {
 
 .fondamento:hover .fondamento-titolo,
 .fondamento:focus-visible .fondamento-titolo {
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .fondamento-icona {
   margin-bottom: 1rem;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   font-size: var(--icona-editoriale);
   line-height: 1;
 }

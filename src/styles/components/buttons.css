@@ -109,9 +109,9 @@
   padding: 0;
   border: 1px solid transparent;
   border-radius: var(--radius-full);
-  background: rgb(var(--bianco-rgb) / 0.92);
+  background: color-mix(in srgb, var(--superficie) 92%, transparent);
   box-shadow: var(--shadow-sm);
-  color: var(--dark-navy);
+  color: var(--testo-forte);
   font-size: var(--icona-comando);
   line-height: 1;
   cursor: pointer;
@@ -131,6 +131,7 @@
 
 .btn-icon:hover {
   background: var(--primary-blue);
+  color: var(--dark-navy);
 }
 
 .btn-icon--scuro {
@@ -150,19 +151,19 @@
   border-color: transparent;
   background: var(--grigio-100);
   box-shadow: none;
-  color: var(--black);
+  color: var(--testo-forte);
 }
 
 .btn-icon--chiudi:hover {
   background: var(--grigio-300);
-  color: var(--black);
+  color: var(--testo-forte);
 }
 
 .btn-icon--contorno {
   background: transparent;
-  border-color: rgb(var(--navy-rgb) / 0.2);
+  border-color: var(--bordo-controllo);
   box-shadow: none;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .btn-icon--contorno:hover {
@@ -194,7 +195,7 @@
   gap: var(--link-gap);
   padding: 0.25rem 0 calc(var(--link-segno-h) + 0.15rem);
   background: none;
-  color: var(--dark-navy);
+  color: var(--testo-forte);
   font-size: var(--label-size);
   font-weight: var(--ui-weight);
   letter-spacing: var(--ui-ls);
@@ -239,7 +240,7 @@
 .link-cta:hover,
 .link-cta:focus-visible,
 a:is(:hover, :focus-visible) .link-cta {
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .link-cta:is(:hover, :focus-visible)::after,
@@ -256,7 +257,7 @@ a:is(:hover, :focus-visible) .link-cta i,
 }
 
 .link-cta:focus-visible {
-  outline: 2px solid var(--primary-blue-dark);
+  outline: 2px solid var(--accento);
   outline-offset: 5px;
   border-radius: var(--radius-xs);
 }

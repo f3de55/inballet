@@ -17,7 +17,7 @@ const giorno = new Intl.DateTimeFormat('it-IT', { dateStyle: 'long', timeZone: '
 Astro.response.headers.set('X-Robots-Tag', 'noindex');
 ---
 
-<Admin title={`${risposta.nome} - Presentazione InBallet`}>
+<Admin title={`${risposta.nome} - Presentazione InBallet`} tema={false}>
     <main class="ai-chat">
         <h1 class="sr-only">La risposta di {risposta.nome}</h1>
         <p class="ai-domanda">{DOMANDA_AI}</p>

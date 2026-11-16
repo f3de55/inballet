@@ -12,13 +12,13 @@
   display: block;
   font-size: var(--icona-editoriale);
   line-height: 1;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   margin-bottom: 1.1rem;
 }
 
 .voce-anno {
   display: block;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   margin-bottom: 0.9rem;
 }
 

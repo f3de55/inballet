@@ -34,6 +34,7 @@
   width: 100%;
   height: 100%;
   object-fit: fill;
+  filter: var(--filtro-mappa);
   mask-image: linear-gradient(to bottom, var(--black) calc(100% - 12px), transparent);
 }
 
@@ -62,18 +63,18 @@
 }
 
 .sedi-mappa-linea-fondo {
-  stroke: var(--white);
+  stroke: var(--sfondo);
   stroke-width: 5;
 }
 
 .sedi-mappa-linea {
-  stroke: var(--primary-blue-dark);
+  stroke: var(--accento);
   stroke-width: 1.5;
   transition: stroke var(--durata) var(--curva);
 }
 
 .sedi-mappa-attiva .sedi-mappa-linea {
-  stroke: var(--dark-navy);
+  stroke: var(--testo-forte);
 }
 
 .sedi-mappa-scia {
@@ -123,11 +124,11 @@
   left: 3%;
   width: 27%;
   padding: 0.4rem;
-  background: var(--white);
+  background: var(--superficie);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
   text-decoration: none;
-  color: var(--dark-navy);
+  color: var(--testo-forte);
   transition: transform var(--durata-lenta) var(--curva-morbida);
 }
 
@@ -178,7 +179,7 @@
 
 .sedi-mappa-numero {
   padding: 0.3rem 0.15rem;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   font-size: var(--label-size);
   font-weight: var(--font-medium);
 }
@@ -196,7 +197,7 @@
   align-items: center;
   gap: 0.4rem;
   margin-top: 0.25rem;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   font-size: var(--label-size);
   transition: color var(--durata-pannello) var(--curva-morbida);
 }
@@ -207,7 +208,7 @@
 }
 
 .sedi-mappa-foto.sedi-mappa-attiva .sedi-mappa-azione {
-  color: var(--dark-navy);
+  color: var(--testo-forte);
 }
 
 .sedi-mappa-foto.sedi-mappa-attiva .sedi-mappa-azione i {
@@ -334,7 +335,7 @@
     padding: 0.75rem 1rem;
     border: 1px solid var(--linea);
     border-radius: var(--radius-md);
-    background: var(--white);
+    background: var(--superficie);
     box-shadow: var(--shadow-card);
     text-align: center;
     text-decoration: none;
@@ -350,14 +351,14 @@
     transform: rotate(45deg);
     border-top: 1px solid var(--linea);
     border-left: 1px solid var(--linea);
-    background: var(--white);
+    background: var(--superficie);
   }
 
   .sedi-mappa-popup-logo {
     display: block;
     width: 5rem;
     height: auto;
-    filter: brightness(0);
+    filter: var(--filtro-logo);
   }
 
   .sedi-mappa-popup p {
@@ -366,7 +367,7 @@
 
   .sedi-mappa-popup:hover,
   .sedi-mappa-popup:focus-visible {
-    border-color: var(--primary-blue-dark);
+    border-color: var(--accento);
     box-shadow: var(--shadow-blue);
   }
 }

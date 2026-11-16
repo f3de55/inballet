@@ -27,7 +27,7 @@
   font-style: normal;
   font-weight: var(--font-bold);
   line-height: 1;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   transform: translateY(-0.2em);
 }
 

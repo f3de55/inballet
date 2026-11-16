@@ -26,7 +26,7 @@
   width: var(--icona-editoriale-compatta);
   font-size: var(--icona-editoriale-compatta);
   text-align: center;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 .riga-corpo,
@@ -56,18 +56,18 @@ a.riga > .riga-nome {
   align-self: center;
   flex-shrink: 0;
   margin-left: auto;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   font-size: var(--icona-in-testo);
   transition: transform var(--transition-base);
 }
 
 a.riga:focus-visible {
-  outline: 2px solid var(--primary-blue-dark);
+  outline: 2px solid var(--accento);
   outline-offset: 4px;
 }
 
 a.riga:hover .riga-nome {
-  color: var(--primary-blue-dark);
+  color: var(--accento);
 }
 
 a.riga:hover .riga-freccia {

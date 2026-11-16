@@ -5,6 +5,7 @@
 }
 
 html {
+  background: var(--sfondo);
   scrollbar-width: thin;
   scrollbar-color: var(--primary-blue) var(--dark-navy);
   scroll-padding-top: calc(var(--header-h-scrolled) + var(--banner-height, 0px));
@@ -42,7 +43,7 @@ html::-webkit-scrollbar-thumb {
 }
 
 html::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-blue-dark);
+  background: var(--accento);
 }
 
 button,
@@ -58,6 +59,14 @@ body {
   padding-top: calc(var(--header-h) + var(--banner-spazio, 0px));
 }
 
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: calc(var(--header-h) + var(--banner-spazio, 0px));
+  background: var(--header-dark);
+}
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -66,7 +75,7 @@ select:focus-visible,
 summary:focus-visible,
 [tabindex]:focus-visible,
 [role='button']:focus-visible {
-  outline: 3px solid var(--primary-blue-dark);
+  outline: 3px solid var(--accento);
   outline-offset: 3px;
 }
 

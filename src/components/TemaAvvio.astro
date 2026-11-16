@@ -1,0 +1,22 @@
+---
+interface Props {
+  colore: string;
+}
+
+const { colore } = Astro.props;
+---
+
+<meta name="theme-color" content={colore} data-chiaro={colore}>
+<script is:inline>
+    (() => {
+        let tema = null;
+        try {
+            tema = localStorage.getItem('inballet-tema');
+        } catch {}
+        if (tema !== 'scuro' && tema !== 'chiaro') tema = matchMedia('(prefers-color-scheme: dark)').matches ? 'scuro' : 'chiaro';
+        document.documentElement.dataset.tema = tema;
+    })();
+</script>
+<script>
+    import '../scripts/tema';
+</script>

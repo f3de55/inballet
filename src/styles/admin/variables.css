@@ -1,13 +1,13 @@
 :root {
   --primary: var(--primary-blue);
-  --primary-dark: var(--primary-blue-dark);
+  --primary-dark: var(--accento);
   --bar: var(--header-dark);
   --bg: var(--grigio-50);
-  --surface: var(--white);
+  --surface: var(--superficie);
   --soft: var(--bg-soft);
   --line: var(--grigio-100);
   --line-strong: var(--grigio-300);
-  --text: var(--dark-navy);
+  --text: var(--testo-forte);
   --success: var(--esito-ok);
   --warning: var(--esito-avviso);
   --danger: var(--esito-errore);
@@ -15,6 +15,7 @@
   --warning-soft: #fff4e0;
   --warning-tenue: #fdf1e1;
   --danger-soft: #fbeceb;
+  --danger-pieno: #c0392b;
   --danger-bordo: #e3b7b1;
   --danger-scuro: #a5301f;
   --danger-scurissimo: #8f2a1d;
@@ -23,6 +24,7 @@
   --su-scuro-avviso: #ffcc66;
   --su-scuro-errore: #ff8a80;
   --anello-focus: 0 0 0 3px rgb(var(--blu-rgb) / 0.35);
+  --ombra-modale: 0 24px 60px rgb(var(--nero-rgb) / 0.2);
   --text-3xl: var(--compatto-3xl);
   --text-2xl: var(--compatto-2xl);
   --text-xl: var(--compatto-xl);
@@ -30,4 +32,15 @@
   --text-sm: var(--compatto-sm);
   --text-xs: var(--compatto-xs);
   --text-2xs: var(--compatto-2xs);
+}
+
+:root[data-tema='scuro'] {
+  --success-soft: #16301f;
+  --warning-soft: #33280f;
+  --warning-tenue: #2e2512;
+  --danger-soft: #3a1b18;
+  --danger-bordo: #6b3530;
+  --danger-scurissimo: #ffb4ab;
+  --warning-scuro: #ffcc66;
+  --ombra-modale: 0 24px 60px rgb(var(--nero-rgb) / 0.6);
 }

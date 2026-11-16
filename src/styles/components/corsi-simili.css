@@ -1,6 +1,6 @@
 .simili-section {
   padding: var(--section-y) 0;
-  background: var(--white);
+  background: var(--sfondo);
 }
 
 .simili-wrapper {
@@ -52,7 +52,7 @@
   overflow: hidden;
   border: 1px solid rgb(var(--blu-rgb) / 0.4);
   border-radius: var(--radius-card);
-  background: var(--white);
+  background: var(--superficie);
 }
 
 .simili-lista li:nth-child(odd) {
@@ -95,7 +95,7 @@
 .simili-nome {
   display: block;
   margin-top: 1.5rem;
-  color: var(--dark-navy);
+  color: var(--testo-forte);
 }
 
 .simili-eta {
@@ -109,7 +109,7 @@
 }
 
 .simili-voce:focus-visible {
-  outline: 2px solid var(--primary-blue-dark);
+  outline: 2px solid var(--accento);
   outline-offset: -4px;
 }
 

@@ -5,12 +5,14 @@ import '../styles/base/variables.css';
 import '../styles/base/accessibilita.css';
 import '../styles/admin/variables.css';
 import '../styles/admin/base.css';
+import TemaAvvio from '../components/TemaAvvio.astro';
 
 interface Props {
   title: string;
+  tema?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, tema = true } = Astro.props;
 Astro.response.headers.set('Cache-Control', 'no-store');
 Astro.response.headers.set('X-Frame-Options', 'SAMEORIGIN');
 Astro.response.headers.set('Content-Security-Policy', "frame-ancestors 'self'");
@@ -23,7 +25,7 @@ Astro.response.headers.set('Referrer-Policy', 'same-origin');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <meta name="theme-color" content="#2a2a2a">
+    {tema ? <TemaAvvio colore="#2a2a2a" /> : <meta name="theme-color" content="#2a2a2a">}
     <title>{title}</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <Font cssVariable="--font-rubik" />

@@ -19,7 +19,7 @@
 
 .corso-intro-section {
   padding: var(--section-y) 0;
-  background: var(--white);
+  background: var(--sfondo);
   position: relative;
 }
 
@@ -82,7 +82,7 @@
   justify-content: center;
   align-items: center;
   width: 1.5rem;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   font-size: var(--icona-in-testo);
   flex-shrink: 0;
 }
@@ -219,7 +219,7 @@
   width: 4rem;
   height: 4rem;
   margin: 0 auto 1.25rem;
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   font-size: var(--icona-editoriale-compatta);
 }
 

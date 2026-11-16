@@ -122,7 +122,7 @@
   min-height: 48px;
   border: 1px solid var(--grigio-300);
   border-radius: var(--radius-md);
-  background: var(--white);
+  background: var(--superficie);
   font: inherit;
   font-size: var(--small-size);
   line-height: var(--body-lh);
@@ -193,7 +193,7 @@
   gap: 0.75rem;
   padding: 0.4rem 0.4rem 0.4rem 1rem;
   border-radius: var(--radius-md);
-  background: var(--white);
+  background: var(--superficie);
   font-size: var(--small-size);
   color: var(--text-body);
 }
@@ -205,7 +205,7 @@
 }
 
 .revisione-elenco i {
-  color: var(--primary-blue-dark);
+  color: var(--accento);
   font-size: var(--icona-in-testo);
 }
 

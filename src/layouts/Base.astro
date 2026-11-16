@@ -8,6 +8,7 @@ import Banner from '../components/Banner.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Chatbot from '../components/Chatbot.astro';
+import TemaAvvio from '../components/TemaAvvio.astro';
 
 interface Props {
   title: string;
@@ -62,7 +63,7 @@ const pagina = {
     <meta name="description" content={description}>
     <meta name="author" content="InBallet ASD">
     <meta name="robots" content={indicizza ? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' : 'noindex, follow'}>
-    <meta name="theme-color" content="#87CEEB">
+    <TemaAvvio colore="#87CEEB" />
     <link rel="canonical" href={canonical}>
 
     <meta property="og:type" content="website">

@@ -1,11 +1,14 @@
 :root {
+  color-scheme: light;
   --primary-blue: #87ceeb;
   --primary-blue-dark: #3b72a0;
   --dark-navy: #1a1a1a;
   --header-dark: #2a2a2a;
   --footer-bg: #0e0e0e;
-  --bg-soft: #eef7fa;
-  --text-body: #444;
+  --azzurrino: #eef7fa;
+  --testo-corpo-chiaro: #444;
+  --bg-soft: var(--azzurrino);
+  --text-body: var(--testo-corpo-chiaro);
   --text-muted: #666;
   --white: #fff;
   --black: #000;
@@ -17,6 +20,10 @@
   --esito-avviso: #995b00;
   --esito-errore: #c0392b;
   --stelle: #f5b301;
+  --sfondo: var(--white);
+  --superficie: var(--white);
+  --testo-forte: var(--dark-navy);
+  --accento: var(--primary-blue-dark);
 
   --bianco-rgb: 255 255 255;
   --nero-rgb: 0 0 0;
@@ -27,6 +34,7 @@
   --blu-scuro-rgb: 59 114 160;
 
   --linea: rgb(var(--navy-rgb) / 0.12);
+  --bordo-controllo: rgb(var(--navy-rgb) / 0.2);
   --linea-su-scuro: rgb(var(--bianco-rgb) / 0.2);
   --velo-chiaro: rgb(var(--bianco-rgb) / 0.12);
   --testo-su-scuro: rgb(var(--bianco-rgb) / 0.9);
@@ -59,7 +67,7 @@
   --font-semibold: 600;
   --font-bold: 700;
 
-  --heading-color: var(--dark-navy);
+  --heading-color: var(--testo-forte);
   --heading-weight: var(--font-bold);
   --h1-size: var(--text-5xl);
   --h1-lh: 1.08;
@@ -88,7 +96,7 @@
   --label-weight: var(--font-semibold);
   --label-lh: 1.4;
   --label-ls: 2px;
-  --label-color: var(--primary-blue-dark);
+  --label-color: var(--accento);
   --ui-size: var(--text-sm);
   --ui-weight: var(--font-semibold);
   --ui-ls: 1px;
@@ -156,6 +164,34 @@
   --decoro-onde-sinistra: url('../../assets/images/decorazioni/onde-sinistra.webp');
   --decoro-curve-scuro: url('../../assets/images/decorazioni/curve-scuro.svg');
   --decoro-footer-desktop: url('../../assets/images/decorazioni/footer-desktop.svg');
+  --filtro-mappa: none;
+  --filtro-logo: brightness(0);
+}
+
+:root[data-tema='scuro'] {
+  color-scheme: dark;
+  --sfondo: #111417;
+  --superficie: #1a1f24;
+  --bg-soft: #14202a;
+  --testo-forte: #eef2f5;
+  --text-body: #c5cdd5;
+  --text-muted: #9ba7b2;
+  --accento: var(--primary-blue);
+  --grigio-50: #161a1e;
+  --grigio-100: #262c32;
+  --grigio-300: #3b434b;
+  --grigio-400: #808b96;
+  --esito-ok: #6fcf97;
+  --esito-avviso: #ffcc66;
+  --esito-errore: #ff8a80;
+  --linea: rgb(var(--bianco-rgb) / 0.14);
+  --bordo-controllo: rgb(var(--bianco-rgb) / 0.24);
+  --shadow-sm: 0 2px 8px rgb(var(--nero-rgb) / 0.4);
+  --shadow-card: 0 4px 20px rgb(var(--nero-rgb) / 0.35);
+  --decoro-onde: url('../../assets/images/decorazioni/onde-destra-scuro.webp');
+  --decoro-onde-sinistra: url('../../assets/images/decorazioni/onde-sinistra-scuro.webp');
+  --filtro-mappa: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9);
+  --filtro-logo: none;
 }
 
 @media (max-width: 1200px) {

@@ -1,0 +1,18 @@
+---
+import '../styles/components/tema.css';
+
+interface Props {
+  class?: string;
+  etichettaNascosta?: boolean;
+}
+
+const { class: classe, etichettaNascosta = false } = Astro.props;
+---
+
+<button type="button" class:list={['tema-interruttore', classe]} data-tema-interruttore aria-pressed="false">
+    <span class="tema-icone" aria-hidden="true">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+    </span>
+    <span class:list={{ 'sr-only': etichettaNascosta }}>Modalità notte</span>
+</button>

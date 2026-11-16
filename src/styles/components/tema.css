@@ -1,0 +1,53 @@
+.tema-icone {
+  display: grid;
+  place-items: center;
+}
+
+.tema-icone i {
+  grid-area: 1 / 1;
+  transition:
+    opacity var(--durata) var(--curva),
+    transform var(--durata) var(--curva);
+}
+
+.btn-icon .tema-icone i {
+  font-size: inherit;
+}
+
+:root[data-tema='scuro'] .tema-icone .fa-moon,
+:root:not([data-tema='scuro']) .tema-icone .fa-sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
+}
+
+@media (scripting: none) {
+  .tema-interruttore {
+    display: none;
+  }
+}
+
+:root.tema-cambio *,
+:root.tema-cambio *::before,
+:root.tema-cambio *::after {
+  transition: none !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: tema-rivela var(--durata-lenta) var(--curva);
+}
+
+@keyframes tema-rivela {
+  from {
+    clip-path: circle(0 at var(--tema-x) var(--tema-y));
+  }
+
+  to {
+    clip-path: circle(var(--tema-raggio) at var(--tema-x) var(--tema-y));
+  }
+}

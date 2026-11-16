@@ -54,7 +54,7 @@ body {
   padding: 0.7rem 0.9rem;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
-  background: var(--white);
+  background: var(--surface);
   font: inherit;
   font-size: var(--text-sm);
   color: var(--text);
@@ -79,7 +79,7 @@ body {
   background: var(--primary);
   font: inherit;
   font-weight: var(--font-semibold);
-  color: var(--text);
+  color: var(--dark-navy);
   cursor: pointer;
   transition:
     background-color 0.2s,
@@ -87,7 +87,7 @@ body {
 }
 .login-btn:hover {
   --icona-secondario: var(--primary-blue);
-  background: var(--primary-dark);
+  background: var(--primary-blue-dark);
   color: var(--white);
 }
 

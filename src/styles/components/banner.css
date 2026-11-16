@@ -144,7 +144,7 @@ html.is-scrolled .event-banner {
 }
 
 .event-banner-close i {
-  font-size: var(--icona-comando);
+  font-size: var(--icona-chiudi);
 }
 
 @media (max-width: 768px) {

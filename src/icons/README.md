@@ -1,6 +1,6 @@
 # InBallet Icons
 
-Set vettoriale originale per InBallet: 116 disegni, con simboli specifici per danza e benessere.
+Set vettoriale originale per InBallet: 118 disegni, con simboli specifici per danza e benessere.
 
 Una famiglia regular su griglia 24 × 24: contorni da 1,8 unità, terminali e raccordi arrotondati. Frecce, chiusure, menu e altri simboli semplici sono monocolore. Le icone descrittive più articolate possono avere accenti azzurri su parti significative del soggetto.
 
@@ -27,3 +27,5 @@ Le icone che introducono un blocco di contenuto usano `--icona-editoriale` (48 p
 Le singole icone sono scalabili e modificabili in un editor vettoriale. `svg(nome, { layer: 'outline' })` e `svg(nome, { layer: 'accent' })` esportano i livelli separati; `svg(nome, { layer: 'monochrome' })` esporta il simbolo completo a un colore. Per le icone dichiarate `monochrome` l'accento separato è trasparente e il disegno predefinito è già monocolore. I simboli social e di pagamento restano riconoscibili; i rispettivi marchi appartengono ai loro titolari. Il set è realizzato per il progetto InBallet.
 
 Ogni CTA a bottone contiene un'icona prima del testo: `ballet-shoes` per i corsi, `compass` per la scelta del percorso, `comments` per i contatti, `hand-holding-heart` per il sostegno, `calendar-days` per le prenotazioni e `paypal` per le donazioni. Le icone sono decorative e il testo resta il nome accessibile dell'azione.
+
+I comandi restano compatti: chiusura 18 px, menu 28 px, altri comandi 24 px; l’area cliccabile resta indipendente dal simbolo. `phone` raffigura uno smartphone essenziale; `paypal` una sola P inclinata. `warm-up` e `krump` indicano movimenti del corpo, senza simboli clinici o fiamme.

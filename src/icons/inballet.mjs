@@ -5,8 +5,8 @@ export const icons = {
     monochrome: true,
   },
   xmark: {
-    outline: '<path d="m5 5 14 14"/>',
-    accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5 5 19"/></g>',
+    outline: '<path d="m6 6 12 12M18 6 6 18"/>',
+    accent: '',
     monochrome: true,
   },
   'arrow-right': {
@@ -92,9 +92,8 @@ export const icons = {
     monochrome: true,
   },
   shuffle: {
-    outline: '<path d="M3 6h2c5 0 8 12 13 12h3M3 18h2c1.5 0 3-1.3 4.3-3.2M14.7 9.2C16 7.3 17 6 19 6h2"/>',
-    accent:
-      '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14 4 4-4 4m0-20 4 4-4 4"/></g>',
+    outline: '<path d="M4 7h16m-3-3 3 3-3 3m3 7H4m3-3-3 3 3 3"/>',
+    accent: '',
     monochrome: true,
   },
   check: {
@@ -133,7 +132,7 @@ export const icons = {
     accent: '<g opacity=".32"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></g>',
   },
   phone: {
-    outline: '<path d="M7.5 3.5h-2a2 2 0 0 0-2 2 15 15 0 0 0 15 15 2 2 0 0 0 2-2v-2l-4-1.5-1.8 2a12 12 0 0 1-8.2-8.2l2-1.8Z"/>',
+    outline: '<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 5h4m-3 13.5h2"/>',
     accent: '',
     monochrome: true,
   },
@@ -277,8 +276,8 @@ export const icons = {
   },
   'hand-holding-heart': {
     outline:
-      '<path d="M2 13h4v8H2Zm4 1h3l3 3h4a1.5 1.5 0 0 0 0-3h-3l-3-3H6m0 9h10l6-5"/><path d="M16 10s-5-3.2-5-6a2.8 2.8 0 0 1 5-1.5A2.8 2.8 0 0 1 21 4c0 2.8-5 6-5 6Z"/>',
-    accent: '<g opacity=".32"><path d="M16 10s-5-3.2-5-6a2.8 2.8 0 0 1 5-1.5A2.8 2.8 0 0 1 21 4c0 2.8-5 6-5 6Z"/></g>',
+      '<path d="M2.5 14.5h3l3-2c.5-.4 1.2-.6 1.8-.6h3.2c1.2 0 2 1 2 2v.6l3.6-1.9c1.3-.7 2.7.7 1.8 1.9l-4.7 5.2c-.5.6-1.3.9-2.1.9H2.5Zm3 0v6.1m4-4.6h4a2 2 0 0 0 2-2"/><path d="M13 9.5 9.5 6A2.3 2.3 0 0 1 13 3a2.3 2.3 0 0 1 3.5 3Z"/>',
+    accent: '<g opacity=".32"><path d="M13 9.5 9.5 6A2.3 2.3 0 0 1 13 3a2.3 2.3 0 0 1 3.5 3Z"/></g>',
   },
   'hands-holding': {
     outline: '<path d="M3 10v7l5 4h8l5-4v-7M7 9v6l3 2m7-8v6l-3 2M3 10a2 2 0 0 1 4 0m10 0a2 2 0 0 1 4 0M10 17h4"/><path d="m9 7 3-4 3 4"/>',
@@ -456,9 +455,10 @@ export const icons = {
       '<g opacity=".32"><path d="M12 7c-3-3-8-1-8 4 0 5 3 10 5 10 1.5 0 2-1 3-1s1.5 1 3 1c2 0 4-3 5-6-4-2-4-5 0-7-3-3-6-3-8-1Zm0-3c0-2 2-3 4-3 0 2-2 4-4 4Z"/></g>',
   },
   paypal: {
-    outline: '<path d="m5 21 3-18h7c8 0 6 10 0 10H8"/>',
-    accent:
-      '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 21 2-12h7c5 0 4 8-2 8h-4"/></g>',
+    outline:
+      '<path d="m6 21 3-18h6.2c4.1 0 6 2.2 5.3 5.7-.7 3.6-3.2 5.8-7.2 5.8h-3L9.2 21Z"/><path d="M11.1 6.5h3.5c1.7 0 2.4.8 2.1 2.2-.3 1.6-1.5 2.3-3.2 2.3h-3.1Z"/>',
+    accent: '',
+    monochrome: true,
   },
   'ballet-shoes': {
     outline:
@@ -493,8 +493,8 @@ export const icons = {
     accent: '<g opacity=".32"><circle cx="4" cy="5" r="2"/><circle cx="20" cy="12" r="2"/><circle cx="4" cy="19" r="2"/></g>',
   },
   heels: {
-    outline: '<path d="M6 3h5c-1 4 1 7 5 9l6 3v4H10c-2-4-3.5-6-5-7L4 22H2V10c0-3 2-5 4-7Z"/>',
-    accent: '<g opacity=".32"><path d="M6 3h5c-1 4 1 7 5 9l6 3v4H10c-2-4-3.5-6-5-7L4 22H2V10c0-3 2-5 4-7Z"/></g>',
+    outline: '<path d="M4 8c3 0 4 2 7 6 1.3 1.7 3 2 5 2h3a2 2 0 0 1 2 2v1h-9c-1.5 0-2.7-.7-3.5-2L6 13l-1 8H3V11a3 3 0 0 1 1-3Z"/>',
+    accent: '<g opacity=".32"><path d="M12 16h7a2 2 0 0 1 2 2v1h-9Z"/></g>',
   },
   stage: {
     outline: '<path d="M2 21h20M2 5V2h20v3M3 5v13h3V5m12 0v13h3V5"/><circle cx="12" cy="8.5" r="2"/><path d="M12 12v4m-4-4 4 1 4-1m-4 4-3 3m3-3 3 3"/>',
@@ -514,8 +514,9 @@ export const icons = {
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a6 6 0 0 1 5-4"/></g>',
   },
   breathing: {
-    outline: '<path d="M10 8C6 7 2 13 2 18c0 4 5 5 8 2Zm4 0c4-1 8 5 8 10 0 4-5 5-8 2Z"/>',
-    accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0-1-3 4m3-4 3 4"/></g>',
+    outline:
+      '<path d="M9 7C5.5 8.8 3 13.5 3 18.5c0 1.3 1 2 2.2 2 2.3 0 4.8-1 4.8-3V9q0-2.5-1-2Zm6 0c3.5 1.8 6 6.5 6 11.5 0 1.3-1 2-2.2 2-2.3 0-4.8-1-4.8-3V9q0-2.5 1-2Z"/><path d="M12 2.5V8m0 0-5 6m5-6 5 6"/>',
+    accent: '<g opacity=".24"><path d="M9 7C5.5 8.8 3 13.5 3 18.5c0 1.3 1 2 2.2 2 2.3 0 4.8-1 4.8-3V9q0-2.5-1-2Z"/></g>',
   },
   'partner-contact': {
     outline: '<circle cx="5" cy="4.5" r="2.3"/><circle cx="19" cy="4.5" r="2.3"/><path d="M5 10l2 6-4 6m4-6 4 6m8-12-2 6 4 6m-4-6-4 6"/>',
@@ -528,6 +529,15 @@ export const icons = {
   'yoga-pose': {
     outline: '<circle cx="12" cy="4" r="2.5"/><path d="M12 8v6m-6-4 6 2 6-2M8 15l-5 3c-2 2 1 4 5 3l8-3m0-3 5 3c2 2-1 4-5 3l-8-3"/>',
     accent: '<g opacity=".32"><circle cx="12" cy="4" r="2.5"/></g>',
+  },
+  'warm-up': {
+    outline: '<circle cx="12" cy="4.5" r="2"/><path d="M12 8v5M6 6l6 3 6-3m-6 7-4 7m4-7 4 7"/>',
+    accent: '<g opacity=".32"><circle cx="12" cy="4.5" r="2"/></g>',
+  },
+  krump: {
+    outline:
+      '<circle cx="12" cy="4" r="2"/><path d="M12 8v7m0-6-5 3-3-4m8 1 5 3 3-4m-8 7-4 2-3 4m7-6 4 2 3 4"/><rect x="3" y="6" width="2" height="2" rx=".6"/><rect x="19" y="6" width="2" height="2" rx=".6"/>',
+    accent: '<g opacity=".32"><circle cx="12" cy="4" r="2"/></g>',
   },
 };
 

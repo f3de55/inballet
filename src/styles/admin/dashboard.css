@@ -601,6 +601,9 @@ body {
   cursor: pointer;
   transition: background-color var(--durata-breve) ease;
 }
+.modal-close i {
+  font-size: var(--icona-chiudi);
+}
 .modal-close:hover {
   background: var(--grigio-300);
 }

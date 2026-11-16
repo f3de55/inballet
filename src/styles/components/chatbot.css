@@ -150,6 +150,10 @@
     color var(--durata-breve) ease;
 }
 
+#cb-close i {
+  font-size: var(--icona-chiudi);
+}
+
 #cb-reset {
   font-size: var(--text-xs);
 }

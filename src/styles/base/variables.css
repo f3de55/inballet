@@ -107,13 +107,14 @@
   --icona-punto: 0.5em;
   --icona-editoriale: 3rem;
   --icona-editoriale-compatta: 2.25rem;
-  --icona-comando: 1.625rem;
-  --icona-menu: 2rem;
+  --icona-comando: 1.5rem;
+  --icona-chiudi: 1.125rem;
+  --icona-menu: 1.75rem;
   --icona-secondario: var(--primary-blue);
   --icona-link: var(--icona-mini);
   --link-gap: 0.625rem;
   --link-segno-h: 0.5rem;
-  --link-segno: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 12' preserveAspectRatio='none'%3E%3Cpath d='M1 7.8C28 3.4 51 3.1 80 6.3S132 9.5 159 3.5C133 12 106 11 79 8.4S27 5.8 1 9.5Z'/%3E%3C/svg%3E");
+  --link-segno: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 12' preserveAspectRatio='none'%3E%3Cpath d='M3 7C48 2.5 112 10.5 157 5' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
   --glifo-citazione: 5.5rem;
 
   --durata-breve: 0.15s;

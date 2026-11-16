@@ -120,15 +120,21 @@
 
 .corsi-scheda-frequenza {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   gap: 0.5rem;
   margin: 0;
 }
 
 .corsi-scheda-frequenza i {
   flex-shrink: 0;
+  margin-block-start: calc((var(--body-size) * var(--body-lh) - var(--icona-mini)) / 2);
   color: var(--primary-blue-dark);
-  font-size: var(--icona-in-testo);
+  font-size: var(--icona-mini);
+  line-height: 1;
+}
+
+.corsi-scheda-frequenza > span {
+  min-width: 0;
 }
 
 .corsi-scheda-freccia {

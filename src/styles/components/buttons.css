@@ -121,6 +121,14 @@
     color var(--durata-breve) ease;
 }
 
+.btn-icon > i {
+  font-size: inherit;
+}
+
+.btn-icon > :is(.fa-times, .fa-xmark) {
+  font-size: var(--icona-chiudi);
+}
+
 .btn-icon:hover {
   background: var(--primary-blue);
 }
@@ -204,6 +212,7 @@
   inset-inline: 0;
   bottom: 0;
   height: var(--link-segno-h);
+  border-radius: var(--radius-pill);
   background: currentColor;
   -webkit-mask: var(--link-segno) center / 100% 100% no-repeat;
   mask: var(--link-segno) center / 100% 100% no-repeat;

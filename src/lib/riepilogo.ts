@@ -66,7 +66,7 @@ ${categorieCorsi.map((c) => `### ${c.nome}\n\n${strip(c.descrizione)}\n\n${c.cor
 - [Progetto NoiConVoi](${url('/progetto-noiconvoi')}): dal 2013, il lunedì sera, ragazzi con disabilità e volontari (anche non danzatori) in sala; ogni lezione unisce Pratica Psicomotoria Aucouturier (PPA) e didattica artistica
 - [Classi multidisciplinari integrate](${url('/classi-integrate')}): quasi tutti i corsi accolgono allievi con bisogni speciali, dopo un consulto con la Direzione e un colloquio con la famiglia
 - [Sportello psicologico](${url('/sportello-psicologico')}): incontri con una psicoterapeuta per singoli, coppie e soprattutto per la tutela del rapporto genitore-figlio, su richiesta alla Direzione
-- [Sostenitori dei progetti sociali](${url('/sostenitori')}): donazioni e, dal 2024, volontariato d'impresa per aziende ed enti
+- [Sostenitori dei progetti sociali](${url('/sostenitori')}): donazioni per i progetti sociali di InBallet
 - [Collaborazioni con le scuole](${url('/collaborazioni-scuole')}): progetti su misura con supporto psicomotorio per nidi, scuole dell'infanzia, primarie e secondarie di primo e secondo grado
 - [Spettacoli ed eventi](${url('/spettacoli-eventi')}): spettacolo annuale in teatro, eventi celebrativi, eventi nelle scuole, team building aziendali ed eventi formativi
 - Borse di studio: la scuola premia ogni anno l'impegno degli allievi; le borse tengono conto anche dell'andamento scolastico

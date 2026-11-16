@@ -6,6 +6,7 @@ import { sfondoCta } from '../lib/images';
 import { heroPagina } from '../lib/hero-pagine';
 import logoCsen from '../assets/images/csen-logo.svg';
 import logoConi from '../assets/images/logo_coni.svg';
+import logoConiScuro from '../assets/images/logo_coni-scuro.svg';
 import '../styles/components/intro-split.css';
 import SezioneElenco from '../components/SezioneElenco.astro';
 import HeroPagina from '../components/HeroPagina.astro';
@@ -26,7 +27,7 @@ const aree = [
 
 const enti = [
   { sigla: 'CSEN', nome: 'Centro Sportivo Educativo Nazionale', logo: logoCsen, href: 'https://www.csen.it/' },
-  { sigla: 'CONI', nome: 'Comitato Olimpico Nazionale Italiano', logo: logoConi, href: 'https://www.coni.it/it/' },
+  { sigla: 'CONI', nome: 'Comitato Olimpico Nazionale Italiano', logo: logoConi, logoScuro: logoConiScuro, href: 'https://www.coni.it/it/' },
 ];
 ---
 
@@ -89,6 +90,7 @@ const enti = [
                         <li class="ente">
                             <a class="ente-logo" href={e.href} target="_blank" rel="noopener noreferrer" aria-label={`Visita il sito ufficiale ${e.sigla} (si apre in una nuova scheda)`}>
                                 <img src={e.logo.src} width={e.logo.width} height={e.logo.height} alt={`Logo ${e.sigla}`} data-sigla={e.sigla} loading="lazy" decoding="async">
+                                {e.logoScuro && <img class="ente-logo-notte" src={e.logoScuro.src} width={e.logoScuro.width} height={e.logoScuro.height} alt={`Logo ${e.sigla}`} data-sigla={e.sigla} loading="lazy" decoding="async">}
                             </a>
                             <p class="ente-nome">{e.nome}</p>
                         </li>

@@ -43,12 +43,13 @@
   height: 84%;
 }
 
-:root[data-tema='scuro'] .ente-logo {
-  width: auto;
-  max-width: 100%;
-  padding: 0.75rem 1.25rem;
-  border-radius: var(--radius-md);
-  background: var(--piastra-logo);
+img.ente-logo-notte,
+:root[data-tema='scuro'] .ente-logo img:not(.ente-logo-notte)[data-sigla='CONI'] {
+  display: none;
+}
+
+:root[data-tema='scuro'] img.ente-logo-notte {
+  display: block;
 }
 
 @media (max-width: 900px) {

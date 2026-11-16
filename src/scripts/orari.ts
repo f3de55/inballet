@@ -25,7 +25,7 @@ customElements.define(
           const [apre, chiude] = fascia.split('-').map(minuti);
           return adesso >= apre && adesso < chiude;
         });
-      stato.innerHTML = `<i class="fas fa-circle" aria-hidden="true"></i> ${aperto ? 'Aperto ora' : 'Chiuso ora'}`;
+      stato.innerHTML = `<span class="orari-indicatore" aria-hidden="true"></span> ${aperto ? 'Aperto ora' : 'Chiuso ora'}`;
       stato.className = `orari-status ${aperto ? 'aperto' : 'chiuso'}`;
     }
   },

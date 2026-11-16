@@ -154,7 +154,7 @@ export const icons = {
     accent: '<g opacity=".32"><circle cx="18" cy="5" r="2.5"/></g>',
   },
   'location-dot': {
-    outline: '<path d="M18.5 9.5c0 4.5-6.5 11-6.5 11S5.5 14 5.5 9.5a6.5 6.5 0 1 1 13 0Z"/><circle cx="12" cy="9.5" r="2.25"/>',
+    outline: '<path d="M19 9.5c0 4.5-7 12-7 12S5 14 5 9.5a7 7 0 1 1 14 0Z"/><circle cx="12" cy="9.5" r="2.25"/>',
     accent: '',
     monochrome: true,
   },
@@ -435,13 +435,13 @@ export const icons = {
     monochrome: true,
   },
   facebook: {
-    outline: '<path d="M14 21v-8h3l.5-4H14V6.8c0-1.1.5-1.8 1.8-1.8H18V2h-3.2C11.5 2 10 4 10 7v2H7v4h3v8Z"/>',
+    outline: '<rect x="3" y="3" width="18" height="18" rx="5.25"/><path d="M12 18V9.8a3.3 3.3 0 0 1 3.3-3.3H17M9 11.5h7"/>',
     accent: '',
     monochrome: true,
   },
   whatsapp: {
     outline:
-      '<path d="M20.5 11.7a8.5 8.5 0 0 1-12.4 7.6L3 20.7l1.4-5.1A8.5 8.5 0 1 1 20.5 11.7Z"/><path d="M8 7.5h2l1 2.5-1.3 1.1a7 7 0 0 0 3.2 3.2l1.1-1.3 2.5 1v2c-4.8.4-9.4-4.2-9-9Z"/>',
+      '<path d="M20.5 11.7a8.5 8.5 0 0 1-12.4 7.6L3 20.7l1.4-5.1A8.5 8.5 0 1 1 20.5 11.7Z"/><path d="M9.1 8.8h1.5l.7 1.8-.9.8a5 5 0 0 0 2.3 2.3l.8-.9 1.8.7v1.4c-3.5.3-6.8-3-6.5-6.5Z" stroke-width="1.4"/>',
     accent: '',
     monochrome: true,
   },

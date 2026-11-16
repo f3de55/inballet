@@ -98,13 +98,16 @@
   height: 44px;
   border: 1px solid var(--linea-su-scuro);
   border-radius: var(--radius-full);
-  color: var(--white);
+  color: var(--footer-testo);
   text-decoration: none;
-  transition: border-color var(--durata-breve) ease;
+  transition:
+    border-color var(--durata-breve) ease,
+    color var(--durata-breve) ease;
 }
 
 .footer-social a:hover {
   border-color: var(--white);
+  color: var(--white);
 }
 
 .footer-nav {
@@ -203,9 +206,12 @@
   outline-offset: 2px;
 }
 
-.footer-dato > a {
+.footer-main .footer-dato > a {
   display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.6rem;
   white-space: nowrap;
 }
@@ -216,7 +222,7 @@
   font-size: var(--icona-in-testo);
   line-height: 1;
   text-align: center;
-  color: var(--white);
+  color: inherit;
 }
 
 .footer-link {

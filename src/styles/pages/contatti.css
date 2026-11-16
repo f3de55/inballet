@@ -221,6 +221,7 @@ orari-segreteria {
 }
 
 .orari-status i {
+  --icona-secondario: currentColor;
   font-size: var(--icona-punto);
 }
 

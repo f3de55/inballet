@@ -46,7 +46,7 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
         })}
     </ul>
 
-    <a href="/contatti" class="btn-primary" aria-current={attiva('/contatti') ? 'page' : undefined}>Contattaci</a>
+    <a href="/contatti" class="btn-primary" aria-current={attiva('/contatti') ? 'page' : undefined}><i class="far fa-comments" aria-hidden="true"></i> Contattaci</a>
     <button type="button" class="btn-icon btn-icon--nudo mobile-menu-btn" id="mobileMenuBtn" aria-label="Apri menu di navigazione" aria-expanded="false" aria-controls="mobileMenu">
         <i class="fas fa-bars" aria-hidden="true"></i>
     </button>
@@ -84,5 +84,5 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
         </div>
     ))}
 
-    <a href="/contatti" class="btn-primary mobile-cta" aria-current={attiva('/contatti') ? 'page' : undefined}>Contattaci <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+    <a href="/contatti" class="btn-primary mobile-cta" aria-current={attiva('/contatti') ? 'page' : undefined}><i class="far fa-comments" aria-hidden="true"></i> Contattaci</a>
 </div>

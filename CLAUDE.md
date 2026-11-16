@@ -172,7 +172,7 @@ Shared classes and tokens: every content section uses them.
 
 - Section header: `<span class="eyebrow">` → `<h2 class="titolo-sezione">` (optional `<em>` for the light italic accent) → `<p class="intro-sezione">`
 - Dark or photo-background section: add `sezione-scura` on the `<section>` (eyebrow, title and intro switch to light colors)
-- Buttons: `btn-primary` (blue pill), `btn-secondary` (white outline, on photos/dark); text action link: `link-cta`; round icon buttons `btn-icon` (see Type scale and single style system)
+- Buttons: `btn-primary` (blue pill), `btn-secondary` (white outline, on photos/dark), both with a decorative action-specific icon as the first child, inside the button and before its text; text action link: `link-cta`; round icon buttons `btn-icon` (see Type scale and single style system)
 - Tokens: `--section-y` (section vertical padding), `--bg-soft` (alternate section background), `--radius-card` / `--shadow-card` (cards), `--radius-img` (photos, with the offset blue frame used in Contatti/Corsi/homepage story)
 - Page hero: `<HeroPagina titolo stile [corso]>` (src/components/HeroPagina.astro; photo from `heroPagina()` in src/lib/hero-pagine.ts, course pages use `heroDa()`; the page passes `preload={hero.preload}` to `<Base>`, which writes the image preload links): photo, bottom gradient, breadcrumb, h1, then the slot (`<p class="hero-lead">`, extra buttons). Text left-aligned and vertically centered. No glass panels.
 - Navigation data lives in `src/data/navigazione.ts`: the navbar (desktop + mobile, active page highlight) and the breadcrumbs (+ BreadcrumbList JSON-LD) are generated from it. Add new pages there; pages outside the menu go in `altrePagine`.
@@ -191,7 +191,7 @@ Shared classes and tokens: every content section uses them.
 
 ### Icons
 
-`src/icons/inballet.mjs` is the custom InBallet icon pack: 24×24 viewBox, one solid family of filled silhouettes with negative-space details, monochrome currentColor and no strokes. `scripts/icons.mjs` scans every source (including data) and generates `styles/icons.css` with inline SVG masks, plus `public/assets/icons/inballet.svg` for `<use>` consumers. Existing `fas` / `far` / `fab` and `fa-*` names are compatibility aliases only; no Font Awesome artwork or icon font is loaded. Unknown names stop the build. All compatibility names render the same solid style; unassigned review stars use reduced opacity, keeping their filled silhouette. Navigation chevrons use the same pack. Add new paths and aliases to the pack, then run `npm run icons`.
+`src/icons/inballet.mjs` is the custom InBallet icon pack: 24×24 viewBox, one regular duotone family with 1.8-unit rounded contours and meaningful light-blue accents. Each drawing has outline and accent layers. `scripts/icons.mjs` scans every source (including data) and generates `styles/icons.css` with paired inline SVG masks, plus `public/assets/icons/inballet.svg` for `<use>` consumers. Existing `fas` / `far` / `fab` and `fa-*` names are compatibility aliases only; no Font Awesome artwork or icon font is loaded. Unknown names stop the build. All compatibility names render the same regular duotone style. The outline inherits currentColor, the accent uses --icona-secondario (sky blue on light or dark surfaces, dark blue on blue buttons). Unassigned review stars keep only their outline. Navigation chevrons use the same pack. Add new paths and aliases to the pack, then run `npm run icons`.
 
 ### Session & Auth
 

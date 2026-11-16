@@ -598,6 +598,7 @@ recensioni-google {
 }
 
 .sintesi-google .sintesi-stelle {
+  --icona-secondario: currentColor;
   grid-area: stelle;
   align-self: end;
   font-size: var(--text-sm);
@@ -634,6 +635,7 @@ recensioni-google {
 }
 
 .recensioni-carousel .recensione-stelle {
+  --icona-secondario: currentColor;
   margin-bottom: 1.25rem;
   font-size: var(--text-sm);
   color: var(--stelle);

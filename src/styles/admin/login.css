@@ -66,6 +66,11 @@ body {
 }
 
 .login-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  --icona-secondario: var(--primary-blue-dark);
   width: 100%;
   min-height: 48px;
   margin-top: 1.25rem;
@@ -81,11 +86,13 @@ body {
     color 0.2s;
 }
 .login-btn:hover {
+  --icona-secondario: var(--primary-blue);
   background: var(--primary-dark);
   color: var(--white);
 }
 
 .login-errore {
+  --icona-secondario: currentColor;
   display: flex;
   align-items: center;
   gap: 0.6rem;

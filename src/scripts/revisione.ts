@@ -92,7 +92,7 @@ gruppi.append(gruppoTesto, gruppoFile);
 
 const esito = crea('p', { class: 'revisione-esito', role: 'alert' });
 const invia = crea('button', { type: 'submit', class: 'btn-primary' });
-const etichettaInvia = () => invia.replaceChildren('Invia', icona('fa-arrow-right'));
+const etichettaInvia = () => invia.replaceChildren(icona('fa-paper-plane'), 'Invia');
 etichettaInvia();
 
 form.append(testata, gruppi, esito, invia);

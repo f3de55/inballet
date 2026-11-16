@@ -109,6 +109,7 @@
   --icona-editoriale-compatta: 2.25rem;
   --icona-comando: 1.625rem;
   --icona-menu: 2rem;
+  --icona-secondario: var(--primary-blue);
   --glifo-citazione: 5.5rem;
 
   --durata-breve: 0.15s;

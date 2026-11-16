@@ -87,12 +87,11 @@
 }
 
 .insegnante-cta {
-  position: static;
+  position: relative;
   margin-top: 1rem;
-  padding: 0 0 0.4rem;
+  padding: 0 0 calc(var(--link-segno-h) + 0.15rem);
   border: none;
-  --lc: currentColor;
-  background: var(--linea-basso);
+  background: none;
   font-family: inherit;
   color: var(--white);
   cursor: pointer;

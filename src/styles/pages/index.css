@@ -305,7 +305,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .corsi-stile:hover .corsi-stile-link i {
-    transform: translateX(8px);
+    transform: translateX(3px);
   }
 }
 
@@ -518,10 +518,9 @@
     gap: 0.5rem;
     margin: 0.25rem 0 0;
     justify-self: start;
-    padding: 0 0 0.25rem;
+    padding: 0 0 calc(var(--link-segno-h) + 0.15rem);
     border: 0;
-    --lc: currentColor;
-    background: var(--linea-basso);
+    background: none;
     color: var(--primary-blue-dark);
   }
 
@@ -661,11 +660,14 @@ recensioni-google {
 }
 
 .recensioni-carousel .read-more-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   margin-left: 0.35rem;
-  padding: 0 0 1px;
+  padding: 0 0 var(--link-segno-h);
   border: none;
-  --lc: var(--primary-blue);
-  background: var(--linea-basso);
+  background: none;
   font: inherit;
   font-size: var(--ui-size);
   font-weight: var(--ui-weight);

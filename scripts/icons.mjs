@@ -23,10 +23,11 @@ const image = (name, layer) => `url("data:image/svg+xml,${encodeURIComponent(svg
 const names = [...new Set([...used].map((name) => aliases[name] ?? name))].sort();
 const rules = names.map((name) => {
   const selectors = [...used].filter((item) => (aliases[item] ?? item) === name).map((item) => `.fa-${item}`);
-  return `${selectors.join(',')}{--ib-icon:${image(name, 'outline')};--ib-accent:${image(name, 'accent')}}`;
+  return `${selectors.join(',')}{--ib-icon:${image(name, 'outline')};--ib-accent:${image(name, 'accent')};--ib-control:${image(name, 'monochrome')}}`;
 });
 const base = `:where(.fas,.far,.fab){font-size:var(--icona-in-testo)}:is(.fas,.far,.fab){position:relative;display:inline-block;isolation:isolate;flex-shrink:0;width:1em;height:1em;font-style:normal;line-height:1;vertical-align:-.125em}:is(.fas,.far,.fab)::before,:is(.fas,.far,.fab)::after{content:'';position:absolute;inset:0;display:block;width:1em;height:1em;-webkit-mask:var(--ib-icon) center/contain no-repeat;mask:var(--ib-icon) center/contain no-repeat}:is(.fas,.far,.fab)::before{z-index:1;background:currentColor}:is(.fas,.far,.fab)::after{z-index:0;background:var(--icona-secondario,var(--primary-blue));-webkit-mask-image:var(--ib-accent);mask-image:var(--ib-accent)}.far.fa-star::after{opacity:0}`;
-await writeFile(output, `${base}\n${rules.join('\n')}\n`);
+const controls = `:where(a,button,summary,[role="button"],.link-cta)>:is(.fas,.far,.fab)::before{-webkit-mask-image:var(--ib-control);mask-image:var(--ib-control)}:where(a,button,summary,[role="button"],.link-cta)>:is(.fas,.far,.fab)::after{display:none}`;
+await writeFile(output, `${base}\n${rules.join('\n')}\n${controls}\n`);
 const exports = path.join(root, 'public/assets/icons');
 await mkdir(exports, { recursive: true });
 const symbols = Object.keys(icons)

@@ -2,88 +2,108 @@ export const icons = {
   bars: {
     outline: '<path d="M3 7h18"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17h15"/></g>',
+    monochrome: true,
   },
   xmark: {
     outline: '<path d="m5 5 14 14"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5 5 19"/></g>',
+    monochrome: true,
   },
   'arrow-right': {
     outline: '<path d="m14 5 7 7-7 7"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/></g>',
+    monochrome: true,
   },
   'arrow-left': {
     outline: '<g transform="rotate(180 12 12)"><path d="m14 5 7 7-7 7"/></g>',
     accent:
       '<g transform="rotate(180 12 12)"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/></g></g>',
+    monochrome: true,
   },
   'arrow-up': {
     outline: '<g transform="rotate(-90 12 12)"><path d="m14 5 7 7-7 7"/></g>',
     accent:
       '<g transform="rotate(-90 12 12)"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/></g></g>',
+    monochrome: true,
   },
   'arrow-down': {
     outline: '<g transform="rotate(90 12 12)"><path d="m14 5 7 7-7 7"/></g>',
     accent:
       '<g transform="rotate(90 12 12)"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/></g></g>',
+    monochrome: true,
   },
   'chevron-right': {
     outline: '<path d="m8 5 7 7"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 12-7 7"/></g>',
+    monochrome: true,
   },
   'chevron-left': {
     outline: '<path d="m16 5-7 7"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 7 7"/></g>',
+    monochrome: true,
   },
   'chevron-down': {
     outline: '<path d="m5 8 7 7"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 15 7-7"/></g>',
+    monochrome: true,
   },
   'arrow-up-right-from-square': {
     outline: '<path d="M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6m-.5-5.5L11 13"/></g>',
+    monochrome: true,
   },
   'arrows-left-right': {
     outline: '<path d="m7 8-4 4 4 4m10-8 4 4-4 4"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/></g>',
+    monochrome: true,
   },
   'arrows-up-down-left-right': {
     outline: '<path d="m9 6 3-3 3 3m-6 12 3 3 3-3M6 9l-3 3 3 3m12-6 3 3-3 3"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/></g>',
+    monochrome: true,
   },
   'arrow-trend-up': {
     outline: '<path d="M14 5h6v6"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 17 6-6 4 3 7-9"/></g>',
+    monochrome: true,
   },
   expand: {
     outline: '<path d="M9 3.5H3.5V9m11 11.5H20V15"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3.5h5.5V9M3.5 15V20H9"/></g>',
+    monochrome: true,
   },
   compress: {
     outline: '<path d="M3.5 9H9V3.5M15 20.5V15h5.5"/>',
     accent:
       '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3.5V9h5.5M9 20.5V15H3.5"/></g>',
+    monochrome: true,
   },
   'arrows-rotate': {
     outline: '<path d="M20 9a8 8 0 0 0-13.5-3M4 15a8 8 0 0 0 13.5 3"/>',
     accent:
       '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6.5 6-3 3M3 4v5h5m9.5 9 3-3M21 20v-5h-5"/></g>',
+    monochrome: true,
   },
   'redo-alt': {
     outline: '<path d="M19.5 8.5a8 8 0 1 0 0 7"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 8.5h5v-5"/></g>',
+    monochrome: true,
   },
   'rotate-left': {
     outline: '<path d="M4.5 8.5a8 8 0 1 1 0 7"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8.5H4v-5"/></g>',
+    monochrome: true,
   },
   shuffle: {
     outline: '<path d="M3 6h2c5 0 8 12 13 12h3M3 18h2c1.5 0 3-1.3 4.3-3.2M14.7 9.2C16 7.3 17 6 19 6h2"/>',
     accent:
       '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14 4 4-4 4m0-20 4 4-4 4"/></g>',
+    monochrome: true,
   },
   check: {
     outline: '<path d="m9 17 11-11"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12 5 5"/></g>',
+    monochrome: true,
   },
   'check-circle': {
     outline: '<circle cx="12" cy="12" r="9"/><path d="m7.5 12 3 3 6-6"/>',
@@ -104,10 +124,12 @@ export const icons = {
   circle: {
     outline: '<circle cx="12" cy="12" r="6"/>',
     accent: '<g opacity=".32"><circle cx="12" cy="12" r="6"/></g>',
+    monochrome: true,
   },
   plus: {
     outline: '<path d="M12 4v16"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"/></g>',
+    monochrome: true,
   },
   star: {
     outline: '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/>',
@@ -138,8 +160,9 @@ export const icons = {
     accent: '<g opacity=".32"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/></g>',
   },
   'map-location-dot': {
-    outline: '<path d="m3 7 6-2 6 2 6-2v15l-6 2-6-2-6 2ZM9 5v15m6-9v11"/><path d="M19 5c0 3-4 6-4 6s-4-3-4-6a4 4 0 1 1 8 0Z"/>',
-    accent: '<g opacity=".32"><path d="m3 7 6-2 6 2 6-2v15l-6 2-6-2-6 2ZM9 5v15m6-9v11"/></g>',
+    outline:
+      '<path d="m2 7 6-2 5 2M2 7v14l6-2 6 2 8-3v-7M8 5v14m6-4v6"/><path d="M21 6c0 3.5-4 7.5-4 7.5S13 9.5 13 6a4 4 0 1 1 8 0Z"/><circle cx="17" cy="6" r="1.3"/>',
+    accent: '<g opacity=".32"><path d="m2 7 6-2v14l-6 2Z"/></g>',
   },
   clock: {
     outline: '<circle cx="12" cy="12" r="9"/><path d="M12 6.5V12l4 2.5"/>',
@@ -152,6 +175,7 @@ export const icons = {
   download: {
     outline: '<path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-5-5 5 5 5-5"/></g>',
+    monochrome: true,
   },
   'cloud-upload-alt': {
     outline: '<path d="M7 17H6a4 4 0 0 1-1-7.9A7 7 0 0 1 18.5 8 4.5 4.5 0 0 1 18 17h-1"/>',
@@ -159,9 +183,8 @@ export const icons = {
   },
   'file-pdf': {
     outline:
-      '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Zm0 0v6h6M8 16c4.8-1 7-3.5 5.5-5.5-1.5 1 0 6 3.5 6-1.5-2.5-8.5-2.5-9 1-.2 1.5 2-.2 3-2"/>',
-    accent:
-      '<g opacity=".32"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Zm0 0v6h6M8 16c4.8-1 7-3.5 5.5-5.5-1.5 1 0 6 3.5 6-1.5-2.5-8.5-2.5-9 1-.2 1.5 2-.2 3-2"/></g>',
+      '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Zm0 0v6h6"/><path d="M7 18v-5h1.2a1.3 1.3 0 0 1 0 2.6H7m4-2.6v5h1a2.5 2.5 0 0 0 0-5Zm5 5v-5h2m-2 2.5h1.7" stroke-width="1.2"/>',
+    accent: '<g opacity=".32"><path d="M14 3v6h6Z"/></g>',
   },
   lock: {
     outline: '<rect x="5" y="10" width="14" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14.5v2"/>',
@@ -170,6 +193,7 @@ export const icons = {
   'sign-out-alt': {
     outline: '<path d="M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h11m-4-4 4 4-4 4"/></g>',
+    monochrome: true,
   },
   gear: {
     outline:
@@ -180,11 +204,13 @@ export const icons = {
   pen: {
     outline: '<path d="m14.5 5.5 4 4M4 20l4.5-1 12-12a2.8 2.8 0 0 0-4-4l-12 12Z"/>',
     accent: '<g opacity=".32"><path d="m14.5 5.5 4 4M4 20l4.5-1 12-12a2.8 2.8 0 0 0-4-4l-12 12Z"/></g>',
+    monochrome: true,
   },
   'trash-alt': {
     outline:
       '<path d="M3.5 6.5h17M9 6.5V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2.5M5.5 6.5l1 13a1.5 1.5 0 0 0 1.5 1.5h8a1.5 1.5 0 0 0 1.5-1.5l1-13M10 10.5v6m4-6v6"/>',
     accent: '<g opacity=".32"><path d="M5.5 6.5h13l-1 13a1.5 1.5 0 0 1-1.5 1.5H8a1.5 1.5 0 0 1-1.5-1.5Z"/></g>',
+    monochrome: true,
   },
   image: {
     outline: '<rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-7 5 8"/>',
@@ -197,6 +223,7 @@ export const icons = {
   'magnifying-glass': {
     outline: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/>',
     accent: '<g opacity=".32"><circle cx="10.5" cy="10.5" r="6.5"/></g>',
+    monochrome: true,
   },
   eye: {
     outline: '<path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z"/><circle cx="12" cy="12" r="3"/>',
@@ -205,23 +232,28 @@ export const icons = {
   list: {
     outline: '<path d="M9 6h12M9 12h12M9 18h12"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h.1M3 12h.1M3 18h.1"/></g>',
+    monochrome: true,
   },
   'list-check': {
     outline: '<path d="M10 6h11M10 12h11M10 18h11"/>',
     accent:
       '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 6 1.5 1.5 3-3m-4.5 7.5L4 13.5l3-3m-4.5 7.5L4 19.5l3-3"/></g>',
+    monochrome: true,
   },
   'grip-lines': {
     outline: '<path d="M5 9h14"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15h14"/></g>',
+    monochrome: true,
   },
   bold: {
     outline: '<path d="M7 4h6a4 4 0 0 1 0 8H7m0-8v16h7a4 4 0 0 0 0-8H7"/>',
     accent: '<g opacity=".32"><path d="M7 4h6a4 4 0 0 1 0 8H7Z"/></g>',
+    monochrome: true,
   },
   italic: {
     outline: '<path d="M10 4h9M5 20h9"/>',
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4 9 20"/></g>',
+    monochrome: true,
   },
   flask: {
     outline: '<path d="M9 3h6M10 3v6l-6 10a1.4 1.4 0 0 0 1.2 2h13.6a1.4 1.4 0 0 0 1.2-2L14 9V3M7 15h10"/>',
@@ -245,16 +277,16 @@ export const icons = {
   },
   'hand-holding-heart': {
     outline:
-      '<path d="M3 15h4l3 3h5a1.5 1.5 0 0 0 0-3h-3l-3-3H5m-2 0v9m4-1h9l5-5"/><path d="M15 11s-4-2.5-4-5a2.3 2.3 0 0 1 4-1.3A2.3 2.3 0 0 1 19 6c0 2.5-4 5-4 5Z"/>',
-    accent: '<g opacity=".32"><path d="M15 11s-4-2.5-4-5a2.3 2.3 0 0 1 4-1.3A2.3 2.3 0 0 1 19 6c0 2.5-4 5-4 5Z"/></g>',
+      '<path d="M2 13h4v8H2Zm4 1h3l3 3h4a1.5 1.5 0 0 0 0-3h-3l-3-3H6m0 9h10l6-5"/><path d="M16 10s-5-3.2-5-6a2.8 2.8 0 0 1 5-1.5A2.8 2.8 0 0 1 21 4c0 2.8-5 6-5 6Z"/>',
+    accent: '<g opacity=".32"><path d="M16 10s-5-3.2-5-6a2.8 2.8 0 0 1 5-1.5A2.8 2.8 0 0 1 21 4c0 2.8-5 6-5 6Z"/></g>',
   },
   'hands-holding': {
     outline: '<path d="M3 10v7l5 4h8l5-4v-7M7 9v6l3 2m7-8v6l-3 2M3 10a2 2 0 0 1 4 0m10 0a2 2 0 0 1 4 0M10 17h4"/><path d="m9 7 3-4 3 4"/>',
     accent: '<g opacity=".32"><path d="m9 7 3-4 3 4-3 4Z"/></g>',
   },
   handshake: {
-    outline: '<path d="m2 8 4-3 4 2 4-2 8 4-3 7-5 5-8-4Zm8-1-3 4 2 2 4-3 6 6m-8-1 4 3"/>',
-    accent: '<g opacity=".32"><path d="m2 8 4-3 4 2-3 4 2 2 4-3 6 6-5 5-8-4Z"/></g>',
+    outline: '<path d="m2 7 4-2 3 7-3 5-4-2Zm20 0-4-2-3 7 3 5 4-2ZM7 7l3-2h4l3 2m-7-2-3 5 2 2 4-3 5 6-5 6-7-5m4-3 4 4m-6-1 3 3"/>',
+    accent: '<g opacity=".32"><path d="m2 7 4-2 3 7-3 5-4-2Zm20 0-4-2-3 7 3 5 4-2Z"/></g>',
   },
   person: {
     outline: '<circle cx="12" cy="5" r="2"/><path d="M12 9v6m-5-4 5 1 5-1m-5 4-4 6m4-6 4 6"/>',
@@ -294,13 +326,14 @@ export const icons = {
   },
   'masks-theater': {
     outline:
-      '<path d="M3 4c4 1.5 7 1.5 11 0v6c0 4-5.5 7-5.5 7S3 14 3 10Zm2.5 4h.1m5-.1h.1M6 11c1.5 1.5 3.5 1.5 5 0M15 8l6-1v6c0 4-5.5 8-5.5 8l-3-2m3.5-8h.1m2.5 5c-1-1-2-1-3 0"/>',
-    accent:
-      '<g opacity=".32"><path d="M3 4c4 1.5 7 1.5 11 0v6c0 4-5.5 7-5.5 7S3 14 3 10Zm2.5 4h.1m5-.1h.1M6 11c1.5 1.5 3.5 1.5 5 0M15 8l6-1v6c0 4-5.5 8-5.5 8l-3-2m3.5-8h.1m2.5 5c-1-1-2-1-3 0"/></g>',
+      '<path d="M2.5 3.5c3.5 1 7.5 1 11 0v7c0 4-5.5 7-5.5 7s-5.5-3-5.5-7ZM5 8h1m4 0h1m-5.5 3.5c1.2 1.5 3.8 1.5 5 0M16.5 7c1.6 0 3-.3 5-1v7.5c0 4-5.5 7.5-5.5 7.5l-3-2m4-7.5h1m-3 5.5c1-1.3 3-1.3 4 0"/>',
+    accent: '<g opacity=".32"><path d="M2.5 3.5c3.5 1 7.5 1 11 0v7c0 4-5.5 7-5.5 7s-5.5-3-5.5-7Z"/></g>',
   },
   'champagne-glasses': {
-    outline: '<path d="m4 3 6 2-2 6a3 3 0 0 1-6-2Zm1 10-2 6m-2-1 4 1M20 3l-6 2 2 6a3 3 0 0 0 6-2Zm-1 10 2 6m-2 1 4-1M11 3l1 2 1-2"/>',
-    accent: '<g opacity=".32"><path d="m4 3 6 2-2 6a3 3 0 0 1-6-2Zm1 10-2 6m-2-1 4 1M20 3l-6 2 2 6a3 3 0 0 0 6-2Zm-1 10 2 6m-2 1 4-1M11 3l1 2 1-2"/></g>',
+    outline:
+      '<g transform="rotate(13 6.5 10)"><path d="M3.5 3h6v7a3 3 0 0 1-6 0Zm3 10v8m-3 0h6"/></g><g transform="rotate(-13 17.5 10)"><path d="M14.5 3h6v7a3 3 0 0 1-6 0Zm3 10v8m-3 0h6"/></g>',
+    accent:
+      '<g transform="rotate(13 6.5 10)"><g opacity=".32"><path d="M3.5 7h6v3a3 3 0 0 1-6 0Z"/></g></g><g transform="rotate(-13 17.5 10)"><g opacity=".32"><path d="M14.5 7h6v3a3 3 0 0 1-6 0Z"/></g></g>',
   },
   'shoe-prints': {
     outline: '<path d="M8 3C4 2 2 8 4 12l4 1 2-6c.6-2-.5-3.5-2-4ZM4 15l4 1-1 4-4-1ZM17 5c4 0 5 6 2 9h-4l-1-6c-.3-2 1.5-3 3-3Zm-2 12h4v4h-4Z"/>',
@@ -510,18 +543,26 @@ const canonical = (name) => {
   return key;
 };
 
+const ink = (content, color = 'currentColor') =>
+  `<g fill="none" stroke="${color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${content}</g>`;
+
+const monochrome = ({ outline, accent }) => ink(outline + (accent.includes('stroke="currentColor"') ? accent : ''));
+
 export function drawing(name) {
-  const { outline, accent } = icons[canonical(name)];
-  return `<g color="var(--ib-tone, #87ceeb)" fill="currentColor" stroke="none">${accent}</g><g fill="none" stroke="var(--ib-ink, currentColor)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${outline}</g>`;
+  const data = icons[canonical(name)];
+  if (data.monochrome) return monochrome(data);
+  return `<g color="var(--ib-tone, #87ceeb)" fill="currentColor" stroke="none">${data.accent}</g>${ink(data.outline, 'var(--ib-ink, currentColor)')}`;
 }
 
 export function svg(name, { layer } = {}) {
-  const { outline, accent } = icons[canonical(name)];
+  const data = icons[canonical(name)];
   const content =
-    layer === 'outline'
-      ? `<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${outline}</g>`
-      : layer === 'accent'
-        ? `<g fill="currentColor" stroke="none">${accent}</g>`
-        : drawing(name);
+    layer === 'monochrome' || (layer === 'outline' && data.monochrome)
+      ? monochrome(data)
+      : layer === 'outline'
+        ? ink(data.outline)
+        : layer === 'accent'
+          ? `<g fill="currentColor" stroke="none">${data.monochrome ? '' : data.accent}</g>`
+          : drawing(name);
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" color="#3b72a0">${content}</svg>`;
 }

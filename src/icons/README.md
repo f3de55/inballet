@@ -2,13 +2,13 @@
 
 Set vettoriale originale per InBallet: 116 disegni, con simboli specifici per danza e benessere.
 
-Un'unica famiglia regular duotone su griglia 24 × 24: contorni da 1,8 unità, terminali e raccordi arrotondati, dettagli essenziali e accenti azzurri. Il blu InBallet definisce il simbolo; il secondo colore evidenzia una parte del soggetto, come il corpo di un oggetto o la direzione di una freccia. Nessuna illustrazione o decorazione incorporata nelle icone.
+Una famiglia regular su griglia 24 × 24: contorni da 1,8 unità, terminali e raccordi arrotondati. Frecce, chiusure, menu e altri simboli semplici sono monocolore. Le icone descrittive più articolate possono avere accenti azzurri su parti significative del soggetto.
 
 ## Sul sito
 
 `inballet.mjs` contiene i disegni e gli alias. Ogni disegno ha due livelli, `outline` e `accent`. `npm run icons` verifica tutti gli usi, anche quelli dinamici nei dati, e genera CSS con due maschere SVG sovrapposte e lo sprite pubblico `assets/icons/inballet.svg`. La build si interrompe se manca un disegno.
 
-I nomi `fas`, `far`, `fab` e `fa-*` restano compatibili con i componenti esistenti. Usano tutti la stessa famiglia regular duotone InBallet e non richiedono Font Awesome né un font di icone. Il contorno eredita il colore del testo e l'accento usa `--icona-secondario`: azzurro sul sito, blu scuro sui pulsanti azzurri e azzurro sugli sfondi scuri. Nelle recensioni le stelle non assegnate mostrano solo il contorno.
+I nomi `fas`, `far`, `fab` e `fa-*` restano compatibili con i componenti esistenti, senza Font Awesome né un font di icone. Il contorno eredita il colore del testo e l'eventuale accento usa `--icona-secondario`. Dentro link, pulsanti e riepiloghi interattivi il disegno viene reso interamente monocolore: tutte le parti restano visibili, senza dividere in due colori la stessa freccia. Nelle recensioni le stelle non assegnate mostrano solo il contorno.
 
 ```html
 <i class="fas fa-arrow-right" aria-hidden="true"></i>
@@ -24,6 +24,6 @@ Le icone che introducono un blocco di contenuto usano `--icona-editoriale` (48 p
 
 ## Pacchetto SVG
 
-Le singole icone sono scalabili e modificabili in un editor vettoriale; includono entrambi i colori. `svg(nome, { layer: 'outline' })` e `svg(nome, { layer: 'accent' })` esportano i livelli separati. Gli SVG e lo sprite accettano `--ib-ink` e `--ib-tone` per adattare i colori al contesto. I simboli social e di pagamento restano riconoscibili; i rispettivi marchi appartengono ai loro titolari. Il set è realizzato per il progetto InBallet.
+Le singole icone sono scalabili e modificabili in un editor vettoriale. `svg(nome, { layer: 'outline' })` e `svg(nome, { layer: 'accent' })` esportano i livelli separati; `svg(nome, { layer: 'monochrome' })` esporta il simbolo completo a un colore. Per le icone dichiarate `monochrome` l'accento separato è trasparente e il disegno predefinito è già monocolore. I simboli social e di pagamento restano riconoscibili; i rispettivi marchi appartengono ai loro titolari. Il set è realizzato per il progetto InBallet.
 
 Ogni CTA a bottone contiene un'icona prima del testo: `ballet-shoes` per i corsi, `compass` per la scelta del percorso, `comments` per i contatti, `hand-holding-heart` per il sostegno, `calendar-days` per le prenotazioni e `paypal` per le donazioni. Le icone sono decorative e il testo resta il nome accessibile dell'azione.

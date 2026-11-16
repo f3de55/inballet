@@ -43,6 +43,14 @@
   height: 84%;
 }
 
+:root[data-tema='scuro'] .ente-logo {
+  width: auto;
+  max-width: 100%;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--piastra-logo);
+}
+
 @media (max-width: 900px) {
   .enti-lista {
     max-width: none;

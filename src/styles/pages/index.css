@@ -252,6 +252,10 @@
   display: contents;
 }
 
+.corsi-stile-foto .corsi-stile-foto-notte {
+  display: none;
+}
+
 .corsi-stile-figura {
   display: none;
 }
@@ -320,11 +324,6 @@
   }
 
   .corsi-stile--grafica {
-    --bg-soft: var(--azzurrino);
-    --testo-forte: var(--dark-navy);
-    --heading-color: var(--dark-navy);
-    --text-body: var(--testo-corpo-chiaro);
-    --accento: var(--primary-blue-dark);
     align-items: stretch;
     background: var(--bg-soft);
     color: var(--testo-forte);
@@ -338,6 +337,12 @@
 
   .corsi-stile--grafica .corsi-stile-foto {
     border-radius: inherit;
+  }
+
+  :root[data-tema='scuro'] .corsi-stile-foto .corsi-stile-foto-notte {
+    position: absolute;
+    inset: 0;
+    display: block;
   }
 
   .corsi-stile--grafica .corsi-stile-foto::after {

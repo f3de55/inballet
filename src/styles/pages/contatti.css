@@ -367,7 +367,7 @@ orari-segreteria {
   }
 
   .info-blocco {
-    --info-colore-velo: var(--white);
+    --info-colore-velo: var(--superficie);
     overflow: hidden;
   }
 

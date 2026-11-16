@@ -9,14 +9,14 @@ interface Props {
 const { link = true } = Astro.props;
 
 const sponsors = [
-  { file: 'panta-rei.png', alt: 'Panta Rei', href: 'https://pantareirehab.it/' },
-  { file: 'clifford-chance.png', alt: 'Clifford Chance', href: 'https://www.cliffordchance.com/' },
-  { file: 'banca-generali.png', alt: 'Banca Generali Private', href: 'https://www.bancageneraliprivate.it/' },
-  { file: 'terna.png', alt: 'Terna Rete Italia', href: 'https://www.terna.it/it' },
-  { file: 'mastrorlando.png', alt: 'Mastrorlando', href: 'https://www.mastrorlando.it/' },
-  { file: 'santoro.png', alt: 'Santoro', href: 'https://www.studiodentisticosantoro.com/' },
-  { file: 'tacchini.png', alt: 'Tacchini Denis', href: 'https://www.aziendaagricolatacchini.it/' },
-  { file: 'bottega-sport.png', alt: 'La Bottega dello Sport', href: 'https://labottegadellosport.it/' },
+  { file: 'panta-rei', alt: 'Panta Rei', href: 'https://pantareirehab.it/' },
+  { file: 'clifford-chance', alt: 'Clifford Chance', href: 'https://www.cliffordchance.com/' },
+  { file: 'banca-generali', alt: 'Banca Generali Private', href: 'https://www.bancageneraliprivate.it/' },
+  { file: 'terna', alt: 'Terna Rete Italia', href: 'https://www.terna.it/it' },
+  { file: 'mastrorlando', alt: 'Mastrorlando', href: 'https://www.mastrorlando.it/', badge: true },
+  { file: 'santoro', alt: 'Santoro', href: 'https://www.studiodentisticosantoro.com/' },
+  { file: 'tacchini', alt: 'Tacchini Denis', href: 'https://www.aziendaagricolatacchini.it/', badge: true },
+  { file: 'bottega-sport', alt: 'La Bottega dello Sport', href: 'https://labottegadellosport.it/' },
 ];
 ---
 
@@ -38,7 +38,8 @@ const sponsors = [
             {sponsors.map((s) => (
                 <li>
                     <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`Visita il sito di ${s.alt} (si apre in una nuova scheda)`}>
-                        <Img src={`sponsors/${s.file}`} alt={s.alt} widths={[388]} sizes="(max-width: 600px) 45vw, 280px" loading="lazy" decoding="async" />
+                        <Img class="sostenitori-logo" src={`sponsors/${s.file}.png`} alt={s.alt} widths={[388]} sizes="(max-width: 600px) 45vw, 280px" loading="lazy" decoding="async" />
+                        <Img class:list={['sostenitori-logo-notte', { 'sostenitori-logo-notte--badge': s.badge }]} src={`sponsors/${s.file}-scuro.png`} alt={s.alt} widths={[388]} sizes="(max-width: 600px) 45vw, 280px" loading="lazy" decoding="async" />
                     </a>
                 </li>
             ))}

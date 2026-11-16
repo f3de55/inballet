@@ -524,7 +524,7 @@ html:has(dialog[open]) {
   aspect-ratio: 4 / 5;
   margin-top: -6rem;
   padding: 0;
-  border: 6px solid var(--white);
+  border: 6px solid var(--cornice-foto);
   border-radius: var(--radius-md);
   background: var(--dark-navy);
   box-shadow: 0 24px 60px rgb(var(--nero-rgb) / 0.2);

@@ -8,8 +8,8 @@ event-banner {
   left: 0;
   right: 0;
   z-index: 1001;
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
-  color: var(--dark-navy);
+  background: var(--banner-sfondo);
+  color: var(--testo-forte);
   padding: 0.7rem 1.5rem;
   display: none;
   box-shadow: 0 2px 12px rgb(var(--nero-rgb) / 0.15);
@@ -48,7 +48,7 @@ html.is-scrolled .event-banner {
 .event-banner-icon i {
   position: relative;
   font-size: var(--icona-in-testo);
-  color: var(--dark-navy);
+  color: var(--testo-forte);
 }
 
 .event-banner-icon::before,
@@ -111,7 +111,7 @@ html.is-scrolled .event-banner {
   display: inline-flex;
   align-items: center;
   gap: var(--link-gap);
-  color: var(--dark-navy);
+  color: var(--testo-forte);
   text-decoration: none;
   font-size: var(--text-xs);
   font-weight: var(--font-bold);

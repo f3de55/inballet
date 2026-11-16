@@ -19,12 +19,12 @@
 
 .carosello-wrap::before {
   left: 0;
-  background: linear-gradient(to right, var(--fade-bg, var(--white)), transparent);
+  background: linear-gradient(to right, var(--fade-bg, var(--sfondo)), transparent);
 }
 
 .carosello-wrap::after {
   right: 0;
-  background: linear-gradient(to left, var(--fade-bg, var(--white)), transparent);
+  background: linear-gradient(to left, var(--fade-bg, var(--sfondo)), transparent);
 }
 
 .carosello {

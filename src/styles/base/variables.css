@@ -5,10 +5,8 @@
   --dark-navy: #1a1a1a;
   --header-dark: #2a2a2a;
   --footer-bg: #0e0e0e;
-  --azzurrino: #eef7fa;
-  --testo-corpo-chiaro: #444;
-  --bg-soft: var(--azzurrino);
-  --text-body: var(--testo-corpo-chiaro);
+  --bg-soft: #eef7fa;
+  --text-body: #444;
   --text-muted: #666;
   --white: #fff;
   --black: #000;
@@ -24,6 +22,8 @@
   --superficie: var(--white);
   --testo-forte: var(--dark-navy);
   --accento: var(--primary-blue-dark);
+  --banner-sfondo: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+  --cornice-foto: var(--white);
 
   --bianco-rgb: 255 255 255;
   --nero-rgb: 0 0 0;
@@ -188,6 +188,10 @@
   --bordo-controllo: rgb(var(--bianco-rgb) / 0.24);
   --shadow-sm: 0 2px 8px rgb(var(--nero-rgb) / 0.4);
   --shadow-card: 0 4px 20px rgb(var(--nero-rgb) / 0.35);
+  --shadow-blue: 0 4px 15px rgb(var(--blu-rgb) / 0.16);
+  --banner-sfondo: linear-gradient(135deg, #1f4a66 0%, #142c3d 100%);
+  --cornice-foto: #e4e9ed;
+  --piastra-logo: #eef2f5;
   --decoro-onde: url('../../assets/images/decorazioni/onde-destra-scuro.webp');
   --decoro-onde-sinistra: url('../../assets/images/decorazioni/onde-sinistra-scuro.webp');
   --filtro-mappa: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9);

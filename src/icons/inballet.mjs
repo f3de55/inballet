@@ -436,7 +436,7 @@ export const icons = {
     monochrome: true,
   },
   facebook: {
-    outline: '<circle cx="12" cy="12" r="9"/><path d="M11.5 18V9.5a3 3 0 0 1 3-3H16m-7.5 5h7"/>',
+    outline: '<circle cx="12" cy="12" r="9"/><path d="M11.25 16.25V10a2.25 2.25 0 0 1 2.25-2.25h1.25m-6 3.75h6.5"/>',
     accent: '',
     monochrome: true,
   },

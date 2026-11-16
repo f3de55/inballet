@@ -13,9 +13,9 @@ const sponsors = [
   { file: 'clifford-chance', alt: 'Clifford Chance', href: 'https://www.cliffordchance.com/' },
   { file: 'banca-generali', alt: 'Banca Generali Private', href: 'https://www.bancageneraliprivate.it/' },
   { file: 'terna', alt: 'Terna Rete Italia', href: 'https://www.terna.it/it' },
-  { file: 'mastrorlando', alt: 'Mastrorlando', href: 'https://www.mastrorlando.it/', badge: true },
+  { file: 'mastrorlando', alt: 'Mastrorlando', href: 'https://www.mastrorlando.it/' },
   { file: 'santoro', alt: 'Santoro', href: 'https://www.studiodentisticosantoro.com/' },
-  { file: 'tacchini', alt: 'Tacchini Denis', href: 'https://www.aziendaagricolatacchini.it/', badge: true },
+  { file: 'tacchini', alt: 'Tacchini Denis', href: 'https://www.aziendaagricolatacchini.it/' },
   { file: 'bottega-sport', alt: 'La Bottega dello Sport', href: 'https://labottegadellosport.it/' },
 ];
 ---
@@ -39,7 +39,7 @@ const sponsors = [
                 <li>
                     <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`Visita il sito di ${s.alt} (si apre in una nuova scheda)`}>
                         <Img class="sostenitori-logo" src={`sponsors/${s.file}.png`} alt={s.alt} widths={[388]} sizes="(max-width: 600px) 45vw, 280px" loading="lazy" decoding="async" />
-                        <Img class:list={['sostenitori-logo-notte', { 'sostenitori-logo-notte--badge': s.badge }]} src={`sponsors/${s.file}-scuro.png`} alt={s.alt} widths={[388]} sizes="(max-width: 600px) 45vw, 280px" loading="lazy" decoding="async" />
+                        <Img class="sostenitori-logo-notte" src={`sponsors/${s.file}-scuro.png`} alt={s.alt} widths={[388]} sizes="(max-width: 600px) 45vw, 280px" loading="lazy" decoding="async" />
                     </a>
                 </li>
             ))}

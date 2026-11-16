@@ -34,7 +34,7 @@
   height: 100%;
   min-width: 0;
   min-height: 0;
-  padding: 0.5rem 1rem;
+  padding: 1.75rem 2rem;
 }
 
 .sostenitori-loghi img {
@@ -57,18 +57,13 @@
   transition: opacity var(--durata-breve) ease;
 }
 
-:root[data-tema='scuro'] .sostenitori-loghi .sostenitori-logo-notte--badge {
-  opacity: 1;
-  filter: brightness(0.88);
-}
-
 :root[data-tema='scuro'] .sostenitori-loghi a:is(:hover, :focus-visible) .sostenitori-logo-notte {
   opacity: 1;
 }
 
 @media (max-width: 900px) {
   .sostenitori-loghi a {
-    padding: 0.75rem;
+    padding: 1.25rem;
   }
 }
 
@@ -80,6 +75,6 @@
   }
 
   .sostenitori-loghi a {
-    padding: 0.25rem;
+    padding: 1rem 0.875rem;
   }
 }

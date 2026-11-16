@@ -8,7 +8,7 @@
   height: 2.25rem;
   border-radius: var(--radius-full);
   background: rgb(var(--nero-rgb) / 0.55);
-  font-size: var(--text-xs);
+  font-size: var(--icona-in-testo);
   color: var(--white);
 }
 

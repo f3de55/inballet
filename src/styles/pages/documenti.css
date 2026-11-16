@@ -25,7 +25,7 @@
 }
 
 .documento-icona {
-  font-size: var(--text-3xl);
+  font-size: var(--icona-editoriale);
   color: var(--primary-blue-dark);
 }
 
@@ -118,7 +118,7 @@
 
 @media (max-width: 600px) {
   .documento {
-    grid-template-columns: 2rem minmax(0, 1fr);
+    grid-template-columns: var(--icona-editoriale) minmax(0, 1fr);
     align-items: start;
     gap: 0.5rem 1rem;
     padding: 1.5rem 0;

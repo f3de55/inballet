@@ -94,8 +94,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border: 1px solid var(--linea-su-scuro);
   border-radius: var(--radius-full);
   color: var(--white);
@@ -205,7 +205,7 @@
 
 .footer-dato {
   display: grid;
-  grid-template-columns: 1.1rem minmax(0, 1fr);
+  grid-template-columns: var(--icona-in-testo) minmax(0, 1fr);
   justify-items: start;
   column-gap: 0.6rem;
   align-items: center;
@@ -213,7 +213,7 @@
 
 .footer-dato > i {
   display: block;
-  width: 1.1rem;
+  width: 1em;
   font-size: var(--icona-in-testo);
   line-height: 1;
   text-align: center;

@@ -19,21 +19,18 @@ for await (const file of sources(path.join(root, 'src'))) {
 }
 const unknown = [...used].filter((name) => !icons[aliases[name] ?? name]);
 if (unknown.length) throw new Error(`[icons] aggiungere al set InBallet: ${unknown.join(', ')}`);
-const image = (name, filled = false) => `url("data:image/svg+xml,${encodeURIComponent(svg(name, { filled }))}")`;
+const image = (name) => `url("data:image/svg+xml,${encodeURIComponent(svg(name))}")`;
 const names = [...new Set([...used].map((name) => aliases[name] ?? name))].sort();
 const rules = names.map((name) => {
   const selectors = [...used].filter((item) => (aliases[item] ?? item) === name).map((item) => `.fa-${item}`);
   return `${selectors.join(',')}{--ib-icon:${image(name)}}`;
 });
-const base = `:is(.fas,.far,.fab){display:inline-block;flex-shrink:0;width:1em;height:1em;font-style:normal;line-height:1;vertical-align:-.125em}:is(.fas,.far,.fab)::before{content:'';display:block;width:1em;height:1em;background:currentColor;-webkit-mask:var(--ib-icon) center/contain no-repeat;mask:var(--ib-icon) center/contain no-repeat}`;
-await writeFile(output, `${base}\n${rules.join('\n')}\n.fas.fa-star{--ib-icon:${image('star', true)}}\n`);
+const base = `:where(.fas,.far,.fab){font-size:var(--icona-in-testo)}:is(.fas,.far,.fab){display:inline-block;flex-shrink:0;width:1em;height:1em;font-style:normal;line-height:1;vertical-align:-.125em}:is(.fas,.far,.fab)::before{content:'';display:block;width:1em;height:1em;background:currentColor;-webkit-mask:var(--ib-icon) center/contain no-repeat;mask:var(--ib-icon) center/contain no-repeat}.far.fa-star{opacity:.28}`;
+await writeFile(output, `${base}\n${rules.join('\n')}\n`);
 const exports = path.join(root, 'public/assets/icons');
 await mkdir(exports, { recursive: true });
 const symbols = Object.keys(icons)
   .sort()
-  .map(
-    (name) =>
-      `<symbol id="${name}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">${icons[name]}</symbol>`,
-  );
+  .map((name) => `<symbol id="${name}" viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" stroke="none">${icons[name]}</symbol>`);
 await writeFile(path.join(exports, 'inballet.svg'), `<svg xmlns="http://www.w3.org/2000/svg">${symbols.join('')}</svg>\n`);
 console.log(`[icons] InBallet: ${Object.keys(icons).length} disegni SVG, ${used.size} nomi usati, nessun font`);

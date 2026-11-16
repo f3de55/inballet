@@ -162,7 +162,7 @@
   display: block;
   width: 1em;
   flex-shrink: 0;
-  font-size: var(--icona-in-testo);
+  font-size: var(--icona-editoriale);
   line-height: 1;
   text-align: center;
   color: var(--primary-blue-dark);
@@ -466,7 +466,7 @@ orari-segreteria {
 .fondamento-icona {
   margin-bottom: 1rem;
   color: var(--primary-blue-dark);
-  font-size: var(--text-3xl);
+  font-size: var(--icona-editoriale);
   line-height: 1;
 }
 
@@ -512,6 +512,5 @@ orari-segreteria {
 
   .fondamento-icona {
     margin-bottom: 0.75rem;
-    font-size: var(--text-2xl);
   }
 }

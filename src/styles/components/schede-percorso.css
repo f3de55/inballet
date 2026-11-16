@@ -138,7 +138,7 @@
   width: 2.75rem;
   height: 2.75rem;
   color: var(--primary-blue-dark);
-  font-size: var(--text-xl);
+  font-size: var(--icona-comando);
   transition: transform var(--transition-base);
 }
 

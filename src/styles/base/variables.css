@@ -102,11 +102,13 @@
   --small-color-su-scuro: var(--testo-su-scuro-debole);
   --label-color-su-scuro: var(--primary-blue);
 
-  --icona-in-testo: 1em;
-  --icona-mini: 0.85em;
+  --icona-in-testo: max(1.5rem, 1em);
+  --icona-mini: 1.25rem;
   --icona-punto: 0.5em;
   --icona-editoriale: 3rem;
-  --icona-editoriale-compatta: 2rem;
+  --icona-editoriale-compatta: 2.25rem;
+  --icona-comando: 1.625rem;
+  --icona-menu: 2rem;
   --glifo-citazione: 5.5rem;
 
   --durata-breve: 0.15s;

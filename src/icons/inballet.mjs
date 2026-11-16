@@ -10,26 +10,23 @@ export const icons = {
     monochrome: true,
   },
   'arrow-right': {
-    outline: '<path d="m14 5 7 7-7 7"/>',
-    accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/></g>',
+    outline: '<path d="M4 12h15m-4.75-4.75L19 12l-4.75 4.75"/>',
+    accent: '',
     monochrome: true,
   },
   'arrow-left': {
-    outline: '<g transform="rotate(180 12 12)"><path d="m14 5 7 7-7 7"/></g>',
-    accent:
-      '<g transform="rotate(180 12 12)"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/></g></g>',
+    outline: '<g transform="rotate(180 12 12)"><path d="M4 12h15m-4.75-4.75L19 12l-4.75 4.75"/></g>',
+    accent: '',
     monochrome: true,
   },
   'arrow-up': {
-    outline: '<g transform="rotate(-90 12 12)"><path d="m14 5 7 7-7 7"/></g>',
-    accent:
-      '<g transform="rotate(-90 12 12)"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/></g></g>',
+    outline: '<g transform="rotate(-90 12 12)"><path d="M4 12h15m-4.75-4.75L19 12l-4.75 4.75"/></g>',
+    accent: '',
     monochrome: true,
   },
   'arrow-down': {
-    outline: '<g transform="rotate(90 12 12)"><path d="m14 5 7 7-7 7"/></g>',
-    accent:
-      '<g transform="rotate(90 12 12)"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/></g></g>',
+    outline: '<g transform="rotate(90 12 12)"><path d="M4 12h15m-4.75-4.75L19 12l-4.75 4.75"/></g>',
+    accent: '',
     monochrome: true,
   },
   'chevron-right': {

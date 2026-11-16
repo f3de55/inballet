@@ -252,10 +252,6 @@
   .agenda-voce:hover .agenda-cta {
     border-color: var(--primary-blue-dark);
   }
-
-  .agenda-voce:hover .agenda-cta i {
-    transform: translateX(3px);
-  }
 }
 
 .agenda-passati {

@@ -20,7 +20,7 @@ I nomi `fas`, `far`, `fab` e `fa-*` restano compatibili con i componenti esisten
 
 Per nuovi usi, preferire SVG inline o sprite. Le icone decorative sono nascoste agli screen reader; il nome accessibile è sul pulsante o sul link. Mantenere un'area interattiva di almeno 44 × 44 px, indipendente dalle dimensioni del disegno. Usare i token di colore e dimensione del sito.
 
-Le icone che introducono un blocco di contenuto usano `--icona-editoriale` (48 px), anche su mobile. Le righe e le competenze con supporto grafico usano `--icona-editoriale-compatta` (36 px). I simboli dentro link e recapiti usano `--icona-in-testo` (minimo 24 px), quelli secondari `--icona-mini` (20 px), i comandi `--icona-comando` (26 px) e il menu `--icona-menu` (32 px). Il piccolo indicatore di stato usa `--icona-punto`. La griglia di disegno da 24 unità non determina la dimensione visualizzata. Per il team building usare `users`, per le scuole `school`, per la formazione `chalkboard-user`.
+Le icone che introducono un blocco di contenuto usano `--icona-editoriale` (48 px), anche su mobile. Le righe e le competenze con supporto grafico usano `--icona-editoriale-compatta` (36 px). I simboli dentro link e recapiti usano `--icona-in-testo` (minimo 24 px), le frecce dei pulsanti testuali `--icona-link` (20 px), quelli secondari `--icona-mini` (20 px), i comandi `--icona-comando` (26 px) e il menu `--icona-menu` (32 px). Il piccolo indicatore di stato usa `--icona-punto`. La griglia di disegno da 24 unità non determina la dimensione visualizzata. Per il team building usare `users`, per le scuole `school`, per la formazione `chalkboard-user`.
 
 ## Pacchetto SVG
 

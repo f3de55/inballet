@@ -110,7 +110,7 @@ html.is-scrolled .event-banner {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: var(--link-gap);
   color: var(--dark-navy);
   text-decoration: none;
   font-size: var(--text-xs);
@@ -119,15 +119,6 @@ html.is-scrolled .event-banner {
   padding-bottom: var(--link-segno-h);
 
   white-space: nowrap;
-}
-
-.event-banner-link i {
-  font-size: var(--icona-in-testo);
-  transition: transform var(--durata) var(--curva);
-}
-
-.event-banner-link:hover i {
-  transform: translateX(3px);
 }
 
 .event-banner-close {

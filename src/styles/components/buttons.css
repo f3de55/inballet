@@ -183,7 +183,7 @@
   width: fit-content;
   max-width: 100%;
   min-height: 44px;
-  gap: 0.75rem;
+  gap: var(--link-gap);
   padding: 0.25rem 0 calc(var(--link-segno-h) + 0.15rem);
   background: none;
   color: var(--dark-navy);
@@ -193,7 +193,7 @@
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transition: color var(--durata-breve) ease;
+  transition: color var(--durata-pannello) var(--curva);
 }
 
 .link-cta::after,
@@ -208,24 +208,23 @@
   -webkit-mask: var(--link-segno) center / 100% 100% no-repeat;
   mask: var(--link-segno) center / 100% 100% no-repeat;
   opacity: 0.8;
-  transform-origin: left center;
-  transition:
-    transform var(--durata) var(--curva),
-    opacity var(--durata) var(--curva);
+  transition: opacity var(--durata-pannello) var(--curva);
   pointer-events: none;
 }
 
 .link-cta:has(> i)::after {
-  inset-inline-end: calc(var(--icona-in-testo) + 0.75rem);
+  inset-inline-end: calc(var(--icona-link) + var(--link-gap));
 }
 
 .event-banner-link::after {
-  inset-inline-end: calc(var(--icona-in-testo) + 0.5rem);
+  inset-inline-end: calc(var(--icona-link) + var(--link-gap));
 }
 
-.link-cta i {
+.link-cta i,
+.event-banner-link i {
+  font-size: var(--icona-link);
   color: inherit;
-  transition: transform var(--durata) var(--curva);
+  transition: transform var(--durata-pannello) var(--curva);
 }
 
 .link-cta:hover,
@@ -239,12 +238,12 @@ a:is(:hover, :focus-visible) .link-cta::after,
 .event-banner-link:is(:hover, :focus-visible)::after,
 .read-more-btn:is(:hover, :focus-visible)::after {
   opacity: 1;
-  transform: translateY(-1px) scaleX(1.02);
 }
 
 .link-cta:is(:hover, :focus-visible) i,
-a:is(:hover, :focus-visible) .link-cta i {
-  transform: translateX(3px);
+a:is(:hover, :focus-visible) .link-cta i,
+.event-banner-link:is(:hover, :focus-visible) i {
+  transform: translateX(2px);
 }
 
 .link-cta:focus-visible {

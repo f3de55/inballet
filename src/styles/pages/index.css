@@ -303,12 +303,6 @@
   color: var(--white);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .corsi-stile:hover .corsi-stile-link i {
-    transform: translateX(3px);
-  }
-}
-
 .corsi-stile:focus-visible {
   outline: 2px solid var(--primary-blue-dark);
   outline-offset: 4px;

@@ -1,5 +1,6 @@
 const ridotto = window.matchMedia('(prefers-reduced-motion: reduce)');
 const SOGLIA_TRASCINAMENTO = 6;
+const mobile = window.matchMedia('(max-width: 768px)');
 
 let puntatoreMouse: { x: number; y: number } | null = null;
 const aggiornaPuntatore = (event: PointerEvent) => {
@@ -14,7 +15,7 @@ window.addEventListener('pointerout', (event) => {
 document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
   const track = fila.querySelector<HTMLElement>('.carosello-track');
   if (!track) return;
-  const secondi = Number(fila.dataset.giro) || 60;
+  const secondi = () => Number((mobile.matches && fila.dataset.giroMobile) || fila.dataset.giro) || 60;
   const giro = () => track.scrollWidth / 2;
 
   const foto = [...track.querySelectorAll<HTMLImageElement>('img')];
@@ -108,7 +109,7 @@ document.querySelectorAll<HTMLElement>('.carosello').forEach((fila) => {
       ricalcolaHover = false;
     }
     if (ultimo && !fermo && !sopra && !modaleAperta) {
-      pos = mod(pos + (giro() / secondi) * ((t - ultimo) / 1000));
+      pos = mod(pos + (giro() / secondi()) * ((t - ultimo) / 1000));
       mostra();
     }
     ultimo = t;

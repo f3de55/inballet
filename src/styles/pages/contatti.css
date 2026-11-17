@@ -183,19 +183,11 @@
   background: none;
 }
 
-.sede a .fa-arrow-up-right-from-square {
-  margin-inline-start: 0.4em;
-}
-
 .sede-indirizzo {
   max-width: 22ch;
   margin: 0.2rem auto 0;
   font-style: normal;
   text-wrap: pretty;
-}
-
-.sede-indirizzo-finale {
-  white-space: nowrap;
 }
 
 .sede-indirizzo .sede-mappa {

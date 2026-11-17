@@ -59,7 +59,7 @@ function dove(prefisso: string, etichetta: string, esempio: string) {
 }
 
 const cornice = crea('div', { class: 'revisione-cornice', 'aria-hidden': 'true' });
-const apri = crea('button', { type: 'button', class: 'btn-primary revisione-apri' });
+const apri = crea('button', { type: 'button', class: 'revisione-apri' });
 apri.append(icona('fa-pen'), 'Proponi un testo');
 const avviso = crea('div', { class: 'revisione-avviso', role: 'status' });
 
@@ -82,8 +82,10 @@ gruppoTesto.append(crea('legend', { class: 'titoletto' }, 'Testo'), campo('Nuovo
 const input = crea('input', { type: 'file', id: 'revisione-file', accept: FILE_REVISIONE, multiple: '' });
 const elenco = crea('ul', { class: 'revisione-elenco', 'aria-label': 'File scelti' });
 const doveFile = dove('revisione-file', 'Dove va inserito', 'Es. al posto della foto grande');
-const campoFile = campo('Scegli i file', input);
-campoFile.append(elenco, crea('small', { class: 'testo-piccolo' }, 'Più file insieme, fino a 50 MB ciascuno.'));
+const scegli = crea('label', { for: input.id, class: 'btn-primary revisione-scegli' });
+scegli.append(icona('fa-cloud-upload-alt'), 'Scegli foto o video');
+const campoFile = crea('div', { class: 'revisione-campo revisione-file' });
+campoFile.append(input, scegli, elenco, crea('small', { class: 'testo-piccolo' }, 'Più file insieme, fino a 50 MB ciascuno.'));
 const gruppoFile = crea('fieldset', { class: 'revisione-gruppo' });
 gruppoFile.append(crea('legend', { class: 'titoletto' }, 'Immagini o video'), doveFile.blocco, campoFile);
 
@@ -98,6 +100,7 @@ etichettaInvia();
 form.append(testata, gruppi, esito, invia);
 dialog.append(barra, form);
 document.body.append(cornice, apri, avviso, dialog);
+document.documentElement.classList.add('revisione-attiva');
 
 let scelti: File[] = [];
 let timerAvviso = 0;

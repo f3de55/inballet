@@ -654,12 +654,6 @@ html:has(dialog[open]) {
   color: var(--heading-color);
 }
 
-.evento-dettagli .evento-mappa i {
-  margin-inline-start: 0.35em;
-  font-size: var(--icona-mini);
-  vertical-align: 0.08em;
-}
-
 .evento-descrizione:empty {
   display: none;
 }
@@ -709,39 +703,29 @@ html:has(dialog[open]) {
 .evento-azioni-btn {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0 1.75rem;
 }
 
 .evento-azione {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
   min-height: 44px;
-  padding: 0 1.25rem;
-  border: 1px solid rgb(var(--blu-scuro-rgb) / 0.35);
-  border-radius: var(--radius-pill);
-  background: var(--superficie);
   font-size: var(--ui-size);
   font-weight: var(--ui-weight);
-  color: var(--testo-forte);
-  text-decoration: none;
-  transition:
-    background-color var(--durata-breve) ease,
-    border-color var(--durata-breve) ease,
-    color var(--durata-breve) ease;
+  color: var(--accento);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  transition: color var(--durata-breve) ease;
 }
 
 .evento-azione i {
   font-size: var(--icona-in-testo);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .evento-azione:hover {
-    background: var(--primary-blue);
-    border-color: var(--primary-blue);
-    color: var(--dark-navy);
-  }
+.evento-azione:hover {
+  color: var(--heading-color);
 }
 
 @media (min-width: 901px) {
@@ -835,19 +819,6 @@ html:has(dialog[open]) {
 
   .evento-azioni-calendario {
     width: 100%;
-  }
-
-  .evento-azioni-btn {
-    display: grid;
-    grid-template-columns: 1fr;
-    width: 100%;
-  }
-
-  .evento-azione {
-    padding: 0.5rem 0.75rem;
-    font-size: var(--text-xs);
-    line-height: 1.2;
-    text-align: center;
   }
 }
 

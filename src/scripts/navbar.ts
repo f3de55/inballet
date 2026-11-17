@@ -122,6 +122,7 @@ sezioni.forEach((s) => impostaSezione(s, false));
 
 menuBtn.addEventListener('click', () => impostaMenu(!menu.classList.contains('active')));
 chiudiBtn.addEventListener('click', () => impostaMenu(false));
+menu.querySelector('[data-tema-interruttore]')?.addEventListener('click', () => impostaMenu(false));
 overlay.addEventListener('click', () => impostaMenu(false));
 
 for (const s of sezioni) {

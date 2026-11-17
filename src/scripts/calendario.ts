@@ -53,8 +53,10 @@ function apriEvento(slug: string) {
   $('dialogTitolo').textContent = e.titolo;
 
   const luogo = escapeHtml(e.luogo);
+  const parole = luogo.split(' ');
+  const coda = parole.pop();
   const dove = e.mappa
-    ? `<a class="evento-mappa" href="${escapeHtml(e.mappa)}" target="_blank" rel="noopener noreferrer" aria-label="${luogo}, indicazioni (si apre in una nuova scheda)">${luogo}&nbsp;<i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>`
+    ? `<a class="evento-mappa" href="${escapeHtml(e.mappa)}" target="_blank" rel="noopener noreferrer" aria-label="${luogo}, indicazioni (si apre in una nuova scheda)">${parole.map((p) => `${p} `).join('')}<span class="link-coda">${coda}<i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span></a>`
     : luogo;
   $('dialogDettagli').innerHTML =
     riga('Quando', escapeHtml(e.quando)) +

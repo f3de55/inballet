@@ -262,7 +262,12 @@ a:is(:hover, :focus-visible) .link-cta i,
   border-radius: var(--radius-xs);
 }
 
+.link-coda {
+  white-space: nowrap;
+}
+
 a .fa-arrow-up-right-from-square {
+  margin-inline-start: 0.1em;
   font-size: var(--icona-mini);
   vertical-align: middle;
 }

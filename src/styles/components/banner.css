@@ -147,7 +147,7 @@ html.is-scrolled .event-banner {
   flex-shrink: 0;
   width: 44px;
   height: 44px;
-  background: rgb(var(--nero-rgb) / 0.25);
+  background: none;
   border: none;
   border-radius: var(--radius-full);
   cursor: pointer;
@@ -155,15 +155,28 @@ html.is-scrolled .event-banner {
   align-items: center;
   justify-content: center;
   color: var(--white);
+}
+
+.event-banner-close::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--icona-chiudi-banner) * 2);
+  height: calc(var(--icona-chiudi-banner) * 2);
+  transform: translate(-50%, -50%);
+  border-radius: var(--radius-full);
+  background: rgb(var(--nero-rgb) / 0.25);
   transition: background var(--durata-breve) ease;
 }
 
-.event-banner-close:hover {
+.event-banner-close:hover::before {
   background: rgb(var(--nero-rgb) / 0.4);
 }
 
 .event-banner-close i {
-  font-size: var(--icona-chiudi);
+  position: relative;
+  font-size: var(--icona-chiudi-banner);
 }
 
 @media (max-width: 768px) {

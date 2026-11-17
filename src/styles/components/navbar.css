@@ -440,17 +440,26 @@ html.menu-aperto {
   margin-bottom: 1rem;
 }
 
+.mobile-menu-top::before,
 .mobile-menu-top::after {
   content: '';
   position: absolute;
   inset-inline: calc(var(--menu-inset) * -1);
-  bottom: 0;
   height: var(--link-segno-h);
   border-radius: var(--radius-pill);
-  background: var(--velo-chiaro);
   -webkit-mask: var(--link-segno) center / 100% 100% no-repeat;
   mask: var(--link-segno) center / 100% 100% no-repeat;
   pointer-events: none;
+}
+
+.mobile-menu-top::before {
+  bottom: 0;
+  background: var(--velo-chiaro);
+}
+
+.mobile-menu-top::after {
+  bottom: calc(var(--link-segno-h) * -1);
+  background: var(--primary-blue);
 }
 
 .mobile-menu-top .eyebrow {

@@ -119,6 +119,7 @@
   --icona-editoriale-compatta: 2.25rem;
   --icona-comando: 1.5rem;
   --icona-chiudi: 1.125rem;
+  --icona-chiudi-banner: var(--text-xs);
   --icona-menu: 1.75rem;
   --icona-secondario: var(--primary-blue);
   --icona-link: var(--icona-mini);

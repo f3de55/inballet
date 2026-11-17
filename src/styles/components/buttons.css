@@ -264,5 +264,5 @@ a:is(:hover, :focus-visible) .link-cta i,
 
 a .fa-arrow-up-right-from-square {
   font-size: var(--icona-mini);
-  vertical-align: -0.125em;
+  vertical-align: middle;
 }

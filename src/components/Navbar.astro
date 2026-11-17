@@ -60,9 +60,12 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
 <div class="mobile-menu sezione-scura" id="mobileMenu" aria-hidden="true">
     <div class="mobile-menu-top">
         <p class="eyebrow">Menu</p>
-        <button type="button" class="btn-icon btn-icon--nudo mobile-menu-close" id="mobileMenuClose" aria-label="Chiudi menu">
-            <i class="fas fa-times" aria-hidden="true"></i>
-        </button>
+        <div class="mobile-menu-comandi">
+            <TemaInterruttore class="btn-icon btn-icon--nudo mobile-menu-tema" etichettaNascosta />
+            <button type="button" class="btn-icon btn-icon--nudo mobile-menu-close" id="mobileMenuClose" aria-label="Chiudi menu">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
     </div>
 
     {menu.map((m) => (

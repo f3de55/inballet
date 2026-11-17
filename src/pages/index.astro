@@ -6,7 +6,7 @@ import SchedaPercorso from '../components/SchedaPercorso.astro';
 import { immaginePagina } from '../data/immagini-pagine';
 import SostenitoriSection from '../components/SostenitoriSection.astro';
 import Galleria from '../components/Galleria.astro';
-import { ANNI_ATTIVITA, categorieCorsi, faqHome, FONDAZIONE, scuola } from '../data/scuola';
+import { anniAttivita, categorieCorsi, faqHome, FONDAZIONE, scuola } from '../data/scuola';
 import { immagineSocial, sfondo, webpSrcset } from '../lib/images';
 import { schemaHome } from '../lib/schema';
 import { enfatizza } from '../lib/text';
@@ -80,7 +80,7 @@ const schema = schemaHome(await immagineSocial('gallery-3.jpg', Astro.site));
         <div class="hero-overlay"></div>
 
         <div class="hero-content">
-            <p class="hero-badge titoletto">InBallet ASD · {ANNI_ATTIVITA} anni di danza</p>
+            <p class="hero-badge titoletto">InBallet ASD · <span data-anni-da={FONDAZIONE}>{anniAttivita()}</span> anni di danza</p>
 
             <h1>Scuola di Danza a Lainate e Rho</h1>
 

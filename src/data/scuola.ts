@@ -1,5 +1,5 @@
 export const FONDAZIONE = 2007;
-export const ANNI_ATTIVITA = new Date().getFullYear() - FONDAZIONE;
+export const anniAttivita = () => new Date().getFullYear() - FONDAZIONE;
 
 export const scuola = {
   nome: 'InBallet ASD',

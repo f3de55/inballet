@@ -121,7 +121,15 @@
 
 @media (max-width: 768px) {
   .gallery-item {
-    width: min(78vw, 420px);
+    width: min(44vw, 240px);
+    height: 340px;
+    aspect-ratio: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-item {
+    height: 300px;
   }
 }
 

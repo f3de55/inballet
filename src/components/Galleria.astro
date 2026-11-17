@@ -61,7 +61,7 @@ const gallery = await Promise.all(
                 gallery.map((img, i) => (
                     <div class="gallery-item" aria-hidden={set === 1 ? 'true' : undefined}>
                         <button type="button" class="gallery-apri" data-index={i} data-full={img.full} data-alt={img.alt} aria-label={`Ingrandisci: ${img.alt}`} tabindex={set === 1 ? -1 : undefined}>
-                            <Img src={img.file} alt={set === 0 ? img.alt : ''} width="510" height="340" loading="lazy" decoding="async" draggable="false" rapporto={2 / 3} widths={[420, 640, 1020]} sizes="(max-width: 768px) min(78vw, 420px), (max-width: 1024px) 450px, 510px" />
+                            <Img src={img.file} alt={set === 0 ? img.alt : ''} width="510" height="340" loading="lazy" decoding="async" draggable="false" rapporto={2 / 3} widths={[420, 640, 1020]} sizes="(max-width: 480px) 450px, (max-width: 768px) 510px, (max-width: 1024px) 450px, 510px" />
                             <span class="gallery-zoom-icon" aria-hidden="true"><i class="fas fa-expand"></i></span>
                         </button>
                     </div>

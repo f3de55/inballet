@@ -1,5 +1,5 @@
 import { getCollection } from 'astro:content';
-import { ANNI_ATTIVITA, categorieCorsi, faq, FONDAZIONE, iscrizioni, scuola, sedi } from '../data/scuola';
+import { anniAttivita, categorieCorsi, faq, FONDAZIONE, iscrizioni, scuola, sedi } from '../data/scuola';
 import type { Documento } from './documenti';
 import { datiGoogle, testoOrari } from './google';
 
@@ -24,7 +24,7 @@ export async function riepilogoScuola({ url, documenti = [], conFaq = true }: Op
   };
   return `# InBallet - Scuola di danza a Lainate e Rho
 
-> ${scuola.nome} (anche "I.N. Ballet") è una scuola di danza multidisciplinare con sede a Lainate e Rho, a nord-ovest di Milano. Fondata nel ${FONDAZIONE} da ${scuola.fondatrice}, da ${ANNI_ATTIVITA} anni propone corsi per bambini dai 3 anni, ragazzi e adulti ed è Ente Formativo riconosciuto CSEN e CONI per la formazione degli insegnanti di danza.
+> ${scuola.nome} (anche "I.N. Ballet") è una scuola di danza multidisciplinare con sede a Lainate e Rho, a nord-ovest di Milano. Fondata nel ${FONDAZIONE} da ${scuola.fondatrice}, da ${anniAttivita()} anni propone corsi per bambini dai 3 anni, ragazzi e adulti ed è Ente Formativo riconosciuto CSEN e CONI per la formazione degli insegnanti di danza.
 
 L'inclusione è centrale per tutte le fasce d'età: dal 2013 il [progetto NoiConVoi](${url('/progetto-noiconvoi')}) accoglie ragazzi con disabilità in esperienze di danza con supporto psicomotorio, insieme a un team di volontari. La scuola propone anche formazioni per professionisti dell'ambito educativo e terapeutico.
 

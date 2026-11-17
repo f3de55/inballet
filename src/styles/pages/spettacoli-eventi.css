@@ -839,7 +839,7 @@ html:has(dialog[open]) {
 
   .evento-azioni-btn {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    grid-template-columns: 1fr;
     width: 100%;
   }
 

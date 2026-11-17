@@ -1,5 +1,7 @@
+const anno = new Date().getFullYear();
 const year = document.getElementById('footerYear');
-if (year) year.textContent = String(new Date().getFullYear());
+if (year) year.textContent = String(anno);
+for (const el of document.querySelectorAll<HTMLElement>('[data-anni-da]')) el.textContent = String(anno - Number(el.dataset.anniDa));
 
 const mobile = window.matchMedia('(max-width: 700px)');
 const riduci = window.matchMedia('(prefers-reduced-motion: reduce)');

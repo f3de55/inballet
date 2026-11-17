@@ -440,6 +440,17 @@ html.menu-aperto {
 
 .mobile-menu-top .eyebrow {
   margin: 0;
+  color: var(--white);
+}
+
+.mobile-menu-comandi {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.mobile-menu-tema {
+  font-size: var(--icona-comando);
 }
 
 .mobile-menu-close {
@@ -574,7 +585,8 @@ html.menu-aperto {
 
 @media (max-width: 1200px) {
   .nav-menu,
-  .nav-azioni > .btn-primary {
+  .nav-azioni > .btn-primary,
+  .main-header .nav-tema {
     display: none;
   }
 

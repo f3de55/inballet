@@ -1,5 +1,5 @@
 ---
-import { ANNI_ATTIVITA, categorieCorsi, FONDAZIONE, sedi } from '../data/scuola';
+import { anniAttivita, categorieCorsi, FONDAZIONE, sedi } from '../data/scuola';
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import InsegnantiSection from '../components/InsegnantiSection.astro';
@@ -26,7 +26,7 @@ const [lainate, rho] = sedi;
 const totaleCorsi = categorieCorsi.reduce((n, cat) => n + cat.corsi.length, 0);
 
 const numeri = [
-  { valore: ANNI_ATTIVITA, etichetta: 'Anni di danza', nota: `Dal ${FONDAZIONE}` },
+  { valore: anniAttivita(), etichetta: 'Anni di danza', nota: `Dal ${FONDAZIONE}` },
   { valore: totaleCorsi, etichetta: 'Corsi', nota: `In ${categorieCorsi.length} percorsi` },
   { valore: 3, etichetta: 'Età per iniziare', nota: 'Anni compiuti' },
   { valore: 2, etichetta: 'Sedi', nota: `${lainate.citta} e ${rho.citta}` },

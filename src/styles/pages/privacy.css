@@ -9,15 +9,20 @@
 
 .privacy-testo {
   max-width: 48rem;
-  margin: var(--spazio-intestazione) auto 0;
+  margin: 0 auto;
+}
+
+.privacy-testo .titolo-sezione {
+  margin-bottom: 1.25rem;
+}
+
+.privacy-data {
+  display: block;
+  margin-top: 0.75rem;
 }
 
 .privacy-testo h3 {
   margin: 2.5rem 0 1rem;
-}
-
-.privacy-testo h3:first-child {
-  margin-top: 0;
 }
 
 .privacy-testo p + p,

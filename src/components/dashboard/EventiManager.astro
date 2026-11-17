@@ -33,14 +33,10 @@ const gruppi = [
 ];
 ---
 
-<div class="pagina-head">
-    <div>
-        <h1>Eventi</h1>
-    </div>
-    <div class="pagina-azioni">
-        <a href="/spettacoli-eventi" target="_blank" rel="noopener" class="btn btn-secondary btn-icona" aria-label="Vedi il calendario sul sito (si apre in una nuova scheda)" title="Vedi il calendario sul sito"><i class="fas fa-eye" aria-hidden="true"></i></a>
-        <button type="button" class="btn btn-primary" data-nuovo-evento><i class="fas fa-plus" aria-hidden="true"></i> Nuovo evento</button>
-    </div>
+<h1 class="sr-only">Eventi</h1>
+<div class="pagina-azioni">
+    <button type="button" class="btn btn-primary" data-nuovo-evento><i class="fas fa-plus" aria-hidden="true"></i> Nuovo evento</button>
+    <a href="/spettacoli-eventi" target="_blank" rel="noopener" class="btn btn-secondary btn-icona" aria-label="Vedi il calendario sul sito (si apre in una nuova scheda)" title="Vedi il calendario sul sito"><i class="fas fa-eye" aria-hidden="true"></i></a>
 </div>
 
 {tutti.length > 0 ? (

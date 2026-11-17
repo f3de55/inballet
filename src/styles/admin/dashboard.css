@@ -88,28 +88,11 @@ body {
   margin: 0 auto;
   padding: 2.25rem 1.5rem 5rem;
 }
-.pagina-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem 2rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.75rem;
-}
-.pagina-head h1 {
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-}
-.pagina-sotto {
-  margin-top: 0.25rem;
-  color: var(--text-muted);
-}
 .pagina-azioni {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
+  margin-bottom: 1.75rem;
 }
 .nota {
   font-weight: var(--font-normal);
@@ -1089,6 +1072,17 @@ input[list]::-webkit-calendar-picker-indicator {
 .imp-campi .nota {
   margin-top: 0.4rem;
 }
+.imp-campo-largo,
+.imp-proposte {
+  grid-column: 1 / -1;
+}
+.imp-proposte {
+  margin-bottom: 1.25rem;
+}
+.imp-proposte a {
+  color: var(--primary-dark);
+  font-weight: var(--font-semibold);
+}
 .imp-tema[aria-pressed='true'] {
   border-color: var(--primary-dark);
   color: var(--primary-dark);
@@ -1573,17 +1567,10 @@ input[list]::-webkit-calendar-picker-indicator {
   .main {
     padding: 1.5rem 1rem 4rem;
   }
-  .pagina-head {
-    align-items: stretch;
-    margin-bottom: 1.25rem;
-  }
-  .pagina-head h1 {
-    font-size: var(--text-2xl);
-  }
   .pagina-azioni {
     flex-wrap: nowrap;
     gap: 0.6rem;
-    width: 100%;
+    margin-bottom: 1.25rem;
   }
   .pagina-azioni .btn-primary {
     flex: 1;

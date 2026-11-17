@@ -227,7 +227,7 @@ export const server = {
 
   impostazioni: {
     salva: defineAction({
-      input: z.object({ revisione: z.boolean(), foglio: z.string().max(500), cartella: z.string().max(500) }),
+      input: z.object({ revisione: z.boolean(), foglio: z.string().max(500), cartella: z.string().max(500), email: z.string().max(500) }),
       handler: admin(async (input, context): Promise<{ avviso?: string; foglio?: string; cartella?: string }> => {
         const imp = await salvaImpostazioni(input);
         segnaRevisione(context.cookies, context.url, imp.revisione);

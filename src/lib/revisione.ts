@@ -1,7 +1,11 @@
 import { randomUUID } from 'node:crypto';
 import { GOOGLE_REVISIONE_CHIAVE, GOOGLE_REVISIONE_URL } from 'astro:env/server';
-import { idCartella, idFoglio, leggiImpostazioni } from './impostazioni';
+import { emailConfigurata, inviaEmail } from './email';
+import { idCartella, idFoglio, indirizziEmail, leggiImpostazioni } from './impostazioni';
 import { MAX_FILE_REVISIONE } from './revisione-comune';
+import { paths, readJson, serialized, writeJson } from './storage';
+import { escapeHtml } from './text';
+import { romeIso } from './time';
 
 export class ErroreRevisione extends Error {}
 
@@ -34,7 +38,45 @@ interface Caricamento {
   file?: FileDrive;
 }
 
+export interface Proposta {
+  id: string;
+  data: string;
+  pagina: string;
+  indirizzo: string;
+  sezioneTesto: string;
+  testo: string;
+  sezioneFile: string;
+  file: FileDrive[];
+  foglio: string;
+  email: string;
+}
+
+const MAX_PROPOSTE = 2000;
+
 const caricamenti = new Map<string, Caricamento>();
+
+export const leggiProposte = () => readJson<Proposta[]>(paths.revisioni, []);
+
+function salvaProposta(proposta: Proposta) {
+  return serialized(async () => {
+    const tutte = (await leggiProposte()).filter((p) => p.id !== proposta.id);
+    await writeJson(paths.revisioni, [...tutte, proposta].slice(-MAX_PROPOSTE));
+  });
+}
+
+const motivo = (e: unknown) => (e instanceof Error ? e.message : String(e));
+
+function messaggio(p: Proposta, a: string[]) {
+  const righe: [string, string][] = [['Pagina', `${p.pagina} (${p.indirizzo})`]];
+  if (p.testo) righe.push(['Sezione del testo', p.sezioneTesto], ['Testo', p.testo]);
+  if (p.file.length) righe.push(['Sezione di immagini e video', p.sezioneFile], ['Immagini e video', p.file.map((f) => `${f.nome}: ${f.url}`).join('\n')]);
+  return {
+    a,
+    oggetto: `Revisione · ${p.pagina}`,
+    testo: righe.map(([k, v]) => `${k}:\n${v}`).join('\n\n'),
+    html: righe.map(([k, v]) => `<p><strong>${escapeHtml(k)}</strong><br>${escapeHtml(v).replace(/\n/g, '<br>')}</p>`).join(''),
+  };
+}
 
 export const revisioneCollegata = () => Boolean(GOOGLE_REVISIONE_URL && GOOGLE_REVISIONE_CHIAVE);
 
@@ -149,19 +191,43 @@ export async function inviaRevisione(input: {
   if (!testo && !file.length) throw new ErroreRevisione('Scrivi un testo o aggiungi un’immagine o un video');
   if (testo && !input.sezioneTesto.trim()) throw new ErroreRevisione('Scegli in che sezione va inserito il testo');
   if (file.length && !input.sezioneFile.trim()) throw new ErroreRevisione('Scegli dove vanno inseriti immagini e video');
-  await google({
-    azione: 'riga',
-    foglio: idFoglio(imp.foglio),
-    colonne: COLONNE,
-    valori: [
-      {},
-      { collegamenti: [{ nome: input.pagina, url: input.indirizzo }] },
-      { testo: testo ? input.sezioneTesto.trim() : '' },
-      { testo },
-      { testo: file.length ? input.sezioneFile.trim() : '' },
-      { collegamenti: file },
-      {},
-    ],
-  });
+  const proposta: Proposta = {
+    id: randomUUID(),
+    data: romeIso(),
+    pagina: input.pagina,
+    indirizzo: input.indirizzo,
+    sezioneTesto: testo ? input.sezioneTesto.trim() : '',
+    testo,
+    sezioneFile: file.length ? input.sezioneFile.trim() : '',
+    file: file as FileDrive[],
+    foglio: 'in corso',
+    email: '',
+  };
+  await salvaProposta(proposta);
+  const destinatari = indirizziEmail(imp.email);
+  const [riga, posta] = await Promise.allSettled([
+    google({
+      azione: 'riga',
+      foglio: idFoglio(imp.foglio),
+      colonne: COLONNE,
+      valori: [
+        {},
+        { collegamenti: [{ nome: proposta.pagina, url: proposta.indirizzo }] },
+        { testo: proposta.sezioneTesto },
+        { testo },
+        { testo: proposta.sezioneFile },
+        { collegamenti: proposta.file },
+        {},
+      ],
+    }),
+    !destinatari.length
+      ? Promise.reject(new Error('nessun destinatario nelle impostazioni'))
+      : emailConfigurata()
+        ? inviaEmail(messaggio(proposta, destinatari))
+        : Promise.reject(new Error('SMTP_URL non configurato')),
+  ]);
+  proposta.foglio = riga.status === 'fulfilled' ? 'inserita' : `non inserita: ${motivo(riga.reason)}`;
+  proposta.email = posta.status === 'fulfilled' ? `inviata a ${destinatari.join(', ')}` : `non inviata: ${motivo(posta.reason)}`;
+  await salvaProposta(proposta);
   for (const id of input.caricamenti) caricamenti.delete(id);
 }

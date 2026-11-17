@@ -1,7 +1,8 @@
 ---
 import { actions } from 'astro:actions';
 import type { Impostazioni } from '../../lib/impostazioni';
-import { revisioneCollegata } from '../../lib/revisione';
+import { leggiProposte, revisioneCollegata } from '../../lib/revisione';
+import { emailConfigurata } from '../../lib/email';
 import TemaInterruttore from '../TemaInterruttore.astro';
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 
 const { impostazioni, demo } = Astro.props;
 const collegata = revisioneCollegata();
+const proposte = (await leggiProposte()).length;
 const testoDemo = {
   eventi: 'Eventi di prova per vedere come appaiono qui e nel calendario del sito; si tolgono con un clic.',
   insegnanti: 'Insegnanti di prova per vedere come appaiono qui e in Chi siamo; si tolgono con un clic.',
@@ -73,6 +75,16 @@ const testoDemo = {
                             <input type="url" id="impCartella" name="cartella" value={impostazioni.cartella} placeholder="https://drive.google.com/drive/folders/…" autocomplete="off" spellcheck="false">
                             <small class="nota">Per immagini e video, con una sottocartella per pagina.</small>
                         </div>
+                        <div class="campo imp-campo-largo">
+                            <label for="impEmail">Email che ricevono ogni proposta</label>
+                            <input type="text" id="impEmail" name="email" value={impostazioni.email} placeholder="nome@esempio.it, altro@esempio.it" autocomplete="off" spellcheck="false" inputmode="email">
+                            <small class="nota">
+                                Copia di sicurezza: arriva anche se Google non risponde.{!emailConfigurata() && <> Invio da configurare sul server: <code>SMTP_URL</code>.</>}
+                            </small>
+                        </div>
+                        <p class="imp-proposte nota">
+                            Ogni proposta resta salvata anche sul sito: {proposte === 1 ? '1 proposta' : `${proposte} proposte`}{proposte > 0 && <> · <a href="/dashboard/revisioni.csv" download>scarica l'elenco (CSV)</a></>}.
+                        </p>
                         {!collegata && (
                             <p class="imp-avviso">
                                 <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>

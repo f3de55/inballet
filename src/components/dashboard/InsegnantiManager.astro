@@ -9,14 +9,10 @@ const n = insegnanti.length;
 const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2).join('').toUpperCase();
 ---
 
-<div class="pagina-head">
-    <div>
-        <h1>Insegnanti</h1>
-    </div>
-    <div class="pagina-azioni">
-        <a href="/chi-siamo#insegnanti" target="_blank" rel="noopener" class="btn btn-secondary btn-icona" aria-label="Vedi gli insegnanti sul sito (si apre in una nuova scheda)" title="Vedi gli insegnanti sul sito"><i class="fas fa-eye" aria-hidden="true"></i></a>
-        <button type="button" class="btn btn-primary" data-nuovo-insegnante><i class="fas fa-plus" aria-hidden="true"></i> Nuovo insegnante</button>
-    </div>
+<h1 class="sr-only">Insegnanti</h1>
+<div class="pagina-azioni">
+    <button type="button" class="btn btn-primary" data-nuovo-insegnante><i class="fas fa-plus" aria-hidden="true"></i> Nuovo insegnante</button>
+    <a href="/chi-siamo#insegnanti" target="_blank" rel="noopener" class="btn btn-secondary btn-icona" aria-label="Vedi gli insegnanti sul sito (si apre in una nuova scheda)" title="Vedi gli insegnanti sul sito"><i class="fas fa-eye" aria-hidden="true"></i></a>
 </div>
 
 <h2 class="ev-gruppo-titolo doc-elenco-titolo">Insegnanti <span>{n}</span></h2>

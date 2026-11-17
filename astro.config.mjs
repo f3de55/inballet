@@ -57,6 +57,8 @@ export default defineConfig({
       GOOGLE_PLACES_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       GOOGLE_REVISIONE_URL: envField.string({ context: 'server', access: 'secret', optional: true }),
       GOOGLE_REVISIONE_CHIAVE: envField.string({ context: 'server', access: 'secret', optional: true }),
+      SMTP_URL: envField.string({ context: 'server', access: 'secret', optional: true }),
+      SMTP_MITTENTE: envField.string({ context: 'server', access: 'secret', optional: true }),
       PUBLIC_GOOGLE_PLACE_ID: envField.string({ context: 'client', access: 'public', default: 'ChIJMTLpHKeUhkcR23yEdflvQRQ' }),
     },
   },

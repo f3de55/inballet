@@ -20,6 +20,7 @@ export const paths = {
   fotoInsegnanti: path.join(dataDir, 'uploads', 'insegnanti'),
   google: path.join(dataDir, 'google.json'),
   impostazioni: path.join(dataDir, 'impostazioni.json'),
+  revisioni: path.join(dataDir, 'revisioni.json'),
 };
 
 export async function ensureDir(dir: string): Promise<void> {

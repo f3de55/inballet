@@ -165,7 +165,7 @@
   font-size: var(--icona-in-testo);
   line-height: 1;
   text-align: center;
-  color: var(--primary-blue);
+  color: var(--accento);
 }
 
 .info-valore {
@@ -232,12 +232,9 @@ orari-segreteria {
   background: none;
 }
 
-.orari-status.aperto .orari-indicatore {
-  color: var(--primary-blue);
-}
-
+.orari-status.aperto .orari-indicatore,
 .orari-status.chiuso .orari-indicatore {
-  color: var(--esito-errore);
+  color: var(--accento);
 }
 
 .orari-grid {

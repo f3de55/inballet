@@ -604,9 +604,9 @@ html.menu-aperto {
 
 .mobile-menu-decoro {
   flex-shrink: 0;
-  width: min(100%, 17rem);
-  margin: 2.75rem auto 0.5rem;
-  opacity: 0.32;
+  width: min(100%, 11rem);
+  margin: 2rem auto 0.5rem;
+  opacity: 0.28;
   pointer-events: none;
 }
 

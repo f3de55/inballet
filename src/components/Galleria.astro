@@ -15,22 +15,32 @@ const {
   testo = 'Lezioni in sala, <strong>spettacoli in teatro</strong> e dietro le quinte.',
 } = Astro.props;
 
-const alts = [
-  'Allieve si preparano dietro le quinte prima dello spettacolo',
-  'Corpo di ballo sul palco illuminato di blu',
-  'Coreografia di danza contemporanea con costumi bianchi',
-  "Lezione di danza contemporanea in sala con l'insegnante",
-  'Allieve durante il riscaldamento a terra in sala',
-  'Spettacolo di fine anno con tutto il corpo di ballo',
-  'Gruppo di allievi InBallet in sala prove',
-  "Abbraccio tra insegnante e allieva al termine della lezione",
-  'Allieve in allungamento sul parquet della sala',
-  'Coreografia sul palco con luci blu ed elementi scenici',
+const foto = [
+  ['spettacolo-corpo-di-ballo-blu', 'Corpo di ballo in bianco sul palco illuminato di blu'],
+  ['sala-punte-piccola-allieva', 'Una piccola allieva guarda le scarpette da punta di una ballerina in sala'],
+  ['spettacolo-contemporaneo-magenta', 'Coreografia contemporanea di gruppo su fondale magenta'],
+  ['quinte-trucco', 'Due allieve si truccano dietro le quinte prima di entrare in scena'],
+  ['spettacolo-classico-rosso', 'Tre ballerine in blu si tengono per mano sul fondale rosso'],
+  ['sala-gruppo-bianco-nero', 'Gruppo di danzatori in posa in sala, in bianco e nero'],
+  ['spettacolo-assolo-occhio-di-bue', "Assolo di danza contemporanea nella luce dell'occhio di bue"],
+  ['spettacolo-bambine-stupore', 'Piccole allieve in abito lilla sul palco, con le mani sul viso per lo stupore'],
+  ['spettacolo-hip-hop', 'Crew hip hop sul palco con le luci blu'],
+  ['sala-sbarra-punte', 'Allieve sulle punte alla sbarra, in bianco e nero'],
+  ['spettacolo-tutu-salto', 'Ballerina in tutù lilla in salto sul palco buio'],
+  ['sala-lezione-classica', "L'insegnante guida la lezione di danza classica con le allieve in body lilla"],
+  ['spettacolo-fili-rossi', 'Coreografia di gruppo intrecciata a fili rossi sul palco'],
+  ['quinte-sipario', 'Sguardo curioso da sotto il sipario rosso prima dello spettacolo'],
+  ['spettacolo-sculture-argento', 'Danzatori sul palco blu con sculture argentate'],
+  ['sala-hip-hop-bambini', 'Gruppo hip hop di bambini in posa in sala'],
+  ['spettacolo-abiti-blu', 'Danzatrici in abito blu attraversano il palco'],
+  ['quinte-camerino', 'Ballerine si preparano davanti allo specchio del camerino'],
+  ['spettacolo-saluto-finale', 'Tutta la scuola sul palco per il saluto finale'],
+  ['esterni-rocce', 'Gruppo di danzatrici in posa tra le rocce'],
 ];
 const gallery = await Promise.all(
-  alts.map(async (alt, i) => {
-    const file = `gallery-${i + 1}.jpg`;
-    return { file, alt, full: await webp(file, 1280) };
+  foto.map(async ([nome, alt]) => {
+    const file = `galleria/${nome}.jpg`;
+    return { file, alt, full: await webp(file, 1920) };
   }),
 );
 ---
@@ -45,13 +55,13 @@ const gallery = await Promise.all(
     </div>
 
     <div class="carosello-wrap carosello-wrap--soft">
-    <div class="carosello gallery-infinite" data-giro="40">
+    <div class="carosello gallery-infinite" data-giro="135">
         <div class="carosello-track gallery-track" id="galleryTrack">
             {[0, 1].map((set) =>
                 gallery.map((img, i) => (
                     <div class="gallery-item" aria-hidden={set === 1 ? 'true' : undefined}>
                         <button type="button" class="gallery-apri" data-index={i} data-full={img.full} data-alt={img.alt} aria-label={`Ingrandisci: ${img.alt}`} tabindex={set === 1 ? -1 : undefined}>
-                            <Img src={img.file} alt={set === 0 ? img.alt : ''} width="300" height="420" loading="eager" decoding="async" draggable="false" rapporto={1.4} widths={[300, 450, 600]} sizes="(max-width: 480px) 215px, (max-width: 768px) 245px, (max-width: 1024px) 275px, 300px" />
+                            <Img src={img.file} alt={set === 0 ? img.alt : ''} width="510" height="340" loading="lazy" decoding="async" draggable="false" rapporto={2 / 3} widths={[420, 640, 1020]} sizes="(max-width: 768px) min(78vw, 420px), (max-width: 1024px) 450px, 510px" />
                             <span class="gallery-zoom-icon" aria-hidden="true"><i class="fas fa-expand"></i></span>
                         </button>
                     </div>

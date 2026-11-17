@@ -206,7 +206,6 @@
 }
 
 .link-cta::after,
-.event-banner-link::after,
 .read-more-btn::after {
   content: '';
   position: absolute;
@@ -226,12 +225,7 @@
   inset-inline-end: calc(var(--icona-link) + var(--link-gap));
 }
 
-.event-banner-link::after {
-  inset-inline-end: calc(var(--icona-link) + var(--link-gap));
-}
-
-.link-cta i,
-.event-banner-link i {
+.link-cta i {
   font-size: var(--icona-link);
   color: inherit;
   transition: transform var(--durata-pannello) var(--curva);
@@ -245,14 +239,12 @@ a:is(:hover, :focus-visible) .link-cta {
 
 .link-cta:is(:hover, :focus-visible)::after,
 a:is(:hover, :focus-visible) .link-cta::after,
-.event-banner-link:is(:hover, :focus-visible)::after,
 .read-more-btn:is(:hover, :focus-visible)::after {
   opacity: 1;
 }
 
 .link-cta:is(:hover, :focus-visible) i,
-a:is(:hover, :focus-visible) .link-cta i,
-.event-banner-link:is(:hover, :focus-visible) i {
+a:is(:hover, :focus-visible) .link-cta i {
   transform: translateX(2px);
 }
 

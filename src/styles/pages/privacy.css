@@ -7,11 +7,6 @@
   background: var(--bg-soft);
 }
 
-.privacy-testo {
-  max-width: 48rem;
-  margin: 0 auto;
-}
-
 .privacy-testo .titolo-sezione {
   margin-bottom: 1.25rem;
 }

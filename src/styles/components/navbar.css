@@ -429,9 +429,11 @@ html.menu-aperto {
 }
 
 .mobile-menu-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.5rem;
+  flex-shrink: 0;
   min-height: var(--nav-h);
   margin-bottom: 1rem;
   --lc: var(--velo-chiaro);
@@ -454,9 +456,7 @@ html.menu-aperto {
 }
 
 .mobile-menu-close {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  justify-self: end;
 }
 
 .mobile-nav-item {

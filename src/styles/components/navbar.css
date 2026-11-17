@@ -628,7 +628,7 @@ html.menu-aperto {
   min-height: 0;
   max-height: 18rem;
   background: var(--primary-blue);
-  mask: url('../../assets/images/decorazioni/menu-velo.webp') center / 100% 100% no-repeat;
+  mask: url('../../assets/images/decorazioni/menu-sbarra.webp') center / 100% auto no-repeat;
 }
 
 .mobile-menu:has(.mobile-submenu.active) .mobile-menu-decoro {

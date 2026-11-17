@@ -8,20 +8,6 @@
   background: var(--bg-soft);
 }
 
-@media (max-width: 900px) {
-  .cura-lista {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2.5rem 2rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .cura-lista {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
-  }
-}
-
 .eventi-section [hidden] {
   display: none !important;
 }

@@ -213,27 +213,6 @@ export const passi: Passo[] = [
   apertura('sito-oggi', 'Il sito di oggi', 'Cosa non funziona nel sito attuale.'),
   {
     capitolo: 'Il sito di oggi',
-    titolo: 'Tutto in bianco e nero',
-    testo: 'La pagina Modern, come la homepage e altri 6 corsi: solo foto in bianco e nero. Una scuola di danza vive di colore.',
-    evidenzia: ['colore'],
-    scena: oggi('/modern.html', '#features2-1c .card-img'),
-  },
-  {
-    capitolo: 'Il sito di oggi',
-    titolo: 'Nessun pulsante',
-    testo: 'La homepage finisce senza un «Contattaci» o un «Prenota una prova», e nei corsi mancano orari, giorni e costi.',
-    evidenzia: ['orari, giorni e costi'],
-    scena: oggi('', '#clients01-7m, #footer1-6i'),
-  },
-  {
-    capitolo: 'Il sito di oggi',
-    titolo: 'Tutti nello stesso paragrafo',
-    testo: 'Famiglie, adulti, professionisti e scuole cercano cose diverse, ma non c’è una strada per ciascuno.',
-    evidenzia: ['una strada per ciascuno'],
-    scena: oggi('', '#header9-7b .mbr-text', { frase: ['La scuola', 'esigenze professionali.'] }),
-  },
-  {
-    capitolo: 'Il sito di oggi',
     titolo: '9 tendine, 43 voci',
     testo: '«Danza integrativa», «Atelier», «Altri servizi» non orientano, e 8 voci principali non hanno una pagina.',
     evidenzia: ['8 voci principali'],
@@ -242,8 +221,8 @@ export const passi: Passo[] = [
   {
     capitolo: 'Il sito di oggi',
     titolo: 'Un paragrafo di 286 parole',
-    testo: 'Racconta la filosofia, ma non dice quale corso, dove, quando e quanto costa.',
-    evidenzia: ['quanto costa'],
+    testo: 'Famiglie, adulti e professionisti tutti nello stesso paragrafo, sopra una foto che lo rende illeggibile, e senza dire quale corso, dove, quando e quanto costa.',
+    evidenzia: ['stesso paragrafo', 'illeggibile'],
     scena: oggi('', '#header9-7b .mbr-text'),
   },
   {
@@ -255,17 +234,24 @@ export const passi: Passo[] = [
   },
   {
     capitolo: 'Il sito di oggi',
+    titolo: 'Foto non valorizzate',
+    testo: 'Avviamento alla danza, per i più piccoli: tre foto piccole, in fondo alla pagina e in bianco e nero, come nella homepage e in altri corsi. Una scuola di danza vive di colore.',
+    evidenzia: ['tre foto piccole', 'bianco e nero'],
+    scena: oggi('/avviamento_alla_danza.html', '#features2-l .card-img'),
+  },
+  {
+    capitolo: 'Il sito di oggi',
+    titolo: 'Nessun pulsante',
+    testo: 'La homepage finisce senza un «Contattaci» o un «Prenota una prova», e nei corsi mancano orari, giorni e costi.',
+    evidenzia: ['orari, giorni e costi'],
+    scena: oggi('', '#clients01-7m, #footer1-6i'),
+  },
+  {
+    capitolo: 'Il sito di oggi',
     titolo: 'Dal telefono si legge male',
     testo: 'Il nome finisce sotto il menu, poi più di due schermate di solo testo.',
     evidenzia: ['sotto il menu'],
     scena: oggi('', '#header9-7b h1', { dispositivo: 'telefono', fermo: true }),
-  },
-  {
-    capitolo: 'Il sito di oggi',
-    titolo: 'Foto non valorizzate',
-    testo: 'Avviamento alla danza, per i più piccoli: tre foto piccole, in fondo, in bianco e nero.',
-    evidenzia: ['tre foto piccole'],
-    scena: oggi('/avviamento_alla_danza.html', '#features2-l .card-img'),
   },
   {
     capitolo: 'Il sito di oggi',
@@ -275,6 +261,13 @@ export const passi: Passo[] = [
     scena: oggi('', '#clients01-7m'),
   },
   apertura('nuovo-sito', 'Il nuovo sito', 'Lo stesso sito, pensato per chi cerca una scuola di danza.'),
+  {
+    capitolo: 'Il nuovo sito',
+    titolo: '4 voci al posto di 9 tendine',
+    testo: 'Corsi, La Scuola, Progetti, Formazione. Contattaci sempre visibile.',
+    evidenzia: ['Contattaci'],
+    scena: nuovo('/', '.nav-menu'),
+  },
   {
     capitolo: 'Il nuovo sito',
     titolo: 'Si capisce subito',
@@ -288,13 +281,6 @@ export const passi: Passo[] = [
     testo: 'Una fascia su ogni pagina annuncia il prossimo appuntamento e si aggiorna da sola.',
     evidenzia: ['si aggiorna da sola'],
     scena: nuovo('/', '.event-banner'),
-  },
-  {
-    capitolo: 'Il nuovo sito',
-    titolo: '4 voci al posto di 9 tendine',
-    testo: 'Corsi, La Scuola, Progetti, Formazione. Contattaci sempre visibile.',
-    evidenzia: ['Contattaci'],
-    scena: nuovo('/', '.nav-menu'),
   },
   {
     capitolo: 'Il nuovo sito',

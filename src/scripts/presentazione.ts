@@ -42,6 +42,7 @@ const TELEFONO_SOTTO = 34;
 const ETICHETTA = 64;
 const ARIA_SOPRA = 48;
 const ASSESTAMENTO = 250;
+const ATTESA_ANIMAZIONI = 2500;
 const ATTESA_MASSIMA = 15000;
 const CORNICI = 4;
 const CONTROLLO_FOCUS = 250;
@@ -293,6 +294,14 @@ function porta(s: Schermo, doc: Document) {
   vista.scrollTo({ top: vista.scrollY + r.top - sopra, behavior: 'instant' });
 }
 
+function animazioniFinite(doc: Document) {
+  const inCorso = doc.getAnimations().filter((a) => {
+    const fine = a.effect?.getComputedTiming().endTime;
+    return a.playState === 'running' && a.timeline === doc.timeline && typeof fine === 'number' && Number.isFinite(fine);
+  });
+  return Promise.race([Promise.all(inCorso.map((a) => a.finished.catch(() => undefined))), new Promise((r) => setTimeout(r, ATTESA_ANIMAZIONI))]);
+}
+
 function evidenzia(s: Schermo, attesa: number) {
   s.faro.hidden = true;
   s.bersaglio = undefined;
@@ -312,11 +321,21 @@ function evidenzia(s: Schermo, attesa: number) {
     }
     s.bersaglio = trovato;
     porta(s, doc);
-    const finale = () => {
-      s.bersaglio = bersaglio(doc, s) ?? trovato;
-      porta(s, doc);
-      accendi(s);
-    };
+    const selettore = s.selettore;
+    const finale = () =>
+      animazioniFinite(doc).then(() => {
+        if (s.selettore !== selettore || documento(s) !== doc) return;
+        s.bersaglio = bersaglio(doc, s) ?? trovato;
+        porta(s, doc);
+        accendi(s);
+        const ricalcola = () => {
+          if (s.selettore !== selettore || documento(s) !== doc || s.faro.hidden) return;
+          s.bersaglio = bersaglio(doc, s) ?? s.bersaglio;
+          posiziona(s);
+        };
+        doc.addEventListener('animationend', ricalcola);
+        setTimeout(() => doc.removeEventListener('animationend', ricalcola), ATTESA_ANIMAZIONI);
+      });
     if (attesa) s.cerca = window.setTimeout(finale, attesa);
     else finale();
   };

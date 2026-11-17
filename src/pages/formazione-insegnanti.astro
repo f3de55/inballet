@@ -92,7 +92,7 @@ const enti = [
                                 <img src={e.logo.src} width={e.logo.width} height={e.logo.height} alt={`Logo ${e.sigla}`} data-sigla={e.sigla} loading="lazy" decoding="async">
                                 {e.logoScuro && <img class="ente-logo-notte" src={e.logoScuro.src} width={e.logoScuro.width} height={e.logoScuro.height} alt={`Logo ${e.sigla}`} data-sigla={e.sigla} loading="lazy" decoding="async">}
                             </a>
-                            <h3 class="voce-titolo">{e.nome}</h3>
+                            <p><strong>{e.nome}</strong></p>
                         </li>
                     ))}
                 </ul>

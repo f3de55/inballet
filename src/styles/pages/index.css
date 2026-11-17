@@ -928,6 +928,29 @@ recensioni-google {
     display: block;
     margin-top: var(--spazio-intestazione);
   }
+
+  .oltre-mobile .corsi-stile-elenco {
+    grid-template-rows: repeat(4, auto);
+  }
+
+  .oltre-mobile :is(.corsi-scheda, .corsi-scheda-link) {
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 0.5rem;
+  }
+
+  .oltre-mobile .corsi-scheda-visual {
+    margin-bottom: 0.5rem;
+  }
+
+  .oltre-mobile .corsi-scheda-corpo {
+    display: contents;
+  }
+
+  .oltre-mobile .corsi-scheda-fondo {
+    align-items: flex-start;
+  }
 }
 
 @media (max-width: 1024px) {

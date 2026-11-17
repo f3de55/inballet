@@ -92,4 +92,20 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
     ))}
 
     <a href="/contatti" class="btn-primary mobile-cta" aria-current={attiva('/contatti') ? 'page' : undefined}><i class="far fa-comments" aria-hidden="true"></i> Contattaci</a>
+    <div class="mobile-menu-decoro" aria-hidden="true">
+        <svg viewBox="0 0 432 320" fill="none" focusable="false">
+            <g class="mobile-menu-nastro mobile-menu-nastro--velo">
+                <path d="M-54 237C26 291 166 285 250 217S358 66 300 57C244 48 229 139 285 177S413 179 482 102" />
+            </g>
+            <g class="mobile-menu-nastro mobile-menu-nastro--principale">
+                <path d="M-54 225C28 278 161 272 244 205S347 58 293 51C242 44 229 127 282 165S408 170 480 94" />
+                <path d="M-51 244C37 295 174 279 255 212S361 63 303 57C247 51 239 142 292 178S420 176 484 106" />
+            </g>
+            <g class="mobile-menu-nastro mobile-menu-nastro--filo">
+                <path d="M-47 204C41 252 155 247 230 185S322 47 282 43C237 38 214 112 265 152S387 167 469 79" />
+                <path d="M-49 266C47 316 189 292 271 225S379 80 321 72C267 64 257 154 307 190S438 183 491 130" />
+                <path d="M-33 288C67 331 205 302 287 237S393 98 341 87C291 77 272 162 322 201S452 195 499 151" />
+            </g>
+        </svg>
+    </div>
 </div>

@@ -379,6 +379,7 @@ html.menu-aperto {
 }
 
 .mobile-menu {
+  --menu-inset: 2rem;
   position: fixed;
   top: var(--banner-height, 0px);
   right: 0;
@@ -386,7 +387,7 @@ html.menu-aperto {
   height: calc(100dvh - var(--banner-height, 0px));
   display: flex;
   flex-direction: column;
-  padding: 0 2rem 2.5rem;
+  padding: 0 var(--menu-inset) 2.5rem;
   background: var(--dark-navy);
   box-shadow: -20px 0 60px rgb(var(--nero-rgb) / 0.35);
   z-index: 1000;
@@ -429,6 +430,7 @@ html.menu-aperto {
 }
 
 .mobile-menu-top {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
@@ -436,6 +438,19 @@ html.menu-aperto {
   flex-shrink: 0;
   min-height: var(--nav-h);
   margin-bottom: 1rem;
+}
+
+.mobile-menu-top::after {
+  content: '';
+  position: absolute;
+  inset-inline: calc(var(--menu-inset) * -1);
+  bottom: 0;
+  height: var(--link-segno-h);
+  border-radius: var(--radius-pill);
+  background: var(--velo-chiaro);
+  -webkit-mask: var(--link-segno) center / 100% 100% no-repeat;
+  mask: var(--link-segno) center / 100% 100% no-repeat;
+  pointer-events: none;
 }
 
 .mobile-menu-top .eyebrow {
@@ -578,7 +593,8 @@ html.menu-aperto {
 
 @media (max-width: 480px) {
   .mobile-menu {
-    padding: 0 1.5rem 2rem;
+    --menu-inset: 1.5rem;
+    padding-bottom: 2rem;
   }
 }
 

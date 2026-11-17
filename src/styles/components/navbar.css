@@ -449,17 +449,19 @@ html.menu-aperto {
   border-radius: var(--radius-pill);
   -webkit-mask: var(--link-segno) center / 100% 100% no-repeat;
   mask: var(--link-segno) center / 100% 100% no-repeat;
+  filter: blur(0.35px);
+  opacity: 0.8;
   pointer-events: none;
 }
 
 .mobile-menu-top::before {
   bottom: 0;
-  background: var(--velo-chiaro);
+  background: linear-gradient(90deg, transparent, var(--velo-chiaro) 25% 75%, transparent);
 }
 
 .mobile-menu-top::after {
   bottom: calc(var(--link-segno-h) * -1);
-  background: var(--primary-blue);
+  background: linear-gradient(90deg, transparent, rgb(var(--blu-rgb) / 0.35) 25% 75%, transparent);
 }
 
 .mobile-menu-top .eyebrow {

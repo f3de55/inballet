@@ -155,7 +155,7 @@ export const icons = {
   },
   'location-dot': {
     outline:
-      '<path d="M12 18.5C10 18.5 2.5 13.5 2.5 9a9.5 7.5 0 0 1 19 0c0 4.5-7.5 9.5-9.5 9.5Z"/><rect x="9.25" y="6.25" width="5.5" height="5.5" rx="1.75" transform="rotate(45 12 9)"/><path d="M7 21c2.5 1.3 7.5 1.3 10 0"/>',
+      '<path d="M20 9.5c0 4.9-5.9 10.7-7.3 11.9a1 1 0 0 1-1.4 0C9.9 20.2 4 14.4 4 9.5a8 8 0 0 1 16 0Z"/><circle cx="12" cy="9.5" r="3"/>',
     accent: '',
     monochrome: true,
   },

@@ -154,8 +154,7 @@ export const icons = {
     accent: '<g opacity=".32"><circle cx="18" cy="5" r="2.5"/></g>',
   },
   'location-dot': {
-    outline:
-      '<path d="M20 9.5c0 4.9-5.9 10.7-7.3 11.9a1 1 0 0 1-1.4 0C9.9 20.2 4 14.4 4 9.5a8 8 0 0 1 16 0Z"/><circle cx="12" cy="9.5" r="3"/>',
+    outline: '<path d="M20 9.5c0 4.9-5.9 10.7-7.3 11.9a1 1 0 0 1-1.4 0C9.9 20.2 4 14.4 4 9.5a8 8 0 0 1 16 0Z"/><circle cx="12" cy="9.5" r="3"/>',
     accent: '',
     monochrome: true,
   },

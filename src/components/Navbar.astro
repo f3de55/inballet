@@ -92,16 +92,5 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
     ))}
 
     <a href="/contatti" class="btn-primary mobile-cta" aria-current={attiva('/contatti') ? 'page' : undefined}><i class="far fa-comments" aria-hidden="true"></i> Contattaci</a>
-    <div class="mobile-menu-decoro" aria-hidden="true">
-        <svg class="mobile-menu-onda" viewBox="0 0 180 232" preserveAspectRatio="none" fill="none" focusable="false">
-            <path d="M-12 151C42 137 78 173 122 155C145 145 161 120 180 120" />
-        </svg>
-        <svg class="mobile-menu-figura" viewBox="180 0 120 232" fill="none" focusable="false">
-            <path d="M180 120C187 120 192 114 198 112C210 108 218 98 230 91L238 85C229 77 232 62 243 60C254 58 260 72 253 81C251 84 247 86 245 87C257 80 268 57 272 36C274 28 280 25 282 30C284 35 279 41 277 48L266 89C263 100 253 112 250 122C255 133 267 144 281 148C261 158 227 159 207 147C220 143 230 134 234 122C238 135 243 150 247 163L242 205C241 210 244 212 247 207L259 171C262 160 258 151 247 151C234 150 229 160 220 170L193 189C186 194 182 191 189 186L214 162C218 157 222 151 225 145C244 151 263 153 281 148C287 146 294 148 300 148" />
-            <path d="M230 91C233 101 236 111 234 122" />
-        </svg>
-        <svg class="mobile-menu-onda" viewBox="300 0 180 232" preserveAspectRatio="none" fill="none" focusable="false">
-            <path d="M300 148C326 148 338 168 380 154S443 134 492 150" />
-        </svg>
-    </div>
+    <div class="mobile-menu-decoro" aria-hidden="true"></div>
 </div>

@@ -161,7 +161,7 @@ Framed editorial photos live in `src/assets/images/percorsi/`. Course `introImag
 
 ### UI system (use it, don't invent new styles)
 
-The mobile menu never scrolls with all accordions closed: its full-width decoration below «Contattaci» flexes into the remaining height, with compact spacing on short screens. The decoration is an unfilled, minimal dancer contour continuously joined to the left and right waves, in low-opacity brand blue. The dancer preserves its proportions while the side waves stretch to the drawer edges; all paths keep the same stroke thickness. Opening an accordion enables vertical scrolling and gives the decoration its own non-collapsing height; closing the last accordion restores the non-scrolling layout. Keep every navigation control at least 44px tall.
+The mobile menu never scrolls with all accordions closed: its full-width decoration below «Contattaci» flexes into the remaining height, with compact spacing on short screens. The decoration uses the transparent, outline-only `decorazioni/menu-ballerina.webp` as a CSS alpha mask in low-opacity brand blue. The two side lines connect only to the dancer's hands, never to her skirt, hips or legs. Keep the illustration proportional, empty inside, with no extra ornaments. Opening an accordion enables vertical scrolling and gives the decoration its own non-collapsing height; closing the last accordion restores the non-scrolling layout. Keep every navigation control at least 44px tall.
 
 ### CSS structure (`src/styles/`)
 

@@ -18,7 +18,7 @@
   --esito-avviso: #995b00;
   --esito-errore: #c0392b;
   --stelle: #f5b301;
-  --revisione: #f06000;
+  --revisione: var(--primary-blue-dark);
   --sfondo: var(--white);
   --superficie: var(--white);
   --testo-forte: var(--dark-navy);

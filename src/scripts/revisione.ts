@@ -31,14 +31,14 @@ const campo = (etichetta: string, controllo: HTMLElement) => {
   return div;
 };
 
-function dove(prefisso: string, etichetta: string, esempio: string) {
+function dove(prefisso: string) {
   const sezione = crea('select', { id: `${prefisso}-sezione` });
   const punto = crea('input', {
     type: 'text',
     id: `${prefisso}-punto`,
     maxlength: '200',
     autocomplete: 'off',
-    placeholder: esempio,
+    placeholder: 'Facoltativo',
   });
   const riempi = () => {
     sezione.replaceChildren(
@@ -54,34 +54,31 @@ function dove(prefisso: string, etichetta: string, esempio: string) {
   };
   const manca = () => !sezione.value || (sezione.value === ALTRO && !punto.value.trim());
   const blocco = crea('div', { class: 'revisione-dove' });
-  blocco.append(campo(etichetta, sezione), campo('Punto preciso (facoltativo)', punto));
+  blocco.append(campo('Sezione', sezione), campo('Punto preciso', punto));
   return { blocco, sezione, punto, riempi, valore, manca };
 }
 
 const cornice = crea('div', { class: 'revisione-cornice', 'aria-hidden': 'true' });
 const apri = crea('button', { type: 'button', class: 'revisione-apri' });
-apri.append(icona('fa-pen'), 'Proponi un testo');
+apri.append(icona('fa-pen'), 'Revisione');
 const avviso = crea('div', { class: 'revisione-avviso', role: 'status' });
 
-const dialog = crea('dialog', { class: 'dialogo revisione-dialog', tabindex: '-1', 'aria-labelledby': 'revisione-titolo' });
+const dialog = crea('dialog', { class: 'dialogo revisione-dialog', tabindex: '-1' });
 const barra = crea('div', { class: 'dialogo-barra' });
 const chiudi = crea('button', { type: 'button', class: 'btn-icon btn-icon--chiudi', 'aria-label': 'Chiudi' });
 chiudi.append(icona('fa-times'));
 barra.append(chiudi);
 
 const form = crea('form', { class: 'dialogo-corpo revisione-corpo', novalidate: '' });
-const testata = crea('div', { class: 'revisione-testata' });
-const etichettaPagina = crea('p', { class: 'eyebrow' });
-testata.append(etichettaPagina, crea('h2', { id: 'revisione-titolo' }, 'Proponi un testo'));
 
 const testo = crea('textarea', { id: 'revisione-testo', rows: '8', maxlength: String(MAX_TESTO_REVISIONE) });
-const doveTesto = dove('revisione-testo', 'In che sezione va inserito', 'Es. dopo il secondo paragrafo');
+const doveTesto = dove('revisione-testo');
 const gruppoTesto = crea('fieldset', { class: 'revisione-gruppo' });
 gruppoTesto.append(crea('legend', { class: 'titoletto' }, 'Testo'), campo('Nuovo testo', testo), doveTesto.blocco);
 
 const input = crea('input', { type: 'file', id: 'revisione-file', accept: FILE_REVISIONE, multiple: '' });
 const elenco = crea('ul', { class: 'revisione-elenco', 'aria-label': 'File scelti' });
-const doveFile = dove('revisione-file', 'Dove va inserito', 'Es. al posto della foto grande');
+const doveFile = dove('revisione-file');
 const scegli = crea('label', { for: input.id, class: 'btn-primary revisione-scegli' });
 scegli.append(icona('fa-cloud-upload-alt'), 'Scegli foto o video');
 const campoFile = crea('div', { class: 'revisione-campo revisione-file' });
@@ -97,7 +94,7 @@ const invia = crea('button', { type: 'submit', class: 'btn-primary' });
 const etichettaInvia = () => invia.replaceChildren(icona('fa-paper-plane'), 'Invia');
 etichettaInvia();
 
-form.append(testata, gruppi, esito, invia);
+form.append(gruppi, esito, invia);
 dialog.append(barra, form);
 document.body.append(cornice, apri, avviso, dialog);
 document.documentElement.classList.add('revisione-attiva');
@@ -161,7 +158,7 @@ input.addEventListener('change', () => {
 });
 
 const mostraDialog = () => {
-  etichettaPagina.textContent = `Modalità revisione · ${nomePagina()}`;
+  dialog.setAttribute('aria-label', `Revisione · ${nomePagina()}`);
   doveTesto.riempi();
   doveFile.riempi();
   errore('');

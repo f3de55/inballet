@@ -462,13 +462,13 @@ export const passi: Passo[] = [
   {
     capitolo: 'Prossimi passi',
     titolo: 'Testi e foto, da parte vostra',
-    testo: 'Accendiamo la modalità revisione nelle Impostazioni: su ogni pagina, con Proponi un testo, ci mandate testi, foto e video, sezione per sezione.',
-    evidenzia: ['modalità revisione', 'Proponi un testo'],
+    testo: 'Accendiamo la modalità revisione nelle Impostazioni: su ogni pagina, con Revisione, ci mandate testi, foto e video, sezione per sezione.',
+    evidenzia: ['modalità revisione', 'Revisione'],
     scena: {
       tipo: 'siti',
       schermi: [
         { nome: 'Impostazioni', url: '/dashboard?impostazioni=revisione', dispositivo: 'pc', evidenzia: '#modalImpostazioni .modal-box', nostro: true },
-        { nome: 'Proponi un testo', url: '/chi-siamo?revisione=apri', dispositivo: 'pc', evidenzia: '.revisione-dialog', nostro: true },
+        { nome: 'Revisione', url: '/chi-siamo?revisione=apri', dispositivo: 'pc', evidenzia: '.revisione-dialog', nostro: true },
       ],
     },
   },

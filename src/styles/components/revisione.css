@@ -35,7 +35,7 @@
   letter-spacing: var(--ui-ls);
   text-transform: uppercase;
   white-space: nowrap;
-  color: var(--dark-navy);
+  color: var(--white);
   cursor: pointer;
   transform: translateX(-50%);
   transition: background-color var(--durata-breve) ease;
@@ -53,12 +53,12 @@
 
 .revisione-apri::before {
   left: calc(var(--radius-md) * -1);
-  background: radial-gradient(circle at 0 0, transparent calc(var(--radius-md) - 0.5px), var(--linguetta-sfondo) var(--radius-md));
+  background: radial-gradient(circle at 0 0, transparent calc(var(--radius-md) - 0.5px), var(--revisione) var(--radius-md));
 }
 
 .revisione-apri::after {
   right: calc(var(--radius-md) * -1);
-  background: radial-gradient(circle at 100% 0, transparent calc(var(--radius-md) - 0.5px), var(--linguetta-sfondo) var(--radius-md));
+  background: radial-gradient(circle at 100% 0, transparent calc(var(--radius-md) - 0.5px), var(--revisione) var(--radius-md));
 }
 
 .revisione-apri i {
@@ -66,16 +66,12 @@
 }
 
 .revisione-apri:hover {
-  --linguetta-sfondo: color-mix(in srgb, var(--revisione) 86%, rgb(var(--nero-rgb)));
-}
-
-.revisione-apri:active i {
-  transform: scale(0.92);
+  --linguetta-sfondo: color-mix(in srgb, var(--revisione) 78%, rgb(var(--nero-rgb)));
 }
 
 .revisione-apri:focus-visible {
-  outline: 3px solid var(--dark-navy);
-  outline-offset: -7px;
+  outline: 2px solid var(--white);
+  outline-offset: -6px;
 }
 
 .revisione-avviso {
@@ -90,13 +86,14 @@
   width: max-content;
   max-width: calc(100% - 2rem);
   margin-inline: auto;
-  padding: 0.9rem 1.5rem;
-  border-radius: var(--radius-pill);
-  background: var(--dark-navy);
+  padding: 0.85rem 1.25rem;
+  border: 2px solid var(--revisione);
+  border-radius: var(--radius-md);
+  background: var(--superficie);
   box-shadow: var(--shadow-card);
-  font-size: var(--ui-size);
-  font-weight: var(--ui-weight);
-  color: var(--white);
+  font-size: var(--small-size);
+  font-weight: var(--font-medium);
+  color: var(--testo-forte);
   opacity: 0;
   transform: translateY(12px);
   pointer-events: none;
@@ -110,7 +107,7 @@
 }
 
 .revisione-avviso i {
-  color: var(--revisione);
+  color: var(--accento);
   font-size: var(--icona-in-testo);
 }
 
@@ -121,15 +118,12 @@
 
 .revisione-dialog {
   width: min(72rem, calc(100% - 3rem));
-  max-height: min(56rem, calc(100dvh - 3rem));
+  max-height: min(56rem, calc(100dvh - 2rem));
 }
 
 .revisione-corpo {
-  gap: 2rem;
-}
-
-.revisione-testata .eyebrow {
-  margin-bottom: 0.5rem;
+  gap: 1.25rem;
+  padding: 3.75rem 2.5rem 2rem;
 }
 
 .revisione-gruppi {
@@ -141,10 +135,10 @@
 .revisione-gruppo {
   display: grid;
   align-content: start;
-  gap: 1.25rem;
+  gap: 1rem;
   min-width: 0;
   margin: 0;
-  padding: 1.75rem;
+  padding: 1.5rem;
   border: none;
   border-radius: var(--radius-card);
   background: var(--bg-soft);
@@ -159,6 +153,8 @@
 
 .revisione-dove {
   display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
   gap: 1rem;
 }
 
@@ -194,7 +190,7 @@
 }
 
 .revisione-campo textarea {
-  min-height: 14rem;
+  height: clamp(6rem, 100dvh - 31rem, 14rem);
   padding: 0.9rem 1rem;
   font-size: var(--body-size);
   resize: vertical;
@@ -274,12 +270,13 @@
 }
 
 .revisione-corpo > .btn-primary {
-  justify-self: end;
-  min-width: 12rem;
+  justify-self: center;
+  min-width: 14rem;
 }
 
 @media (max-width: 900px) {
-  .revisione-gruppi {
+  .revisione-gruppi,
+  .revisione-dove {
     grid-template-columns: minmax(0, 1fr);
   }
 }
@@ -311,7 +308,7 @@
   }
 
   .revisione-campo textarea {
-    min-height: 9rem;
+    height: 9rem;
   }
 
   .revisione-scegli {

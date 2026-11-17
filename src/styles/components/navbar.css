@@ -391,7 +391,7 @@ html.menu-aperto {
   background: var(--dark-navy);
   box-shadow: -20px 0 60px rgb(var(--nero-rgb) / 0.35);
   z-index: 1000;
-  overflow-y: auto;
+  overflow-y: hidden;
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: var(--linea-su-scuro) transparent;
@@ -406,6 +406,10 @@ html.menu-aperto {
   transform: none;
   visibility: visible;
   transition-delay: 0s;
+}
+
+.mobile-menu:has(.mobile-submenu.active) {
+  overflow-y: auto;
 }
 
 .mobile-overlay {
@@ -485,6 +489,7 @@ html.menu-aperto {
 }
 
 .mobile-nav-item {
+  flex-shrink: 0;
   --lc: var(--velo-chiaro);
   background: var(--linea-basso);
 }
@@ -603,23 +608,77 @@ html.menu-aperto {
 }
 
 .mobile-menu-decoro {
-  flex-shrink: 0;
-  width: min(100%, 11rem);
-  margin: 2rem auto 0.5rem;
-  opacity: 0.28;
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  min-height: 0;
+  width: calc(100% + var(--menu-inset) * 2);
+  margin: 1rem calc(var(--menu-inset) * -1) 0;
+  overflow: clip;
+  color: var(--primary-blue);
+  opacity: 0.3;
   pointer-events: none;
+  mask-image: linear-gradient(90deg, transparent, var(--white) 12% 88%, transparent);
 }
 
-.mobile-menu-decoro img {
+.mobile-menu-decoro svg {
   display: block;
-  width: 100%;
-  height: auto;
+  height: 100%;
+  min-height: 0;
+  max-height: 19rem;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mobile-menu-decoro path {
+  vector-effect: non-scaling-stroke;
+}
+
+.mobile-menu-onda {
+  flex: 1 1 0;
+  width: 0;
+}
+
+.mobile-menu-figura {
+  flex: 0 0 auto;
+  width: auto;
+  aspect-ratio: 120 / 232;
+}
+
+.mobile-menu:has(.mobile-submenu.active) .mobile-menu-decoro {
+  flex: 0 0 clamp(7rem, 30dvh, 16rem);
 }
 
 @media (max-width: 480px) {
   .mobile-menu {
     --menu-inset: 1.5rem;
     padding-bottom: 2rem;
+  }
+}
+
+@media (max-height: 600px) {
+  .mobile-menu {
+    padding-bottom: 0.5rem;
+  }
+
+  .mobile-menu-top {
+    min-height: 44px;
+    margin-bottom: 0;
+  }
+
+  .mobile-nav-toggle {
+    min-height: 44px;
+    padding-block: 0.25rem;
+  }
+
+  .mobile-cta {
+    margin-top: 0.25rem;
+  }
+
+  .mobile-menu-decoro {
+    margin-top: 0.25rem;
   }
 }
 

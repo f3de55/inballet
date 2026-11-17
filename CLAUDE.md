@@ -161,6 +161,8 @@ Framed editorial photos live in `src/assets/images/percorsi/`. Course `introImag
 
 ### UI system (use it, don't invent new styles)
 
+The mobile menu never scrolls with all accordions closed: its full-width decoration below «Contattaci» flexes into the remaining height, with compact spacing on short screens. The decoration is an unfilled, minimal dancer contour continuously joined to the left and right waves, in low-opacity brand blue. The dancer preserves its proportions while the side waves stretch to the drawer edges; all paths keep the same stroke thickness. Opening an accordion enables vertical scrolling and gives the decoration its own non-collapsing height; closing the last accordion restores the non-scrolling layout. Keep every navigation control at least 44px tall.
+
 ### CSS structure (`src/styles/`)
 
 No `<style>` blocks and no `style=` with real properties in `.astro` files: all CSS lives in `src/styles/`, and the file that uses it imports it in its frontmatter (`import '../styles/pages/chi-siamo.css'`), so each page loads only its own CSS. Plain CSS (no scoping): class names must be unique across files, prefix them with the page or component.

@@ -603,55 +603,23 @@ html.menu-aperto {
 }
 
 .mobile-menu-decoro {
-  display: grid;
-  place-items: center;
-  flex: 1 0 0;
-  min-height: 0;
-  margin: 1.5rem -2rem -2.5rem;
-  overflow: hidden;
+  flex-shrink: 0;
+  width: min(100%, 17rem);
+  margin: 2.75rem auto 0.5rem;
+  opacity: 0.32;
   pointer-events: none;
-  color: var(--primary-blue);
-  mask-image: linear-gradient(transparent, var(--white) 18%, var(--white) 80%, transparent);
 }
 
-.mobile-menu-decoro svg {
+.mobile-menu-decoro img {
   display: block;
   width: 100%;
-  height: 100%;
-  max-height: 24rem;
-  min-height: 0;
-}
-
-.mobile-menu-nastro {
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.mobile-menu-nastro--velo {
-  stroke-width: 22;
-  opacity: 0.045;
-}
-
-.mobile-menu-nastro--principale {
-  stroke-width: 2;
-  opacity: 0.2;
-}
-
-.mobile-menu-nastro--filo {
-  stroke-width: 1;
-  opacity: 0.09;
+  height: auto;
 }
 
 @media (max-width: 480px) {
   .mobile-menu {
     --menu-inset: 1.5rem;
     padding-bottom: 2rem;
-  }
-
-  .mobile-menu-decoro {
-    margin-inline: -1.5rem;
-    margin-bottom: -2rem;
   }
 }
 

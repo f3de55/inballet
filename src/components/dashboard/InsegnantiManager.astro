@@ -12,7 +12,6 @@ const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2
 <div class="pagina-head">
     <div>
         <h1>Insegnanti</h1>
-        <p class="pagina-sotto">{n === 0 ? 'Nessun insegnante: la sezione non compare in Chi siamo' : n === 1 ? '1 insegnante in Chi siamo' : `${n} insegnanti in Chi siamo`}</p>
     </div>
     <div class="pagina-azioni">
         <a href="/chi-siamo#insegnanti" target="_blank" rel="noopener" class="btn btn-secondary btn-icona" aria-label="Vedi gli insegnanti sul sito (si apre in una nuova scheda)" title="Vedi gli insegnanti sul sito"><i class="fas fa-eye" aria-hidden="true"></i></a>
@@ -20,8 +19,38 @@ const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2
     </div>
 </div>
 
-<section class="pannello doc-testi" aria-labelledby="testiTitolo">
-    <h2 id="testiTitolo">Intestazione della sezione</h2>
+<h2 class="ev-gruppo-titolo doc-elenco-titolo">Insegnanti <span>{n}</span></h2>
+
+{n > 0 ? (
+    <ul class="ev-lista" id="insLista">
+        {insegnanti.map((d, i) => (
+            <li class="ev ins" data-id={d.id} data-modifica={JSON.stringify(d)}>
+                <button type="button" class="ev-apri" data-azione="modifica"><span class="sr-only">Modifica </span>
+                    <span class="ins-foto" aria-hidden="true">
+                        {d.foto ? <img src={d.foto} alt="" width="48" height="60" loading="lazy" /> : iniziali(d.nome)}
+                    </span>
+                    <span class="ev-testo">
+                        <span class="ev-titolo">{d.demo && <span class="ev-demo">Demo</span>}{d.nome}</span>
+                        <span class="ev-meta">{d.ruolo || 'Disciplina non indicata'}</span>
+                    </span>
+                </button>
+                <div class="ev-azioni">
+                    <button type="button" data-azione="su" aria-label={`Sposta in alto ${d.nome}`} title="Sposta in alto" disabled={i === 0}><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
+                    <button type="button" data-azione="giu" aria-label={`Sposta in basso ${d.nome}`} title="Sposta in basso" disabled={i === n - 1}><i class="fas fa-arrow-down" aria-hidden="true"></i></button>
+                    <button type="button" class="elimina" data-azione="elimina" aria-label={`Elimina ${d.nome}`} title="Elimina"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                </div>
+            </li>
+        ))}
+    </ul>
+) : (
+    <div class="vuoto">
+        <p>Qui compariranno gli insegnanti mostrati nella pagina Chi siamo. Finché l'elenco è vuoto, la sezione non compare sul sito.</p>
+        <button type="button" class="btn btn-primary" data-nuovo-insegnante><i class="fas fa-plus" aria-hidden="true"></i> Aggiungi il primo insegnante</button>
+    </div>
+)}
+
+<details class="pannello pannello-apribile doc-testi">
+    <summary><h2>Titolo e testo della sezione</h2><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
     <form id="formTestiInsegnanti" novalidate>
         <div class="campo">
             <label for="eyebrow">Etichetta sopra il titolo</label>
@@ -30,7 +59,7 @@ const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2
         </div>
         <div class="campi-2 campi-2--impila">
             <div class="campo">
-                <label for="titolo">Titolo <span class="nota">obbligatorio</span></label>
+                <label for="titolo">Titolo</label>
                 <input type="text" id="titolo" name="titolo" value={sezione.titolo} maxlength="60" data-counter="60" required autocomplete="off">
                 <small class="contatore" id="titolo-counter"></small>
             </div>
@@ -46,38 +75,7 @@ const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2
             <button type="submit" class="btn btn-primary" id="btnSalvaTesti">Salva i testi</button>
         </div>
     </form>
-</section>
-
-<h2 class="ev-gruppo-titolo doc-elenco-titolo">Insegnanti <span>{n}</span></h2>
-
-{n > 0 ? (
-    <ul class="ev-lista" id="insLista">
-        {insegnanti.map((d, i) => (
-            <li class="ev ins" data-id={d.id} data-modifica={JSON.stringify(d)}>
-                <button type="button" class="ev-apri" data-azione="modifica">
-                    <span class="ins-foto" aria-hidden="true">
-                        {d.foto ? <img src={d.foto} alt="" width="48" height="60" loading="lazy" /> : iniziali(d.nome)}
-                    </span>
-                    <span class="ev-testo">
-                        <span class="ev-titolo">{d.demo && <span class="ev-demo">Demo</span>}{d.nome}</span>
-                        <span class="ev-meta">{d.ruolo || 'Disciplina non indicata'}</span>
-                    </span>
-                </button>
-                <div class="ev-azioni">
-                    <button type="button" data-azione="su" aria-label={`Sposta in alto ${d.nome}`} title="Sposta in alto" disabled={i === 0}><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
-                    <button type="button" data-azione="giu" aria-label={`Sposta in basso ${d.nome}`} title="Sposta in basso" disabled={i === n - 1}><i class="fas fa-arrow-down" aria-hidden="true"></i></button>
-                    <button type="button" data-azione="modifica" aria-label={`Modifica ${d.nome}`} title="Modifica"><i class="fas fa-pen" aria-hidden="true"></i></button>
-                    <button type="button" class="elimina" data-azione="elimina" aria-label={`Elimina ${d.nome}`} title="Elimina"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
-                </div>
-            </li>
-        ))}
-    </ul>
-) : (
-    <div class="vuoto">
-        <p>Qui compariranno gli insegnanti mostrati nella pagina Chi siamo. Finché l'elenco è vuoto, la sezione non compare sul sito.</p>
-        <button type="button" class="btn btn-primary" data-nuovo-insegnante><i class="fas fa-plus" aria-hidden="true"></i> Aggiungi il primo insegnante</button>
-    </div>
-)}
+</details>
 
 <InsegnanteModal />
 <DemoModal tipo="insegnanti" presenti={insegnanti.filter((d) => d.demo).length} liberi={MAX_INSEGNANTI - n} />

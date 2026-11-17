@@ -23,30 +23,23 @@ const { tipi, sedi, luoghi, destinatari, costi } = Astro.props;
                 <input type="hidden" id="eventoId">
 
                 <div class="campo">
-                    <label for="titolo">Titolo <span class="nota">obbligatorio</span></label>
+                    <label for="titolo">Titolo</label>
                     <input type="text" id="titolo" required placeholder="Es. Workshop di Hip-Hop" maxlength="100" data-counter="100" autocomplete="off">
                     <small class="contatore" id="titolo-counter"></small>
                 </div>
 
-                <div class="campi-2">
+                <div class="campi-3">
                     <div class="campo">
-                        <label for="data">Data <span class="nota">obbligatoria</span></label>
+                        <label for="data">Data</label>
                         <input type="date" id="data" required>
                     </div>
                     <div class="campo">
-                        <label for="ora">Ora di inizio <span class="nota">obbligatoria</span></label>
+                        <label for="ora">Inizio</label>
                         <input type="time" id="ora" required>
                     </div>
-                </div>
-
-                <div class="campi-2">
                     <div class="campo">
-                        <label for="oraFine">Ora di fine <span class="nota">obbligatoria</span></label>
+                        <label for="oraFine">Fine</label>
                         <input type="time" id="oraFine" required>
-                    </div>
-                    <div class="campo" id="campoDataFine" hidden>
-                        <label for="dataFine">Data di fine <span class="nota">obbligatoria</span></label>
-                        <input type="date" id="dataFine">
                     </div>
                 </div>
 
@@ -54,6 +47,11 @@ const { tipi, sedi, luoghi, destinatari, costi } = Astro.props;
                     <input type="checkbox" id="piuGiorni">
                     <span>Finisce in un altro giorno</span>
                 </label>
+
+                <div class="campo campo-data-fine" id="campoDataFine" hidden>
+                    <label for="dataFine">Data di fine</label>
+                    <input type="date" id="dataFine">
+                </div>
 
                 <div class="campo">
                     <label for="luogo">Luogo</label>

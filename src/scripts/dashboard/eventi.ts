@@ -182,7 +182,7 @@ function aggiornaElenco() {
   const q = cerca?.value.trim().toLowerCase() ?? '';
   let trovati = 0;
   document.querySelectorAll<HTMLElement>('.ev-gruppo').forEach((gruppo) => {
-    const nelFiltro = q || filtro === 'tutti' || gruppo.dataset.gruppo === filtro;
+    const nelFiltro = q || gruppo.dataset.gruppo === filtro;
     let visibiliGruppo = 0;
     gruppo.querySelectorAll<HTMLElement>('.ev-mese').forEach((mese) => {
       let visibiliMese = 0;

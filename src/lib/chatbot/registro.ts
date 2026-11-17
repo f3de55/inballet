@@ -28,6 +28,7 @@ export interface LogEntry {
 }
 
 export const MAX_LOG = 10000;
+export const GIORNI_REGISTRO = 365;
 const ATTESA_SCRITTURA = 2000;
 
 export interface Token {
@@ -95,7 +96,8 @@ function scriviRegistro() {
         const nuove = daScrivere;
         daScrivere = [];
         const logs = await readJson<LogEntry[]>(paths.analytics, []);
-        await writeJson(paths.analytics, [...logs, ...nuove].slice(-MAX_LOG));
+        const limite = romeDate(Date.now() - GIORNI_REGISTRO * 86_400_000);
+        await writeJson(paths.analytics, [...logs, ...nuove].filter((l) => l.date >= limite).slice(-MAX_LOG));
       }),
     )
     .catch((e) => console.error('Errore registro chatbot:', e))

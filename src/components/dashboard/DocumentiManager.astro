@@ -10,7 +10,6 @@ const n = documenti.length;
 <div class="pagina-head">
     <div>
         <h1>Documenti</h1>
-        <p class="pagina-sotto">{n === 0 ? 'Nessun documento da scaricare' : n === 1 ? '1 documento da scaricare' : `${n} documenti da scaricare`}</p>
     </div>
     <div class="pagina-azioni">
         <a href="/documenti" target="_blank" rel="noopener" class="btn btn-secondary btn-icona" aria-label="Vedi la pagina Documenti sul sito (si apre in una nuova scheda)" title="Vedi la pagina Documenti sul sito"><i class="fas fa-eye" aria-hidden="true"></i></a>
@@ -18,32 +17,13 @@ const n = documenti.length;
     </div>
 </div>
 
-<section class="pannello doc-testi" aria-labelledby="testiTitolo">
-    <h2 id="testiTitolo">Testi della pagina</h2>
-    <form id="formTesti" novalidate>
-        <fieldset class="doc-gruppo">
-            <legend>Intestazione in alto</legend>
-            <div class="campo">
-                <label for="heroTitolo">Titolo <span class="nota">obbligatorio</span></label>
-                <input type="text" id="heroTitolo" name="heroTitolo" value={hero.titolo} maxlength="80" data-counter="80" required autocomplete="off">
-                <small class="contatore" id="heroTitolo-counter"></small>
-            </div>
-            <EditorTesto id="heroTesto" etichetta="Testo sotto il titolo" valore={hero.testo} max={250} />
-        </fieldset>
-
-        <div class="doc-testi-azioni">
-            <button type="submit" class="btn btn-primary" id="btnSalvaTesti">Salva i testi</button>
-        </div>
-    </form>
-</section>
-
 <h2 class="ev-gruppo-titolo doc-elenco-titolo">Documenti da scaricare <span>{n}</span></h2>
 
 {n > 0 ? (
     <ul class="ev-lista" id="docLista">
         {documenti.map((d, i) => (
             <li class="ev doc" data-id={d.id} data-modifica={JSON.stringify(d)}>
-                <button type="button" class="ev-apri" data-azione="modifica">
+                <button type="button" class="ev-apri" data-azione="modifica"><span class="sr-only">Modifica </span>
                     <span class="doc-icona" aria-hidden="true"><i class="fas fa-file-pdf"></i></span>
                     <span class="ev-testo">
                         <span class="ev-titolo">{d.titolo}</span>
@@ -53,7 +33,6 @@ const n = documenti.length;
                 <div class="ev-azioni">
                     <button type="button" data-azione="su" aria-label={`Sposta in alto ${d.titolo}`} title="Sposta in alto" disabled={i === 0}><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
                     <button type="button" data-azione="giu" aria-label={`Sposta in basso ${d.titolo}`} title="Sposta in basso" disabled={i === n - 1}><i class="fas fa-arrow-down" aria-hidden="true"></i></button>
-                    <button type="button" data-azione="modifica" aria-label={`Modifica ${d.titolo}`} title="Modifica"><i class="fas fa-pen" aria-hidden="true"></i></button>
                     <button type="button" class="elimina" data-azione="elimina" aria-label={`Elimina ${d.titolo}`} title="Elimina"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
                 </div>
             </li>
@@ -65,6 +44,21 @@ const n = documenti.length;
         <button type="button" class="btn btn-primary" data-nuovo-documento><i class="fas fa-plus" aria-hidden="true"></i> Aggiungi il primo documento</button>
     </div>
 )}
+
+<details class="pannello pannello-apribile doc-testi">
+    <summary><h2>Testi della pagina</h2><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+    <form id="formTesti" novalidate>
+        <div class="campo">
+            <label for="heroTitolo">Titolo</label>
+            <input type="text" id="heroTitolo" name="heroTitolo" value={hero.titolo} maxlength="80" data-counter="80" required autocomplete="off">
+            <small class="contatore" id="heroTitolo-counter"></small>
+        </div>
+        <EditorTesto id="heroTesto" etichetta="Testo sotto il titolo" valore={hero.testo} max={250} />
+        <div class="doc-testi-azioni">
+            <button type="submit" class="btn btn-primary" id="btnSalvaTesti">Salva i testi</button>
+        </div>
+    </form>
+</details>
 
 <DocumentoModal />
 

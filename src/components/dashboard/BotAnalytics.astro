@@ -73,7 +73,6 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
 <div class="pagina-head">
     <div>
         <h1>Chatbot</h1>
-        <p class="pagina-sotto">Dal {dataIt(filterFrom)} al {dataIt(filterTo)}{demoNelPeriodo > 0 && ` · ${fmt.format(demoNelPeriodo)} messaggi demo inclusi`}</p>
     </div>
 </div>
 
@@ -83,12 +82,6 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
             <a href={`?s=bot&from=${p.from}&to=${oggi}`} class:list={['filtro', { attivo: p.attivo }]} aria-current={p.attivo ? 'true' : undefined}>{p.n} giorni</a>
         ))}
     </div>
-    <form class="periodo-date" method="GET">
-        <input type="hidden" name="s" value="bot">
-        <label>Dal <input type="date" name="from" value={filterFrom}></label>
-        <label>al <input type="date" name="to" value={filterTo}></label>
-        <button type="submit" class="btn btn-secondary">Mostra</button>
-    </form>
 </div>
 
 {totalMessages === 0 ? (
@@ -99,6 +92,7 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
             <div class="numero">
                 <dt>Messaggi</dt>
                 <dd>{fmt.format(totalMessages)}</dd>
+                {demoNelPeriodo > 0 && <dd class="numero-nota">{fmt.format(demoNelPeriodo)} di prova</dd>}
             </div>
             <div class="numero">
                 <dt>Persone</dt>
@@ -106,27 +100,9 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
                 <dd class="numero-nota">conteggio anonimo</dd>
             </div>
             <div class="numero">
-                <dt>Risposte immediate</dt>
-                <dd>{cacheHitRate}%</dd>
-                <dd class="numero-nota">domande già ricevute, risposta dalla cache</dd>
-            </div>
-        </dl>
-
-        <dl class="numeri">
-            <div class="numero">
                 <dt>Spesa stimata</dt>
                 <dd>{dollari(spesa)}</dd>
-                <dd class="numero-nota">{dollari(costoMille)} ogni 1.000 risposte · oggi {dollari(spesaOggi)}{CHATBOT_BUDGET_GIORNO > 0 && ` su ${dollari(CHATBOT_BUDGET_GIORNO)}`}</dd>
-            </div>
-            <div class="numero">
-                <dt>Tempo di risposta</dt>
-                <dd>{tempoMedio.toFixed(1).replace('.', ',')} s</dd>
-                <dd class="numero-nota">media delle risposte del modello</dd>
-            </div>
-            <div class="numero">
-                <dt>Riserve usate</dt>
-                <dd>{fmt.format(daRiserva + senzaModello)}</dd>
-                <dd class="numero-nota">{fmt.format(daRiserva)} da un fornitore di riserva, {fmt.format(senzaModello)} senza risposta AI</dd>
+                <dd class="numero-nota">oggi {dollari(spesaOggi)}{CHATBOT_BUDGET_GIORNO > 0 && ` su un massimo di ${dollari(CHATBOT_BUDGET_GIORNO)}`}</dd>
             </div>
         </dl>
 
@@ -156,8 +132,59 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
     </>
 )}
 
-<section class="pannello bot-sezione" aria-labelledby="catenaTitolo">
-    <h2 id="catenaTitolo">Fornitori AI</h2>
+<section class="pannello bot-sezione" aria-labelledby="convTitolo">
+    <h2 id="convTitolo">Ultime conversazioni</h2>
+    <small class="nota bot-intro">Conservate {GIORNI_CONSERVAZIONE} giorni, poi cancellate automaticamente. Le persone sono anonime.</small>
+    {conversazioni.length === 0 ? (
+        <small class="nota">Nessuna conversazione salvata.</small>
+    ) : (
+        <ul class="conversazioni">
+            {conversazioni.map((c) => (
+                <li>
+                    <details class="conv">
+                        <summary>
+                            <span class="conv-quando">{quando(c.aggiornata)}</span>
+                            <span class="conv-prima">{c.scambi[0].domanda}</span>
+                            <span class="conv-n">{c.scambi.length} {c.scambi.length === 1 ? 'domanda' : 'domande'}</span>
+                        </summary>
+                        <ol class="conv-scambi">
+                            {c.scambi.map((s) => (
+                                <li>
+                                    <p class="conv-domanda">{s.domanda}</p>
+                                    <p class="conv-risposta" set:html={formatta(s.risposta)} />
+                                    <small class="nota">{s.ora.slice(11, 16)} · {s.modello ?? etichettaTipo[s.tipo] ?? s.tipo}</small>
+                                </li>
+                            ))}
+                        </ol>
+                    </details>
+                </li>
+            ))}
+        </ul>
+    )}
+</section>
+
+<details class="pannello bot-sezione pannello-apribile">
+    <summary><h2>Dettagli tecnici</h2><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+    {totalMessages > 0 && (
+        <dl class="numeri">
+            <div class="numero">
+                <dt>Risposte immediate</dt>
+                <dd>{cacheHitRate}%</dd>
+                <dd class="numero-nota">domande già ricevute, risposta dalla cache</dd>
+            </div>
+            <div class="numero">
+                <dt>Tempo di risposta</dt>
+                <dd>{tempoMedio.toFixed(1).replace('.', ',')} s</dd>
+                <dd class="numero-nota">media delle risposte del modello</dd>
+            </div>
+            <div class="numero">
+                <dt>Riserve usate</dt>
+                <dd>{fmt.format(daRiserva + senzaModello)}</dd>
+                <dd class="numero-nota">{fmt.format(daRiserva)} da un fornitore di riserva, {fmt.format(senzaModello)} senza risposta AI · {dollari(costoMille)} ogni 1.000 risposte</dd>
+            </div>
+        </dl>
+    )}
+    <h3>Fornitori AI</h3>
     <small class="nota bot-intro">In ordine di priorità: se il primo non risponde si passa al successivo; se nessuno risponde, Étoile invita a riprovare o a contattare la segreteria. Si configurano in <code>CHATBOT_MODELLI</code> nel file <code>.env</code>.</small>
     <small class="nota bot-intro">
         {sito
@@ -193,38 +220,7 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
             ))}
         </ol>
     )}
-</section>
-
-<section class="pannello bot-sezione" aria-labelledby="convTitolo">
-    <h2 id="convTitolo">Ultime conversazioni</h2>
-    <small class="nota bot-intro">Conservate {GIORNI_CONSERVAZIONE} giorni, poi cancellate automaticamente. Le persone sono anonime.</small>
-    {conversazioni.length === 0 ? (
-        <small class="nota">Nessuna conversazione salvata.</small>
-    ) : (
-        <ul class="conversazioni">
-            {conversazioni.map((c) => (
-                <li>
-                    <details class="conv">
-                        <summary>
-                            <span class="conv-quando">{quando(c.aggiornata)}</span>
-                            <span class="conv-prima">{c.scambi[0].domanda}</span>
-                            <span class="conv-n">{c.scambi.length} {c.scambi.length === 1 ? 'domanda' : 'domande'}</span>
-                        </summary>
-                        <ol class="conv-scambi">
-                            {c.scambi.map((s) => (
-                                <li>
-                                    <p class="conv-domanda">{s.domanda}</p>
-                                    <p class="conv-risposta" set:html={formatta(s.risposta)} />
-                                    <small class="nota">{s.ora.slice(11, 16)} · {s.modello ?? etichettaTipo[s.tipo] ?? s.tipo}</small>
-                                </li>
-                            ))}
-                        </ol>
-                    </details>
-                </li>
-            ))}
-        </ul>
-    )}
-</section>
+</details>
 
 <DemoModal tipo="chatbot" presenti={tuttiLog.filter((l) => l.demo).length} liberi={MAX_LOG - tuttiLog.length} />
 

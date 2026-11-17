@@ -5,6 +5,10 @@ import type { Token } from './registro';
 
 interface Fornitore {
   nome: string;
+  titolare: string;
+  paese: string;
+  informativa?: string;
+  nota?: string;
   chiave: string;
   tipo: 'anthropic' | 'openai';
   url?: string | { variabile: string };
@@ -13,17 +17,39 @@ interface Fornitore {
 }
 
 const FORNITORI: Record<string, Fornitore> = {
-  anthropic: { nome: 'Anthropic (Claude)', chiave: 'ANTHROPIC_API_KEY', tipo: 'anthropic' },
+  anthropic: {
+    nome: 'Anthropic (Claude)',
+    titolare: 'Anthropic, PBC',
+    paese: 'Stati Uniti',
+    informativa: 'https://www.anthropic.com/legal/privacy',
+    chiave: 'ANTHROPIC_API_KEY',
+    tipo: 'anthropic',
+  },
   gemini: {
     nome: 'Google Gemini',
+    titolare: 'Google LLC (Gemini API)',
+    paese: 'Stati Uniti',
+    informativa: 'https://ai.google.dev/gemini-api/terms',
+    nota: 'Il servizio è a pagamento: Google non usa domande e risposte per migliorare i propri prodotti e le conserva per un tempo limitato solo per individuare abusi.',
     chiave: 'GEMINI_API_KEY',
     tipo: 'openai',
     url: 'https://generativelanguage.googleapis.com/v1beta/openai',
     extra: () => ({ reasoning_effort: 'low' }),
   },
-  mistral: { nome: 'Mistral', chiave: 'MISTRAL_API_KEY', tipo: 'openai', url: 'https://api.mistral.ai/v1' },
+  mistral: {
+    nome: 'Mistral',
+    titolare: 'Mistral AI SAS',
+    paese: 'Francia (Unione europea)',
+    informativa: 'https://legal.mistral.ai/terms/privacy-policy',
+    chiave: 'MISTRAL_API_KEY',
+    tipo: 'openai',
+    url: 'https://api.mistral.ai/v1',
+  },
   groq: {
     nome: 'Groq',
+    titolare: 'Groq, Inc.',
+    paese: 'Stati Uniti',
+    informativa: 'https://groq.com/privacy-policy',
     chiave: 'GROQ_API_KEY',
     tipo: 'openai',
     url: 'https://api.groq.com/openai/v1',
@@ -31,6 +57,9 @@ const FORNITORI: Record<string, Fornitore> = {
   },
   openrouter: {
     nome: 'OpenRouter',
+    titolare: 'OpenRouter, Inc.',
+    paese: 'Stati Uniti',
+    informativa: 'https://openrouter.ai/privacy',
     chiave: 'OPENROUTER_API_KEY',
     tipo: 'openai',
     url: 'https://openrouter.ai/api/v1',
@@ -38,6 +67,9 @@ const FORNITORI: Record<string, Fornitore> = {
   },
   openai: {
     nome: 'OpenAI',
+    titolare: 'OpenAI',
+    paese: 'Stati Uniti',
+    informativa: 'https://openai.com/policies/privacy-policy',
     chiave: 'OPENAI_API_KEY',
     tipo: 'openai',
     url: 'https://api.openai.com/v1',
@@ -46,12 +78,22 @@ const FORNITORI: Record<string, Fornitore> = {
   },
   cerebras: {
     nome: 'Cerebras',
+    titolare: 'Cerebras Systems Inc.',
+    paese: 'Stati Uniti',
+    informativa: 'https://www.cerebras.ai/privacy-policy',
     chiave: 'CEREBRAS_API_KEY',
     tipo: 'openai',
     url: 'https://api.cerebras.ai/v1',
     extra: (m) => (m.startsWith('gpt-oss') ? { reasoning_effort: 'low' } : {}),
   },
-  compatibile: { nome: 'API compatibile', chiave: 'CHATBOT_COMPATIBILE_KEY', tipo: 'openai', url: { variabile: 'CHATBOT_COMPATIBILE_URL' } },
+  compatibile: {
+    nome: 'API compatibile',
+    titolare: "Servizio compatibile scelto dall'associazione",
+    paese: 'da verificare con il fornitore',
+    chiave: 'CHATBOT_COMPATIBILE_KEY',
+    tipo: 'openai',
+    url: { variabile: 'CHATBOT_COMPATIBILE_URL' },
+  },
 };
 
 const baseUrl = (f: Fornitore) => (typeof f.url === 'string' ? f.url : f.url && getSecret(f.url.variabile)?.replace(/\/+$/, ''));
@@ -97,6 +139,18 @@ interface Stato {
 const stati = new Map<string, Stato>();
 const chiave = (a: Anello) => `${a.fornitore}:${a.modello}`;
 const statoDi = (a: Anello) => stati.get(chiave(a)) ?? stati.set(chiave(a), { errori: 0, sospesoFino: 0 }).get(chiave(a))!;
+
+export function fornitoriIA() {
+  const usati = new Set(
+    catena()
+      .filter((a) => a.attivo)
+      .map((a) => a.fornitore),
+  );
+  return [...usati].map((id) => {
+    const { titolare, paese, informativa, nota } = FORNITORI[id];
+    return { titolare, paese, informativa, nota };
+  });
+}
 
 export function statoCatena() {
   return catena().map((a) => {

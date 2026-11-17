@@ -5,6 +5,7 @@ const banner = {
   corsi: 'hero-pagine/corsi',
   contatti: 'hero-pagine/contatti',
   documenti: 'hero-pagine/documenti',
+  privacy: 'hero-pagine/contatti',
   'formazione-insegnanti': 'hero-corsi/lezioni-individuali',
   'formazioni-personalizzate': 'hero-pagine/formazioni-personalizzate',
   'collaborazioni-scuole': 'hero-corsi/bambini',

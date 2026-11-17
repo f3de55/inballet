@@ -74,5 +74,6 @@ export const percorsoPagina = (url: URL) =>
 
 export const altrePagine: Record<string, string> = {
   '/contatti': 'Contatti',
+  '/privacy': 'Privacy policy',
   '/404': 'Pagina non trovata',
 };

@@ -468,24 +468,7 @@ body {
 }
 
 .doc-testi {
-  margin-bottom: 2.5rem;
-}
-.doc-gruppo {
-  margin: 0 0 1.5rem;
-  padding: 0;
-  border: none;
-}
-.doc-gruppo legend {
-  display: block;
-  width: 100%;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--line);
-  font-size: var(--text-2xs);
-  font-weight: var(--font-semibold);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--primary-dark);
+  margin-top: 2.5rem;
 }
 .doc-anteprima-titolo {
   margin: -0.5rem 0 1.35rem;
@@ -684,6 +667,14 @@ input[list]::-webkit-calendar-picker-indicator {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0 1rem;
+}
+.campi-3 {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 1rem;
+}
+.campo-data-fine {
+  max-width: 50%;
 }
 .contatore {
   display: block;
@@ -1195,29 +1186,6 @@ input[list]::-webkit-calendar-picker-indicator {
   flex-wrap: wrap;
   margin-bottom: 1.75rem;
 }
-.periodo-date {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-}
-.periodo-date label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-}
-.periodo-date input {
-  min-height: 44px;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  font: inherit;
-  font-size: var(--text-sm);
-  color: var(--text);
-}
 .numeri {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1268,6 +1236,37 @@ input[list]::-webkit-calendar-picker-indicator {
 .grafico {
   position: relative;
   height: 240px;
+}
+.pannello-apribile > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 44px;
+  margin: -0.5rem 0;
+  list-style: none;
+  cursor: pointer;
+}
+.pannello-apribile > summary::-webkit-details-marker {
+  display: none;
+}
+.pannello-apribile > summary h2 {
+  margin: 0;
+}
+.pannello-apribile > summary i {
+  color: var(--text-muted);
+  transition: transform var(--durata-breve);
+}
+.pannello-apribile[open] > summary {
+  margin-bottom: 1rem;
+}
+.pannello-apribile[open] > summary i {
+  transform: rotate(180deg);
+}
+.pannello-apribile h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
 }
 .domande {
   list-style: none;
@@ -1651,6 +1650,15 @@ input[list]::-webkit-calendar-picker-indicator {
     order: 1;
     min-height: 44px;
   }
+  .campi-3 {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .campi-3 > :first-child {
+    grid-column: 1 / -1;
+  }
+  .campo-data-fine {
+    max-width: none;
+  }
   .campi-2--impila {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1684,22 +1692,6 @@ input[list]::-webkit-calendar-picker-indicator {
   }
   .periodo .filtri {
     display: flex;
-  }
-  .periodo-date {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 0.6rem;
-  }
-  .periodo-date label {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.25rem;
-  }
-  .periodo-date input {
-    width: 100%;
-  }
-  .periodo-date .btn {
-    grid-column: 1/-1;
   }
   .numeri {
     grid-template-columns: minmax(0, 1fr);

@@ -1,0 +1,38 @@
+.privacy-sezione {
+  padding: var(--section-y) 0;
+  background: var(--sfondo);
+}
+
+.privacy-sezione--soft {
+  background: var(--bg-soft);
+}
+
+.privacy-testo {
+  max-width: 48rem;
+  margin: var(--spazio-intestazione) auto 0;
+}
+
+.privacy-testo h3 {
+  margin: 2.5rem 0 1rem;
+}
+
+.privacy-testo h3:first-child {
+  margin-top: 0;
+}
+
+.privacy-testo p + p,
+.privacy-testo ul + p,
+.privacy-testo p + ul {
+  margin-top: 1rem;
+}
+
+.privacy-testo ul {
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1.25em;
+  list-style: disc;
+}
+
+.privacy-testo li::marker {
+  color: var(--accento);
+}

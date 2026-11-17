@@ -9,7 +9,8 @@ interface Messaggio {
 
 const STORAGE_KEY = 'inballet_chatbot_session';
 const CONV_KEY = 'inballet_chatbot_conv';
-const WELCOME = "Ciao! Sono <b>Étoile</b>, l'assistente di InBallet. Posso aiutarti con corsi, sedi, orari e iscrizioni: cosa vorresti sapere?";
+const WELCOME =
+  "Ciao! Sono <b>Étoile</b>, l'assistente di InBallet basata sull'<b>intelligenza artificiale</b>: rispondo in automatico su corsi, sedi, orari e iscrizioni. Cosa vorresti sapere?";
 const PAUSA_MIN = 2000;
 
 const box = document.getElementById('cb-box')!;

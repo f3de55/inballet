@@ -1,0 +1,174 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPagina from '../components/HeroPagina.astro';
+import { heroPagina } from '../lib/hero-pagine';
+import { scuola } from '../data/scuola';
+import { GIORNI_CONSERVAZIONE } from '../lib/chatbot/conversazioni';
+import { GIORNI_REGISTRO } from '../lib/chatbot/registro';
+import { fornitoriIA } from '../lib/chatbot/fornitori';
+import '../styles/pages/privacy.css';
+
+export const prerender = false;
+
+const AGGIORNATA = '17 novembre 2026';
+const hero = await heroPagina('privacy');
+const fornitori = fornitoriIA();
+const mesiRegistro = Math.round(GIORNI_REGISTRO / 30.4);
+const esterno = '(si apre in una nuova scheda)';
+---
+
+<Base
+    title="Privacy policy e cookie | InBallet"
+    description="Come InBallet ASD tratta i dati di chi visita il sito, usa l'assistente Étoile o ci contatta: titolare, finalità, cookie, fornitori e diritti."
+    ogTitle="Privacy policy | InBallet"
+    ogDescription="Dati di navigazione, assistente Étoile, cookie tecnici, fornitori e diritti: l'informativa del sito InBallet."
+    preload={hero.preload}
+>
+
+    <HeroPagina titolo="Privacy policy" stile={hero.style}>
+        <p class="hero-lead">Quali dati tratta il sito, <strong>perché</strong>, per quanto tempo e come puoi esercitare i tuoi diritti.</p>
+    </HeroPagina>
+
+    <section id="titolare" class="privacy-sezione decoro-onde" aria-labelledby="privacy-titolare">
+        <div class="container">
+            <div class="intro-editoriale">
+                <p class="eyebrow">Informativa ai sensi degli articoli 13 e 14 del Regolamento (UE) 2016/679</p>
+                <h2 class="titolo-sezione" id="privacy-titolare">Chi tratta <em>i tuoi dati</em></h2>
+                <p>Aggiornata al <strong>{AGGIORNATA}</strong>.</p>
+            </div>
+            <div class="privacy-testo">
+                <h3>Titolare del trattamento</h3>
+                <p>{scuola.ragioneSociale} ({scuola.nome}), con sede legale in {scuola.sedeLegale}, codice fiscale {scuola.codiceFiscale}. Puoi scriverci a <a href={`mailto:${scuola.email}`}>{scuola.email}</a> o chiamarci al <a href={scuola.telefonoHref}>{scuola.telefono}</a>.</p>
+                <p>L'associazione non è tenuta a nominare un responsabile della protezione dei dati (DPO), perché non effettua trattamenti su larga scala.</p>
+
+                <h3>A cosa si riferisce questa informativa</h3>
+                <p>Riguarda il sito <a href={scuola.sito}>www.inballet.it</a> e i suoi indirizzi tecnici: la navigazione, l'assistente virtuale Étoile e i contatti che ci invii partendo dal sito. L'iscrizione ai corsi ha una propria informativa, allegata al <a href="/documenti">modulo di iscrizione</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="dati" class="privacy-sezione privacy-sezione--soft" aria-labelledby="privacy-dati">
+        <div class="container">
+            <div class="intro-editoriale">
+                <p class="eyebrow">Finalità, basi giuridiche e conservazione</p>
+                <h2 class="titolo-sezione" id="privacy-dati">Quali dati <em>e perché</em></h2>
+                <p>Il sito non chiede di registrarsi, non usa strumenti di <strong>profilazione</strong> o di pubblicità e non vende né cede dati a nessuno.</p>
+            </div>
+            <div class="privacy-testo">
+                <h3>Dati di navigazione</h3>
+                <p>Per mostrare le pagine, il server e il fornitore che ospita il sito registrano automaticamente alcuni dati tecnici di ogni richiesta: <strong>indirizzo IP</strong>, data e ora, pagina richiesta, esito della richiesta, browser e sistema operativo. Servono solo a far funzionare il sito, a misurarne il carico e a proteggerlo da abusi e attacchi.</p>
+                <p>Base giuridica: <strong>legittimo interesse</strong> del titolare al funzionamento e alla sicurezza del sito (art. 6, par. 1, lett. f, GDPR). I registri tecnici del fornitore di hosting sono conservati per un periodo limitato, al massimo 90 giorni, salvo che servano ad accertare illeciti su richiesta dell'autorità. I contatori usati per limitare gli abusi dell'assistente e dell'area riservata restano solo nella memoria del server, con l'indirizzo IP trasformato in un codice non reversibile, e si azzerano al massimo entro 24 ore.</p>
+
+                <h3 id="chatbot">Assistente virtuale Étoile</h3>
+                <p><strong>Étoile è un sistema di intelligenza artificiale</strong>, non una persona: risponde in automatico alle domande su corsi, sedi, orari, eventi e iscrizioni, usando solo i contenuti pubblicati su questo sito. Le risposte possono contenere errori: date, costi e disponibilità vanno sempre confermati con la segreteria.</p>
+                <p>Quando scrivi una domanda trattiamo:</p>
+                <ul>
+                    <li>il <strong>testo dei messaggi</strong> e delle risposte;</li>
+                    <li>un codice casuale che lega i messaggi della stessa conversazione;</li>
+                    <li>l'indirizzo IP trasformato in un codice non reversibile (hash), il tipo di browser, la data e l'ora.</li>
+                </ul>
+                <p>Finalità e basi giuridiche: rispondere alla tua richiesta di informazioni (art. 6, par. 1, lett. b, GDPR); proteggere il servizio da abusi, controllarne la qualità e i costi (legittimo interesse, art. 6, par. 1, lett. f). Le conversazioni sono cancellate automaticamente dopo <strong>{GIORNI_CONSERVAZIONE} giorni</strong>; il registro tecnico, che conserva al massimo i primi 200 caratteri di ogni domanda, i primi 100 della risposta e una parte del codice dell'IP, è cancellato dopo <strong>{mesiRegistro} mesi</strong>. Il tuo browser conserva la conversazione in corso finché non premi «Nuova conversazione» o non cancelli i dati del sito.</p>
+                <p>Per generare le risposte, il testo della domanda e dei messaggi precedenti della stessa conversazione viene inviato dal nostro server al fornitore del servizio di intelligenza artificiale, che agisce come responsabile del trattamento; il tuo indirizzo IP non gli viene comunicato. {fornitori.length === 1 ? 'Il fornitore attuale è:' : 'I fornitori attuali sono:'}</p>
+                {fornitori.length > 0 ? (
+                    <ul>
+                        {fornitori.map((f) => (
+                            <li>
+                                <strong>{f.titolare}</strong>, {f.paese}{f.informativa && <>, <a href={f.informativa} target="_blank" rel="noopener noreferrer">condizioni e informativa<span class="sr-only"> {esterno}</span></a></>}.{f.nota && <> {f.nota}</>}
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>Al momento nessuno: l'assistente non invia messaggi a servizi esterni.</p>
+                )}
+                <p>L'assistente non prende decisioni che producano effetti giuridici o che incidano in modo significativo su di te (art. 22 GDPR). Usarlo è facoltativo: puoi sempre chiedere le stesse informazioni per telefono, email o WhatsApp. <strong>Non scrivere nella chat dati personali</strong>, in particolare dati sulla salute o riferiti ai figli: per queste richieste contatta direttamente la segreteria. Se hai meno di 14 anni puoi usare l'assistente solo con il consenso di un genitore, come prevede l'articolo 4 della legge 23 settembre 2025, n. 132.</p>
+
+                <h3>Contatti che ci invii</h3>
+                <p>Se ci scrivi via email, ci chiami o usi i collegamenti a WhatsApp, Facebook o Instagram, trattiamo i dati che ci comunichi (nome, recapiti, contenuto del messaggio) solo per risponderti e, se lo chiedi, per darti informazioni sui corsi (art. 6, par. 1, lett. b, GDPR). Li conserviamo per il tempo necessario a gestire la richiesta; se poi ti iscrivi, vale l'informativa del modulo di iscrizione. WhatsApp, Facebook e Instagram sono servizi di Meta Platforms Ireland Ltd., che tratta i dati come titolare autonomo secondo le proprie condizioni.</p>
+
+                <h3>Recensioni di Google</h3>
+                <p>La home mostra la valutazione e le ultime recensioni pubblicate sulla nostra scheda Google, con il nome scelto dall'autore su Google. Il nostro server le scarica tramite le API di Google Places circa una volta al mese: quando visiti il sito il tuo browser non si collega a Google. Base giuridica: legittimo interesse a mostrare opinioni già pubbliche sull'associazione. Chi ha scritto una recensione può modificarla o cancellarla su Google; la modifica compare qui al successivo aggiornamento, oppure prima se ce lo chiedi.</p>
+
+                <h3>Area riservata</h3>
+                <p>La dashboard e la modalità di revisione dei contenuti sono usate solo dal personale autorizzato dell'associazione, che vi accede con una password. Non raccolgono dati dei visitatori.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="cookie" class="privacy-sezione decoro-onde decoro-onde--sinistra" aria-labelledby="privacy-cookie">
+        <div class="container">
+            <div class="intro-editoriale">
+                <p class="eyebrow">Cookie e altri strumenti</p>
+                <h2 class="titolo-sezione" id="privacy-cookie">Cookie e <em>risorse esterne</em></h2>
+                <p>Il sito usa solo strumenti <strong>tecnici</strong>, necessari al suo funzionamento o a ricordare una tua scelta: per questo non serve il tuo consenso e non compare alcun banner (linee guida del Garante del 10 giugno 2021).</p>
+            </div>
+            <div class="privacy-testo">
+                <h3>Cookie e memoria del browser</h3>
+                <ul>
+                    <li><strong>inballet-tema</strong> (memoria del browser): ricorda se hai scelto la modalità notte, finché non cancelli i dati del sito.</li>
+                    <li><strong>banner_dismissed_…</strong> (memoria del browser): ricorda gli avvisi sugli eventi che hai chiuso, per non mostrarteli di nuovo.</li>
+                    <li><strong>inballet_chatbot_session</strong> e <strong>inballet_chatbot_conv</strong> (memoria del browser): conservano la conversazione con Étoile e il suo codice, finché non ne inizi una nuova.</li>
+                    <li><strong>inballet-session</strong> e <strong>inballet-revisione</strong> (cookie): solo per il personale che accede all'area riservata; durano al massimo 24 ore.</li>
+                </ul>
+                <p>Non usiamo cookie di profilazione, di statistica o di terze parti. Puoi cancellare cookie e memoria del sito in qualsiasi momento dalle impostazioni del browser.</p>
+
+                <h3>Caratteri, mappe e collegamenti esterni</h3>
+                <p>Il carattere tipografico Rubik proviene dalla raccolta Google Fonts ma è <strong>salvato sul nostro server</strong>: aprendo le pagine il browser non si collega ai server di Google. Anche immagini, video e mappa delle sedi sono ospitati sul sito; non ci sono video, mappe o pulsanti social incorporati da altri servizi.</p>
+                <p>Alcuni collegamenti portano a siti di terzi (Google Maps per le indicazioni stradali, WhatsApp, Facebook, Instagram, le piattaforme di prenotazione degli eventi, i siti di CSEN e CONI). Questi siti ricevono i tuoi dati solo se apri il collegamento, e li trattano secondo le proprie informative.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="destinatari" class="privacy-sezione privacy-sezione--soft" aria-labelledby="privacy-destinatari">
+        <div class="container">
+            <div class="intro-editoriale">
+                <p class="eyebrow">Destinatari e trasferimenti</p>
+                <h2 class="titolo-sezione" id="privacy-destinatari">A chi arrivano <em>i dati</em></h2>
+                <p>I dati sono trattati dal <strong>personale autorizzato</strong> dell'associazione e dai fornitori che ci aiutano a gestire il sito, nominati responsabili del trattamento (art. 28 GDPR). Non sono diffusi.</p>
+            </div>
+            <div class="privacy-testo">
+                <h3>Fornitori</h3>
+                <ul>
+                    <li><strong>Railway Corporation</strong>, Stati Uniti: ospita il sito e i suoi dati su server negli Stati Uniti.</li>
+                    <li><strong>Fornitori dell'assistente Étoile</strong>: quelli indicati nella sezione dedicata, che ricevono solo il testo delle conversazioni.</li>
+                    <li><strong>Google LLC</strong>, Stati Uniti: tramite le API di Google Places fornisce valutazione, recensioni e orari della segreteria; non riceve dati dei visitatori.</li>
+                    <li>Consulenti e tecnici informatici che curano il sito, quando devono intervenire.</li>
+                </ul>
+                <p>I dati possono essere comunicati alle autorità che ne facciano richiesta nei casi previsti dalla legge.</p>
+
+                <h3>Trasferimenti fuori dall'Unione europea</h3>
+                <p>Alcuni fornitori trattano i dati negli Stati Uniti. Il trasferimento avviene sulla base della <strong>decisione di adeguatezza</strong> della Commissione europea del 10 luglio 2023 (EU-U.S. Data Privacy Framework), per i fornitori certificati, oppure delle <strong>clausole contrattuali standard</strong> approvate dalla Commissione con la decisione (UE) 2021/914, previste dai contratti sul trattamento dei dati dei fornitori (art. 45 e art. 46 GDPR). Puoi chiederci una copia delle garanzie scrivendo a <a href={`mailto:${scuola.email}`}>{scuola.email}</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="diritti" class="privacy-sezione decoro-onde" aria-labelledby="privacy-diritti">
+        <div class="container">
+            <div class="intro-editoriale">
+                <p class="eyebrow">Diritti dell'interessato</p>
+                <h2 class="titolo-sezione" id="privacy-diritti">I tuoi <em>diritti</em></h2>
+                <p>Puoi esercitarli in ogni momento, gratuitamente, scrivendo a <a href={`mailto:${scuola.email}`}>{scuola.email}</a>: ti rispondiamo entro <strong>un mese</strong>.</p>
+            </div>
+            <div class="privacy-testo">
+                <h3>Cosa puoi chiedere</h3>
+                <ul>
+                    <li>di <strong>accedere</strong> ai tuoi dati e riceverne copia (art. 15 GDPR);</li>
+                    <li>di <strong>correggerli</strong> o completarli (art. 16);</li>
+                    <li>di <strong>cancellarli</strong>, per esempio una conversazione con Étoile (art. 17);</li>
+                    <li>di <strong>limitarne</strong> il trattamento (art. 18);</li>
+                    <li>di riceverli in un formato di uso comune, quando il trattamento si basa su un contratto (art. 20);</li>
+                    <li>di <strong>opporti</strong> ai trattamenti basati sul legittimo interesse, per motivi legati alla tua situazione (art. 21).</li>
+                </ul>
+                <p>Per trovare una conversazione con Étoile ci servono giorno e ora approssimativi e il testo di almeno un messaggio, perché non conosciamo chi l'ha scritta.</p>
+
+                <h3>Reclamo</h3>
+                <p>Se ritieni che il trattamento violi il GDPR puoi proporre reclamo al <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer">Garante per la protezione dei dati personali<span class="sr-only"> {esterno}</span></a> (Piazza Venezia 11, 00187 Roma) o ricorrere all'autorità giudiziaria.</p>
+
+                <h3>Minori</h3>
+                <p>Il sito si rivolge a famiglie e allievi di ogni età, ma i dati dei minori di 14 anni possono esserci comunicati solo da chi esercita la responsabilità genitoriale. Se ti accorgi che un minore ci ha inviato dati senza consenso, scrivici e li cancelleremo.</p>
+
+                <h3>Sicurezza e aggiornamenti</h3>
+                <p>Il sito usa solo connessioni cifrate (HTTPS), protegge con password l'area riservata e conserva i dati dei visitatori nella forma meno identificabile possibile. Possiamo aggiornare questa informativa quando cambiano il sito o le norme: la data in alto indica la versione in vigore.</p>
+            </div>
+        </div>
+    </section>
+</Base>

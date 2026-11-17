@@ -13,6 +13,7 @@ export const scuola = {
   fondatrice: 'Ilenia Nobile',
   ragioneSociale: 'Associazione Sportiva Dilettantistica I.N. Ballet',
   codiceFiscale: '93550490150',
+  sedeLegale: 'Via Aldo Moro 1, 20017 Rho (MI)',
   social: {
     instagram: 'https://www.instagram.com/i.n.ballet/',
     facebook: 'https://www.facebook.com/inballetasd/',

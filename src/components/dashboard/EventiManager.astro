@@ -49,7 +49,6 @@ const gruppi = [
             <div class="filtri" role="group" aria-label="Mostra">
                 <button type="button" class="filtro attivo" data-filtro="futuri" aria-pressed="true">In programma</button>
                 <button type="button" class="filtro" data-filtro="passati" aria-pressed="false">Passati</button>
-                <button type="button" class="filtro" data-filtro="tutti" aria-pressed="false">Tutti</button>
             </div>
             <label class="cerca">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -75,7 +74,7 @@ const gruppi = [
                                 return (
                                     <li class:list={['ev', { passato: g.passato }]} data-id={ev.id} data-modifica={JSON.stringify(ev)}
                                         data-cerca={[titolo, luogo, ev.tipo, mese.titolo, ev.stato !== 'pubblicato' ? ETICHETTE_STATO[ev.stato] : ''].join(' ').toLowerCase()}>
-                                        <button type="button" class="ev-apri" data-azione="modifica">
+                                        <button type="button" class="ev-apri" data-azione="modifica"><span class="sr-only">Modifica </span>
                                             <span class="ev-data">
                                                 <span class="ev-giorno">{g2.numero}</span>
                                                 <span class="ev-sett">{g2.settimana}</span>
@@ -92,7 +91,6 @@ const gruppi = [
                                         </button>
                                         <div class="ev-azioni">
                                             {ev.stato !== 'bozza' && <a href={urlEvento(ev)} target="_blank" rel="noopener" aria-label={`Vedi ${titolo} sul sito (si apre in una nuova scheda)`} title="Vedi sul sito"><i class="fas fa-external-link-alt" aria-hidden="true"></i></a>}
-                                            <button type="button" data-azione="modifica" aria-label={`Modifica ${titolo}`} title="Modifica"><i class="fas fa-pen" aria-hidden="true"></i></button>
                                             <button type="button" class="elimina" data-azione="elimina" aria-label={`Elimina ${titolo}`} title="Elimina"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
                                         </div>
                                     </li>

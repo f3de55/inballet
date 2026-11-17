@@ -263,13 +263,13 @@
   color: rgb(var(--bianco-rgb) / 0.55);
 }
 
-.footer-credits a {
+.footer-bottom a {
   color: inherit;
   text-decoration: none;
   transition: color var(--transition-base);
 }
 
-.footer-credits a:hover {
+.footer-bottom a:hover {
   color: var(--white);
 }
 
@@ -460,7 +460,7 @@
 
   .footer-bottom {
     width: auto;
-    padding: 0 1.5rem var(--footer-y);
+    padding: 0 1.5rem calc(var(--footer-y) + 4.5rem);
     background: none;
   }
 }

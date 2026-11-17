@@ -279,6 +279,7 @@ orari-segreteria {
   color: var(--accento);
 }
 
+.info .recapito,
 .info-whatsapp,
 .info-social-link a,
 .sede-mappa {

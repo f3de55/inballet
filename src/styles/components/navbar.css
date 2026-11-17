@@ -436,8 +436,6 @@ html.menu-aperto {
   flex-shrink: 0;
   min-height: var(--nav-h);
   margin-bottom: 1rem;
-  --lc: var(--velo-chiaro);
-  background: var(--linea-basso);
 }
 
 .mobile-menu-top .eyebrow {
@@ -457,6 +455,7 @@ html.menu-aperto {
 
 .mobile-menu-close {
   justify-self: end;
+  margin-inline-end: calc((var(--icona-mini) - 44px) / 2);
 }
 
 .mobile-nav-item {

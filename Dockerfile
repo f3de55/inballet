@@ -11,6 +11,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 
 FROM node:24-alpine
+RUN apk add --no-cache git
 WORKDIR /app
 ENV NODE_ENV=production \
     HOST=0.0.0.0 \

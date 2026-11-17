@@ -1,6 +1,6 @@
 import { getCollection } from 'astro:content';
 
-const ESCLUSE = /^(\[.*\]|404|login|dashboard|presentazione)$/;
+const ESCLUSE = /^(\[.*\]|404|login|dashboard|presentazione|area-sviluppatori)$/;
 const HOST_DI_PROVA = /(^|\.)up\.railway\.app$|^localhost$|^127\.0\.0\.1$/;
 
 const pagine = Object.keys(import.meta.glob('../pages/*.astro'))

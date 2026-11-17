@@ -1,0 +1,230 @@
+---
+import '../styles/admin/dashboard.css';
+import '../styles/admin/sviluppatori.css';
+import { Image } from 'astro:assets';
+import { actions } from 'astro:actions';
+import Admin from '../layouts/Admin.astro';
+import Conferma from '../components/dashboard/Conferma.astro';
+import logo from '../assets/images/logo.png';
+import { isSviluppatore } from '../lib/auth';
+import { modalita } from '../lib/sviluppatori/deposito';
+
+export const prerender = false;
+
+if (!(await isSviluppatore(Astro.session))) return Astro.redirect('/login?da=/area-sviluppatori');
+
+const viste = [
+  { id: 'visuale', label: 'Visuale', icona: 'fa-pen' },
+  { id: 'tema', label: 'Tema', icona: 'fa-layer-group' },
+  { id: 'animazioni', label: 'Animazioni', icona: 'fa-film' },
+  { id: 'seo', label: 'SEO', icona: 'fa-magnifying-glass' },
+  { id: 'immagini', label: 'Immagini', icona: 'fa-image' },
+  { id: 'file', label: 'File', icona: 'fa-list' },
+  { id: 'pubblica', label: 'Pubblica', icona: 'fa-paper-plane' },
+];
+const dispositivi = [
+  { id: 'desktop', label: 'Desktop', larghezza: 1440 },
+  { id: 'portatile', label: 'Portatile', larghezza: 1280 },
+  { id: 'tablet', label: 'Tablet', larghezza: 768 },
+  { id: 'telefono', label: 'Telefono', larghezza: 390 },
+];
+const configurata = modalita() !== 'assente';
+---
+
+<Admin title="Area sviluppatori - InBallet">
+    <header class="topbar sv-topbar">
+        <div class="sv-topbar-inner">
+            <a href="/area-sviluppatori" class="topbar-logo sv-logo" aria-label="Area sviluppatori InBallet">
+                <Image src={logo} alt="" width={240} format="webp" loading="eager" />
+                <span class="sv-marchio">Sviluppatori</span>
+            </a>
+            {configurata && (
+                <div class="sv-schede" role="tablist" aria-label="Strumenti">
+                    {viste.map((v, i) => (
+                        <button type="button" role="tab" id={`scheda-${v.id}`} aria-controls={`vista-${v.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-vista={v.id}>
+                            <i class={`fas ${v.icona}`} aria-hidden="true"></i>
+                            {v.label}
+                            {v.id === 'pubblica' && <span class="sv-conteggio" id="svConteggio" hidden></span>}
+                        </button>
+                    ))}
+                </div>
+            )}
+            <nav class="sv-uscite" aria-label="Altre aree">
+                <a href="/dashboard" class="sv-uscita">Dashboard</a>
+                <a href="/" class="sv-uscita" target="_blank" rel="noopener">Sito<span class="sr-only"> (si apre in una nuova scheda)</span></a>
+                <button type="submit" form="svEsci" class="sv-uscita"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Esci</button>
+            </nav>
+            <form id="svEsci" method="POST" action={actions.auth.logout} hidden></form>
+        </div>
+    </header>
+
+    <main class="sv-main" id="sv">
+        <h1 class="sr-only">Area sviluppatori</h1>
+
+        {!configurata && (
+            <div class="vuoto sv-configura">
+                <p>L'area non è ancora collegata al codice del sito.</p>
+                <p>Su Railway aggiungi la variabile <code>GITHUB_TOKEN</code> (token GitHub con permesso «Contents: read and write» sul repository) e riavvia il servizio.</p>
+            </div>
+        )}
+
+        {configurata && (
+            <>
+                <section class="sv-lavoro" id="svLavoro" aria-label="Anteprima e modifica">
+                    <div class="sv-pannello" id="svPannello">
+                        <div role="tabpanel" id="vista-visuale" aria-labelledby="scheda-visuale" class="sv-vista" data-con-anteprima>
+                            <div class="sv-vuoto-pannello" id="svNessuno">
+                                <h2>Clicca un elemento nell'anteprima</h2>
+                                <p>Testi, colori, spazi, effetti al passaggio del mouse, versioni per tablet e telefono, immagini e icone: tutto si modifica da qui.</p>
+                                <p>Usa «Naviga» per cliccare i link del sito e cambiare pagina.</p>
+                            </div>
+                            <div id="svIspettore" hidden></div>
+                        </div>
+                        <div role="tabpanel" id="vista-tema" aria-labelledby="scheda-tema" class="sv-vista" data-con-anteprima hidden>
+                            <div class="sv-filtro">
+                                <label for="svCercaToken" class="sr-only">Cerca nel tema</label>
+                                <input type="search" id="svCercaToken" placeholder="Cerca colore, misura, font…" autocomplete="off">
+                            </div>
+                            <div id="svTema"></div>
+                        </div>
+                        <div role="tabpanel" id="vista-animazioni" aria-labelledby="scheda-animazioni" class="sv-vista" data-con-anteprima hidden>
+                            <div class="sv-filtro">
+                                <label for="svCercaAnimazioni" class="sr-only">Cerca animazioni</label>
+                                <input type="search" id="svCercaAnimazioni" placeholder="Cerca animazione, transizione o selettore…" autocomplete="off">
+                            </div>
+                            <div id="svAnimazioni"></div>
+                        </div>
+                    </div>
+
+                    <div class="sv-palco">
+                        <div class="sv-barra">
+                            <label for="svIndirizzo" class="sr-only">Pagina</label>
+                            <input id="svIndirizzo" list="svPagine" value="/" autocomplete="off" spellcheck="false">
+                            <datalist id="svPagine"></datalist>
+                            <div class="sv-gruppo" role="group" aria-label="Larghezza">
+                                {dispositivi.map((d, i) => (
+                                    <button type="button" data-dispositivo={d.id} data-larghezza={d.larghezza} aria-pressed={i === 0 ? 'true' : 'false'}>{d.label}</button>
+                                ))}
+                            </div>
+                            <div class="sv-gruppo" role="group" aria-label="Tema dell'anteprima">
+                                <button type="button" data-tema-anteprima="chiaro" aria-pressed="true"><i class="fas fa-sun" aria-hidden="true"></i> Chiaro</button>
+                                <button type="button" data-tema-anteprima="scuro" aria-pressed="false"><i class="fas fa-moon" aria-hidden="true"></i> Scuro</button>
+                            </div>
+                            <div class="sv-gruppo" role="group" aria-label="Modalità">
+                                <button type="button" data-modo="modifica" aria-pressed="true"><i class="fas fa-pen" aria-hidden="true"></i> Modifica</button>
+                                <button type="button" data-modo="naviga" aria-pressed="false"><i class="fas fa-route" aria-hidden="true"></i> Naviga</button>
+                            </div>
+                            <button type="button" class="sv-ricarica" id="svRicarica" aria-label="Ricarica l'anteprima" title="Ricarica l'anteprima"><i class="fas fa-arrows-rotate" aria-hidden="true"></i></button>
+                        </div>
+                        <div class="sv-scena" id="svScena">
+                            <div class="sv-cornice" id="svCornice">
+                                <iframe id="svAnteprima" title="Anteprima del sito"></iframe>
+                                <div class="sv-evidenza sv-evidenza--sopra" id="svSopra" hidden></div>
+                                <div class="sv-evidenza sv-evidenza--scelto" id="svScelto" hidden><span id="svSceltoNome"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section role="tabpanel" id="vista-seo" aria-labelledby="scheda-seo" class="sv-vista sv-intera" hidden>
+                    <div class="pagina-azioni">
+                        <button type="button" class="btn btn-primary" id="svSeoControlla"><i class="fas fa-magnifying-glass" aria-hidden="true"></i> Controlla tutte le pagine</button>
+                    </div>
+                    <p class="sv-spiega">Titolo fino a 60 caratteri, descrizione fino a 160, un solo h1, testo alternativo dell'immagine social. Le regole condivise (dati strutturati, robots, sitemap, llms.txt) sono nei file qui sotto.</p>
+                    <div class="sv-collegamenti" id="svSeoFile"></div>
+                    <div id="svSeo"></div>
+                </section>
+
+                <section role="tabpanel" id="vista-immagini" aria-labelledby="scheda-immagini" class="sv-vista sv-intera" hidden>
+                    <div class="barra">
+                        <div class="sv-filtro sv-filtro--riga">
+                            <label for="svCercaImmagini" class="sr-only">Cerca immagini</label>
+                            <input type="search" id="svCercaImmagini" placeholder="Cerca per nome o cartella…" autocomplete="off">
+                        </div>
+                        <label class="btn btn-primary sv-carica">
+                            <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Aggiungi immagini
+                            <input type="file" id="svNuoveImmagini" accept="image/*" multiple class="sr-only">
+                        </label>
+                    </div>
+                    <div class="sv-immagini" id="svImmagini"></div>
+                </section>
+
+                <section role="tabpanel" id="vista-file" aria-labelledby="scheda-file" class="sv-vista sv-intera sv-file" hidden>
+                    <div class="sv-file-lato">
+                        <div class="sv-filtro">
+                            <label for="svFiltroFile" class="sr-only">Filtra i file</label>
+                            <input type="search" id="svFiltroFile" placeholder="Filtra i file…" autocomplete="off">
+                        </div>
+                        <div class="sv-filtro">
+                            <label for="svCercaCodice" class="sr-only">Cerca nel codice</label>
+                            <input type="search" id="svCercaCodice" placeholder="Cerca nel codice (Invio)…" autocomplete="off">
+                        </div>
+                        <div class="sv-file-comandi">
+                            <button type="button" class="btn btn-secondary" id="svNuovoFile"><i class="fas fa-plus" aria-hidden="true"></i> Nuovo</button>
+                            <label class="btn btn-secondary sv-carica">
+                                <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Carica
+                                <input type="file" id="svCaricaFile" class="sr-only">
+                            </label>
+                        </div>
+                        <div class="sv-albero" id="svAlbero"></div>
+                    </div>
+                    <div class="sv-file-corpo">
+                        <div class="sv-file-testa">
+                            <h2 id="svFileNome">Scegli un file</h2>
+                            <div class="sv-file-azioni" id="svFileAzioni" hidden>
+                                <button type="button" class="btn btn-primary" id="svFileSalva" disabled><i class="fas fa-check" aria-hidden="true"></i> Salva</button>
+                                <button type="button" class="btn btn-secondary" id="svFileRinomina">Rinomina</button>
+                                <a class="btn btn-secondary" id="svFileScarica" href="/area-sviluppatori" download><i class="fas fa-download" aria-hidden="true"></i> Scarica</a>
+                                <button type="button" class="btn btn-secondary btn-icona" id="svFileElimina" aria-label="Elimina il file" title="Elimina il file"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <div class="sv-editor" id="svEditor"></div>
+                    </div>
+                </section>
+
+                <section role="tabpanel" id="vista-pubblica" aria-labelledby="scheda-pubblica" class="sv-vista sv-intera" hidden>
+                    <div class="sv-pubblica">
+                        <div>
+                            <h2 class="sv-titolo">Modifiche da pubblicare</h2>
+                            <p class="sv-spiega" id="svModo"></p>
+                            <ul class="sv-modifiche" id="svModifiche"></ul>
+                            <form class="sv-invia" id="svInvia">
+                                <div class="campo">
+                                    <label for="svMessaggio">Cosa hai cambiato</label>
+                                    <input id="svMessaggio" maxlength="300" placeholder="Es. Nuovo colore dei pulsanti" autocomplete="off">
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="svPubblica"><i class="fas fa-paper-plane" aria-hidden="true"></i> Pubblica sul sito</button>
+                            </form>
+                            <p class="sv-online" id="svOnline" role="status" aria-live="polite"></p>
+                            <h2 class="sv-titolo">Ultime pubblicazioni</h2>
+                            <ul class="sv-storia" id="svStoria"></ul>
+                        </div>
+                        <div class="sv-differenza">
+                            <h2 class="sv-titolo" id="svDiffNome">Differenze</h2>
+                            <pre id="svDiff" tabindex="0"><code>Scegli un file per vedere cosa cambia.</code></pre>
+                        </div>
+                    </div>
+                </section>
+            </>
+        )}
+    </main>
+
+    <dialog class="conferma sv-chiedi" id="svChiedi" aria-labelledby="svChiediTitolo">
+        <form method="dialog">
+            <h2 id="svChiediTitolo"></h2>
+            <div class="campo">
+                <label for="svChiediCampo" id="svChiediEtichetta"></label>
+                <input id="svChiediCampo" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="conferma-azioni">
+                <button type="submit" value="no" class="btn btn-secondary" formnovalidate>Annulla</button>
+                <button type="submit" value="si" class="btn btn-primary">Conferma</button>
+            </div>
+        </form>
+    </dialog>
+    <Conferma />
+</Admin>
+
+<script>
+    import '../scripts/sviluppatori/index';
+</script>

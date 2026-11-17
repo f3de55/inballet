@@ -3,18 +3,21 @@ import { Image } from 'astro:assets';
 import { actions } from 'astro:actions';
 import Admin from '../layouts/Admin.astro';
 import logo from '../assets/images/logo.png';
-import { isLoggedIn } from '../lib/auth';
+import { isLoggedIn, isSviluppatore } from '../lib/auth';
 import '../styles/admin/login.css';
 
 export const prerender = false;
 
 const richiesta = Astro.url.searchParams.get('da') ?? '';
-const destinazione = /^\/[a-z]/.test(richiesta) ? richiesta : '/dashboard';
+const sviluppatore = await isSviluppatore(Astro.session);
+const destinazione = /^\/[a-z]/.test(richiesta) ? richiesta : sviluppatore ? '/area-sviluppatori' : '/dashboard';
+const anteprima = sviluppatore && Astro.url.searchParams.has('anteprima');
+const consentita = sviluppatore || !destinazione.startsWith('/area-sviluppatori');
 const result = Astro.getActionResult(actions.auth.login);
-if (result && !result.error) return Astro.redirect(destinazione);
-if (await isLoggedIn(Astro.session)) return Astro.redirect(destinazione);
+if (!anteprima && consentita && result && !result.error) return Astro.redirect(destinazione);
+if (!anteprima && consentita && (await isLoggedIn(Astro.session))) return Astro.redirect(destinazione);
 
-const error = result?.error?.message ?? '';
+const error = result?.error?.message ?? (result && !consentita ? 'Questa area richiede la password sviluppatori' : '');
 if (result?.error) Astro.response.status = 401;
 ---
 

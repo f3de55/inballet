@@ -1,10 +1,11 @@
 import { defineMiddleware } from 'astro:middleware';
-import { isLoggedIn } from './lib/auth';
+import { isLoggedIn, isSviluppatore } from './lib/auth';
 import { immagineOttimizzata } from './lib/immagini-ottimizzate';
 
 const CARICAMENTI = /^\/_actions\/(?:immagini\.carica|documenti\.salva|insegnanti\.salva|revisione\.pezzo)\/?$/;
+const CARICAMENTI_SVILUPPATORI = /^\/_actions\/sviluppatori\.(?:scrivi|carica|immagine)\/?$/;
 const CORPO_MASSIMO = 256 * 1024;
-const RISERVATE = /^\/(?:dashboard|login)(?:\/|$)/;
+const RISERVATE = /^\/(?:dashboard|login|area-sviluppatori)(?:\/|$)/;
 
 export const onRequest = defineMiddleware(async (context, next) => {
   if (context.isPrerendered) return next();
@@ -12,7 +13,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   if (request.method === 'POST') {
     const peso = Number(request.headers.get('content-length') ?? 0);
-    if (peso > CORPO_MASSIMO && !(CARICAMENTI.test(url.pathname) && (await isLoggedIn(context.session)))) {
+    const ammesso = async () =>
+      (CARICAMENTI.test(url.pathname) && (await isLoggedIn(context.session))) ||
+      (CARICAMENTI_SVILUPPATORI.test(url.pathname) && (await isSviluppatore(context.session)));
+    if (peso > CORPO_MASSIMO && !(await ammesso())) {
       return new Response('Payload too large', { status: 413 });
     }
     if (url.pathname.startsWith('/_actions/') && request.headers.get('origin') !== url.origin) {

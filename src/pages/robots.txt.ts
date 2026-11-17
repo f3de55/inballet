@@ -7,6 +7,7 @@ const ufficiale = [
   'Allow: /',
   'Disallow: /login',
   'Disallow: /dashboard',
+  'Disallow: /area-sviluppatori',
   'Disallow: /presentazione',
   'Disallow: /sito-oggi',
   'Disallow: /_actions/',

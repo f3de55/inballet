@@ -1,6 +1,6 @@
 import { ActionError, defineAction, type ActionAPIContext } from 'astro:actions';
 import { z } from 'astro/zod';
-import { isLoggedIn, login, logout, verificaAccesso } from '../lib/auth';
+import { isLoggedIn, isSviluppatore, login, logout, verificaAccesso } from '../lib/auth';
 import { prepara, rispondi } from '../lib/chatbot';
 import { ipVisitatore } from '../lib/chatbot/protezioni';
 import { verifica } from '../lib/chatbot/verifica';
@@ -13,6 +13,9 @@ import * as insegnanti from '../lib/insegnanti';
 import { ErroreImpostazioni, leggiImpostazioni, salvaImpostazioni, segnaRevisione } from '../lib/impostazioni';
 import { caricaPezzo, ErroreRevisione, iniziaCaricamento, inviaRevisione, preparaTabella, revisioneCollegata } from '../lib/revisione';
 import { MAX_SEZIONE_REVISIONE, MAX_TESTO_REVISIONE } from '../lib/revisione-comune';
+import { indirizziSitemap } from '../lib/sitemap';
+import * as sv from '../lib/sviluppatori';
+import * as deposito from '../lib/sviluppatori/deposito';
 
 function admin<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O>) {
   return async (input: I, context: ActionAPIContext): Promise<O> => {
@@ -37,6 +40,25 @@ function admin<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O
 }
 
 const richiesta = (message: string) => new ActionError({ code: 'BAD_REQUEST', message });
+
+function sviluppatore<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O>, preparare = true) {
+  return async (input: I, context: ActionAPIContext): Promise<O> => {
+    if (!(await isSviluppatore(context.session))) {
+      throw new ActionError({ code: 'UNAUTHORIZED', message: 'Sessione scaduta: accedi di nuovo con la password sviluppatori' });
+    }
+    try {
+      if (preparare) await deposito.prepara();
+      return await handler(input, context);
+    } catch (e) {
+      if (e instanceof sv.ErroreSviluppatori) throw richiesta(e.message);
+      throw e;
+    }
+  };
+}
+
+const percorso = z.string().min(1).max(400);
+const modificaCss = z.object({ prop: z.string().max(80), valore: z.string().max(4000).nullable() });
+const contesti = z.array(z.string().max(300)).max(6);
 const campo = z.string().max(2000).optional();
 const perId = z.object({ id: z.string().max(40) });
 const ordine = (max: number) => z.object({ ids: z.array(z.string().max(40)).max(max) });
@@ -269,6 +291,122 @@ export const server = {
     }),
   },
 
+  sviluppatori: {
+    stato: defineAction({
+      handler: sviluppatore(async () => ({
+        modalita: deposito.modalita(),
+        testa: await deposito.testa(),
+        online: deposito.online(),
+        modifiche: await deposito.modifiche(),
+        font: await sv.fontAttuale(),
+      })),
+    }),
+
+    elenco: defineAction({ handler: sviluppatore(() => deposito.elenco()) }),
+
+    leggi: defineAction({
+      input: z.object({ percorso }),
+      handler: sviluppatore(({ percorso }) => sv.leggiPerEditor(percorso)),
+    }),
+
+    scrivi: defineAction({
+      input: z.object({ percorso, testo: z.string().max(2 * 1024 * 1024) }),
+      handler: sviluppatore(async ({ percorso, testo }) => ({ testo: await sv.salvaTesto(percorso, testo) })),
+    }),
+
+    carica: defineAction({
+      accept: 'form',
+      input: z.object({ percorso, file: z.instanceof(File) }),
+      handler: sviluppatore(({ percorso, file }) => sv.caricaFile(percorso, file)),
+    }),
+
+    elimina: defineAction({
+      input: z.object({ percorso }),
+      handler: sviluppatore(({ percorso }) => deposito.elimina(percorso)),
+    }),
+
+    rinomina: defineAction({
+      input: z.object({ da: percorso, a: percorso }),
+      handler: sviluppatore(({ da, a }) => deposito.rinomina(da, a)),
+    }),
+
+    cerca: defineAction({
+      input: z.object({ query: z.string().max(200) }),
+      handler: sviluppatore(({ query }) => sv.cerca(query)),
+    }),
+
+    testo: defineAction({
+      input: z.object({
+        vecchio: z.string().max(20000),
+        nuovo: z.string().max(20000),
+        vicini: z.array(z.string().max(2000)).max(12),
+        pagina: z.string().max(400),
+        scelta: z.object({ file: percorso, inizio: z.number().int().min(0) }).optional(),
+        tutte: z.boolean().optional(),
+      }),
+      handler: sviluppatore((input) => sv.modificaTesto(input)),
+    }),
+
+    regole: defineAction({ handler: sviluppatore(() => sv.tutteLeRegole()) }),
+
+    regola: defineAction({
+      input: z.object({
+        file: percorso,
+        percorso: z.array(z.number().int().min(0)).max(10),
+        selettore: z.string().max(2000),
+        modifiche: z.array(modificaCss).min(1).max(60),
+      }),
+      handler: sviluppatore(({ file, percorso, selettore, modifiche }) => sv.modificaRegola(file, percorso, selettore, modifiche)),
+    }),
+
+    nuovaRegola: defineAction({
+      input: z.object({ file: percorso, selettore: z.string().max(2000), contesti, dichiarazioni: z.array(modificaCss).max(60) }),
+      handler: sviluppatore(({ file, selettore, contesti, dichiarazioni }) => sv.nuovaRegola(file, selettore, contesti, dichiarazioni)),
+    }),
+
+    immagini: defineAction({
+      input: z.object({ indirizzo: z.string().max(2000) }),
+      handler: sviluppatore(({ indirizzo }) => sv.trovaImmagine(indirizzo)),
+    }),
+
+    immagine: defineAction({
+      accept: 'form',
+      input: z.object({ percorso, file: z.instanceof(File) }),
+      handler: sviluppatore(({ percorso, file }) => sv.sostituisciImmagine(percorso, file)),
+    }),
+
+    font: defineAction({
+      input: z.object({ nome: z.string().max(60) }),
+      handler: sviluppatore(({ nome }) => sv.cambiaFont(nome)),
+    }),
+
+    pagine: defineAction({
+      handler: sviluppatore(async (_, context) => (await indirizziSitemap(context.site!, context.url)).map((u) => new URL(u).pathname), false),
+    }),
+
+    differenza: defineAction({
+      input: z.object({ percorso }),
+      handler: sviluppatore(({ percorso }) => deposito.differenza(percorso)),
+    }),
+
+    scarta: defineAction({
+      input: z.object({ percorso }),
+      handler: sviluppatore(({ percorso }) => deposito.scarta(percorso)),
+    }),
+
+    pubblica: defineAction({
+      input: z.object({ messaggio: z.string().max(300) }),
+      handler: sviluppatore(async ({ messaggio }) => ({ sha: await deposito.pubblica(messaggio) })),
+    }),
+
+    storia: defineAction({ handler: sviluppatore(() => deposito.storia()) }),
+
+    annulla: defineAction({
+      input: z.object({ sha: z.string().max(40) }),
+      handler: sviluppatore(({ sha }) => deposito.annulla(sha)),
+    }),
+  },
+
   auth: {
     login: defineAction({
       accept: 'form',
@@ -277,7 +415,7 @@ export const server = {
         const esito = verificaAccesso(password, ipVisitatore(context.request.headers, context.clientAddress));
         if (esito === 'bloccato') throw new ActionError({ code: 'TOO_MANY_REQUESTS', message: 'Troppi tentativi: riprova tra 15 minuti' });
         if (esito === 'errata') throw new ActionError({ code: 'UNAUTHORIZED', message: 'Password non corretta' });
-        await login(context.session);
+        await login(context.session, esito);
         segnaRevisione(context.cookies, context.url, (await leggiImpostazioni()).revisione);
       },
     }),

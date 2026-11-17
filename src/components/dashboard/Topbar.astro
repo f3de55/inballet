@@ -1,8 +1,6 @@
 ---
-import { actions } from 'astro:actions';
 import { Image } from 'astro:assets';
 import logo from '../../assets/images/logo.png';
-import TemaInterruttore from '../TemaInterruttore.astro';
 
 interface Props {
   sezione: 'eventi' | 'documenti' | 'insegnanti' | 'bot';
@@ -27,13 +25,6 @@ const voci = [
                 <a href={`?s=${v.id}`} class:list={{ attiva: sezione === v.id }} aria-current={sezione === v.id ? 'page' : undefined}>{v.label}</a>
             ))}
         </nav>
-        <div class="topbar-azioni">
-            <button type="button" data-apri-impostazioni><i class="fas fa-gear" aria-hidden="true"></i><span>Impostazioni</span></button>
-            <TemaInterruttore etichettaNascosta />
-            <a href="/" target="_blank" rel="noopener"><i class="fas fa-external-link-alt" aria-hidden="true"></i><span>Vedi il sito</span><span class="sr-only"> (si apre in una nuova scheda)</span></a>
-            <form method="POST" action={actions.auth.logout}>
-                <button type="submit"><i class="fas fa-sign-out-alt" aria-hidden="true"></i><span>Esci</span></button>
-            </form>
-        </div>
+        <button type="button" class="topbar-impostazioni" data-apri-impostazioni aria-label="Impostazioni" title="Impostazioni"><i class="fas fa-gear" aria-hidden="true"></i></button>
     </div>
 </header>

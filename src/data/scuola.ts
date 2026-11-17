@@ -59,7 +59,7 @@ export const categorieCorsi = [
   {
     id: 'classica-moderna',
     nome: 'Danza Classica e Moderna',
-    sintesi: 'La base di ogni stile: si comincia giocando a 3 anni e si arriva ai livelli avanzati.',
+    sintesi: 'Dal gioco a 3 anni fino ai livelli avanzati: la base di ogni stile.',
     immagine: { src: 'foto/tutu-classica.jpg', alt: 'Tutù rosa di danza classica', fuoco: { desktop: '60% 50%', mobile: '50% 45%' } },
     immagineHome: { src: 'grafica-corsi/classica-moderna-unica.webp', fuoco: { desktop: '50% 50%' } },
     descrizione: 'Si comincia giocando: a 3 anni con Avviamento alla Danza, a 4-5 anni con Educazione alla Danza. Dai 6 anni arrivano Danza Classica e Modern, fino ai livelli avanzati.',
@@ -74,7 +74,7 @@ export const categorieCorsi = [
   {
     id: 'contemporanea',
     nome: 'Danza Contemporanea',
-    sintesi: "L'arte più libera del movimento, dai 10 anni in su. Per gli adulti, anche da zero.",
+    sintesi: 'Il movimento più libero, dai 10 anni in su; adulti anche da zero.',
     immagine: { src: 'foto/contact-improvisation-img2.jpg', alt: 'Due danzatori a terra durante una sequenza di contact improvisation', fuoco: { desktop: '50% 50%' } },
     immagineHome: { src: 'grafica-corsi/contemporanea-unica.webp', fuoco: { desktop: '50% 50%' } },
     descrizione: "L'arte più libera del movimento: Danza Contemporanea dai 10 anni, Contemporanea Adulti dai 40 anni, anche partendo da zero, Contact Improvisation e Movimento Creativo, aperto dai 18 anni anche a chi non ha mai danzato.",
@@ -89,7 +89,7 @@ export const categorieCorsi = [
   {
     id: 'urban',
     nome: 'Urban Dance',
-    sintesi: 'Gli stili urbani tra energia, tecnica e cultura Hip-Hop, dai 6 anni.',
+    sintesi: 'Energia, tecnica e cultura Hip-Hop: gli stili urbani dai 6 anni.',
     immagine: { src: 'foto/breaking-img2.jpg', alt: 'Allievi di breaking in freeze sul parquet della sala', fuoco: { desktop: '50% 50%', mobile: '50% 60%' } },
     immagineHome: { src: 'grafica-corsi/urban-unica.webp', fuoco: { desktop: '50% 50%' } },
     descrizione: 'Hip-Hop e Breaking dai 6 anni, Heels, Danza Acrobatica e, dai 16 anni, il Contaminato: gli stili urbani tra energia, tecnica e cultura Hip-Hop.',
@@ -105,7 +105,7 @@ export const categorieCorsi = [
   {
     id: 'benessere',
     nome: 'Benessere e Movimento',
-    sintesi: 'Tempo per il corpo e per la mente, da solo o accanto a un corso di danza.',
+    sintesi: 'Tempo per il corpo e per la mente, da solo o accanto alla danza.',
     immagine: { src: 'foto/yoga-img2.jpg', alt: 'Lezione di yoga in sala, con le mani giunte sopra la testa', fuoco: { desktop: '55% 50%', mobile: '50% 35%' } },
     immagineHome: { src: 'grafica-corsi/benessere-unica.webp', fuoco: { desktop: '50% 50%' } },
     descrizione: "Hatha Yoga, Pilates per livelli e lezioni individuali: tempo per il corpo e per la mente, da solo o accanto a un corso di danza.",

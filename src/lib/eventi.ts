@@ -1,7 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { z } from 'astro/zod';
 import { paths, readJson, serialized, writeJson } from './storage';
-import { decodeHtml, slug, stripTags } from './text';
+import { decodeHtml, slug, stripTags, testoRicco } from './text';
 import { isDateFormat, isValidTime, romeIso, romeTimestamp } from './time';
 import { scuola, sedi } from '../data/scuola';
 
@@ -130,7 +130,7 @@ function normalizza(raw: Record<string, unknown>): Evento {
     stato,
     tipo: str(raw.tipo),
     luogo: str(raw.luogo),
-    descrizione: pulisciDescrizione(str(raw.descrizione)),
+    descrizione: testoRicco(str(raw.descrizione), true),
     immagine: str(raw.immagine),
     destinatari: str(raw.destinatari),
     costo: str(raw.costo),
@@ -170,16 +170,6 @@ export async function trovaEvento(chiave: string): Promise<{ evento: Evento; vec
   if (evento) return { evento, vecchio: false };
   const altro = eventi.find((e) => e.alias?.includes(chiave) || e.id === chiave);
   return altro ? { evento: altro, vecchio: true } : null;
-}
-
-const TAG_DESCRIZIONE = ['b', 'strong', 'i', 'em', 'ul', 'li', 'br'];
-
-function pulisciDescrizione(html: string): string {
-  return stripTags(html.replace(/<\/(div|p)>\s*/gi, '<br>'), TAG_DESCRIZIONE)
-    .replace(/<(\/?)([a-z]+)\b[^>]*>/gi, (_, chiusura: string, tag: string) => `<${chiusura}${tag.toLowerCase()}>`)
-    .replace(/<br>\s*(<\/?(ul|li)>)/gi, '$1')
-    .replace(/(<br>\s*)+$/i, '')
-    .trim();
 }
 
 export async function salvaEvento(input: InputEvento): Promise<{ evento: Evento; warnings: string[] }> {
@@ -224,7 +214,7 @@ export async function salvaEvento(input: InputEvento): Promise<{ evento: Evento;
       stato: input.stato,
       tipo,
       luogo: input.luogo,
-      descrizione: pulisciDescrizione(input.descrizione),
+      descrizione: testoRicco(input.descrizione, true),
       immagine: input.immagine,
       destinatari: input.destinatari,
       costo: input.costo,

@@ -15,7 +15,7 @@ export interface PaginaDocumenti {
 export const documentiPredefiniti: PaginaDocumenti = {
   hero: {
     titolo: 'Iscrizioni e documenti',
-    testo: "Modulo di iscrizione, autocertificazione e scadenze **2026/2027**: tutto per iscriversi a InBallet.",
+    testo: "Modulo di iscrizione, autocertificazione e scadenze <strong>2026/2027</strong>: tutto per iscriversi a InBallet.",
   },
   documenti: [
     {

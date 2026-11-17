@@ -52,16 +52,9 @@ let immagini: Immagine[] = [];
 let immagineSelezionata = '';
 let modificato = false;
 
-function updateEditorCounter() {
-  const counter = $('descrizione-counter');
-  const len = editor.text.trim().length;
-  counter.textContent = len > 800 ? `${len}/1000` : '';
-  counter.classList.toggle('vicino', len > 900);
-}
-
-const editor = createEditor($('descrizione'), modalEvento.querySelector<HTMLElement>('.editor-toolbar')!, () => {
+const editor = createEditor($('descrizione'), () => {
   modificato = true;
-  updateEditorCounter();
+  aggiornaContatore($('descrizione'));
 });
 campi.titolo.addEventListener('input', () => aggiornaContatore(campi.titolo));
 const piuGiorni = $<HTMLInputElement>('piuGiorni');
@@ -98,7 +91,7 @@ function apriModal(ev?: Evento) {
   impostaLocandina(ev?.immagine ?? '');
   $<HTMLDetailsElement>('libreria').open = false;
   aggiornaContatore(campi.titolo);
-  updateEditorCounter();
+  aggiornaContatore($('descrizione'));
   modificato = false;
 
   mostraModal(modalEvento);

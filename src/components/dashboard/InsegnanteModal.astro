@@ -1,3 +1,7 @@
+---
+import EditorTesto from './EditorTesto.astro';
+---
+
 
 <div class="modal" id="modalInsegnante" role="dialog" aria-modal="true" aria-labelledby="modalInsegnanteTitle">
     <div class="modal-box">
@@ -22,12 +26,7 @@
                     <small class="contatore" id="insRuolo-counter"></small>
                 </div>
 
-                <div class="campo">
-                    <label for="insBio">Breve presentazione</label>
-                    <textarea id="insBio" rows="4" maxlength="400" data-counter="400" placeholder="Formazione, esperienza, corsi che segue"></textarea>
-                    <small class="contatore" id="insBio-counter"></small>
-                    <small class="nota doc-aiuto">Per il grassetto scrivi la parola tra doppi asterischi: **così**.</small>
-                </div>
+                <EditorTesto id="insBio" etichetta="Breve presentazione" max={400} placeholder="Formazione, esperienza, corsi che segue" />
 
                 <div class="campo">
                     <label for="insCompetenze">Competenze <span class="nota">una per riga</span></label>

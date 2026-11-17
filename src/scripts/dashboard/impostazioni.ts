@@ -25,6 +25,7 @@ if (modal && form) {
   document.addEventListener('click', (e) => {
     const t = e.target as Element;
     if (t.closest('[data-apri-impostazioni]')) return mostraModal(modal);
+    if (t.closest('[data-apri-demo]')) return chiudi();
     if (t.closest('[data-chiudi-impostazioni]') || t === modal) return chiudi();
   });
   document.addEventListener('keydown', (e) => {

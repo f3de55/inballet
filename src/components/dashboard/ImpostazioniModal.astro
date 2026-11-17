@@ -1,13 +1,21 @@
 ---
+import { actions } from 'astro:actions';
 import type { Impostazioni } from '../../lib/impostazioni';
 import { revisioneCollegata } from '../../lib/revisione';
+import TemaInterruttore from '../TemaInterruttore.astro';
 
 interface Props {
   impostazioni: Impostazioni;
+  demo?: 'eventi' | 'insegnanti' | 'chatbot';
 }
 
-const { impostazioni } = Astro.props;
+const { impostazioni, demo } = Astro.props;
 const collegata = revisioneCollegata();
+const testoDemo = {
+  eventi: 'Eventi di prova per vedere come appaiono qui e nel calendario del sito; si tolgono con un clic.',
+  insegnanti: 'Insegnanti di prova per vedere come appaiono qui e in Chi siamo; si tolgono con un clic.',
+  chatbot: 'Messaggi di prova per riempire numeri e grafici del chatbot; si tolgono con un clic.',
+};
 ---
 
 <div class="modal modal--impostazioni" id="modalImpostazioni" role="dialog" aria-modal="true" aria-labelledby="impostazioniTitolo">
@@ -18,13 +26,31 @@ const collegata = revisioneCollegata();
         </div>
         <form id="formImpostazioni" novalidate>
             <div class="modal-body">
-                <section class="imp-riga" aria-labelledby="impEliminaTitolo">
+                <section class="imp-riga" aria-labelledby="impTemaTitolo">
                     <div class="imp-testo">
-                        <h3 id="impEliminaTitolo">Elimina tutto</h3>
-                        <small class="nota">Cancella eventi, locandine e dati del chatbot, <strong>anche quelli veri</strong>. Non si può annullare.</small>
+                        <h3 id="impTemaTitolo">Aspetto</h3>
+                        <small class="nota">Colori scuri per la dashboard e il sito, su questo dispositivo.</small>
                     </div>
-                    <button type="button" class="btn btn-danger" data-apri-elimina><i class="fas fa-trash-alt" aria-hidden="true"></i> Elimina tutto…</button>
+                    <TemaInterruttore class="btn btn-secondary imp-tema" />
                 </section>
+
+                <section class="imp-riga" aria-labelledby="impSitoTitolo">
+                    <div class="imp-testo">
+                        <h3 id="impSitoTitolo">Il sito</h3>
+                        <small class="nota">Apre il sito pubblico in una nuova scheda.</small>
+                    </div>
+                    <a href="/" target="_blank" rel="noopener" class="btn btn-secondary"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Vedi il sito<span class="sr-only"> (si apre in una nuova scheda)</span></a>
+                </section>
+
+                {demo && (
+                    <section class="imp-riga" aria-labelledby="impDemoTitolo">
+                        <div class="imp-testo">
+                            <h3 id="impDemoTitolo">Dati demo</h3>
+                            <small class="nota">{testoDemo[demo]}</small>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-apri-demo><i class="fas fa-flask" aria-hidden="true"></i> Dati demo…</button>
+                    </section>
+                )}
 
                 <section class="imp-riga" aria-labelledby="impRevisioneTitolo">
                     <div class="imp-testo">
@@ -55,12 +81,22 @@ const collegata = revisioneCollegata();
                         )}
                     </div>
                 </section>
+
+                <section class="imp-riga" aria-labelledby="impEliminaTitolo">
+                    <div class="imp-testo">
+                        <h3 id="impEliminaTitolo">Elimina tutto</h3>
+                        <small class="nota">Cancella eventi, locandine e dati del chatbot, <strong>anche quelli veri</strong>. Non si può annullare.</small>
+                    </div>
+                    <button type="button" class="btn btn-danger" data-apri-elimina><i class="fas fa-trash-alt" aria-hidden="true"></i> Elimina tutto…</button>
+                </section>
             </div>
             <div class="modal-footer">
+                <button type="submit" class="btn btn-link imp-esci" form="formEsci"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Esci dalla dashboard</button>
                 <button type="button" class="btn btn-secondary" data-chiudi-impostazioni>Annulla</button>
                 <button type="submit" class="btn btn-primary" id="impSalva">Salva</button>
             </div>
         </form>
+        <form id="formEsci" method="POST" action={actions.auth.logout} hidden></form>
     </div>
 </div>
 

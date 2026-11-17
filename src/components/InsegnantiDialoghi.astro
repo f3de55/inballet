@@ -1,6 +1,5 @@
 ---
 import type { SezioneInsegnanti } from '../lib/insegnanti';
-import { grassettoDaTesto } from '../lib/text';
 import '../styles/components/dialogo.css';
 import '../styles/components/zoom-foto.css';
 import '../styles/components/insegnanti-dialoghi.css';
@@ -27,7 +26,7 @@ const { insegnanti } = Astro.props.dati;
       <div class="ins-dialog-testo">
         <h2 class="ins-dialog-nome" id={`insegnante-${p.id}-nome`}>{p.nome}</h2>
         {p.ruolo && <p class="ins-dialog-ruolo titoletto">{p.ruolo}</p>}
-        {p.bio && <p class="ins-dialog-bio" set:html={grassettoDaTesto(p.bio)} />}
+        {p.bio && <p class="ins-dialog-bio" set:html={p.bio} />}
         {p.competenze.length > 0 && (
           <div class="ins-competenze">
             <h3 class="ins-competenze-titolo titoletto">Competenze</h3>

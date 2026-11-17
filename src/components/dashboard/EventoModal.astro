@@ -1,4 +1,5 @@
 ---
+import EditorTesto from './EditorTesto.astro';
 interface Props {
   tipi: string[];
   sedi: { nome: string; luogo: string }[];
@@ -97,18 +98,7 @@ const { tipi, sedi, luoghi, destinatari, costi } = Astro.props;
                     </details>
                 </div>
 
-                <div class="campo">
-                    <span class="campo-label" id="descrizione-label"><span>Descrizione</span></span>
-                    <div class="editor-wrapper">
-                        <div class="editor-toolbar" role="toolbar" aria-label="Formattazione">
-                            <button type="button" data-format="bold" title="Grassetto (Ctrl+B)" aria-label="Grassetto"><i class="fas fa-bold" aria-hidden="true"></i></button>
-                            <button type="button" data-format="italic" title="Corsivo (Ctrl+I)" aria-label="Corsivo"><i class="fas fa-italic" aria-hidden="true"></i></button>
-                            <button type="button" data-format="list" title="Elenco puntato" aria-label="Elenco puntato"><i class="fas fa-list-ul" aria-hidden="true"></i></button>
-                        </div>
-                        <div class="editor-content" id="descrizione" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="descrizione-label" data-placeholder="Cosa si fa, a chi è adatto, cosa portare…"></div>
-                    </div>
-                    <small class="contatore" id="descrizione-counter"></small>
-                </div>
+                <EditorTesto id="descrizione" etichetta="Descrizione" max={1000} placeholder="Cosa si fa, a chi è adatto, cosa portare…" elenchi />
 
                 <div class="campi-2 campi-2--impila">
                     <div class="campo">

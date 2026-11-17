@@ -1,10 +1,12 @@
 import { actions } from 'astro:actions';
 import { conferma } from './conferma';
+import { createEditor } from './editor';
 import { $, aggiornaContatore, attivaContatori, elencoOrdinabile, MAX_SIZE, mostraModal, nascondiModal, zonaCaricamento } from './comune';
 import { toast } from './toast';
 import type { Documento } from '../../data/documenti';
 
 const formTesti = $<HTMLFormElement>('formTesti');
+const testoHero = createEditor($('heroTesto'));
 
 attivaContatori();
 
@@ -21,7 +23,7 @@ formTesti.addEventListener('submit', async (e) => {
   salva.textContent = 'Salvataggio…';
   const { error } = await actions.documenti.salvaTesti({
     heroTitolo: valore('heroTitolo'),
-    heroTesto: valore('heroTesto'),
+    heroTesto: testoHero.html,
   });
   salva.disabled = false;
   salva.textContent = 'Salva i testi';

@@ -637,47 +637,47 @@ const COGNOMI = [
 const PROFILI: Pick<Insegnante, 'ruolo' | 'bio' | 'competenze'>[] = [
   {
     ruolo: 'Danza Classica e Modern',
-    bio: 'Diploma in danza classica; segue i corsi **dai 6 anni** con attenzione alla tecnica e alla musicalità.',
+    bio: 'Diploma in danza classica; segue i corsi <strong>dai 6 anni</strong> con attenzione alla tecnica e alla musicalità.',
     competenze: ['Danza classica', 'Modern', 'Floor barre', 'Insegnante CSEN'],
   },
   {
     ruolo: 'Avviamento alla Danza',
-    bio: 'Accompagna i più piccoli **dai 3 anni** nel primo incontro con musica e movimento, attraverso il gioco.',
+    bio: 'Accompagna i più piccoli <strong>dai 3 anni</strong> nel primo incontro con musica e movimento, attraverso il gioco.',
     competenze: ['Avviamento alla danza', 'Educazione alla danza', 'Propedeutica musicale'],
   },
   {
     ruolo: 'Danza Contemporanea',
-    bio: 'Guida i corsi di contemporanea tra **tecnica e improvvisazione**, con un lavoro di ricerca coreografica.',
+    bio: 'Guida i corsi di contemporanea tra <strong>tecnica e improvvisazione</strong>, con un lavoro di ricerca coreografica.',
     competenze: ['Danza contemporanea', 'Improvvisazione', 'Composizione coreografica'],
   },
   {
     ruolo: 'Hip-Hop e Breaking',
-    bio: 'Dal mondo urban, insegna **Hip-Hop e Breaking** a bambini e ragazzi, dai passi in piedi ai freeze.',
+    bio: 'Dal mondo urban, insegna <strong>Hip-Hop e Breaking</strong> a bambini e ragazzi, dai passi in piedi ai freeze.',
     competenze: ['Hip-Hop', 'Breaking', 'Popping', 'Old School'],
   },
   {
     ruolo: 'Heels',
-    bio: 'Porta in sala **portamento, linee e presenza scenica** sui tacchi, per ragazze e adulte.',
+    bio: 'Porta in sala <strong>portamento, linee e presenza scenica</strong> sui tacchi, per ragazze e adulte.',
     competenze: ['Heels', 'Jazz Funk', 'Coreografia'],
   },
   {
     ruolo: 'Danza Acrobatica',
-    bio: 'Insegna gli **elementi acrobatici** a terra e in aria, con progressioni sicure per ogni livello.',
+    bio: 'Insegna gli <strong>elementi acrobatici</strong> a terra e in aria, con progressioni sicure per ogni livello.',
     competenze: ['Danza acrobatica', 'Ginnastica artistica', 'Preparazione atletica'],
   },
   {
     ruolo: 'Yoga e Pilates',
-    bio: 'Insegna **Hatha Yoga** e Pilates agli adulti, con attenzione al respiro e alla postura.',
+    bio: 'Insegna <strong>Hatha Yoga</strong> e Pilates agli adulti, con attenzione al respiro e alla postura.',
     competenze: ['Hatha Yoga', 'Pilates', 'Ginnastica posturale'],
   },
   {
     ruolo: 'Contact Improvisation',
-    bio: 'Conduce il lavoro sul **contatto e lo scambio di peso**, in ascolto del partner e dello spazio.',
+    bio: 'Conduce il lavoro sul <strong>contatto e lo scambio di peso</strong>, in ascolto del partner e dello spazio.',
     competenze: ['Contact Improvisation', 'Danza contemporanea', 'Release technique'],
   },
   {
     ruolo: 'Movimento Creativo',
-    bio: 'Guida adulti, anche non danzatori, in un percorso di **ascolto ed espressione** attraverso il movimento.',
+    bio: 'Guida adulti, anche non danzatori, in un percorso di <strong>ascolto ed espressione</strong> attraverso il movimento.',
     competenze: ['Movimento creativo', 'Danzamovimentoterapia', 'Improvvisazione'],
   },
 ];

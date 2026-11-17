@@ -71,6 +71,27 @@ export const nomeBreve = (nome: string) => nome.replace(/\s*\(.*\)$/, '');
 
 export const etichettaEta = (badge: string) => badge.replace(' - ', ' · ');
 
-export const grassettoDaTesto = (s: string) => escapeHtml(s).replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
+const TAG_RICCHI: Record<string, string> = { b: 'strong', strong: 'strong', i: 'em', em: 'em', br: 'br', ul: 'ul', li: 'li' };
 
-export const senzaGrassetto = (s: string) => s.replace(/\*\*([^*]+?)\*\*/g, '$1');
+export function testoRicco(valore: string, elenchi = false): string {
+  const html = /<\/?[a-z][a-z0-9]*\b[^>]*>|&[a-z0-9#]+;/i.test(valore) ? valore : escapeHtml(valore).replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
+  const righe = html
+    .replace(/<(div|p)\b[^>]*>\s*<br\s*\/?>\s*<\/(div|p)>/gi, '<br>')
+    .replace(/<(div|p)\b[^>]*>/gi, '<br>')
+    .replace(/<\/(div|p)>/gi, '');
+  return stripTags(
+    elenchi ? righe : righe.replace(/<\/li>/gi, '<br>'),
+    Object.keys(TAG_RICCHI).filter((t) => elenchi || (t !== 'ul' && t !== 'li')),
+  )
+    .replace(/<(\/?)([a-z]+)\b[^>]*>/gi, (_, chiusura: string, tag: string) => `<${chiusura}${TAG_RICCHI[tag.toLowerCase()]}>`)
+    .replace(/<br>\s*(<\/?(ul|li)>)/gi, '$1')
+    .replace(/<(strong|em)>(\s*)<\/\1>/gi, '$2')
+    .replace(/^(\s*<br>)+|(<br>\s*)+$/gi, '')
+    .trim();
+}
+
+export const testoSemplice = (html: string) =>
+  decodeHtml(stripTags(html.replace(/<br>|<\/li>/gi, ' ')))
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();

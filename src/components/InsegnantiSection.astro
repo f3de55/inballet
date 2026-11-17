@@ -1,6 +1,5 @@
 ---
 import type { SezioneInsegnanti } from '../lib/insegnanti';
-import { grassettoDaTesto } from '../lib/text';
 import '../styles/components/insegnanti-section.css';
 
 interface Props {
@@ -19,7 +18,7 @@ const meta = Array.from({ length: ripetizioni }, () => insegnanti).flat();
       <div class="insegnanti-header">
         {sezione.eyebrow && <p class="eyebrow insegnanti-eyebrow">{sezione.eyebrow}</p>}
         <h2 class="titolo-sezione insegnanti-titolo" id="insegnanti-titolo">{sezione.titolo}{sezione.accento && <> <em>{sezione.accento}</em></>}</h2>
-        {sezione.intro && <p class="intro-sezione insegnanti-intro" set:html={grassettoDaTesto(sezione.intro)} />}
+        {sezione.intro && <p class="intro-sezione insegnanti-intro" set:html={sezione.intro} />}
       </div>
     </div>
 

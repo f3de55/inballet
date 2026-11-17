@@ -417,7 +417,7 @@
   }
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1280px) {
   .corsi-indice {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     max-width: none;

@@ -23,7 +23,7 @@ export const insegnantiPredefiniti: SezioneInsegnanti = {
     eyebrow: 'Il nostro team',
     titolo: 'I nostri',
     accento: 'insegnanti',
-    intro: 'Insegnanti **qualificati**, uniti dalla passione per la danza.',
+    intro: 'Insegnanti <strong>qualificati</strong>, uniti dalla passione per la danza.',
   },
   insegnanti: [],
 };

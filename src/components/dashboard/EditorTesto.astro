@@ -1,0 +1,26 @@
+---
+interface Props {
+  id: string;
+  etichetta: string;
+  nota?: string;
+  valore?: string;
+  max: number;
+  placeholder?: string;
+  elenchi?: boolean;
+}
+
+const { id, etichetta, nota, valore = '', max, placeholder = '', elenchi = false } = Astro.props;
+---
+
+<div class="campo">
+    <span class="campo-label" id={`${id}-label`}><span>{etichetta}</span>{nota && <span class="nota">{nota}</span>}</span>
+    <div class="editor-wrapper">
+        <div class="editor-toolbar" role="toolbar" aria-label={`Formattazione: ${etichetta}`} aria-controls={id}>
+            <button type="button" data-format="bold" title="Grassetto (Ctrl+B)" aria-label="Grassetto" aria-pressed="false"><i class="fas fa-bold" aria-hidden="true"></i></button>
+            <button type="button" data-format="italic" title="Corsivo (Ctrl+I)" aria-label="Corsivo" aria-pressed="false"><i class="fas fa-italic" aria-hidden="true"></i></button>
+            {elenchi && <button type="button" data-format="list" title="Elenco puntato" aria-label="Elenco puntato" aria-pressed="false"><i class="fas fa-list-ul" aria-hidden="true"></i></button>}
+        </div>
+        <div class:list={['editor-content', { 'editor-content--breve': !elenchi }]} id={id} contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby={`${id}-label`} data-placeholder={placeholder} data-counter={max} set:html={valore}></div>
+    </div>
+    <small class="contatore" id={`${id}-counter`}></small>
+</div>

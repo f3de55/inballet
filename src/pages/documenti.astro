@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { heroPagina } from '../lib/hero-pagine';
 import { leggiDocumenti } from '../lib/documenti';
 import { scuola } from '../data/scuola';
-import { grassettoDaTesto, senzaGrassetto } from '../lib/text';
+import { testoSemplice } from '../lib/text';
 import HeroPagina from '../components/HeroPagina.astro';
 import '../styles/pages/documenti.css';
 
@@ -15,7 +15,7 @@ const bg = {
 const { hero, documenti } = await leggiDocumenti();
 const moduli = documenti.filter((d) => d.categoria !== 'statuto');
 const statuto = documenti.find((d) => d.categoria === 'statuto');
-const base = senzaGrassetto(hero.testo) || 'Moduli di iscrizione e documenti da scaricare.';
+const base = testoSemplice(hero.testo) || 'Moduli di iscrizione e documenti da scaricare.';
 const luogo = ' InBallet, scuola di danza a Lainate e Rho (MI).';
 const description = base.length + luogo.length <= 160 ? base + luogo : base;
 ---
@@ -29,7 +29,7 @@ const description = base.length + luogo.length <= 160 ? base + luogo : base;
 >
 
     <HeroPagina titolo={hero.titolo} stile={bg.hero.style}>
-        {hero.testo && <p class="hero-lead" set:html={grassettoDaTesto(hero.testo)} />}
+        {hero.testo && <p class="hero-lead" set:html={hero.testo} />}
     </HeroPagina>
 
     <section id="documenti" class="documenti-section decoro-onde" aria-labelledby="documenti-titolo">

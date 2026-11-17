@@ -4,7 +4,7 @@ import path from 'node:path';
 import { insegnantiPredefiniti, type Insegnante, type SezioneInsegnanti } from '../data/insegnanti';
 import { ensureDir, paths, readJson, serialized, writeJson } from './storage';
 import { sniffMime } from './uploads';
-import { controllaLunghezza, mbLen, riga as str, slug } from './text';
+import { controllaLunghezza, mbLen, riga as str, slug, testoRicco, testoSemplice } from './text';
 
 export type { SezioneInsegnanti };
 
@@ -30,9 +30,10 @@ export async function leggiInsegnanti(): Promise<SezioneInsegnanti> {
   const salvato = await readJson<Partial<SezioneInsegnanti> | null>(paths.insegnanti, null);
   const base = insegnantiPredefiniti;
   return {
-    sezione: { ...base.sezione, ...salvato?.sezione },
+    sezione: { ...base.sezione, ...salvato?.sezione, intro: testoRicco(salvato?.sezione?.intro ?? base.sezione.intro) },
     insegnanti: (Array.isArray(salvato?.insegnanti) ? salvato.insegnanti : base.insegnanti).map((i) => ({
       ...i,
+      bio: testoRicco(i.bio ?? ''),
       competenze: Array.isArray(i.competenze) ? i.competenze : [],
     })),
   };
@@ -41,12 +42,12 @@ export async function leggiInsegnanti(): Promise<SezioneInsegnanti> {
 type TestiInput = Partial<Record<'eyebrow' | 'titolo' | 'accento' | 'intro', string>>;
 
 export async function salvaTesti(input: TestiInput): Promise<SezioneInsegnanti> {
-  const v = { eyebrow: str(input.eyebrow), titolo: str(input.titolo), accento: str(input.accento), intro: str(input.intro) };
+  const v = { eyebrow: str(input.eyebrow), titolo: str(input.titolo), accento: str(input.accento), intro: testoRicco(str(input.intro)) };
   const errors: string[] = [];
   controllaLunghezza(errors, 'Etichetta', v.eyebrow, LIMITI.eyebrow);
   controllaLunghezza(errors, 'Titolo', v.titolo, LIMITI.titolo, true);
   controllaLunghezza(errors, 'Parola in evidenza', v.accento, LIMITI.accento);
-  controllaLunghezza(errors, 'Introduzione', v.intro, LIMITI.intro);
+  controllaLunghezza(errors, 'Introduzione', testoSemplice(v.intro), LIMITI.intro);
   if (errors.length) throw new ErroreInsegnanti(errors.join('. '));
 
   return serialized(async () => {
@@ -98,7 +99,7 @@ export async function salvaInsegnante(input: InsegnanteInput): Promise<Insegnant
   const id = str(input.id) || null;
   const nome = str(input.nome);
   const ruolo = str(input.ruolo);
-  const bio = str(input.bio);
+  const bio = testoRicco(str(input.bio));
   const foto = input.foto && input.foto.size > 0 ? input.foto : undefined;
   const competenze = [
     ...new Set(
@@ -113,7 +114,7 @@ export async function salvaInsegnante(input: InsegnanteInput): Promise<Insegnant
   if (id && !ID.test(id)) errors.push('ID non valido');
   controllaLunghezza(errors, 'Nome', nome, LIMITI.nome, true);
   controllaLunghezza(errors, 'Disciplina', ruolo, LIMITI.ruolo);
-  controllaLunghezza(errors, 'Presentazione', bio, LIMITI.bio);
+  controllaLunghezza(errors, 'Presentazione', testoSemplice(bio), LIMITI.bio);
   if (competenze.length > LIMITI.competenze) errors.push(`Competenze: massimo ${LIMITI.competenze}`);
   const lunga = competenze.find((c) => mbLen(c) > LIMITI.competenza);
   if (lunga) errors.push(`Competenza «${lunga.slice(0, 20)}…»: massimo ${LIMITI.competenza} caratteri`);

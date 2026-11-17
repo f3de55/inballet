@@ -3,7 +3,7 @@ import { unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { documentiPredefiniti, type Documento, type PaginaDocumenti } from '../data/documenti';
 import { ensureDir, paths, readJson, serialized, writeJson } from './storage';
-import { controllaLunghezza, riga as str, slug } from './text';
+import { controllaLunghezza, riga as str, slug, testoRicco, testoSemplice } from './text';
 
 export type { Documento };
 
@@ -24,7 +24,7 @@ export async function leggiDocumenti(): Promise<PaginaDocumenti> {
   const salvato = await readJson<Partial<PaginaDocumenti> | null>(paths.documenti, null);
   const base = documentiPredefiniti;
   return {
-    hero: { ...base.hero, ...salvato?.hero },
+    hero: { titolo: salvato?.hero?.titolo ?? base.hero.titolo, testo: testoRicco(salvato?.hero?.testo ?? base.hero.testo) },
     documenti: Array.isArray(salvato?.documenti) ? salvato.documenti : base.documenti,
   };
 }
@@ -34,11 +34,11 @@ type TestiInput = Partial<Record<'heroTitolo' | 'heroTesto', string>>;
 export async function salvaTesti(input: TestiInput): Promise<PaginaDocumenti> {
   const v = {
     heroTitolo: str(input.heroTitolo),
-    heroTesto: str(input.heroTesto),
+    heroTesto: testoRicco(str(input.heroTesto)),
   };
   const errors: string[] = [];
   controllaLunghezza(errors, 'Titolo della pagina', v.heroTitolo, LIMITI.heroTitolo, true);
-  controllaLunghezza(errors, 'Testo sotto il titolo', v.heroTesto, LIMITI.heroTesto);
+  controllaLunghezza(errors, 'Testo sotto il titolo', testoSemplice(v.heroTesto), LIMITI.heroTesto);
   if (errors.length) throw new ErroreDocumenti(errors.join('. '));
 
   return serialized(async () => {

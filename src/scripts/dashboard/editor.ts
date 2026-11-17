@@ -6,7 +6,8 @@ const TAGS: Record<Formato, string[]> = {
   list: ['LI'],
 };
 
-export function createEditor(editor: HTMLElement, toolbar: HTMLElement, onChange: () => void) {
+export function createEditor(editor: HTMLElement, onChange: () => void = () => {}) {
+  const toolbar = editor.closest('.editor-wrapper')!.querySelector<HTMLElement>('.editor-toolbar')!;
   function closest(node: Node | null, tags: string[]): HTMLElement | null {
     for (let n = node; n && n !== editor; n = n.parentNode) {
       if (n instanceof HTMLElement && tags.includes(n.tagName)) return n;
@@ -135,6 +136,24 @@ export function createEditor(editor: HTMLElement, toolbar: HTMLElement, onChange
       e.preventDefault();
       format('italic');
     }
+  });
+  editor.addEventListener('paste', (e) => {
+    e.preventDefault();
+    const testo = e.clipboardData?.getData('text/plain') ?? '';
+    const range = currentRange();
+    if (!range || !testo) return;
+    range.deleteContents();
+    const righe = testo.split(/\r\n?|\n/);
+    const frammento = document.createDocumentFragment();
+    righe.forEach((r, i) => {
+      if (i) frammento.append(document.createElement('br'));
+      frammento.append(r);
+    });
+    const ultimo = frammento.lastChild;
+    range.insertNode(frammento);
+    if (ultimo) getSelection()!.collapse(ultimo, ultimo.nodeType === Node.TEXT_NODE ? (ultimo.textContent?.length ?? 0) : 0);
+    editor.normalize();
+    editor.dispatchEvent(new Event('input', { bubbles: true }));
   });
   editor.addEventListener('input', () => {
     if (!editor.textContent?.trim() && !editor.querySelector('li')) editor.innerHTML = '';

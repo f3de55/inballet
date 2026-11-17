@@ -4,16 +4,16 @@ export const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.g
 
 export const MAX_SIZE = 20 * 1024 * 1024;
 
-export function aggiornaContatore(input: HTMLInputElement | HTMLTextAreaElement) {
-  const max = Number(input.dataset.counter);
-  const contatore = $(`${input.id}-counter`);
-  const len = input.value.length;
+export function aggiornaContatore(campo: HTMLElement) {
+  const max = Number(campo.dataset.counter);
+  const contatore = $(`${campo.id}-counter`);
+  const len = campo instanceof HTMLInputElement || campo instanceof HTMLTextAreaElement ? campo.value.length : campo.innerText.trim().length;
   contatore.textContent = len > max * 0.8 ? `${len}/${max}` : '';
   contatore.classList.toggle('vicino', len > max * 0.9);
 }
 
 export function attivaContatori() {
-  document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-counter]').forEach((el) => {
+  document.querySelectorAll<HTMLElement>('[data-counter]').forEach((el) => {
     aggiornaContatore(el);
     el.addEventListener('input', () => aggiornaContatore(el));
   });

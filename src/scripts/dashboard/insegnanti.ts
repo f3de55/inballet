@@ -1,5 +1,6 @@
 import { actions } from 'astro:actions';
 import { conferma } from './conferma';
+import { createEditor } from './editor';
 import { $, aggiornaContatore, attivaContatori, elencoOrdinabile, MAX_SIZE, mostraModal, nascondiModal, zonaCaricamento } from './comune';
 import { toast } from './toast';
 
@@ -15,6 +16,8 @@ interface Insegnante {
 attivaContatori();
 
 const formTesti = $<HTMLFormElement>('formTestiInsegnanti');
+const intro = createEditor($('intro'));
+const bio = createEditor($('insBio'));
 const valore = (id: string) => $<HTMLInputElement>(id).value.trim();
 
 function aggiornaAnteprimaTitolo() {
@@ -36,7 +39,7 @@ formTesti.addEventListener('submit', async (e) => {
     eyebrow: valore('eyebrow'),
     titolo: valore('titolo'),
     accento: valore('accento'),
-    intro: valore('intro'),
+    intro: intro.html,
   });
   salva.disabled = false;
   salva.textContent = 'Salva i testi';
@@ -50,7 +53,6 @@ const campi = {
   id: $<HTMLInputElement>('insegnanteId'),
   nome: $<HTMLInputElement>('insNome'),
   ruolo: $<HTMLInputElement>('insRuolo'),
-  bio: $<HTMLTextAreaElement>('insBio'),
   competenze: $<HTMLTextAreaElement>('insCompetenze'),
   file: $<HTMLInputElement>('insFile'),
 };
@@ -86,9 +88,9 @@ function apriModal(ins?: Insegnante) {
   campi.id.value = ins?.id ?? '';
   campi.nome.value = ins?.nome ?? '';
   campi.ruolo.value = ins?.ruolo ?? '';
-  campi.bio.value = ins?.bio ?? '';
+  bio.html = ins?.bio ?? '';
   campi.competenze.value = (ins?.competenze ?? []).join('\n');
-  [campi.nome, campi.ruolo, campi.bio].forEach(aggiornaContatore);
+  [campi.nome, campi.ruolo, $('insBio')].forEach(aggiornaContatore);
   mostraFoto();
   modificato = false;
 
@@ -144,7 +146,7 @@ form.addEventListener('submit', async (e) => {
   if (campi.id.value) dati.append('id', campi.id.value);
   dati.append('nome', nome);
   dati.append('ruolo', campi.ruolo.value.trim());
-  dati.append('bio', campi.bio.value.trim());
+  dati.append('bio', bio.html);
   dati.append('competenze', campi.competenze.value);
   if (nuovaFoto) dati.append('foto', nuovaFoto);
   if (togliFoto) dati.append('togliFoto', 'true');

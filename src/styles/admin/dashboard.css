@@ -61,32 +61,25 @@ body {
   color: var(--white);
   border-bottom-color: var(--primary);
 }
-.topbar-azioni {
-  display: flex;
-  gap: 1.5rem;
+.topbar-impostazioni {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
   margin-left: auto;
-}
-.topbar-azioni form {
-  display: contents;
-}
-.topbar-azioni a,
-.topbar-azioni button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
   padding: 0;
-  white-space: nowrap;
   border: none;
+  border-radius: var(--radius-pill);
   background: none;
   color: var(--testo-su-scuro-debole);
-  font: inherit;
-  font-size: var(--text-xs);
-  text-decoration: none;
+  font-size: var(--icona-comando);
   cursor: pointer;
-  transition: color var(--durata-breve);
+  transition:
+    color var(--durata-breve),
+    background-color var(--durata-breve);
 }
-.topbar-azioni a:hover,
-.topbar-azioni button:hover {
+.topbar-impostazioni:hover {
+  background: rgb(var(--bianco-rgb) / 0.08);
   color: var(--white);
 }
 
@@ -203,6 +196,11 @@ body {
 }
 .btn-pieno {
   width: 100%;
+}
+.btn-icona {
+  width: 44px;
+  padding: 0;
+  font-size: var(--icona-comando);
 }
 .btn-danger:disabled {
   background: var(--danger-bordo);
@@ -769,6 +767,9 @@ input[list]::-webkit-calendar-picker-indicator {
   font-size: var(--text-sm);
   line-height: 1.6;
 }
+.editor-content--breve {
+  min-height: 4.5rem;
+}
 .editor-content:focus {
   outline: none;
 }
@@ -1096,6 +1097,13 @@ input[list]::-webkit-calendar-picker-indicator {
 }
 .imp-campi .nota {
   margin-top: 0.4rem;
+}
+.imp-tema[aria-pressed='true'] {
+  border-color: var(--primary-dark);
+  color: var(--primary-dark);
+}
+.imp-esci {
+  margin-right: auto;
 }
 .imp-avviso {
   grid-column: 1 / -1;
@@ -1514,27 +1522,6 @@ input[list]::-webkit-calendar-picker-indicator {
   }
 }
 
-@media (max-width: 1100px) {
-  .topbar-azioni {
-    gap: 0;
-  }
-  .topbar-azioni a,
-  .topbar-azioni button {
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    font-size: var(--text-sm);
-  }
-  .topbar-azioni span:not(.tema-icone) {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-}
-
 @media (max-width: 860px) {
   .topbar-inner {
     flex-wrap: wrap;
@@ -1595,22 +1582,12 @@ input[list]::-webkit-calendar-picker-indicator {
     font-size: var(--text-2xl);
   }
   .pagina-azioni {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    flex-wrap: nowrap;
     gap: 0.6rem;
     width: 100%;
   }
-  .pagina-azioni .btn {
-    width: 100%;
-    padding-inline: 0.75rem;
-  }
-  .pagina-azioni .btn-primary,
-  .pagina-azioni .btn:only-child {
-    grid-column: 1/-1;
-    order: -1;
-  }
-  .pagina-azioni--due .btn {
-    grid-column: 1/-1;
+  .pagina-azioni .btn-primary {
+    flex: 1;
   }
   .barra {
     flex-direction: column;
@@ -1663,8 +1640,16 @@ input[list]::-webkit-calendar-picker-indicator {
   .modal-footer {
     padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
   }
+  .modal-footer {
+    flex-wrap: wrap;
+  }
   .modal-footer .btn {
     flex: 1;
+  }
+  .modal-footer .imp-esci {
+    flex: 0 0 100%;
+    order: 1;
+    min-height: 44px;
   }
   .campi-2--impila {
     grid-template-columns: minmax(0, 1fr);

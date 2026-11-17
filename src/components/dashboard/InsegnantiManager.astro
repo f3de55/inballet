@@ -1,6 +1,7 @@
 ---
 import { leggiInsegnanti, MAX_INSEGNANTI } from '../../lib/insegnanti';
 import InsegnanteModal from './InsegnanteModal.astro';
+import EditorTesto from './EditorTesto.astro';
 import DemoModal from './DemoModal.astro';
 
 const { sezione, insegnanti } = await leggiInsegnanti();
@@ -14,8 +15,7 @@ const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2
         <p class="pagina-sotto">{n === 0 ? 'Nessun insegnante: la sezione non compare in Chi siamo' : n === 1 ? '1 insegnante in Chi siamo' : `${n} insegnanti in Chi siamo`}</p>
     </div>
     <div class="pagina-azioni">
-        <button type="button" class="btn btn-secondary" data-apri-demo><i class="fas fa-flask" aria-hidden="true"></i> Dati demo</button>
-        <a href="/chi-siamo#insegnanti" target="_blank" rel="noopener" class="btn btn-secondary">Vedi la pagina<span class="sr-only"> (si apre in una nuova scheda)</span></a>
+        <a href="/chi-siamo#insegnanti" target="_blank" rel="noopener" class="btn btn-secondary btn-icona" aria-label="Vedi gli insegnanti sul sito (si apre in una nuova scheda)" title="Vedi gli insegnanti sul sito"><i class="fas fa-eye" aria-hidden="true"></i></a>
         <button type="button" class="btn btn-primary" data-nuovo-insegnante><i class="fas fa-plus" aria-hidden="true"></i> Nuovo insegnante</button>
     </div>
 </div>
@@ -41,12 +41,7 @@ const iniziali = (nome: string) => nome.split(/\s+/).map((p) => p[0]).slice(0, 2
             </div>
         </div>
         <small class="doc-anteprima-titolo" aria-live="polite">Anteprima: <strong id="anteprimaTitolo"></strong></small>
-        <div class="campo">
-            <label for="intro">Testo introduttivo</label>
-            <textarea id="intro" name="intro" rows="2" maxlength="300" data-counter="300">{sezione.intro}</textarea>
-            <small class="contatore" id="intro-counter"></small>
-            <small class="nota doc-aiuto">Per il grassetto scrivi la parola tra doppi asterischi: **così**.</small>
-        </div>
+        <EditorTesto id="intro" etichetta="Testo introduttivo" valore={sezione.intro} max={300} />
         <div class="doc-testi-azioni">
             <button type="submit" class="btn btn-primary" id="btnSalvaTesti">Salva i testi</button>
         </div>

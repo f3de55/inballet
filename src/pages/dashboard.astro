@@ -35,6 +35,6 @@ const titoli = { eventi: 'Eventi', documenti: 'Documenti', insegnanti: 'Insegnan
     </main>
 
     <Conferma />
-    <ImpostazioniModal impostazioni={impostazioni} />
+    <ImpostazioniModal impostazioni={impostazioni} demo={sezione === 'bot' ? 'chatbot' : sezione === 'documenti' ? undefined : sezione} />
     <EliminaTuttoModal />
 </Admin>

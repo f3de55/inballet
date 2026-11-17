@@ -29,3 +29,7 @@ Le singole icone sono scalabili e modificabili in un editor vettoriale. `svg(nom
 Ogni CTA a bottone contiene un'icona prima del testo: `ballet-shoes` per i corsi, `compass` per la scelta del percorso, `comments` per i contatti, `hand-holding-heart` per il sostegno, `calendar-days` per le prenotazioni e `paypal` per le donazioni. Le icone sono decorative e il testo resta il nome accessibile dell'azione.
 
 I comandi restano compatti: chiusura 18 px, menu 28 px, altri comandi 24 px; l’area cliccabile resta indipendente dal simbolo. `phone` raffigura uno smartphone essenziale; `paypal` una sola P inclinata. `warm-up` e `krump` indicano movimenti del corpo, senza simboli clinici o fiamme.
+
+## Marchio Facebook
+
+Il simbolo `facebook` usa il disegno riconoscibile `facebook-f` di Font Awesome Free 7.3.1, © 2026 Fonticons, Inc., [licenza CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). [Sorgente originale](https://github.com/FortAwesome/Font-Awesome/blob/7.x/svgs/brands/facebook-f.svg). Il tracciato è invariato; sono adattati soltanto scala e posizione nella griglia 24 × 24. Il marchio resta del rispettivo titolare. Non viene caricato il font né la libreria Font Awesome.

@@ -631,19 +631,21 @@ html.menu-aperto {
 }
 
 .mobile-menu-logo {
+  position: absolute;
+  top: 49%;
+  left: 50%;
   display: block;
-  flex: 0 1 auto;
-  width: 8.5rem;
+  width: 96%;
   height: auto;
-  min-height: 0;
-  max-height: 3rem;
+  max-height: 32%;
   object-fit: contain;
-  opacity: 0.4;
+  opacity: 0.42;
+  transform: translate(-50%, -50%);
 }
 
 .mobile-menu-emblema {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 8.5rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 14rem) minmax(0, 1fr);
   align-items: end;
   gap: 0.75rem;
   flex: 1 1 0;
@@ -656,7 +658,7 @@ html.menu-aperto {
   content: '';
   display: block;
   height: 20px;
-  margin-bottom: 1.25rem;
+  margin-bottom: 2.25rem;
   border-radius: var(--radius-pill);
   background: linear-gradient(90deg, rgb(var(--blu-rgb) / 0.12), rgb(var(--blu-rgb) / 0.42) 65%, rgb(var(--blu-rgb) / 0.5));
   -webkit-mask: var(--ondina-svg) 50% 50% / 72px 20px repeat-x;
@@ -667,17 +669,24 @@ html.menu-aperto {
   transform: scaleX(-1);
 }
 
-.mobile-menu-scarpe {
-  display: block;
+.mobile-menu-ritratto {
+  position: relative;
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
   width: 100%;
   height: 100%;
   min-height: 0;
-  max-height: 12rem;
-  opacity: 0.22;
-  mask-image: linear-gradient(180deg, transparent, var(--white) 14%);
+  max-height: 15rem;
+}
+
+.mobile-menu-ballerina {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  opacity: 0.18;
+  mask-image: linear-gradient(180deg, var(--white) 85%, transparent);
 }
 
 .mobile-menu:has(.mobile-submenu.active) .mobile-menu-decoro {

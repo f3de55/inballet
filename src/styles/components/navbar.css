@@ -612,7 +612,9 @@ html.menu-aperto {
   place-items: center;
   flex: 1 1 0;
   min-height: 0;
+  width: calc(100% + var(--menu-inset) * 2);
   margin-top: 1.25rem;
+  margin-inline: calc(var(--menu-inset) * -1);
   overflow: clip;
   pointer-events: none;
 }
@@ -641,7 +643,7 @@ html.menu-aperto {
 
 .mobile-menu-emblema {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 10rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 8.5rem) minmax(0, 1fr);
   align-items: end;
   gap: 0.75rem;
   flex: 1 1 0;
@@ -653,12 +655,12 @@ html.menu-aperto {
 .mobile-menu-emblema::after {
   content: '';
   display: block;
-  height: 17px;
-  margin-bottom: 1rem;
+  height: 20px;
+  margin-bottom: 1.25rem;
   border-radius: var(--radius-pill);
-  background: linear-gradient(90deg, transparent, rgb(var(--blu-rgb) / 0.4));
-  -webkit-mask: var(--ondina-svg) 50% 50% / 34px 17px repeat-x;
-  mask: var(--ondina-svg) 50% 50% / 34px 17px repeat-x;
+  background: linear-gradient(90deg, rgb(var(--blu-rgb) / 0.12), rgb(var(--blu-rgb) / 0.42) 65%, rgb(var(--blu-rgb) / 0.5));
+  -webkit-mask: var(--ondina-svg) 50% 50% / 72px 20px repeat-x;
+  mask: var(--ondina-svg) 50% 50% / 72px 20px repeat-x;
 }
 
 .mobile-menu-emblema::after {

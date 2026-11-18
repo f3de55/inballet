@@ -93,16 +93,13 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
 
     <a href="/contatti" class="btn-primary mobile-cta" aria-current={attiva('/contatti') ? 'page' : undefined}><i class="far fa-comments" aria-hidden="true"></i> Contattaci</a>
     <div class="mobile-menu-decoro" aria-hidden="true">
-        <Img
-            class="mobile-menu-scarpe"
-            src="decorazioni/menu-scarpette-v2.png"
-            widths={[240, 480, 640]}
-            sizes="(max-width: 480px) 68vw, 256px"
-            width="1254"
-            height="1254"
-            alt=""
-            loading="lazy"
-            decoding="async"
-        />
+        <svg class="mobile-menu-segno" viewBox="0 0 80 100" fill="none" focusable="false">
+            <g class="mobile-menu-segno-secondario">
+                <path d="M44 37C49 33 56 36 57 43C59 54 50 72 44 83L39 92Q37 96 33 94L27 91Q24 89 26 85L37 60C41 51 39 42 44 37Z" />
+                <path d="M43 45Q49 40 53 45C53 52 48 61 43 67M28 85L42 91M46 37C37 26 54 17 63 13" />
+            </g>
+            <path d="M32 31C36 27 43 28 46 33C52 43 45 58 39 69L26 90Q24 93 20 91L14 87Q11 85 14 81L26 55C30 46 27 36 32 31Z" />
+            <path d="M32 38Q37 34 42 37C44 44 37 55 32 61M15 81L28 87M33 30C22 20 41 14 38 6M44 32C49 23 40 18 34 16" />
+        </svg>
     </div>
 </div>

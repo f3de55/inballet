@@ -391,7 +391,7 @@ html.menu-aperto {
   background: var(--dark-navy);
   box-shadow: -20px 0 60px rgb(var(--nero-rgb) / 0.35);
   z-index: 1000;
-  overflow-y: hidden;
+  overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: var(--linea-su-scuro) transparent;
@@ -406,10 +406,6 @@ html.menu-aperto {
   transform: none;
   visibility: visible;
   transition-delay: 0s;
-}
-
-.mobile-menu:has(.mobile-submenu.active) {
-  overflow-y: auto;
 }
 
 .mobile-overlay {
@@ -610,8 +606,8 @@ html.menu-aperto {
 .mobile-menu-decoro {
   display: grid;
   place-items: center;
-  flex: 1 1 0;
-  min-height: 0;
+  flex: 1 0 12rem;
+  min-height: 12rem;
   width: calc(100% + var(--menu-inset) * 2);
   margin-top: 1.25rem;
   margin-inline: calc(var(--menu-inset) * -1);
@@ -625,8 +621,8 @@ html.menu-aperto {
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  height: 100%;
-  min-height: 0;
+  height: 12rem;
+  min-height: 12rem;
   max-height: 12rem;
 }
 
@@ -709,10 +705,6 @@ html.menu-aperto {
   min-height: 0;
   opacity: 0.18;
   mask-image: linear-gradient(180deg, var(--white) 85%, transparent);
-}
-
-.mobile-menu:has(.mobile-submenu.active) .mobile-menu-decoro {
-  flex: 0 0 clamp(8rem, 26dvh, 12rem);
 }
 
 @media (max-width: 480px) {

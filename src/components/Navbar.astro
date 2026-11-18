@@ -1,5 +1,6 @@
 ---
 import Img from './Img.astro';
+import PunteMenu from '../assets/decorazioni/menu-punte.svg';
 import TemaInterruttore from './TemaInterruttore.astro';
 import { menu, percorsoPagina, type Menu } from '../data/navigazione';
 import '../styles/components/navbar.css';
@@ -93,16 +94,11 @@ const menuAttivo = (m: Menu) => (m.href && attiva(m.href)) || m.sezioni.some((s)
 
     <a href="/contatti" class="btn-primary mobile-cta" aria-current={attiva('/contatti') ? 'page' : undefined}><i class="far fa-comments" aria-hidden="true"></i> Contattaci</a>
     <div class="mobile-menu-decoro" aria-hidden="true">
-        <Img
-            class="mobile-menu-scarpe"
-            src="decorazioni/menu-punte-posizione.png"
-            widths={[240, 480, 640]}
-            sizes="(max-width: 480px) 56vw, 208px"
-            width="1254"
-            height="1254"
-            alt=""
-            loading="lazy"
-            decoding="async"
-        />
+        <div class="mobile-menu-firma">
+            <Img class="mobile-menu-logo" src="logo.png" alt="" width="376" height="133" widths={[136, 272]} sizes="136px" loading="lazy" />
+            <div class="mobile-menu-emblema">
+                <PunteMenu class="mobile-menu-scarpe" focusable="false" />
+            </div>
+        </div>
     </div>
 </div>

@@ -608,43 +608,78 @@ html.menu-aperto {
 }
 
 .mobile-menu-decoro {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  display: grid;
+  place-items: center;
   flex: 1 1 0;
   min-height: 0;
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
   overflow: clip;
-  opacity: 0.2;
   pointer-events: none;
 }
 
-.mobile-menu-decoro::before,
-.mobile-menu-decoro::after {
-  content: '';
-  flex: 1 1 0;
-  height: 1px;
-  border-radius: var(--radius-pill);
-  background: linear-gradient(90deg, transparent, rgb(var(--blu-rgb) / 0.35));
+.mobile-menu-firma {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: 15rem;
 }
 
-.mobile-menu-decoro::after {
+.mobile-menu-logo {
+  display: block;
+  flex: 0 1 auto;
+  width: 8.5rem;
+  height: auto;
+  min-height: 0;
+  max-height: 3rem;
+  object-fit: contain;
+  opacity: 0.4;
+}
+
+.mobile-menu-emblema {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 10rem) minmax(0, 1fr);
+  align-items: end;
+  gap: 0.75rem;
+  flex: 1 1 0;
+  width: 100%;
+  min-height: 0;
+}
+
+.mobile-menu-emblema::before,
+.mobile-menu-emblema::after {
+  content: '';
+  display: block;
+  height: 17px;
+  margin-bottom: 1rem;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, transparent, rgb(var(--blu-rgb) / 0.4));
+  -webkit-mask: var(--ondina-svg) 50% 50% / 34px 17px repeat-x;
+  mask: var(--ondina-svg) 50% 50% / 34px 17px repeat-x;
+}
+
+.mobile-menu-emblema::after {
   transform: scaleX(-1);
 }
 
 .mobile-menu-scarpe {
   display: block;
-  flex-shrink: 0;
-  width: min(56%, 13rem);
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  width: 100%;
   height: 100%;
   min-height: 0;
-  max-height: 13rem;
-  object-fit: contain;
-  mask-image: linear-gradient(135deg, rgb(var(--bianco-rgb) / 0.6), var(--white) 25% 75%, rgb(var(--bianco-rgb) / 0.6));
+  max-height: 12rem;
+  opacity: 0.22;
+  mask-image: linear-gradient(180deg, transparent, var(--white) 14%);
 }
 
 .mobile-menu:has(.mobile-submenu.active) .mobile-menu-decoro {
-  flex: 0 0 clamp(8rem, 26dvh, 13rem);
+  flex: 0 0 clamp(10rem, 32dvh, 15rem);
 }
 
 @media (max-width: 480px) {

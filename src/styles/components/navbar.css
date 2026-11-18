@@ -624,7 +624,7 @@ html.menu-aperto {
   display: block;
   height: 100%;
   min-height: 0;
-  max-height: 18rem;
+  max-height: 14rem;
   stroke: var(--primary-blue);
   stroke-width: 1.35;
   stroke-linecap: round;

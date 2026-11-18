@@ -610,40 +610,65 @@ html.menu-aperto {
 .mobile-menu-decoro {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   flex: 1 1 0;
   min-height: 0;
   width: calc(100% + var(--menu-inset) * 2);
   margin: 1rem calc(var(--menu-inset) * -1) 0;
+  padding-inline-end: calc(var(--menu-inset) * 0.5);
   overflow: clip;
-  opacity: 0.4;
   pointer-events: none;
-  mask-image: linear-gradient(90deg, transparent, var(--white) 12% 88%, transparent);
 }
 
-.mobile-menu-decoro svg {
+.mobile-menu-scarpe {
   display: block;
+  flex-shrink: 0;
+  width: min(68%, 16rem);
   height: 100%;
   min-height: 0;
-  max-height: 14rem;
-  stroke: var(--primary-blue);
-  stroke-width: 1.35;
+  max-height: 16rem;
   stroke-linecap: round;
   stroke-linejoin: round;
+  mask-image: linear-gradient(135deg, rgb(var(--bianco-rgb) / 0.35), var(--white) 30% 75%, rgb(var(--bianco-rgb) / 0.35));
 }
 
-.mobile-menu-decoro path {
+.mobile-menu-scarpe path {
   vector-effect: non-scaling-stroke;
 }
 
-.mobile-menu-onda {
-  flex: 1 1 0;
-  width: 0;
+.scarpe-luce {
+  stop-color: var(--primary-blue);
 }
 
-.mobile-menu-tutu {
-  flex: 0 0 auto;
-  width: auto;
-  aspect-ratio: 1;
+.scarpe-ombra {
+  stop-color: var(--primary-blue-dark);
+}
+
+.scarpa-profilo {
+  fill: url('#menu-scarpe-superficie');
+  stroke: url('#menu-scarpe-contorno');
+  stroke-width: 1.6;
+}
+
+.scarpa-apertura {
+  fill: var(--dark-navy);
+  stroke: url('#menu-scarpe-contorno');
+  stroke-width: 1.25;
+}
+
+.scarpe-legacci,
+.scarpa-incrocio {
+  stroke: rgb(var(--blu-rgb) / 0.45);
+  stroke-width: 1.2;
+}
+
+.scarpa-punta {
+  stroke: rgb(var(--blu-scuro-rgb) / 0.65);
+  stroke-width: 1;
+}
+
+.scarpa-secondaria {
+  opacity: 0.72;
 }
 
 .mobile-menu:has(.mobile-submenu.active) .mobile-menu-decoro {

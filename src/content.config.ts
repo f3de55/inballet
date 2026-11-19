@@ -27,7 +27,7 @@ const corsi = defineCollection({
     eta: z.string(),
     frequenza: z.string(),
     metodoTitolo: z.string(),
-    metodo: z.array(z.object({ titolo: z.string(), testo: z.string() })),
+    metodo: z.array(z.object({ titolo: z.string(), testo: z.string(), immagine: z.string(), immagineAlt: z.string() })),
     imparaTitolo: z.string(),
     imparaTitoli: z.array(z.string().min(1)),
     impara: z.array(z.string()),

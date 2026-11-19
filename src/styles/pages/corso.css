@@ -147,8 +147,19 @@
 
 .corso-metodo-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2.5rem 3rem;
+}
+
+.corso-metodo-foto {
+  grid-row: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+  margin-bottom: 1.5rem;
 }
 
 .corso-impara-section {

@@ -32,15 +32,21 @@
     "metodo": [
       {
         "titolo": "Danza Contemporanea Adulti",
-        "testo": "<strong>Dai 40 anni</strong>, <strong>senza limiti di età</strong>: per chi ricomincia dopo anni di stop o parte da zero, tra floor barre, sbarra e coreografia."
+        "testo": "<strong>Dai 40 anni</strong>, <strong>senza limiti di età</strong>: per chi ricomincia dopo anni di stop o parte da zero, tra floor barre, sbarra e coreografia.",
+        "immagine": "assets/images/metodo/adulti-1.webp",
+        "immagineAlt": "Una donna di 50 anni pratica una semplice sequenza contemporanea alla sbarra, postura comoda e accompagnata."
       },
       {
         "titolo": "Movimento Creativo",
-        "testo": "<strong>Dai 18 anni</strong>, <strong>danzatori e non</strong>: respiro, musica e ascolto di sé, in sessioni a tema dedicate alla cura di sé."
+        "testo": "<strong>Dai 18 anni</strong>, <strong>danzatori e non</strong>: respiro, musica e ascolto di sé, in sessioni a tema dedicate alla cura di sé.",
+        "immagine": "assets/images/metodo/adulti-2.webp",
+        "immagineAlt": "Una donna di 45 anni esplora un gesto lento e libero delle braccia, piedi ben appoggiati, ascoltando il proprio respiro."
       },
       {
         "titolo": "Yoga e Pilates",
-        "testo": "<strong>Hatha Yoga</strong> in lezioni di un'ora e mezza e <strong>Pilates per livelli</strong>: forza, flessibilità e respiro."
+        "testo": "<strong>Hatha Yoga</strong> in lezioni di un'ora e mezza e <strong>Pilates per livelli</strong>: forza, flessibilità e respiro.",
+        "immagine": "assets/images/metodo/adulti-3.webp",
+        "immagineAlt": "Due donne adulte su tappetini distanziati, una in posizione yoga del guerriero e una in allungamento Pilates, ambiente sereno."
       }
     ],
     "imparaTitolo": "Cosa troverai",
@@ -92,15 +98,21 @@
     "metodo": [
       {
         "titolo": "Coinvolgimento",
-        "testo": "<strong>Sintonia ed equilibrio di gruppo</strong> sono alla base della classe: ogni bambino impara a relazionarsi con gli altri attraverso il movimento."
+        "testo": "<strong>Sintonia ed equilibrio di gruppo</strong> sono alla base della classe: ogni bambino impara a relazionarsi con gli altri attraverso il movimento.",
+        "immagine": "assets/images/metodo/avviamento-danza-1.webp",
+        "immagineAlt": "Tre bambini in abbigliamento sportivo color pastello seguono un semplice gioco in cerchio con un'insegnante adulta."
       },
       {
         "titolo": "Educazione",
-        "testo": "<strong>Attenzione e cura</strong> per ogni singolo piccolo allievo, <strong>nel rispetto dei tempi di ciascuno</strong> e senza forzature."
+        "testo": "<strong>Attenzione e cura</strong> per ogni singolo piccolo allievo, <strong>nel rispetto dei tempi di ciascuno</strong> e senza forzature.",
+        "immagine": "assets/images/metodo/avviamento-danza-2.webp",
+        "immagineAlt": "Un'insegnante adulta inginocchiata mostra un semplice gesto delle braccia a una bambina in piedi, alla sua altezza."
       },
       {
         "titolo": "Divertimento",
-        "testo": "Lo <strong>spazio ludico</strong>, inserito nel lavoro di gruppo, è sempre presente: i bambini <strong>imparano giocando</strong>."
+        "testo": "Lo <strong>spazio ludico</strong>, inserito nel lavoro di gruppo, è sempre presente: i bambini <strong>imparano giocando</strong>.",
+        "immagine": "assets/images/metodo/avviamento-danza-3.webp",
+        "immagineAlt": "Tre bambini giocano a muoversi tra cerchi piatti sul pavimento sotto la supervisione di una maestra adulta."
       }
     ],
     "imparaTitolo": "Cosa impareranno",
@@ -154,15 +166,21 @@
     "metodo": [
       {
         "titolo": "Danza Classica",
-        "testo": "Sbarra, centro, salti e giri: la <strong>base tecnica</strong> utile a qualsiasi percorso futuro."
+        "testo": "Sbarra, centro, salti e giri: la <strong>base tecnica</strong> utile a qualsiasi percorso futuro.",
+        "immagine": "assets/images/metodo/bambini-1.webp",
+        "immagineAlt": "Due allieve di 10 anni in abbigliamento da danza classica eseguono un semplice port de bras alla sbarra."
       },
       {
         "titolo": "Modern e Contemporanea",
-        "testo": "Il <strong>Modern</strong> con contrazione e rilascio e, <strong>dai 10 anni</strong>, la Danza Contemporanea: linguaggi più liberi, tra spazio e sperimentazione."
+        "testo": "Il <strong>Modern</strong> con contrazione e rilascio e, <strong>dai 10 anni</strong>, la Danza Contemporanea: linguaggi più liberi, tra spazio e sperimentazione.",
+        "immagine": "assets/images/metodo/bambini-2.webp",
+        "immagineAlt": "Un'allieva di 11 anni in abbigliamento sportivo esegue un movimento Modern al centro della sala, braccia aperte e ginocchia morbide."
       },
       {
         "titolo": "Hip-Hop e Breaking",
-        "testo": "<strong>Energia e stile urbano</strong>: groove, diversi stili Hip-Hop e, nel Breaking, movimenti a terra e <strong>freeze</strong>."
+        "testo": "<strong>Energia e stile urbano</strong>: groove, diversi stili Hip-Hop e, nel Breaking, movimenti a terra e <strong>freeze</strong>.",
+        "immagine": "assets/images/metodo/bambini-3.webp",
+        "immagineAlt": "Due bambini di 10 anni in abiti sportivi urbani provano semplici passi hip-hop in piedi, con energia e spazio tra loro."
       }
     ],
     "imparaTitolo": "Cosa impareranno",
@@ -216,15 +234,21 @@
     "metodo": [
       {
         "titolo": "Condivisione",
-        "testo": "Classi equilibrate e <strong>divise per livello</strong> coinvolgono ogni allievo, anche negli esercizi a terra, e preparano a danzare nel cerchio, a turno al centro."
+        "testo": "Classi equilibrate e <strong>divise per livello</strong> coinvolgono ogni allievo, anche negli esercizi a terra, e preparano a danzare nel cerchio, a turno al centro.",
+        "immagine": "assets/images/metodo/breaking-1.webp",
+        "immagineAlt": "Tre breaker adulti in abiti streetwear formano un piccolo cerchio in sala, uno al centro mostra un passo in piedi."
       },
       {
         "titolo": "Staticità",
-        "testo": "Gli esercizi si sviluppano nello spazio intorno al breaker: una <strong>zona ben definita</strong> aiuta a prendere confidenza con le pause, prima di scendere a terra."
+        "testo": "Gli esercizi si sviluppano nello spazio intorno al breaker: una <strong>zona ben definita</strong> aiuta a prendere confidenza con le pause, prima di scendere a terra.",
+        "immagine": "assets/images/metodo/breaking-2.webp",
+        "immagineAlt": "Un breaker adulto in posa bassa stabile, entrambe le scarpe a terra e una mano appoggiata al pavimento, prepara un freeze."
       },
       {
         "titolo": "Equilibrio",
-        "testo": "Dalla staticità nasce un <strong>equilibrio solido</strong>, che permette di reggere nel tempo le figure ferme (<strong>freeze</strong>) e le loro variazioni."
+        "testo": "Dalla staticità nasce un <strong>equilibrio solido</strong>, che permette di reggere nel tempo le figure ferme (<strong>freeze</strong>) e le loro variazioni.",
+        "immagine": "assets/images/metodo/breaking-3.webp",
+        "immagineAlt": "Un breaker adulto mostra un semplice freeze a terra sostenuto su entrambe le mani, ginocchia vicine ai gomiti, posa plausibile e sicura."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -279,15 +303,21 @@
     "metodo": [
       {
         "titolo": "Respiro",
-        "testo": "Nello Yoga gli esercizi di <strong>pranayama</strong>, nel Pilates la <strong>respirazione corretta</strong> durante ogni esercizio."
+        "testo": "Nello Yoga gli esercizi di <strong>pranayama</strong>, nel Pilates la <strong>respirazione corretta</strong> durante ogni esercizio.",
+        "immagine": "assets/images/metodo/classi-1.webp",
+        "immagineAlt": "Una donna adulta seduta comodamente su un tappetino, mani sulle costole laterali, pratica una respirazione tranquilla."
       },
       {
         "titolo": "Controllo",
-        "testo": "Il Pilates insegna a <strong>controllare i muscoli con la mente</strong>, partendo dalla <strong>Power House</strong>; lo Yoga lavora sulla concentrazione."
+        "testo": "Il Pilates insegna a <strong>controllare i muscoli con la mente</strong>, partendo dalla <strong>Power House</strong>; lo Yoga lavora sulla concentrazione.",
+        "immagine": "assets/images/metodo/classi-2.webp",
+        "immagineAlt": "Una donna adulta esegue il Pilates tabletop su tappetino, schiena appoggiata, ginocchia piegate a novanta gradi."
       },
       {
         "titolo": "Equilibrio",
-        "testo": "<strong>Forza e flessibilità</strong> crescono insieme, a vantaggio della <strong>postura</strong> e della schiena."
+        "testo": "<strong>Forza e flessibilità</strong> crescono insieme, a vantaggio della <strong>postura</strong> e della schiena.",
+        "immagine": "assets/images/metodo/classi-3.webp",
+        "immagineAlt": "Una donna adulta nella posizione yoga dell'albero con piede appoggiato al polpaccio, braccia raccolte, equilibrio naturale."
       }
     ],
     "imparaTitolo": "Cosa troverai",
@@ -342,15 +372,21 @@
     "metodo": [
       {
         "titolo": "Scoperte",
-        "testo": "Improvvisando, il danzatore scopre se stesso: riconosce le proprie qualità di movimento e impara a essere <strong>autore della propria danza</strong>."
+        "testo": "Improvvisando, il danzatore scopre se stesso: riconosce le proprie qualità di movimento e impara a essere <strong>autore della propria danza</strong>.",
+        "immagine": "assets/images/metodo/contact-improvisation-1.webp",
+        "immagineAlt": "Una danzatrice adulta improvvisa un movimento circolare basso delle braccia, ginocchia morbide e piedi ben visibili."
       },
       {
         "titolo": "Unione",
-        "testo": "Percepire un partner, un corpo accanto al proprio: <strong>leve e sforzi condivisi</strong> con il compagno rendono ogni movimento morbido e leggero."
+        "testo": "Percepire un partner, un corpo accanto al proprio: <strong>leve e sforzi condivisi</strong> con il compagno rendono ogni movimento morbido e leggero.",
+        "immagine": "assets/images/metodo/contact-improvisation-2.webp",
+        "immagineAlt": "Due danzatori adulti appoggiano delicatamente le schiene tra loro condividendo il peso, ginocchia flesse e piedi saldi."
       },
       {
         "titolo": "Fusione",
-        "testo": "Il traguardo più alto è vedere in movimento un <strong>corpo unico</strong>, anziché tanti corpi uno vicino all'altro."
+        "testo": "Il traguardo più alto è vedere in movimento un <strong>corpo unico</strong>, anziché tanti corpi uno vicino all'altro.",
+        "immagine": "assets/images/metodo/contact-improvisation-3.webp",
+        "immagineAlt": "Due danzatori adulti vicini eseguono un gesto fluido coordinato, avambracci a contatto e linee complementari ben leggibili."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -404,15 +440,21 @@
     "metodo": [
       {
         "titolo": "Temperamento",
-        "testo": "Per lasciare un'impronta nel Contaminato serve aver studiato negli anni <strong>discipline diverse</strong>: da qui può emergere un'attitudine speciale per una in particolare."
+        "testo": "Per lasciare un'impronta nel Contaminato serve aver studiato negli anni <strong>discipline diverse</strong>: da qui può emergere un'attitudine speciale per una in particolare.",
+        "immagine": "assets/images/metodo/contaminato-1.webp",
+        "immagineAlt": "Una danzatrice adulta fonde un gesto energico urbano con una linea contemporanea, ginocchia morbide e braccia scolpite."
       },
       {
         "titolo": "Eleganza",
-        "testo": "Movimenti definiti e curati in ogni dettaglio danno al corpo una <strong>grande eleganza</strong>."
+        "testo": "Movimenti definiti e curati in ogni dettaglio danno al corpo una <strong>grande eleganza</strong>.",
+        "immagine": "assets/images/metodo/contaminato-2.webp",
+        "immagineAlt": "Una danzatrice adulta in abiti neri esegue una linea elegante di braccia e busto, un piede appena sollevato."
       },
       {
         "titolo": "Fusione",
-        "testo": "Prima della coreografia si lavora su <strong>ciò che ogni danzatore sente più suo</strong> e sui limiti da superare; poi, in scena, nascono veri <strong>effetti speciali</strong>."
+        "testo": "Prima della coreografia si lavora su <strong>ciò che ogni danzatore sente più suo</strong> e sui limiti da superare; poi, in scena, nascono veri <strong>effetti speciali</strong>.",
+        "immagine": "assets/images/metodo/contaminato-3.webp",
+        "immagineAlt": "Due danzatrici adulte con stili diversi compongono una sequenza coordinata, una con linea classica e una con gesto contemporaneo."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -467,15 +509,21 @@
     "metodo": [
       {
         "titolo": "Tecnica",
-        "testo": "Le basi del metodo <strong>floor barre</strong>, la sbarra a terra, e gli esercizi fondamentali della danza classica alla sbarra."
+        "testo": "Le basi del metodo <strong>floor barre</strong>, la sbarra a terra, e gli esercizi fondamentali della danza classica alla sbarra.",
+        "immagine": "assets/images/metodo/contemporanea-adulti-1.webp",
+        "immagineAlt": "Una donna di 50 anni esegue un semplice plié alla sbarra con sostegno leggero della mano e postura naturale."
       },
       {
         "titolo": "Allungamento",
-        "testo": "Una parte di ogni lezione è dedicata all'<strong>allungamento muscolare</strong>: esercizi metodici che, con il tempo, danno ottimi risultati."
+        "testo": "Una parte di ogni lezione è dedicata all'<strong>allungamento muscolare</strong>: esercizi metodici che, con il tempo, danno ottimi risultati.",
+        "immagine": "assets/images/metodo/contemporanea-adulti-2.webp",
+        "immagineAlt": "Una donna di 55 anni seduta su tappetino allunga dolcemente una gamba, busto diritto e gesto rilassato."
       },
       {
         "titolo": "Dinamismo",
-        "testo": "Impari a muoverti con <strong>autonomia nelle coreografie</strong>, mentre coordinazione e memoria migliorano grazie alla costanza."
+        "testo": "Impari a muoverti con <strong>autonomia nelle coreografie</strong>, mentre coordinazione e memoria migliorano grazie alla costanza.",
+        "immagine": "assets/images/metodo/contemporanea-adulti-3.webp",
+        "immagineAlt": "Due donne di 45 e 60 anni percorrono la sala con semplici passi contemporanei e braccia aperte, movimento accessibile."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -530,15 +578,21 @@
     "metodo": [
       {
         "titolo": "Allenamento",
-        "testo": "La lezione inizia con una parte di <strong>allenamento aerobico</strong>, che prepara i muscoli all'impegno richiesto dagli elementi acrobatici."
+        "testo": "La lezione inizia con una parte di <strong>allenamento aerobico</strong>, che prepara i muscoli all'impegno richiesto dagli elementi acrobatici.",
+        "immagine": "assets/images/metodo/danza-acrobatica-1.webp",
+        "immagineAlt": "Una danzatrice adulta si riscalda con un affondo dinamico controllato, abiti sportivi e scarpe morbide."
       },
       {
         "titolo": "Dinamiche aeree",
-        "testo": "<strong>Elementi emozionanti e scenografici</strong> che portano il movimento anche in aria."
+        "testo": "<strong>Elementi emozionanti e scenografici</strong> che portano il movimento anche in aria.",
+        "immagine": "assets/images/metodo/danza-acrobatica-2.webp",
+        "immagineAlt": "Una danzatrice adulta esegue un piccolo salto laterale controllato a ginocchia piegate, intero corpo in aria e spazio libero sotto i piedi."
       },
       {
         "titolo": "Precisione",
-        "testo": "Movimento dinamico e <strong>linee precise</strong> si uniscono: un valore aggiunto per il danzatore di qualsiasi stile."
+        "testo": "Movimento dinamico e <strong>linee precise</strong> si uniscono: un valore aggiunto per il danzatore di qualsiasi stile.",
+        "immagine": "assets/images/metodo/danza-acrobatica-3.webp",
+        "immagineAlt": "Una danzatrice adulta in equilibrio su un piede con altra gamba estesa bassa dietro, braccia laterali, linea precisa e sostenibile."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -591,15 +645,21 @@
     "metodo": [
       {
         "titolo": "Portamento",
-        "testo": "Una postura più curata nasce da una <strong>conoscenza più profonda del proprio corpo</strong>."
+        "testo": "Una postura più curata nasce da una <strong>conoscenza più profonda del proprio corpo</strong>.",
+        "immagine": "assets/images/metodo/danza-classica-1.webp",
+        "immagineAlt": "Una ballerina adulta alla sbarra, busto eretto e lungo port de bras, profilo elegante senza pose estreme."
       },
       {
         "titolo": "Dettagli",
-        "testo": "Consolidare la <strong>resistenza agli esercizi</strong> porta un risultato migliore in ogni parte del corpo."
+        "testo": "Consolidare la <strong>resistenza agli esercizi</strong> porta un risultato migliore in ogni parte del corpo.",
+        "immagine": "assets/images/metodo/danza-classica-2.webp",
+        "immagineAlt": "Dettaglio ampio di una ballerina adulta che cura posizione di mani, spalle e braccia alla sbarra, viso e parte del corpo visibili."
       },
       {
         "titolo": "Costanza",
-        "testo": "Esercizi eseguiti con assiduità e correttezza danno <strong>tonicità e uno sviluppo muscolare armonico</strong>."
+        "testo": "Esercizi eseguiti con assiduità e correttezza danno <strong>tonicità e uno sviluppo muscolare armonico</strong>.",
+        "immagine": "assets/images/metodo/danza-classica-3.webp",
+        "immagineAlt": "Due ballerine adulte in abbigliamento da prova eseguono lo stesso esercizio di relevé alla sbarra, piedi e mani chiaramente leggibili."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -654,15 +714,21 @@
     "metodo": [
       {
         "titolo": "Multiforme",
-        "testo": "<strong>Il vero artista è il danzatore</strong>: risultati sorprendenti nascono dalla sperimentazione nello spazio che lo circonda."
+        "testo": "<strong>Il vero artista è il danzatore</strong>: risultati sorprendenti nascono dalla sperimentazione nello spazio che lo circonda.",
+        "immagine": "assets/images/metodo/danza-contemporanea-1.webp",
+        "immagineAlt": "Una danzatrice adulta in posa asimmetrica bassa, una gamba piegata e altra estesa, due braccia in forme curve distinte."
       },
       {
         "titolo": "Inconsueta",
-        "testo": "<strong>Passare da una forma all'altra</strong> in modo inatteso crea, agli occhi di chi guarda, un effetto quasi mai visto e molto attraente."
+        "testo": "<strong>Passare da una forma all'altra</strong> in modo inatteso crea, agli occhi di chi guarda, un effetto quasi mai visto e molto attraente.",
+        "immagine": "assets/images/metodo/danza-contemporanea-2.webp",
+        "immagineAlt": "Una danzatrice adulta durante una spirale del busto con ginocchia morbide, una mano verso il pavimento e una aperta lateralmente, gesto inatteso ma anatomicamente naturale."
       },
       {
         "titolo": "Sospesa",
-        "testo": "<strong>Un corpo sbilanciato e sospeso</strong> diventa la fonte di energia più originale, da cui nascono coreografie belle e significative."
+        "testo": "<strong>Un corpo sbilanciato e sospeso</strong> diventa la fonte di energia più originale, da cui nascono coreografie belle e significative.",
+        "immagine": "assets/images/metodo/danza-contemporanea-3.webp",
+        "immagineAlt": "Una danzatrice adulta in un piccolo salto contemporaneo inclinato lateralmente, entrambe le gambe chiaramente distinte, piedi sollevati dal pavimento, braccia aperte."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -715,15 +781,21 @@
     "metodo": [
       {
         "titolo": "Competenze",
-        "testo": "Gli stimoli motori diventano <strong>competenze psicomotorie</strong>, in un gruppo dove sintonia ed equilibrio sono alla base della classe."
+        "testo": "Gli stimoli motori diventano <strong>competenze psicomotorie</strong>, in un gruppo dove sintonia ed equilibrio sono alla base della classe.",
+        "immagine": "assets/images/metodo/educazione-danza-1.webp",
+        "immagineAlt": "Tre bambini di 5 anni seguono una maestra adulta in una semplice sequenza coordinata di braccia, abbigliamento sportivo."
       },
       {
         "titolo": "Autonomia",
-        "testo": "Attenzione e cura per ogni piccolo allievo, accompagnato a costruire le <strong>prime sequenze</strong> e a muoversi da solo sulla musica."
+        "testo": "Attenzione e cura per ogni piccolo allievo, accompagnato a costruire le <strong>prime sequenze</strong> e a muoversi da solo sulla musica.",
+        "immagine": "assets/images/metodo/educazione-danza-2.webp",
+        "immagineAlt": "Una bambina di 5 anni esegue da sola tre semplici passi lungo segni circolari sul pavimento, maestra adulta sullo sfondo."
       },
       {
         "titolo": "Armonia",
-        "testo": "<strong>Corpo, ascolto di sé e ritmo</strong> trovano un equilibrio comune, con uno spazio di gioco sempre presente nel lavoro di gruppo."
+        "testo": "<strong>Corpo, ascolto di sé e ritmo</strong> trovano un equilibrio comune, con uno spazio di gioco sempre presente nel lavoro di gruppo.",
+        "immagine": "assets/images/metodo/educazione-danza-3.webp",
+        "immagineAlt": "Due bambini di 4 e 5 anni si muovono in sincronia su un ritmo, braccia aperte e sorrisi spontanei, nessun contatto complicato."
       }
     ],
     "imparaTitolo": "Cosa impareranno",
@@ -777,15 +849,21 @@
     "metodo": [
       {
         "titolo": "Portamento",
-        "testo": "Un <strong>linguaggio del corpo</strong> che lavora su femminilità, presenza e una fine ricerca della sensualità."
+        "testo": "Un <strong>linguaggio del corpo</strong> che lavora su femminilità, presenza e una fine ricerca della sensualità.",
+        "immagine": "assets/images/metodo/heels-1.webp",
+        "immagineAlt": "Una danzatrice adulta con pantaloni lunghi neri e top sobrio prova una camminata elegante su stivaletti da danza col tacco, postura slanciata."
       },
       {
         "titolo": "Elasticità",
-        "testo": "Aperture, slanci e passaggi veloci richiedono un <strong>corpo elastico</strong>, preparato a performare sui tacchi."
+        "testo": "Aperture, slanci e passaggi veloci richiedono un <strong>corpo elastico</strong>, preparato a performare sui tacchi.",
+        "immagine": "assets/images/metodo/heels-2.webp",
+        "immagineAlt": "Una danzatrice adulta in pantaloni lunghi e stivaletti col tacco pratica un allungamento morbido in affondo, appoggi ben stabili."
       },
       {
         "titolo": "Tecnica",
-        "testo": "Linee e tenute, studiate anche in altri stili, danno <strong>pulizia e sicurezza</strong> a ogni passo."
+        "testo": "Linee e tenute, studiate anche in altri stili, danno <strong>pulizia e sicurezza</strong> a ogni passo.",
+        "immagine": "assets/images/metodo/heels-3.webp",
+        "immagineAlt": "Una danzatrice adulta in stivaletti da danza col tacco e abiti sobri studia una posa di braccia e piedi davanti allo specchio, riflesso sfocato."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -840,15 +918,21 @@
     "metodo": [
       {
         "titolo": "Determinazione",
-        "testo": "Nasce al centro della sala: le tante ripetizioni degli esercizi tecnici allo specchio rafforzano la <strong>determinazione</strong> nel migliorare la qualità del movimento."
+        "testo": "Nasce al centro della sala: le tante ripetizioni degli esercizi tecnici allo specchio rafforzano la <strong>determinazione</strong> nel migliorare la qualità del movimento.",
+        "immagine": "assets/images/metodo/hip-hop-1.webp",
+        "immagineAlt": "Un ballerino adulto in abiti streetwear ripete un passo tecnico davanti a uno specchio sfocato, sguardo concentrato."
       },
       {
         "titolo": "Energia",
-        "testo": "Uno degli <strong>stili più grintosi</strong>: libera energia in modo intenso e, soprattutto in età scolare, aiuta a far uscire le emozioni più nascoste."
+        "testo": "Uno degli <strong>stili più grintosi</strong>: libera energia in modo intenso e, soprattutto in età scolare, aiuta a far uscire le emozioni più nascoste.",
+        "immagine": "assets/images/metodo/hip-hop-2.webp",
+        "immagineAlt": "Una ballerina adulta in abiti streetwear azzurri esegue un groove energico con ginocchia piegate e braccia distinte."
       },
       {
         "titolo": "Carattere",
-        "testo": "La danza aiuta a <strong>porsi degli obiettivi</strong>, in sala e nella vita; la cultura Hip-Hop rafforza il lato più tenace di ogni allievo."
+        "testo": "La danza aiuta a <strong>porsi degli obiettivi</strong>, in sala e nella vita; la cultura Hip-Hop rafforza il lato più tenace di ogni allievo.",
+        "immagine": "assets/images/metodo/hip-hop-3.webp",
+        "immagineAlt": "Un ballerino adulto in abiti streetwear scuri termina una sequenza con una posa sicura e personale, espressione determinata."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -903,15 +987,21 @@
     "metodo": [
       {
         "titolo": "Personalizzazione",
-        "testo": "Ogni lezione è costruita <strong>sui tuoi obiettivi</strong>, sul tuo livello e sulle tue esigenze specifiche."
+        "testo": "Ogni lezione è costruita <strong>sui tuoi obiettivi</strong>, sul tuo livello e sulle tue esigenze specifiche.",
+        "immagine": "assets/images/metodo/lezioni-individuali-1.webp",
+        "immagineAlt": "Un'insegnante adulta e un'allieva adulta concordano un esercizio indicando una semplice sequenza di passi in sala."
       },
       {
         "titolo": "Attenzione totale",
-        "testo": "L'insegnante <strong>si dedica esclusivamente a te</strong>, correggendo, guidando e sostenendo ogni movimento."
+        "testo": "L'insegnante <strong>si dedica esclusivamente a te</strong>, correggendo, guidando e sostenendo ogni movimento.",
+        "immagine": "assets/images/metodo/lezioni-individuali-2.webp",
+        "immagineAlt": "Un'insegnante adulta mostra la posizione corretta di un braccio alla sua unica allieva adulta, gesto chiaro senza toccare."
       },
       {
         "titolo": "Borse di studio",
-        "testo": "In diverse occasioni InBallet assegna <strong>borse di studio</strong> ai propri allievi: un modo per premiare e stimolare un rendimento maggiore."
+        "testo": "In diverse occasioni InBallet assegna <strong>borse di studio</strong> ai propri allievi: un modo per premiare e stimolare un rendimento maggiore.",
+        "immagine": "assets/images/metodo/lezioni-individuali-3.webp",
+        "immagineAlt": "Un'insegnante adulta consegna una semplice cartellina chiusa senza testo a un'allieva adulta sorridente in abiti da danza, gesto di riconoscimento del percorso."
       }
     ],
     "imparaTitolo": "Cosa offriamo",
@@ -964,15 +1054,21 @@
     "metodo": [
       {
         "titolo": "Definizione",
-        "testo": "Lo studio tecnico dello stile rende le esecuzioni <strong>consapevoli</strong>: ogni movimento nasce da un impulso e si sviluppa in forme eleganti e ben definite."
+        "testo": "Lo studio tecnico dello stile rende le esecuzioni <strong>consapevoli</strong>: ogni movimento nasce da un impulso e si sviluppa in forme eleganti e ben definite.",
+        "immagine": "assets/images/metodo/modern-1.webp",
+        "immagineAlt": "Una danzatrice adulta mostra un gesto Modern preciso con braccia ad angoli morbidi e ginocchia piegate, linee ben leggibili."
       },
       {
         "titolo": "Leggerezza",
-        "testo": "<strong>Contrazione e rilascio</strong>, alla base dello stile, danno un senso di libertà che percepisce chi danza e chi guarda."
+        "testo": "<strong>Contrazione e rilascio</strong>, alla base dello stile, danno un senso di libertà che percepisce chi danza e chi guarda.",
+        "immagine": "assets/images/metodo/modern-2.webp",
+        "immagineAlt": "Una danzatrice adulta esegue un rilascio morbido del busto con braccia aperte, gesto leggero e stabile."
       },
       {
         "titolo": "Contrasti",
-        "testo": "<strong>Movimenti grandi e piccoli, lenti e veloci</strong> insegnano a comprendere l'energia del proprio corpo, con una consapevolezza che cresce con età e livello."
+        "testo": "<strong>Movimenti grandi e piccoli, lenti e veloci</strong> insegnano a comprendere l'energia del proprio corpo, con una consapevolezza che cresce con età e livello.",
+        "immagine": "assets/images/metodo/modern-3.webp",
+        "immagineAlt": "Due danzatrici adulte esprimono energie opposte nella stessa sala, una raccolta in un gesto piccolo e una aperta in una linea ampia."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -1026,15 +1122,21 @@
     "metodo": [
       {
         "titolo": "Lentezza",
-        "testo": "Si parte dal <strong>ritmo del proprio respiro</strong>, che trova una dimensione di pace e comodità all'interno del corpo."
+        "testo": "Si parte dal <strong>ritmo del proprio respiro</strong>, che trova una dimensione di pace e comodità all'interno del corpo.",
+        "immagine": "assets/images/metodo/movimento-creativo-1.webp",
+        "immagineAlt": "Una donna adulta in abiti comodi si muove lentamente con occhi socchiusi e mani sul centro del busto, respiro tranquillo."
       },
       {
         "titolo": "Riflessi di sé",
-        "testo": "Una sessione può offrire <strong>nuovi sguardi su di sé</strong> e spunti da cui ripartire, nella vita e nell'essere."
+        "testo": "Una sessione può offrire <strong>nuovi sguardi su di sé</strong> e spunti da cui ripartire, nella vita e nell'essere.",
+        "immagine": "assets/images/metodo/movimento-creativo-2.webp",
+        "immagineAlt": "Una donna adulta esplora un gesto personale con una mano aperta davanti a sé e l'altra sul petto, volto sereno."
       },
       {
         "titolo": "Stimolazione",
-        "testo": "Contesti mai casuali: <strong>guida vocale, musica e a volte materiali</strong> offrono infinite possibilità interpretative, con l'ambiente connesso alle persone."
+        "testo": "Contesti mai casuali: <strong>guida vocale, musica e a volte materiali</strong> offrono infinite possibilità interpretative, con l'ambiente connesso alle persone.",
+        "immagine": "assets/images/metodo/movimento-creativo-3.webp",
+        "immagineAlt": "Una facilitatrice adulta guida due persone adulte in gesti liberi con foulard azzurri morbidi, corpi separati e mani leggibili."
       }
     ],
     "imparaTitolo": "Cosa vivrai",
@@ -1090,15 +1192,21 @@
     "metodo": [
       {
         "titolo": "Principi",
-        "testo": "Si pratica nel rispetto dei principi del metodo: <strong>concentrazione, controllo, fluidità, precisione e respirazione</strong>."
+        "testo": "Si pratica nel rispetto dei principi del metodo: <strong>concentrazione, controllo, fluidità, precisione e respirazione</strong>.",
+        "immagine": "assets/images/metodo/pilates-1.webp",
+        "immagineAlt": "Una donna adulta sul tappetino pratica un semplice esercizio Pilates con una gamba distesa e una piegata, controllo e respiro."
       },
       {
         "titolo": "Controllo",
-        "testo": "Lo sviluppo di ogni singolo esercizio attiva l'<strong>analisi del proprio baricentro</strong>."
+        "testo": "Lo sviluppo di ogni singolo esercizio attiva l'<strong>analisi del proprio baricentro</strong>.",
+        "immagine": "assets/images/metodo/pilates-2.webp",
+        "immagineAlt": "Una donna adulta sul tappetino nella posizione quadrupedica, schiena neutra, alza un solo braccio orizzontalmente mantenendo i tre appoggi."
       },
       {
         "titolo": "Sinergia",
-        "testo": "<strong>Corpo e mente</strong>, sollecitati insieme, migliorano flessibilità, forza, resistenza isometrica, controllo del corpo ed equilibrio."
+        "testo": "<strong>Corpo e mente</strong>, sollecitati insieme, migliorano flessibilità, forza, resistenza isometrica, controllo del corpo ed equilibrio.",
+        "immagine": "assets/images/metodo/pilates-3.webp",
+        "immagineAlt": "Una donna adulta esegue un ponte Pilates basso, piedi piatti e braccia appoggiate al tappetino, posizione controllata."
       }
     ],
     "imparaTitolo": "Cosa imparerai",
@@ -1152,15 +1260,21 @@
     "metodo": [
       {
         "titolo": "Avviamento alla Danza",
-        "testo": "<strong>Dai 3 anni compiuti</strong>, <strong>una volta a settimana</strong> in una classe a numero chiuso: il primissimo approccio a musica e movimento, attraverso il gioco."
+        "testo": "<strong>Dai 3 anni compiuti</strong>, <strong>una volta a settimana</strong> in una classe a numero chiuso: il primissimo approccio a musica e movimento, attraverso il gioco.",
+        "immagine": "assets/images/metodo/prima-infanzia-1.webp",
+        "immagineAlt": "Una maestra adulta guida due bambini di 3 anni in un semplice gioco musicale con braccia in alto e piedi a terra."
       },
       {
         "titolo": "Educazione alla Danza",
-        "testo": "<strong>A 4 e 5 anni</strong>, <strong>una volta a settimana</strong>: gli stimoli motori diventano competenze psicomotorie, ritmo e prime sequenze."
+        "testo": "<strong>A 4 e 5 anni</strong>, <strong>una volta a settimana</strong>: gli stimoli motori diventano competenze psicomotorie, ritmo e prime sequenze.",
+        "immagine": "assets/images/metodo/prima-infanzia-2.webp",
+        "immagineAlt": "Due bambini di 5 anni eseguono una piccola sequenza ritmica seguendo una maestra adulta, gesti facili e giocosi."
       },
       {
         "titolo": "Sostegno alle famiglie",
-        "testo": "<strong>Su richiesta alla Direzione</strong>, lo <strong>sportello psicologico</strong> offre incontri con la psicoterapeuta per i genitori e per la tutela del rapporto genitore-figlio."
+        "testo": "<strong>Su richiesta alla Direzione</strong>, lo <strong>sportello psicologico</strong> offre incontri con la psicoterapeuta per i genitori e per la tutela del rapporto genitore-figlio.",
+        "immagine": "assets/images/metodo/prima-infanzia-3.webp",
+        "immagineAlt": "Due genitori adulti seduti parlano con una professionista adulta in uno spazio d'ascolto semplice e accogliente, nessun bambino nella scena."
       }
     ],
     "imparaTitolo": "Cosa impareranno",
@@ -1214,15 +1328,21 @@
     "metodo": [
       {
         "titolo": "Danza Classica e Modern",
-        "testo": "<strong>Livelli intermedi e avanzati</strong>, con uno studio più approfondito della tecnica."
+        "testo": "<strong>Livelli intermedi e avanzati</strong>, con uno studio più approfondito della tecnica.",
+        "immagine": "assets/images/metodo/ragazzi-1.webp",
+        "immagineAlt": "Due allieve di 14 anni in abbigliamento sportivo da danza provano un esercizio classico alla sbarra con busto eretto."
       },
       {
         "titolo": "Contemporanea e Contaminato",
-        "testo": "Ricerca, improvvisazione e un linguaggio personale; il Contaminato, <strong>dai 16 anni</strong>, chiede <strong>almeno tre discipline</strong> alle spalle."
+        "testo": "Ricerca, improvvisazione e un linguaggio personale; il Contaminato, <strong>dai 16 anni</strong>, chiede <strong>almeno tre discipline</strong> alle spalle.",
+        "immagine": "assets/images/metodo/ragazzi-2.webp",
+        "immagineAlt": "Un'allieva di 15 anni in abbigliamento sportivo prova una sequenza contemporanea ampia e naturale, ambiente di lezione."
       },
       {
         "titolo": "Hip-Hop e Breaking",
-        "testo": "Stili urbani ai <strong>livelli avanzati</strong>, con moduli tenuti da <strong>professionisti internazionali</strong>."
+        "testo": "Stili urbani ai <strong>livelli avanzati</strong>, con moduli tenuti da <strong>professionisti internazionali</strong>.",
+        "immagine": "assets/images/metodo/ragazzi-3.webp",
+        "immagineAlt": "Due allievi di 15 anni in streetwear sportivo studiano un passo hip-hop con ginocchia flesse e appoggi stabili."
       }
     ],
     "imparaTitolo": "Cosa impareranno",
@@ -1276,15 +1396,21 @@
     "metodo": [
       {
         "titolo": "Danza Classica",
-        "testo": "I <strong>primi elementi della tecnica classica</strong> adattati all'età: posizioni, port de bras e semplici combinazioni."
+        "testo": "I <strong>primi elementi della tecnica classica</strong> adattati all'età: posizioni, port de bras e semplici combinazioni.",
+        "immagine": "assets/images/metodo/seconda-infanzia-1.webp",
+        "immagineAlt": "Due bambini di 7 anni in abbigliamento da danza provano un semplice port de bras con entrambe le gambe a terra."
       },
       {
         "titolo": "Modern",
-        "testo": "<strong>Dai 6 anni</strong> il primo grado di Modern: impulsi, <strong>contrazione e rilascio</strong>, con un lavoro che coinvolge anche emozioni e immaginazione."
+        "testo": "<strong>Dai 6 anni</strong> il primo grado di Modern: impulsi, <strong>contrazione e rilascio</strong>, con un lavoro che coinvolge anche emozioni e immaginazione.",
+        "immagine": "assets/images/metodo/seconda-infanzia-2.webp",
+        "immagineAlt": "Una bambina di 8 anni in abiti sportivi prova un semplice gesto Modern ampio con le braccia e ginocchia morbide."
       },
       {
         "titolo": "Hip-Hop e Breaking",
-        "testo": "<strong>Dai 6 anni</strong> i ritmi urbani: groove, primi stili Hip-Hop e, nel Breaking, passi in piedi e movimenti a terra in <strong>classi a numero chiuso</strong>."
+        "testo": "<strong>Dai 6 anni</strong> i ritmi urbani: groove, primi stili Hip-Hop e, nel Breaking, passi in piedi e movimenti a terra in <strong>classi a numero chiuso</strong>.",
+        "immagine": "assets/images/metodo/seconda-infanzia-3.webp",
+        "immagineAlt": "Due bambini di 7 anni in abiti streetwear provano un passo hip-hop semplice in piedi, visibili per intero."
       }
     ],
     "imparaTitolo": "Cosa impareranno",
@@ -1338,15 +1464,21 @@
     "metodo": [
       {
         "titolo": "Concentrazione",
-        "testo": "Fin dall'inizio la lezione richiede la <strong>massima concentrazione su di sé</strong>, con il respiro come cardine."
+        "testo": "Fin dall'inizio la lezione richiede la <strong>massima concentrazione su di sé</strong>, con il respiro come cardine.",
+        "immagine": "assets/images/metodo/yoga-1.webp",
+        "immagineAlt": "Una donna adulta seduta a gambe incrociate su tappetino con mani sulle ginocchia pratica un respiro consapevole."
       },
       {
         "titolo": "Interiorità",
-        "testo": "Un processo di attivazione sensoriale orientato all'<strong>equilibrio emotivo</strong>, con benefici sulla salute generale della persona."
+        "testo": "Un processo di attivazione sensoriale orientato all'<strong>equilibrio emotivo</strong>, con benefici sulla salute generale della persona.",
+        "immagine": "assets/images/metodo/yoga-2.webp",
+        "immagineAlt": "Una donna adulta in piedi nella posizione della montagna, palmi uniti al petto e occhi socchiusi, calma interiore."
       },
       {
         "titolo": "Rigenerazione",
-        "testo": "La pratica migliora l'<strong>ossigenazione dei tessuti</strong>, sostiene le funzioni cognitive e rende la schiena più forte e flessibile."
+        "testo": "La pratica migliora l'<strong>ossigenazione dei tessuti</strong>, sostiene le funzioni cognitive e rende la schiena più forte e flessibile.",
+        "immagine": "assets/images/metodo/yoga-3.webp",
+        "immagineAlt": "Una donna adulta sul tappetino esegue la posizione del bambino con fronte verso il tappetino e braccia distese in avanti, rilassamento."
       }
     ],
     "imparaTitolo": "Cosa imparerai",

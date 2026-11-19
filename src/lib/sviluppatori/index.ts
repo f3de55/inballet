@@ -1,5 +1,8 @@
-import { spawn } from 'node:child_process';
+import { execFile, spawn } from 'node:child_process';
+import { rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import sharp from 'sharp';
 import { problemiStile } from '../regole-stile.mjs';
 import { ErroreSviluppatori, elenco, esiste, leggi, leggiTesto, modalita, percorsoSicuro, radice, scrivi } from './deposito';
@@ -8,7 +11,9 @@ import { estratto, normalizza, riga, sostituisci, TestoCalcolato, trova, type Oc
 
 export { ErroreSviluppatori } from './deposito';
 
-const FORMATTABILE = /^(src|scripts|tests)\/.*\.(css|ts|mts|js|mjs|json|md)$|^astro\.config\.mjs$/;
+const FORMATTABILE = /^(src|scripts|tests)\/|^astro\.config\.mjs$/;
+const CON_ICONE = /^src\/(?!styles\/icons\.css$).*\.(astro|ts|js|json|css)$/;
+const PACCHETTO_ICONE = 'src/icons/inballet.mjs';
 const TESTUALE = /\.(astro|ts|mts|js|mjs|cjs|json|css|md|txt|html|svg|xml|gs|yml|yaml|toml)$|(^|\/)(Dockerfile|\.gitignore|\.dockerignore|\.prettierignore)$/;
 const DOVE_TESTI = /^(src\/(?!styles\/|icons\/).*\.(astro|ts|json|mjs|md)|astro\.config\.mjs)$/;
 const IMMAGINE = /\.(webp|png|jpe?g|avif|gif|svg|ico)$/i;
@@ -20,6 +25,7 @@ export const eTestuale = (percorso: string) => TESTUALE.test(percorso);
 async function formatta(percorso: string, testo: string): Promise<string> {
   const prettier = await import('prettier');
   const file = path.join(radice(), ...percorso.split('/'));
+  if (!(await prettier.getFileInfo(file)).inferredParser) return testo;
   const opzioni = (await prettier.resolveConfig(file)) ?? {};
   try {
     return await prettier.format(testo, { ...opzioni, filepath: file });
@@ -64,9 +70,42 @@ export async function salvaTesto(percorso: string, contenuto: string): Promise<s
       `Non rispetta le regole del progetto, la build fallirebbe:\n${problemi.map((x: { riga: number; messaggio: string }) => `riga ${x.riga}: ${x.messaggio}`).join('\n')}`,
     );
   }
+  const sconosciute = await iconeSconosciute(p, testo);
+  if (sconosciute.length) {
+    throw new ErroreSviluppatori(
+      `Icone che non esistono nel set InBallet, la build fallirebbe: ${sconosciute.map((n) => `fa-${n}`).join(', ')}. Aggiungile prima a ${PACCHETTO_ICONE}.`,
+    );
+  }
   await scrivi(p, testo);
   if (modalita() === 'locale' && /^src\/.*\.(astro|ts|js|json|css)$/.test(p) && /\bfa-/.test(testo)) await rigeneraIcone();
   return testo;
+}
+
+const nomiIcone = (testo: string) => [...testo.matchAll(/(?<!-)fa-([a-z0-9-]+)/g)].map((m) => m[1]);
+
+function mancantiNelPacchetto(pacchetto: string, nomi: string[]): Promise<string[]> {
+  if (!nomi.length) return Promise.resolve([]);
+  const codice = `const { icons, aliases } = await import(${JSON.stringify(pathToFileURL(pacchetto).href)}); const nomi = ${JSON.stringify(nomi)}; process.stdout.write(JSON.stringify(nomi.filter((n) => !icons[aliases[n] ?? n])));`;
+  return new Promise((ok, ko) =>
+    execFile(process.execPath, ['--input-type=module', '-e', codice], { windowsHide: true }, (errore, uscita, dettaglio) =>
+      errore
+        ? ko(new ErroreSviluppatori(`Il set di icone non si carica: ${(dettaglio || errore.message).trim().split('\n')[0]}`))
+        : ok(JSON.parse(uscita) as string[]),
+    ),
+  );
+}
+
+async function iconeSconosciute(percorso: string, testo: string): Promise<string[]> {
+  if (percorso !== PACCHETTO_ICONE)
+    return CON_ICONE.test(percorso) ? mancantiNelPacchetto(path.join(radice(), PACCHETTO_ICONE), [...new Set(nomiIcone(testo))]) : [];
+  const provvisorio = path.join(tmpdir(), `inballet-icone-${process.pid}-${Date.now()}.mjs`);
+  await writeFile(provvisorio, testo);
+  try {
+    const usati = (await fileTestuali(CON_ICONE)).flatMap((f) => nomiIcone(f.testo));
+    return await mancantiNelPacchetto(provvisorio, [...new Set(usati)]);
+  } finally {
+    await rm(provvisorio, { force: true });
+  }
 }
 
 function rigeneraIcone(): Promise<void> {

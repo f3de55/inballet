@@ -263,36 +263,6 @@ small.sv-spiega {
   text-align: center;
 }
 
-.sv-main kbd,
-.sv-menu kbd,
-.sv-palette kbd,
-.sv-dock kbd {
-  display: inline-grid;
-  place-items: center;
-  min-width: 1.5rem;
-  padding: 0 0.35rem;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-xs);
-  background: var(--bg);
-  color: var(--text-muted);
-  font-family: inherit;
-  font-size: var(--text-2xs);
-  font-weight: var(--font-medium);
-  line-height: 1.5;
-  white-space: nowrap;
-}
-.sv-dock kbd {
-  margin-left: auto;
-  border-color: rgb(var(--bianco-rgb) / 0.18);
-  background: rgb(var(--bianco-rgb) / 0.08);
-  color: var(--testo-su-scuro-debole);
-}
-.btn-primary kbd {
-  border-color: currentColor;
-  background: none;
-  color: inherit;
-}
-
 .sv-menu {
   position: fixed;
   inset: auto;
@@ -347,11 +317,9 @@ small.sv-spiega {
   font-size: var(--icona-mini);
 }
 .sv-menu-voce small {
+  margin-left: auto;
   color: var(--text-muted);
   font-size: var(--text-2xs);
-}
-.sv-menu-voce kbd {
-  margin-left: auto;
 }
 .sv-menu-voce:hover {
   background: var(--soft);
@@ -629,23 +597,11 @@ small.sv-spiega {
   color: var(--primary-dark);
 }
 .sv-palette-nome {
-  flex-shrink: 0;
-  max-width: 60%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.sv-palette-voce small {
   flex: 1;
   min-width: 0;
   overflow: hidden;
-  color: var(--text-muted);
-  font-size: var(--text-2xs);
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-.sv-palette-voce kbd {
-  margin-left: auto;
 }
 .sv-palette-vuoto {
   padding: 1.5rem;
@@ -1461,7 +1417,6 @@ small.sv-spiega {
   .sv-dock-pagina code {
     max-width: none;
   }
-  .sv-dock kbd,
   .sv-dock-separatore,
   #svVistaLarghezza {
     display: none;

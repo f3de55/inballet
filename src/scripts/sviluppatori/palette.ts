@@ -1,24 +1,18 @@
 import { $, el, icona } from './comune';
-import { tutte, eVariabili } from './regole';
-import { elencoFile, apri as apriFile } from './file';
 
-export type Comando = { gruppo: string; nome: string; dettaglio?: string; icona: string; tasto?: string; fai: () => void };
-type Azioni = { vai: (percorso: string) => void; token: (nome: string) => void };
+type Pagina = { gruppo: string; percorso: string };
 
 const finestra = $<HTMLDialogElement>('svPalette');
 const campo = $<HTMLInputElement>('svPaletteCampo');
 const lista = $('svPaletteRisultati');
-const ORDINE_VUOTO = ['Strumenti', 'Vista', 'Pagine', 'Altro'];
-let comandi: Comando[] = [];
-let azioni: Azioni | null = null;
-let file: string[] = [];
-let token: string[] = [];
-let mostrati: Comando[] = [];
-let attivo = 0;
+let pagine: Pagina[] = [];
+let vai: (percorso: string) => void = () => {};
+let mostrate: Pagina[] = [];
+let attiva = 0;
 
-export function impostaComandi(nuovi: Comando[], a?: Azioni) {
-  comandi = nuovi;
-  if (a) azioni = a;
+export function impostaPagine(nuove: Pagina[], azione: (percorso: string) => void) {
+  pagine = nuove;
+  vai = azione;
   if (finestra.open) disegna();
 }
 
@@ -38,123 +32,89 @@ function punteggio(q: string, testo: string): number {
   return j === q.length ? s : -1;
 }
 
-type Trovato = { c: Comando; p: number };
-
-function migliori(q: string, voci: Comando[], quanti: number): Trovato[] {
-  return voci
-    .map((c) => ({ c, p: punteggio(q, `${c.nome} ${c.dettaglio ?? ''}`) }))
-    .filter((x) => x.p >= 0)
-    .sort((a, b) => b.p - a.p)
-    .slice(0, quanti);
-}
-
-function risultati(): Comando[] {
-  const q = campo.value.trim().toLowerCase();
-  if (!q) return [...comandi].sort((a, b) => ORDINE_VUOTO.indexOf(a.gruppo) - ORDINE_VUOTO.indexOf(b.gruppo));
-  const trovati: Trovato[] = [];
-  if (q.startsWith('/') && !comandi.some((c) => c.nome === q))
-    trovati.push({ c: { gruppo: 'Pagine', nome: `Vai a ${campo.value.trim()}`, icona: 'fa-route', fai: () => azioni?.vai(campo.value.trim()) }, p: Infinity });
-  trovati.push(...migliori(q, comandi, 30));
-  if (q.length >= 2 && !q.startsWith('--'))
-    trovati.push(
-      ...migliori(
-        q,
-        file.map((p) => ({ gruppo: 'File', nome: p.split('/').pop()!, dettaglio: p, icona: 'fa-code', fai: () => void apriFile(p) })),
-        20,
-      ),
-    );
-  if (q.length >= 3 || q.startsWith('--'))
-    trovati.push(
-      ...migliori(
-        q,
-        token.map((t) => ({ gruppo: 'Token', nome: t, icona: 'fa-layer-group', fai: () => azioni?.token(t) })),
-        12,
-      ),
-    );
-  trovati.sort((a, b) => b.p - a.p);
-  const gruppi = [...new Set(trovati.map((x) => x.c.gruppo))];
-  return trovati.map((x) => x.c).sort((a, b) => gruppi.indexOf(a.gruppo) - gruppi.indexOf(b.gruppo));
+function risultati(): Pagina[] {
+  const testo = campo.value.trim();
+  const q = testo.toLowerCase();
+  if (!q) return pagine;
+  const trovate = pagine
+    .map((p) => ({ p, s: punteggio(q, p.percorso) }))
+    .filter((x) => x.s >= 0)
+    .sort((a, b) => b.s - a.s)
+    .map((x) => x.p);
+  const gruppi = [...new Set(trovate.map((p) => p.gruppo))];
+  trovate.sort((a, b) => gruppi.indexOf(a.gruppo) - gruppi.indexOf(b.gruppo));
+  if (q.startsWith('/') && !pagine.some((p) => p.percorso === testo)) trovate.unshift({ gruppo: 'Indirizzo', percorso: testo });
+  return trovate;
 }
 
 function disegna() {
-  mostrati = risultati();
-  attivo = Math.min(attivo, Math.max(0, mostrati.length - 1));
+  mostrate = risultati();
+  attiva = Math.min(attiva, Math.max(0, mostrate.length - 1));
   const voci: HTMLElement[] = [];
   let gruppo = '';
-  mostrati.forEach((c, i) => {
-    if (c.gruppo !== gruppo) {
-      gruppo = c.gruppo;
+  mostrate.forEach((p, i) => {
+    if (p.gruppo !== gruppo) {
+      gruppo = p.gruppo;
       voci.push(el('li', { class: 'sv-palette-gruppo', role: 'presentation', text: gruppo }));
     }
-    const voce = el(
-      'li',
-      { id: `sv-op-${i}`, role: 'option', class: 'sv-palette-voce', 'aria-selected': String(i === attivo), 'data-indice': i },
-      icona(c.icona),
-      el('span', { class: 'sv-palette-nome', text: c.nome }),
-      c.dettaglio ? el('small', { text: c.dettaglio }) : null,
-      c.tasto ? el('kbd', { text: c.tasto }) : null,
+    voci.push(
+      el(
+        'li',
+        { id: `sv-op-${i}`, role: 'option', class: 'sv-palette-voce', 'aria-selected': String(i === attiva), 'data-indice': i },
+        icona('fa-route'),
+        el('span', { class: 'sv-palette-nome', text: p.percorso }),
+      ),
     );
-    voci.push(voce);
   });
-  if (!mostrati.length)
-    voci.push(el('li', { class: 'sv-palette-vuoto', role: 'presentation', text: 'Nessun risultato. Scrivi un indirizzo che inizia con / per aprirlo.' }));
+  if (!mostrate.length)
+    voci.push(el('li', { class: 'sv-palette-vuoto', role: 'presentation', text: 'Nessuna pagina. Scrivi un indirizzo che inizia con / per aprirlo.' }));
   lista.replaceChildren(...voci);
   evidenzia();
 }
 
 function evidenzia() {
-  lista.querySelectorAll('[role="option"]').forEach((o) => o.setAttribute('aria-selected', String(Number((o as HTMLElement).dataset.indice) === attivo)));
-  const scelto = $(`sv-op-${attivo}`);
-  if (scelto) {
-    campo.setAttribute('aria-activedescendant', scelto.id);
-    scelto.scrollIntoView({ block: 'nearest' });
+  lista.querySelectorAll('[role="option"]').forEach((o) => o.setAttribute('aria-selected', String(Number((o as HTMLElement).dataset.indice) === attiva)));
+  const scelta = $(`sv-op-${attiva}`);
+  if (scelta) {
+    campo.setAttribute('aria-activedescendant', scelta.id);
+    scelta.scrollIntoView({ block: 'nearest' });
   } else campo.removeAttribute('aria-activedescendant');
 }
 
 function esegui(i: number) {
-  const c = mostrati[i];
-  if (!c) return;
+  const p = mostrate[i];
+  if (!p) return;
   finestra.close();
-  c.fai();
+  vai(p.percorso);
 }
 
-export function apriPalette(testo = '') {
-  if (finestra.open) {
-    campo.select();
-    return;
-  }
+export function apriPalette() {
   finestra.showModal();
-  campo.value = testo;
-  attivo = 0;
+  campo.value = '';
+  attiva = 0;
   disegna();
   campo.focus();
-  campo.select();
-  void Promise.all([elencoFile(), tutte()]).then(([f, regole]) => {
-    file = f;
-    token = [...new Set(regole.filter((r) => eVariabili(r.file)).flatMap((r) => r.dichiarazioni.map((d) => d.prop).filter((p) => p.startsWith('--'))))].sort();
-    if (finestra.open && campo.value.trim()) disegna();
-  });
 }
 
 campo.addEventListener('input', () => {
-  attivo = 0;
+  attiva = 0;
   disegna();
 });
 campo.addEventListener('keydown', (e) => {
   const passo = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0;
-  if (passo && mostrati.length) {
+  if (passo && mostrate.length) {
     e.preventDefault();
-    attivo = (attivo + passo + mostrati.length) % mostrati.length;
+    attiva = (attiva + passo + mostrate.length) % mostrate.length;
     evidenzia();
   } else if (e.key === 'Enter') {
     e.preventDefault();
-    esegui(attivo);
+    esegui(attiva);
   }
 });
 lista.addEventListener('pointermove', (e) => {
   const o = (e.target as Element).closest<HTMLElement>('[role="option"]');
-  if (o && Number(o.dataset.indice) !== attivo) {
-    attivo = Number(o.dataset.indice);
+  if (o && Number(o.dataset.indice) !== attiva) {
+    attiva = Number(o.dataset.indice);
     evidenzia();
   }
 });

@@ -56,7 +56,7 @@ const configurata = modalita() !== 'assente';
                         <h2 id="svIspettoreTitolo">Elemento</h2>
                         <div class="sv-finestra-comandi">
                             <button type="button" class="sv-comando" data-riduci aria-expanded="true" aria-label="Riduci la finestra" title="Riduci"><i class="fas fa-minus" aria-hidden="true"></i></button>
-                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi e deseleziona" title="Chiudi (Esc)"><i class="fas fa-times" aria-hidden="true"></i></button>
+                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi e deseleziona" title="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
                         </div>
                     </header>
                     <div class="sv-finestra-corpo sv-scorre" id="svIspettore"></div>
@@ -71,7 +71,7 @@ const configurata = modalita() !== 'assente';
                         </div>
                         <div class="sv-finestra-comandi">
                             <button type="button" class="sv-comando" data-riduci aria-expanded="true" aria-label="Riduci la finestra" title="Riduci"><i class="fas fa-minus" aria-hidden="true"></i></button>
-                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi Design" title="Chiudi (Esc)"><i class="fas fa-times" aria-hidden="true"></i></button>
+                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi Design" title="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
                         </div>
                     </header>
                     <div class="sv-finestra-corpo">
@@ -100,7 +100,7 @@ const configurata = modalita() !== 'assente';
                             <button type="button" role="tab" id="scheda-immagini" aria-controls="vista-immagini" aria-selected="false" tabindex="-1" data-strumento="immagini">Immagini</button>
                         </div>
                         <div class="sv-finestra-comandi">
-                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi Contenuti" title="Chiudi (Esc)"><i class="fas fa-times" aria-hidden="true"></i></button>
+                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi Contenuti" title="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
                         </div>
                     </header>
                     <div class="sv-finestra-corpo">
@@ -133,7 +133,7 @@ const configurata = modalita() !== 'assente';
                         <h2 id="svCodiceTitolo">Codice</h2>
                         <code class="sv-finestra-file" id="svFileNome"></code>
                         <div class="sv-finestra-comandi">
-                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi Codice" title="Chiudi (Esc)"><i class="fas fa-times" aria-hidden="true"></i></button>
+                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi Codice" title="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
                         </div>
                     </header>
                     <div class="sv-finestra-corpo sv-file">
@@ -157,12 +157,12 @@ const configurata = modalita() !== 'assente';
                         </div>
                         <div class="sv-file-corpo">
                             <div class="sv-file-azioni" id="svFileAzioni" hidden>
-                                <button type="button" class="btn btn-primary" id="svFileSalva" disabled><i class="fas fa-check" aria-hidden="true"></i> Salva <kbd>Ctrl S</kbd></button>
+                                <button type="button" class="btn btn-primary" id="svFileSalva" disabled><i class="fas fa-check" aria-hidden="true"></i> Salva</button>
                                 <button type="button" class="btn btn-secondary" id="svFileRinomina">Rinomina</button>
                                 <a class="btn btn-secondary" id="svFileScarica" href="/area-sviluppatori" download><i class="fas fa-download" aria-hidden="true"></i> Scarica</a>
                                 <button type="button" class="btn btn-secondary btn-icona" id="svFileElimina" aria-label="Elimina il file" title="Elimina il file"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
                             </div>
-                            <div class="sv-editor" id="svEditor"><p class="sv-spiega sv-editor-vuoto">Scegli un file a sinistra, oppure premi <kbd>Ctrl K</kbd> e scrivine il nome.</p></div>
+                            <div class="sv-editor" id="svEditor"><p class="sv-spiega sv-editor-vuoto">Scegli un file a sinistra.</p></div>
                         </div>
                     </div>
                 </dialog>
@@ -171,7 +171,7 @@ const configurata = modalita() !== 'assente';
                     <header class="sv-finestra-testa" data-trascina>
                         <h2 id="svPubblicaTitolo">Pubblica</h2>
                         <div class="sv-finestra-comandi">
-                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi Pubblica" title="Chiudi (Esc)"><i class="fas fa-times" aria-hidden="true"></i></button>
+                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi Pubblica" title="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
                         </div>
                     </header>
                     <div class="sv-finestra-corpo sv-pubblica">
@@ -205,17 +205,16 @@ const configurata = modalita() !== 'assente';
                                 <i class={`fas ${d.icona}`} aria-hidden="true"></i>
                                 {d.nome}
                                 <small>{d.larghezza ? `${d.larghezza} px` : 'finestra'}</small>
-                                <kbd>{i + 1}</kbd>
                             </button>
                         ))}
                     </div>
                     <small class="sv-menu-titolo" id="svTemiTitolo">Tema dell'anteprima</small>
                     <div class="sv-menu-gruppo" role="group" aria-labelledby="svTemiTitolo">
-                        <button type="button" class="sv-menu-voce" data-tema-anteprima="chiaro" aria-pressed="true"><i class="fas fa-sun" aria-hidden="true"></i> Chiaro <kbd>D</kbd></button>
-                        <button type="button" class="sv-menu-voce" data-tema-anteprima="scuro" aria-pressed="false"><i class="fas fa-moon" aria-hidden="true"></i> Scuro <kbd>D</kbd></button>
+                        <button type="button" class="sv-menu-voce" data-tema-anteprima="chiaro" aria-pressed="true"><i class="fas fa-sun" aria-hidden="true"></i> Chiaro</button>
+                        <button type="button" class="sv-menu-voce" data-tema-anteprima="scuro" aria-pressed="false"><i class="fas fa-moon" aria-hidden="true"></i> Scuro</button>
                     </div>
                     <div class="sv-menu-gruppo sv-menu-gruppo--fine">
-                        <button type="button" class="sv-menu-voce" id="svRicarica"><i class="fas fa-arrows-rotate" aria-hidden="true"></i> Ricarica l'anteprima <kbd>R</kbd></button>
+                        <button type="button" class="sv-menu-voce" id="svRicarica"><i class="fas fa-arrows-rotate" aria-hidden="true"></i> Ricarica l'anteprima</button>
                     </div>
                 </div>
             </>
@@ -224,10 +223,10 @@ const configurata = modalita() !== 'assente';
 
     {configurata && (
         <nav class="sv-dock" id="svDock" aria-label="Strumenti sviluppatori">
-            <button type="button" class="sv-dock-voce sv-dock-pagina" id="svPagina" aria-haspopup="dialog" aria-keyshortcuts="Control+K" title="Pagine, strumenti, file e token (Ctrl K)">
+            <button type="button" class="sv-dock-voce sv-dock-pagina" id="svPagina" aria-haspopup="dialog" title="Cerca una pagina">
                 <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+                <span class="sr-only">Cerca una pagina. Pagina attuale: </span>
                 <code id="svPercorso">/</code>
-                <kbd>Ctrl K</kbd>
             </button>
             <button type="button" class="sv-dock-voce" id="svVista" popovertarget="svVistaMenu" aria-label="Vista: larghezza e tema dell'anteprima" title="Larghezza e tema">
                 <i class="fas fa-desktop" id="svVistaIcona" aria-hidden="true"></i>
@@ -235,8 +234,8 @@ const configurata = modalita() !== 'assente';
                 <i class="fas fa-sun" id="svVistaTema" aria-hidden="true"></i>
             </button>
             <div class="sv-dock-segmento" role="group" aria-label="Modalità">
-                <button type="button" class="sv-dock-voce" data-modo="modifica" aria-pressed="true" aria-keyshortcuts="M" title="Clicca un elemento per modificarlo (M)"><i class="fas fa-pen" aria-hidden="true"></i><span class="sv-dock-testo">Modifica</span></button>
-                <button type="button" class="sv-dock-voce" data-modo="naviga" aria-pressed="false" aria-keyshortcuts="M" title="Usa il sito e i suoi link (M)"><i class="fas fa-route" aria-hidden="true"></i><span class="sv-dock-testo">Naviga</span></button>
+                <button type="button" class="sv-dock-voce" data-modo="modifica" aria-pressed="true" title="Clicca un elemento per modificarlo"><i class="fas fa-pen" aria-hidden="true"></i><span class="sv-dock-testo">Modifica</span></button>
+                <button type="button" class="sv-dock-voce" data-modo="naviga" aria-pressed="false" title="Usa il sito e i suoi link"><i class="fas fa-route" aria-hidden="true"></i><span class="sv-dock-testo">Naviga</span></button>
             </div>
             <span class="sv-dock-separatore" aria-hidden="true"></span>
             {strumenti.map((s) => (
@@ -245,7 +244,7 @@ const configurata = modalita() !== 'assente';
                 </button>
             ))}
             <span class="sv-dock-separatore" aria-hidden="true"></span>
-            <button type="button" class="sv-dock-voce sv-dock-pubblica" data-apri="pubblica" aria-controls="finPubblica" aria-expanded="false" aria-keyshortcuts="P" title="Pubblica (P)">
+            <button type="button" class="sv-dock-voce sv-dock-pubblica" data-apri="pubblica" aria-controls="finPubblica" aria-expanded="false">
                 <i class="fas fa-paper-plane" aria-hidden="true"></i><span class="sv-dock-testo">Pubblica</span>
                 <span class="sv-conteggio" id="svConteggio" hidden></span>
             </button>
@@ -256,18 +255,16 @@ const configurata = modalita() !== 'assente';
             <div class="sv-menu-gruppo">
                 <a href="/dashboard" class="sv-menu-voce"><i class="fas fa-gear" aria-hidden="true"></i> Dashboard</a>
                 <a href="/" class="sv-menu-voce" target="_blank" rel="noopener"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Il sito<span class="sr-only"> (si apre in una nuova scheda)</span></a>
-                <button type="button" class="sv-menu-voce" data-palette><i class="fas fa-magnifying-glass" aria-hidden="true"></i> Comandi e scorciatoie <kbd>Ctrl K</kbd></button>
             </div>
             <div class="sv-menu-gruppo sv-menu-gruppo--fine">
                 <button type="submit" form="svEsci" class="sv-menu-voce"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Esci</button>
             </div>
         </div>
 
-        <dialog class="sv-palette" id="svPalette" aria-label="Vai a pagine, strumenti, file e token">
+        <dialog class="sv-palette" id="svPalette" aria-label="Cerca una pagina">
             <div class="sv-palette-campo">
                 <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
-                <input id="svPaletteCampo" role="combobox" aria-expanded="true" aria-controls="svPaletteRisultati" aria-autocomplete="list" aria-label="Cerca" placeholder="Pagina, strumento, file, token… oppure /indirizzo" autocomplete="off" spellcheck="false">
-                <kbd>Esc</kbd>
+                <input id="svPaletteCampo" role="combobox" aria-expanded="true" aria-controls="svPaletteRisultati" aria-autocomplete="list" aria-label="Cerca una pagina" placeholder="Cerca una pagina… oppure /indirizzo" autocomplete="off" spellcheck="false">
             </div>
             <ul class="sv-palette-risultati" id="svPaletteRisultati" role="listbox" aria-label="Risultati"></ul>
         </dialog>

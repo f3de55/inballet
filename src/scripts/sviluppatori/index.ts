@@ -23,18 +23,23 @@ import { mostraSeo } from './seo';
 import { mostraImmagini } from './immagini';
 import { mostraFile } from './file';
 import { mostraPubblica } from './pubblica';
-import { apriPalette, impostaComandi, type Comando } from './palette';
+import { apriPalette, impostaPagine } from './palette';
 
-type Strumento = { nome: string; finestra: string; scheda?: string; tasto: string; icona: string; fuoco?: string; mostra: () => void };
+type Strumento = { finestra: string; scheda?: string; fuoco?: string; mostra: () => void };
 
 const CHIAVE_VISTA = 'sv-vista';
-const ALTRE_PAGINE = [
+const AREA_RISERVATA = [
   '/dashboard',
   '/dashboard?s=bot',
   '/dashboard?s=documenti',
   '/dashboard?s=insegnanti',
   '/login?anteprima',
   '/presentazione',
+  '/presentazione/google',
+  '/presentazione/chatgpt',
+  '/presentazione/claude',
+  '/presentazione/mappa/oggi',
+  '/presentazione/mappa/nuovo',
   '/pagina-inesistente',
 ];
 const GRUPPI: Record<string, string> = { design: 'tema', contenuti: 'seo', codice: 'file', pubblica: 'pubblica' };
@@ -44,41 +49,16 @@ const modi = [...document.querySelectorAll<HTMLButtonElement>('[data-modo]')];
 const vistaMenu = $('svVistaMenu');
 let font = '';
 let strumentoAttuale = 'visuale';
-let modo: 'modifica' | 'naviga' = 'modifica';
 let tema: 'chiaro' | 'scuro' = 'chiaro';
 const ultimeSchede: Record<string, string> = {};
 
 const STRUMENTI: Record<string, Strumento> = {
-  tema: {
-    nome: 'Tema',
-    finestra: 'finDesign',
-    scheda: 'scheda-tema',
-    tasto: 'T',
-    icona: 'fa-layer-group',
-    fuoco: 'svCercaToken',
-    mostra: () => mostraTema(font),
-  },
-  animazioni: {
-    nome: 'Animazioni',
-    finestra: 'finDesign',
-    scheda: 'scheda-animazioni',
-    tasto: 'A',
-    icona: 'fa-film',
-    fuoco: 'svCercaAnimazioni',
-    mostra: mostraAnimazioni,
-  },
-  seo: { nome: 'SEO', finestra: 'finContenuti', scheda: 'scheda-seo', tasto: 'S', icona: 'fa-magnifying-glass', mostra: mostraSeo },
-  immagini: {
-    nome: 'Immagini',
-    finestra: 'finContenuti',
-    scheda: 'scheda-immagini',
-    tasto: 'I',
-    icona: 'fa-image',
-    fuoco: 'svCercaImmagini',
-    mostra: mostraImmagini,
-  },
-  file: { nome: 'File', finestra: 'finCodice', tasto: 'F', icona: 'fa-code', fuoco: 'svFiltroFile', mostra: mostraFile },
-  pubblica: { nome: 'Pubblica', finestra: 'finPubblica', tasto: 'P', icona: 'fa-paper-plane', fuoco: 'svMessaggio', mostra: mostraPubblica },
+  tema: { finestra: 'finDesign', scheda: 'scheda-tema', fuoco: 'svCercaToken', mostra: () => mostraTema(font) },
+  animazioni: { finestra: 'finDesign', scheda: 'scheda-animazioni', fuoco: 'svCercaAnimazioni', mostra: mostraAnimazioni },
+  seo: { finestra: 'finContenuti', scheda: 'scheda-seo', mostra: mostraSeo },
+  immagini: { finestra: 'finContenuti', scheda: 'scheda-immagini', fuoco: 'svCercaImmagini', mostra: mostraImmagini },
+  file: { finestra: 'finCodice', fuoco: 'svFiltroFile', mostra: mostraFile },
+  pubblica: { finestra: 'finPubblica', fuoco: 'svMessaggio', mostra: mostraPubblica },
 };
 
 function ricordaIndirizzo() {
@@ -175,7 +155,6 @@ document
   .forEach((b) => b.addEventListener('click', () => temaAnteprima(b.dataset.temaAnteprima as 'chiaro' | 'scuro')));
 
 function scegliModo(m: 'modifica' | 'naviga') {
-  modo = m;
   premi(
     modi,
     modi.find((b) => b.dataset.modo === m)!,
@@ -189,13 +168,7 @@ $('svRicarica').addEventListener('click', () => {
   vistaMenu.hidePopover();
   ricarica();
 });
-$('svPagina').addEventListener('click', () => apriPalette());
-document.querySelectorAll('[data-palette]').forEach((b) =>
-  b.addEventListener('click', () => {
-    $('svAltroMenu').hidePopover();
-    apriPalette();
-  }),
-);
+$('svPagina').addEventListener('click', apriPalette);
 
 for (const menu of document.querySelectorAll<HTMLElement>('.sv-menu[popover]')) {
   menu.addEventListener('toggle', (e) => {
@@ -211,35 +184,16 @@ const scrivibile = (t: EventTarget | null) =>
   typeof (t as Element | null)?.closest === 'function' &&
   Boolean((t as Element).closest('input, textarea, select, [contenteditable=""], [contenteditable="true"], .cm-editor'));
 
-function tasto(e: KeyboardEvent) {
-  if ((e.ctrlKey || e.metaKey) && !e.altKey && e.key.toLowerCase() === 'k') {
+function esc(e: KeyboardEvent) {
+  if (e.key !== 'Escape' || document.querySelector('dialog[open]:modal, [popover]:popover-open')) return;
+  const f = inCima();
+  if (f && (f.contains(e.target as Node) || !scrivibile(e.target))) {
     e.preventDefault();
-    apriPalette();
-    return;
-  }
-  if (e.key === 'Escape') {
-    if (document.querySelector('dialog[open]:modal, [popover]:popover-open')) return;
-    const f = inCima();
-    if (f && (f.contains(e.target as Node) || !scrivibile(e.target))) {
-      e.preventDefault();
-      f.close();
-    } else if (!f && elementoAttuale()) seleziona(null);
-    return;
-  }
-  if (e.ctrlKey || e.metaKey || e.altKey || scrivibile(e.target) || document.querySelector('dialog[open]:modal')) return;
-  const k = e.key.toUpperCase();
-  const strumento = Object.entries(STRUMENTI).find(([, s]) => s.tasto === k)?.[0];
-  const numero = Number(e.key);
-  if (strumento) apriStrumento(strumento);
-  else if (k === 'M') scegliModo(modo === 'modifica' ? 'naviga' : 'modifica');
-  else if (k === 'D') temaAnteprima(tema === 'chiaro' ? 'scuro' : 'chiaro');
-  else if (k === 'R') ricarica();
-  else if (numero >= 1 && numero <= dispositivi.length) scegliDispositivo(dispositivi[numero - 1]);
-  else return;
-  e.preventDefault();
+    f.close();
+  } else if (!f && elementoAttuale()) seleziona(null);
 }
-addEventListener('keydown', tasto);
-onTasto(tasto);
+addEventListener('keydown', esc);
+onTasto(esc);
 
 const aggiornaConteggio = rimbalzo(async () => {
   const s = await chiama(actions.sviluppatori.stato());
@@ -271,47 +225,12 @@ ascolta('finestre', () => {
 });
 ascolta('dimensioni', etichettaVista);
 
-function comandi(pagine: string[]): Comando[] {
-  const strumenti: Comando[] = Object.entries(STRUMENTI).map(([id, s]) => ({
-    gruppo: 'Strumenti',
-    nome: s.nome,
-    dettaglio: s.finestra === 'finDesign' ? 'Design' : s.finestra === 'finContenuti' ? 'Contenuti' : s.finestra === 'finCodice' ? 'Codice' : '',
-    icona: s.icona,
-    tasto: s.tasto,
-    fai: () => apriStrumento(id),
-  }));
-  const vista: Comando[] = [
-    ...dispositivi.map((b, i) => ({
-      gruppo: 'Vista',
-      nome: b.dataset.nome!,
-      dettaglio: b.dataset.larghezza === '0' ? 'finestra' : `${b.dataset.larghezza} px`,
-      icona: b.dataset.icona!,
-      tasto: String(i + 1),
-      fai: () => scegliDispositivo(b),
-    })),
-    { gruppo: 'Vista', nome: 'Tema chiaro / scuro', icona: 'fa-moon', tasto: 'D', fai: () => temaAnteprima(tema === 'chiaro' ? 'scuro' : 'chiaro') },
-    { gruppo: 'Vista', nome: 'Modifica / Naviga', icona: 'fa-pen', tasto: 'M', fai: () => scegliModo(modo === 'modifica' ? 'naviga' : 'modifica') },
-    { gruppo: 'Vista', nome: 'Ricarica l’anteprima', icona: 'fa-arrows-rotate', tasto: 'R', fai: ricarica },
-  ];
-  const vaiA: Comando[] = [...pagine, ...ALTRE_PAGINE].map((p) => ({ gruppo: 'Pagine', nome: p, icona: 'fa-route', fai: () => vai(p) }));
-  const uscite: Comando[] = [
-    { gruppo: 'Altro', nome: 'Dashboard', icona: 'fa-gear', fai: () => location.assign('/dashboard') },
-    { gruppo: 'Altro', nome: 'Apri il sito in una nuova scheda', icona: 'fa-external-link-alt', fai: () => open(percorsoAttuale(), '_blank', 'noopener') },
-    { gruppo: 'Altro', nome: 'Esci', icona: 'fa-sign-out-alt', fai: () => $<HTMLFormElement>('svEsci').requestSubmit() },
-  ];
-  return [...strumenti, ...vaiA, ...vista, ...uscite];
-}
-
-impostaComandi(comandi([]), {
-  vai,
-  token: (nome) => {
-    apriStrumento('tema');
-    const cerca = $<HTMLInputElement>('svCercaToken');
-    cerca.value = nome;
-    cerca.dispatchEvent(new Event('input'));
-  },
-});
-void chiama(actions.sviluppatori.pagine()).then((pagine) => impostaComandi(comandi(pagine ?? [])));
+const elenco = (sito: string[]) => [
+  ...sito.map((percorso) => ({ gruppo: 'Pagine del sito', percorso })),
+  ...AREA_RISERVATA.map((percorso) => ({ gruppo: 'Area riservata e errori', percorso })),
+];
+impostaPagine(elenco([]), vai);
+void chiama(actions.sviluppatori.pagine()).then((sito) => impostaPagine(elenco(sito ?? []), vai));
 void tutte().then(aggiornaElencoToken);
 aggiornaConteggio();
 onCarica(ricordaIndirizzo);

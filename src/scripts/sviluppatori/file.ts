@@ -1,5 +1,6 @@
 import { actions } from 'astro:actions';
 import { $, ascolta, chiama, chiedi, conferma, el, emetti, icona, toast } from './comune';
+import { avvisaAnteprima, ritoccaImmagine } from './anteprima';
 import { dimentica } from './regole';
 import type { Editor } from './codice';
 
@@ -90,7 +91,7 @@ async function salva() {
     dimentica();
     emetti('stili', '');
   }
-  toast(`Salvato: ${corrente}`, 'success');
+  avvisaAnteprima(`Salvato: ${corrente}`);
 }
 
 export async function apri(percorso: string, riga?: number) {
@@ -122,7 +123,10 @@ export async function apri(percorso: string, riga?: number) {
       const azione = IMMAGINE.test(percorso) ? actions.sviluppatori.immagine : actions.sviluppatori.carica;
       if ((await chiama(azione(dati), 'File non sostituito')) === undefined) return;
       emetti('modificato');
-      toast(`Sostituito: ${percorso}`, 'success');
+      if (IMMAGINE.test(percorso)) {
+        ritoccaImmagine(percorso);
+        toast(`Sostituito: ${percorso}`, 'success');
+      } else avvisaAnteprima(`Sostituito: ${percorso}`);
       void apri(percorso);
     });
     zona.append(
@@ -186,7 +190,7 @@ async function dopoCambio(messaggio: string) {
   dimentica();
   emetti('modificato');
   emetti('stili', '');
-  toast(messaggio, 'success');
+  avvisaAnteprima(messaggio);
 }
 
 $('svNuovoFile').addEventListener('click', async () => {
@@ -218,9 +222,10 @@ $('svFileRinomina').addEventListener('click', async () => {
   if (!corrente) return;
   const a = await chiedi('Rinomina o sposta', 'Nuovo percorso', corrente);
   if (!a || a === corrente) return;
-  if ((await chiama(actions.sviluppatori.rinomina({ da: corrente, a }), 'File non rinominato')) === undefined) return;
+  const aggiornati = await chiama(actions.sviluppatori.rinomina({ da: corrente, a }), 'File non rinominato');
+  if (!aggiornati) return;
   sporco = false;
-  await dopoCambio(`Rinominato in ${a}`);
+  await dopoCambio(`Rinominato in ${a}${aggiornati.length ? `, riferimenti aggiornati in ${aggiornati.join(', ')}` : ''}`);
   void apri(a);
 });
 

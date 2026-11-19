@@ -20,7 +20,6 @@ const dispositivi = [
 ];
 const strumenti = [
   { id: 'design', nome: 'Design', icona: 'fa-layer-group', finestra: 'finDesign' },
-  { id: 'contenuti', nome: 'Contenuti', icona: 'fa-image', finestra: 'finContenuti' },
   { id: 'codice', nome: 'Codice', icona: 'fa-code', finestra: 'finCodice' },
 ];
 const configurata = modalita() !== 'assente';
@@ -64,10 +63,12 @@ const configurata = modalita() !== 'assente';
 
                 <dialog class="sv-finestra sv-finestra--lato" id="finDesign" data-lato="sinistra" tabindex="-1" aria-labelledby="svDesignTitolo">
                     <header class="sv-finestra-testa" data-trascina>
-                        <h2 id="svDesignTitolo">Design</h2>
+                        <h2 id="svDesignTitolo" class="sr-only">Design</h2>
                         <div class="sv-linguette" role="tablist" aria-label="Design">
                             <button type="button" role="tab" id="scheda-tema" aria-controls="vista-tema" aria-selected="true" data-strumento="tema">Tema</button>
                             <button type="button" role="tab" id="scheda-animazioni" aria-controls="vista-animazioni" aria-selected="false" tabindex="-1" data-strumento="animazioni">Animazioni</button>
+                            <button type="button" role="tab" id="scheda-seo" aria-controls="vista-seo" aria-selected="false" tabindex="-1" data-strumento="seo">SEO</button>
+                            <button type="button" role="tab" id="scheda-immagini" aria-controls="vista-immagini" aria-selected="false" tabindex="-1" data-strumento="immagini">Immagini</button>
                         </div>
                         <div class="sv-finestra-comandi">
                             <button type="button" class="sv-comando" data-riduci aria-expanded="true" aria-label="Riduci la finestra" title="Riduci"><i class="fas fa-minus" aria-hidden="true"></i></button>
@@ -89,22 +90,7 @@ const configurata = modalita() !== 'assente';
                             </div>
                             <div id="svAnimazioni"></div>
                         </div>
-                    </div>
-                </dialog>
-
-                <dialog class="sv-finestra sv-finestra--grande" id="finContenuti" tabindex="-1" aria-labelledby="svContenutiTitolo">
-                    <header class="sv-finestra-testa" data-trascina>
-                        <h2 id="svContenutiTitolo">Contenuti</h2>
-                        <div class="sv-linguette" role="tablist" aria-label="Contenuti">
-                            <button type="button" role="tab" id="scheda-seo" aria-controls="vista-seo" aria-selected="true" data-strumento="seo">SEO</button>
-                            <button type="button" role="tab" id="scheda-immagini" aria-controls="vista-immagini" aria-selected="false" tabindex="-1" data-strumento="immagini">Immagini</button>
-                        </div>
-                        <div class="sv-finestra-comandi">
-                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi Contenuti" title="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
-                        </div>
-                    </header>
-                    <div class="sv-finestra-corpo">
-                        <div role="tabpanel" id="vista-seo" aria-labelledby="scheda-seo" class="sv-scorre sv-largo">
+                        <div role="tabpanel" id="vista-seo" aria-labelledby="scheda-seo" class="sv-scorre sv-largo" hidden>
                             <div class="sv-riga-comandi">
                                 <button type="button" class="btn btn-primary" id="svSeoControlla"><i class="fas fa-magnifying-glass" aria-hidden="true"></i> Controlla tutte le pagine</button>
                                 <small class="sv-spiega">Titolo ≤ 60 caratteri, descrizione ≤ 160, un solo h1, alt dell'immagine social.</small>
@@ -186,7 +172,7 @@ const configurata = modalita() !== 'assente';
                                 </div>
                                 <button type="submit" class="btn btn-primary" id="svPubblica"><i class="fas fa-paper-plane" aria-hidden="true"></i> Pubblica sul sito</button>
                             </form>
-                            <p class="sv-online" id="svOnline" role="status" aria-live="polite"></p>
+                            <div class="sv-online" id="svOnline" role="status" aria-live="polite"></div>
                             <h3 class="sv-titolo">Ultime pubblicazioni</h3>
                             <ul class="sv-storia" id="svStoria"></ul>
                         </div>
@@ -248,18 +234,7 @@ const configurata = modalita() !== 'assente';
                 <i class="fas fa-paper-plane" aria-hidden="true"></i><span class="sv-dock-testo">Pubblica</span>
                 <span class="sv-conteggio" id="svConteggio" hidden></span>
             </button>
-            <button type="button" class="sv-dock-voce" popovertarget="svAltroMenu" aria-label="Altro" title="Dashboard, sito, esci"><i class="fas fa-ellipsis" aria-hidden="true"></i></button>
         </nav>
-
-        <div class="sv-menu" id="svAltroMenu" popover aria-label="Altro">
-            <div class="sv-menu-gruppo">
-                <a href="/dashboard" class="sv-menu-voce"><i class="fas fa-gear" aria-hidden="true"></i> Dashboard</a>
-                <a href="/" class="sv-menu-voce" target="_blank" rel="noopener"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Il sito<span class="sr-only"> (si apre in una nuova scheda)</span></a>
-            </div>
-            <div class="sv-menu-gruppo sv-menu-gruppo--fine">
-                <button type="submit" form="svEsci" class="sv-menu-voce"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Esci</button>
-            </div>
-        </div>
 
         <dialog class="sv-palette" id="svPalette" aria-label="Cerca una pagina">
             <div class="sv-palette-campo">

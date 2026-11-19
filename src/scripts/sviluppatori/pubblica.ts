@@ -146,11 +146,14 @@ function attendi(sha: string, locale: boolean) {
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   bottone.disabled = true;
-  online.textContent = 'Controllo e pubblicazione in corso…';
+  delete online.dataset.errore;
+  online.textContent = 'Controllo come la build di Railway (stile, formattazione, TypeScript e test), poi pubblico…';
   const s = (await chiama(actions.sviluppatori.stato())) as Stato | undefined;
-  const r = await chiama(actions.sviluppatori.pubblica({ messaggio: messaggio.value }), 'Pubblicazione non riuscita');
+  const { data: r, error } = await actions.sviluppatori.pubblica({ messaggio: messaggio.value }).catch(() => ({ data: undefined, error: undefined }));
   if (!r) {
-    online.textContent = '';
+    online.dataset.errore = '';
+    online.textContent = error?.message || 'Pubblicazione non riuscita';
+    toast('Non pubblicato', 'error');
     bottone.disabled = false;
     return;
   }

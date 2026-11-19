@@ -363,7 +363,8 @@ small.sv-spiega {
   width: 400px;
   height: calc(100dvh - var(--sv-sotto, 5rem) - 24px);
 }
-.sv-finestra--grande {
+.sv-finestra--grande,
+.sv-finestra--lato[data-larga] {
   width: min(1180px, calc(100vw - 24px));
   height: calc(100dvh - var(--sv-sotto, 5rem) - 24px);
 }
@@ -454,6 +455,9 @@ small.sv-spiega {
   font-size: var(--text-xs);
   font-weight: var(--font-medium);
   cursor: pointer;
+}
+.sv-finestra--lato .sv-linguette button {
+  padding: 0 0.6rem;
 }
 .sv-linguette button[aria-selected='true'] {
   background: var(--surface);
@@ -1296,6 +1300,15 @@ small.sv-spiega {
   padding: 0.75rem 1rem;
   border-radius: var(--radius-sm);
   background: var(--soft);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.sv-online[data-errore] {
+  max-height: 18rem;
+  overflow: auto;
+  color: var(--danger);
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: var(--text-2xs);
 }
 .sv-storia li {
   display: flex;

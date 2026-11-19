@@ -1,6 +1,16 @@
 import { actions } from 'astro:actions';
 import { $, ascolta, chiama, el, emetti, icona, normalizza, toast } from './comune';
-import { elementoAttuale, nomeElemento, onSeleziona, percorsoAttuale, rettangoloScelto, ritoccaTesto, seleziona, simulaStato } from './anteprima';
+import {
+  elementoAttuale,
+  nomeElemento,
+  onSeleziona,
+  percorsoAttuale,
+  rettangoloScelto,
+  ritoccaImmagine,
+  ritoccaTesto,
+  seleziona,
+  simulaStato,
+} from './anteprima';
 import { apri, aperta, chiudi, evita } from './finestre';
 import { cartaRegola, corrispondenti, etichettaContesto, nuovaRegola, tutte, type Corrispondenza } from './regole';
 
@@ -288,6 +298,7 @@ function sezioneImmagine(e: Element): HTMLElement | null {
             dati.append('percorso', p);
             dati.append('file', f);
             if ((await chiama(actions.sviluppatori.immagine(dati), 'Immagine non sostituita')) === undefined) return;
+            ritoccaImmagine(p);
             const url = URL.createObjectURL(f);
             if (img) {
               img.removeAttribute('srcset');

@@ -1,6 +1,6 @@
 import { execFile } from 'node:child_process';
 import { existsSync } from 'node:fs';
-import { mkdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rename, rm, stat, symlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { GITHUB_BRANCH, GITHUB_REPO, GITHUB_TOKEN, RAILWAY_GIT_COMMIT_SHA } from 'astro:env/server';
 import { paths, readJson, writeJson } from '../storage';
@@ -16,7 +16,8 @@ const cartellaClone = path.join(paths.data, 'sviluppatori', 'repo');
 const fileToccati = path.join(paths.data, 'sviluppatori', 'toccati.json');
 const PROFONDITA = '30';
 const AUTORE = ['-c', 'user.name=Area sviluppatori InBallet', '-c', 'user.email=area-sviluppatori@users.noreply.github.com'];
-const VIETATI = /^(\.git|\.env|node_modules|dist|data|\.astro|\.claude)(\/|$)|(^|\/)\.env(\.|$)/;
+const VIETATI = /^(\.git|\.env|node_modules|dist|data|\.astro|\.claude|public\/assets\/icons)(\/|$)|^src\/styles\/icons\.css$|(^|\/)\.env(\.|$)/;
+const CONTROLLI = ['verifica:stile', 'format:check', 'check', 'test'];
 
 export function modalita(): Modalita {
   const repoLocale = existsSync(path.join(progetto, '.git')) && existsSync(path.join(progetto, 'src'));
@@ -274,6 +275,44 @@ async function riallinea(lista: Modifica[]): Promise<void> {
   }
 }
 
+function riassunto(uscita: string): string {
+  const righe = uscita
+    .replace(/\u001b\[[0-9;]*m/g, '')
+    .split('\n')
+    .map((r) => r.trimEnd())
+    .filter((r) => r.trim() && !r.startsWith('> '));
+  const errori = righe.filter((r) => /error|errore|problemi|not ok|fail|✖|\[warn\]/i.test(r));
+  return (errori.length ? errori : righe).slice(-25).join('\n');
+}
+
+function npm(script: string): Promise<void> {
+  const windows = process.platform === 'win32';
+  return new Promise((ok, ko) =>
+    execFile(
+      windows ? 'npm.cmd' : 'npm',
+      ['run', script],
+      {
+        cwd: radice(),
+        shell: windows,
+        timeout: 300_000,
+        maxBuffer: 64 * 1024 * 1024,
+        env: { ...process.env, NO_COLOR: '1', FORCE_COLOR: '0' },
+        windowsHide: true,
+      },
+      (errore, stdout, stderr) =>
+        errore
+          ? ko(new ErroreSviluppatori(`Non pubblicato: la build su Railway fallirebbe, «npm run ${script}» non passa.\n${riassunto(`${stdout}\n${stderr}`)}`))
+          : ok(),
+    ),
+  );
+}
+
+async function controllaBuild(): Promise<void> {
+  if (modalita() === 'clone' && !existsSync(path.join(cartellaClone, 'node_modules')))
+    await symlink(path.join(progetto, 'node_modules'), path.join(cartellaClone, 'node_modules'), 'junction');
+  for (const script of CONTROLLI) await npm(script);
+}
+
 export function pubblica(messaggio: string): Promise<string> {
   return inCoda(async () => {
     const lista = await elencoModifiche();
@@ -281,6 +320,7 @@ export function pubblica(messaggio: string): Promise<string> {
     const percorsi = lista.map((m) => m.percorso);
     const testo = messaggio.trim() || `Area sviluppatori: aggiorna ${percorsi.length === 1 ? percorsi[0] : `${percorsi.length} file`}`;
     if (modalita() === 'locale') {
+      await controllaBuild();
       await git(['add', '-f', '-A', '--', ...percorsi]);
       await git(['commit', '-m', testo, '--', ...percorsi]);
       await writeJson(fileToccati, []);
@@ -293,6 +333,7 @@ export function pubblica(messaggio: string): Promise<string> {
       return testa();
     }
     await riallinea(lista);
+    await controllaBuild();
     await git(['add', '-f', '-A', '--', ...percorsi]);
     await git([...AUTORE, 'commit', '-m', testo]);
     try {

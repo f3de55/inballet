@@ -1,8 +1,10 @@
-import { $, emetti, normalizza } from './comune';
+import { $, emetti, normalizza, toast } from './comune';
 import type { RegolaCss } from './regole';
 
 type Ritocco = { file: string; selettore: string; contesti: string[]; props: Map<string, string | null> };
 type RitoccoTesto = { file: string; vecchio: string; nuovo: string; attributo?: string };
+type RitoccoImmagine = { file: string; radice: string; url: string };
+type Salvati = { css: [string, Omit<Ritocco, 'props'> & { props: [string, string | null][] }][]; testi: RitoccoTesto[]; immagini: RitoccoImmagine[] };
 
 const iframe = $<HTMLIFrameElement>('svAnteprima');
 const cornice = $('svCornice');
@@ -14,6 +16,8 @@ const etichetta = $('svPercorso');
 
 const ritocchi = new Map<string, Ritocco>();
 const ritocchiTesto: RitoccoTesto[] = [];
+const ritocchiImmagine: RitoccoImmagine[] = [];
+const CHIAVE_RITOCCHI = 'sv-ritocchi';
 const alCaricamento = new Set<() => void>();
 const allaScelta = new Set<(e: Element | null) => void>();
 const aiTasti = new Set<(e: KeyboardEvent) => void>();
@@ -26,6 +30,7 @@ let modo: 'modifica' | 'naviga' = 'modifica';
 let elementoSopra: Element | null = null;
 let elementoScelto: Element | null = null;
 let statoSimulato: { stato: string; regole: RegolaCss[] } | null = null;
+let fedele = true;
 
 export const doc = () => iframe.contentDocument;
 export const win = () => iframe.contentWindow;
@@ -236,11 +241,84 @@ function iniettaRitocco(chiave: string, r: Ritocco) {
   d.body.append(stile);
 }
 
+function salva() {
+  const dati: Salvati = {
+    css: [...ritocchi].map(([k, r]) => [k, { ...r, props: [...r.props] }]),
+    testi: ritocchiTesto,
+    immagini: ritocchiImmagine,
+  };
+  try {
+    sessionStorage.setItem(CHIAVE_RITOCCHI, JSON.stringify(dati));
+  } catch {
+    return;
+  }
+}
+
+function ripristina() {
+  try {
+    const dati = JSON.parse(sessionStorage.getItem(CHIAVE_RITOCCHI) ?? 'null') as Salvati | null;
+    if (!dati) return;
+    for (const [k, r] of dati.css) ritocchi.set(k, { ...r, props: new Map(r.props) });
+    ritocchiTesto.push(...dati.testi);
+    ritocchiImmagine.push(...dati.immagini);
+  } catch {
+    return;
+  }
+}
+
+export function impostaModalita(modalita: string) {
+  fedele = modalita === 'locale';
+}
+
+export function avvisaAnteprima(testo: string) {
+  if (fedele) toast(testo, 'success');
+  else toast(`${testo}. L’anteprima mostra il sito pubblicato: questa modifica si vedrà dopo «Pubblica».`, 'warning');
+}
+
+export const radiceImmagine = (indirizzo: string) => {
+  const url = new URL(indirizzo, location.origin);
+  const reale = url.pathname === '/_image' ? new URL(url.searchParams.get('href') ?? '', location.origin).pathname : url.pathname;
+  return decodeURIComponent(reale.split('/').pop() ?? '')
+    .replace(/\.[^.]+$/, '')
+    .replace(/\.[\w-]{6,12}$/, '');
+};
+
+function sostituisciImmagini(r: RitoccoImmagine) {
+  const d = doc();
+  if (!d?.body) return;
+  const stessa = (u: string) => Boolean(u) && !u.startsWith('blob:') && !u.includes('/area-sviluppatori/') && radiceImmagine(u) === r.radice;
+  d.querySelectorAll('img').forEach((img) => {
+    if (!stessa(img.currentSrc || img.src)) return;
+    img.removeAttribute('srcset');
+    img
+      .closest('picture')
+      ?.querySelectorAll('source')
+      .forEach((s) => s.remove());
+    img.src = r.url;
+  });
+  d.querySelectorAll<HTMLElement>('[style*="url("]').forEach((e) => {
+    const stile = e.getAttribute('style') ?? '';
+    const nuovo = stile.replace(/url\((['"]?)([^'")]+)\1\)/g, (tutto, _v, u: string) => (stessa(u) ? `url("${r.url}")` : tutto));
+    if (nuovo !== stile) e.setAttribute('style', nuovo);
+  });
+}
+
+export function ritoccaImmagine(file: string) {
+  const r = { file, radice: radiceImmagine(`/${file}`), url: `/area-sviluppatori/file?p=${encodeURIComponent(file)}&v=${Date.now()}` };
+  const i = ritocchiImmagine.findIndex((x) => x.file === file);
+  if (i >= 0) ritocchiImmagine.splice(i, 1);
+  ritocchiImmagine.push(r);
+  salva();
+  sostituisciImmagini(r);
+  requestAnimationFrame(aggiornaRiquadri);
+}
+
 export function ritocca(file: string, selettore: string, contesti: string[], prop: string, valore: string | null) {
   const chiave = `${contesti.join('|')}§${selettore}`;
   const r = ritocchi.get(chiave) ?? { file, selettore, contesti, props: new Map() };
   r.props.set(prop, valore);
   ritocchi.set(chiave, r);
+  salva();
   iniettaRitocco(chiave, r);
   requestAnimationFrame(aggiornaRiquadri);
 }
@@ -268,6 +346,7 @@ function sostituisciNodi(r: RitoccoTesto) {
 export function ritoccaTesto(file: string, vecchio: string, nuovo: string, attributo?: string) {
   const r = { file, vecchio: normalizza(vecchio), nuovo: normalizza(nuovo), attributo };
   ritocchiTesto.push(r);
+  salva();
   sostituisciNodi(r);
   requestAnimationFrame(aggiornaRiquadri);
 }
@@ -275,11 +354,15 @@ export function ritoccaTesto(file: string, vecchio: string, nuovo: string, attri
 export function dimenticaFile(file: string) {
   for (const [k, r] of ritocchi) if (r.file === file) ritocchi.delete(k);
   for (let i = ritocchiTesto.length - 1; i >= 0; i--) if (ritocchiTesto[i].file === file) ritocchiTesto.splice(i, 1);
+  for (let i = ritocchiImmagine.length - 1; i >= 0; i--) if (ritocchiImmagine[i].file === file) ritocchiImmagine.splice(i, 1);
+  salva();
 }
 
 export function dimenticaTutto() {
   ritocchi.clear();
   ritocchiTesto.length = 0;
+  ritocchiImmagine.length = 0;
+  salva();
 }
 
 function dichiarazioniCon(r: RegolaCss): string {
@@ -329,6 +412,7 @@ function aggancia() {
   d.documentElement.dataset.tema = tema;
   for (const [k, r] of ritocchi) iniettaRitocco(k, r);
   ritocchiTesto.forEach(sostituisciNodi);
+  ritocchiImmagine.forEach(sostituisciImmagini);
   const blocca = (e: Event) => {
     if (modo !== 'modifica') return;
     e.preventDefault();
@@ -379,3 +463,4 @@ iframe.addEventListener('load', () => {
 });
 
 new ResizeObserver(dimensiona).observe(scena);
+ripristina();

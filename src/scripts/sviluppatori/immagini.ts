@@ -1,5 +1,6 @@
 import { actions } from 'astro:actions';
 import { $, chiama, chiedi, conferma, el, emetti, icona, toast } from './comune';
+import { ritoccaImmagine } from './anteprima';
 import { elencoFile } from './file';
 
 const griglia = $('svImmagini');
@@ -28,6 +29,7 @@ function carta(p: string): HTMLElement {
     if ((await chiama(actions.sviluppatori.immagine(dati), 'Immagine non sostituita')) === undefined) return;
     versione = Date.now();
     anteprima.src = indirizzo(p);
+    ritoccaImmagine(p);
     emetti('modificato');
     toast(`Sostituita: ${p}`, 'success');
   });
@@ -35,7 +37,7 @@ function carta(p: string): HTMLElement {
     if (
       !(await conferma({
         titolo: 'Eliminare l’immagine?',
-        testo: `${p}: controlla prima con «Dove è usata», o la build si fermerà.`,
+        testo: `${p} sparirà alla prossima pubblicazione. Se il sito la usa ancora, l’area lo dice e non la elimina.`,
         ok: 'Elimina',
         pericolo: true,
       }))

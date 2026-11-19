@@ -24,11 +24,6 @@ export const icons = {
     accent: '',
     monochrome: true,
   },
-  ellipsis: {
-    outline: '<circle cx="5.5" cy="12" r=".9"/><circle cx="12" cy="12" r=".9"/><circle cx="18.5" cy="12" r=".9"/>',
-    accent: '',
-    monochrome: true,
-  },
   minus: {
     outline: '<path d="M5 12h14"/>',
     accent: '',

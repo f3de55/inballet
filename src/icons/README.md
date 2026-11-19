@@ -1,6 +1,6 @@
 # InBallet Icons
 
-Set vettoriale originale per InBallet: 126 disegni, con simboli specifici per danza e benessere.
+Set vettoriale originale per InBallet: 125 disegni, con simboli specifici per danza e benessere.
 
 Una famiglia regular su griglia 24 × 24: contorni da 1,8 unità, terminali e raccordi arrotondati. Frecce, chiusure, menu e altri simboli semplici sono monocolore. Le icone descrittive più articolate possono avere accenti azzurri su parti significative del soggetto.
 

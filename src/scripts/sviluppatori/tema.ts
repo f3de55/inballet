@@ -1,6 +1,6 @@
 import { actions } from 'astro:actions';
-import { $, aEsadecimale, ascolta, chiama, el, emetti, icona, toast } from './comune';
-import { doc, ritocca } from './anteprima';
+import { $, aEsadecimale, ascolta, chiama, el, emetti, icona } from './comune';
+import { avvisaAnteprima, doc, ritocca } from './anteprima';
 import { etichettaContesto, eVariabili, salvaRegola, tutte, type RegolaCss } from './regole';
 
 type Valore = { regola: RegolaCss; valore: string };
@@ -108,7 +108,7 @@ function sezioneFont(): HTMLElement {
     if (ok === undefined) return;
     font = input.value.trim();
     emetti('modificato');
-    toast(`Font del sito: ${font}`, 'success');
+    avvisaAnteprima(`Font del sito: ${font}`);
   });
   return el(
     'section',

@@ -4,6 +4,7 @@ import {
   dimensiona,
   elementoAttuale,
   impostaLarghezza,
+  impostaModalita,
   impostaModo,
   impostaTema,
   larghezzaAttuale,
@@ -15,7 +16,7 @@ import {
   vai,
 } from './anteprima';
 import { aggiornaElencoToken, tutte } from './regole';
-import { apri, chiudi, inCima } from './finestre';
+import { allarga, apri, chiudi, inCima } from './finestre';
 import './ispettore';
 import { mostraTema } from './tema';
 import { mostraAnimazioni } from './animazioni';
@@ -25,7 +26,7 @@ import { mostraFile } from './file';
 import { mostraPubblica } from './pubblica';
 import { apriPalette, impostaPagine } from './palette';
 
-type Strumento = { finestra: string; scheda?: string; fuoco?: string; mostra: () => void };
+type Strumento = { finestra: string; scheda?: string; larga?: boolean; fuoco?: string; mostra: () => void };
 
 const CHIAVE_VISTA = 'sv-vista';
 const AREA_RISERVATA = [
@@ -42,7 +43,7 @@ const AREA_RISERVATA = [
   '/presentazione/mappa/nuovo',
   '/pagina-inesistente',
 ];
-const GRUPPI: Record<string, string> = { design: 'tema', contenuti: 'seo', codice: 'file', pubblica: 'pubblica' };
+const GRUPPI: Record<string, string> = { design: 'tema', codice: 'file', pubblica: 'pubblica' };
 const conteggio = $('svConteggio');
 const dispositivi = [...document.querySelectorAll<HTMLButtonElement>('button[data-dispositivo]')];
 const modi = [...document.querySelectorAll<HTMLButtonElement>('[data-modo]')];
@@ -55,8 +56,8 @@ const ultimeSchede: Record<string, string> = {};
 const STRUMENTI: Record<string, Strumento> = {
   tema: { finestra: 'finDesign', scheda: 'scheda-tema', fuoco: 'svCercaToken', mostra: () => mostraTema(font) },
   animazioni: { finestra: 'finDesign', scheda: 'scheda-animazioni', fuoco: 'svCercaAnimazioni', mostra: mostraAnimazioni },
-  seo: { finestra: 'finContenuti', scheda: 'scheda-seo', mostra: mostraSeo },
-  immagini: { finestra: 'finContenuti', scheda: 'scheda-immagini', fuoco: 'svCercaImmagini', mostra: mostraImmagini },
+  seo: { finestra: 'finDesign', scheda: 'scheda-seo', larga: true, mostra: mostraSeo },
+  immagini: { finestra: 'finDesign', scheda: 'scheda-immagini', larga: true, fuoco: 'svCercaImmagini', mostra: mostraImmagini },
   file: { finestra: 'finCodice', fuoco: 'svFiltroFile', mostra: mostraFile },
   pubblica: { finestra: 'finPubblica', fuoco: 'svMessaggio', mostra: mostraPubblica },
 };
@@ -83,6 +84,7 @@ function scegliScheda(s: Strumento) {
     $(t.getAttribute('aria-controls')!).hidden = !attiva;
   }
   ultimeSchede[s.finestra] = scelta.dataset.strumento!;
+  allarga(s.finestra, Boolean(s.larga));
 }
 
 function apriStrumento(id: string, fuoco = true) {
@@ -198,6 +200,7 @@ onTasto(esc);
 const aggiornaConteggio = rimbalzo(async () => {
   const s = await chiama(actions.sviluppatori.stato());
   if (!s) return;
+  impostaModalita(s.modalita);
   const cambiato = font !== s.font;
   font = s.font;
   if (cambiato && $('vista-tema').checkVisibility()) mostraTema(font);
@@ -211,7 +214,7 @@ const aggiornaConteggio = rimbalzo(async () => {
 ascolta('modificato', aggiornaConteggio);
 ascolta('mostra-vista', (id) => apriStrumento(String(id), false));
 ascolta('vai', (p) => {
-  chiudi('finContenuti');
+  chiudi('finDesign');
   vai(String(p));
 });
 ascolta('tema-anteprima', (t) => temaAnteprima(t as 'chiaro' | 'scuro'));

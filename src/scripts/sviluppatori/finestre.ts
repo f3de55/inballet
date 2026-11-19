@@ -89,6 +89,15 @@ export function chiudi(id: string) {
   if (f.open) f.close();
 }
 
+export function allarga(id: string, larga: boolean) {
+  const f = document.getElementById(id) as HTMLDialogElement;
+  if (f.hasAttribute('data-larga') === larga) return;
+  f.toggleAttribute('data-larga', larga);
+  f.style.removeProperty('width');
+  f.style.removeProperty('height');
+  if (f.open) colloca(f);
+}
+
 export const aperta = (id: string) => (document.getElementById(id) as HTMLDialogElement).open;
 
 export function inCima(): HTMLDialogElement | null {

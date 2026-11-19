@@ -5,11 +5,6 @@ RUN npm ci
 COPY . .
 RUN npm run verifica:stile && npm run format:check && npm run check && npm test && npm run build
 
-FROM node:24-alpine AS deps
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
-
 FROM node:24-alpine
 RUN apk add --no-cache git
 WORKDIR /app
@@ -17,7 +12,7 @@ ENV NODE_ENV=production \
     HOST=0.0.0.0 \
     PORT=8080 \
     DATA_DIR=/app/data
-COPY --from=deps /app/node_modules ./node_modules
+COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY package.json ./
 COPY demo ./demo

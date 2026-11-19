@@ -16,6 +16,7 @@ import { MAX_SEZIONE_REVISIONE, MAX_TESTO_REVISIONE } from '../lib/revisione-com
 import { indirizziSitemap } from '../lib/sitemap';
 import * as sv from '../lib/sviluppatori';
 import * as deposito from '../lib/sviluppatori/deposito';
+import * as riferimenti from '../lib/sviluppatori/riferimenti';
 
 function admin<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O>) {
   return async (input: I, context: ActionAPIContext): Promise<O> => {
@@ -322,12 +323,12 @@ export const server = {
 
     elimina: defineAction({
       input: z.object({ percorso }),
-      handler: sviluppatore(({ percorso }) => deposito.elimina(percorso)),
+      handler: sviluppatore(({ percorso }) => riferimenti.eliminaFile(percorso)),
     }),
 
     rinomina: defineAction({
       input: z.object({ da: percorso, a: percorso }),
-      handler: sviluppatore(({ da, a }) => deposito.rinomina(da, a)),
+      handler: sviluppatore(({ da, a }) => riferimenti.rinominaFile(da, a)),
     }),
 
     cerca: defineAction({

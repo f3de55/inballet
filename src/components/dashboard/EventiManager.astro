@@ -1,12 +1,7 @@
 ---
-import { ETICHETTE_STATO, giornoBreve, inCorso, leggiEventi, leggiTipi, passato, perInizio, perMese, urlEvento } from '../../lib/eventi';
+import { ETICHETTE_STATO, giornoBreve, inCorso, leggiEventi, passato, perInizio, perMese, urlEvento } from '../../lib/eventi';
 import { romeDate } from '../../lib/time';
-import { sedi } from '../../data/scuola';
-import EventoModal from './EventoModal.astro';
-import TipiModal from './TipiModal.astro';
-import DemoModal from './DemoModal.astro';
 
-const tipiEvento = await leggiTipi();
 const tutti = await leggiEventi();
 const adesso = Date.now();
 const oggi = romeDate(adesso);
@@ -17,27 +12,11 @@ const passati = tutti.filter((e) => passato(e, adesso)).sort((a, b) => perInizio
 
 const giorno = (data: string) => ({ numero: Number(data.slice(8, 10)), settimana: giornoBreve(data) });
 
-function usati(campo: 'luogo' | 'destinatari' | 'costo') {
-  const conta = new Map<string, number>();
-  for (const e of tutti) {
-    const v = e[campo].trim();
-    if (v) conta.set(v, (conta.get(v) ?? 0) + 1);
-  }
-  return [...conta].sort((a, b) => b[1] - a[1]).map(([v]) => v);
-}
-const sediRapide = sedi.map((s) => ({ nome: s.citta, luogo: `Sede di ${s.citta}, ${s.via.replace(',', '')}` }));
-
 const gruppi = [
   { id: 'futuri', titolo: 'In programma', mesi: perMese(futuri), n: futuri.length, passato: false },
   { id: 'passati', titolo: 'Passati', mesi: perMese(passati), n: passati.length, passato: true },
 ];
 ---
-
-<h1 class="sr-only">Eventi</h1>
-<div class="pagina-azioni">
-    <button type="button" class="btn btn-primary" data-nuovo-evento><i class="fas fa-plus" aria-hidden="true"></i> Nuovo evento</button>
-    <a href="/spettacoli-eventi" target="_blank" rel="noopener" class="btn btn-secondary btn-icona" aria-label="Vedi il calendario sul sito (si apre in una nuova scheda)" title="Vedi il calendario sul sito"><i class="fas fa-eye" aria-hidden="true"></i></a>
-</div>
 
 {tutti.length > 0 ? (
     <>
@@ -54,11 +33,11 @@ const gruppi = [
 
         {gruppi.map((g) => (
             <section class="ev-gruppo" data-gruppo={g.id} hidden={g.id !== 'futuri'} aria-label={g.titolo}>
-                <h2 class="ev-gruppo-titolo">{g.titolo} <span>{g.n}</span></h2>
+                <h3 class="ev-gruppo-titolo">{g.titolo} <span>{g.n}</span></h3>
                 {g.n === 0 && <p class="ev-vuoto">Nessun evento {g.passato ? 'passato' : 'in programma'}.</p>}
                 {g.mesi.map((mese) => (
                     <div class="ev-mese">
-                        <h3>{mese.titolo}</h3>
+                        <h4>{mese.titolo}</h4>
                         <ul class="ev-lista">
                             {mese.eventi.map((ev) => {
                                 const g2 = giorno(ev.data);
@@ -86,7 +65,7 @@ const gruppi = [
                                             </span>
                                         </button>
                                         <div class="ev-azioni">
-                                            {ev.stato !== 'bozza' && <a href={urlEvento(ev)} target="_blank" rel="noopener" aria-label={`Vedi ${titolo} sul sito (si apre in una nuova scheda)`} title="Vedi sul sito"><i class="fas fa-external-link-alt" aria-hidden="true"></i></a>}
+                                            {ev.stato !== 'bozza' && <button type="button" data-anteprima={urlEvento(ev)} aria-label={`Mostra ${titolo} nel sito`} title="Mostra nel sito"><i class="fas fa-eye" aria-hidden="true"></i></button>}
                                             <button type="button" class="elimina" data-azione="elimina" aria-label={`Elimina ${titolo}`} title="Elimina"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
                                         </div>
                                     </li>
@@ -106,13 +85,3 @@ const gruppi = [
         <button type="button" class="btn btn-primary" data-nuovo-evento><i class="fas fa-plus" aria-hidden="true"></i> Aggiungi il primo evento</button>
     </div>
 )}
-
-<EventoModal tipi={tipiEvento} sedi={sediRapide} luoghi={usati('luogo')} destinatari={usati('destinatari')} costi={usati('costo')} />
-<TipiModal />
-<DemoModal tipo="eventi" presenti={tutti.filter((e) => e.demo).length} />
-
-<script type="application/json" id="tipiEventoData" set:html={JSON.stringify(tipiEvento).replace(/</g, '\\u003c')} />
-
-<script>
-    import '../../scripts/dashboard/eventi';
-</script>

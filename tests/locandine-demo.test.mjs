@@ -30,6 +30,8 @@ test('locandine demo: file persi, miniature e generazione nel runtime Docker', {
       `DATA_DIR=${dataDir}`,
       '-e',
       'DASHBOARD_PASSWORD=demo-image-test-only',
+      '-e',
+      'SVILUPPATORI_PASSWORD=demo-dev-test-only',
       'inballet-site',
     );
     started = true;
@@ -84,7 +86,7 @@ test('locandine demo: file persi, miniature e generazione nel runtime Docker', {
       method: 'POST',
       redirect: 'manual',
       headers: { Origin: base, 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ password: 'demo-image-test-only' }),
+      body: new URLSearchParams({ password: 'demo-dev-test-only' }),
     });
     assert.ok(login.status === 302 || login.status === 303, 'Login nel container di test riuscito');
     const cookie = login.headers

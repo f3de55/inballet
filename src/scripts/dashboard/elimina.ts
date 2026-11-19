@@ -1,11 +1,9 @@
 import { actions } from 'astro:actions';
 import { toast } from './toast';
-import { mostraModal, nascondiModal } from './comune';
 
-const modal = document.getElementById('modalElimina');
 const form = document.getElementById('formElimina') as HTMLFormElement | null;
 
-if (modal && form) {
+if (form) {
   const parola = form.dataset.parola!;
   const input = document.getElementById('eliminaParola') as HTMLInputElement;
   const vai = document.getElementById('eliminaVai') as HTMLButtonElement;
@@ -14,26 +12,6 @@ if (modal && form) {
   const aggiorna = () => {
     vai.disabled = input.value.trim().toUpperCase() !== parola || (!scelta('eventi') && !scelta('chatbot'));
   };
-
-  const apri = () => {
-    document.querySelectorAll('#modalDemo, #modalImpostazioni').forEach((m) => m.classList.remove('open'));
-    form.reset();
-    aggiorna();
-    mostraModal(modal);
-    if (matchMedia('(hover: hover)').matches) input.focus();
-  };
-  const chiudi = () => {
-    nascondiModal(modal);
-  };
-
-  document.addEventListener('click', (e) => {
-    const t = e.target as Element;
-    if (t.closest('[data-apri-elimina]')) return apri();
-    if (t.closest('[data-chiudi-elimina]') || t === modal) return chiudi();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) chiudi();
-  });
   form.addEventListener('input', aggiorna);
 
   form.addEventListener('submit', async (e) => {

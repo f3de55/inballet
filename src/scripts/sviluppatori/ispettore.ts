@@ -11,7 +11,7 @@ import {
   seleziona,
   simulaStato,
 } from './anteprima';
-import { apri, aperta, chiudi, evita } from './finestre';
+import { apri, aperta, chiudi, evita } from '../finestre';
 import { cartaRegola, corrispondenti, etichettaContesto, nuovaRegola, tutte, type Corrispondenza } from './regole';
 
 type Esito =

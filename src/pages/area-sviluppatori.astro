@@ -1,9 +1,19 @@
 ---
 import '../styles/admin/dashboard.css';
+import '../styles/admin/scena.css';
 import '../styles/admin/sviluppatori.css';
 import { actions } from 'astro:actions';
 import Admin from '../layouts/Admin.astro';
 import Conferma from '../components/dashboard/Conferma.astro';
+import ChatbotTecnico from '../components/dashboard/ChatbotTecnico.astro';
+import DemoBlocco from '../components/dashboard/DemoBlocco.astro';
+import RevisionePannello from '../components/dashboard/RevisionePannello.astro';
+import EliminaTutto from '../components/dashboard/EliminaTutto.astro';
+import { leggiEventi } from '../lib/eventi';
+import { leggiInsegnanti, MAX_INSEGNANTI } from '../lib/insegnanti';
+import { MAX_LOG } from '../lib/chatbot/registro';
+import type { LogEntry } from '../lib/chatbot';
+import { paths, readJson } from '../lib/storage';
 import { isSviluppatore } from '../lib/auth';
 import { modalita } from '../lib/sviluppatori/deposito';
 
@@ -19,10 +29,23 @@ const dispositivi = [
   { id: 'telefono', nome: 'Telefono', larghezza: 390, icona: 'fa-phone' },
 ];
 const strumenti = [
-  { id: 'design', nome: 'Design', icona: 'fa-layer-group', finestra: 'finDesign' },
+  { id: 'contenuti', nome: 'Contenuti', icona: 'fa-layer-group', finestra: 'finContenuti' },
   { id: 'codice', nome: 'Codice', icona: 'fa-code', finestra: 'finCodice' },
 ];
 const configurata = modalita() !== 'assente';
+const eventiDemo = (await leggiEventi()).filter((e) => e.demo).length;
+const { insegnanti } = await leggiInsegnanti();
+const registro = await readJson<LogEntry[]>(paths.analytics, []);
+const schede = [
+  { id: 'tema', nome: 'Tema' },
+  { id: 'animazioni', nome: 'Animazioni' },
+  { id: 'seo', nome: 'SEO' },
+  { id: 'immagini', nome: 'Immagini' },
+  { id: 'chatbot', nome: 'Chatbot' },
+  { id: 'demo', nome: 'Dati demo' },
+  { id: 'revisione', nome: 'Revisione' },
+  { id: 'elimina', nome: 'Elimina tutto' },
+];
 ---
 
 <Admin title="Area sviluppatori - InBallet">
@@ -61,20 +84,19 @@ const configurata = modalita() !== 'assente';
                     <div class="sv-finestra-corpo sv-scorre" id="svIspettore"></div>
                 </dialog>
 
-                <dialog class="sv-finestra sv-finestra--lato" id="finDesign" data-lato="sinistra" tabindex="-1" aria-labelledby="svDesignTitolo">
+                <dialog class="sv-finestra sv-finestra--lato" id="finContenuti" data-lato="sinistra" tabindex="-1" aria-labelledby="svContenutiTitolo">
                     <header class="sv-finestra-testa" data-trascina>
-                        <h2 id="svDesignTitolo" class="sr-only">Design</h2>
-                        <div class="sv-linguette" role="tablist" aria-label="Design">
-                            <button type="button" role="tab" id="scheda-tema" aria-controls="vista-tema" aria-selected="true" data-strumento="tema">Tema</button>
-                            <button type="button" role="tab" id="scheda-animazioni" aria-controls="vista-animazioni" aria-selected="false" tabindex="-1" data-strumento="animazioni">Animazioni</button>
-                            <button type="button" role="tab" id="scheda-seo" aria-controls="vista-seo" aria-selected="false" tabindex="-1" data-strumento="seo">SEO</button>
-                            <button type="button" role="tab" id="scheda-immagini" aria-controls="vista-immagini" aria-selected="false" tabindex="-1" data-strumento="immagini">Immagini</button>
-                        </div>
+                        <h2 id="svContenutiTitolo">Contenuti</h2>
                         <div class="sv-finestra-comandi">
                             <button type="button" class="sv-comando" data-riduci aria-expanded="true" aria-label="Riduci la finestra" title="Riduci"><i class="fas fa-minus" aria-hidden="true"></i></button>
-                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi Design" title="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+                            <button type="button" class="sv-comando" data-chiudi aria-label="Chiudi Contenuti" title="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
                         </div>
                     </header>
+                    <div class="sv-linguette sv-linguette--riga" role="tablist" aria-label="Contenuti">
+                        {schede.map((t, i) => (
+                            <button type="button" role="tab" id={`scheda-${t.id}`} aria-controls={`vista-${t.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? undefined : '-1'} data-strumento={t.id}>{t.nome}</button>
+                        ))}
+                    </div>
                     <div class="sv-finestra-corpo">
                         <div role="tabpanel" id="vista-tema" aria-labelledby="scheda-tema" class="sv-scorre">
                             <div class="sv-filtro">
@@ -110,6 +132,22 @@ const configurata = modalita() !== 'assente';
                                 </label>
                             </div>
                             <div class="sv-immagini" id="svImmagini"></div>
+                        </div>
+                        <div role="tabpanel" id="vista-chatbot" aria-labelledby="scheda-chatbot" class="sv-scorre sv-largo" hidden>
+                            <ChatbotTecnico />
+                        </div>
+                        <div role="tabpanel" id="vista-demo" aria-labelledby="scheda-demo" class="sv-scorre sv-largo" hidden>
+                            <div class="demo-blocchi">
+                                <DemoBlocco tipo="eventi" presenti={eventiDemo} />
+                                <DemoBlocco tipo="insegnanti" presenti={insegnanti.filter((d) => d.demo).length} liberi={MAX_INSEGNANTI - insegnanti.length} />
+                                <DemoBlocco tipo="chatbot" presenti={registro.filter((l) => l.demo).length} liberi={MAX_LOG - registro.length} />
+                            </div>
+                        </div>
+                        <div role="tabpanel" id="vista-revisione" aria-labelledby="scheda-revisione" class="sv-scorre sv-largo" hidden>
+                            <RevisionePannello />
+                        </div>
+                        <div role="tabpanel" id="vista-elimina" aria-labelledby="scheda-elimina" class="sv-scorre sv-largo" hidden>
+                            <EliminaTutto />
                         </div>
                     </div>
                 </dialog>

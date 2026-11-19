@@ -1,5 +1,3 @@
-import { emetti } from './comune';
-
 type Posizione = { x: number; y: number };
 
 const CHIAVE = 'sv-finestre';
@@ -26,7 +24,7 @@ function ricorda() {
 }
 
 function spazioDock(): number {
-  const dock = document.getElementById('svDock');
+  const dock = document.querySelector('.sv-dock');
   return dock ? innerHeight - dock.getBoundingClientRect().top + MARGINE : MARGINE;
 }
 
@@ -64,7 +62,7 @@ function colloca(f: HTMLDialogElement) {
 
 function segnaAperte() {
   for (const f of finestre) document.querySelectorAll(`[aria-controls="${f.id}"]`).forEach((b) => b.setAttribute('aria-expanded', String(f.open)));
-  emetti('finestre');
+  document.dispatchEvent(new Event('finestre'));
 }
 
 export function inPrimoPiano(f: HTMLDialogElement) {
@@ -164,3 +162,13 @@ for (const f of finestre) {
 
 addEventListener('resize', () => finestre.filter((f) => f.open).forEach(colloca));
 piccolo.addEventListener('change', () => finestre.filter((f) => f.open).forEach(colloca));
+
+for (const menu of document.querySelectorAll<HTMLElement>('.sv-menu[popover]')) {
+  menu.addEventListener('toggle', (e) => {
+    if ((e as ToggleEvent).newState !== 'open') return;
+    const bottone = document.querySelector<HTMLElement>(`[popovertarget="${menu.id}"]`)!.getBoundingClientRect();
+    const larga = menu.offsetWidth;
+    menu.style.left = `${Math.min(Math.max(12, bottone.left + bottone.width / 2 - larga / 2), innerWidth - larga - 12)}px`;
+    menu.style.bottom = `${innerHeight - bottone.top + 10}px`;
+  });
+}

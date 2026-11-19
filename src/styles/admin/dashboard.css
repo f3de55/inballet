@@ -18,81 +18,10 @@ body {
   outline-offset: 2px;
 }
 
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--bar);
-  color: var(--white);
-}
-.topbar-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-}
-.topbar-logo img {
-  display: block;
-  width: 92px;
-  height: auto;
-}
-.topbar-nav {
-  display: flex;
-  align-self: stretch;
-  gap: 0.25rem;
-}
-.topbar-nav a {
-  display: flex;
-  align-items: center;
-  padding: 0 1rem;
-  border-bottom: 3px solid transparent;
-  color: var(--testo-su-scuro-debole);
-  font-weight: var(--font-medium);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.topbar-nav a:hover {
-  color: var(--white);
-}
-.topbar-nav a.attiva {
-  color: var(--white);
-  border-bottom-color: var(--primary);
-}
-.topbar-impostazioni {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  margin-left: auto;
-  padding: 0;
-  border: none;
-  border-radius: var(--radius-pill);
-  background: none;
-  color: var(--testo-su-scuro-debole);
-  font-size: var(--icona-comando);
-  cursor: pointer;
-  transition:
-    color var(--durata-breve),
-    background-color var(--durata-breve);
-}
-.topbar-impostazioni:hover {
-  background: rgb(var(--bianco-rgb) / 0.08);
-  color: var(--white);
-}
-
 .main {
   max-width: 1100px;
   margin: 0 auto;
   padding: 2.25rem 1.5rem 5rem;
-}
-.pagina-azioni {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.75rem;
 }
 .nota {
   font-weight: var(--font-normal);
@@ -277,7 +206,7 @@ body {
 .ev-mese {
   margin-bottom: 1.5rem;
 }
-.ev-mese h3 {
+.ev-mese h4 {
   margin: 0 0 0.5rem;
   font-size: var(--text-2xs);
   font-weight: var(--font-semibold);
@@ -1037,29 +966,6 @@ input[list]::-webkit-calendar-picker-indicator {
   margin: -0.25rem 0 1.5rem;
 }
 
-.modal--impostazioni .modal-box {
-  max-width: 880px;
-}
-.imp-riga {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 1rem 3rem;
-}
-.imp-riga + .imp-riga {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
-}
-.imp-testo {
-  display: grid;
-  gap: 0.35rem;
-  max-width: 34rem;
-}
-.imp-testo h3 {
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-}
 .imp-campi {
   grid-column: 1 / -1;
   display: grid;
@@ -1082,13 +988,6 @@ input[list]::-webkit-calendar-picker-indicator {
 .imp-proposte a {
   color: var(--primary-dark);
   font-weight: var(--font-semibold);
-}
-.imp-tema[aria-pressed='true'] {
-  border-color: var(--primary-dark);
-  color: var(--primary-dark);
-}
-.imp-esci {
-  margin-right: auto;
 }
 .imp-avviso {
   grid-column: 1 / -1;
@@ -1222,7 +1121,7 @@ input[list]::-webkit-calendar-picker-indicator {
   border-radius: var(--radius-sm);
   background: var(--surface);
 }
-.pannello h2 {
+.pannello :is(h2, h3) {
   margin-bottom: 1rem;
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
@@ -1244,7 +1143,7 @@ input[list]::-webkit-calendar-picker-indicator {
 .pannello-apribile > summary::-webkit-details-marker {
   display: none;
 }
-.pannello-apribile > summary h2 {
+.pannello-apribile > summary :is(h2, h3) {
   margin: 0;
 }
 .pannello-apribile > summary i {
@@ -1256,11 +1155,6 @@ input[list]::-webkit-calendar-picker-indicator {
 }
 .pannello-apribile[open] > summary i {
   transform: rotate(180deg);
-}
-.pannello-apribile h3 {
-  margin: 1.5rem 0 0.5rem;
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
 }
 .domande {
   list-style: none;
@@ -1515,36 +1409,6 @@ input[list]::-webkit-calendar-picker-indicator {
   }
 }
 
-@media (max-width: 860px) {
-  .topbar-inner {
-    flex-wrap: wrap;
-    height: auto;
-    gap: 0;
-    padding: 0 0.5rem 0 1rem;
-  }
-  .topbar-logo {
-    flex: 1;
-    padding: 0.6rem 0;
-  }
-  .topbar-logo img {
-    width: 80px;
-  }
-  .topbar-nav {
-    order: 3;
-    flex: 0 0 100%;
-    margin: 0 -0.5rem 0 -1rem;
-    border-top: 1px solid rgb(var(--bianco-rgb) / 0.08);
-  }
-  .topbar-nav a {
-    flex: 1 1 auto;
-    justify-content: center;
-    min-height: 46px;
-    padding: 0 0.4rem;
-    font-size: var(--text-xs);
-    white-space: nowrap;
-  }
-}
-
 @media (max-width: 900px) {
   .pannelli {
     grid-template-columns: minmax(0, 1fr);
@@ -1552,13 +1416,6 @@ input[list]::-webkit-calendar-picker-indicator {
 }
 
 @media (max-width: 640px) {
-  .imp-riga {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-  }
-  .imp-riga > :is(.btn, .interruttore) {
-    justify-self: start;
-  }
   .imp-campi {
     grid-template-columns: minmax(0, 1fr);
     padding: 1rem 1rem 0;
@@ -1566,14 +1423,6 @@ input[list]::-webkit-calendar-picker-indicator {
 
   .main {
     padding: 1.5rem 1rem 4rem;
-  }
-  .pagina-azioni {
-    flex-wrap: nowrap;
-    gap: 0.6rem;
-    margin-bottom: 1.25rem;
-  }
-  .pagina-azioni .btn-primary {
-    flex: 1;
   }
   .barra {
     flex-direction: column;
@@ -1631,11 +1480,6 @@ input[list]::-webkit-calendar-picker-indicator {
   }
   .modal-footer .btn {
     flex: 1;
-  }
-  .modal-footer .imp-esci {
-    flex: 0 0 100%;
-    order: 1;
-    min-height: 44px;
   }
   .campi-3 {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1758,4 +1602,46 @@ input[list]::-webkit-calendar-picker-indicator {
 .in-uscita {
   opacity: 0;
   transition: opacity 0.25s;
+}
+
+.db-main .sv-cornice,
+.db-main .sv-cornice > iframe {
+  width: 100%;
+  height: 100%;
+}
+.main.db-main {
+  padding-bottom: 7rem;
+}
+.sv-finestra--lato.db-elenco {
+  width: 460px;
+}
+.db-elenco .sv-finestra-corpo {
+  padding-top: 1.1rem;
+}
+html.modal-aperta .sv-dock {
+  visibility: hidden;
+}
+.db-dock .db-dock-nuovo {
+  background: var(--primary);
+  color: var(--dark-navy);
+  font-weight: var(--font-semibold);
+}
+.db-dock .db-dock-nuovo:hover {
+  background: var(--white);
+  color: var(--dark-navy);
+}
+.db-dock .db-dock-qui {
+  background: rgb(var(--bianco-rgb) / 0.12);
+  color: var(--white);
+}
+
+@media (max-width: 560px) {
+  .db-dock-testo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }

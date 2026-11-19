@@ -42,6 +42,16 @@ function admin<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O
 
 const richiesta = (message: string) => new ActionError({ code: 'BAD_REQUEST', message });
 
+function tecnico<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O>) {
+  const protetto = admin(handler);
+  return async (input: I, context: ActionAPIContext): Promise<O> => {
+    if (!(await isSviluppatore(context.session))) {
+      throw new ActionError({ code: 'UNAUTHORIZED', message: 'Riservato agli sviluppatori: accedi con la password sviluppatori' });
+    }
+    return protetto(input, context);
+  };
+}
+
 function sviluppatore<I, O>(handler: (input: I, context: ActionAPIContext) => Promise<O>, preparare = true) {
   return async (input: I, context: ActionAPIContext): Promise<O> => {
     if (!(await isSviluppatore(context.session))) {
@@ -88,7 +98,7 @@ export const server = {
 
     verifica: defineAction({
       input: z.object({ fornitore: z.string().max(40), modello: z.string().max(120), indice: z.number().int().min(0).max(100) }),
-      handler: admin(({ fornitore, modello, indice }, context) => verifica({ fornitore, modello }, indice, context.url.origin)),
+      handler: tecnico(({ fornitore, modello, indice }, context) => verifica({ fornitore, modello }, indice, context.url.origin)),
     }),
   },
 
@@ -213,34 +223,34 @@ export const server = {
   demo: {
     eventi: defineAction({
       input: z.object({ quanti: z.number().int().min(1).max(MAX_EVENTI) }),
-      handler: admin(async ({ quanti }) => ({ creati: await generaEventi(quanti) })),
+      handler: tecnico(async ({ quanti }) => ({ creati: await generaEventi(quanti) })),
     }),
 
     rimuoviEventi: defineAction({
-      handler: admin(async () => ({ rimossi: await rimuoviEventiDemo() })),
+      handler: tecnico(async () => ({ rimossi: await rimuoviEventiDemo() })),
     }),
 
     chatbot: defineAction({
       input: z.object({ quanti: z.number().int().min(1).max(MAX_MESSAGGI), giorni: z.number().int().min(1).max(365) }),
-      handler: admin(async ({ quanti, giorni }) => ({ creati: await generaChat(quanti, giorni) })),
+      handler: tecnico(async ({ quanti, giorni }) => ({ creati: await generaChat(quanti, giorni) })),
     }),
 
     rimuoviChatbot: defineAction({
-      handler: admin(async () => ({ rimossi: await rimuoviChatDemo() })),
+      handler: tecnico(async () => ({ rimossi: await rimuoviChatDemo() })),
     }),
 
     insegnanti: defineAction({
       input: z.object({ quanti: z.number().int().min(1).max(MAX_INSEGNANTI_DEMO) }),
-      handler: admin(async ({ quanti }) => ({ creati: await generaInsegnanti(quanti) })),
+      handler: tecnico(async ({ quanti }) => ({ creati: await generaInsegnanti(quanti) })),
     }),
 
     rimuoviInsegnanti: defineAction({
-      handler: admin(async () => ({ rimossi: await insegnanti.rimuoviInsegnantiDemo() })),
+      handler: tecnico(async () => ({ rimossi: await insegnanti.rimuoviInsegnantiDemo() })),
     }),
 
     eliminaTutto: defineAction({
       input: z.object({ eventi: z.boolean(), chatbot: z.boolean(), conferma: z.string().max(40) }),
-      handler: admin(async ({ eventi, chatbot, conferma }) => {
+      handler: tecnico(async ({ eventi, chatbot, conferma }) => {
         if (conferma.trim().toUpperCase() !== PAROLA_CONFERMA) throw richiesta(`Scrivi ${PAROLA_CONFERMA} per confermare`);
         if (!eventi && !chatbot) throw richiesta('Scegli cosa eliminare');
         return eliminaTutto({ eventi, chatbot });
@@ -251,7 +261,7 @@ export const server = {
   impostazioni: {
     salva: defineAction({
       input: z.object({ revisione: z.boolean(), foglio: z.string().max(500), cartella: z.string().max(500), email: z.string().max(500) }),
-      handler: admin(async (input, context): Promise<{ avviso?: string; foglio?: string; cartella?: string }> => {
+      handler: tecnico(async (input, context): Promise<{ avviso?: string; foglio?: string; cartella?: string }> => {
         const imp = await salvaImpostazioni(input);
         segnaRevisione(context.cookies, context.url, imp.revisione);
         if (!imp.revisione) return {};

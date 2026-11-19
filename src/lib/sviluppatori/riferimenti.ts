@@ -102,7 +102,7 @@ export async function eliminaFile(percorso: string): Promise<void> {
   await elimina(p);
 }
 
-function nuovoSpec(spec: string, da: string, vecchio: string, nuovo: string): string {
+function nuovoSpec(spec: string, da: string, nuovo: string): string {
   const [base, coda = ''] = spec.split(/(?=[?#])/);
   const fine = (p: string) => (path.posix.extname(base) ? p : senzaEstensione(p));
   let risultato: string;
@@ -129,8 +129,7 @@ export async function rinominaFile(da: string, a: string): Promise<string[]> {
   const aggiornati = new Map<string, string>();
   for (const [file, lista] of perFile) {
     let testo = await leggiTesto(file);
-    for (const u of [...lista].sort((x, y) => y.inizio - x.inizio))
-      testo = testo.slice(0, u.inizio) + nuovoSpec(u.spec, file, vecchio, nuovo) + testo.slice(u.fine);
+    for (const u of [...lista].sort((x, y) => y.inizio - x.inizio)) testo = testo.slice(0, u.inizio) + nuovoSpec(u.spec, file, nuovo) + testo.slice(u.fine);
     aggiornati.set(file, testo);
   }
   await rinomina(vecchio, nuovo);

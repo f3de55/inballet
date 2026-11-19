@@ -1,19 +1,12 @@
 ---
 import { leggiDocumenti } from '../../lib/documenti';
-import DocumentoModal from './DocumentoModal.astro';
 import EditorTesto from './EditorTesto.astro';
 
 const { hero, documenti } = await leggiDocumenti();
 const n = documenti.length;
 ---
 
-<h1 class="sr-only">Documenti</h1>
-<div class="pagina-azioni">
-    <button type="button" class="btn btn-primary" data-nuovo-documento><i class="fas fa-plus" aria-hidden="true"></i> Nuovo documento</button>
-    <a href="/documenti" target="_blank" rel="noopener" class="btn btn-secondary btn-icona" aria-label="Vedi la pagina Documenti sul sito (si apre in una nuova scheda)" title="Vedi la pagina Documenti sul sito"><i class="fas fa-eye" aria-hidden="true"></i></a>
-</div>
-
-<h2 class="ev-gruppo-titolo doc-elenco-titolo">Documenti da scaricare <span>{n}</span></h2>
+<h3 class="ev-gruppo-titolo doc-elenco-titolo">Documenti da scaricare <span>{n}</span></h3>
 
 {n > 0 ? (
     <ul class="ev-lista" id="docLista">
@@ -42,7 +35,7 @@ const n = documenti.length;
 )}
 
 <details class="pannello pannello-apribile doc-testi">
-    <summary><h2>Testi della pagina</h2><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+    <summary><h3>Testi della pagina</h3><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
     <form id="formTesti" novalidate>
         <div class="campo">
             <label for="heroTitolo">Titolo</label>
@@ -55,8 +48,6 @@ const n = documenti.length;
         </div>
     </form>
 </details>
-
-<DocumentoModal />
 
 <script>
     import '../../scripts/dashboard/documenti';

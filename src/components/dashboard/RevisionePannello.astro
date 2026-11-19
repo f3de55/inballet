@@ -1,0 +1,53 @@
+---
+import { leggiImpostazioni } from '../../lib/impostazioni';
+import { leggiProposte, revisioneCollegata } from '../../lib/revisione';
+import { emailConfigurata } from '../../lib/email';
+
+const impostazioni = await leggiImpostazioni();
+const collegata = revisioneCollegata();
+const proposte = (await leggiProposte()).length;
+---
+
+<form class="rev-pannello" id="formRevisione" novalidate>
+    <small class="sv-spiega">Quando è attiva, il cliente collegato alla dashboard vede su ogni pagina del sito <strong>Revisione</strong>: testi, immagini e video finiscono in una tabella di Google Fogli, pagina per pagina, non sul sito.</small>
+    <label class="interruttore">
+        <input type="checkbox" role="switch" name="revisione" id="impRevisione" checked={impostazioni.revisione} aria-controls="impCampiRevisione">
+        <span>Modalità revisione attiva</span>
+    </label>
+
+    <div id="impCampiRevisione" class="imp-campi" hidden={!impostazioni.revisione}>
+        <div class="campo">
+            <label for="impFoglio">Indirizzo di Google Fogli</label>
+            <input type="url" id="impFoglio" name="foglio" value={impostazioni.foglio} placeholder="https://docs.google.com/spreadsheets/d/…" autocomplete="off" spellcheck="false">
+            <small class="nota">Se manca, la scheda «Revisione» viene creata al salvataggio.</small>
+        </div>
+        <div class="campo">
+            <label for="impCartella">Cartella di Google Drive</label>
+            <input type="url" id="impCartella" name="cartella" value={impostazioni.cartella} placeholder="https://drive.google.com/drive/folders/…" autocomplete="off" spellcheck="false">
+            <small class="nota">Per immagini e video, con una sottocartella per pagina.</small>
+        </div>
+        <div class="campo imp-campo-largo">
+            <label for="impEmail">Email che ricevono ogni proposta</label>
+            <input type="text" id="impEmail" name="email" value={impostazioni.email} placeholder="nome@esempio.it, altro@esempio.it" autocomplete="off" spellcheck="false" inputmode="email">
+            <small class="nota">
+                Copia di sicurezza: arriva anche se Google non risponde.{!emailConfigurata() && <> Invio da configurare sul server: <code>SMTP_URL</code>.</>}
+            </small>
+        </div>
+        <p class="imp-proposte nota">
+            Ogni proposta resta salvata anche sul sito: {proposte === 1 ? '1 proposta' : `${proposte} proposte`}{proposte > 0 && <> · <a href="/dashboard/revisioni.csv" download>scarica l'elenco (CSV)</a></>}.
+        </p>
+        {!collegata && (
+            <p class="imp-avviso">
+                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                <span>Collegamento a Google da configurare sul server: <code>GOOGLE_REVISIONE_URL</code> e <code>GOOGLE_REVISIONE_CHIAVE</code>.</span>
+            </p>
+        )}
+    </div>
+    <div class="rev-azioni">
+        <button type="submit" class="btn btn-primary" id="impSalva">Salva</button>
+    </div>
+</form>
+
+<script>
+    import '../../scripts/dashboard/revisione-impostazioni';
+</script>

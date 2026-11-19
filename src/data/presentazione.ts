@@ -411,14 +411,14 @@ export const passi: Passo[] = [
     titolo: 'La tua area riservata',
     testo: 'Con una password aggiorni il sito da sola, senza codice.',
     evidenzia: ['da sola'],
-    scena: nuovo('/dashboard', '.topbar-nav'),
+    scena: nuovo('/dashboard', '#dbDock'),
   },
   {
     capitolo: 'La dashboard',
     titolo: 'Eventi',
-    testo: 'Crei l’evento, carichi la locandina, scegli lo stato. Compare subito sul sito.',
+    testo: 'Crei l’evento, carichi la locandina, scegli lo stato: lo vedi subito sul sito, qui sotto.',
     evidenzia: ['locandina'],
-    scena: nuovo('/dashboard', '.pagina-azioni [data-nuovo-evento]'),
+    scena: nuovo('/dashboard', '#dbDock [data-nuovo-evento]'),
   },
   {
     capitolo: 'La dashboard',
@@ -448,12 +448,11 @@ export const passi: Passo[] = [
   {
     capitolo: 'Prossimi passi',
     titolo: 'Testi e foto, da parte vostra',
-    testo: 'Accendiamo la modalità revisione nelle Impostazioni: su ogni pagina, con Revisione, ci mandate testi, foto e video, sezione per sezione.',
+    testo: 'Accendiamo noi la modalità revisione: su ogni pagina, con Revisione, ci mandate testi, foto e video, sezione per sezione.',
     evidenzia: ['modalità revisione', 'Revisione'],
     scena: {
       tipo: 'siti',
       schermi: [
-        { nome: 'Impostazioni', url: '/dashboard?impostazioni=revisione', dispositivo: 'pc', evidenzia: '#modalImpostazioni .modal-box', nostro: true },
         { nome: 'Revisione', url: '/chi-siamo?revisione=apri', dispositivo: 'pc', evidenzia: '.revisione-dialog', nostro: true },
       ],
     },

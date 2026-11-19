@@ -1,11 +1,9 @@
 import { actions } from 'astro:actions';
 import { toast } from './toast';
-import { mostraModal, nascondiModal } from './comune';
 
-const modal = document.getElementById('modalImpostazioni');
-const form = document.getElementById('formImpostazioni') as HTMLFormElement | null;
+const form = document.getElementById('formRevisione') as HTMLFormElement | null;
 
-if (modal && form) {
+if (form) {
   const revisione = document.getElementById('impRevisione') as HTMLInputElement;
   const campi = document.getElementById('impCampiRevisione')!;
   const foglio = document.getElementById('impFoglio') as HTMLInputElement;
@@ -13,36 +11,10 @@ if (modal && form) {
   const email = document.getElementById('impEmail') as HTMLInputElement;
   const salva = document.getElementById('impSalva') as HTMLButtonElement;
 
-  const mostraCampi = () => {
-    campi.hidden = !revisione.checked;
-  };
-
-  const chiudi = () => {
-    nascondiModal(modal);
-    form.reset();
-    mostraCampi();
-  };
-
-  document.addEventListener('click', (e) => {
-    const t = e.target as Element;
-    if (t.closest('[data-apri-impostazioni]')) return mostraModal(modal);
-    if (t.closest('[data-apri-demo]')) return chiudi();
-    if (t.closest('[data-chiudi-impostazioni]') || t === modal) return chiudi();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) chiudi();
-  });
   revisione.addEventListener('change', () => {
-    mostraCampi();
+    campi.hidden = !revisione.checked;
     if (revisione.checked && !foglio.value) foglio.focus();
   });
-
-  const richiesta = new URLSearchParams(location.search).get('impostazioni');
-  if (richiesta !== null) {
-    mostraModal(modal);
-    if (richiesta === 'revisione') revisione.checked = true;
-    mostraCampi();
-  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -57,10 +29,6 @@ if (modal && form) {
     salva.disabled = false;
     salva.textContent = 'Salva';
     if (error) return toast(error.message || 'Impostazioni non salvate', 'error');
-    revisione.defaultChecked = revisione.checked;
-    foglio.defaultValue = foglio.value;
-    cartella.defaultValue = cartella.value;
-    email.defaultValue = email.value;
     if (data.avviso) return toast(data.avviso, 'warning');
     if (!revisione.checked) return toast('Modalità revisione spenta', 'success');
     const dove = data.cartella ? ` · file in «${data.cartella}»` : '';

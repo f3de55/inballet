@@ -1,18 +1,43 @@
 import { actions } from 'astro:actions';
 import { conferma } from './conferma';
 import { toast } from './toast';
-import { mostraModal, nascondiModal } from './comune';
 
-const modal = document.getElementById('modalDemo');
+type Tipo = 'eventi' | 'chatbot' | 'insegnanti';
 
-if (modal) {
-  const tipo = modal.dataset.demo as 'eventi' | 'chatbot' | 'insegnanti';
-  const eventi = tipo === 'eventi';
-  const insegnanti = tipo === 'insegnanti';
-  const presenti = Number(modal.dataset.presenti);
-  const form = document.getElementById('formDemo') as HTMLFormElement | null;
-  const quanti = document.getElementById('demoQuanti') as HTMLInputElement | null;
-  const genera = document.getElementById('demoGenera') as HTMLButtonElement | null;
+const AZIONI = {
+  eventi: { genera: (n: number) => actions.demo.eventi({ quanti: n }), rimuovi: () => actions.demo.rimuoviEventi() },
+  insegnanti: { genera: (n: number) => actions.demo.insegnanti({ quanti: n }), rimuovi: () => actions.demo.rimuoviInsegnanti() },
+  chatbot: {
+    genera: (n: number) =>
+      actions.demo.chatbot({ quanti: n, giorni: Number((document.getElementById('demoGiorni') as HTMLSelectElement | null)?.value ?? 30) }),
+    rimuovi: () => actions.demo.rimuoviChatbot(),
+  },
+};
+
+const TESTI = {
+  eventi: {
+    genera: 'Compariranno nella dashboard e anche nel calendario pubblico del sito, finché non li rimuovi.',
+    attesa: (n: number) => `Creo ${n} eventi e locandine…`,
+    rimuovi: 'Gli eventi demo e le loro locandine verranno eliminati. Gli eventi veri non vengono toccati.',
+  },
+  insegnanti: {
+    genera: 'Compariranno nella dashboard e anche nella pagina Chi siamo del sito, finché non li rimuovi.',
+    attesa: (n: number) => `Creo ${n} insegnanti e foto…`,
+    rimuovi: 'Gli insegnanti demo e le loro foto verranno eliminati. Gli insegnanti veri non vengono toccati.',
+  },
+  chatbot: {
+    genera: 'Verranno aggiunti al registro del chatbot e contati nelle statistiche, finché non li rimuovi.',
+    attesa: () => 'Generazione in corso…',
+    rimuovi: 'I messaggi demo spariranno dalle statistiche. Le conversazioni vere non vengono toccate.',
+  },
+};
+
+for (const blocco of document.querySelectorAll<HTMLElement>('[data-demo]')) {
+  const tipo = blocco.dataset.demo as Tipo;
+  const presenti = Number(blocco.dataset.presenti);
+  const form = blocco.querySelector<HTMLFormElement>('.demo-form');
+  const quanti = blocco.querySelector<HTMLInputElement>('.demo-quanti');
+  const genera = blocco.querySelector<HTMLButtonElement>('.demo-genera');
   const unita = form?.dataset.unita ?? '';
   const max = Number(quanti?.max ?? 0);
 
@@ -21,23 +46,7 @@ if (modal) {
     if (genera) genera.textContent = `Genera ${valore().toLocaleString('it-IT')} ${unita}`;
   };
 
-  const apri = () => {
-    mostraModal(modal);
-  };
-  const chiudi = () => {
-    nascondiModal(modal);
-  };
-
-  document.addEventListener('click', (e) => {
-    const t = e.target as Element;
-    if (t.closest('[data-apri-demo]')) return apri();
-    if (t.closest('[data-chiudi-demo]') || t === modal) return chiudi();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open') && !document.querySelector('dialog[open]')) chiudi();
-  });
-
-  modal.addEventListener('click', (e) => {
+  blocco.addEventListener('click', (e) => {
     const t = e.target as HTMLElement;
     const passo = t.closest<HTMLElement>('[data-passo]')?.dataset.passo;
     const rapido = t.closest<HTMLElement>('[data-valore]')?.dataset.valore;
@@ -47,6 +56,7 @@ if (modal) {
   });
   quanti?.addEventListener('input', aggiornaPulsante);
   quanti?.addEventListener('blur', () => {
+    if (!quanti) return;
     quanti.value = String(valore());
     aggiornaPulsante();
   });
@@ -54,58 +64,28 @@ if (modal) {
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const n = valore();
-    const ok = await conferma({
-      titolo: `Generare ${n.toLocaleString('it-IT')} ${unita} demo?`,
-      testo: eventi
-        ? 'Compariranno qui e anche nel calendario pubblico del sito, finché non li rimuovi.'
-        : insegnanti
-          ? 'Compariranno qui e anche nella pagina Chi siamo del sito, finché non li rimuovi.'
-          : 'Verranno aggiunti al registro del chatbot e contati nelle statistiche, finché non li rimuovi.',
-      ok: 'Genera',
-    });
-    if (!ok || !genera) return;
-
+    if (!(await conferma({ titolo: `Generare ${n.toLocaleString('it-IT')} ${unita} demo?`, testo: TESTI[tipo].genera, ok: 'Genera' })) || !genera) return;
     genera.disabled = true;
-    genera.textContent = eventi ? `Creo ${n} eventi e locandine…` : insegnanti ? `Creo ${n} insegnanti e foto…` : 'Generazione in corso…';
-    const giorni = Number((document.getElementById('demoGiorni') as HTMLSelectElement | null)?.value ?? 30);
-    const { data, error } = eventi
-      ? await actions.demo.eventi({ quanti: n })
-      : insegnanti
-        ? await actions.demo.insegnanti({ quanti: n })
-        : await actions.demo.chatbot({ quanti: n, giorni });
+    genera.textContent = TESTI[tipo].attesa(n);
+    const { data, error } = await AZIONI[tipo].genera(n);
     if (error) {
       genera.disabled = false;
       aggiornaPulsante();
       return toast(error.message || 'Errore nella generazione', 'error');
     }
     toast(`${data.creati.toLocaleString('it-IT')} ${unita} demo creati`, 'success');
-    setTimeout(() => {
-      const periodo = [...document.querySelectorAll<HTMLAnchorElement>('.periodo .filtro')].find((a) => parseInt(a.textContent!, 10) === giorni);
-      if (tipo !== 'chatbot' || !periodo) location.reload();
-      else location.href = periodo.href;
-    }, 700);
+    setTimeout(() => location.reload(), 700);
   });
 
-  document.getElementById('demoRimuovi')?.addEventListener('click', async (e) => {
+  blocco.querySelector<HTMLButtonElement>('.demo-rimuovi')?.addEventListener('click', async (e) => {
     const btn = e.currentTarget as HTMLButtonElement;
-    const ok = await conferma({
-      titolo: `Rimuovere ${presenti.toLocaleString('it-IT')} ${unita} demo?`,
-      testo: eventi
-        ? 'Gli eventi demo e le loro locandine verranno eliminati. Gli eventi inseriti da te non vengono toccati.'
-        : insegnanti
-          ? 'Gli insegnanti demo e le loro foto verranno eliminati. Gli insegnanti inseriti da te non vengono toccati.'
-          : 'I messaggi demo spariranno dalle statistiche. Le conversazioni vere non vengono toccate.',
-      ok: 'Rimuovi',
-      pericolo: true,
-    });
-    if (!ok) return;
+    if (
+      !(await conferma({ titolo: `Rimuovere ${presenti.toLocaleString('it-IT')} ${unita} demo?`, testo: TESTI[tipo].rimuovi, ok: 'Rimuovi', pericolo: true }))
+    )
+      return;
     btn.disabled = true;
     btn.textContent = 'Rimozione…';
-    const { data, error } = eventi
-      ? await actions.demo.rimuoviEventi()
-      : insegnanti
-        ? await actions.demo.rimuoviInsegnanti()
-        : await actions.demo.rimuoviChatbot();
+    const { data, error } = await AZIONI[tipo].rimuovi();
     if (error) {
       btn.disabled = false;
       return toast(error.message || 'Errore nella rimozione', 'error');

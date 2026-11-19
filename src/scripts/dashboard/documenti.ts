@@ -1,7 +1,18 @@
 import { actions } from 'astro:actions';
 import { conferma } from './conferma';
 import { createEditor } from './editor';
-import { $, aggiornaContatore, attivaContatori, elencoOrdinabile, MAX_SIZE, mostraModal, nascondiModal, zonaCaricamento } from './comune';
+import {
+  $,
+  aggiornaAnteprima,
+  aggiornaContatore,
+  attivaContatori,
+  dopoModifica,
+  elencoOrdinabile,
+  MAX_SIZE,
+  mostraModal,
+  nascondiModal,
+  zonaCaricamento,
+} from './comune';
 import { toast } from './toast';
 import type { Documento } from '../../data/documenti';
 
@@ -29,6 +40,7 @@ formTesti.addEventListener('submit', async (e) => {
   salva.textContent = 'Salva i testi';
   if (error) return toast(error.message || 'Errore nel salvataggio', 'error');
   toast('Testi salvati', 'success');
+  aggiornaAnteprima();
 });
 
 const modal = $('modalDocumento');
@@ -146,7 +158,7 @@ form.addEventListener('submit', async (e) => {
 
   toast('Documento salvato', 'success');
   void chiudiModal(true);
-  setTimeout(() => location.reload(), 700);
+  dopoModifica('/documenti');
 });
 
 const lista = document.getElementById('docLista');
@@ -169,7 +181,7 @@ async function elimina(riga: HTMLElement) {
 
   toast('Documento eliminato', 'success');
   riga.classList.add('in-uscita');
-  setTimeout(() => location.reload(), 700);
+  dopoModifica('/documenti');
 }
 
 document.addEventListener('click', (e) => {

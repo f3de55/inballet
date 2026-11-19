@@ -3,6 +3,22 @@ import { toast } from './toast';
 export const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 
 export const MAX_SIZE = 20 * 1024 * 1024;
+export const CHIAVE_ANTEPRIMA = 'db-anteprima';
+
+function ricordaAnteprima(anteprima: string) {
+  try {
+    sessionStorage.setItem(CHIAVE_ANTEPRIMA, anteprima);
+  } catch {
+    return;
+  }
+}
+
+export function dopoModifica(anteprima: string, attesa = 700) {
+  ricordaAnteprima(anteprima);
+  setTimeout(() => location.reload(), attesa);
+}
+
+export const aggiornaAnteprima = () => document.dispatchEvent(new Event('anteprima'));
 
 export function aggiornaContatore(campo: HTMLElement) {
   const max = Number(campo.dataset.counter);
@@ -69,6 +85,7 @@ export function elencoOrdinabile(lista: HTMLElement | null, selettore: string, s
       return;
     }
     toast('Ordine aggiornato', 'success');
+    aggiornaAnteprima();
   };
 }
 

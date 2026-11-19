@@ -2,15 +2,10 @@
 import { CHATBOT_BUDGET_GIORNO } from 'astro:env/server';
 import type { LogEntry } from '../../lib/chatbot';
 import { GIORNI_CONSERVAZIONE, ultimeConversazioni } from '../../lib/chatbot/conversazioni';
-import { statoConoscenza } from '../../lib/chatbot/conoscenza';
 import { formatta } from '../../lib/chatbot/formato';
-import { statoCatena } from '../../lib/chatbot/fornitori';
-import { MAX_LOG } from '../../lib/chatbot/registro';
 import { paths, readJson } from '../../lib/storage';
 import { mbSlice } from '../../lib/text';
 import { romeDate } from '../../lib/time';
-import { VERIFICHE } from '../../data/chatbot';
-import DemoModal from './DemoModal.astro';
 
 const params = Astro.url.searchParams;
 const giorniFa = (n: number) => romeDate(Date.now() - n * 86400000);
@@ -22,7 +17,6 @@ const demoNelPeriodo = logs.filter((l) => l.demo).length;
 
 const totalMessages = logs.length;
 const uniqueUsers = new Set(logs.map((l) => l.ip_hash)).size;
-const cacheHitRate = totalMessages ? Math.round((logs.filter((l) => l.cached).length / totalMessages) * 100) : 0;
 
 const perGiorno = new Map<string, number>();
 const perOra = Array<number>(24).fill(0);
@@ -47,25 +41,13 @@ const oggi = romeDate();
 const periodi = [7, 30, 90].map((n) => ({ n, from: giorniFa(n), attivo: filterTo === oggi && filterFrom === giorniFa(n) }));
 const dataIt = (d: string) => d.split('-').reverse().join('/');
 
-const dalModello = logs.filter((l) => l.type === 'success');
 const somma = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
 const spesa = somma(logs.map((l) => l.costo ?? 0));
 const spesaOggi = somma(tuttiLog.filter((l) => l.date === oggi && !l.demo).map((l) => l.costo ?? 0));
-const conCosto = dalModello.filter((l) => l.costo !== undefined);
-const costoMille = conCosto.length ? (somma(conCosto.map((l) => l.costo!)) / conCosto.length) * 1000 : 0;
-const tempi = dalModello.flatMap((l) => (l.ms ? [l.ms] : []));
-const tempoMedio = tempi.length ? somma(tempi) / tempi.length / 1000 : 0;
-const daRiserva = dalModello.filter((l) => (l.fallback ?? 0) > 0).length;
-const senzaModello = logs.filter((l) => l.type === 'offline').length;
-const perModello = new Map<string, number>();
-for (const l of dalModello) if (l.modello) perModello.set(`${l.fornitore}:${l.modello}`, (perModello.get(`${l.fornitore}:${l.modello}`) ?? 0) + 1);
 
 const dollari = (n: number) => `${n < 0.01 && n > 0 ? n.toFixed(4) : n.toFixed(2)} $`.replace('.', ',');
-const orario = (ms: number) => new Intl.DateTimeFormat('it-IT', { timeZone: 'Europe/Rome', hour: '2-digit', minute: '2-digit' }).format(ms);
 const quando = (iso: string) => `${dataIt(iso.slice(0, 10))} ${iso.slice(11, 16)}`;
 
-const catena = statoCatena();
-const sito = statoConoscenza();
 const conversazioni = await ultimeConversazioni(20);
 const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 'senza risposta AI' };
 ---
@@ -159,124 +141,8 @@ const etichettaTipo: Record<string, string> = { cached: 'dalla cache', offline: 
     )}
 </section>
 
-<details class="pannello bot-sezione pannello-apribile">
-    <summary><h2>Dettagli tecnici</h2><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
-    {totalMessages > 0 && (
-        <dl class="numeri">
-            <div class="numero">
-                <dt>Risposte immediate</dt>
-                <dd>{cacheHitRate}%</dd>
-                <dd class="numero-nota">domande già ricevute, risposta dalla cache</dd>
-            </div>
-            <div class="numero">
-                <dt>Tempo di risposta</dt>
-                <dd>{tempoMedio.toFixed(1).replace('.', ',')} s</dd>
-                <dd class="numero-nota">media delle risposte del modello</dd>
-            </div>
-            <div class="numero">
-                <dt>Riserve usate</dt>
-                <dd>{fmt.format(daRiserva + senzaModello)}</dd>
-                <dd class="numero-nota">{fmt.format(daRiserva)} da un fornitore di riserva, {fmt.format(senzaModello)} senza risposta AI · {dollari(costoMille)} ogni 1.000 risposte</dd>
-            </div>
-        </dl>
-    )}
-    <h3>Fornitori AI</h3>
-    <small class="nota bot-intro">In ordine di priorità: se il primo non risponde si passa al successivo; se nessuno risponde, Étoile invita a riprovare o a contattare la segreteria. Si configurano in <code>CHATBOT_MODELLI</code> nel file <code>.env</code>.</small>
-    <small class="nota bot-intro">
-        {sito
-            ? `Conoscenza: dati ufficiali sempre presenti (circa ${fmt.format(Math.round(sito.caratteriFissi / 360) * 100)} token, in cache presso i fornitori) e, per ogni domanda, i passaggi pertinenti scelti tra ${fmt.format(sito.passaggi)} (testi di ${sito.pagine} pagine letti alle ${orario(sito.letto)}, FAQ ed eventi).`
-            : 'Conoscenza: le pagine del sito vengono lette alla prima domanda dopo l’avvio del server.'}
-    </small>
-    {catena.length === 0 ? (
-        <small class="nota">Nessun fornitore configurato: il chatbot non può rispondere.</small>
-    ) : (
-        <ol class="catena" data-verifiche={JSON.stringify(VERIFICHE.map((v) => v.domanda))}>
-            {catena.map((a, i) => (
-                <li class="anello">
-                    <div class="anello-riga">
-                        <span class="anello-n">{i + 1}</span>
-                        <div class="anello-nome">
-                            <strong>{a.nome}</strong>
-                            <span class="nota">{a.modello}{perModello.get(`${a.fornitore}:${a.modello}`) && ` · ${fmt.format(perModello.get(`${a.fornitore}:${a.modello}`)!)} risposte nel periodo`}</span>
-                        </div>
-                        {!a.attivo ? (
-                            <span class="stato stato--spento">Manca la chiave API</span>
-                        ) : a.sospesoFino ? (
-                            <span class="stato stato--sospeso" title={a.ultimoErrore}>Sospeso fino alle {orario(a.sospesoFino)}</span>
-                        ) : (
-                            <span class="stato stato--ok">Attivo</span>
-                        )}
-                        {a.attivo && (
-                            <button type="button" class="btn btn-secondary anello-verifica" data-fornitore={a.fornitore} data-modello={a.modello}>Verifica</button>
-                        )}
-                    </div>
-                    {a.ultimoErrore && a.quando && <small class="anello-errore">Ultimo errore alle {orario(a.quando)}: {a.ultimoErrore}</small>}
-                    <div class="verifica" hidden aria-live="polite"></div>
-                </li>
-            ))}
-        </ol>
-    )}
-</details>
 
-<DemoModal tipo="chatbot" presenti={tuttiLog.filter((l) => l.demo).length} liberi={MAX_LOG - tuttiLog.length} />
 
-<script>
-    import { actions } from 'astro:actions';
-
-    const domande: string[] = JSON.parse(document.querySelector<HTMLElement>('.catena')?.dataset.verifiche ?? '[]');
-    const pausa = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
-    function riga(domanda: string, esito: { ok: boolean; risposta: string; problemi: string[] } | undefined, errore?: string) {
-        const li = document.createElement('li');
-        li.className = esito?.ok ? 'ok' : 'ko';
-        const d = document.createElement('details');
-        const s = document.createElement('summary');
-        const icona = document.createElement('i');
-        icona.className = `fas ${esito?.ok ? 'fa-check-circle' : 'fa-times-circle'}`;
-        icona.setAttribute('aria-label', esito?.ok ? 'Corretta' : 'Da controllare');
-        const testo = document.createElement('span');
-        testo.textContent = domanda;
-        s.append(icona, testo);
-        const problemi = errore ?? esito?.problemi.join(', ');
-        if (problemi) {
-            const p = document.createElement('span');
-            p.className = 'verifica-problemi';
-            p.textContent = problemi;
-            s.append(p);
-        }
-        const risposta = document.createElement('p');
-        risposta.className = 'verifica-risposta';
-        risposta.textContent = esito?.risposta || 'Nessuna risposta';
-        d.append(s, risposta);
-        li.append(d);
-        return li;
-    }
-
-    document.querySelectorAll<HTMLButtonElement>('.anello-verifica').forEach((btn) =>
-        btn.addEventListener('click', async () => {
-            const box = btn.closest('.anello')!.querySelector<HTMLElement>('.verifica')!;
-            const stato = document.createElement('p');
-            stato.className = 'verifica-stato';
-            const lista = document.createElement('ol');
-            lista.className = 'verifica-lista';
-            box.replaceChildren(stato, lista);
-            box.hidden = false;
-            btn.disabled = true;
-            let corrette = 0;
-            let costo = 0;
-            for (const [i, domanda] of domande.entries()) {
-                stato.textContent = `Domanda ${i + 1} di ${domande.length}…`;
-                const { data, error } = await actions.chatbot.verifica({ fornitore: btn.dataset.fornitore!, modello: btn.dataset.modello!, indice: i });
-                if (data?.ok) corrette++;
-                costo += data?.costo ?? 0;
-                lista.append(riga(domanda, data, error?.message));
-                if (i < domande.length - 1) await pausa(1500);
-            }
-            stato.textContent = `${corrette} risposte corrette su ${domande.length}${costo ? ` · costo della verifica ${costo.toFixed(4).replace('.', ',')} $` : ''}`;
-            btn.disabled = false;
-        }),
-    );
-</script>
 
 <script>
     import { BarController, BarElement, CategoryScale, Chart, Filler, LinearScale, LineController, LineElement, PointElement } from 'chart.js';

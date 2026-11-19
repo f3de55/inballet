@@ -16,7 +16,7 @@ import {
   vai,
 } from './anteprima';
 import { aggiornaElencoToken, tutte } from './regole';
-import { allarga, apri, chiudi, inCima } from './finestre';
+import { allarga, apri, chiudi, inCima } from '../finestre';
 import './ispettore';
 import { mostraTema } from './tema';
 import { mostraAnimazioni } from './animazioni';
@@ -43,7 +43,7 @@ const AREA_RISERVATA = [
   '/presentazione/mappa/nuovo',
   '/pagina-inesistente',
 ];
-const GRUPPI: Record<string, string> = { design: 'tema', codice: 'file', pubblica: 'pubblica' };
+const GRUPPI: Record<string, string> = { contenuti: 'tema', codice: 'file', pubblica: 'pubblica' };
 const conteggio = $('svConteggio');
 const dispositivi = [...document.querySelectorAll<HTMLButtonElement>('button[data-dispositivo]')];
 const modi = [...document.querySelectorAll<HTMLButtonElement>('[data-modo]')];
@@ -54,10 +54,14 @@ let tema: 'chiaro' | 'scuro' = 'chiaro';
 const ultimeSchede: Record<string, string> = {};
 
 const STRUMENTI: Record<string, Strumento> = {
-  tema: { finestra: 'finDesign', scheda: 'scheda-tema', fuoco: 'svCercaToken', mostra: () => mostraTema(font) },
-  animazioni: { finestra: 'finDesign', scheda: 'scheda-animazioni', fuoco: 'svCercaAnimazioni', mostra: mostraAnimazioni },
-  seo: { finestra: 'finDesign', scheda: 'scheda-seo', larga: true, mostra: mostraSeo },
-  immagini: { finestra: 'finDesign', scheda: 'scheda-immagini', larga: true, fuoco: 'svCercaImmagini', mostra: mostraImmagini },
+  tema: { finestra: 'finContenuti', scheda: 'scheda-tema', fuoco: 'svCercaToken', mostra: () => mostraTema(font) },
+  animazioni: { finestra: 'finContenuti', scheda: 'scheda-animazioni', fuoco: 'svCercaAnimazioni', mostra: mostraAnimazioni },
+  seo: { finestra: 'finContenuti', scheda: 'scheda-seo', larga: true, mostra: mostraSeo },
+  immagini: { finestra: 'finContenuti', scheda: 'scheda-immagini', larga: true, fuoco: 'svCercaImmagini', mostra: mostraImmagini },
+  chatbot: { finestra: 'finContenuti', scheda: 'scheda-chatbot', larga: true, mostra: () => {} },
+  demo: { finestra: 'finContenuti', scheda: 'scheda-demo', larga: true, mostra: () => {} },
+  revisione: { finestra: 'finContenuti', scheda: 'scheda-revisione', larga: true, mostra: () => {} },
+  elimina: { finestra: 'finContenuti', scheda: 'scheda-elimina', larga: true, mostra: () => {} },
   file: { finestra: 'finCodice', fuoco: 'svFiltroFile', mostra: mostraFile },
   pubblica: { finestra: 'finPubblica', fuoco: 'svMessaggio', mostra: mostraPubblica },
 };
@@ -172,16 +176,6 @@ $('svRicarica').addEventListener('click', () => {
 });
 $('svPagina').addEventListener('click', apriPalette);
 
-for (const menu of document.querySelectorAll<HTMLElement>('.sv-menu[popover]')) {
-  menu.addEventListener('toggle', (e) => {
-    if ((e as ToggleEvent).newState !== 'open') return;
-    const bottone = document.querySelector<HTMLElement>(`[popovertarget="${menu.id}"]`)!.getBoundingClientRect();
-    const larga = menu.offsetWidth;
-    menu.style.left = `${Math.min(Math.max(12, bottone.left + bottone.width / 2 - larga / 2), innerWidth - larga - 12)}px`;
-    menu.style.bottom = `${innerHeight - bottone.top + 10}px`;
-  });
-}
-
 const scrivibile = (t: EventTarget | null) =>
   typeof (t as Element | null)?.closest === 'function' &&
   Boolean((t as Element).closest('input, textarea, select, [contenteditable=""], [contenteditable="true"], .cm-editor'));
@@ -214,11 +208,11 @@ const aggiornaConteggio = rimbalzo(async () => {
 ascolta('modificato', aggiornaConteggio);
 ascolta('mostra-vista', (id) => apriStrumento(String(id), false));
 ascolta('vai', (p) => {
-  chiudi('finDesign');
+  chiudi('finContenuti');
   vai(String(p));
 });
 ascolta('tema-anteprima', (t) => temaAnteprima(t as 'chiaro' | 'scuro'));
-ascolta('finestre', () => {
+document.addEventListener('finestre', () => {
   const f = inCima();
   const id = f
     ? (Object.entries(STRUMENTI).find(([, s]) => s.finestra === f.id && (!s.scheda || !$(s.scheda.replace('scheda-', 'vista-')).hidden))?.[0] ?? 'visuale')

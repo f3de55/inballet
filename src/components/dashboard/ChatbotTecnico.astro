@@ -1,0 +1,89 @@
+---
+import type { LogEntry } from '../../lib/chatbot';
+import { statoConoscenza } from '../../lib/chatbot/conoscenza';
+import { statoCatena } from '../../lib/chatbot/fornitori';
+import { paths, readJson } from '../../lib/storage';
+import { romeDate } from '../../lib/time';
+import { VERIFICHE } from '../../data/chatbot';
+
+const GIORNI = 30;
+const dal = romeDate(Date.now() - GIORNI * 86400000);
+const logs = (await readJson<LogEntry[]>(paths.analytics, [])).filter((l) => l.date >= dal);
+const fmt = new Intl.NumberFormat('it-IT');
+const somma = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
+const dalModello = logs.filter((l) => l.type === 'success');
+const cacheHitRate = logs.length ? Math.round((logs.filter((l) => l.cached).length / logs.length) * 100) : 0;
+const conCosto = dalModello.filter((l) => l.costo !== undefined);
+const costoMille = conCosto.length ? (somma(conCosto.map((l) => l.costo!)) / conCosto.length) * 1000 : 0;
+const tempi = dalModello.flatMap((l) => (l.ms ? [l.ms] : []));
+const tempoMedio = tempi.length ? somma(tempi) / tempi.length / 1000 : 0;
+const daRiserva = dalModello.filter((l) => (l.fallback ?? 0) > 0).length;
+const senzaModello = logs.filter((l) => l.type === 'offline').length;
+const perModello = new Map<string, number>();
+for (const l of dalModello) if (l.modello) perModello.set(`${l.fornitore}:${l.modello}`, (perModello.get(`${l.fornitore}:${l.modello}`) ?? 0) + 1);
+const dollari = (n: number) => `${n < 0.01 && n > 0 ? n.toFixed(4) : n.toFixed(2)} $`.replace('.', ',');
+const orario = (ms: number) => new Intl.DateTimeFormat('it-IT', { timeZone: 'Europe/Rome', hour: '2-digit', minute: '2-digit' }).format(ms);
+const catena = statoCatena();
+const sito = statoConoscenza();
+---
+
+<small class="sv-spiega">Ultimi {GIORNI} giorni. Quello che vede il cliente (messaggi, persone, spesa, grafici e conversazioni) resta nella sua dashboard.</small>
+{logs.length > 0 && (
+    <dl class="numeri">
+        <div class="numero">
+            <dt>Risposte immediate</dt>
+            <dd>{cacheHitRate}%</dd>
+            <dd class="numero-nota">domande già ricevute, risposta dalla cache</dd>
+        </div>
+        <div class="numero">
+            <dt>Tempo di risposta</dt>
+            <dd>{tempoMedio.toFixed(1).replace('.', ',')} s</dd>
+            <dd class="numero-nota">media delle risposte del modello</dd>
+        </div>
+        <div class="numero">
+            <dt>Riserve usate</dt>
+            <dd>{fmt.format(daRiserva + senzaModello)}</dd>
+            <dd class="numero-nota">{fmt.format(daRiserva)} da un fornitore di riserva, {fmt.format(senzaModello)} senza risposta AI · {dollari(costoMille)} ogni 1.000 risposte</dd>
+        </div>
+    </dl>
+)}
+<h3>Fornitori AI</h3>
+<small class="nota bot-intro">In ordine di priorità: se il primo non risponde si passa al successivo; se nessuno risponde, Étoile invita a riprovare o a contattare la segreteria. Si configurano in <code>CHATBOT_MODELLI</code>.</small>
+<small class="nota bot-intro">
+    {sito
+        ? `Conoscenza: dati ufficiali sempre presenti (circa ${fmt.format(Math.round(sito.caratteriFissi / 360) * 100)} token, in cache presso i fornitori) e, per ogni domanda, i passaggi pertinenti scelti tra ${fmt.format(sito.passaggi)} (testi di ${sito.pagine} pagine letti alle ${orario(sito.letto)}, FAQ ed eventi).`
+        : 'Conoscenza: le pagine del sito vengono lette alla prima domanda dopo l’avvio del server.'}
+</small>
+{catena.length === 0 ? (
+    <small class="nota">Nessun fornitore configurato: il chatbot non può rispondere.</small>
+) : (
+    <ol class="catena" data-verifiche={JSON.stringify(VERIFICHE.map((v) => v.domanda))}>
+        {catena.map((a, i) => (
+            <li class="anello">
+                <div class="anello-riga">
+                    <span class="anello-n">{i + 1}</span>
+                    <div class="anello-nome">
+                        <strong>{a.nome}</strong>
+                        <span class="nota">{a.modello}{perModello.get(`${a.fornitore}:${a.modello}`) && ` · ${fmt.format(perModello.get(`${a.fornitore}:${a.modello}`)!)} risposte in ${GIORNI} giorni`}</span>
+                    </div>
+                    {!a.attivo ? (
+                        <span class="stato stato--spento">Manca la chiave API</span>
+                    ) : a.sospesoFino ? (
+                        <span class="stato stato--sospeso" title={a.ultimoErrore}>Sospeso fino alle {orario(a.sospesoFino)}</span>
+                    ) : (
+                        <span class="stato stato--ok">Attivo</span>
+                    )}
+                    {a.attivo && (
+                        <button type="button" class="btn btn-secondary anello-verifica" data-fornitore={a.fornitore} data-modello={a.modello}>Verifica</button>
+                    )}
+                </div>
+                {a.ultimoErrore && a.quando && <small class="anello-errore">Ultimo errore alle {orario(a.quando)}: {a.ultimoErrore}</small>}
+                <div class="verifica" hidden aria-live="polite"></div>
+            </li>
+        ))}
+    </ol>
+)}
+
+<script>
+    import '../../scripts/dashboard/verifica-chatbot';
+</script>

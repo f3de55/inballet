@@ -1,7 +1,18 @@
 import { actions } from 'astro:actions';
 import { conferma } from './conferma';
 import { createEditor } from './editor';
-import { $, aggiornaContatore, attivaContatori, elencoOrdinabile, MAX_SIZE, mostraModal, nascondiModal, zonaCaricamento } from './comune';
+import {
+  $,
+  aggiornaAnteprima,
+  aggiornaContatore,
+  attivaContatori,
+  dopoModifica,
+  elencoOrdinabile,
+  MAX_SIZE,
+  mostraModal,
+  nascondiModal,
+  zonaCaricamento,
+} from './comune';
 import { toast } from './toast';
 
 interface Insegnante {
@@ -45,6 +56,7 @@ formTesti.addEventListener('submit', async (e) => {
   salva.textContent = 'Salva i testi';
   if (error) return toast(error.message || 'Errore nel salvataggio', 'error');
   toast('Testi salvati', 'success');
+  aggiornaAnteprima();
 });
 
 const modal = $('modalInsegnante');
@@ -155,7 +167,7 @@ form.addEventListener('submit', async (e) => {
   inCorso = true;
   salva.disabled = true;
   salva.textContent = nuovaFoto ? 'Caricamento…' : 'Salvataggio…';
-  const { error } = await actions.insegnanti.salva(dati);
+  const { data, error } = await actions.insegnanti.salva(dati);
   inCorso = false;
   if (error) {
     salva.disabled = false;
@@ -165,7 +177,7 @@ form.addEventListener('submit', async (e) => {
 
   toast('Insegnante salvato', 'success');
   void chiudiModal(true);
-  setTimeout(() => location.reload(), 700);
+  dopoModifica(`/chi-siamo?insegnante=${data.insegnante.id}#insegnanti`);
 });
 
 const lista = document.getElementById('insLista');
@@ -188,7 +200,7 @@ async function elimina(riga: HTMLElement) {
 
   toast('Insegnante eliminato', 'success');
   riga.classList.add('in-uscita');
-  setTimeout(() => location.reload(), 700);
+  dopoModifica('/chi-siamo#insegnanti');
 }
 
 document.addEventListener('click', (e) => {

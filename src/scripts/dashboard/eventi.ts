@@ -1,7 +1,7 @@
 import { actions, isInputError } from 'astro:actions';
 import { createEditor } from './editor';
 import { conferma } from './conferma';
-import { $, aggiornaContatore, MAX_SIZE, mostraModal, nascondiModal, zonaCaricamento } from './comune';
+import { $, aggiornaContatore, dopoModifica, MAX_SIZE, mostraModal, nascondiModal, zonaCaricamento } from './comune';
 import { toast } from './toast';
 
 interface Evento {
@@ -146,7 +146,10 @@ form.addEventListener('submit', async (e) => {
   new Set(data.warnings).forEach((w) => toast(w, 'warning'));
   toast('Evento salvato', 'success');
   void chiudiModal(true);
-  setTimeout(() => location.reload(), data.warnings.length ? 2500 : 700);
+  dopoModifica(
+    data.evento.stato === 'bozza' ? '/spettacoli-eventi' : `/spettacoli-eventi?evento=${encodeURIComponent(data.evento.slug)}`,
+    data.warnings.length ? 2500 : 700,
+  );
 });
 
 modalEvento.addEventListener('click', (e) => {
@@ -172,7 +175,7 @@ async function eliminaEvento(row: HTMLElement) {
 
   toast('Evento eliminato', 'success');
   row.classList.add('in-uscita');
-  setTimeout(() => location.reload(), 700);
+  dopoModifica('/spettacoli-eventi');
 }
 
 const cerca = document.getElementById('searchEventi') as HTMLInputElement | null;

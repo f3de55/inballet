@@ -1,14 +1,17 @@
 ---
 import '../styles/admin/dashboard.css';
+import '../styles/admin/scena.css';
+import { actions } from 'astro:actions';
 import Admin from '../layouts/Admin.astro';
-import Topbar from '../components/dashboard/Topbar.astro';
 import BotAnalytics from '../components/dashboard/BotAnalytics.astro';
 import EventiManager from '../components/dashboard/EventiManager.astro';
+import EventiModali from '../components/dashboard/EventiModali.astro';
 import DocumentiManager from '../components/dashboard/DocumentiManager.astro';
+import DocumentoModal from '../components/dashboard/DocumentoModal.astro';
 import InsegnantiManager from '../components/dashboard/InsegnantiManager.astro';
+import InsegnanteModal from '../components/dashboard/InsegnanteModal.astro';
 import Conferma from '../components/dashboard/Conferma.astro';
-import EliminaTuttoModal from '../components/dashboard/EliminaTuttoModal.astro';
-import ImpostazioniModal from '../components/dashboard/ImpostazioniModal.astro';
+import TemaInterruttore from '../components/TemaInterruttore.astro';
 import { isLoggedIn } from '../lib/auth';
 import { leggiImpostazioni, segnaRevisione } from '../lib/impostazioni';
 
@@ -16,25 +19,86 @@ export const prerender = false;
 
 if (!(await isLoggedIn(Astro.session))) return Astro.redirect('/login');
 
-const impostazioni = await leggiImpostazioni();
-segnaRevisione(Astro.cookies, Astro.url, impostazioni.revisione);
+segnaRevisione(Astro.cookies, Astro.url, (await leggiImpostazioni()).revisione);
 
+const sezioni = [
+  { id: 'eventi', nome: 'Eventi', icona: 'fa-calendar-alt', pagina: '/spettacoli-eventi', nuovo: 'Nuovo evento', attributo: 'data-nuovo-evento', modifica: 'Modifica questo evento' },
+  { id: 'documenti', nome: 'Documenti', icona: 'fa-file-pdf', pagina: '/documenti', nuovo: 'Nuovo documento', attributo: 'data-nuovo-documento', modifica: '' },
+  { id: 'insegnanti', nome: 'Insegnanti', icona: 'fa-users', pagina: '/chi-siamo#insegnanti', nuovo: 'Nuovo insegnante', attributo: 'data-nuovo-insegnante', modifica: 'Modifica questo insegnante' },
+  { id: 'bot', nome: 'Chatbot', icona: 'fa-comments', pagina: '', nuovo: '', attributo: '', modifica: '' },
+] as const;
 const s = Astro.url.searchParams.get('s');
-const sezione = s === 'bot' || s === 'documenti' || s === 'insegnanti' ? s : 'eventi';
-const titoli = { eventi: 'Eventi', documenti: 'Documenti', insegnanti: 'Insegnanti', bot: 'Chatbot' };
+const sezione = sezioni.find((x) => x.id === s) ?? sezioni[0];
+const sito = sezione.id !== 'bot';
 ---
 
-<Admin title={`${titoli[sezione]} - Dashboard InBallet`}>
-    <Topbar sezione={sezione} />
-
-    <main class="main">
-        {sezione === 'eventi' && <EventiManager />}
-        {sezione === 'documenti' && <DocumentiManager />}
-        {sezione === 'insegnanti' && <InsegnantiManager />}
-        {sezione === 'bot' && <BotAnalytics />}
+<Admin title={`${sezione.nome} - Dashboard InBallet`}>
+    <main class:list={['db-main', { main: !sito }]} data-sezione={sezione.id} data-pagina={sezione.pagina}>
+        <h1 class="sr-only">{sezione.nome}</h1>
+        {sito ? (
+            <>
+                <div class="sv-scena" data-dispositivo="schermo">
+                    <div class="sv-cornice"><iframe id="dbAnteprima" title={`Il sito: ${sezione.nome.toLowerCase()} come lo vedono le famiglie`}></iframe></div>
+                </div>
+                <dialog class="sv-finestra sv-finestra--lato db-elenco" id="finElenco" data-lato="destra" tabindex="-1" aria-labelledby="dbElencoTitolo">
+                    <header class="sv-finestra-testa" data-trascina>
+                        <h2 id="dbElencoTitolo">{sezione.nome}</h2>
+                        <div class="sv-finestra-comandi">
+                            <button type="button" class="sv-comando" data-riduci aria-expanded="true" aria-label="Riduci la finestra" title="Riduci"><i class="fas fa-minus" aria-hidden="true"></i></button>
+                            <button type="button" class="sv-comando" data-chiudi aria-label={`Chiudi l'elenco ${sezione.nome.toLowerCase()}`} title="Chiudi"><i class="fas fa-times" aria-hidden="true"></i></button>
+                        </div>
+                    </header>
+                    <div class="sv-finestra-corpo sv-scorre">
+                        {sezione.id === 'eventi' && <EventiManager />}
+                        {sezione.id === 'documenti' && <DocumentiManager />}
+                        {sezione.id === 'insegnanti' && <InsegnantiManager />}
+                    </div>
+                </dialog>
+            </>
+        ) : (
+            <BotAnalytics />
+        )}
     </main>
 
+    <nav class="sv-dock db-dock" id="dbDock" aria-label="Dashboard">
+        <div class="sv-dock-segmento">
+            {sezioni.map((x) => (
+                <a href={`/dashboard?s=${x.id}`} class="sv-dock-voce" aria-current={x.id === sezione.id ? 'page' : undefined}>
+                    <i class={`fas ${x.icona}`} aria-hidden="true"></i><span class="db-dock-testo">{x.nome}</span>
+                </a>
+            ))}
+        </div>
+        {sito && (
+            <>
+                <span class="sv-dock-separatore" aria-hidden="true"></span>
+                <button type="button" class="sv-dock-voce db-dock-nuovo" {...{ [sezione.attributo]: '' }}><i class="fas fa-plus" aria-hidden="true"></i>{sezione.nuovo}</button>
+                {sezione.modifica && (
+                    <button type="button" class="sv-dock-voce db-dock-qui" id="dbModificaQui" hidden><i class="fas fa-pen" aria-hidden="true"></i>{sezione.modifica}</button>
+                )}
+                <button type="button" class="sv-dock-voce" data-apri-elenco aria-controls="finElenco" aria-expanded="false"><i class="fas fa-list" aria-hidden="true"></i><span class="db-dock-testo">Elenco</span></button>
+            </>
+        )}
+        <span class="sv-dock-separatore" aria-hidden="true"></span>
+        <button type="button" class="sv-dock-voce" popovertarget="dbAltro" aria-label="Aspetto, sito ed esci" title="Aspetto, sito ed esci"><i class="fas fa-gear" aria-hidden="true"></i></button>
+    </nav>
+
+    <div class="sv-menu" id="dbAltro" popover aria-label="Altro">
+        <div class="sv-menu-gruppo">
+            <TemaInterruttore class="sv-menu-voce" />
+            <a href="/" class="sv-menu-voce" target="_blank" rel="noopener"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Il sito<span class="sr-only"> (si apre in una nuova scheda)</span></a>
+        </div>
+        <div class="sv-menu-gruppo sv-menu-gruppo--fine">
+            <button type="submit" form="dbEsci" class="sv-menu-voce"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Esci dalla dashboard</button>
+        </div>
+    </div>
+    <form id="dbEsci" method="POST" action={actions.auth.logout} hidden></form>
+
+    {sezione.id === 'eventi' && <EventiModali />}
+    {sezione.id === 'documenti' && <DocumentoModal />}
+    {sezione.id === 'insegnanti' && <InsegnanteModal />}
     <Conferma />
-    <ImpostazioniModal impostazioni={impostazioni} demo={sezione === 'bot' ? 'chatbot' : sezione === 'documenti' ? undefined : sezione} />
-    <EliminaTuttoModal />
 </Admin>
+
+<script>
+    import '../scripts/dashboard/scena';
+</script>

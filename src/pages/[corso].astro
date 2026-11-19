@@ -104,8 +104,8 @@ const accento = (titolo: string) => titolo.replace(/^(.*\s)(\S+)$/, '$1<em>$2</e
             <div class="corso-metodo-list">
                 {data.metodo.map((item) => (
                     <div class="corso-metodo-item voce">
-                        <Img class="corso-metodo-foto" src={item.immagine} alt={item.immagineAlt} loading="lazy" decoding="async" width={960} height={640} widths={[400, 640, 960]} rapporto={2 / 3} sizes="(max-width: 900px) calc(100vw - 4rem), (max-width: 1200px) calc((100vw - 10rem) / 3), 347px" />
                         <h3 class="voce-titolo" set:html={item.titolo} />
+                        <Img class="corso-metodo-foto" src={item.immagine} alt={item.immagineAlt} loading="lazy" decoding="async" width={960} height={640} widths={[400, 640, 960]} rapporto={2 / 3} sizes="(max-width: 900px) calc(100vw - 4rem), (max-width: 1200px) calc((100vw - 10rem) / 3), 347px" />
                         <p class="voce-testo" set:html={item.testo} />
                     </div>
                 ))}

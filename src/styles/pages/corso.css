@@ -151,8 +151,16 @@
   gap: 2.5rem 3rem;
 }
 
+.corso-metodo-item.voce {
+  grid-row: span 5;
+}
+
+.corso-metodo-item.voce > .voce-testo {
+  grid-row: 5;
+}
+
 .corso-metodo-foto {
-  grid-row: 1;
+  grid-row: 4;
   display: block;
   width: 100%;
   height: auto;

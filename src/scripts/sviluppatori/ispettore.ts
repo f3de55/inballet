@@ -1,6 +1,7 @@
 import { actions } from 'astro:actions';
 import { $, ascolta, chiama, el, emetti, icona, normalizza, toast } from './comune';
-import { elementoAttuale, nomeElemento, onSeleziona, percorsoAttuale, ritoccaTesto, seleziona, simulaStato } from './anteprima';
+import { elementoAttuale, nomeElemento, onSeleziona, percorsoAttuale, rettangoloScelto, ritoccaTesto, seleziona, simulaStato } from './anteprima';
+import { apri, aperta, chiudi, evita } from './finestre';
 import { cartaRegola, corrispondenti, etichettaContesto, nuovaRegola, tutte, type Corrispondenza } from './regole';
 
 type Esito =
@@ -26,7 +27,8 @@ const CALCOLATI = [
 ];
 
 const pannello = $('svIspettore');
-const nessuno = $('svNessuno');
+const titolo = $('svIspettoreTitolo');
+const finestra = $<HTMLDialogElement>('finIspettore');
 let scheda: 'testo' | 'stile' | null = null;
 let statoScelto: string | null = null;
 
@@ -437,8 +439,7 @@ function briciole(e: Element): HTMLElement {
 
 async function aggiorna(e: Element | null) {
   if (!e || !e.isConnected) {
-    pannello.hidden = true;
-    nessuno.hidden = false;
+    chiudi(finestra.id);
     simulaStato(null, []);
     statoScelto = null;
     return;
@@ -459,14 +460,22 @@ async function aggiorna(e: Element | null) {
   }
   const corpo = attuale === 'testo' ? el('div', {}, sezioneTesti(e), sezioneIcona(e), sezioneImmagine(e)) : await sezioneStili(e);
   if (elementoAttuale() !== e) return;
-  pannello.replaceChildren(el('div', { class: 'sv-ispettore-testa' }, el('h2', { text: nomeElemento(e) }), briciole(e), schede), corpo);
-  pannello.hidden = false;
-  nessuno.hidden = true;
+  const scorrimento = pannello.scrollTop;
+  titolo.textContent = nomeElemento(e);
+  pannello.replaceChildren(el('div', { class: 'sv-ispettore-testa' }, briciole(e), schede), corpo);
+  const nuova = !aperta(finestra.id);
+  if (nuova) apri(finestra.id);
+  else pannello.scrollTop = scorrimento;
+  if (nuova || !pannello.contains(document.activeElement)) evita(finestra.id, rettangoloScelto());
 }
 
 onSeleziona((e) => {
   scheda = null;
+  pannello.scrollTop = 0;
   void aggiorna(e);
+});
+finestra.addEventListener('close', () => {
+  if (elementoAttuale()) seleziona(null);
 });
 ascolta('stili', () => void aggiorna(elementoAttuale()));
 ascolta('file-scartato', () => void aggiorna(elementoAttuale()));

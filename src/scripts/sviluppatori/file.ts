@@ -239,7 +239,7 @@ $('svFileElimina').addEventListener('click', async () => {
   editor = null;
   corrente = null;
   sporco = false;
-  nome.textContent = 'Scegli un file';
+  nome.textContent = '';
   azioni.hidden = true;
   zona.replaceChildren();
   await dopoCambio(`Eliminato: ${percorso}`);

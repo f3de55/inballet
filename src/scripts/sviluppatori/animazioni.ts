@@ -35,7 +35,7 @@ async function disegna() {
       el(
         'section',
         { class: 'sv-categoria' },
-        el('h2', { text: 'Animazioni (@keyframes)' }),
+        el('h3', { text: 'Animazioni (@keyframes)' }),
         ...animazioni.map(([chiave, lista]) => {
           const [nome, file] = chiave.split('|');
           const play = el('button', { type: 'button', class: 'btn btn-secondary' }, icona('fa-redo-alt'), 'Riproduci');
@@ -43,7 +43,7 @@ async function disegna() {
           return el(
             'div',
             { class: 'sv-fotogrammi' },
-            el('div', { class: 'sv-fotogrammi-testa' }, el('h3', { text: nome }), el('code', { text: file.replace(/^src\/styles\//, '') }), play),
+            el('div', { class: 'sv-fotogrammi-testa' }, el('h4', { text: nome }), el('code', { text: file.replace(/^src\/styles\//, '') }), play),
             ...lista.map((r) => cartaRegola(r, { titolo: r.selettore })),
           );
         }),
@@ -58,7 +58,7 @@ async function disegna() {
       el(
         'section',
         { class: 'sv-categoria' },
-        el('h2', { text: 'Transizioni ed effetti al passaggio del mouse' }),
+        el('h3', { text: 'Transizioni ed effetti al passaggio del mouse' }),
         el('p', { class: 'sv-spiega', text: 'Durate e curve comuni sono nel Tema, gruppo «Movimento e animazioni».' }),
         ...movimento.slice(0, 150).map((r) => cartaRegola(r, { filtro: (d) => MOVIMENTO.test(d.prop) })),
       ),
@@ -76,5 +76,5 @@ export function mostraAnimazioni() {
 
 cerca.addEventListener('input', () => void disegna());
 ascolta('stili', () => {
-  if (!contenitore.closest('[hidden]')) void disegna();
+  if (contenitore.checkVisibility()) void disegna();
 });

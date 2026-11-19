@@ -1,4 +1,4 @@
-import { $, normalizza } from './comune';
+import { $, emetti, normalizza } from './comune';
 import type { RegolaCss } from './regole';
 
 type Ritocco = { file: string; selettore: string; contesti: string[]; props: Map<string, string | null> };
@@ -10,15 +10,17 @@ const scena = $('svScena');
 const sopra = $('svSopra');
 const scelto = $('svScelto');
 const sceltoNome = $('svSceltoNome');
-const indirizzo = $<HTMLInputElement>('svIndirizzo');
+const etichetta = $('svPercorso');
 
 const ritocchi = new Map<string, Ritocco>();
 const ritocchiTesto: RitoccoTesto[] = [];
 const alCaricamento = new Set<() => void>();
 const allaScelta = new Set<(e: Element | null) => void>();
+const aiTasti = new Set<(e: KeyboardEvent) => void>();
 
-let larghezza = 1440;
+let larghezza = 0;
 let scala = 1;
+let percorso = '/';
 let tema: 'chiaro' | 'scuro' = 'chiaro';
 let modo: 'modifica' | 'naviga' = 'modifica';
 let elementoSopra: Element | null = null;
@@ -29,15 +31,21 @@ export const doc = () => iframe.contentDocument;
 export const win = () => iframe.contentWindow;
 export const elementoAttuale = () => elementoScelto;
 export const temaAttuale = () => tema;
-export const larghezzaAttuale = () => larghezza;
+export const larghezzaAttuale = () => larghezza || Math.round(scena.clientWidth);
 export const percorsoAttuale = () => {
   const w = win();
   try {
-    return w?.location.protocol.startsWith('http') ? w.location.pathname + w.location.search : indirizzo.value || '/';
+    return w?.location.protocol.startsWith('http') ? w.location.pathname + w.location.search : percorso;
   } catch {
     return '/';
   }
 };
+export const rettangoloScelto = () => (scelto.hidden ? null : scelto.getBoundingClientRect());
+
+function mostraPercorso(p: string) {
+  percorso = p;
+  etichetta.textContent = p;
+}
 
 export function onCarica(fn: () => void) {
   alCaricamento.add(fn);
@@ -45,6 +53,10 @@ export function onCarica(fn: () => void) {
 
 export function onSeleziona(fn: (e: Element | null) => void) {
   allaScelta.add(fn);
+}
+
+export function onTasto(fn: (e: KeyboardEvent) => void) {
+  aiTasti.add(fn);
 }
 
 function nomeElemento(e: Element): string {
@@ -71,15 +83,20 @@ function aggiornaRiquadri() {
 }
 
 export function dimensiona() {
-  const disponibile = scena.clientWidth - 32;
-  scala = Math.min(1, disponibile / larghezza);
-  const altezza = Math.max(400, (scena.clientHeight - 32) / scala);
-  cornice.style.width = `${larghezza * scala}px`;
+  const stile = getComputedStyle(scena);
+  const orizzontale = parseFloat(stile.paddingLeft) + parseFloat(stile.paddingRight);
+  const verticale = parseFloat(stile.paddingTop) + parseFloat(stile.paddingBottom);
+  const disponibile = scena.clientWidth - orizzontale;
+  const larga = larghezza || disponibile;
+  scala = Math.min(1, disponibile / larga);
+  const altezza = Math.max(400, (scena.clientHeight - verticale) / scala);
+  cornice.style.width = `${larga * scala}px`;
   cornice.style.height = `${altezza * scala}px`;
-  iframe.style.width = `${larghezza}px`;
+  iframe.style.width = `${larga}px`;
   iframe.style.height = `${altezza}px`;
   iframe.style.transform = `scale(${scala})`;
   aggiornaRiquadri();
+  emetti('dimensioni');
 }
 
 export function seleziona(e: Element | null) {
@@ -94,7 +111,7 @@ export function vai(percorso: string) {
   let p = percorso.trim() || '/';
   if (!p.startsWith('/')) p = `/${p}`;
   if (p.startsWith('/area-sviluppatori')) p = '/';
-  indirizzo.value = p;
+  mostraPercorso(p);
   seleziona(null);
   iframe.src = p;
 }
@@ -106,8 +123,9 @@ export function ricarica() {
   requestAnimationFrame(() => (iframe.src = p));
 }
 
-export function impostaLarghezza(px: number) {
+export function impostaLarghezza(px: number, dispositivo: string) {
   larghezza = px;
+  scena.dataset.dispositivo = dispositivo;
   dimensiona();
 }
 
@@ -341,9 +359,7 @@ function aggancia() {
   });
   w.addEventListener('scroll', aggiornaRiquadri, true);
   w.addEventListener('resize', aggiornaRiquadri);
-  w.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modo === 'modifica') seleziona(null);
-  });
+  w.addEventListener('keydown', (e) => aiTasti.forEach((fn) => fn(e)));
   new ResizeObserver(aggiornaRiquadri).observe(d.documentElement);
 }
 
@@ -353,7 +369,7 @@ iframe.addEventListener('load', () => {
     vai('/');
     return;
   }
-  if (document.activeElement !== indirizzo) indirizzo.value = percorso;
+  mostraPercorso(percorso);
   elementoSopra = null;
   elementoScelto = null;
   aggancia();

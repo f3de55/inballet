@@ -113,7 +113,7 @@ function sezioneFont(): HTMLElement {
   return el(
     'section',
     { class: 'sv-categoria' },
-    el('h2', { text: 'Carattere' }),
+    el('h3', { text: 'Carattere' }),
     el('p', { class: 'sv-spiega', text: 'Nome di un font di Google Fonts con pesi da 300 a 900 e corsivo. L’anteprima lo mostra mentre scrivi.' }),
     el('div', { class: 'campo' }, el('label', { for: 'svFont', text: 'Font del sito e della dashboard' }), input),
     applica,
@@ -136,7 +136,7 @@ async function disegna() {
     for (const nome of ordine) {
       const lista = gruppi.get(nome);
       if (!lista?.length) continue;
-      blocchi.push(el('section', { class: 'sv-categoria' }, el('h2', { text: `${nome} · ${titolo}` }), ...lista.map((v) => riga(v, regole))));
+      blocchi.push(el('section', { class: 'sv-categoria' }, el('h3', { text: `${nome} · ${titolo}` }), ...lista.map((v) => riga(v, regole))));
     }
   }
   if (!blocchi.length) blocchi.push(el('p', { class: 'sv-spiega', text: 'Nessun valore trovato.' }));
@@ -152,5 +152,5 @@ export function mostraTema(attuale: string) {
 
 cerca.addEventListener('input', () => void disegna());
 ascolta('stili', (file) => {
-  if ((file === '' || (typeof file === 'string' && eVariabili(file))) && !contenitore.closest('[hidden]')) void disegna();
+  if ((file === '' || (typeof file === 'string' && eVariabili(file))) && contenitore.checkVisibility()) void disegna();
 });

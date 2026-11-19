@@ -4,6 +4,36 @@ export const icons = {
     accent: '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17h15"/></g>',
     monochrome: true,
   },
+  desktop: {
+    outline: '<rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4"/>',
+    accent: '',
+    monochrome: true,
+  },
+  laptop: {
+    outline: '<rect x="4.5" y="5" width="15" height="10.5" rx="1.8"/><path d="M2.5 19h19"/>',
+    accent: '',
+    monochrome: true,
+  },
+  tablet: {
+    outline: '<rect x="4.5" y="2.5" width="15" height="19" rx="2.5"/><path d="M11 18.5h2"/>',
+    accent: '',
+    monochrome: true,
+  },
+  code: {
+    outline: '<path d="m8 7-5 5 5 5m8-10 5 5-5 5M13.5 4.5l-3 15"/>',
+    accent: '',
+    monochrome: true,
+  },
+  ellipsis: {
+    outline: '<circle cx="5.5" cy="12" r=".9"/><circle cx="12" cy="12" r=".9"/><circle cx="18.5" cy="12" r=".9"/>',
+    accent: '',
+    monochrome: true,
+  },
+  minus: {
+    outline: '<path d="M5 12h14"/>',
+    accent: '',
+    monochrome: true,
+  },
   xmark: {
     outline: '<path d="m6 6 12 12M18 6 6 18"/>',
     accent: '',

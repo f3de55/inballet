@@ -170,6 +170,20 @@
   margin-bottom: 1.5rem;
 }
 
+@media (min-width: 601px) {
+  .corso-metodo-item.voce {
+    grid-row: span 4;
+  }
+
+  .corso-metodo-item.voce > .voce-testo {
+    grid-row: 4;
+  }
+
+  .corso-metodo-foto {
+    grid-row: 1;
+  }
+}
+
 .corso-impara-section {
   padding: var(--section-y) 0;
   background: var(--bg-soft);

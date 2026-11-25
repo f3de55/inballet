@@ -460,7 +460,7 @@
 
   .footer-bottom {
     width: auto;
-    padding: 0 1.5rem calc(var(--footer-y) + 4.5rem);
+    padding: 0 calc(1.5rem + 4.5rem) var(--footer-y) 1.5rem;
     background: none;
   }
 }

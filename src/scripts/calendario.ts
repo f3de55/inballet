@@ -42,28 +42,33 @@ let ritorno: HTMLElement | null = null;
 const layoutEventoMobile = window.matchMedia('(max-width: 600px)');
 const fondoLocandina = document.createElement('div');
 fondoLocandina.className = 'evento-fondo-locandina';
+const rigaTitolo = document.createElement('div');
+rigaTitolo.className = 'evento-riga-titolo';
 function disponiEvento() {
   const corpo = $('dialogCorpo');
   const barra = dialog.querySelector<HTMLElement>('.dialogo-barra')!;
-  const azioni = corpo.querySelector<HTMLElement>('.evento-azioni')!;
+  const titolo = $('dialogTitolo');
   const condividi = $('btnCondividi');
-  const testo = $('btnCondividiTesto');
   const locandina = $('dialogLocandinaBtn');
   const attivo = document.activeElement;
   if (layoutEventoMobile.matches) {
-    if (condividi.parentElement !== azioni) azioni.append(condividi);
+    if (titolo.parentElement !== rigaTitolo) {
+      titolo.before(rigaTitolo);
+      rigaTitolo.append(titolo, condividi);
+    }
     if (locandina.parentElement !== fondoLocandina) fondoLocandina.append(locandina);
     if (corpo.lastElementChild !== fondoLocandina) corpo.append(fondoLocandina);
   } else {
     if (condividi.parentElement !== barra) barra.prepend(condividi);
+    if (titolo.parentElement === rigaTitolo) {
+      rigaTitolo.before(titolo);
+      rigaTitolo.remove();
+    }
     if (locandina.nextElementSibling !== $('dialogDettagli')) {
       corpo.insertBefore(locandina, $('dialogDettagli'));
     }
     fondoLocandina.remove();
   }
-  condividi.classList.toggle('btn-icon', !layoutEventoMobile.matches);
-  condividi.classList.toggle('evento-azione', layoutEventoMobile.matches);
-  testo.classList.toggle('sr-only', !layoutEventoMobile.matches);
   if (dialog.open && (attivo === condividi || attivo === locandina)) {
     (attivo as HTMLElement).focus({ preventScroll: true });
   }

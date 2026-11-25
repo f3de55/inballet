@@ -841,6 +841,16 @@ html:has(dialog[open]) {
       linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
   }
 
+  .evento-fondo-locandina::after {
+    content: '';
+    position: absolute;
+    inset: var(--onda-h) 0 0;
+    z-index: 0;
+    background: url('../../assets/images/decorazioni/evento-chiffon.png') center bottom / 125% auto no-repeat;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
   .evento-dialog .evento-locandina {
     width: min(12.5rem, 70%);
     margin: 0;
@@ -871,24 +881,20 @@ html:has(dialog[open]) {
     width: 100%;
   }
 
-  .evento-azioni .evento-condividi {
-    align-self: flex-start;
+  .evento-riga-titolo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .evento-riga-titolo .evento-dialog-titolo {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .evento-dialog .evento-riga-titolo .evento-condividi {
     margin: 0;
-    padding: 0;
-    border: 0;
-    background: none;
-    cursor: pointer;
-    text-align: left;
-    font-family: inherit;
-    line-height: inherit;
-  }
-
-  .evento-azioni:has(.evento-azioni-calendario:not([hidden])) .evento-condividi {
-    margin-top: -0.75rem;
-  }
-
-  .evento-azioni .evento-condividi:focus-visible {
-    outline-offset: 4px;
   }
 }
 

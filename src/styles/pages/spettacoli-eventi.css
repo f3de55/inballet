@@ -810,9 +810,40 @@ html:has(dialog[open]) {
     margin-top: 0.25rem;
   }
 
+  .evento-dialog-corpo:has(.evento-fondo-locandina > .evento-locandina:not([hidden])) {
+    padding-bottom: 0;
+  }
+
+  .evento-fondo-locandina {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    justify-items: center;
+    margin: -0.5rem calc(var(--corpo-lato) * -1) 0;
+    padding: calc(var(--onda-h) + 1.5rem) var(--corpo-lato) 2.5rem;
+  }
+
+  .evento-fondo-locandina:not(:has(> .evento-locandina:not([hidden]))) {
+    display: none;
+  }
+
+  .evento-fondo-locandina::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--bg-soft);
+    -webkit-mask:
+      var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
+      linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
+    mask:
+      var(--onda-svg) 0 0 / var(--onda-w) var(--onda-h) repeat-x,
+      linear-gradient(var(--black) 0 0) 0 calc(var(--onda-h) - 1px) / 100% 100% no-repeat;
+  }
+
   .evento-dialog .evento-locandina {
     width: min(12.5rem, 70%);
-    margin: 0.75rem 0 0.5rem;
+    margin: 0;
   }
 
   .evento-dettagli {

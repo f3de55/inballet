@@ -40,6 +40,8 @@ let toccoGiorno: HTMLElement | null = null;
 let ritorno: HTMLElement | null = null;
 
 const layoutEventoMobile = window.matchMedia('(max-width: 600px)');
+const fondoLocandina = document.createElement('div');
+fondoLocandina.className = 'evento-fondo-locandina';
 function disponiEvento() {
   const corpo = $('dialogCorpo');
   const barra = dialog.querySelector<HTMLElement>('.dialogo-barra')!;
@@ -50,12 +52,14 @@ function disponiEvento() {
   const attivo = document.activeElement;
   if (layoutEventoMobile.matches) {
     if (condividi.parentElement !== azioni) azioni.append(condividi);
-    if (corpo.lastElementChild !== locandina) corpo.append(locandina);
+    if (locandina.parentElement !== fondoLocandina) fondoLocandina.append(locandina);
+    if (corpo.lastElementChild !== fondoLocandina) corpo.append(fondoLocandina);
   } else {
     if (condividi.parentElement !== barra) barra.prepend(condividi);
     if (locandina.nextElementSibling !== $('dialogDettagli')) {
       corpo.insertBefore(locandina, $('dialogDettagli'));
     }
+    fondoLocandina.remove();
   }
   condividi.classList.toggle('btn-icon', !layoutEventoMobile.matches);
   condividi.classList.toggle('evento-azione', layoutEventoMobile.matches);

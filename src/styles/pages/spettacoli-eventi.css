@@ -773,13 +773,46 @@ html:has(dialog[open]) {
     gap: 1.75rem;
   }
 
-  .evento-testata {
-    padding-top: 4.25rem;
+  .evento-dialog .dialogo-barra .btn-icon--chiudi {
+    width: 36px;
+    height: 36px;
+    margin: 0.85rem 0.85rem 0 0;
+    box-shadow: 0 2px 10px rgb(var(--nero-rgb) / 0.10);
   }
 
-  .evento-locandina {
-    width: min(12.5rem, 60%);
-    margin-top: -5.25rem;
+  .evento-dialog .dialogo-barra .btn-icon--chiudi > i {
+    font-size: 0.75rem;
+  }
+
+  .evento-testata,
+  .con-locandina .evento-testata {
+    padding-top: 3.5rem;
+    padding-bottom: calc(var(--onda-h) + 1rem);
+  }
+
+  /* Nastro danzante, leggero e contenuto nella fascia azzurra. */
+  .evento-testata::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    width: min(65%, 16rem);
+    height: 100%;
+    background: var(--primary-blue);
+    opacity: 0.23;
+    pointer-events: none;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 220'%3E%3Cg fill='none' stroke='black' stroke-linecap='round'%3E%3Cpath stroke-width='2' d='M280 -18C136 6 223 69 159 93S80 126 115 163s100 12 145 54'/%3E%3Cpath stroke-width='1' d='M284 -4C152 19 237 78 173 105S98 130 130 164s91 13 136 43'/%3E%3C/g%3E%3C/svg%3E") right top / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 220'%3E%3Cg fill='none' stroke='black' stroke-linecap='round'%3E%3Cpath stroke-width='2' d='M280 -18C136 6 223 69 159 93S80 126 115 163s100 12 145 54'/%3E%3Cpath stroke-width='1' d='M284 -4C152 19 237 78 173 105S98 130 130 164s91 13 136 43'/%3E%3C/g%3E%3C/svg%3E") right top / contain no-repeat;
+  }
+
+  .evento-dettagli {
+    margin-top: 0.25rem;
+  }
+
+  .evento-dialog .evento-locandina {
+    width: min(12.5rem, 70%);
+    margin: 0.75rem 0 0.5rem;
   }
 
   .evento-dettagli {
@@ -805,6 +838,26 @@ html:has(dialog[open]) {
 
   .evento-azioni-calendario {
     width: 100%;
+  }
+
+  .evento-azioni .evento-condividi {
+    align-self: flex-start;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    line-height: inherit;
+  }
+
+  .evento-azioni:has(.evento-azioni-calendario:not([hidden])) .evento-condividi {
+    margin-top: -0.75rem;
+  }
+
+  .evento-azioni .evento-condividi:focus-visible {
+    outline-offset: 4px;
   }
 }
 

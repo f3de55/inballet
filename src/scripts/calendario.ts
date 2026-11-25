@@ -39,6 +39,36 @@ let eventoCorrente: EventoSito | null = null;
 let toccoGiorno: HTMLElement | null = null;
 let ritorno: HTMLElement | null = null;
 
+// Mantiene un unico pulsante di condivisione e l'ordine reale di lettura
+// e di tabulazione coerente con il layout, anche al cambio di orientamento.
+const layoutEventoMobile = window.matchMedia('(max-width: 600px)');
+function disponiEvento() {
+  const corpo = $('dialogCorpo');
+  const barra = dialog.querySelector<HTMLElement>('.dialogo-barra')!;
+  const azioni = corpo.querySelector<HTMLElement>('.evento-azioni')!;
+  const condividi = $('btnCondividi');
+  const testo = $('btnCondividiTesto');
+  const locandina = $('dialogLocandinaBtn');
+  const attivo = document.activeElement;
+  if (layoutEventoMobile.matches) {
+    if (condividi.parentElement !== azioni) azioni.append(condividi);
+    if (corpo.lastElementChild !== locandina) corpo.append(locandina);
+  } else {
+    if (condividi.parentElement !== barra) barra.prepend(condividi);
+    if (locandina.nextElementSibling !== $('dialogDettagli')) {
+      corpo.insertBefore(locandina, $('dialogDettagli'));
+    }
+  }
+  condividi.classList.toggle('btn-icon', !layoutEventoMobile.matches);
+  condividi.classList.toggle('evento-azione', layoutEventoMobile.matches);
+  testo.classList.toggle('sr-only', !layoutEventoMobile.matches);
+  if (dialog.open && (attivo === condividi || attivo === locandina)) {
+    (attivo as HTMLElement).focus({ preventScroll: true });
+  }
+}
+disponiEvento();
+layoutEventoMobile.addEventListener('change', disponiEvento);
+
 const riga = (label: string, valore: string) => `<div><dt class="titoletto">${label}</dt><dd>${valore}</dd></div>`;
 
 function apriEvento(slug: string) {

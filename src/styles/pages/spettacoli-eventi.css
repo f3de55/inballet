@@ -777,11 +777,11 @@ html:has(dialog[open]) {
     width: 36px;
     height: 36px;
     margin: 0.85rem 0.85rem 0 0;
-    box-shadow: 0 2px 10px rgb(var(--nero-rgb) / 0.10);
+    box-shadow: 0 2px 10px rgb(var(--nero-rgb) / 0.1);
   }
 
   .evento-dialog .dialogo-barra .btn-icon--chiudi > i {
-    font-size: 0.75rem;
+    font-size: var(--icona-stato);
   }
 
   .evento-testata,
@@ -790,7 +790,6 @@ html:has(dialog[open]) {
     padding-bottom: calc(var(--onda-h) + 1rem);
   }
 
-  /* Nastro danzante, leggero e contenuto nella fascia azzurra. */
   .evento-testata::after {
     content: '';
     position: absolute;
@@ -802,8 +801,9 @@ html:has(dialog[open]) {
     background: var(--primary-blue);
     opacity: 0.23;
     pointer-events: none;
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 220'%3E%3Cg fill='none' stroke='black' stroke-linecap='round'%3E%3Cpath stroke-width='2' d='M280 -18C136 6 223 69 159 93S80 126 115 163s100 12 145 54'/%3E%3Cpath stroke-width='1' d='M284 -4C152 19 237 78 173 105S98 130 130 164s91 13 136 43'/%3E%3C/g%3E%3C/svg%3E") right top / contain no-repeat;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 220'%3E%3Cg fill='none' stroke='black' stroke-linecap='round'%3E%3Cpath stroke-width='2' d='M280 -18C136 6 223 69 159 93S80 126 115 163s100 12 145 54'/%3E%3Cpath stroke-width='1' d='M284 -4C152 19 237 78 173 105S98 130 130 164s91 13 136 43'/%3E%3C/g%3E%3C/svg%3E") right top / contain no-repeat;
+    --nastro-evento: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 220'%3E%3Cg fill='none' stroke='black' stroke-linecap='round'%3E%3Cpath stroke-width='2' d='M280 -18C136 6 223 69 159 93S80 126 115 163s100 12 145 54'/%3E%3Cpath stroke-width='1' d='M284 -4C152 19 237 78 173 105S98 130 130 164s91 13 136 43'/%3E%3C/g%3E%3C/svg%3E");
+    -webkit-mask: var(--nastro-evento) right top / contain no-repeat;
+    mask: var(--nastro-evento) right top / contain no-repeat;
   }
 
   .evento-dettagli {

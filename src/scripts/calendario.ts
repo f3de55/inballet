@@ -39,8 +39,6 @@ let eventoCorrente: EventoSito | null = null;
 let toccoGiorno: HTMLElement | null = null;
 let ritorno: HTMLElement | null = null;
 
-// Mantiene un unico pulsante di condivisione e l'ordine reale di lettura
-// e di tabulazione coerente con il layout, anche al cambio di orientamento.
 const layoutEventoMobile = window.matchMedia('(max-width: 600px)');
 function disponiEvento() {
   const corpo = $('dialogCorpo');
